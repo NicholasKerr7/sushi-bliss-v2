@@ -1,20 +1,28 @@
 "use client";
 
-import { ResponsiveGrid } from "@/components/responsive/ResponsiveGrid";
+import { useState } from "react";
+
 import { PageContainer } from "@/components/layout/PageContainer";
+import { ResponsiveGrid } from "@/components/responsive/ResponsiveGrid";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Input } from "@/components/ui/Input";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { CartDrawer } from "@/features/cart/CartDrawer";
+import { CartFloatingButton } from "@/features/cart/CartFloatingButton";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useMenu } from "@/hooks/useMenu";
 import { pluralize } from "@/lib/format";
+import type { MenuItem } from "@/types/menu";
 
+import { ItemDetailDrawer } from "./ItemDetailDrawer";
 import { MenuCard } from "./MenuCard";
 import { MenuCategoryTabs } from "./MenuCategoryTabs";
 
 export function MenuExplorer() {
+  const [cartOpen, setCartOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const {
     categories,
     category,
@@ -30,6 +38,11 @@ export function MenuExplorer() {
   } = useMenu();
   const { isFavorite, toggleFavorite } = useFavorites();
 
+  const handleItemAdded = () => {
+    setSelectedItem(null);
+    setCartOpen(true);
+  };
+
   return (
     <section
       className="border-b border-sb-line bg-sb-charcoal py-12 md:py-16"
@@ -38,11 +51,16 @@ export function MenuExplorer() {
       <PageContainer>
         <SectionHeader
           actions={
-            hasActiveFilters ? (
-              <Button onClick={clearFilters} variant="ghost">
-                Reset filters
+            <>
+              <Button onClick={() => setCartOpen(true)} variant="secondary">
+                View cart
               </Button>
-            ) : null
+              {hasActiveFilters ? (
+                <Button onClick={clearFilters} variant="ghost">
+                  Reset filters
+                </Button>
+              ) : null}
+            </>
           }
           eyebrow={<Badge>Menu browsing</Badge>}
           subtitle={`${totalItemCount} chef-built signatures with filters for category, ingredient, texture, and pairing preferences.`}
@@ -86,6 +104,7 @@ export function MenuExplorer() {
                 item={item}
                 key={item.id}
                 onToggleFavorite={toggleFavorite}
+                onViewDetails={setSelectedItem}
               />
             ))}
           </ResponsiveGrid>
@@ -102,6 +121,21 @@ export function MenuExplorer() {
           />
         )}
       </PageContainer>
+      <CartFloatingButton onOpenCart={() => setCartOpen(true)} />
+      <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
+      {selectedItem ? (
+        <ItemDetailDrawer
+          item={selectedItem}
+          key={selectedItem.id}
+          onAdded={handleItemAdded}
+          onOpenChange={(nextOpen) => {
+            if (!nextOpen) {
+              setSelectedItem(null);
+            }
+          }}
+          open={Boolean(selectedItem)}
+        />
+      ) : null}
     </section>
   );
 }

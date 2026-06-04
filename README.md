@@ -39,6 +39,16 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Popular menu cards and saved favorites are powered by normalized menu data.
 - Favorites persist locally through `useFavorites`.
 
+## Sprint 4 Status
+
+- Menu item details open in a responsive drawer with ingredients, chef notes,
+  sake pairing previews, customization groups, add-ons, notes, and quantity.
+- Add-to-cart creates persistent local cart lines that merge identical
+  customization sets.
+- Cart drawer supports empty state, editable quantities, item removal, clear
+  cart, and calculated subtotal/tax/service/total summaries.
+- Cart state is stored through `useCart` without backend credentials.
+
 ## Scripts
 
 ```bash

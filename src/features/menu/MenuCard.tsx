@@ -13,12 +13,14 @@ interface MenuCardProps {
   isFavorite: boolean;
   item: MenuItem;
   onToggleFavorite: (itemId: string) => void;
+  onViewDetails: (item: MenuItem) => void;
 }
 
 export function MenuCard({
   isFavorite,
   item,
   onToggleFavorite,
+  onViewDetails,
 }: MenuCardProps) {
   return (
     <Card className="flex h-full flex-col overflow-hidden">
@@ -65,14 +67,16 @@ export function MenuCard({
           <p className="text-xs leading-5 text-sb-dim">
             {item.ingredients.slice(0, 4).join(", ") || item.texture}
           </p>
-          <Button
-            aria-pressed={isFavorite}
-            className="w-full"
-            onClick={() => onToggleFavorite(item.id)}
-            variant={isFavorite ? "secondary" : "ghost"}
-          >
-            {isFavorite ? "Saved" : "Save favorite"}
-          </Button>
+          <div className="grid grid-cols-2 gap-2">
+            <Button onClick={() => onViewDetails(item)}>Details</Button>
+            <Button
+              aria-pressed={isFavorite}
+              onClick={() => onToggleFavorite(item.id)}
+              variant={isFavorite ? "secondary" : "ghost"}
+            >
+              {isFavorite ? "Saved" : "Save"}
+            </Button>
+          </div>
         </div>
       </div>
     </Card>

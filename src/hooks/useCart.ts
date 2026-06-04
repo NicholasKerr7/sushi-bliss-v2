@@ -1,55 +1,102 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useSyncExternalStore } from "react";
 
+import { menuItemById } from "@/data/menu";
+import {
+  calculateCartLineSubtotal,
+  createStoredCartLineItem,
+  resolveStoredCartLineItems,
+} from "@/lib/cart";
+import {
+  getCartSnapshot,
+  getEmptyCartSnapshot,
+  parseStoredCartItems,
+  readStoredCartItems,
+  subscribeToCart,
+  writeStoredCartItems,
+} from "@/lib/cartStorage";
 import { calculateOrderTotals } from "@/lib/money";
-import type { CartLineItem } from "@/types/order";
+import type { CartItemDraft } from "@/types/order";
 
-/** Manages local cart line items and derived totals until backend persistence exists. */
+const MAX_CART_QUANTITY = 99;
+
+/** Manages persistent local cart line items and derived totals. */
 export function useCart() {
-  const [items, setItems] = useState<CartLineItem[]>([]);
-
+  const cartSnapshot = useSyncExternalStore(
+    subscribeToCart,
+    getCartSnapshot,
+    getEmptyCartSnapshot,
+  );
+  const storedItems = useMemo(
+    () => parseStoredCartItems(cartSnapshot),
+    [cartSnapshot],
+  );
+  const items = useMemo(
+    () => resolveStoredCartLineItems(storedItems, menuItemById),
+    [storedItems],
+  );
   const subtotalCents = useMemo(
     () =>
-      items.reduce(
-        (total, item) => total + item.menuItem.priceCents * item.quantity,
-        0,
-      ),
+      items.reduce((total, item) => total + calculateCartLineSubtotal(item), 0),
     [items],
   );
 
-  const addItem = useCallback((item: CartLineItem) => {
-    setItems((current) => {
-      const existing = current.find((lineItem) => lineItem.id === item.id);
-
-      if (!existing) {
-        return [...current, item];
-      }
-
-      return current.map((lineItem) =>
-        lineItem.id === item.id
-          ? { ...lineItem, quantity: lineItem.quantity + item.quantity }
-          : lineItem,
-      );
+  const addItem = useCallback((draft: CartItemDraft) => {
+    const storedLineItem = createStoredCartLineItem({
+      ...draft,
+      quantity: Math.min(Math.max(Math.floor(draft.quantity), 1), 12),
     });
+    const currentItems = readStoredCartItems();
+    const existing = currentItems.find((item) => item.id === storedLineItem.id);
+
+    if (!existing) {
+      writeStoredCartItems([...currentItems, storedLineItem]);
+      return;
+    }
+
+    writeStoredCartItems(
+      currentItems.map((item) =>
+        item.id === storedLineItem.id
+          ? {
+              ...item,
+              quantity: Math.min(
+                item.quantity + storedLineItem.quantity,
+                MAX_CART_QUANTITY,
+              ),
+            }
+          : item,
+      ),
+    );
   }, []);
 
   const updateQuantity = useCallback((id: string, quantity: number) => {
-    setItems((current) =>
-      current
-        .map((item) => ({
-          ...item,
-          quantity: item.id === id ? Math.max(quantity, 0) : item.quantity,
-        }))
+    const nextQuantity = Math.max(Math.floor(quantity), 0);
+    const currentItems = readStoredCartItems();
+
+    writeStoredCartItems(
+      currentItems
+        .map((item) =>
+          item.id === id
+            ? {
+                ...item,
+                quantity: Math.min(nextQuantity, MAX_CART_QUANTITY),
+              }
+            : item,
+        )
         .filter((item) => item.quantity > 0),
     );
   }, []);
 
   const removeItem = useCallback((id: string) => {
-    setItems((current) => current.filter((item) => item.id !== id));
+    writeStoredCartItems(
+      readStoredCartItems().filter((item) => item.id !== id),
+    );
   }, []);
 
-  const clearCart = useCallback(() => setItems([]), []);
+  const clearCart = useCallback(() => {
+    writeStoredCartItems([]);
+  }, []);
 
   return {
     addItem,
@@ -60,6 +107,7 @@ export function useCart() {
     removeItem,
     subtotalCents,
     totals: calculateOrderTotals(subtotalCents),
+    uniqueItemCount: items.length,
     updateQuantity,
   };
 }
