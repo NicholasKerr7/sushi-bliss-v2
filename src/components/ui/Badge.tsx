@@ -1,5 +1,7 @@
 import type { HTMLAttributes, ReactNode } from "react";
 
+import { classNames } from "@/lib/classNames";
+
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   children: ReactNode;
   tone?: "neutral" | "premium" | "success";
@@ -19,13 +21,11 @@ export function Badge({
 }: BadgeProps) {
   return (
     <span
-      className={[
+      className={classNames(
         "inline-flex items-center rounded-control border px-3 py-1 text-xs font-semibold",
         toneClasses[tone],
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      )}
       {...props}
     >
       {children}

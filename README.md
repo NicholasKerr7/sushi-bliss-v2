@@ -12,6 +12,15 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - App shell placeholder is implemented with mobile and desktop navigation.
 - Shared types, utilities, hooks, and seed data modules are in place.
 
+## Sprint 1 Status
+
+- Mobile header and bottom navigation are established.
+- Tablet navigation uses a dedicated side rail.
+- Desktop navigation is separated into reusable header/nav components.
+- Reusable UI primitives are available for buttons, cards, badges, status
+  badges, inputs, selects, modals, drawers, states, section headers, responsive
+  grids, and quantity controls.
+
 ## Scripts
 
 ```bash
