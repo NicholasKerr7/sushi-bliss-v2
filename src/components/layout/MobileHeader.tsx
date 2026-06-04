@@ -27,7 +27,7 @@ export function MobileHeader() {
         </a>
         <a
           className="rounded-control border border-sb-gold/50 px-3 py-1.5 text-xs font-semibold text-sb-gold-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-          href="#menu-preview"
+          href="#menu"
         >
           Order
         </a>

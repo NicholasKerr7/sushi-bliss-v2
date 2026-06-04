@@ -3,11 +3,20 @@
 import { useMemo, useState } from "react";
 
 import { menuCategories, menuItems } from "@/data/menu";
+import type { MenuCategory } from "@/types/menu";
+
+const allCategory: MenuCategory = {
+  id: "all",
+  itemCount: menuItems.length,
+  label: "All",
+};
 
 /** Filters normalized menu data by category and full search text. */
 export function useMenu() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
+
+  const categories = useMemo(() => [allCategory, ...menuCategories], []);
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -22,13 +31,29 @@ export function useMenu() {
     });
   }, [category, query]);
 
+  const selectedCategory = useMemo(
+    () =>
+      categories.find((categoryItem) => categoryItem.id === category) ||
+      allCategory,
+    [categories, category],
+  );
+
+  const clearFilters = () => {
+    setCategory("all");
+    setQuery("");
+  };
+
   return {
-    categories: menuCategories,
+    categories,
     category,
+    clearFilters,
     filteredItems,
+    hasActiveFilters: category !== "all" || query.trim().length > 0,
     itemCount: filteredItems.length,
     query,
+    selectedCategory,
     setCategory,
     setQuery,
+    totalItemCount: menuItems.length,
   };
 }

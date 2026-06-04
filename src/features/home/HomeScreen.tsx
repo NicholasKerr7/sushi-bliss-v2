@@ -1,17 +1,16 @@
 import Image from "next/image";
 
 import { PageContainer } from "@/components/layout/PageContainer";
-import { ResponsiveGrid } from "@/components/responsive/ResponsiveGrid";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { StatusBadge } from "@/components/ui/StatusBadge";
 import { featuredAssets } from "@/data/assets";
-import { featuredMenuItems, menuCategories } from "@/data/menu";
 import { offers } from "@/data/offers";
+import { FavoritesPreview } from "@/features/menu/FavoritesPreview";
+import { MenuExplorer } from "@/features/menu/MenuExplorer";
+import { PopularItems } from "@/features/menu/PopularItems";
 import { getBrandContent } from "@/lib/data";
-import { formatMoney } from "@/lib/money";
 
 export function HomeScreen() {
   const brand = getBrandContent();
@@ -33,83 +32,45 @@ export function HomeScreen() {
         <div className="absolute inset-0 bg-sb-ink/60" />
         <PageContainer className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-end pb-10 pt-20 md:min-h-[calc(100dvh-5rem)] md:pb-16">
           <div className="max-w-2xl">
-            <Badge tone="premium">Clean rebuild foundation</Badge>
+            <Badge tone="premium">Tokyo sushi house</Badge>
             <h1 className="mt-5 text-4xl font-semibold leading-tight text-sb-rice sm:text-5xl md:text-6xl">
               {brand.name}
             </h1>
             <p className="mt-4 max-w-xl text-base leading-7 text-sb-muted sm:text-lg">
-              {brand.tagline} rebuilt as a mobile-first Next.js app for menu
-              browsing, reservations, loyalty, gifts, and premium dining flows.
+              {brand.tagline} with chef-led nigiri, seasonal sashimi, quiet
+              omakase service, and polished pickup dining.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Button href="#menu-preview">View menu preview</Button>
+              <Button href="#menu">Explore menu</Button>
               <Button href="#experience-preview" variant="secondary">
-                Explore experiences
-              </Button>
-              <Button disabled variant="ghost">
-                Checkout coming soon
+                Reserve table
               </Button>
             </div>
           </div>
         </PageContainer>
       </section>
 
+      <PopularItems />
+      <MenuExplorer />
+      <FavoritesPreview />
+
       <section
-        id="menu-preview"
-        className="border-b border-sb-line bg-sb-charcoal py-12 md:py-16"
+        id="orders-preview"
+        className="border-b border-sb-line bg-sb-ink py-12 md:py-16"
       >
         <PageContainer>
-          <SectionHeader
-            eyebrow={<Badge>Menu data connected</Badge>}
-            subtitle={
-              <>
-                Menu items are normalized from the copied
-                <span className="font-mono text-sb-gold-soft">
-                  {" "}
-                  data.json
-                </span>{" "}
-                source and resolve images through public asset URLs.
-              </>
-            }
-            title="Featured signatures"
-          />
-
-          <div className="mt-6 flex gap-2 overflow-x-auto pb-2">
-            {menuCategories.slice(0, 8).map((category) => (
-              <Badge key={category.id} tone="neutral">
-                {category.label} · {category.itemCount}
-              </Badge>
-            ))}
-          </div>
-
-          <ResponsiveGrid className="mt-6">
-            {featuredMenuItems.map((item) => (
-              <Card key={item.id} className="overflow-hidden">
-                <div className="relative aspect-[4/3]">
-                  <Image
-                    src={item.image.publicUrl}
-                    alt={item.image.alt || item.name}
-                    fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="space-y-3 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-base font-semibold text-sb-rice">
-                      {item.name}
-                    </h3>
-                    <span className="font-mono text-sm text-sb-gold-soft">
-                      {formatMoney(item.priceCents)}
-                    </span>
-                  </div>
-                  <p className="text-sm leading-6 text-sb-muted">
-                    {item.chefNote}
-                  </p>
-                </div>
-              </Card>
-            ))}
-          </ResponsiveGrid>
+          <Card className="grid gap-5 p-5 md:grid-cols-[1fr_1fr] md:p-8">
+            <div>
+              <Badge>Order status</Badge>
+              <h2 className="mt-4 text-2xl font-semibold text-sb-rice">
+                Active pickup and delivery updates will appear here.
+              </h2>
+            </div>
+            <p className="text-sm leading-6 text-sb-muted">
+              After checkout, guests can follow preparation, handoff, courier
+              assignment, and receipt details from a single order view.
+            </p>
+          </Card>
         </PageContainer>
       </section>
 
@@ -117,25 +78,29 @@ export function HomeScreen() {
         id="experience-preview"
         className="border-b border-sb-line bg-sb-ink py-12 md:py-16"
       >
-        <PageContainer className="grid gap-4 md:grid-cols-2">
-          {offers.map((offer) => (
-            <Card key={offer.id} className="p-5">
-              <Badge tone={offer.accent === "premium" ? "premium" : "neutral"}>
-                Sprint preview
-              </Badge>
-              <h2 className="mt-4 text-xl font-semibold text-sb-rice">
-                {offer.title}
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-sb-muted">
-                {offer.description}
-              </p>
-              <div className="mt-5">
-                <Button disabled variant="ghost">
-                  Flow coming soon
-                </Button>
-              </div>
-            </Card>
-          ))}
+        <PageContainer>
+          <SectionHeader
+            eyebrow={<Badge tone="premium">Experiences</Badge>}
+            subtitle="Private tasting menus, seasonal offers, and celebratory dining packages."
+            title="Omakase and offers"
+          />
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {offers.map((offer) => (
+              <Card key={offer.id} className="p-5">
+                <Badge
+                  tone={offer.accent === "premium" ? "premium" : "neutral"}
+                >
+                  {offer.accent === "premium" ? "Premium" : "Dining"}
+                </Badge>
+                <h2 className="mt-4 text-xl font-semibold text-sb-rice">
+                  {offer.title}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-sb-muted">
+                  {offer.description}
+                </p>
+              </Card>
+            ))}
+          </div>
         </PageContainer>
       </section>
 
@@ -146,16 +111,14 @@ export function HomeScreen() {
         <PageContainer>
           <Card className="grid gap-5 p-5 md:grid-cols-[1.2fr_0.8fr] md:p-8">
             <div>
-              <Badge tone="success">Ready for stateful flows</Badge>
+              <Badge tone="success">Member dining</Badge>
               <h2 className="mt-4 text-2xl font-semibold text-sb-rice">
-                Profile, checkout, loyalty, and reservations will share typed
-                state.
+                Loyalty rewards, refined preferences, and saved dining details.
               </h2>
             </div>
             <p className="text-sm leading-6 text-sb-muted">
-              Sprint 0 creates the hooks and data contracts without wiring fake
-              actions into the UI. Later sprints can turn each preview into a
-              complete working flow.
+              Returning guests can keep preferred dining details close for
+              smoother checkout, reservations, and rewards.
             </p>
           </Card>
         </PageContainer>
@@ -163,26 +126,18 @@ export function HomeScreen() {
 
       <section id="support-preview" className="bg-sb-ink py-12 md:py-16">
         <PageContainer>
-          <div
-            id="sprint-roadmap"
-            className="grid gap-4 rounded-card border border-sb-line bg-sb-panel/70 p-5 md:grid-cols-3 md:p-8"
-          >
-            {[
-              "Sprint 1: reusable UI shell",
-              "Sprint 2: deeper data and asset layer",
-              "Sprint 3: menu browsing and search",
-            ].map((item, index) => (
-              <div
-                key={item}
-                className="space-y-3 text-sm font-medium text-sb-muted"
-              >
-                <StatusBadge tone={index === 0 ? "success" : "neutral"}>
-                  {index === 0 ? "Active" : "Next"}
-                </StatusBadge>
-                {item}
-              </div>
-            ))}
-          </div>
+          <Card className="grid gap-5 p-5 md:grid-cols-[0.9fr_1.1fr] md:p-8">
+            <div>
+              <Badge>Concierge</Badge>
+              <h2 className="mt-4 text-2xl font-semibold text-sb-rice">
+                Quiet support for pickup, tasting menus, and private events.
+              </h2>
+            </div>
+            <p className="text-sm leading-6 text-sb-muted">
+              The concierge desk can help with allergies, special occasions,
+              accessibility needs, and changes to the evening seating plan.
+            </p>
+          </Card>
         </PageContainer>
       </section>
     </div>

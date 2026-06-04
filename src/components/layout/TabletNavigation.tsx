@@ -50,7 +50,7 @@ export function TabletNavigation() {
       </nav>
       <a
         className="mx-2 mb-4 rounded-card border border-sb-gold/40 px-2 py-3 text-center text-[0.68rem] font-semibold text-sb-gold-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-        href="#menu-preview"
+        href="#menu"
       >
         Order
       </a>

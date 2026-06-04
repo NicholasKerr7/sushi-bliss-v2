@@ -16,4 +16,13 @@ export const menuTags = getMenuTags();
 
 export const featuredMenuItems = getFeaturedMenuItems();
 
+export const popularMenuItems = menuItems
+  .filter(
+    (item) =>
+      item.tags.includes("premium") ||
+      item.tags.includes("chef-special") ||
+      item.category === "nigiri",
+  )
+  .slice(0, 6);
+
 export { getMenuItemById };

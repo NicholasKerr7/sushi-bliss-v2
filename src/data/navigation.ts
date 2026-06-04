@@ -10,7 +10,7 @@ export const primaryNavigation: NavigationItem[] = [
   {
     id: "menu",
     label: "Menu",
-    href: "#menu-preview",
+    href: "#menu",
     iconUrl: "/assets/icons/sushi-menu-icon.png",
   },
   {
@@ -22,7 +22,7 @@ export const primaryNavigation: NavigationItem[] = [
   {
     id: "orders",
     label: "Orders",
-    href: "#sprint-roadmap",
+    href: "#orders-preview",
     iconUrl: "/assets/icons/takeaway-bag-icon.png",
   },
   {

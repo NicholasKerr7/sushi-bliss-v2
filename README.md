@@ -30,6 +30,15 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Hooks, utilities, and data transformations include concise docstrings where
   the behavior is stateful or non-obvious.
 
+## Sprint 3 Status
+
+- Home now uses customer-facing restaurant sections instead of sprint preview
+  copy.
+- The menu explorer supports search, category filtering, result counts, reset
+  controls, empty state handling, and responsive item grids.
+- Popular menu cards and saved favorites are powered by normalized menu data.
+- Favorites persist locally through `useFavorites`.
+
 ## Scripts
 
 ```bash
