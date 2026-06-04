@@ -49,6 +49,16 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
   cart, and calculated subtotal/tax/service/total summaries.
 - Cart state is stored through `useCart` without backend credentials.
 
+## Sprint 5 Status
+
+- Cart checkout now supports pickup or delivery, fulfillment time selection,
+  delivery address add/edit, saved payment selection, promo validation, and
+  receipt review.
+- Placing an order creates a confirmed mock order, clears the cart, and shows an
+  order confirmation with a confirmation code.
+- Confirmed mock orders are persisted locally for the upcoming orders and
+  tracking sprint.
+
 ## Scripts
 
 ```bash

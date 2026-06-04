@@ -1,15 +1,30 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useSyncExternalStore } from "react";
 
+import {
+  addStoredOrder,
+  getOrdersSnapshot,
+  parseStoredOrders,
+  subscribeToOrders,
+} from "@/lib/orderStorage";
 import type { Order } from "@/types/order";
 
 /** Stores active and past mock orders for the local ordering flow. */
 export function useOrders(initialOrders: Order[] = []) {
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const ordersSnapshot = useSyncExternalStore(
+    subscribeToOrders,
+    getOrdersSnapshot,
+    () => JSON.stringify(initialOrders),
+  );
+  const persistedOrders = useMemo(
+    () => parseStoredOrders(ordersSnapshot),
+    [ordersSnapshot],
+  );
+  const orders = persistedOrders.length > 0 ? persistedOrders : initialOrders;
 
   const addOrder = useCallback((order: Order) => {
-    setOrders((current) => [order, ...current]);
+    addStoredOrder(order);
   }, []);
 
   return {

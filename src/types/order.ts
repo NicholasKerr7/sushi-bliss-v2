@@ -1,5 +1,6 @@
 import type { FulfillmentMode, ID } from "@/types/common";
 import type { MenuItem } from "@/types/menu";
+import type { Address, PaymentMethod } from "@/types/user";
 
 export type OrderStatus =
   | "draft"
@@ -82,4 +83,16 @@ export interface Order {
   items: CartLineItem[];
   totals: OrderTotals;
   createdAt: string;
+  confirmationCode: string;
+  customer: OrderCustomer;
+  deliveryAddress?: Address;
+  fulfillmentAt: string;
+  paymentMethod: PaymentMethod;
+  promoCode?: string;
+}
+
+export interface OrderCustomer {
+  email: string;
+  name: string;
+  phone: string;
 }
