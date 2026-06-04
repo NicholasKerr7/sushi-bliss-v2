@@ -10,6 +10,7 @@ import { offers } from "@/data/offers";
 import { FavoritesPreview } from "@/features/menu/FavoritesPreview";
 import { MenuExplorer } from "@/features/menu/MenuExplorer";
 import { PopularItems } from "@/features/menu/PopularItems";
+import { OrdersDashboard } from "@/features/orders/OrdersDashboard";
 import { getBrandContent } from "@/lib/data";
 
 export function HomeScreen() {
@@ -53,26 +54,7 @@ export function HomeScreen() {
       <PopularItems />
       <MenuExplorer />
       <FavoritesPreview />
-
-      <section
-        id="orders-preview"
-        className="border-b border-sb-line bg-sb-ink py-12 md:py-16"
-      >
-        <PageContainer>
-          <Card className="grid gap-5 p-5 md:grid-cols-[1fr_1fr] md:p-8">
-            <div>
-              <Badge>Order status</Badge>
-              <h2 className="mt-4 text-2xl font-semibold text-sb-rice">
-                Active pickup and delivery updates will appear here.
-              </h2>
-            </div>
-            <p className="text-sm leading-6 text-sb-muted">
-              After checkout, guests can follow preparation, handoff, courier
-              assignment, and receipt details from a single order view.
-            </p>
-          </Card>
-        </PageContainer>
-      </section>
+      <OrdersDashboard />
 
       <section
         id="experience-preview"

@@ -28,9 +28,13 @@ export function useOrders(initialOrders: Order[] = []) {
   }, []);
 
   return {
-    activeOrders: orders.filter((order) => order.status !== "completed"),
+    activeOrders: orders.filter(
+      (order) => order.status !== "completed" && order.status !== "cancelled",
+    ),
     addOrder,
     orders,
-    pastOrders: orders.filter((order) => order.status === "completed"),
+    pastOrders: orders.filter(
+      (order) => order.status === "completed" || order.status === "cancelled",
+    ),
   };
 }

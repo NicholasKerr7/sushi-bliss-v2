@@ -89,10 +89,27 @@ export interface Order {
   fulfillmentAt: string;
   paymentMethod: PaymentMethod;
   promoCode?: string;
+  courier?: OrderCourier;
 }
 
 export interface OrderCustomer {
   email: string;
   name: string;
   phone: string;
+}
+
+export interface OrderCourier {
+  id: ID;
+  name: string;
+  phone: string;
+  etaMinutes: number;
+  vehicle: string;
+}
+
+export interface OrderTimelineStep {
+  id: ID;
+  label: string;
+  description: string;
+  completed: boolean;
+  timestamp?: string;
 }

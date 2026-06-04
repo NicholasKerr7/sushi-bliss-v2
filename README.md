@@ -59,6 +59,15 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Confirmed mock orders are persisted locally for the upcoming orders and
   tracking sprint.
 
+## Sprint 6 Status
+
+- The orders dashboard shows active and past orders from persisted checkout
+  data, with mock fallback orders for first-run review.
+- Order details include receipt lines, totals, status timeline, courier card,
+  and delivery tracking map preview.
+- Reorder adds prior order line items back into the cart with their saved
+  customizations and add-ons.
+
 ## Scripts
 
 ```bash
