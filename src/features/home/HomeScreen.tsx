@@ -7,10 +7,12 @@ import { Card } from "@/components/ui/Card";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { featuredAssets } from "@/data/assets";
 import { offers } from "@/data/offers";
+import { LocationsDirectory } from "@/features/locations/LocationsDirectory";
 import { FavoritesPreview } from "@/features/menu/FavoritesPreview";
 import { MenuExplorer } from "@/features/menu/MenuExplorer";
 import { PopularItems } from "@/features/menu/PopularItems";
 import { OrdersDashboard } from "@/features/orders/OrdersDashboard";
+import { ReservationsDashboard } from "@/features/reservations/ReservationsDashboard";
 import { getBrandContent } from "@/lib/data";
 
 export function HomeScreen() {
@@ -43,7 +45,7 @@ export function HomeScreen() {
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Button href="#menu">Explore menu</Button>
-              <Button href="#experience-preview" variant="secondary">
+              <Button href="#reservations" variant="secondary">
                 Reserve table
               </Button>
             </div>
@@ -55,6 +57,8 @@ export function HomeScreen() {
       <MenuExplorer />
       <FavoritesPreview />
       <OrdersDashboard />
+      <ReservationsDashboard />
+      <LocationsDirectory />
 
       <section
         id="experience-preview"

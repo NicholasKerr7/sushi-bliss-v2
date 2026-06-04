@@ -68,6 +68,15 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Reorder adds prior order line items back into the cart with their saved
   customizations and add-ons.
 
+## Sprint 7 Status
+
+- Reservations now support experience, date/time, party size, seating,
+  occasion, location, guest details, notes, review, and confirmation.
+- Reservation history supports modify and cancel actions with persistent local
+  storage and future-date validation.
+- Locations now include a directory and detail drawer with maps, hours,
+  features, and direct reservation entry.
+
 ## Scripts
 
 ```bash
