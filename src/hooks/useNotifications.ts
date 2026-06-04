@@ -5,6 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { mockNotifications } from "@/data/mockUser";
 import type { AppNotification } from "@/types/notification";
 
+/** Manages notification read state for local mock notifications. */
 export function useNotifications(
   initialNotifications: AppNotification[] = mockNotifications,
 ) {

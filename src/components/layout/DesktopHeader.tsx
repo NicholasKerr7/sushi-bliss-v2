@@ -14,8 +14,8 @@ export function DesktopHeader() {
           href="#home"
         >
           <Image
-            src={brand.logo.publicUrl}
-            alt={brand.logo.alt || brand.name}
+            src={brand.assets.logo.publicUrl}
+            alt={brand.assets.logo.alt || brand.name}
             width={152}
             height={44}
             priority

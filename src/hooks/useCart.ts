@@ -5,6 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { calculateOrderTotals } from "@/lib/money";
 import type { CartLineItem } from "@/types/order";
 
+/** Manages local cart line items and derived totals until backend persistence exists. */
 export function useCart() {
   const [items, setItems] = useState<CartLineItem[]>([]);
 

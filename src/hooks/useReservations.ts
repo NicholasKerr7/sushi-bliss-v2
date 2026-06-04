@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 
 import type { Reservation } from "@/types/reservation";
 
+/** Stores and updates mock reservation records with cancellation support. */
 export function useReservations(initialReservations: Reservation[] = []) {
   const [reservations, setReservations] =
     useState<Reservation[]>(initialReservations);

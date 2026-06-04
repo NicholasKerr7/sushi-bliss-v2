@@ -2,19 +2,7 @@ import rawAssetManifest from "../../public/assets/data/asset-manifest.json";
 
 import { ASSET_FALLBACKS } from "@/lib/constants";
 import type { ImageReference } from "@/types/common";
-
-export interface AssetManifestEntry {
-  id: string;
-  fileName: string;
-  filePath: string;
-  publicUrl: string;
-  folder: string;
-  extension: string;
-  mimeType: string;
-  sizeBytes: number;
-  width?: number;
-  height?: number;
-}
+import type { AssetManifestEntry } from "@/types/asset";
 
 const manifest = rawAssetManifest as unknown;
 
@@ -24,27 +12,64 @@ const assetEntries = (
     : Object.values(manifest as Record<string, AssetManifestEntry>)
 ).filter((entry): entry is AssetManifestEntry => Boolean(entry.publicUrl));
 
+const assetById = new Map(assetEntries.map((entry) => [entry.id, entry]));
+const assetByPublicUrl = new Map(
+  assetEntries.map((entry) => [entry.publicUrl, entry]),
+);
+
+/** Returns the normalized asset manifest as a stable, read-only list. */
 export function getAssetManifest(): AssetManifestEntry[] {
   return assetEntries;
 }
 
+/** Finds a manifest entry by its generated asset id. */
 export function getAssetById(id: string): AssetManifestEntry | undefined {
-  return assetEntries.find((entry) => entry.id === id);
+  return assetById.get(id);
 }
 
+/** Finds a manifest entry by the public URL used by Next image components. */
+export function getAssetByPublicUrl(
+  publicUrl: string,
+): AssetManifestEntry | undefined {
+  return assetByPublicUrl.get(publicUrl);
+}
+
+/** Returns every manifest entry within a logical folder such as `menu/sushi`. */
+export function getAssetsByFolder(folder: string): AssetManifestEntry[] {
+  return assetEntries.filter((entry) => entry.folder === folder);
+}
+
+/** Resolves an asset id to a public URL, with a safe fallback for missing data. */
 export function getAssetUrl(
   id: string,
-  fallback = ASSET_FALLBACKS.menuItem,
+  fallback: string = ASSET_FALLBACKS.menuItem,
 ): string {
   return getAssetById(id)?.publicUrl ?? fallback;
 }
 
+/** Converts a raw asset URL into the shared image contract with dimensions. */
 export function toImageReference(
   publicUrl: string | undefined,
   alt: string,
+  fallback: string = ASSET_FALLBACKS.menuItem,
 ): ImageReference {
+  const resolvedPublicUrl = publicUrl || fallback;
+  const manifestEntry = getAssetByPublicUrl(resolvedPublicUrl);
+
   return {
-    publicUrl: publicUrl || ASSET_FALLBACKS.menuItem,
     alt,
+    filePath: manifestEntry?.filePath,
+    height: manifestEntry?.height,
+    publicUrl: resolvedPublicUrl,
+    width: manifestEntry?.width,
   };
+}
+
+/** Creates an image reference from a manifest id, falling back when unavailable. */
+export function imageReferenceFromAssetId(
+  id: string,
+  alt: string,
+  fallback: string = ASSET_FALLBACKS.menuItem,
+): ImageReference {
+  return toImageReference(getAssetById(id)?.publicUrl, alt, fallback);
 }

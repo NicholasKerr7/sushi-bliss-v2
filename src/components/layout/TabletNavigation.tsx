@@ -18,7 +18,7 @@ export function TabletNavigation() {
           className="h-9 w-9"
           height={36}
           priority
-          src={brand.icon.publicUrl}
+          src={brand.assets.icon.publicUrl}
           width={36}
         />
       </a>

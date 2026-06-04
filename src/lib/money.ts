@@ -5,10 +5,12 @@ import {
 } from "@/lib/constants";
 import type { OrderTotals } from "@/types/order";
 
+/** Converts dollar values from JSON/content into integer cents for calculations. */
 export function dollarsToCents(amount: number): number {
   return Math.round(amount * 100);
 }
 
+/** Formats integer cents as localized currency display text. */
 export function formatMoney(
   cents: number,
   currency = DEFAULT_CURRENCY,
@@ -19,6 +21,7 @@ export function formatMoney(
   }).format(cents / 100);
 }
 
+/** Calculates the mock order total model used by cart and checkout previews. */
 export function calculateOrderTotals(
   subtotalCents: number,
   discountCents = 0,

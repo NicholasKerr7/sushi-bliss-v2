@@ -1,3 +1,4 @@
+/** Converts display text into a stable lowercase id segment. */
 export function slugify(value: string): string {
   return value
     .toLowerCase()
@@ -6,6 +7,7 @@ export function slugify(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+/** Converts slug or sentence fragments into human-readable title case. */
 export function titleCase(value: string): string {
   return value
     .split(/[\s-]+/)
@@ -14,6 +16,7 @@ export function titleCase(value: string): string {
     .join(" ");
 }
 
+/** Chooses singular or plural copy based on a count. */
 export function pluralize(
   count: number,
   singular: string,

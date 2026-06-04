@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { featuredAssets } from "@/data/assets";
 import { featuredMenuItems, menuCategories } from "@/data/menu";
 import { offers } from "@/data/offers";
 import { getBrandContent } from "@/lib/data";
@@ -19,8 +20,11 @@ export function HomeScreen() {
     <div id="home" className="overflow-hidden">
       <section className="relative min-h-[calc(100dvh-4rem)] border-b border-sb-line md:min-h-[calc(100dvh-5rem)]">
         <Image
-          src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
-          alt="Otoro nigiri presented on a dark luxury surface"
+          src={featuredAssets.heroSushi.publicUrl}
+          alt={
+            featuredAssets.heroSushi.alt ||
+            "Otoro nigiri presented on a dark luxury surface"
+          }
           fill
           sizes="100vw"
           priority

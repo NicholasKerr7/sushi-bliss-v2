@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { mockLoyaltyAccount } from "@/data/mockUser";
 import type { LoyaltyAccount } from "@/types/loyalty";
 
+/** Encapsulates loyalty point awarding and redemption guardrails. */
 export function useLoyalty(
   initialAccount: LoyaltyAccount = mockLoyaltyAccount,
 ) {

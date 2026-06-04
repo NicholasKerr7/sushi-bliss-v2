@@ -21,6 +21,15 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
   badges, inputs, selects, modals, drawers, states, section headers, responsive
   grids, and quantity controls.
 
+## Sprint 2 Status
+
+- Legacy `data.json` is isolated behind typed normalizers in `src/lib/data.ts`.
+- Asset manifest helpers provide id, URL, folder, and image fallback lookups.
+- Menu, brand, chef, omakase, screenshot, and featured editorial data are
+  exposed through small `src/data/*` modules.
+- Hooks, utilities, and data transformations include concise docstrings where
+  the behavior is stateful or non-obvious.
+
 ## Scripts
 
 ```bash

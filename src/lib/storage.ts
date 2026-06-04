@@ -1,3 +1,4 @@
+/** Safely reads browser localStorage while preserving server-render compatibility. */
 export function readStorageValue(key: string): string | null {
   if (typeof window === "undefined") {
     return null;
@@ -10,6 +11,7 @@ export function readStorageValue(key: string): string | null {
   }
 }
 
+/** Safely writes browser localStorage and reports whether persistence succeeded. */
 export function writeStorageValue(key: string, value: string): boolean {
   if (typeof window === "undefined") {
     return false;
@@ -23,6 +25,7 @@ export function writeStorageValue(key: string, value: string): boolean {
   }
 }
 
+/** Safely removes a browser localStorage key and reports whether it succeeded. */
 export function removeStorageValue(key: string): boolean {
   if (typeof window === "undefined") {
     return false;

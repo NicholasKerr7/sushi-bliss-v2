@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { menuCategories, menuItems } from "@/data/menu";
 
+/** Filters normalized menu data by category and full search text. */
 export function useMenu() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
@@ -15,11 +16,7 @@ export function useMenu() {
       const matchesCategory = category === "all" || item.category === category;
       const matchesQuery =
         normalizedQuery.length === 0 ||
-        item.name.toLowerCase().includes(normalizedQuery) ||
-        item.description.toLowerCase().includes(normalizedQuery) ||
-        item.ingredients.some((ingredient) =>
-          ingredient.toLowerCase().includes(normalizedQuery),
-        );
+        item.searchText.includes(normalizedQuery);
 
       return matchesCategory && matchesQuery;
     });

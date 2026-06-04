@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export type ResponsiveMode = "mobile" | "tablet" | "desktop";
 
+/** Maps viewport width to the app's layout mode breakpoints. */
 function getResponsiveMode(width: number): ResponsiveMode {
   if (width >= 1024) {
     return "desktop";
@@ -16,6 +17,7 @@ function getResponsiveMode(width: number): ResponsiveMode {
   return "mobile";
 }
 
+/** Tracks the current responsive layout mode on the client. */
 export function useResponsiveMode(): ResponsiveMode {
   const [mode, setMode] = useState<ResponsiveMode>("mobile");
 
