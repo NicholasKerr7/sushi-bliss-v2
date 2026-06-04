@@ -1,14 +1,8 @@
 import { checkoutPromos } from "@/data/checkout";
 import { formatDateTime } from "@/lib/dates";
-import { slugify } from "@/lib/format";
-import { isPostalCode, requireNonEmpty } from "@/lib/validation";
-import type {
-  CheckoutAddressDraft,
-  CheckoutOrderInput,
-} from "@/types/checkout";
+import type { CheckoutOrderInput } from "@/types/checkout";
 import type { FulfillmentMode } from "@/types/common";
 import type { CartLineItem, Order } from "@/types/order";
-import type { Address, PaymentMethod } from "@/types/user";
 
 const PICKUP_LEAD_MINUTES = 25;
 const DELIVERY_LEAD_MINUTES = 50;
@@ -64,61 +58,6 @@ export function calculatePromoDiscount(
   return Math.min(promo.value, subtotalCents);
 }
 
-/** Validates address fields before they are saved into the checkout flow. */
-export function validateCheckoutAddressDraft(
-  draft: CheckoutAddressDraft,
-): string | undefined {
-  const requiredFields: Array<[string, string]> = [
-    [draft.label, "Label"],
-    [draft.line1, "Street address"],
-    [draft.city, "City"],
-    [draft.region, "State"],
-    [draft.postalCode, "Postal code"],
-  ];
-
-  for (const [value, label] of requiredFields) {
-    const result = requireNonEmpty(value, label);
-
-    if (!result.valid) {
-      return result.message;
-    }
-  }
-
-  if (!isPostalCode(draft.postalCode)) {
-    return "Enter a valid US postal code.";
-  }
-
-  return undefined;
-}
-
-/** Creates a saved address record from checkout form values. */
-export function createAddressFromDraft(
-  draft: CheckoutAddressDraft,
-  existingId?: string,
-): Address {
-  const id =
-    existingId ||
-    slugify(`${draft.label}-${draft.line1}-${Date.now().toString(36)}`);
-
-  return {
-    city: draft.city.trim(),
-    id,
-    label: draft.label.trim(),
-    line1: draft.line1.trim(),
-    line2: draft.line2.trim() || undefined,
-    postalCode: draft.postalCode.trim(),
-    region: draft.region.trim(),
-  };
-}
-
-/** Determines whether a mock saved payment method can be used for checkout. */
-export function isPaymentMethodUsable(paymentMethod: PaymentMethod): boolean {
-  const now = new Date();
-  const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-
-  return paymentMethod.expiresAt >= currentMonth;
-}
-
 /** Generates a readable confirmation code for mock orders. */
 export function createConfirmationCode(date = new Date()): string {
   const datePart = date
@@ -155,27 +94,5 @@ export function createOrderFromCheckout(
     promoCode: input.promo?.code,
     status: "confirmed",
     totals: input.totals,
-  };
-}
-
-export function getDefaultAddressDraft(): CheckoutAddressDraft {
-  return {
-    city: "",
-    label: "",
-    line1: "",
-    line2: "",
-    postalCode: "",
-    region: "",
-  };
-}
-
-export function addressToDraft(address: Address): CheckoutAddressDraft {
-  return {
-    city: address.city,
-    label: address.label,
-    line1: address.line1,
-    line2: address.line2 || "",
-    postalCode: address.postalCode,
-    region: address.region,
   };
 }

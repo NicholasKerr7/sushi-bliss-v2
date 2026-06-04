@@ -1,7 +1,7 @@
 "use client";
 
 import { classNames } from "@/lib/classNames";
-import { isPaymentMethodUsable } from "@/lib/checkout";
+import { isPaymentMethodUsable } from "@/lib/profile";
 import type { PaymentMethod } from "@/types/user";
 
 interface CheckoutPaymentSectionProps {

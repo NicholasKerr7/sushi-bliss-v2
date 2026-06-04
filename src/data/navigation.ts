@@ -28,7 +28,7 @@ export const primaryNavigation: NavigationItem[] = [
   {
     id: "profile",
     label: "Profile",
-    href: "#profile-preview",
+    href: "#profile",
     iconUrl: "/assets/icons/user-icon.png",
   },
 ];

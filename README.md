@@ -77,6 +77,16 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Locations now include a directory and detail drawer with maps, hours,
   features, and direct reservation entry.
 
+## Sprint 8 Status
+
+- Profile settings now support editable contact details, saved addresses,
+  payment methods, dietary preferences, notification preferences, privacy
+  settings, reset, and mock logout.
+- Profile state is persisted locally through `useProfile` and shared with
+  checkout address/payment selection.
+- Reservation defaults now use the active profile contact, and the profile
+  dashboard summarizes loyalty, active orders, and upcoming reservations.
+
 ## Scripts
 
 ```bash

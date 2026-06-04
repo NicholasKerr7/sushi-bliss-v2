@@ -1,15 +1,8 @@
 import type { FulfillmentMode, ID } from "@/types/common";
 import type { OrderTotals } from "@/types/order";
-import type { Address, PaymentMethod } from "@/types/user";
+import type { Address, AddressDraft, PaymentMethod } from "@/types/user";
 
-export interface CheckoutAddressDraft {
-  city: string;
-  label: string;
-  line1: string;
-  line2: string;
-  postalCode: string;
-  region: string;
-}
+export type CheckoutAddressDraft = AddressDraft;
 
 export interface CheckoutPromo {
   code: string;

@@ -11,6 +11,7 @@ import {
   getDefaultReservationDraft,
   getMockReservations,
 } from "@/data/reservations";
+import { useProfile } from "@/hooks/useProfile";
 import { useReservations } from "@/hooks/useReservations";
 import { classNames } from "@/lib/classNames";
 import {
@@ -32,6 +33,7 @@ import { ReservationConfirmation } from "./ReservationConfirmation";
 type ReservationView = "upcoming" | "past";
 
 export function ReservationsDashboard() {
+  const { profile } = useProfile();
   const mockReservations = useMemo(() => getMockReservations(), []);
   const currentTime = useMemo(() => new Date().getTime(), []);
   const {
@@ -41,8 +43,8 @@ export function ReservationsDashboard() {
     upcomingReservations,
   } = useReservations(mockReservations, currentTime);
   const [view, setView] = useState<ReservationView>("upcoming");
-  const [draft, setDraft] = useState<ReservationDraft>(
-    getDefaultReservationDraft,
+  const [draft, setDraft] = useState<ReservationDraft>(() =>
+    getDefaultReservationDraft(profile),
   );
   const [validation, setValidation] = useState<ReservationValidationState>({});
   const [editingReservation, setEditingReservation] =
@@ -69,7 +71,7 @@ export function ReservationsDashboard() {
   };
 
   const resetForm = () => {
-    setDraft(getDefaultReservationDraft());
+    setDraft(getDefaultReservationDraft(profile));
     setEditingReservation(null);
     setValidation({});
   };

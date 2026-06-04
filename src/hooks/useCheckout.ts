@@ -2,46 +2,49 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { mockUser } from "@/data/mockUser";
+import { useProfile } from "@/hooks/useProfile";
 import {
-  addressToDraft,
   calculatePromoDiscount,
-  createAddressFromDraft,
   createOrderFromCheckout,
   findCheckoutPromo,
   getCheckoutTimeSlots,
-  getDefaultAddressDraft,
-  isPaymentMethodUsable,
-  validateCheckoutAddressDraft,
 } from "@/lib/checkout";
 import { calculateOrderTotals } from "@/lib/money";
+import {
+  addressToDraft,
+  createAddressFromDraft,
+  getDefaultAddressDraft,
+  isPaymentMethodUsable,
+  validateAddressDraft,
+} from "@/lib/profile";
 import type {
   CheckoutAddressDraft,
   CheckoutValidationState,
 } from "@/types/checkout";
 import type { FulfillmentMode } from "@/types/common";
 import type { CartLineItem, Order } from "@/types/order";
-import type { Address } from "@/types/user";
 
 type AddressDraftField = keyof CheckoutAddressDraft;
 
 /** Tracks checkout form selections shared by pickup and delivery flows. */
 export function useCheckout(subtotalCents = 0) {
-  const initialMode = mockUser.preferences.fulfillmentMode;
+  const { profile, saveAddress } = useProfile();
+  const initialMode = profile.preferences.fulfillmentMode;
   const [mode, setModeState] = useState<FulfillmentMode>(initialMode);
-  const [addresses, setAddresses] = useState<Address[]>(mockUser.addresses);
+  const defaultAddressId =
+    profile.addresses.find((address) => address.isDefault)?.id ||
+    profile.addresses[0]?.id ||
+    null;
+  const defaultPaymentMethodId =
+    profile.paymentMethods.find((payment) => payment.isDefault)?.id ||
+    profile.paymentMethods[0]?.id ||
+    null;
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
-    mockUser.addresses.find((address) => address.isDefault)?.id ||
-      mockUser.addresses[0]?.id ||
-      null,
+    defaultAddressId,
   );
   const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState<
     string | null
-  >(
-    mockUser.paymentMethods.find((payment) => payment.isDefault)?.id ||
-      mockUser.paymentMethods[0]?.id ||
-      null,
-  );
+  >(defaultPaymentMethodId);
   const [selectedTime, setSelectedTime] = useState(
     () => getCheckoutTimeSlots(initialMode)[0]?.value || "",
   );
@@ -56,11 +59,19 @@ export function useCheckout(subtotalCents = 0) {
 
   const timeSlots = useMemo(() => getCheckoutTimeSlots(mode), [mode]);
   const selectedAddress =
-    addresses.find((address) => address.id === selectedAddressId) || null;
+    profile.addresses.find((address) => address.id === selectedAddressId) ||
+    profile.addresses.find((address) => address.id === defaultAddressId) ||
+    null;
+  const effectiveSelectedAddressId = selectedAddress?.id || null;
   const selectedPaymentMethod =
-    mockUser.paymentMethods.find(
+    profile.paymentMethods.find(
       (payment) => payment.id === selectedPaymentMethodId,
-    ) || null;
+    ) ||
+    profile.paymentMethods.find(
+      (payment) => payment.id === defaultPaymentMethodId,
+    ) ||
+    null;
+  const effectiveSelectedPaymentMethodId = selectedPaymentMethod?.id || null;
   const appliedPromo = appliedPromoCode
     ? findCheckoutPromo(appliedPromoCode) || null
     : null;
@@ -118,7 +129,7 @@ export function useCheckout(subtotalCents = 0) {
   }, []);
 
   const saveAddressDraft = useCallback(() => {
-    const addressError = validateCheckoutAddressDraft(addressDraft);
+    const addressError = validateAddressDraft(addressDraft);
 
     if (addressError) {
       setValidation((current) => ({ ...current, address: addressError }));
@@ -130,15 +141,7 @@ export function useCheckout(subtotalCents = 0) {
       editingAddressId || undefined,
     );
 
-    setAddresses((current) => {
-      const exists = current.some((address) => address.id === savedAddress.id);
-
-      return exists
-        ? current.map((address) =>
-            address.id === savedAddress.id ? savedAddress : address,
-          )
-        : [...current, savedAddress];
-    });
+    saveAddress(savedAddress);
     setSelectedAddressId(savedAddress.id);
     setAddressDraft(getDefaultAddressDraft());
     setEditingAddressId(null);
@@ -146,7 +149,7 @@ export function useCheckout(subtotalCents = 0) {
     setValidation((current) => ({ ...current, address: undefined }));
 
     return true;
-  }, [addressDraft, editingAddressId]);
+  }, [addressDraft, editingAddressId, saveAddress]);
 
   const applyPromoCode = useCallback(() => {
     const promo = findCheckoutPromo(promoCode);
@@ -207,9 +210,9 @@ export function useCheckout(subtotalCents = 0) {
 
       return createOrderFromCheckout(items, {
         address: selectedAddress || undefined,
-        customerEmail: mockUser.email,
-        customerName: mockUser.name,
-        customerPhone: mockUser.phone,
+        customerEmail: profile.email,
+        customerName: profile.name,
+        customerPhone: profile.phone,
         fulfillmentAt: selectedTime,
         mode,
         paymentMethod: selectedPaymentMethod,
@@ -220,6 +223,9 @@ export function useCheckout(subtotalCents = 0) {
     [
       appliedPromo,
       mode,
+      profile.email,
+      profile.name,
+      profile.phone,
       reviewTotals,
       selectedAddress,
       selectedPaymentMethod,
@@ -231,7 +237,7 @@ export function useCheckout(subtotalCents = 0) {
   return {
     addressDraft,
     addressFormOpen,
-    addresses,
+    addresses: profile.addresses,
     appliedPromo,
     applyPromoCode,
     cancelAddressForm,
@@ -240,14 +246,14 @@ export function useCheckout(subtotalCents = 0) {
     discountCents,
     editingAddressId,
     mode,
-    paymentMethods: mockUser.paymentMethods,
+    paymentMethods: profile.paymentMethods,
     promoCode,
     reviewTotals,
     saveAddressDraft,
     selectedAddress,
-    selectedAddressId,
+    selectedAddressId: effectiveSelectedAddressId,
     selectedPaymentMethod,
-    selectedPaymentMethodId,
+    selectedPaymentMethodId: effectiveSelectedPaymentMethodId,
     selectedTime,
     setMode,
     setPromoCode,

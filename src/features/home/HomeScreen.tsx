@@ -12,6 +12,7 @@ import { FavoritesPreview } from "@/features/menu/FavoritesPreview";
 import { MenuExplorer } from "@/features/menu/MenuExplorer";
 import { PopularItems } from "@/features/menu/PopularItems";
 import { OrdersDashboard } from "@/features/orders/OrdersDashboard";
+import { ProfileDashboard } from "@/features/profile/ProfileDashboard";
 import { ReservationsDashboard } from "@/features/reservations/ReservationsDashboard";
 import { getBrandContent } from "@/lib/data";
 
@@ -59,6 +60,7 @@ export function HomeScreen() {
       <OrdersDashboard />
       <ReservationsDashboard />
       <LocationsDirectory />
+      <ProfileDashboard />
 
       <section
         id="experience-preview"
@@ -87,26 +89,6 @@ export function HomeScreen() {
               </Card>
             ))}
           </div>
-        </PageContainer>
-      </section>
-
-      <section
-        id="profile-preview"
-        className="border-b border-sb-line bg-sb-charcoal py-12 md:py-16"
-      >
-        <PageContainer>
-          <Card className="grid gap-5 p-5 md:grid-cols-[1.2fr_0.8fr] md:p-8">
-            <div>
-              <Badge tone="success">Member dining</Badge>
-              <h2 className="mt-4 text-2xl font-semibold text-sb-rice">
-                Loyalty rewards, refined preferences, and saved dining details.
-              </h2>
-            </div>
-            <p className="text-sm leading-6 text-sb-muted">
-              Returning guests can keep preferred dining details close for
-              smoother checkout, reservations, and rewards.
-            </p>
-          </Card>
         </PageContainer>
       </section>
 

@@ -5,6 +5,7 @@ import type {
   ReservationDraft,
   ReservationExperience,
 } from "@/types/reservation";
+import type { UserProfile } from "@/types/user";
 
 export const reservationExperiences: ReservationExperience[] = [
   {
@@ -53,12 +54,14 @@ export const reservationOccasions = [
   "No occasion",
 ];
 
-export function getDefaultReservationDraft(): ReservationDraft {
+export function getDefaultReservationDraft(
+  profile: Pick<UserProfile, "name" | "phone"> = mockUser,
+): ReservationDraft {
   return {
     date: "",
     experienceId: reservationExperiences[0]?.id || "",
-    guestName: mockUser.name,
-    guestPhone: mockUser.phone,
+    guestName: profile.name,
+    guestPhone: profile.phone,
     locationId: locations[0]?.id || "",
     notes: "",
     occasion: reservationOccasions[0],
