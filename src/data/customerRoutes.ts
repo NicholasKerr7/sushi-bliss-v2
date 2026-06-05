@@ -18,20 +18,7 @@ export const customerRoutes = [
 
 export type CustomerRouteId = (typeof customerRoutes)[number]["id"];
 
-const customerRouteLabels = Object.fromEntries(
-  customerRoutes.map((route) => [route.id, route.label]),
-) as Record<CustomerRouteId, string>;
-
 export const customerRouteIds = customerRoutes.map((route) => route.id);
-
-/** Narrows arbitrary route params to the supported customer screen set. */
-export function isCustomerRouteId(value: string): value is CustomerRouteId {
-  return value in customerRouteLabels;
-}
-
-export function getCustomerRouteLabel(routeId: CustomerRouteId) {
-  return customerRouteLabels[routeId];
-}
 
 export function getCustomerRoutePath(routeId: CustomerRouteId) {
   return `/${routeId}`;

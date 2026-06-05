@@ -33,7 +33,7 @@ export const rewards: Reward[] = [
     category: "dining",
     description: "Redeem for a chef-selected hand roll on any pickup order.",
     id: "hand-roll-reward",
-    imageUrl: "/assets/menu/rolls/spicy-tuna-roll.webp",
+    imageUrl: "/assets/menu/sushi/spicy-tuna-roll.webp",
     isAvailable: true,
     pointsCost: 450,
     terms: "Valid once per order. Cannot be combined with another reward.",
