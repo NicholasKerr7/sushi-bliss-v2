@@ -24,20 +24,20 @@ export const dashboardCategories = [
 ] as const;
 
 export const desktopNav = [
-  ["Home", "#home-dashboard"],
-  ["Menu", "#menu"],
-  ["Reservations", "#reservations"],
-  ["Order Online", "#menu"],
-  ["About Us", "#about"],
-  ["Contact", "#support"],
+  ["Home", "/home"],
+  ["Menu", "/menu"],
+  ["Reservations", "/reservations"],
+  ["Order Online", "/menu"],
+  ["About Us", "/about"],
+  ["Contact", "/support"],
 ] as const;
 
 export const mobileNav = [
-  { href: "#home-dashboard", icon: icons.home, label: "Home" },
-  { href: "#menu", icon: icons.menu, label: "Menu" },
-  { href: "#reservations", icon: icons.calendar, label: "Reservations" },
-  { href: "#orders", icon: icons.bag, label: "Orders" },
-  { href: "#profile", icon: icons.profile, label: "Profile" },
+  { href: "/home", icon: icons.home, label: "Home" },
+  { href: "/menu", icon: icons.menu, label: "Menu" },
+  { href: "/reservations", icon: icons.calendar, label: "Reservations" },
+  { href: "/orders", icon: icons.bag, label: "Orders" },
+  { href: "/profile", icon: icons.profile, label: "Profile" },
 ] as const;
 
 /** Chooses a stable menu item for screenshot-matched dashboard modules. */

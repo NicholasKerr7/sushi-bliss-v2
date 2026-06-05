@@ -92,7 +92,7 @@ export function OrdersDashboard() {
         ) : (
           <EmptyState
             action={
-              <Button href="#menu" variant="secondary">
+              <Button href="/menu" variant="secondary">
                 Browse menu
               </Button>
             }

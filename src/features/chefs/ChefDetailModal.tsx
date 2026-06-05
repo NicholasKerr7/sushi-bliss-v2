@@ -30,11 +30,11 @@ export function ChefDetailModal({ chef, onOpenChange }: ChefDetailModalProps) {
       footer={
         chef ? (
           <div className="grid gap-3 sm:grid-cols-2">
-            <Button href="#reservations" onClick={() => onOpenChange(false)}>
+            <Button href="/reservations" onClick={() => onOpenChange(false)}>
               Reserve counter
             </Button>
             <Button
-              href="#omakase"
+              href="/omakase"
               onClick={() => onOpenChange(false)}
               variant="ghost"
             >

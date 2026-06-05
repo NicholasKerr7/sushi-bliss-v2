@@ -11,13 +11,16 @@ import { Input } from "@/components/ui/Input";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useCart } from "@/hooks/useCart";
 import { useMenu } from "@/hooks/useMenu";
 import { pluralize } from "@/lib/format";
+import { getDefaultCustomizations } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
 import { ItemDetailDrawer } from "./ItemDetailDrawer";
 import { MenuCard } from "./MenuCard";
 import { MenuCategoryTabs } from "./MenuCategoryTabs";
+import { TabletMenuExplorer } from "./TabletMenuExplorer";
 
 export function MenuExplorer() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -36,18 +39,44 @@ export function MenuExplorer() {
     totalItemCount,
   } = useMenu();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { addItem, itemCount: cartItemCount } = useCart();
 
   const handleItemAdded = () => {
     setSelectedItem(null);
     setCartOpen(true);
   };
 
+  const handleAddToCart = (item: MenuItem) => {
+    addItem({
+      addOns: [],
+      customizations: getDefaultCustomizations(),
+      menuItem: item,
+      quantity: 1,
+    });
+    setCartOpen(true);
+  };
+
   return (
     <section
-      className="border-b border-sb-line bg-sb-charcoal py-12 md:py-16"
+      className="border-b border-sb-line bg-sb-charcoal py-12 md:py-0 xl:py-16"
       id="menu"
     >
-      <PageContainer>
+      <TabletMenuExplorer
+        category={category}
+        cartItemCount={cartItemCount}
+        categories={categories}
+        filteredItems={filteredItems}
+        isFavorite={isFavorite}
+        query={query}
+        onAddToCart={handleAddToCart}
+        onClearFilters={clearFilters}
+        onOpenCart={() => setCartOpen(true)}
+        onQueryChange={setQuery}
+        onSelectCategory={setCategory}
+        onToggleFavorite={toggleFavorite}
+        onViewDetails={setSelectedItem}
+      />
+      <PageContainer className="md:hidden xl:block">
         <SectionHeader
           actions={
             <>

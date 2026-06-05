@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { formatMoney } from "@/lib/money";
@@ -26,7 +27,7 @@ export function HomeMenuCard({
       <span className="absolute left-0 top-0 z-10 rounded-br-[12px] bg-[var(--sb-red)]/86 px-2 py-1 text-[10px] uppercase text-white">
         {badge}
       </span>
-      <a className="block w-full text-left" href="#menu">
+      <Link className="block w-full text-left" href="/menu">
         <div className="relative h-[86px] md:h-[52px]">
           <Image
             alt=""
@@ -48,7 +49,7 @@ export function HomeMenuCard({
             {formatMoney(item.priceCents)}
           </p>
         </div>
-      </a>
+      </Link>
       <button
         aria-label={`Add ${item.name} to cart`}
         className="absolute bottom-3 right-3 z-20 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/50 transition active:scale-95 md:bottom-2 md:right-2 md:h-7 md:w-7"

@@ -66,7 +66,7 @@ export function OffersDashboard() {
                   <Button onClick={() => setSelectedOffer(offer)} size="sm">
                     Details
                   </Button>
-                  <Button href="#menu" size="sm" variant="ghost">
+                  <Button href="/menu" size="sm" variant="ghost">
                     Order
                   </Button>
                 </div>

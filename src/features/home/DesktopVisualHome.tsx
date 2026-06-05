@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { formatMoney } from "@/lib/money";
@@ -17,9 +18,9 @@ import {
 export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
   return (
     <header className="hidden h-[88px] items-center border-b border-white/[0.06] px-[5.5vw] xl:flex">
-      <a
+      <Link
         className="flex min-w-[270px] items-center gap-4 text-left text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--sb-gold)]"
-        href="#home-dashboard"
+        href="/home"
       >
         <AssetIcon
           className="rounded-full"
@@ -31,13 +32,13 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
           <br />
           Bliss
         </span>
-      </a>
+      </Link>
       <nav
         aria-label="Desktop primary"
         className="flex flex-1 items-center justify-center gap-11"
       >
         {desktopNav.map(([label, href], index) => (
-          <a
+          <Link
             className={`relative py-8 text-[13px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] ${
               index === 0 ? "text-[var(--sb-red-bright)]" : ""
             }`}
@@ -48,14 +49,14 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
             {index === 0 ? (
               <span className="absolute inset-x-0 bottom-[18px] h-px bg-[var(--sb-red-bright)]" />
             ) : null}
-          </a>
+          </Link>
         ))}
       </nav>
       <div className="flex min-w-[330px] items-center justify-end gap-5">
-        <a
+        <Link
           aria-label="Open cart"
           className="relative grid h-12 w-12 place-items-center text-[var(--sb-gold)]"
-          href="#menu"
+          href="/menu"
         >
           <AssetIcon size={34} src={icons.cart} />
           {cartCount > 0 ? (
@@ -63,8 +64,8 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
               {cartCount}
             </span>
           ) : null}
-        </a>
-        <a className="flex items-center gap-3" href="#profile">
+        </Link>
+        <Link className="flex items-center gap-3" href="/profile">
           <Image
             alt=""
             className="h-14 w-14 rounded-full border border-[var(--sb-border)] object-cover"
@@ -83,7 +84,7 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
           <span className="text-[var(--sb-gold)]" aria-hidden="true">
             v
           </span>
-        </a>
+        </Link>
       </div>
     </header>
   );
@@ -129,22 +130,22 @@ export function DesktopDashboard({
                 perfection.
               </p>
               <div className="mt-6 flex gap-4">
-                <a
+                <Link
                   className="red-glow-button flex h-12 w-[205px] items-center justify-center rounded-[10px] text-xs font-semibold uppercase tracking-[0.16em] text-white"
-                  href="#reservations"
+                  href="/reservations"
                 >
                   Reserve a Table
                   <span className="ml-3" aria-hidden="true">
                     &gt;
                   </span>
-                </a>
-                <a
+                </Link>
+                <Link
                   className="flex h-12 w-[175px] items-center justify-center rounded-[10px] border border-[var(--sb-border)] bg-black/42 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold)]"
-                  href="#menu"
+                  href="/menu"
                 >
                   Order Now
                   <AssetIcon className="ml-3" size={20} src={icons.bag} />
-                </a>
+                </Link>
               </div>
               <div className="mt-5 flex gap-2">
                 {[0, 1, 2, 3].map((index) => (
@@ -168,14 +169,14 @@ export function DesktopDashboard({
                 <AssetIcon size={24} src={icons.flower} />
                 Featured Menu
               </h2>
-              <a
+              <Link
                 aria-label="Explore menu"
                 className="flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-[var(--sb-gold)]"
-                href="#menu"
+                href="/menu"
               >
                 View Full Menu
                 <span aria-hidden="true">&gt;</span>
-              </a>
+              </Link>
             </div>
             <div className="mt-3 grid grid-cols-4 gap-3">
               {items.map((item, index) => (
@@ -243,13 +244,13 @@ function DesktopInfoCard() {
           </p>
         </div>
       </div>
-      <a
+      <Link
         className="mt-5 flex h-10 w-full items-center justify-center gap-2 rounded-full border border-[var(--sb-border)] text-sm uppercase tracking-[0.14em] text-[var(--sb-gold)]"
-        href="#locations"
+        href="/locations"
       >
         View Details
         <span aria-hidden="true">&gt;</span>
-      </a>
+      </Link>
     </aside>
   );
 }
@@ -279,28 +280,28 @@ function DesktopReservationCard({ className = "" }: { className?: string }) {
             {location.street}, {location.city}
           </p>
         </div>
-        <a
+        <Link
           className="flex items-center justify-center border-l border-[var(--sb-border)] px-4 text-sm text-[var(--sb-gold)]"
-          href="#reservations"
+          href="/reservations"
         >
           2 Guests
-        </a>
+        </Link>
       </div>
-      <a
+      <Link
         className="red-glow-button mt-2 flex h-9 w-full items-center justify-center rounded-[9px] font-semibold uppercase tracking-[0.14em] text-white"
-        href="#reservations"
+        href="/reservations"
       >
         Find a Table
-      </a>
+      </Link>
       <div className="mt-2 flex items-center justify-between text-sm text-white/62">
         <span>4 Guests</span>
         <span>Table A7</span>
-        <a
+        <Link
           className="rounded-full border border-[var(--sb-border)] px-4 py-1 text-[var(--sb-red-bright)]"
-          href="#reservations"
+          href="/reservations"
         >
           Modify
-        </a>
+        </Link>
       </div>
     </section>
   );
@@ -320,9 +321,9 @@ function DesktopRecentOrder({
       <h2 className="text-base uppercase tracking-[0.12em] text-white">
         Recent Order
       </h2>
-      <a
+      <Link
         className="mt-3 grid w-full grid-cols-[96px_1fr_auto] items-center gap-3 rounded-[10px] border border-[var(--sb-border)] bg-black/42 p-2 text-left"
-        href="#orders"
+        href="/orders"
       >
         <div className="relative h-14 overflow-hidden rounded-[8px]">
           <Image
@@ -346,7 +347,7 @@ function DesktopRecentOrder({
         <span className="text-[var(--sb-gold)]" aria-hidden="true">
           &gt;
         </span>
-      </a>
+      </Link>
     </section>
   );
 }
@@ -366,12 +367,12 @@ function DesktopRewardCard({ className = "" }: { className?: string }) {
       <progress className="mt-2 h-2 w-full" max={4000} value={3250}>
         3250
       </progress>
-      <a
+      <Link
         className="mt-2 flex h-8 items-center justify-center rounded-[10px] border border-[var(--sb-border)] text-xs uppercase tracking-[0.14em] text-[var(--sb-gold)]"
-        href="#loyalty"
+        href="/loyalty"
       >
         View Benefits
-      </a>
+      </Link>
     </section>
   );
 }
@@ -391,9 +392,9 @@ function DesktopChefSpecial({
         <AssetIcon size={24} src={icons.flower} />
         Chef&apos;s Special
       </h2>
-      <a
+      <Link
         className="mt-3 grid grid-cols-[minmax(136px,0.9fr)_1fr_auto] items-center gap-4 text-left"
-        href="#menu"
+        href="/menu"
       >
         <div className="relative h-14 overflow-hidden rounded-[9px]">
           <Image
@@ -416,7 +417,7 @@ function DesktopChefSpecial({
         <span className="text-[var(--sb-gold)]" aria-hidden="true">
           &gt;
         </span>
-      </a>
+      </Link>
     </section>
   );
 }

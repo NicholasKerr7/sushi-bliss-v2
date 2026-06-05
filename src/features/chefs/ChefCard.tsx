@@ -38,7 +38,7 @@ export function ChefCard({ chef, onViewChef }: ChefCardProps) {
           </Button>
           <Button
             aria-label={`View omakase experiences for ${chef.name}`}
-            href="#omakase"
+            href="/omakase"
             size="sm"
             variant="ghost"
           >

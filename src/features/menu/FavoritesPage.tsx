@@ -44,7 +44,7 @@ export function FavoritesPage() {
                 Clear saved
               </Button>
             ) : (
-              <Button href="#menu" variant="secondary">
+              <Button href="/menu" variant="secondary">
                 Browse menu
               </Button>
             )
@@ -108,7 +108,7 @@ export function FavoritesPage() {
         ) : (
           <EmptyState
             action={
-              <Button href="#menu" variant="secondary">
+              <Button href="/menu" variant="secondary">
                 Explore menu
               </Button>
             }

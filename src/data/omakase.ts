@@ -200,7 +200,7 @@ export const premiumReservationCards: PremiumReservationCard[] = [
   {
     description:
       "Reserve chef-counter seats for the most direct omakase pacing.",
-    href: "#reservations",
+    href: "/reservations",
     id: "counter-reservation",
     image: {
       alt: "Elegant sushi bar with amber lighting",
@@ -212,7 +212,7 @@ export const premiumReservationCards: PremiumReservationCard[] = [
   {
     description:
       "Use a private room for gifting, anniversaries, and small groups.",
-    href: "#reservations",
+    href: "/reservations",
     id: "private-room-reservation",
     image: {
       alt: "Intimate upscale dining room setting",

@@ -32,7 +32,7 @@ export function LocationDetailDrawer({
       title={location?.name || "Location"}
       footer={
         location ? (
-          <Button className="w-full" href="#reservations">
+          <Button className="w-full" href="/reservations">
             Reserve this location
           </Button>
         ) : null

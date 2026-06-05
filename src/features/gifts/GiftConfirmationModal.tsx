@@ -23,7 +23,7 @@ export function GiftConfirmationModal({
       description="Gift experience confirmation"
       footer={
         <div className="grid gap-3 sm:grid-cols-2">
-          <Button href="#profile" onClick={onClose} variant="secondary">
+          <Button href="/profile" onClick={onClose} variant="secondary">
             View profile
           </Button>
           <Button onClick={onClose}>Done</Button>

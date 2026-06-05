@@ -82,7 +82,7 @@ export const mockNotifications: AppNotification[] = [
     body: "Your guest profile is ready for the clean rebuild.",
     category: "support",
     createdAt: "2026-06-04T00:00:00.000Z",
-    href: "#support",
+    href: "/support",
     id: "welcome",
     relatedLabel: "Guest profile",
     title: "Welcome to Sushi Bliss",

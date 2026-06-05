@@ -39,7 +39,7 @@ export function OmakaseReviewModal({
       description="Review guests, pairing, courses, and reservation next step."
       footer={
         <div className="grid gap-3 sm:grid-cols-2">
-          <Button href="#reservations" onClick={() => onOpenChange(false)}>
+          <Button href="/reservations" onClick={() => onOpenChange(false)}>
             Reserve package
           </Button>
           <Button onClick={() => onOpenChange(false)} variant="ghost">

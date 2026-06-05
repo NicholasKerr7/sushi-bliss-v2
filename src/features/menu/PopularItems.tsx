@@ -14,7 +14,7 @@ export function PopularItems() {
     <section className="border-b border-sb-line bg-sb-ink py-12 md:py-16">
       <PageContainer>
         <SectionHeader
-          actions={<Button href="#menu">Browse full menu</Button>}
+          actions={<Button href="/menu">Browse full menu</Button>}
           eyebrow={<Badge tone="premium">Popular signatures</Badge>}
           subtitle="A quick scan of premium nigiri and chef-special items before the full menu explorer."
           title="Guest favorites"

@@ -10,8 +10,10 @@ export const sushiIconAssetIds = {
   crown: "lotus-crown-icon",
   flower: "floral-emblem-icon",
   home: "home-icon",
+  leaf: "lotus-icon",
   location: "map-pin-icon",
   menu: "sushi-menu-icon",
+  miso: "miso-soup-icon",
   nigiri: "nigiri-icon",
   plus: "plus-icon",
   profile: "user-icon",
@@ -19,6 +21,8 @@ export const sushiIconAssetIds = {
   sashimi: "sashimi-icon",
   search: "search-icon",
   settings: "user-settings-icon",
+  star: "star-icon",
+  x: "x-icon",
 } as const;
 
 export type SushiIconAssetKey = keyof typeof sushiIconAssetIds;

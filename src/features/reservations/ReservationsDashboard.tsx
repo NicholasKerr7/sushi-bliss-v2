@@ -165,7 +165,7 @@ export function ReservationsDashboard() {
               ) : (
                 <EmptyState
                   action={
-                    <Button href="#reservations" variant="secondary">
+                    <Button href="/reservations" variant="secondary">
                       Book a table
                     </Button>
                   }

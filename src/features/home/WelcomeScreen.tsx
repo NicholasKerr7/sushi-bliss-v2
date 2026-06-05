@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { getSushiIconAssets } from "@/data/iconAssets";
@@ -69,31 +70,31 @@ export function WelcomeScreen() {
           </div>
 
           <div className="space-y-4">
-            <a
+            <Link
               className="red-glow-button flex h-[64px] w-full items-center rounded-[18px] border border-[var(--sb-red-bright)] px-8 text-[16px] font-semibold uppercase tracking-[0.16em] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
-              href="#menu"
+              href="/menu"
             >
               <AssetIcon className="mr-4" size={28} src={icons.flower} />
               <span className="flex-1">Explore Menu</span>
               <span className="text-[var(--sb-gold)]" aria-hidden="true">
                 &gt;
               </span>
-            </a>
-            <a
+            </Link>
+            <Link
               className="flex h-[62px] w-full items-center rounded-[16px] border border-[var(--sb-border-strong)] bg-black/34 px-8 text-[16px] font-semibold uppercase tracking-[0.22em] text-[var(--sb-gold)] backdrop-blur-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
-              href="#profile"
+              href="/profile"
             >
               <AssetIcon className="mr-4" size={28} src={icons.profile} />
               <span className="flex-1">Sign In</span>
               <span aria-hidden="true">&gt;</span>
-            </a>
-            <a
+            </Link>
+            <Link
               className="mx-auto flex h-12 items-center justify-center gap-4 px-4 text-[15px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
-              href="#home-dashboard"
+              href="/home"
             >
               Continue As Guest
               <span aria-hidden="true">&gt;</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

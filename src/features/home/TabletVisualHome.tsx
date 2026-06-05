@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -89,7 +90,7 @@ function TabletHeader({
 }: TabletHeaderProps) {
   return (
     <header className="mt-1 grid h-[82px] grid-cols-[312px_1fr_260px] items-center gap-5">
-      <a className="flex items-center gap-8" href="#home-dashboard">
+      <Link className="flex items-center gap-8" href="/home">
         <AssetIcon
           alt={brand.name}
           className="rounded-full"
@@ -101,7 +102,7 @@ function TabletHeader({
           <br />
           Bliss
         </span>
-      </a>
+      </Link>
       <form
         className="mx-auto flex h-[58px] w-full max-w-[386px] items-center gap-4 rounded-[24px] border border-white/16 bg-white/[0.035] px-6"
         onSubmit={onSearchSubmit}
@@ -119,9 +120,9 @@ function TabletHeader({
         />
       </form>
       <div className="flex items-center justify-end gap-6">
-        <TabletIconLink badge={2} href="#notifications" icon={icons.bell} />
-        <TabletIconLink badge={cartCount || 4} href="#menu" icon={icons.cart} />
-        <a className="flex items-center gap-5" href="#profile">
+        <TabletIconLink badge={2} href="/notifications" icon={icons.bell} />
+        <TabletIconLink badge={cartCount || 4} href="/menu" icon={icons.cart} />
+        <Link className="flex items-center gap-5" href="/profile">
           <Image
             alt=""
             className="h-[58px] w-[58px] rounded-full border border-[var(--sb-border)] object-cover"
@@ -132,7 +133,7 @@ function TabletHeader({
           <span className="text-[var(--sb-gold)]" aria-hidden="true">
             v
           </span>
-        </a>
+        </Link>
       </div>
     </header>
   );
@@ -148,12 +149,12 @@ function TabletIconLink({
   icon?: string;
 }) {
   return (
-    <a className="relative grid h-11 w-11 place-items-center" href={href}>
+    <Link className="relative grid h-11 w-11 place-items-center" href={href}>
       <AssetIcon size={32} src={icon} />
       <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
         {badge}
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -181,20 +182,20 @@ function TabletHero() {
           An unforgettable dining experience where tradition meets perfection.
         </p>
         <div className="mt-8 flex gap-5">
-          <a
+          <Link
             className="red-glow-button flex h-14 w-[255px] items-center justify-center gap-8 rounded-[10px] text-base uppercase tracking-[0.08em] text-white"
-            href="#reservations"
+            href="/reservations"
           >
             Reserve a Table
             <span aria-hidden="true">&gt;</span>
-          </a>
-          <a
+          </Link>
+          <Link
             className="flex h-14 w-[210px] items-center justify-center gap-6 rounded-[10px] border border-[var(--sb-border-strong)] bg-black/32 text-base uppercase tracking-[0.08em] text-[var(--sb-gold)]"
-            href="#menu"
+            href="/menu"
           >
             Order Now
             <AssetIcon size={22} src={icons.bag} />
-          </a>
+          </Link>
         </div>
         <div className="mt-7 flex gap-5">
           {[0, 1, 2, 3, 4].map((index) => (
@@ -227,13 +228,13 @@ function TabletFeaturedMenu({
           <AssetIcon size={26} src={icons.flower} />
           Featured Menu
         </h2>
-        <a
+        <Link
           className="flex items-center gap-3 text-sm uppercase tracking-[0.08em] text-[var(--sb-gold)]"
-          href="#menu"
+          href="/menu"
         >
           View All
           <span aria-hidden="true">&gt;</span>
-        </a>
+        </Link>
       </div>
       <div className="mt-6 grid grid-cols-4 gap-2.5">
         {items.map((item, index) => (
@@ -266,7 +267,7 @@ function TabletMenuCard({
       <span className="absolute left-0 top-0 z-10 rounded-br-[12px] bg-[var(--sb-red)]/86 px-2.5 py-1 text-[10px] uppercase text-white">
         {badge}
       </span>
-      <a href="#menu">
+      <Link href="/menu">
         <div className="relative h-[96px]">
           <Image
             alt=""
@@ -288,7 +289,7 @@ function TabletMenuCard({
             {formatMoney(item.priceCents)}
           </p>
         </div>
-      </a>
+      </Link>
       <button
         aria-label={`Add ${item.name} to cart`}
         className="absolute bottom-3 right-3 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55"
@@ -322,15 +323,15 @@ function TabletReservationCard() {
           <div className="flex min-h-[42px] items-center border-b border-[var(--sb-border)] px-5 text-sm text-white/72">
             <span className="w-24">7:00 PM</span>
           </div>
-          <a
+          <Link
             className="flex min-h-[48px] items-center justify-between px-5 text-sm text-white"
-            href="#reservations"
+            href="/reservations"
           >
             2 Guests
             <span className="text-[var(--sb-gold)]" aria-hidden="true">
               v
             </span>
-          </a>
+          </Link>
         </div>
         <div className="flex gap-3 border-t border-[var(--sb-border)] px-5 py-2 text-sm text-white/78">
           <AssetIcon size={22} src={icons.location} />
@@ -341,20 +342,20 @@ function TabletReservationCard() {
           </span>
         </div>
       </div>
-      <a
+      <Link
         className="red-glow-button mt-3 flex h-11 items-center justify-center rounded-[8px] text-base uppercase tracking-[0.08em] text-white"
-        href="#reservations"
+        href="/reservations"
       >
         Find a Table
-      </a>
+      </Link>
       <div className="mt-4 flex items-center justify-between text-[15px] text-white/68">
         <span className="flex items-center gap-2">
           <AssetIcon size={20} src={icons.reservations} />
           Table A7
         </span>
-        <a className="text-[var(--sb-gold)]" href="#reservations">
+        <Link className="text-[var(--sb-gold)]" href="/reservations">
           Change
-        </a>
+        </Link>
       </div>
     </section>
   );
@@ -367,9 +368,9 @@ function TabletRecentOrder({ item }: { item: MenuItem }) {
         <AssetIcon size={26} src={icons.flower} />
         Recent Order
       </h2>
-      <a
+      <Link
         className="mt-4 grid grid-cols-[138px_1fr_auto] items-center gap-4 rounded-[8px] border border-[var(--sb-border)] bg-black/38 p-3"
-        href="#orders"
+        href="/orders"
       >
         <div className="relative h-[74px] overflow-hidden rounded-[6px]">
           <Image
@@ -394,7 +395,7 @@ function TabletRecentOrder({ item }: { item: MenuItem }) {
         <span className="text-[28px] text-[var(--sb-gold)]" aria-hidden="true">
           &gt;
         </span>
-      </a>
+      </Link>
     </section>
   );
 }
@@ -421,9 +422,9 @@ function TabletRewardsCard() {
           <span className="text-sm text-white/62">3,250 / 4,000</span>
         </div>
       </div>
-      <a
+      <Link
         className="grid grid-rows-[1fr_48px] border-l border-[var(--sb-border)] text-center"
-        href="#loyalty"
+        href="/loyalty"
       >
         <span className="grid place-items-center bg-[radial-gradient(circle,rgba(202,164,93,0.18),transparent_58%)]">
           <AssetIcon size={92} src={icons.flower} />
@@ -431,7 +432,7 @@ function TabletRewardsCard() {
         <span className="flex items-center justify-center border-t border-[var(--sb-border)] text-base uppercase tracking-[0.08em] text-[var(--sb-gold)]">
           View Benefits
         </span>
-      </a>
+      </Link>
     </section>
   );
 }
@@ -471,7 +472,7 @@ function TabletBottomNav() {
       <ul className="grid grid-cols-5">
         {mobileNav.map((item, index) => (
           <li key={item.label}>
-            <a
+            <Link
               className={`flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[12px] text-[15px] ${
                 index === 0 ? "text-[var(--sb-red-bright)]" : "text-white/62"
               }`}
@@ -479,7 +480,7 @@ function TabletBottomNav() {
             >
               <AssetIcon size={30} src={item.icon} />
               {item.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

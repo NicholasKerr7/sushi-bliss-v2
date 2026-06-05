@@ -10,7 +10,7 @@ async function expectNoFrameworkErrorOverlay(page: Page) {
 }
 
 test.describe("customer experience", () => {
-  test("renders the home page and supports menu add-to-cart", async ({
+  test("renders customer entry and supports menu add-to-cart", async ({
     page,
   }) => {
     await page.goto("/");
@@ -21,14 +21,16 @@ test.describe("customer experience", () => {
       page.getByRole("heading", { level: 1, name: "Sushi Bliss" }),
     ).toBeVisible();
 
+    await page.goto("/menu");
+    await expectNoFrameworkErrorOverlay(page);
+
     const menuSection = page.locator("#menu");
 
-    await page.getByRole("link", { name: "Explore menu" }).first().click();
     await expect(
       menuSection.getByRole("heading", { name: "Explore the menu" }),
     ).toBeVisible();
 
-    await menuSection.getByLabel("Search menu").fill("Otoro Nigiri");
+    await menuSection.locator("#menu-search").fill("Otoro Nigiri");
     await expect(
       menuSection.getByRole("heading", { name: "Otoro Nigiri" }),
     ).toBeVisible();

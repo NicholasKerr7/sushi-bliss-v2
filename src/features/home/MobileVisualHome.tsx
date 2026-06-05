@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -73,7 +74,7 @@ export function MobileDashboard({
 function MobileDashboardHeader() {
   return (
     <header className="mt-2 flex items-center justify-between">
-      <a className="flex items-center gap-3" href="#home-dashboard">
+      <Link className="flex items-center gap-3" href="/home">
         <AssetIcon
           alt="Sushi Bliss"
           className="rounded-full"
@@ -85,15 +86,15 @@ function MobileDashboardHeader() {
           <br />
           Bliss
         </span>
-      </a>
-      <a
+      </Link>
+      <Link
         aria-label="Notifications"
         className="relative grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/52 shadow-[0_0_28px_rgba(202,164,93,0.12)] backdrop-blur-xl"
-        href="#notifications"
+        href="/notifications"
       >
         <AssetIcon size={28} src={icons.bell} />
         <span className="absolute right-3 top-2.5 h-2.5 w-2.5 rounded-full bg-[var(--sb-red-bright)]" />
-      </a>
+      </Link>
     </header>
   );
 }
@@ -121,22 +122,22 @@ function MobileSearchBar({
           value={query}
         />
       </label>
-      <a
+      <Link
         aria-label="Open filters"
         className="grid h-14 w-14 place-items-center rounded-[14px] border border-[var(--sb-border)] bg-black/52 backdrop-blur-xl"
-        href="#menu"
+        href="/menu"
       >
         <AssetIcon size={27} src={icons.settings} />
-      </a>
+      </Link>
     </form>
   );
 }
 
 function MobileHeroCard() {
   return (
-    <a
+    <Link
       className="relative mt-4 block min-h-[190px] w-full overflow-hidden text-left"
-      href="#menu"
+      href="/menu"
     >
       <Image
         alt=""
@@ -160,7 +161,7 @@ function MobileHeroCard() {
           Authentic. Refined. Unforgettable.
         </p>
       </div>
-    </a>
+    </Link>
   );
 }
 
@@ -210,14 +211,14 @@ function FeaturedMenuRail({ items, onAddToCart }: FeaturedMenuRailProps) {
         <h2 className="editorial-title text-[20px] tracking-[0.12em] text-[var(--sb-gold)]">
           Featured Menu
         </h2>
-        <a
+        <Link
           aria-label="Explore menu"
           className="flex items-center gap-1 text-[15px] font-medium text-[var(--sb-red-bright)]"
-          href="#menu"
+          href="/menu"
         >
           View All
           <span aria-hidden="true">&gt;</span>
-        </a>
+        </Link>
       </div>
       <div className="mt-3 grid grid-cols-3 gap-3">
         {items.slice(0, 3).map((item, index) => (
@@ -239,9 +240,9 @@ function FeaturedMenuRail({ items, onAddToCart }: FeaturedMenuRailProps) {
 function QuickActionGrid() {
   return (
     <div className="mt-5 grid grid-cols-2 gap-3">
-      <a
+      <Link
         className="red-glow-button flex min-h-[82px] items-center gap-3 rounded-[18px] px-4 text-left uppercase tracking-[0.12em] text-white"
-        href="#reservations"
+        href="/reservations"
       >
         <AssetIcon size={34} src={icons.calendar} />
         <span>
@@ -252,10 +253,10 @@ function QuickActionGrid() {
             Unforgettable dining awaits
           </span>
         </span>
-      </a>
-      <a
+      </Link>
+      <Link
         className="flex min-h-[82px] items-center gap-3 rounded-[18px] border border-[var(--sb-border-strong)] bg-black/58 px-4 text-left uppercase tracking-[0.12em] text-[var(--sb-gold)] shadow-[0_0_24px_rgba(202,164,93,0.12)]"
-        href="#menu"
+        href="/menu"
       >
         <AssetIcon size={34} src={icons.bag} />
         <span>
@@ -264,7 +265,7 @@ function QuickActionGrid() {
             Sushi delivered to you
           </span>
         </span>
-      </a>
+      </Link>
     </div>
   );
 }
@@ -314,13 +315,13 @@ function MemberCard({
           >
             {progressValue}
           </progress>
-          <a
+          <Link
             className="mt-3 flex items-center gap-1 text-[13px] text-[var(--sb-gold)]"
-            href="#loyalty"
+            href="/loyalty"
           >
             View Benefits
             <span aria-hidden="true">&gt;</span>
-          </a>
+          </Link>
         </div>
       </div>
       <span className="sr-only">Cart contains {cartCount} items.</span>
@@ -337,7 +338,7 @@ function MobileDashboardNav() {
       <ul className="grid grid-cols-5 gap-1">
         {mobileNav.map((item, index) => (
           <li key={item.label}>
-            <a
+            <Link
               className={`flex min-h-[74px] flex-col items-center justify-center gap-2 rounded-[15px] text-[11px] uppercase ${
                 index === 0
                   ? "border border-[var(--sb-red-bright)] bg-[var(--sb-red)]/18 text-[var(--sb-red-bright)] shadow-[0_0_24px_var(--sb-red-glow)]"
@@ -347,7 +348,7 @@ function MobileDashboardNav() {
             >
               <AssetIcon size={25} src={item.icon} />
               {item.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
