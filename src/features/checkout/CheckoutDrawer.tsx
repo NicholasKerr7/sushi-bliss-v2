@@ -19,15 +19,29 @@ import { CheckoutPaymentSection } from "./CheckoutPaymentSection";
 import { CheckoutPromoSection } from "./CheckoutPromoSection";
 import { CheckoutReview } from "./CheckoutReview";
 import { OrderConfirmation } from "./OrderConfirmation";
+import { TabletCheckoutDialog } from "./TabletCheckoutDialog";
 
 interface CheckoutDrawerProps {
+  onBackToCart?: () => void;
   onOpenChange: (open: boolean) => void;
   open: boolean;
 }
 
-export function CheckoutDrawer({ onOpenChange, open }: CheckoutDrawerProps) {
+export function CheckoutDrawer({
+  onBackToCart,
+  onOpenChange,
+  open,
+}: CheckoutDrawerProps) {
   const mode = useResponsiveMode();
-  const { clearCart, isEmpty, items, subtotalCents } = useCart();
+  const {
+    clearCart,
+    isEmpty,
+    itemCount,
+    items,
+    removeItem,
+    subtotalCents,
+    updateQuantity,
+  } = useCart();
   const { awardOrderPoints } = useLoyalty();
   const { addOrder } = useOrders();
   const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
@@ -47,6 +61,36 @@ export function CheckoutDrawer({ onOpenChange, open }: CheckoutDrawerProps) {
     onOpenChange(false);
     setConfirmedOrder(order);
   };
+
+  if (mode === "tablet") {
+    return (
+      <>
+        <TabletCheckoutDialog
+          checkout={checkout}
+          itemCount={itemCount}
+          items={items}
+          key={open ? "tablet-checkout-open" : "tablet-checkout-closed"}
+          onBackToCart={() => {
+            onOpenChange(false);
+            onBackToCart?.();
+          }}
+          onOpenChange={onOpenChange}
+          onPlaceOrder={handlePlaceOrder}
+          onRemoveItem={removeItem}
+          onUpdateQuantity={updateQuantity}
+          open={open}
+        />
+        <OrderConfirmation
+          onClose={() => {
+            setConfirmedOrder(null);
+            setConfirmedPoints(0);
+          }}
+          order={confirmedOrder}
+          pointsAwarded={confirmedPoints}
+        />
+      </>
+    );
+  }
 
   return (
     <>

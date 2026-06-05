@@ -181,6 +181,7 @@ export function useCheckout(subtotalCents = 0) {
     setValidation((current) => ({ ...current, promo: undefined }));
   }, []);
 
+  /** Validates the current checkout selections before review or order creation. */
   const validateCheckout = useCallback(() => {
     const nextValidation: CheckoutValidationState = {};
 
@@ -264,6 +265,7 @@ export function useCheckout(subtotalCents = 0) {
     startNewAddress,
     timeSlots,
     updateAddressDraft,
+    validateCheckout,
     validation,
   };
 }
