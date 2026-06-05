@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
+import { AnalyticsPlaceholder } from "@/components/layout/AnalyticsPlaceholder";
+import { getSiteUrl, siteMetadata } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,11 +15,47 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sushi Bliss",
-  description:
-    "A luxury sushi restaurant experience for ordering, reservations, omakase, loyalty, and gifts.",
-  applicationName: "Sushi Bliss",
-  metadataBase: new URL("https://sushi-bliss.example"),
+  applicationName: siteMetadata.name,
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: siteMetadata.shortName,
+  },
+  authors: [{ name: "Sushi Bliss" }],
+  category: "restaurant",
+  description: siteMetadata.description,
+  icons: {
+    apple: "/apple-icon.png",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+  },
+  manifest: "/manifest.webmanifest",
+  metadataBase: getSiteUrl(),
+  openGraph: {
+    description: siteMetadata.description,
+    images: [
+      {
+        alt: "Sushi Bliss omakase nigiri on a dark luxury surface",
+        height: 1080,
+        url: "/assets/editorial/hero-otoro-nigiri-no-red-moon.webp",
+        width: 1920,
+      },
+    ],
+    locale: "en_US",
+    siteName: siteMetadata.name,
+    title: siteMetadata.name,
+    type: "website",
+  },
+  title: {
+    default: siteMetadata.name,
+    template: `%s | ${siteMetadata.name}`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    description: siteMetadata.description,
+    images: ["/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"],
+    title: siteMetadata.name,
+  },
 };
 
 export default function RootLayout({
@@ -32,6 +70,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-sb-ink text-sb-rice">
         {children}
+        <AnalyticsPlaceholder />
       </body>
     </html>
   );

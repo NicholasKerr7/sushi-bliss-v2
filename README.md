@@ -150,6 +150,16 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Browser verification confirms `/` and `/admin` render content without a
   framework error overlay.
 
+## Sprint 15 Status
+
+- Production metadata, Open Graph/Twitter cards, app icons, manifest, robots,
+  and sitemap routes are configured.
+- `vercel.json` documents the Vercel framework, install/build commands, and
+  baseline security headers.
+- `docs/deployment.md` records deployment checks, Vercel CLI usage, and env
+  handling.
+- Analytics is represented by a disabled placeholder until a provider is chosen.
+
 ## Scripts
 
 ```bash
@@ -163,8 +173,13 @@ npm run format:check
 
 ## Environment
 
-Copy `.env.example` when backend services are introduced. Do not commit real
+Copy `.env.example` for local overrides. Set `NEXT_PUBLIC_SITE_URL` in
+production when a Vercel alias or custom domain is assigned. Do not commit real
 Supabase or Stripe secrets.
+
+## Deployment
+
+See `docs/deployment.md` for the release checklist and Vercel CLI flow.
 
 ## Asset Source
 
