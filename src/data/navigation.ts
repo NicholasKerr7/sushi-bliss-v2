@@ -62,7 +62,25 @@ export const desktopNavigation: NavigationItem[] = [
   {
     id: "support",
     label: "Support",
-    href: "#support-preview",
+    href: "#support",
     iconUrl: "/assets/icons/headset-icon.png",
+  },
+  {
+    id: "notifications",
+    label: "Alerts",
+    href: "#notifications",
+    iconUrl: "/assets/icons/notification-bell-icon.png",
+  },
+  {
+    id: "about",
+    label: "About",
+    href: "#about",
+    iconUrl: "/assets/icons/lotus-icon.png",
+  },
+  {
+    id: "chefs",
+    label: "Chefs",
+    href: "#chefs",
+    iconUrl: "/assets/icons/chef-hat-icon.png",
   },
 ];

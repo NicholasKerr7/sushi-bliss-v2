@@ -1,16 +1,38 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useSyncExternalStore } from "react";
 
-import { mockNotifications } from "@/data/mockUser";
+import { initialNotifications as defaultNotifications } from "@/data/notifications";
+import {
+  getNotificationReadsSnapshot,
+  parseNotificationReadSnapshot,
+  setAllNotificationsRead,
+  setNotificationReadAt,
+  subscribeToNotificationReads,
+} from "@/lib/notificationStorage";
 import type { AppNotification } from "@/types/notification";
 
 /** Manages notification read state for local mock notifications. */
 export function useNotifications(
-  initialNotifications: AppNotification[] = mockNotifications,
+  initialNotifications: AppNotification[] = defaultNotifications,
 ) {
-  const [notifications, setNotifications] =
-    useState<AppNotification[]>(initialNotifications);
+  const readSnapshot = useSyncExternalStore(
+    subscribeToNotificationReads,
+    getNotificationReadsSnapshot,
+    () => "{}",
+  );
+  const readState = useMemo(
+    () => parseNotificationReadSnapshot(readSnapshot),
+    [readSnapshot],
+  );
+  const notifications = useMemo(
+    () =>
+      initialNotifications.map((notification) => ({
+        ...notification,
+        readAt: notification.readAt || readState[notification.id],
+      })),
+    [initialNotifications, readState],
+  );
 
   const unreadCount = useMemo(
     () => notifications.filter((notification) => !notification.readAt).length,
@@ -18,16 +40,17 @@ export function useNotifications(
   );
 
   const markRead = useCallback((id: string) => {
-    const readAt = new Date().toISOString();
-
-    setNotifications((current) =>
-      current.map((notification) =>
-        notification.id === id ? { ...notification, readAt } : notification,
-      ),
-    );
+    setNotificationReadAt(id);
   }, []);
 
+  const markAllRead = useCallback(() => {
+    setAllNotificationsRead(
+      initialNotifications.map((notification) => notification.id),
+    );
+  }, [initialNotifications]);
+
   return {
+    markAllRead,
     markRead,
     notifications,
     unreadCount,

@@ -79,10 +79,13 @@ export const mockLoyaltyAccount: LoyaltyAccount = {
 
 export const mockNotifications: AppNotification[] = [
   {
-    id: "welcome",
-    title: "Welcome to Sushi Bliss",
     body: "Your guest profile is ready for the clean rebuild.",
-    tone: "premium",
+    category: "support",
     createdAt: "2026-06-04T00:00:00.000Z",
+    href: "#support",
+    id: "welcome",
+    relatedLabel: "Guest profile",
+    title: "Welcome to Sushi Bliss",
+    tone: "premium",
   },
 ];

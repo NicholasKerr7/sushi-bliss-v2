@@ -108,6 +108,18 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
   saved payment selection, validation, confirmation, and local persistence.
 - Sent gift confirmations appear in both the gift section and profile history.
 
+## Sprint 11 Status
+
+- Notifications now include order, reservation, reward, offer, and concierge
+  categories with filters, detail modals, related-flow links, and persisted read
+  state.
+- Support now includes contact methods, a validated concierge form, local
+  request history, and help article detail modals.
+- About and master chef sections use normalized brand, ambience, and chef asset
+  data from the legacy content layer.
+- Customer brand/support pages are integrated into the home flow without
+  reviving the old monolithic app structure.
+
 ## Scripts
 
 ```bash

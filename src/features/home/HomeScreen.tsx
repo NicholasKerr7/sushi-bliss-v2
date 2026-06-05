@@ -3,19 +3,22 @@ import Image from "next/image";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
 import { featuredAssets } from "@/data/assets";
+import { AboutSection } from "@/features/about/AboutSection";
+import { ChefsSection } from "@/features/chefs/ChefsSection";
 import { GiftExperienceSection } from "@/features/gifts/GiftExperienceSection";
 import { LocationsDirectory } from "@/features/locations/LocationsDirectory";
 import { LoyaltyDashboard } from "@/features/loyalty/LoyaltyDashboard";
 import { FavoritesPage } from "@/features/menu/FavoritesPage";
 import { MenuExplorer } from "@/features/menu/MenuExplorer";
+import { NotificationsCenter } from "@/features/notifications/NotificationsCenter";
 import { OmakaseExperienceSection } from "@/features/omakase/OmakaseExperienceSection";
 import { PopularItems } from "@/features/menu/PopularItems";
 import { OffersDashboard } from "@/features/offers/OffersDashboard";
 import { OrdersDashboard } from "@/features/orders/OrdersDashboard";
 import { ProfileDashboard } from "@/features/profile/ProfileDashboard";
 import { ReservationsDashboard } from "@/features/reservations/ReservationsDashboard";
+import { SupportCenter } from "@/features/support/SupportCenter";
 import { getBrandContent } from "@/lib/data";
 
 export function HomeScreen() {
@@ -67,23 +70,10 @@ export function HomeScreen() {
       <ProfileDashboard />
       <LoyaltyDashboard />
       <OffersDashboard />
-
-      <section id="support-preview" className="bg-sb-ink py-12 md:py-16">
-        <PageContainer>
-          <Card className="grid gap-5 p-5 md:grid-cols-[0.9fr_1.1fr] md:p-8">
-            <div>
-              <Badge>Concierge</Badge>
-              <h2 className="mt-4 text-2xl font-semibold text-sb-rice">
-                Quiet support for pickup, tasting menus, and private events.
-              </h2>
-            </div>
-            <p className="text-sm leading-6 text-sb-muted">
-              The concierge desk can help with allergies, special occasions,
-              accessibility needs, and changes to the evening seating plan.
-            </p>
-          </Card>
-        </PageContainer>
-      </section>
+      <NotificationsCenter />
+      <SupportCenter />
+      <AboutSection />
+      <ChefsSection />
     </div>
   );
 }
