@@ -9,6 +9,7 @@ import type { MenuItem } from "@/types/menu";
 
 import { DesktopDashboard, DesktopDashboardHeader } from "./DesktopVisualHome";
 import { MobileDashboard } from "./MobileVisualHome";
+import { TabletDashboard } from "./TabletVisualHome";
 import { getDashboardItem } from "./visualHomeData";
 
 /** Renders the screenshot-matched home dashboard while keeping v2 cart behavior. */
@@ -57,6 +58,15 @@ export function VisualHomeDashboard() {
         query={query}
         onAddToCart={handleAddToCart}
         onCategoryChange={setActiveCategory}
+        onQueryChange={setQuery}
+        onSearchSubmit={handleSearchSubmit}
+      />
+      <TabletDashboard
+        cartCount={itemCount}
+        items={items}
+        memberItem={memberItem}
+        query={query}
+        onAddToCart={handleAddToCart}
         onQueryChange={setQuery}
         onSearchSubmit={handleSearchSubmit}
       />

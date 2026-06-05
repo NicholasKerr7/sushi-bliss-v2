@@ -103,7 +103,7 @@ export function DesktopDashboard({
   onAddToCart,
 }: DesktopDashboardProps) {
   return (
-    <div className="hidden px-[3.2vw] pb-3 pt-0 md:block xl:min-h-[calc(100svh-88px)]">
+    <div className="hidden px-[3.2vw] pb-3 pt-0 xl:block xl:min-h-[calc(100svh-88px)]">
       <div className="overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-black/68 shadow-[0_30px_110px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
         <section className="relative min-h-[272px] overflow-hidden border-b border-[var(--sb-border)] px-8 py-5 xl:px-[6vw]">
           <Image
