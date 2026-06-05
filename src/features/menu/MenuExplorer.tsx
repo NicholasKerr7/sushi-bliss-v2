@@ -10,7 +10,6 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Input } from "@/components/ui/Input";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CartDrawer } from "@/features/cart/CartDrawer";
-import { CartFloatingButton } from "@/features/cart/CartFloatingButton";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useMenu } from "@/hooks/useMenu";
 import { pluralize } from "@/lib/format";
@@ -121,7 +120,6 @@ export function MenuExplorer() {
           />
         )}
       </PageContainer>
-      <CartFloatingButton onOpenCart={() => setCartOpen(true)} />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
       {selectedItem ? (
         <ItemDetailDrawer

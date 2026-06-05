@@ -1,0 +1,446 @@
+import Image from "next/image";
+
+import { AssetIcon } from "@/components/icons/AssetIcon";
+import { formatMoney } from "@/lib/money";
+import type { MenuItem } from "@/types/menu";
+
+import { HomeMenuCard } from "./HomeMenuCard";
+import {
+  appContent,
+  brand,
+  chefAvatar,
+  desktopNav,
+  featuredAssets,
+  icons,
+} from "./visualHomeData";
+
+export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
+  return (
+    <header className="hidden h-[88px] items-center border-b border-white/[0.06] px-[5.5vw] xl:flex">
+      <a
+        className="flex min-w-[270px] items-center gap-4 text-left text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--sb-gold)]"
+        href="#home-dashboard"
+      >
+        <AssetIcon
+          className="rounded-full"
+          size={52}
+          src={brand.assets.icon.publicUrl}
+        />
+        <span className="editorial-title text-[24px] leading-[0.88] tracking-[0.34em]">
+          Sushi
+          <br />
+          Bliss
+        </span>
+      </a>
+      <nav
+        aria-label="Desktop primary"
+        className="flex flex-1 items-center justify-center gap-11"
+      >
+        {desktopNav.map(([label, href], index) => (
+          <a
+            className={`relative py-8 text-[13px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] ${
+              index === 0 ? "text-[var(--sb-red-bright)]" : ""
+            }`}
+            href={href}
+            key={label}
+          >
+            {label}
+            {index === 0 ? (
+              <span className="absolute inset-x-0 bottom-[18px] h-px bg-[var(--sb-red-bright)]" />
+            ) : null}
+          </a>
+        ))}
+      </nav>
+      <div className="flex min-w-[330px] items-center justify-end gap-5">
+        <a
+          aria-label="Open cart"
+          className="relative grid h-12 w-12 place-items-center text-[var(--sb-gold)]"
+          href="#menu"
+        >
+          <AssetIcon size={34} src={icons.cart} />
+          {cartCount > 0 ? (
+            <span className="absolute right-0 top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold text-white">
+              {cartCount}
+            </span>
+          ) : null}
+        </a>
+        <a className="flex items-center gap-3" href="#profile">
+          <Image
+            alt=""
+            className="h-14 w-14 rounded-full border border-[var(--sb-border)] object-cover"
+            height={56}
+            src={chefAvatar}
+            width={56}
+          />
+          <span>
+            <span className="block text-sm font-semibold text-white">
+              Hiroshi Tanaka
+            </span>
+            <span className="block text-xs uppercase tracking-[0.12em] text-white/62">
+              Bliss Member
+            </span>
+          </span>
+          <span className="text-[var(--sb-gold)]" aria-hidden="true">
+            v
+          </span>
+        </a>
+      </div>
+    </header>
+  );
+}
+
+interface DesktopDashboardProps {
+  items: MenuItem[];
+  memberItem: MenuItem;
+  specialItem: MenuItem;
+  onAddToCart: (item: MenuItem) => void;
+}
+
+export function DesktopDashboard({
+  items,
+  memberItem,
+  specialItem,
+  onAddToCart,
+}: DesktopDashboardProps) {
+  return (
+    <div className="hidden px-[3.2vw] pb-3 pt-0 md:block xl:min-h-[calc(100svh-88px)]">
+      <div className="overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-black/68 shadow-[0_30px_110px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
+        <section className="relative min-h-[272px] overflow-hidden border-b border-[var(--sb-border)] px-8 py-5 xl:px-[6vw]">
+          <Image
+            alt=""
+            className="object-cover"
+            fill
+            priority
+            sizes="1200px"
+            src={featuredAssets.heroSushi.publicUrl}
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.62)_34%,rgba(0,0,0,0.18)_72%,rgba(0,0,0,0.8)_100%)]" />
+          <div className="relative z-10 grid min-h-[232px] grid-cols-1 gap-8 xl:grid-cols-[1fr_280px]">
+            <div className="flex flex-col justify-center">
+              <p className="text-sm uppercase tracking-[0.24em] text-[var(--sb-gold)]">
+                Timeless Japanese Artistry.
+              </p>
+              <h1 className="editorial-title mt-3 text-[56px] leading-[0.9] text-white xl:text-[72px]">
+                Sushi
+                <span className="block text-[var(--sb-red-bright)]">Bliss</span>
+              </h1>
+              <p className="mt-4 max-w-sm text-base leading-6 text-white/78">
+                An unforgettable dining experience where tradition meets
+                perfection.
+              </p>
+              <div className="mt-6 flex gap-4">
+                <a
+                  className="red-glow-button flex h-12 w-[205px] items-center justify-center rounded-[10px] text-xs font-semibold uppercase tracking-[0.16em] text-white"
+                  href="#reservations"
+                >
+                  Reserve a Table
+                  <span className="ml-3" aria-hidden="true">
+                    &gt;
+                  </span>
+                </a>
+                <a
+                  className="flex h-12 w-[175px] items-center justify-center rounded-[10px] border border-[var(--sb-border)] bg-black/42 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold)]"
+                  href="#menu"
+                >
+                  Order Now
+                  <AssetIcon className="ml-3" size={20} src={icons.bag} />
+                </a>
+              </div>
+              <div className="mt-5 flex gap-2">
+                {[0, 1, 2, 3].map((index) => (
+                  <span
+                    className={`h-2 w-2 rounded-full ${
+                      index === 0 ? "bg-[var(--sb-red-bright)]" : "bg-white/24"
+                    }`}
+                    key={index}
+                  />
+                ))}
+              </div>
+            </div>
+            <DesktopInfoCard />
+          </div>
+        </section>
+
+        <div className="grid gap-3 p-3 lg:grid-cols-12">
+          <section className="rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-4 lg:col-span-8">
+            <div className="flex items-center justify-between">
+              <h2 className="flex items-center gap-3 text-lg uppercase tracking-[0.12em] text-white">
+                <AssetIcon size={24} src={icons.flower} />
+                Featured Menu
+              </h2>
+              <a
+                aria-label="Explore menu"
+                className="flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-[var(--sb-gold)]"
+                href="#menu"
+              >
+                View Full Menu
+                <span aria-hidden="true">&gt;</span>
+              </a>
+            </div>
+            <div className="mt-3 grid grid-cols-4 gap-3">
+              {items.map((item, index) => (
+                <HomeMenuCard
+                  badge={
+                    index === 0
+                      ? "Nigiri"
+                      : index === 1
+                        ? "Hot"
+                        : index === 2
+                          ? "Special"
+                          : "Sashimi"
+                  }
+                  item={item}
+                  key={item.id}
+                  onAddToCart={onAddToCart}
+                  priority
+                />
+              ))}
+            </div>
+          </section>
+
+          <DesktopReservationCard className="lg:col-span-4" />
+          <DesktopRecentOrder className="lg:col-span-4" item={memberItem} />
+          <DesktopRewardCard className="lg:col-span-4" />
+          <DesktopChefSpecial className="lg:col-span-4" item={specialItem} />
+        </div>
+        <DesktopBenefitsStrip />
+      </div>
+    </div>
+  );
+}
+
+function DesktopInfoCard() {
+  const { hours, location } = appContent;
+
+  return (
+    <aside className="hidden self-center rounded-[14px] border border-[var(--sb-border)] bg-black/54 p-5 backdrop-blur-xl xl:block">
+      <div className="flex gap-3">
+        <AssetIcon size={25} src={icons.location} />
+        <div>
+          <p className="text-sm uppercase tracking-[0.16em] text-white">
+            {location.city} · {location.country}
+          </p>
+          <p className="mt-2 text-sm leading-5 text-white/70">
+            {location.street},
+            <br />
+            {location.postalLine}
+            <br />
+            {location.phone}
+          </p>
+        </div>
+      </div>
+      <div className="my-4 h-px bg-[var(--sb-border)]" />
+      <div className="flex gap-3">
+        <AssetIcon size={24} src={icons.clock} />
+        <div>
+          <p className="text-sm uppercase tracking-[0.16em] text-white">
+            Hours
+          </p>
+          <p className="mt-2 text-sm leading-5 text-white/70">
+            {hours.days}
+            <br />
+            {hours.service}
+          </p>
+        </div>
+      </div>
+      <a
+        className="mt-5 flex h-10 w-full items-center justify-center gap-2 rounded-full border border-[var(--sb-border)] text-sm uppercase tracking-[0.14em] text-[var(--sb-gold)]"
+        href="#locations"
+      >
+        View Details
+        <span aria-hidden="true">&gt;</span>
+      </a>
+    </aside>
+  );
+}
+
+function DesktopReservationCard({ className = "" }: { className?: string }) {
+  const { location } = appContent;
+
+  return (
+    <section
+      className={`rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
+    >
+      <h2 className="flex items-center gap-3 text-lg uppercase tracking-[0.12em] text-white">
+        <AssetIcon size={24} src={icons.flower} />
+        Make a Reservation
+      </h2>
+      <div className="mt-2 grid grid-cols-[82px_1fr_170px] overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-black/42">
+        <div className="grid place-items-center border-r border-[var(--sb-border)] py-1 text-center">
+          <span className="text-xs uppercase text-white/72">Sat</span>
+          <span className="editorial-title text-3xl text-white">24</span>
+          <span className="text-xs uppercase text-white/72">May</span>
+        </div>
+        <div className="px-5 py-2">
+          <p className="text-xl text-white">7:00 PM</p>
+          <p className="mt-2 text-sm text-white/72">
+            Sushi Bliss Downtown
+            <br />
+            {location.street}, {location.city}
+          </p>
+        </div>
+        <a
+          className="flex items-center justify-center border-l border-[var(--sb-border)] px-4 text-sm text-[var(--sb-gold)]"
+          href="#reservations"
+        >
+          2 Guests
+        </a>
+      </div>
+      <a
+        className="red-glow-button mt-2 flex h-9 w-full items-center justify-center rounded-[9px] font-semibold uppercase tracking-[0.14em] text-white"
+        href="#reservations"
+      >
+        Find a Table
+      </a>
+      <div className="mt-2 flex items-center justify-between text-sm text-white/62">
+        <span>4 Guests</span>
+        <span>Table A7</span>
+        <a
+          className="rounded-full border border-[var(--sb-border)] px-4 py-1 text-[var(--sb-red-bright)]"
+          href="#reservations"
+        >
+          Modify
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function DesktopRecentOrder({
+  className = "",
+  item,
+}: {
+  className?: string;
+  item: MenuItem;
+}) {
+  return (
+    <section
+      className={`rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
+    >
+      <h2 className="text-base uppercase tracking-[0.12em] text-white">
+        Recent Order
+      </h2>
+      <a
+        className="mt-3 grid w-full grid-cols-[96px_1fr_auto] items-center gap-3 rounded-[10px] border border-[var(--sb-border)] bg-black/42 p-2 text-left"
+        href="#orders"
+      >
+        <div className="relative h-14 overflow-hidden rounded-[8px]">
+          <Image
+            alt=""
+            className="pointer-events-none object-cover"
+            fill
+            sizes="128px"
+            src={item.image.publicUrl}
+          />
+        </div>
+        <span>
+          <span className="block text-base text-white">Sushi Bliss Deluxe</span>
+          <span className="mt-1 block text-sm text-white/58">
+            May 10, 2024 · 5:50 PM
+          </span>
+          <span className="mt-1 block text-base text-[var(--sb-gold)]">
+            $85.00{" "}
+            <span className="ml-4 text-sm text-emerald-400">Delivered</span>
+          </span>
+        </span>
+        <span className="text-[var(--sb-gold)]" aria-hidden="true">
+          &gt;
+        </span>
+      </a>
+    </section>
+  );
+}
+
+function DesktopRewardCard({ className = "" }: { className?: string }) {
+  return (
+    <section
+      className={`rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
+    >
+      <h2 className="flex items-center gap-3 text-base uppercase tracking-[0.12em] text-[var(--sb-gold)]">
+        <AssetIcon size={24} src={icons.flower} />
+        Bliss Rewards
+      </h2>
+      <p className="text-lg uppercase text-[var(--sb-gold)]">Gold Tier</p>
+      <p className="text-base text-white">You have 3,250 points</p>
+      <p className="text-xs text-white/62">750 pts to reach Platinum</p>
+      <progress className="mt-2 h-2 w-full" max={4000} value={3250}>
+        3250
+      </progress>
+      <a
+        className="mt-2 flex h-8 items-center justify-center rounded-[10px] border border-[var(--sb-border)] text-xs uppercase tracking-[0.14em] text-[var(--sb-gold)]"
+        href="#loyalty"
+      >
+        View Benefits
+      </a>
+    </section>
+  );
+}
+
+function DesktopChefSpecial({
+  className = "",
+  item,
+}: {
+  className?: string;
+  item: MenuItem;
+}) {
+  return (
+    <section
+      className={`relative overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
+    >
+      <h2 className="flex items-center gap-3 text-base uppercase tracking-[0.12em] text-white">
+        <AssetIcon size={24} src={icons.flower} />
+        Chef&apos;s Special
+      </h2>
+      <a
+        className="mt-3 grid grid-cols-[minmax(136px,0.9fr)_1fr_auto] items-center gap-4 text-left"
+        href="#menu"
+      >
+        <div className="relative h-14 overflow-hidden rounded-[9px]">
+          <Image
+            alt=""
+            className="object-cover"
+            fill
+            sizes="260px"
+            src={item.image.publicUrl}
+          />
+        </div>
+        <span>
+          <span className="block text-base text-white">{item.name}</span>
+          <span className="mt-1 block line-clamp-2 text-xs leading-4 text-white/72">
+            {item.description}
+          </span>
+          <span className="mt-1 block text-base text-[var(--sb-gold)]">
+            {formatMoney(item.priceCents)}
+          </span>
+        </span>
+        <span className="text-[var(--sb-gold)]" aria-hidden="true">
+          &gt;
+        </span>
+      </a>
+    </section>
+  );
+}
+
+function DesktopBenefitsStrip() {
+  return (
+    <div className="mx-3 mb-3 grid grid-cols-4 rounded-[14px] border border-[var(--sb-border)] bg-white/[0.04]">
+      {appContent.benefits.map((benefit) => (
+        <div
+          className="flex items-center justify-center gap-4 border-r border-[var(--sb-border)] px-6 py-4 last:border-r-0"
+          key={benefit.id}
+        >
+          <AssetIcon
+            size={32}
+            src={icons[benefit.icon as keyof typeof icons]}
+          />
+          <span>
+            <span className="block text-sm uppercase tracking-[0.16em] text-white/82">
+              {benefit.title}
+            </span>
+            <span className="block text-sm text-white/58">{benefit.copy}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}

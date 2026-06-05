@@ -12,8 +12,13 @@
   --sb-gold-soft: #f1d28a;
   --sb-red: #b72a2a;
   --sb-red-deep: #711a1d;
+  --sb-red-bright: #ef2f25;
+  --sb-red-glow: rgb(210 22 22 / 0.45);
   --sb-wasabi: #8aa15a;
   --sb-line: rgb(255 248 237 / 0.14);
+  --sb-border: rgb(212 170 90 / 0.22);
+  --sb-border-strong: rgb(212 170 90 / 0.42);
+  --sb-safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @theme inline {
@@ -69,6 +74,90 @@ textarea {
 ::selection {
   background: rgb(215 168 79 / 0.35);
   color: var(--sb-rice);
+}
+
+.luxury-panel {
+  border: 1px solid var(--sb-border);
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.015)),
+    rgb(12 12 10 / 0.78);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 24px 80px rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(26px);
+}
+
+.red-glow-button {
+  border: 1px solid rgb(255 94 74 / 0.36);
+  background:
+    linear-gradient(180deg, rgb(255 74 64 / 0.92), rgb(153 14 14 / 0.96)),
+    #b81414;
+  box-shadow:
+    0 0 0 1px rgb(255 210 150 / 0.1) inset,
+    0 14px 42px var(--sb-red-glow);
+}
+
+.red-glow-button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.stone-gradient {
+  background:
+    radial-gradient(circle at 8% 16%, rgb(184 20 20 / 0.08), transparent 26%),
+    radial-gradient(circle at 92% 8%, rgb(202 164 93 / 0.12), transparent 22%),
+    linear-gradient(180deg, #080807 0%, #050505 54%, #0b0806 100%);
+}
+
+.editorial-title {
+  font-family: Georgia, "Times New Roman", var(--font-geist-sans), serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.sb-wave-pattern {
+  background-image:
+    radial-gradient(
+      60% 52% at 50% 100%,
+      transparent 56%,
+      rgb(202 164 93 / 0.2) 57%,
+      transparent 59%
+    ),
+    radial-gradient(
+      60% 52% at 18% 100%,
+      transparent 56%,
+      rgb(202 164 93 / 0.16) 57%,
+      transparent 59%
+    ),
+    radial-gradient(
+      60% 52% at 82% 100%,
+      transparent 56%,
+      rgb(202 164 93 / 0.16) 57%,
+      transparent 59%
+    );
+  background-size: 72px 42px;
+}
+
+progress {
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.08);
+}
+
+progress::-webkit-progress-bar {
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.08);
+}
+
+progress::-webkit-progress-value {
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sb-red), var(--sb-gold));
+}
+
+progress::-moz-progress-bar {
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sb-red), var(--sb-gold));
 }
 
 @media (prefers-reduced-motion: reduce) {
