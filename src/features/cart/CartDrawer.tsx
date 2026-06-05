@@ -11,6 +11,7 @@ import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 
 import { CartLineItemRow } from "./CartLineItemRow";
 import { CartSummary } from "./CartSummary";
+import { TabletCartDialog } from "./TabletCartDialog";
 
 interface CartDrawerProps {
   onOpenChange: (open: boolean) => void;
@@ -34,6 +35,25 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
     onOpenChange(false);
     setCheckoutOpen(true);
   };
+
+  if (mode === "tablet") {
+    return (
+      <>
+        <TabletCartDialog
+          itemCount={itemCount}
+          items={items}
+          open={open}
+          totals={totals}
+          onClearCart={clearCart}
+          onClose={() => onOpenChange(false)}
+          onOpenCheckout={openCheckout}
+          onRemove={removeItem}
+          onUpdateQuantity={updateQuantity}
+        />
+        <CheckoutDrawer onOpenChange={setCheckoutOpen} open={checkoutOpen} />
+      </>
+    );
+  }
 
   return (
     <>
