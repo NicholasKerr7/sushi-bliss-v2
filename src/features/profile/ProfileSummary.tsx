@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { pluralize } from "@/lib/format";
+import { getNextTier } from "@/lib/loyalty";
 import type { LoyaltyAccount } from "@/types/loyalty";
 import type { UserProfile } from "@/types/user";
 
@@ -20,10 +21,10 @@ export function ProfileSummary({
   profile,
   upcomingReservationCount,
 }: ProfileSummaryProps) {
-  const remainingPoints = Math.max(
-    loyaltyAccount.nextTierPoints - loyaltyAccount.points,
-    0,
-  );
+  const nextTier = getNextTier(loyaltyAccount.lifetimePoints);
+  const remainingPoints = nextTier
+    ? Math.max(nextTier.minimumPoints - loyaltyAccount.lifetimePoints, 0)
+    : 0;
 
   return (
     <Card className="p-5 md:p-6">
@@ -47,7 +48,9 @@ export function ProfileSummary({
             {loyaltyAccount.points}
           </p>
           <p className="mt-1 text-xs leading-5 text-sb-muted">
-            {remainingPoints} points to next tier
+            {remainingPoints > 0
+              ? `${remainingPoints} points to next tier`
+              : "Top tier unlocked"}
           </p>
         </div>
         <div className="rounded-card border border-sb-line bg-sb-ink/50 p-4">

@@ -87,6 +87,17 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Reservation defaults now use the active profile contact, and the profile
   dashboard summarizes loyalty, active orders, and upcoming reservations.
 
+## Sprint 9 Status
+
+- Loyalty state now persists locally with points balance, lifetime tier
+  progress, member pass, reward redemptions, and points activity.
+- Checkout awards loyalty points only after a confirmed order, with duplicate
+  order awards blocked by order id.
+- Rewards validate availability, point cost, and balance before subtracting
+  points; invalid reward attempts leave points unchanged.
+- Favorites now support quick add-to-cart, offers include detail modals with
+  copyable codes, and referrals include a member code plus milestone progress.
+
 ## Scripts
 
 ```bash

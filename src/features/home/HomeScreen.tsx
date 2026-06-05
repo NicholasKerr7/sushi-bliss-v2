@@ -4,13 +4,13 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { SectionHeader } from "@/components/ui/SectionHeader";
 import { featuredAssets } from "@/data/assets";
-import { offers } from "@/data/offers";
 import { LocationsDirectory } from "@/features/locations/LocationsDirectory";
-import { FavoritesPreview } from "@/features/menu/FavoritesPreview";
+import { LoyaltyDashboard } from "@/features/loyalty/LoyaltyDashboard";
+import { FavoritesPage } from "@/features/menu/FavoritesPage";
 import { MenuExplorer } from "@/features/menu/MenuExplorer";
 import { PopularItems } from "@/features/menu/PopularItems";
+import { OffersDashboard } from "@/features/offers/OffersDashboard";
 import { OrdersDashboard } from "@/features/orders/OrdersDashboard";
 import { ProfileDashboard } from "@/features/profile/ProfileDashboard";
 import { ReservationsDashboard } from "@/features/reservations/ReservationsDashboard";
@@ -56,41 +56,13 @@ export function HomeScreen() {
 
       <PopularItems />
       <MenuExplorer />
-      <FavoritesPreview />
+      <FavoritesPage />
       <OrdersDashboard />
       <ReservationsDashboard />
       <LocationsDirectory />
       <ProfileDashboard />
-
-      <section
-        id="experience-preview"
-        className="border-b border-sb-line bg-sb-ink py-12 md:py-16"
-      >
-        <PageContainer>
-          <SectionHeader
-            eyebrow={<Badge tone="premium">Experiences</Badge>}
-            subtitle="Private tasting menus, seasonal offers, and celebratory dining packages."
-            title="Omakase and offers"
-          />
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {offers.map((offer) => (
-              <Card key={offer.id} className="p-5">
-                <Badge
-                  tone={offer.accent === "premium" ? "premium" : "neutral"}
-                >
-                  {offer.accent === "premium" ? "Premium" : "Dining"}
-                </Badge>
-                <h2 className="mt-4 text-xl font-semibold text-sb-rice">
-                  {offer.title}
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-sb-muted">
-                  {offer.description}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </PageContainer>
-      </section>
+      <LoyaltyDashboard />
+      <OffersDashboard />
 
       <section id="support-preview" className="bg-sb-ink py-12 md:py-16">
         <PageContainer>

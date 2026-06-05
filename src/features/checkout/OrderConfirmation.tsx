@@ -9,9 +9,14 @@ import type { Order } from "@/types/order";
 interface OrderConfirmationProps {
   onClose: () => void;
   order: Order | null;
+  pointsAwarded?: number;
 }
 
-export function OrderConfirmation({ onClose, order }: OrderConfirmationProps) {
+export function OrderConfirmation({
+  onClose,
+  order,
+  pointsAwarded = 0,
+}: OrderConfirmationProps) {
   return (
     <Modal
       description={
@@ -66,6 +71,14 @@ export function OrderConfirmation({ onClose, order }: OrderConfirmationProps) {
                 {order.paymentMethod.brand} {order.paymentMethod.last4}
               </span>
             </div>
+            {pointsAwarded > 0 ? (
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-sb-muted">Loyalty earned</span>
+                <span className="font-mono text-sb-wasabi">
+                  +{pointsAwarded} points
+                </span>
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}

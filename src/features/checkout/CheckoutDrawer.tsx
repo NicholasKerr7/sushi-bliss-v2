@@ -8,6 +8,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Select } from "@/components/ui/Select";
 import { useCart } from "@/hooks/useCart";
 import { useCheckout } from "@/hooks/useCheckout";
+import { useLoyalty } from "@/hooks/useLoyalty";
 import { useOrders } from "@/hooks/useOrders";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import type { Order } from "@/types/order";
@@ -27,8 +28,10 @@ interface CheckoutDrawerProps {
 export function CheckoutDrawer({ onOpenChange, open }: CheckoutDrawerProps) {
   const mode = useResponsiveMode();
   const { clearCart, isEmpty, items, subtotalCents } = useCart();
+  const { awardOrderPoints } = useLoyalty();
   const { addOrder } = useOrders();
   const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
+  const [confirmedPoints, setConfirmedPoints] = useState(0);
   const checkout = useCheckout(subtotalCents);
 
   const handlePlaceOrder = () => {
@@ -39,6 +42,7 @@ export function CheckoutDrawer({ onOpenChange, open }: CheckoutDrawerProps) {
     }
 
     addOrder(order);
+    setConfirmedPoints(awardOrderPoints(order));
     clearCart();
     onOpenChange(false);
     setConfirmedOrder(order);
@@ -140,8 +144,12 @@ export function CheckoutDrawer({ onOpenChange, open }: CheckoutDrawerProps) {
       </Drawer>
 
       <OrderConfirmation
-        onClose={() => setConfirmedOrder(null)}
+        onClose={() => {
+          setConfirmedOrder(null);
+          setConfirmedPoints(0);
+        }}
         order={confirmedOrder}
+        pointsAwarded={confirmedPoints}
       />
     </>
   );

@@ -36,6 +36,18 @@ export const primaryNavigation: NavigationItem[] = [
 export const desktopNavigation: NavigationItem[] = [
   ...primaryNavigation,
   {
+    id: "loyalty",
+    label: "Loyalty",
+    href: "#loyalty",
+    iconUrl: "/assets/icons/floral-emblem-icon.png",
+  },
+  {
+    id: "offers",
+    label: "Offers",
+    href: "#offers",
+    iconUrl: "/assets/icons/gift-icon.png",
+  },
+  {
     id: "support",
     label: "Support",
     href: "#support-preview",

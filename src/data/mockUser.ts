@@ -73,6 +73,8 @@ export const mockLoyaltyAccount: LoyaltyAccount = {
   points: 1840,
   tier: "gold",
   nextTierPoints: 3000,
+  lifetimePoints: 1840,
+  memberCode: "SB-GOLD-8421",
 };
 
 export const mockNotifications: AppNotification[] = [

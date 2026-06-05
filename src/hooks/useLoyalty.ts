@@ -1,39 +1,71 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useSyncExternalStore } from "react";
 
-import { mockLoyaltyAccount } from "@/data/mockUser";
-import type { LoyaltyAccount } from "@/types/loyalty";
+import { awardOrderPointsToState, redeemRewardFromState } from "@/lib/loyalty";
+import {
+  getLoyaltySnapshot,
+  parseStoredLoyaltyState,
+  readStoredLoyaltyState,
+  subscribeToLoyalty,
+  writeStoredLoyaltyState,
+} from "@/lib/loyaltyStorage";
+import type { LoyaltyState, Reward } from "@/types/loyalty";
+import type { Order } from "@/types/order";
 
-/** Encapsulates loyalty point awarding and redemption guardrails. */
-export function useLoyalty(
-  initialAccount: LoyaltyAccount = mockLoyaltyAccount,
-) {
-  const [account, setAccount] = useState<LoyaltyAccount>(initialAccount);
+/** Encapsulates persisted loyalty point awarding and redemption guardrails. */
+export function useLoyalty() {
+  const snapshot = useSyncExternalStore(
+    subscribeToLoyalty,
+    getLoyaltySnapshot,
+    getLoyaltySnapshot,
+  );
+  const state = useMemo(() => parseStoredLoyaltyState(snapshot), [snapshot]);
 
-  const awardPoints = useCallback((points: number) => {
-    setAccount((current) => ({
-      ...current,
-      points: current.points + Math.max(points, 0),
-    }));
+  const updateLoyaltyState = useCallback(
+    (updater: (state: LoyaltyState) => LoyaltyState) => {
+      writeStoredLoyaltyState(updater(readStoredLoyaltyState()));
+    },
+    [],
+  );
+
+  const awardOrderPoints = useCallback((order: Order) => {
+    const currentState = readStoredLoyaltyState();
+    const nextState = awardOrderPointsToState(currentState, order);
+
+    if (nextState === currentState) {
+      return 0;
+    }
+
+    writeStoredLoyaltyState(nextState);
+
+    const transaction = nextState.transactions.find(
+      (item) => item.orderId === order.id && item.type === "earn",
+    );
+
+    return transaction?.points || 0;
   }, []);
 
-  const redeemPoints = useCallback((points: number) => {
-    setAccount((current) => {
-      if (points <= 0 || current.points < points) {
-        return current;
-      }
+  const redeemReward = useCallback((reward: Reward) => {
+    const { result, state: nextState } = redeemRewardFromState(
+      readStoredLoyaltyState(),
+      reward,
+    );
 
-      return {
-        ...current,
-        points: current.points - points,
-      };
-    });
+    if (result.success) {
+      writeStoredLoyaltyState(nextState);
+    }
+
+    return result;
   }, []);
 
   return {
-    account,
-    awardPoints,
-    redeemPoints,
+    account: state.account,
+    awardOrderPoints,
+    redeemReward,
+    redeemedRewards: state.redeemedRewards,
+    state,
+    transactions: state.transactions,
+    updateLoyaltyState,
   };
 }
