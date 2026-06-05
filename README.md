@@ -98,6 +98,16 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Favorites now support quick add-to-cart, offers include detail modals with
   copyable codes, and referrals include a member code plus milestone progress.
 
+## Sprint 10 Status
+
+- Omakase experiences now include package selection, course previews, guest
+  count controls, sake pairing options, package review, and reservation entry.
+- Premium reservation cards connect chef counter and private room experiences
+  back into the reservation flow.
+- Gift experiences support recipient/sender details, message, delivery timing,
+  saved payment selection, validation, confirmation, and local persistence.
+- Sent gift confirmations appear in both the gift section and profile history.
+
 ## Scripts
 
 ```bash

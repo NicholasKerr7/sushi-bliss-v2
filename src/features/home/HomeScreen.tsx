@@ -5,10 +5,12 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { featuredAssets } from "@/data/assets";
+import { GiftExperienceSection } from "@/features/gifts/GiftExperienceSection";
 import { LocationsDirectory } from "@/features/locations/LocationsDirectory";
 import { LoyaltyDashboard } from "@/features/loyalty/LoyaltyDashboard";
 import { FavoritesPage } from "@/features/menu/FavoritesPage";
 import { MenuExplorer } from "@/features/menu/MenuExplorer";
+import { OmakaseExperienceSection } from "@/features/omakase/OmakaseExperienceSection";
 import { PopularItems } from "@/features/menu/PopularItems";
 import { OffersDashboard } from "@/features/offers/OffersDashboard";
 import { OrdersDashboard } from "@/features/orders/OrdersDashboard";
@@ -59,6 +61,8 @@ export function HomeScreen() {
       <FavoritesPage />
       <OrdersDashboard />
       <ReservationsDashboard />
+      <OmakaseExperienceSection />
+      <GiftExperienceSection />
       <LocationsDirectory />
       <ProfileDashboard />
       <LoyaltyDashboard />

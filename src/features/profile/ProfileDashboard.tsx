@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/Badge";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { mockOrders } from "@/data/orders";
 import { getMockReservations } from "@/data/reservations";
+import { GiftHistoryPanel } from "@/features/gifts/GiftHistoryPanel";
+import { useGifts } from "@/hooks/useGifts";
 import { useLoyalty } from "@/hooks/useLoyalty";
 import { useOrders } from "@/hooks/useOrders";
 import { useProfile } from "@/hooks/useProfile";
@@ -34,6 +36,7 @@ export function ProfileDashboard() {
   } = useProfile();
   const mockReservations = useMemo(() => getMockReservations(), []);
   const currentTime = useMemo(() => new Date().getTime(), []);
+  const { confirmations } = useGifts();
   const { account } = useLoyalty();
   const { activeOrders } = useOrders(mockOrders);
   const { upcomingReservations } = useReservations(
@@ -87,6 +90,7 @@ export function ProfileDashboard() {
               onSavePaymentMethod={savePaymentMethod}
               paymentMethods={profile.paymentMethods}
             />
+            <GiftHistoryPanel confirmations={confirmations} />
             <SecurityPanel
               onResetProfile={resetProfile}
               onUpdatePreferences={updateProfilePreferences}

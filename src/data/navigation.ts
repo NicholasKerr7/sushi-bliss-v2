@@ -42,6 +42,18 @@ export const desktopNavigation: NavigationItem[] = [
     iconUrl: "/assets/icons/floral-emblem-icon.png",
   },
   {
+    id: "omakase",
+    label: "Omakase",
+    href: "#omakase",
+    iconUrl: "/assets/icons/sushi-menu-icon.png",
+  },
+  {
+    id: "gifts",
+    label: "Gifts",
+    href: "#gifts",
+    iconUrl: "/assets/icons/gift-icon.png",
+  },
+  {
     id: "offers",
     label: "Offers",
     href: "#offers",
