@@ -120,6 +120,17 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Customer brand/support pages are integrated into the home flow without
   reviving the old monolithic app structure.
 
+## Sprint 12 Status
+
+- Backend-ready service boundaries now live in `src/services`, returning typed
+  mock-backed `ServiceResponse<T>` values until Supabase is wired.
+- Supabase and Stripe placeholders read env configuration without constructing
+  SDK clients or exposing server secrets.
+- `.env.example` documents public Supabase keys, server-only Supabase service
+  role usage, and future Stripe values.
+- Backend planning docs cover service boundaries, suggested API routes, schema
+  tables, RLS models, and first-pass indexes.
+
 ## Scripts
 
 ```bash
