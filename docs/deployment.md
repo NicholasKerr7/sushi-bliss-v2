@@ -26,6 +26,9 @@ pull requests targeting `main`. It installs Chromium for Playwright, uploads
 Playwright artifacts on failure, and can also be started manually from the
 Actions tab.
 
+Dependabot checks npm dependencies and GitHub Actions weekly so routine updates
+arrive as isolated pull requests.
+
 ## Vercel CLI
 
 Use the linked Vercel project from the repository root:

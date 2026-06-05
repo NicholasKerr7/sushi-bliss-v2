@@ -1,5 +1,7 @@
 # Sushi Bliss v2
 
+[![Release Checks](https://github.com/NicholasKerr7/sushi-bliss-v2/actions/workflows/release-checks.yml/badge.svg)](https://github.com/NicholasKerr7/sushi-bliss-v2/actions/workflows/release-checks.yml)
+
 Clean mobile-first rebuild of Sushi Bliss with Next.js, TypeScript, Tailwind
 CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 
