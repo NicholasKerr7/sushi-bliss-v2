@@ -24,6 +24,32 @@ interface TabletSectionProps {
   title: string;
 }
 
+const tabletCategoryTabs = [
+  { id: "all", icon: icons.star, label: "Recommended" },
+  { id: "nigiri", icon: icons.nigiri, label: "Nigiri" },
+  { id: "rolls", icon: icons.menu, label: "Rolls" },
+  { id: "sashimi", icon: icons.sashimi, label: "Sashimi" },
+  { id: "chef-specials", icon: icons.crown, label: "Chef Specials" },
+  { id: "vegetarian", icon: icons.leaf, label: "Vegetarian" },
+  {
+    disabledReason: "Drinks coming soon",
+    id: "drinks",
+    icon: icons.miso,
+    label: "Drinks",
+  },
+] as const;
+
+function isAvailableTabletCategory(
+  categories: MenuCategory[],
+  categoryId: string,
+) {
+  if (categoryId === "all" || categoryId === "chef-specials") {
+    return true;
+  }
+
+  return categories.some((item) => item.id === categoryId);
+}
+
 export function TabletCategoryBar({
   category,
   categories,
@@ -34,22 +60,30 @@ export function TabletCategoryBar({
       aria-label="Tablet menu categories"
       className="mt-4 grid grid-cols-7 rounded-[12px] border border-white/14 bg-white/[0.035]"
     >
-      {categories.slice(0, 7).map((item) => (
-        <button
-          aria-pressed={category === item.id}
-          className={`flex min-h-[48px] items-center justify-center gap-3 border-r border-white/10 px-4 text-sm uppercase last:border-r-0 ${
-            category === item.id
-              ? "bg-[var(--sb-gold)]/28 text-[var(--sb-gold)]"
-              : "text-white/72"
-          }`}
-          key={item.id}
-          onClick={() => onSelectCategory(item.id)}
-          type="button"
-        >
-          <AssetIcon size={22} src={getCategoryIcon(item.id)} />
-          {item.label}
-        </button>
-      ))}
+      {tabletCategoryTabs.map((item) => {
+        const disabled =
+          "disabledReason" in item ||
+          !isAvailableTabletCategory(categories, item.id);
+
+        return (
+          <button
+            aria-pressed={category === item.id}
+            className={`flex min-h-[48px] items-center justify-center gap-3 border-r border-white/10 px-4 text-sm uppercase last:border-r-0 disabled:cursor-not-allowed disabled:opacity-45 ${
+              category === item.id
+                ? "bg-[var(--sb-gold)]/28 text-[var(--sb-gold)]"
+                : "text-white/72"
+            }`}
+            disabled={disabled}
+            key={item.id}
+            onClick={() => onSelectCategory(item.id)}
+            title={"disabledReason" in item ? item.disabledReason : undefined}
+            type="button"
+          >
+            <AssetIcon size={22} src={item.icon} />
+            {item.label}
+          </button>
+        );
+      })}
     </nav>
   );
 }
@@ -61,22 +95,30 @@ export function TabletCategoryTiles({
 }: TabletCategoryControlProps) {
   return (
     <div className="mt-4 grid grid-cols-7 gap-3">
-      {categories.slice(0, 7).map((item) => (
-        <button
-          aria-pressed={category === item.id}
-          className={`flex min-h-[108px] flex-col items-center justify-center gap-2 rounded-[10px] border text-sm uppercase ${
-            category === item.id
-              ? "border-[var(--sb-gold)] bg-[var(--sb-red)]/18 text-white shadow-[0_0_22px_var(--sb-red-glow)]"
-              : "border-white/12 bg-white/[0.035] text-white/78"
-          }`}
-          key={item.id}
-          onClick={() => onSelectCategory(item.id)}
-          type="button"
-        >
-          <AssetIcon size={34} src={getCategoryIcon(item.id)} />
-          {item.label}
-        </button>
-      ))}
+      {tabletCategoryTabs.map((item) => {
+        const disabled =
+          "disabledReason" in item ||
+          !isAvailableTabletCategory(categories, item.id);
+
+        return (
+          <button
+            aria-pressed={category === item.id}
+            className={`flex min-h-[108px] flex-col items-center justify-center gap-2 rounded-[10px] border text-sm uppercase disabled:cursor-not-allowed disabled:opacity-45 ${
+              category === item.id
+                ? "border-[var(--sb-gold)] bg-[var(--sb-red)]/18 text-white shadow-[0_0_22px_var(--sb-red-glow)]"
+                : "border-white/12 bg-white/[0.035] text-white/78"
+            }`}
+            disabled={disabled}
+            key={item.id}
+            onClick={() => onSelectCategory(item.id)}
+            title={"disabledReason" in item ? item.disabledReason : undefined}
+            type="button"
+          >
+            <AssetIcon size={34} src={item.icon} />
+            {item.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -125,6 +167,41 @@ export function TabletSelectButton({ label }: { label: string }) {
   );
 }
 
+export function TabletFilterSelect({
+  label,
+  onChange,
+  options,
+  value,
+}: {
+  label: string;
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="relative block">
+      <span className="sr-only">{label}</span>
+      <select
+        className="h-12 min-w-[150px] appearance-none rounded-[9px] border border-[var(--sb-border)] bg-black/22 px-5 pr-10 text-sm uppercase text-white outline-none focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/25"
+        onChange={(event) => onChange(event.target.value)}
+        value={value}
+      >
+        {options.map((option) => (
+          <option className="bg-[#050607] text-white" key={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--sb-gold)]"
+      >
+        v
+      </span>
+    </label>
+  );
+}
+
 export function TabletSection({ children, icon, title }: TabletSectionProps) {
   return (
     <section className="mt-4 rounded-[14px] border border-white/14 bg-white/[0.035] p-4">
@@ -145,14 +222,4 @@ export function TabletSection({ children, icon, title }: TabletSectionProps) {
       {children}
     </section>
   );
-}
-
-function getCategoryIcon(categoryId: string) {
-  if (categoryId === "all") return icons.flower;
-  if (categoryId === "nigiri") return icons.nigiri;
-  if (categoryId === "rolls") return icons.menu;
-  if (categoryId === "sashimi") return icons.sashimi;
-  if (categoryId === "vegetarian") return icons.leaf;
-  if (categoryId === "drinks") return icons.miso;
-  return icons.crown;
 }

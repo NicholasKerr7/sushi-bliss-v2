@@ -8,6 +8,7 @@ import {
   TabletMenuStatusBar,
 } from "./TabletMenuChrome";
 import { TabletMenuOverview } from "./TabletMenuOverview";
+import { TabletNigiriCategoryView } from "./TabletNigiriCategoryView";
 import { TabletSearchFilter } from "./TabletSearchFilter";
 import { tabletSearchFallbackItems } from "./tabletMenuData";
 
@@ -68,6 +69,14 @@ export function TabletMenuExplorer({
           onQueryChange={onQueryChange}
           onSelectCategory={onSelectCategory}
           onToggleFavorite={onToggleFavorite}
+          onViewDetails={onViewDetails}
+        />
+      ) : category === "nigiri" ? (
+        <TabletNigiriCategoryView
+          categories={categories}
+          onAddToCart={onAddToCart}
+          onQueryChange={onQueryChange}
+          onSelectCategory={onSelectCategory}
           onViewDetails={onViewDetails}
         />
       ) : (

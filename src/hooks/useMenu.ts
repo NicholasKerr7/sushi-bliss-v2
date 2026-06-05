@@ -11,18 +11,31 @@ const allCategory: MenuCategory = {
   label: "All",
 };
 
+const chefSpecialCategory: MenuCategory = {
+  id: "chef-specials",
+  itemCount: menuItems.filter((item) => item.tags.includes("chef-special"))
+    .length,
+  label: "Chef Specials",
+};
+
 /** Filters normalized menu data by category and full search text. */
 export function useMenu() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
 
-  const categories = useMemo(() => [allCategory, ...menuCategories], []);
+  const categories = useMemo(
+    () => [allCategory, chefSpecialCategory, ...menuCategories],
+    [],
+  );
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     return menuItems.filter((item) => {
-      const matchesCategory = category === "all" || item.category === category;
+      const matchesCategory =
+        category === "all" ||
+        (category === "chef-specials" && item.tags.includes("chef-special")) ||
+        item.category === category;
       const matchesQuery =
         normalizedQuery.length === 0 ||
         item.searchText.includes(normalizedQuery);

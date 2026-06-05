@@ -1,7 +1,7 @@
 import { menuItemById, menuItems } from "@/data/menu";
 import type { MenuItem } from "@/types/menu";
 
-function getMenuItemsById(ids: string[]): MenuItem[] {
+export function getMenuItemsById(ids: string[]): MenuItem[] {
   return ids
     .map((id) => menuItemById.get(id))
     .filter((item): item is MenuItem => Boolean(item));
@@ -33,6 +33,15 @@ export const tabletSearchFallbackItems = getMenuItemsById([
   "spicy-tuna-crunch-roll",
   "spicy-yellowtail-roll",
   "firecracker-roll",
+]);
+
+export const tabletNigiriItems = getMenuItemsById([
+  "otoro-nigiri",
+  "salmon-nigiri",
+  "hamachi-nigiri",
+  "uni-nigiri",
+  "ebi-nigiri",
+  "ikura-gunkan",
 ]);
 
 export const recentTabletSearches = [
