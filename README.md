@@ -140,11 +140,22 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Admin functionality is mock/local state only, keeping future Supabase CRUD
   boundaries ready without polluting the customer app shell.
 
+## Sprint 14 Status
+
+- Playwright is configured for desktop and mobile Chromium smoke coverage.
+- E2E tests verify the customer home/menu/add-to-cart path and the admin
+  dashboard controls.
+- Image loading and icon sizing warnings from the browser QA pass were cleaned
+  up.
+- Browser verification confirms `/` and `/admin` render content without a
+  framework error overlay.
+
 ## Scripts
 
 ```bash
 npm run dev
 npm run lint
+npm run test
 npm run typecheck
 npm run build
 npm run format:check

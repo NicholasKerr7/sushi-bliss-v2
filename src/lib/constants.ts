@@ -7,7 +7,7 @@ export const SALES_TAX_RATE = 0.08875;
 export const SERVICE_FEE_CENTS = 250;
 
 export const ASSET_FALLBACKS = {
-  menuItem: "/assets/editorial/hero-otoro-nigiri-no-red-moon.webp",
+  menuItem: "/assets/food/luxury-sushi-platter-on-marble-surface.webp",
   brandLogo: "/assets/brand/sushi-bliss-primary-logo.png",
   brandIcon: "/assets/brand/sushi-bliss-app-icon.png",
 } as const;

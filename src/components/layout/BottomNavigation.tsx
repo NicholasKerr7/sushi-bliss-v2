@@ -20,9 +20,9 @@ export function BottomNavigation() {
                   <Image
                     src={item.iconUrl}
                     alt=""
-                    width={24}
-                    height={24}
-                    className="max-h-5 w-auto object-contain"
+                    width={20}
+                    height={20}
+                    className="h-5 w-5 object-contain"
                   />
                 </span>
               ) : null}

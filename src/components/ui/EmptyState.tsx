@@ -24,7 +24,7 @@ export function EmptyState({
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-sb-gold/30 bg-sb-gold/10">
         <Image
           alt=""
-          className="h-7 w-auto object-contain"
+          className="h-7 w-7 object-contain"
           height={28}
           src={iconUrl}
           width={28}

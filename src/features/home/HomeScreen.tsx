@@ -34,8 +34,9 @@ export function HomeScreen() {
             "Otoro nigiri presented on a dark luxury surface"
           }
           fill
+          loading="eager"
+          preload
           sizes="100vw"
-          priority
           className="object-cover opacity-[0.62]"
         />
         <div className="absolute inset-0 bg-sb-ink/60" />

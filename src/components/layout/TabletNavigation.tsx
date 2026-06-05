@@ -35,10 +35,10 @@ export function TabletNavigation() {
                   <span className="flex h-6 w-6 items-center justify-center">
                     <Image
                       alt=""
-                      className="max-h-6 w-auto object-contain"
-                      height={28}
+                      className="h-6 w-6 object-contain"
+                      height={24}
                       src={item.iconUrl}
-                      width={28}
+                      width={24}
                     />
                   </span>
                 ) : null}
