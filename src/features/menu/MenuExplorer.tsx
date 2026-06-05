@@ -155,11 +155,13 @@ export function MenuExplorer() {
           item={selectedItem}
           key={selectedItem.id}
           onAdded={handleItemAdded}
+          onOpenCart={() => setCartOpen(true)}
           onOpenChange={(nextOpen) => {
             if (!nextOpen) {
               setSelectedItem(null);
             }
           }}
+          onSearchQueryChange={setQuery}
           open={Boolean(selectedItem)}
         />
       ) : null}

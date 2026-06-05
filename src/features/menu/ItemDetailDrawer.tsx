@@ -8,6 +8,7 @@ import { Drawer } from "@/components/ui/Drawer";
 import { QuantityControl } from "@/components/ui/QuantityControl";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { useCart } from "@/hooks/useCart";
+import { useFavorites } from "@/hooks/useFavorites";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import {
   calculateCartLineUnitPrice,
@@ -20,11 +21,14 @@ import type { MenuItem } from "@/types/menu";
 
 import { ItemAddOnSelector } from "./ItemAddOnSelector";
 import { ItemCustomizationControls } from "./ItemCustomizationControls";
+import { TabletItemDetailDialog } from "./TabletItemDetailDialog";
 
 interface ItemDetailDrawerProps {
   item: MenuItem;
   onAdded: () => void;
   onOpenChange: (open: boolean) => void;
+  onOpenCart?: () => void;
+  onSearchQueryChange?: (query: string) => void;
   open: boolean;
 }
 
@@ -32,10 +36,13 @@ export function ItemDetailDrawer({
   item,
   onAdded,
   onOpenChange,
+  onOpenCart,
+  onSearchQueryChange,
   open,
 }: ItemDetailDrawerProps) {
   const mode = useResponsiveMode();
-  const { addItem } = useCart();
+  const { addItem, itemCount: cartItemCount } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const availableAddOns = useMemo(() => getAvailableAddOns(item), [item]);
   const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState("");
@@ -83,6 +90,43 @@ export function ItemDetailDrawer({
     });
     onAdded();
   };
+
+  const handleAddRelatedItem = (relatedItem: MenuItem) => {
+    addItem({
+      addOns: [],
+      customizations: getDefaultCustomizations(),
+      menuItem: relatedItem,
+      quantity: 1,
+    });
+  };
+
+  if (mode === "tablet") {
+    return (
+      <TabletItemDetailDialog
+        availableAddOns={availableAddOns}
+        cartItemCount={cartItemCount}
+        customizations={customizations}
+        isFavorite={isFavorite(item.id)}
+        item={item}
+        notes={notes}
+        open={open}
+        quantity={quantity}
+        selectedAddOnIds={selectedAddOnIds}
+        totalCents={totalCents}
+        unitPriceCents={unitPriceCents}
+        onAddOnToggle={handleAddOnToggle}
+        onAddRelatedItem={handleAddRelatedItem}
+        onAddToCart={handleAddToCart}
+        onClose={() => onOpenChange(false)}
+        onCustomizationChange={handleCustomizationChange}
+        onNotesChange={setNotes}
+        onOpenCart={() => onOpenCart?.()}
+        onQuantityChange={setQuantity}
+        onSearchQueryChange={onSearchQueryChange}
+        onToggleFavorite={() => toggleFavorite(item.id)}
+      />
+    );
+  }
 
   return (
     <Drawer

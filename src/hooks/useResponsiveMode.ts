@@ -6,7 +6,7 @@ export type ResponsiveMode = "mobile" | "tablet" | "desktop";
 
 /** Maps viewport width to the app's layout mode breakpoints. */
 function getResponsiveMode(width: number): ResponsiveMode {
-  if (width >= 1024) {
+  if (width >= 1280) {
     return "desktop";
   }
 

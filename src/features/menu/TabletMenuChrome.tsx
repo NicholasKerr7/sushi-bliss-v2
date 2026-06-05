@@ -10,6 +10,7 @@ interface TabletMenuHeaderProps {
   onClearQuery: () => void;
   onOpenCart: () => void;
   onQueryChange: (query: string) => void;
+  onSubmitQuery?: (query: string) => void;
 }
 
 export function TabletMenuStatusBar() {
@@ -34,6 +35,7 @@ export function TabletMenuHeader({
   onClearQuery,
   onOpenCart,
   onQueryChange,
+  onSubmitQuery,
 }: TabletMenuHeaderProps) {
   return (
     <header className="mt-1 grid h-[82px] grid-cols-[260px_1fr_268px] items-center gap-5">
@@ -56,6 +58,7 @@ export function TabletMenuHeader({
         }`}
         onSubmit={(event) => {
           event.preventDefault();
+          onSubmitQuery?.(query);
         }}
       >
         <AssetIcon size={24} src={icons.search} />
