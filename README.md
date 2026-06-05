@@ -131,6 +131,15 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Backend planning docs cover service boundaries, suggested API routes, schema
   tables, RLS models, and first-pass indexes.
 
+## Sprint 13 Status
+
+- A separated `/admin` route now uses its own admin shell and navigation.
+- The admin dashboard includes overview metrics, menu controls, order status
+  advancement, reservation status controls, offer visibility, location review
+  flags, customer summaries, and operations analytics.
+- Admin functionality is mock/local state only, keeping future Supabase CRUD
+  boundaries ready without polluting the customer app shell.
+
 ## Scripts
 
 ```bash
