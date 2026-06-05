@@ -19,6 +19,13 @@ npm run build
 npm audit --audit-level=moderate
 ```
 
+## GitHub Actions
+
+The `Release Checks` workflow runs the required release checks on pushes and
+pull requests targeting `main`. It installs Chromium for Playwright, uploads
+Playwright artifacts on failure, and can also be started manually from the
+Actions tab.
+
 ## Vercel CLI
 
 Use the linked Vercel project from the repository root:

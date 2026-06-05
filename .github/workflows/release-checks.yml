@@ -1,0 +1,68 @@
+name: Release Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: true
+  group: release-checks-${{ github.ref }}
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: Audit
+        run: npm audit --audit-level=moderate
+
+      - name: Upload Playwright artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: ignore
+          name: playwright-artifacts
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7

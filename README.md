@@ -179,7 +179,8 @@ Supabase or Stripe secrets.
 
 ## Deployment
 
-See `docs/deployment.md` for the release checklist and Vercel CLI flow.
+See `docs/deployment.md` for the release checklist, GitHub Actions workflow,
+and Vercel CLI flow.
 
 ## Asset Source
 
