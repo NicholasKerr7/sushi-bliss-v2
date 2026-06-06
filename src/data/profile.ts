@@ -1,14 +1,15 @@
 import type { SelectOption } from "@/types/common";
 
 export const dietaryPreferenceOptions = [
-  "no shellfish",
-  "gluten conscious",
-  "low sodium",
-  "vegetarian",
-  "no raw egg",
-  "sesame free",
-  "spicy preferred",
-  "omakase adventurous",
+  "No Preference",
+  "Vegetarian",
+  "Vegan",
+  "Gluten-Free",
+  "Dairy-Free",
+  "Nut Allergy",
+  "Pescatarian",
+  "Keto",
+  "Other",
 ];
 
 export const paymentBrandOptions: SelectOption[] = [

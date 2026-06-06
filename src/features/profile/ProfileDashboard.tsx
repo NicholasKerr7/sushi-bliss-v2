@@ -13,6 +13,7 @@ import { useLoyalty } from "@/hooks/useLoyalty";
 import { useOrders } from "@/hooks/useOrders";
 import { useProfile } from "@/hooks/useProfile";
 import { useReservations } from "@/hooks/useReservations";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 
 import { AddressBook } from "./AddressBook";
 import { PaymentMethodsPanel } from "./PaymentMethodsPanel";
@@ -20,8 +21,10 @@ import { PreferencesPanel } from "./PreferencesPanel";
 import { ProfileDetailsForm } from "./ProfileDetailsForm";
 import { ProfileSummary } from "./ProfileSummary";
 import { SecurityPanel } from "./SecurityPanel";
+import { TabletProfileExperience } from "./TabletProfileExperience";
 
 export function ProfileDashboard() {
+  const mode = useResponsiveMode();
   const {
     deleteAddress,
     deletePaymentMethod,
@@ -43,6 +46,21 @@ export function ProfileDashboard() {
     mockReservations,
     currentTime,
   );
+
+  if (mode === "tablet") {
+    return (
+      <TabletProfileExperience
+        account={account}
+        activeOrderCount={activeOrders.length}
+        profile={profile}
+        upcomingReservations={upcomingReservations}
+        onDeletePaymentMethod={deletePaymentMethod}
+        onMakeDefaultPaymentMethod={makeDefaultPaymentMethod}
+        onSavePaymentMethod={savePaymentMethod}
+        onUpdatePreferences={updateProfilePreferences}
+      />
+    );
+  }
 
   return (
     <section
