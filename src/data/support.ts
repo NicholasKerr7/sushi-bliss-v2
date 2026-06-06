@@ -65,7 +65,7 @@ export const helpArticles: HelpArticle[] = [
     body: [
       "Pickup windows are confirmed during checkout and stored with your order confirmation.",
       "For delivery, the order detail panel shows courier assignment, estimated arrival, and a map preview once an order is active.",
-      "Use reorder from the order dashboard to restore the original menu items, add-ons, and customizations.",
+      "Use reorder from Orders to restore the original menu items, add-ons, and customizations.",
     ],
     category: "Orders",
     id: "order-tracking",
@@ -75,7 +75,7 @@ export const helpArticles: HelpArticle[] = [
   {
     body: [
       "Reservations require a future date and an available slot before confirmation.",
-      "Upcoming reservations can be modified or cancelled from the reservations dashboard.",
+      "Upcoming reservations can be modified or cancelled from Reservations.",
       "Occasion and seating notes stay attached to the booking for concierge review.",
     ],
     category: "Reservations",

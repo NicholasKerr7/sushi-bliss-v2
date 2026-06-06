@@ -449,7 +449,7 @@ function TabletBenefitsStrip() {
 function TabletBottomNav() {
   return (
     <nav
-      aria-label="Tablet dashboard navigation"
+      aria-label="Tablet home navigation"
       className="mt-9 rounded-[14px] border border-white/10 bg-white/[0.035] p-1"
     >
       <ul className="grid grid-cols-5">

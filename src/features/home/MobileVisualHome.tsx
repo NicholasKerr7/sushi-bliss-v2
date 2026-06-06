@@ -332,7 +332,7 @@ function MemberCard({
 function MobileDashboardNav() {
   return (
     <nav
-      aria-label="Mobile dashboard navigation"
+      aria-label="Mobile home navigation"
       className="mt-6 rounded-[18px] border border-white/[0.06] bg-white/[0.035] p-1 backdrop-blur-xl"
     >
       <ul className="grid grid-cols-5 gap-1">

@@ -7,15 +7,15 @@ import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 
 interface TabletProfileBottomNavProps {
-  active?: "dashboard" | "profile";
+  active?: "home" | "profile";
 }
 
 const profileNav = [
   {
-    activeKey: "dashboard",
+    activeKey: "home",
     href: "/home",
-    icon: icons.settings,
-    label: "Dashboard",
+    icon: icons.home,
+    label: "Home",
   },
   {
     activeKey: "reservations",

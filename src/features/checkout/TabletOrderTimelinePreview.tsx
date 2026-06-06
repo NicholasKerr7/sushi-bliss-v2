@@ -29,7 +29,7 @@ export function TabletOrderTimelinePreview({
             Order progress
           </h2>
           <p className="mt-1 text-[14px] text-white/52">
-            Updates continue in your orders dashboard.
+            Updates continue in Orders.
           </p>
         </div>
         <StatusBadge tone={getOrderStatusTone(order.status)}>

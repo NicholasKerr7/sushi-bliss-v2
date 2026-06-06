@@ -91,7 +91,7 @@ export function OrdersDashboard() {
           }
           eyebrow={<Badge>Orders</Badge>}
           subtitle="Follow active pickup or delivery progress, review receipts, and reorder previous selections."
-          title="Order dashboard"
+          title="Orders"
         />
 
         {reorderMessage ? (
