@@ -13,7 +13,7 @@ export const sakePairingOptions: SakePairingOption[] = [
       "Three seasonal pours calibrated around fatty tuna, shellfish, and dessert.",
     id: "seasonal-sake-flight",
     label: "Seasonal sake flight",
-    priceCents: 3800,
+    priceCents: 3000,
   },
   {
     description:
@@ -61,9 +61,8 @@ export const omakasePackages: OmakasePackage[] = [
         title: "Matcha gold mousse",
       },
     ],
-    description:
-      "A focused counter tasting built around premium nigiri, chef pacing, and a refined dessert finish.",
-    durationMinutes: 105,
+    description: "A refined journey through sushi fundamentals.",
+    durationMinutes: 75,
     guestRange: { max: 4, min: 1 },
     id: "counter-signature",
     image: {
@@ -72,14 +71,14 @@ export const omakasePackages: OmakasePackage[] = [
         "/assets/omakase/specialties/lead-chef-omakase-nigiri-flight.webp",
     },
     inclusions: [
-      "10 course counter tasting",
-      "Chef pacing notes",
+      "7 course counter tasting",
+      "Chef fundamentals",
       "Welcome tea service",
     ],
-    priceCents: 14500,
-    subtitle: "Counter tasting",
+    priceCents: 12000,
+    subtitle: "7 courses",
     tier: "counter",
-    title: "Counter Signature",
+    title: "Essential",
   },
   {
     accent: "premium",
@@ -119,8 +118,8 @@ export const omakasePackages: OmakasePackage[] = [
       },
     ],
     description:
-      "A broader seasonal tasting with sashimi, nigiri, warm courses, and optional sake pairings.",
-    durationMinutes: 135,
+      "An elevated experience featuring rare and seasonal selections.",
+    durationMinutes: 90,
     guestRange: { max: 6, min: 2 },
     id: "seasonal-mastery",
     image: {
@@ -128,14 +127,14 @@ export const omakasePackages: OmakasePackage[] = [
       publicUrl: "/assets/editorial/luxury-seafood-and-wagyu-selection.webp",
     },
     inclusions: [
-      "14 course seasonal tasting",
+      "10 course seasonal tasting",
       "Warm course interlude",
       "Printed course card",
     ],
-    priceCents: 21500,
-    subtitle: "Seasonal tasting",
+    priceCents: 18000,
+    subtitle: "10 courses",
     tier: "seasonal",
-    title: "Seasonal Mastery",
+    title: "Premium",
   },
   {
     accent: "success",
@@ -175,7 +174,7 @@ export const omakasePackages: OmakasePackage[] = [
       },
     ],
     description:
-      "A private-room premium tasting for celebrations, gifting, and concierge-led dining.",
+      "The ultimate omakase journey. Exclusive, exquisite, unforgettable.",
     durationMinutes: 150,
     guestRange: { max: 8, min: 4 },
     id: "private-kintsugi",
@@ -189,10 +188,10 @@ export const omakasePackages: OmakasePackage[] = [
       "Concierge occasion notes",
       "Celebration dessert",
     ],
-    priceCents: 28500,
-    subtitle: "Private experience",
+    priceCents: 25000,
+    subtitle: "12+ courses",
     tier: "private",
-    title: "Private Kintsugi",
+    title: "Bliss Signature",
   },
 ];
 

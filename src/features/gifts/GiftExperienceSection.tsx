@@ -11,15 +11,30 @@ import { GiftExperienceCard } from "@/features/gifts/GiftExperienceCard";
 import { GiftHistoryPanel } from "@/features/gifts/GiftHistoryPanel";
 import { useGifts } from "@/hooks/useGifts";
 import { useProfile } from "@/hooks/useProfile";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import type { GiftConfirmation, GiftExperience } from "@/types/gift";
 
+import { TabletGiftExperience } from "./TabletGiftExperience";
+
 export function GiftExperienceSection() {
+  const mode = useResponsiveMode();
   const { profile } = useProfile();
   const { confirmations, giftExperiences, sendGift } = useGifts();
   const [selectedGift, setSelectedGift] = useState<GiftExperience | null>(null);
   const [confirmation, setConfirmation] = useState<GiftConfirmation | null>(
     null,
   );
+
+  if (mode === "tablet") {
+    return (
+      <TabletGiftExperience
+        giftExperiences={giftExperiences}
+        paymentMethods={profile.paymentMethods}
+        profile={profile}
+        onSubmitGift={(draft) => sendGift(draft, profile.paymentMethods)}
+      />
+    );
+  }
 
   return (
     <section

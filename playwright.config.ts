@@ -23,18 +23,18 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   testDir: "./tests/e2e",
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://127.0.0.1:3000",
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000",
     screenshot: "only-on-failure",
     trace: "on-first-retry",
     video: "retain-on-failure",
   },
   webServer: {
-    command: "npm run dev -- --hostname 127.0.0.1",
+    command: "npm run dev -- --hostname localhost",
     env: {
       NEXT_TELEMETRY_DISABLED: "1",
     },
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
-    url: "http://127.0.0.1:3000",
+    url: "http://localhost:3000",
   },
 });

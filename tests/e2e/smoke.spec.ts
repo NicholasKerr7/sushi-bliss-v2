@@ -34,7 +34,9 @@ test.describe("customer experience", () => {
     await expect(
       menuSection.getByRole("heading", { name: "Otoro Nigiri" }),
     ).toBeVisible();
-    await expect(menuSection.getByText(/Showing 1 item in All/i)).toBeVisible();
+    await expect(
+      menuSection.getByText(/Showing\s+1\s+item\s+in\s+All/i),
+    ).toBeVisible();
 
     await menuSection.getByRole("button", { name: "Details" }).click();
     await expect(
@@ -68,6 +70,7 @@ test.describe("admin experience", () => {
     ).toBeVisible();
 
     await page.getByRole("button", { name: "Pause Ikura Gunkan" }).click();
+    await expect(page.locator("#menu-admin").getByText("Paused")).toBeVisible();
     await expect(
       page.getByRole("button", { name: "Resume Ikura Gunkan" }),
     ).toBeVisible();

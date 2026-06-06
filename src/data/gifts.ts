@@ -5,58 +5,54 @@ export const giftExperiences: GiftExperience[] = [
     category: "Omakase",
     deliveryNote: "Delivered instantly by email with a printable gift pass.",
     description:
-      "A polished gift pass for a chef-led counter tasting with flexible booking.",
+      "Chef's curated multi-course omakase journey with flexible booking.",
     id: "counter-omakase-gift",
     image: {
-      alt: "Luxury sushi gift box",
-      publicUrl:
-        "/assets/brand/gift-cards/luxury-sushi-with-gift-box-elegance.webp",
+      alt: "Omakase counter experience",
+      publicUrl: "/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp",
     },
     inclusions: [
-      "Counter Signature tasting credit",
-      "Welcome tea service",
+      "Chef's curated multi-course omakase journey",
+      "Two guest digital gift pass",
       "Recipient booking concierge",
     ],
-    priceCents: 14500,
-    title: "Counter Omakase Gift",
+    priceCents: 18000,
+    title: "Omakase Experience",
   },
   {
     category: "Premium",
     deliveryNote: "Scheduled delivery available for celebrations.",
     description:
-      "A premium tasting credit with sake-pairing flexibility and a ceremonial gift note.",
+      "An intimate dining experience in a private room with concierge support.",
     id: "seasonal-tasting-gift",
     image: {
-      alt: "Premium gift box with red ribbon",
-      publicUrl:
-        "/assets/brand/gift-cards/premium-gift-box-with-red-ribbon.webp",
+      alt: "Private dining room",
+      publicUrl: "/assets/gallery/intimate-upscale-dining-room-setting.webp",
     },
     inclusions: [
-      "Seasonal Mastery tasting credit",
-      "Optional sake pairing upgrade",
-      "Printed occasion message",
+      "Private dining experience",
+      "Celebration occasion notes",
+      "Flexible recipient booking",
     ],
-    priceCents: 21500,
-    title: "Seasonal Tasting Gift",
+    priceCents: 25000,
+    title: "Private Dining",
   },
   {
-    category: "Flexible",
+    category: "Class",
     deliveryNote: "Email gift card with recipient booking support.",
-    description:
-      "A flexible Sushi Bliss experience credit for pickup, reservations, or omakase.",
+    description: "Learn from our master chefs in an immersive sushi class.",
     id: "bliss-experience-credit",
     image: {
-      alt: "Elegant gift card with red ribbon",
-      publicUrl:
-        "/assets/brand/gift-cards/elegant-gift-card-with-red-ribbon.webp",
+      alt: "Sushi master class",
+      publicUrl: "/assets/gallery/precision-in-sushi-preparation.webp",
     },
     inclusions: [
-      "Flexible dining credit",
-      "Menu, reservation, or gift checkout use",
-      "Concierge support",
+      "Hands-on chef instruction",
+      "Seasonal sushi tasting",
+      "Take-home technique card",
     ],
-    priceCents: 10000,
-    title: "Bliss Experience Credit",
+    priceCents: 15000,
+    title: "Sushi Master Class",
   },
 ];
 

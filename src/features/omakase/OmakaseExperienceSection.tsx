@@ -10,13 +10,16 @@ import { Card } from "@/components/ui/Card";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { premiumReservationCards } from "@/data/omakase";
 import { useOmakase } from "@/hooks/useOmakase";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { formatMoney } from "@/lib/money";
 
 import { OmakasePackageCard } from "./OmakasePackageCard";
 import { OmakaseReviewModal } from "./OmakaseReviewModal";
 import { PremiumReservationCard } from "./PremiumReservationCard";
+import { TabletOmakaseExperience } from "./TabletOmakaseExperience";
 
 export function OmakaseExperienceSection() {
+  const mode = useResponsiveMode();
   const [reviewOpen, setReviewOpen] = useState(false);
   const {
     guestCount,
@@ -29,6 +32,10 @@ export function OmakaseExperienceSection() {
     setSakePairingId,
     updateGuestCount,
   } = useOmakase();
+
+  if (mode === "tablet") {
+    return <TabletOmakaseExperience />;
+  }
 
   return (
     <section
