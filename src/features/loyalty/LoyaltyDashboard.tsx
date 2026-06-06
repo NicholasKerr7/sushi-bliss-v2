@@ -9,6 +9,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { referralProgress, rewards } from "@/data/loyalty";
 import { useLoyalty } from "@/hooks/useLoyalty";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { classNames } from "@/lib/classNames";
 import { formatDateTime } from "@/lib/dates";
 import { getNextTier, getTierLabel, getTierProgress } from "@/lib/loyalty";
@@ -18,6 +19,7 @@ import { MemberPass } from "./MemberPass";
 import { ReferralPanel } from "./ReferralPanel";
 import { RewardCard } from "./RewardCard";
 import { RewardDetailModal } from "./RewardDetailModal";
+import { TabletLoyaltyDashboard } from "./TabletLoyaltyDashboard";
 
 function getProgressCells(progress: number) {
   const filledCells = Math.round(progress / 10);
@@ -27,6 +29,7 @@ function getProgressCells(progress: number) {
 
 export function LoyaltyDashboard() {
   const { account, redeemReward, redeemedRewards, transactions } = useLoyalty();
+  const mode = useResponsiveMode();
   const [selectedReward, setSelectedReward] = useState<Reward | null>(null);
   const [redemptionMessage, setRedemptionMessage] = useState("");
   const progress = getTierProgress(account);
@@ -48,6 +51,22 @@ export function LoyaltyDashboard() {
 
     return result;
   };
+
+  if (mode === "tablet") {
+    return (
+      <TabletLoyaltyDashboard
+        account={account}
+        memberPoints={account.points}
+        onRedeemReward={handleRedeemReward}
+        redeemedRewards={redeemedRewards}
+        redemptionMessage={redemptionMessage}
+        selectedReward={selectedReward}
+        setRedemptionMessage={setRedemptionMessage}
+        setSelectedReward={setSelectedReward}
+        transactions={transactions}
+      />
+    );
+  }
 
   return (
     <section
@@ -112,8 +131,9 @@ export function LoyaltyDashboard() {
                 Rewards list
               </h3>
               <div className="mt-4 grid gap-4 md:grid-cols-2">
-                {rewards.map((reward) => (
+                {rewards.map((reward, index) => (
                   <RewardCard
+                    imagePriority={index < 2}
                     key={reward.id}
                     memberPoints={account.points}
                     onViewReward={handleViewReward}

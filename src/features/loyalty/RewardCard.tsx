@@ -8,12 +8,14 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import type { Reward } from "@/types/loyalty";
 
 interface RewardCardProps {
+  imagePriority?: boolean;
   memberPoints: number;
   onViewReward: (reward: Reward) => void;
   reward: Reward;
 }
 
 export function RewardCard({
+  imagePriority = false,
   memberPoints,
   onViewReward,
   reward,
@@ -27,6 +29,7 @@ export function RewardCard({
           alt={reward.title}
           className="object-cover"
           fill
+          loading={imagePriority ? "eager" : "lazy"}
           sizes="(min-width: 1024px) 24vw, (min-width: 768px) 45vw, 100vw"
           src={reward.imageUrl}
         />

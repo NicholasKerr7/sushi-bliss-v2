@@ -10,7 +10,7 @@ interface MemberPassProps {
   account: LoyaltyAccount;
 }
 
-function getQrCells(memberCode: string): boolean[] {
+export function getQrCells(memberCode: string): boolean[] {
   const source = memberCode.replace(/[^A-Z0-9]/gi, "");
 
   return Array.from({ length: 49 }, (_, index) => {
