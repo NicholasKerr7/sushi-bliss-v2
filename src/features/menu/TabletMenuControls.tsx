@@ -8,6 +8,7 @@ import type { MenuCategory } from "@/types/menu";
 interface TabletCategoryControlProps {
   category: string;
   categories: MenuCategory[];
+  variant?: "bar" | "pills";
   onSelectCategory: (categoryId: string) => void;
 }
 
@@ -53,25 +54,43 @@ function isAvailableTabletCategory(
 export function TabletCategoryBar({
   category,
   categories,
+  variant = "bar",
   onSelectCategory,
 }: TabletCategoryControlProps) {
+  const isPillVariant = variant === "pills";
+
   return (
     <nav
       aria-label="Tablet menu categories"
-      className="mt-3 grid grid-cols-7 rounded-[12px] border border-white/14 bg-white/[0.035] lg:grid-cols-[1.08fr_0.8fr_0.78fr_0.88fr_1.08fr_0.98fr_0.74fr]"
+      className={
+        isPillVariant
+          ? "mt-4 grid grid-cols-7 gap-2 min-[1080px]:grid-cols-[1.05fr_0.72fr_0.72fr_0.82fr_1.08fr_0.96fr_0.72fr] min-[1080px]:gap-3"
+          : "mt-3 grid grid-cols-7 rounded-[12px] border border-white/14 bg-white/[0.035] lg:grid-cols-[1.08fr_0.8fr_0.78fr_0.88fr_1.08fr_0.98fr_0.74fr]"
+      }
     >
       {tabletCategoryTabs.map((item) => {
         const disabled =
           "disabledReason" in item ||
           !isAvailableTabletCategory(categories, item.id);
+        const isActive = category === item.id;
 
         return (
           <button
             aria-label={item.label}
-            aria-pressed={category === item.id}
-            className={`flex min-h-[46px] min-w-0 items-center justify-center gap-0 border-r border-white/10 px-2 text-[13px] uppercase last:border-r-0 disabled:cursor-not-allowed disabled:opacity-45 lg:gap-2 lg:px-2.5 ${
-              category === item.id
-                ? "bg-[var(--sb-gold)]/28 text-[var(--sb-gold)]"
+            aria-pressed={isActive}
+            className={`flex min-h-[46px] min-w-0 items-center justify-center gap-0 px-2 text-[13px] uppercase disabled:cursor-not-allowed disabled:opacity-45 ${
+              isPillVariant
+                ? "min-[1080px]:gap-2 min-[1080px]:px-2.5"
+                : "lg:gap-2 lg:px-2.5"
+            } ${
+              isPillVariant
+                ? "rounded-[10px] border border-white/14 bg-black/24"
+                : "border-r border-white/10 last:border-r-0"
+            } ${
+              isActive
+                ? isPillVariant
+                  ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] text-black shadow-[0_0_24px_rgb(215_168_79_/_0.22)]"
+                  : "bg-[var(--sb-gold)]/28 text-[var(--sb-gold)]"
                 : "text-white/72"
             }`}
             disabled={disabled}
@@ -81,7 +100,11 @@ export function TabletCategoryBar({
             type="button"
           >
             <AssetIcon size={20} src={item.icon} />
-            <span className="hidden min-w-0 whitespace-nowrap lg:inline">
+            <span
+              className={`hidden min-w-0 whitespace-nowrap ${
+                isPillVariant ? "min-[1080px]:inline" : "lg:inline"
+              }`}
+            >
               {item.label}
             </span>
           </button>

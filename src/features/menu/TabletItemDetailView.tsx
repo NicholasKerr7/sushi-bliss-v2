@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/features/home/visualHomeData";
+import { getTabletPresentationImage } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
@@ -69,11 +70,11 @@ export function TabletDetailView({
         <div className="relative h-[386px]">
           <Image
             alt={item.image.alt || item.name}
-            className="object-cover"
+            className="object-cover object-[62%_50%]"
             fill
             priority
             sizes="1034px"
-            src={item.image.publicUrl}
+            src={getTabletPresentationImage(item)}
           />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#111111] via-[#111111]/78 to-transparent" />
           <button

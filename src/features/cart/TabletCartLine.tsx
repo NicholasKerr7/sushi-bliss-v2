@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { QuantityControl } from "@/components/ui/QuantityControl";
+import { getTabletPresentationImage } from "@/lib/assets";
 import {
   calculateCartLineSubtotal,
   calculateCartLineUnitPrice,
@@ -33,7 +34,7 @@ export function TabletCartLine({
           fill
           loading="eager"
           sizes="160px"
-          src={item.menuItem.image.publicUrl}
+          src={getTabletPresentationImage(item.menuItem)}
         />
       </div>
       <div className="min-w-0">

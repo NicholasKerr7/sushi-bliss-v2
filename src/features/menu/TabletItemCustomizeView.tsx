@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
 import { cartCustomizationGroups } from "@/data/cart";
+import { getTabletPresentationImage } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
@@ -65,11 +66,11 @@ export function TabletCustomizeView({
           <div className="relative h-[510px] overflow-hidden rounded-[22px] bg-white/[0.04]">
             <Image
               alt={item.image.alt || item.name}
-              className="object-cover"
+              className="object-cover object-[58%_50%]"
               fill
               priority
               sizes="440px"
-              src={item.image.publicUrl}
+              src={getTabletPresentationImage(item)}
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/86 to-transparent p-6">
               <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
@@ -81,7 +82,10 @@ export function TabletCustomizeView({
             </div>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-3">
-            <MiniGalleryImage imageUrl={item.image.publicUrl} label="Dish" />
+            <MiniGalleryImage
+              imageUrl={getTabletPresentationImage(item)}
+              label="Dish"
+            />
             <MiniGalleryImage
               imageUrl={item.ingredientImage?.publicUrl || item.image.publicUrl}
               label="Ingredient"

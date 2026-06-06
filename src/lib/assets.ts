@@ -3,6 +3,7 @@ import rawAssetManifest from "../../public/assets/data/asset-manifest.json";
 import { ASSET_FALLBACKS } from "@/lib/constants";
 import type { ImageReference } from "@/types/common";
 import type { AssetManifestEntry } from "@/types/asset";
+import type { MenuItem } from "@/types/menu";
 
 const manifest = rawAssetManifest as unknown;
 
@@ -16,6 +17,16 @@ const assetById = new Map(assetEntries.map((entry) => [entry.id, entry]));
 const assetByPublicUrl = new Map(
   assetEntries.map((entry) => [entry.publicUrl, entry]),
 );
+
+export const TABLET_OTORO_HERO_IMAGE =
+  "/assets/editorial/hero-otoro-nigiri-no-red-moon.webp";
+
+/** Uses wide editorial imagery for tablet presentation surfaces when available. */
+export function getTabletPresentationImage(item: MenuItem) {
+  return item.id === "otoro-nigiri"
+    ? TABLET_OTORO_HERO_IMAGE
+    : item.image.publicUrl;
+}
 
 /** Returns the normalized asset manifest as a stable, read-only list. */
 export function getAssetManifest(): AssetManifestEntry[] {

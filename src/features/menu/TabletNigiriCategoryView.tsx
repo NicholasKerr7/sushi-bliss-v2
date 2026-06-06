@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { icons } from "@/features/home/visualHomeData";
+import { TABLET_OTORO_HERO_IMAGE } from "@/lib/assets";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
@@ -105,24 +106,24 @@ export function TabletNigiriCategoryView({
 
   return (
     <>
-      <section className="relative mt-[18px] min-h-[342px] overflow-hidden rounded-[14px] border border-white/16">
+      <section className="relative mt-[18px] min-h-[280px] overflow-hidden rounded-[14px] border border-white/16 min-[1080px]:min-h-[342px]">
         <Image
           alt=""
           className="object-cover object-[70%_46%]"
           fill
           priority
           sizes="1034px"
-          src="/assets/menu/sushi/otoro-nigiri.webp"
+          src={TABLET_OTORO_HERO_IMAGE}
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.78)_42%,rgba(0,0,0,0.18)_100%)]" />
-        <div className="relative z-10 flex min-h-[342px] flex-col justify-center px-[86px]">
-          <p className="text-[18px] uppercase tracking-[0.16em] text-[var(--sb-gold)]">
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.78)_43%,rgba(0,0,0,0.16)_100%)]" />
+        <div className="relative z-10 flex min-h-[280px] flex-col justify-center px-[64px] min-[1080px]:min-h-[342px] min-[1080px]:px-[86px]">
+          <p className="text-[16px] uppercase tracking-[0.16em] text-[var(--sb-gold)] min-[1080px]:text-[18px]">
             Menu &gt; Nigiri
           </p>
-          <h1 className="editorial-title mt-5 text-[86px] uppercase leading-[0.9] tracking-[0.18em] text-white">
+          <h1 className="editorial-title mt-4 text-[64px] uppercase leading-[0.9] tracking-[0.18em] text-white min-[1080px]:mt-5 min-[1080px]:text-[86px]">
             Nigiri
           </h1>
-          <p className="mt-5 max-w-[420px] text-[20px] leading-8 text-[var(--sb-gold)]">
+          <p className="mt-4 max-w-[420px] text-[18px] leading-7 text-[var(--sb-gold)] min-[1080px]:mt-5 min-[1080px]:text-[20px] min-[1080px]:leading-8">
             Experience the pure art of nigiri. Hand-pressed perfection featuring
             the finest fish and seasonal ingredients.
           </p>
@@ -132,12 +133,13 @@ export function TabletNigiriCategoryView({
       <TabletCategoryBar
         category="nigiri"
         categories={categories}
+        variant="pills"
         onSelectCategory={onSelectCategory}
       />
 
-      <div className="mt-5 grid grid-cols-[310px_1fr_1fr_1fr_1fr] gap-4">
+      <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-[260px_1fr_1fr_1fr_1fr] min-[1080px]:grid-cols-[310px_1fr_1fr_1fr_1fr] min-[1080px]:gap-4">
         <form
-          className="flex h-12 items-center gap-4 rounded-[9px] border border-[var(--sb-border)] bg-black/22 px-5"
+          className="col-span-2 flex h-12 items-center gap-4 rounded-[9px] border border-[var(--sb-border)] bg-black/22 px-5 lg:col-span-1"
           onSubmit={(event) => event.preventDefault()}
         >
           <AssetIcon size={22} src={icons.search} />
@@ -243,7 +245,7 @@ function TabletNigiriCard({
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <div className="relative h-[128px]">
+        <div className="relative h-[98px] min-[1080px]:h-[128px]">
           <Image
             alt=""
             className="object-cover"
@@ -252,7 +254,7 @@ function TabletNigiriCard({
             src={item.image.publicUrl}
           />
         </div>
-        <div className="p-4">
+        <div className="p-3 min-[1080px]:p-4">
           <h2 className="text-[19px] text-white">{item.name}</h2>
           <p className="mt-2 text-sm text-white/68">{item.description}</p>
           <p className="mt-4 text-[22px] text-[var(--sb-gold)]">
