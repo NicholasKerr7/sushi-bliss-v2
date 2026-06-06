@@ -66,28 +66,41 @@ export const cartCustomizationGroups: CartCustomizationGroup[] = [
 
 export const cartAddOns: CartAddOnDefinition[] = [
   {
-    id: "fresh-wasabi",
-    label: "Fresh wasabi",
-    description: "Freshly grated wasabi on the side.",
-    priceCents: 250,
+    id: "gold-flakes",
+    label: "Gold flakes",
+    description: "Delicate gold garnish for a celebratory finish.",
+    priceCents: 300,
   },
   {
-    id: "pickled-ginger",
-    label: "Pickled ginger",
-    description: "Extra house-pickled ginger.",
-    priceCents: 100,
-  },
-  {
-    id: "yuzu-kosho",
-    label: "Yuzu kosho",
-    description: "Citrus chile paste for richer cuts.",
+    id: "truffle-oil",
+    label: "Truffle oil",
+    description: "Aromatic truffle accent brushed tableside.",
     priceCents: 200,
   },
   {
-    id: "osetra-caviar",
-    label: "Osetra caviar",
-    description: "A small spoon of premium roe.",
+    id: "caviar-5g",
+    label: "Caviar (5g)",
+    description: "Premium roe for richer nigiri and chef specials.",
     premiumOnly: true,
-    priceCents: 850,
+    priceCents: 600,
+  },
+  {
+    id: "yuzu-zest",
+    label: "Yuzu zest",
+    description: "Bright citrus lift over the finished piece.",
+    priceCents: 150,
+  },
+  {
+    id: "ikura-salmon-roe",
+    label: "Ikura (salmon roe)",
+    description: "Briny salmon roe for a jewel-like finish.",
+    premiumOnly: true,
+    priceCents: 250,
+  },
+  {
+    id: "green-onion",
+    label: "Green onion",
+    description: "Fresh green onion, sliced fine.",
+    priceCents: 50,
   },
 ];

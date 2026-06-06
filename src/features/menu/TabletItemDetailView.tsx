@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
@@ -34,8 +35,6 @@ const tastingNotes = [
   { label: "Finish", value: "Clean", point: "left-[28%] top-[53%]" },
 ] as const;
 
-const detailBadges = ["Chef balanced", "Fresh cut", "Sake ready"] as const;
-
 export function TabletDetailView({
   isFavorite,
   item,
@@ -49,64 +48,124 @@ export function TabletDetailView({
   onQuantityChange,
   onToggleFavorite,
 }: TabletDetailViewProps) {
+  const galleryImages = useMemo(
+    () =>
+      [
+        getTabletPresentationImage(item),
+        item.ingredientImage?.publicUrl,
+        item.sakePairing?.image?.publicUrl,
+        item.image.publicUrl,
+      ].filter((imageUrl, index, imageUrls): imageUrl is string =>
+        Boolean(imageUrl && imageUrls.indexOf(imageUrl) === index),
+      ),
+    [item],
+  );
+  const [imageIndex, setImageIndex] = useState(0);
+  const activeImage =
+    galleryImages[imageIndex] || getTabletPresentationImage(item);
+  const showPreviousImage = () => {
+    setImageIndex((current) =>
+      current === 0 ? galleryImages.length - 1 : current - 1,
+    );
+  };
+  const showNextImage = () => {
+    setImageIndex((current) =>
+      current === galleryImages.length - 1 ? 0 : current + 1,
+    );
+  };
+
   return (
     <>
-      <nav
-        aria-label="Item breadcrumb"
-        className="mt-4 flex items-center gap-3 text-[14px] text-white/58"
-      >
-        <Link className="hover:text-white" href="/home">
-          Home
-        </Link>
-        <span aria-hidden="true">/</span>
-        <button className="hover:text-white" onClick={onClose} type="button">
-          Menu
-        </button>
-        <span aria-hidden="true">/</span>
-        <span className="text-white/82">{item.name}</span>
-      </nav>
-
-      <section className="mt-3 overflow-hidden rounded-[26px] border border-white/10 bg-[#111111] shadow-[0_26px_80px_rgb(0_0_0_/_0.48)]">
-        <div className="relative h-[386px]">
+      <section className="mt-4 overflow-hidden rounded-[26px] border border-white/10 bg-[#101112] shadow-[0_26px_80px_rgb(0_0_0_/_0.48)]">
+        <div className="relative h-[440px]">
           <Image
             alt={item.image.alt || item.name}
-            className="object-cover object-[62%_50%]"
+            className="object-cover object-[58%_48%]"
             fill
             priority
             sizes="1034px"
-            src={getTabletPresentationImage(item)}
+            src={activeImage}
           />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#111111] via-[#111111]/78 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#101112] via-[#101112]/82 to-transparent" />
+          <nav
+            aria-label="Item breadcrumb"
+            className="absolute left-7 top-6 flex items-center gap-4 text-[14px] text-white/70"
+          >
+            <button
+              className="flex items-center gap-2 text-[var(--sb-gold)] hover:text-[var(--sb-gold-soft)]"
+              onClick={onClose}
+              type="button"
+            >
+              <span aria-hidden="true">‹</span>
+              Back
+            </button>
+            <Link className="hover:text-white" href="/home">
+              Home
+            </Link>
+            <span aria-hidden="true">›</span>
+            <button
+              className="hover:text-white"
+              onClick={onClose}
+              type="button"
+            >
+              Menu
+            </button>
+            <span aria-hidden="true">›</span>
+            <span className="text-[var(--sb-red-bright)]">{item.name}</span>
+          </nav>
           <button
-            aria-label="Back to menu"
-            className="absolute left-7 top-7 grid h-12 w-12 place-items-center rounded-full border border-white/16 bg-black/54 text-[28px] text-white shadow-soft backdrop-blur"
-            onClick={onClose}
+            aria-label="Show previous image"
+            className="absolute left-8 top-1/2 grid h-[54px] w-[54px] -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/34 text-[34px] text-[var(--sb-gold-soft)] shadow-soft backdrop-blur"
+            onClick={showPreviousImage}
             type="button"
           >
             ‹
           </button>
+          <button
+            aria-label="Show next image"
+            className="absolute right-8 top-1/2 grid h-[54px] w-[54px] -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/34 text-[34px] text-[var(--sb-gold-soft)] shadow-soft backdrop-blur"
+            onClick={showNextImage}
+            type="button"
+          >
+            ›
+          </button>
+          <div
+            aria-label="Item gallery"
+            className="absolute inset-x-0 bottom-6 flex justify-center gap-2"
+            role="tablist"
+          >
+            {galleryImages.map((imageUrl, index) => (
+              <button
+                aria-label={`Show image ${index + 1}`}
+                aria-selected={imageIndex === index}
+                className={classNames(
+                  "h-2.5 w-2.5 rounded-full transition",
+                  imageIndex === index
+                    ? "bg-[var(--sb-red-bright)]"
+                    : "bg-white/34",
+                )}
+                key={imageUrl}
+                onClick={() => setImageIndex(index)}
+                role="tab"
+                type="button"
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="px-8 pb-6 pt-4">
-          <div className="grid grid-cols-[minmax(0,1fr)_468px] gap-8 border-b border-white/10 pb-5">
+        <div className="px-8 pb-6 pt-3">
+          <div className="grid grid-cols-[minmax(0,1fr)_468px] gap-8 border-b border-white/10 pb-4">
             <div>
-              <div className="flex flex-wrap gap-2">
-                {detailBadges.map((badge) => (
-                  <span
-                    className="rounded-full border border-[var(--sb-gold)]/32 bg-[var(--sb-gold)]/10 px-3 py-1 text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]"
-                    key={badge}
-                  >
-                    {badge}
-                  </span>
-                ))}
-              </div>
+              <span className="inline-flex rounded-[8px] border border-[var(--sb-gold)]/34 bg-[var(--sb-gold)]/8 px-3 py-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
+                Chef&apos;s Special
+              </span>
               <h1
-                className="editorial-title mt-3 text-[50px] leading-[0.95] text-white"
+                className="editorial-title mt-2 text-[50px] leading-[0.95] text-white"
                 id={`tablet-item-detail-${item.id}`}
               >
                 {item.name}
               </h1>
-              <p className="mt-3 max-w-[620px] text-[17px] leading-7 text-white/72">
+              <p className="mt-2 max-w-[620px] text-[17px] leading-7 text-white/72">
                 {item.description}
               </p>
               <p className="mt-3 font-mono text-[30px] font-semibold text-[var(--sb-gold-soft)]">
@@ -153,7 +212,7 @@ export function TabletDetailView({
             </aside>
           </div>
 
-          <p className="mt-4 text-[15px] leading-6 text-white/68">
+          <p className="mt-4 max-w-[760px] text-[15px] leading-6 text-white/72">
             {item.chefNote}
           </p>
 
@@ -261,8 +320,8 @@ function RelatedMenuCard({
   onAddRelatedItem: (item: MenuItem) => void;
 }) {
   return (
-    <article className="grid h-[116px] grid-cols-[126px_1fr] overflow-hidden rounded-[16px] border border-white/10 bg-white/[0.04]">
-      <div className="relative h-[116px]">
+    <article className="grid h-[106px] grid-cols-[130px_1fr] overflow-hidden rounded-[14px] border border-white/10 bg-white/[0.035]">
+      <div className="relative h-[106px]">
         <Image
           alt={item.image.alt || item.name}
           className="object-cover"
@@ -272,25 +331,26 @@ function RelatedMenuCard({
           src={item.image.publicUrl}
         />
       </div>
-      <div className="p-3">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-white/40">
-          {item.categoryLabel}
-        </p>
-        <h3 className="mt-1 line-clamp-2 text-[17px] font-semibold leading-5">
-          {item.name}
-        </h3>
-        <div className="mt-3 flex items-center justify-between gap-3">
-          <span className="font-mono text-[var(--sb-gold-soft)]">
+      <div className="grid grid-cols-[1fr_44px] gap-2 p-3">
+        <div>
+          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-white/40">
+            {item.categoryLabel}
+          </p>
+          <h3 className="mt-1 line-clamp-2 text-[17px] font-semibold leading-5">
+            {item.name}
+          </h3>
+          <span className="mt-2 block font-mono text-[var(--sb-gold-soft)]">
             {formatMoney(item.priceCents)}
           </span>
-          <button
-            className="rounded-full bg-[var(--sb-red)] px-4 py-2 text-[13px] font-semibold text-white"
-            onClick={() => onAddRelatedItem(item)}
-            type="button"
-          >
-            Add
-          </button>
         </div>
+        <button
+          aria-label={`Add ${item.name}`}
+          className="self-end rounded-full border border-[var(--sb-gold)]/50 bg-black/20 p-2.5 text-[22px] leading-none text-[var(--sb-gold-soft)]"
+          onClick={() => onAddRelatedItem(item)}
+          type="button"
+        >
+          +
+        </button>
       </div>
     </article>
   );
