@@ -11,12 +11,14 @@ import { mockOrders } from "@/data/orders";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useOrders } from "@/hooks/useOrders";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { classNames } from "@/lib/classNames";
 import { getReorderDrafts } from "@/lib/orders";
 import type { Order } from "@/types/order";
 
 import { OrderCard } from "./OrderCard";
 import { OrderDetailDrawer } from "./OrderDetailDrawer";
+import { TabletOrdersDashboard } from "./TabletOrdersDashboard";
 
 type OrderView = "active" | "past";
 
@@ -25,7 +27,8 @@ export function OrdersDashboard() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [reorderMessage, setReorderMessage] = useState("");
-  const { addItem } = useCart();
+  const mode = useResponsiveMode();
+  const { addItem, itemCount } = useCart();
   const { activeOrders, pastOrders } = useOrders(mockOrders);
   const visibleOrders = view === "active" ? activeOrders : pastOrders;
 
@@ -35,6 +38,25 @@ export function OrdersDashboard() {
     setSelectedOrder(null);
     setCartOpen(true);
   };
+
+  if (mode === "tablet") {
+    return (
+      <TabletOrdersDashboard
+        activeOrders={activeOrders}
+        cartCount={itemCount}
+        cartOpen={cartOpen}
+        onCartOpenChange={setCartOpen}
+        onOpenCart={() => setCartOpen(true)}
+        onReorder={handleReorder}
+        onSelectOrder={setSelectedOrder}
+        onViewChange={setView}
+        pastOrders={pastOrders}
+        reorderMessage={reorderMessage}
+        selectedOrder={selectedOrder}
+        view={view}
+      />
+    );
+  }
 
   return (
     <section
