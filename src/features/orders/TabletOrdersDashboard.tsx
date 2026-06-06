@@ -43,9 +43,8 @@ export function TabletOrdersDashboard({
   selectedOrder,
   view,
 }: TabletOrdersDashboardProps) {
-  const [surface, setSurface] = useState<TabletOrderSurface>("tracking");
+  const [surface, setSurface] = useState<TabletOrderSurface>("list");
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const visibleOrders = view === "active" ? activeOrders : pastOrders;
   const fallbackOrder = activeOrders[0] || pastOrders[0] || null;
   const trackedOrder = selectedOrder || fallbackOrder;
 
@@ -84,17 +83,18 @@ export function TabletOrdersDashboard({
       ) : (
         <TabletOrderListView
           activeCount={activeOrders.length}
+          activeOrders={activeOrders}
           onReorder={onReorder}
           onSelectOrder={handleSelectOrder}
           onViewChange={handleViewChange}
-          orders={visibleOrders}
           pastCount={pastOrders.length}
+          pastOrders={pastOrders}
           reorderMessage={reorderMessage}
           view={view}
         />
       )}
 
-      <TabletMenuBottomNav activeIndex={3} />
+      <TabletMenuBottomNav activeIndex={3} compact={surface === "tracking"} />
       <CartDrawer onOpenChange={onCartOpenChange} open={cartOpen} />
     </section>
   );

@@ -105,7 +105,7 @@ export function TabletOrderTrackingView({
         </div>
       </section>
 
-      <section className="relative mt-4 h-[284px] overflow-hidden rounded-[18px] border border-white/10 bg-black/40">
+      <section className="relative mt-4 h-[260px] overflow-hidden rounded-[18px] border border-white/10 bg-black/40">
         <Image
           alt="Live delivery tracking map"
           className="object-cover opacity-82"
