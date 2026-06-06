@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { icons, featuredAssets } from "@/features/home/visualHomeData";
+import { featuredAssets, icons } from "@/features/home/visualHomeData";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
@@ -47,7 +47,7 @@ export function TabletMenuOverview({
           sizes="1034px"
           src={featuredAssets.heroSushi.publicUrl}
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.7)_36%,rgba(0,0,0,0.12)_76%,rgba(0,0,0,0.55)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.96)_0%,rgba(0,0,0,0.82)_39%,rgba(0,0,0,0.18)_74%,rgba(0,0,0,0.58)_100%)]" />
         <Link
           aria-label="Previous recommendation"
           className="absolute left-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)]"
@@ -103,7 +103,7 @@ export function TabletMenuOverview({
         categories={categories}
         onSelectCategory={onSelectCategory}
       />
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-3 flex items-center justify-between">
         <div className="flex gap-3">
           <TabletSelectButton label="Dietary" />
           <TabletSelectButton label="Spicy Level" />

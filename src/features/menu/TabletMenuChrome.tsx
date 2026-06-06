@@ -30,7 +30,7 @@ export function TabletMenuHeader({
           size={66}
           src={brand.assets.floralEmblem.publicUrl}
         />
-        <span className="editorial-title text-[22px] uppercase leading-[0.98] tracking-[0.24em] lg:text-[27px] lg:tracking-[0.35em]">
+        <span className="editorial-title text-[22px] font-normal uppercase leading-[0.98] tracking-[0.36em] lg:text-[27px] lg:tracking-[0.43em]">
           Sushi
           <br />
           Bliss
@@ -120,13 +120,13 @@ export function TabletMenuBottomNav({ activeIndex }: { activeIndex: number }) {
   return (
     <nav
       aria-label="Tablet menu navigation"
-      className="mt-5 rounded-[14px] border border-white/10 bg-white/[0.035] p-1"
+      className="mt-4 rounded-[14px] border border-white/10 bg-white/[0.035] p-1"
     >
       <ul className="grid grid-cols-5">
         {mobileNav.map((item, index) => (
           <li key={item.label}>
             <Link
-              className={`flex min-h-[86px] flex-col items-center justify-center gap-2 rounded-[12px] text-[15px] ${
+              className={`flex min-h-[78px] flex-col items-center justify-center gap-2 rounded-[12px] text-[15px] ${
                 index === activeIndex
                   ? "text-[var(--sb-red-bright)]"
                   : "text-white/62"

@@ -80,7 +80,7 @@ function TabletHeader({
           size={66}
           src={brand.assets.floralEmblem.publicUrl}
         />
-        <span className="editorial-title text-[22px] uppercase leading-[0.98] tracking-[0.24em] lg:text-[27px] lg:tracking-[0.35em]">
+        <span className="editorial-title text-[22px] font-normal uppercase leading-[0.98] tracking-[0.36em] lg:text-[27px] lg:tracking-[0.43em]">
           Sushi
           <br />
           Bliss

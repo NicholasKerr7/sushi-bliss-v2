@@ -25,7 +25,7 @@ export const allTabletMenuItems = getMenuItemsById([
   "scallop-nigiri",
   "california-roll",
   "philadelphia-roll",
-  "shrimp-tempura-roll",
+  "tempura-roll",
 ]);
 
 export const tabletSearchFallbackItems = getMenuItemsById([

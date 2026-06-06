@@ -58,7 +58,7 @@ export function TabletCategoryBar({
   return (
     <nav
       aria-label="Tablet menu categories"
-      className="mt-4 grid grid-cols-7 rounded-[12px] border border-white/14 bg-white/[0.035]"
+      className="mt-3 grid grid-cols-7 rounded-[12px] border border-white/14 bg-white/[0.035]"
     >
       {tabletCategoryTabs.map((item) => {
         const disabled =
@@ -68,7 +68,7 @@ export function TabletCategoryBar({
         return (
           <button
             aria-pressed={category === item.id}
-            className={`flex min-h-[48px] items-center justify-center gap-3 border-r border-white/10 px-4 text-sm uppercase last:border-r-0 disabled:cursor-not-allowed disabled:opacity-45 ${
+            className={`flex min-h-[46px] items-center justify-center gap-3 border-r border-white/10 px-4 text-sm uppercase last:border-r-0 disabled:cursor-not-allowed disabled:opacity-45 ${
               category === item.id
                 ? "bg-[var(--sb-gold)]/28 text-[var(--sb-gold)]"
                 : "text-white/72"
@@ -204,8 +204,8 @@ export function TabletFilterSelect({
 
 export function TabletSection({ children, icon, title }: TabletSectionProps) {
   return (
-    <section className="mt-4 rounded-[14px] border border-white/14 bg-white/[0.035] p-4">
-      <div className="mb-4 flex items-center justify-between">
+    <section className="mt-3 rounded-[14px] border border-white/14 bg-white/[0.035] p-3.5">
+      <div className="mb-3 flex items-center justify-between">
         <h2 className="flex items-center gap-3 text-base uppercase tracking-[0.08em] text-white">
           {icon ? <AssetIcon size={24} src={icon} /> : null}
           {title}
