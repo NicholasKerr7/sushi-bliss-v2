@@ -141,6 +141,32 @@ function getProgressCells(progress: number) {
   return Array.from({ length: 10 }, (_, index) => index < filledCells);
 }
 
+/** Builds the compact reservation date labels used by the tablet profile card. */
+function getReservationDateSummary(startsAt?: string) {
+  const date = startsAt ? new Date(startsAt) : null;
+
+  if (!date || Number.isNaN(date.getTime())) {
+    return {
+      day: "--",
+      month: "TBD",
+      time: "Time TBD",
+      weekday: "--",
+    };
+  }
+
+  return {
+    day: new Intl.DateTimeFormat("en-US", { day: "2-digit" }).format(date),
+    month: new Intl.DateTimeFormat("en-US", { month: "short" }).format(date),
+    time: new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    }).format(date),
+    weekday: new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(
+      date,
+    ),
+  };
+}
+
 function TabletPaymentMark({
   paymentMethod,
 }: {
@@ -180,6 +206,9 @@ export function TabletProfileDashboardView({
         (location) => location.id === upcomingReservation.locationId,
       )
     : locations[0];
+  const reservationDate = getReservationDateSummary(
+    upcomingReservation?.startsAt,
+  );
 
   return (
     <section
@@ -483,19 +512,19 @@ export function TabletProfileDashboardView({
                 <div className="grid place-items-center border-r border-white/10 text-center">
                   <span>
                     <span className="block text-[12px] uppercase text-white/58">
-                      Fri
+                      {reservationDate.weekday}
                     </span>
                     <span className="editorial-title block text-[36px] leading-none text-white">
-                      24
+                      {reservationDate.day}
                     </span>
                     <span className="block text-[12px] uppercase text-white/58">
-                      May
+                      {reservationDate.month}
                     </span>
                   </span>
                 </div>
                 <div className="p-4">
                   <p className="text-[15px] font-semibold text-white">
-                    7:00 PM
+                    {reservationDate.time}
                   </p>
                   <p className="mt-1 text-[13px] text-white/58">
                     {upcomingReservation?.partySize || 2} Guests
