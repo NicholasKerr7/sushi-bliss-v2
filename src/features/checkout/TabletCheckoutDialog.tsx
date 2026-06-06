@@ -139,7 +139,7 @@ export function TabletCheckoutDialog({
         <TabletCheckoutBenefitStrip />
       </main>
 
-      <TabletMenuBottomNav activeIndex={4} />
+      <TabletMenuBottomNav activeIndex={4} compact />
     </div>
   );
 }

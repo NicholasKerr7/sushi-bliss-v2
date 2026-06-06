@@ -12,6 +12,7 @@ import {
   TabletCheckoutAddressPanel,
   TabletCheckoutPaymentPanel,
 } from "./TabletCheckoutPanels";
+import { TabletCheckoutProgress } from "./TabletCheckoutProgress";
 import { TabletCheckoutSelectLike } from "./TabletCheckoutSelectLike";
 import { TabletCheckoutStepTitle } from "./TabletCheckoutStepTitle";
 import { TabletCheckoutSummary } from "./TabletCheckoutSummary";
@@ -82,7 +83,9 @@ export function TabletCheckoutDetails({
         </p>
       </div>
 
-      <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_390px]">
+      <TabletCheckoutProgress activeStep={1} />
+
+      <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_390px]">
         <section className="rounded-[18px] border border-white/10 bg-white/[0.04] p-5">
           <TabletCheckoutStepTitle number={1} title="Delivery or pickup" />
           <div className="mt-4 grid grid-cols-2 gap-3">

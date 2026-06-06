@@ -26,13 +26,13 @@ export function TabletCheckoutSummary({
   totals,
 }: TabletCheckoutSummaryProps) {
   return (
-    <aside className="rounded-[18px] border border-white/10 bg-white/[0.04] p-5">
+    <aside className="rounded-[16px] border border-white/10 bg-white/[0.04] p-3">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-[20px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+          <h2 className="text-[18px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
             Order Summary
           </h2>
-          <p className="mt-2 text-[15px] text-white/54">
+          <p className="mt-1 text-[14px] text-white/54">
             {itemCount} {itemCount === 1 ? "item" : "items"}
           </p>
         </div>
@@ -45,7 +45,7 @@ export function TabletCheckoutSummary({
         </button>
       </div>
 
-      <div className="mt-5 divide-y divide-white/10">
+      <div className="mt-3 divide-y divide-white/10">
         {items.map((item) => (
           <TabletCheckoutLine
             item={item}
@@ -56,7 +56,7 @@ export function TabletCheckoutSummary({
         ))}
       </div>
 
-      <div className="mt-5 space-y-3 border-t border-white/10 pt-5 text-[15px]">
+      <div className="mt-3 space-y-2 border-t border-white/10 pt-3 text-[13px]">
         <SummaryRow
           label={`Subtotal (${itemCount} items)`}
           value={formatMoney(totals.subtotalCents)}
@@ -75,7 +75,7 @@ export function TabletCheckoutSummary({
         <SummaryRow label="Tax" value={formatMoney(totals.taxCents)} />
       </div>
 
-      <div className="mt-5 border-t border-white/10 pt-5">
+      <div className="mt-3 border-t border-white/10 pt-3">
         <SummaryRow
           large
           label="Total"
@@ -83,11 +83,11 @@ export function TabletCheckoutSummary({
         />
       </div>
 
-      <div className="mt-5 rounded-[16px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8 p-4">
-        <p className="text-[15px] font-semibold text-[var(--sb-gold-soft)]">
+      <div className="mt-3 rounded-[14px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8 p-3">
+        <p className="text-[14px] font-semibold text-[var(--sb-gold-soft)]">
           You&apos;ll earn {Math.floor(totals.totalCents / 100)} Bliss Points
         </p>
-        <p className="mt-1 text-[13px] text-white/52">for this order</p>
+        <p className="mt-0.5 text-[12px] text-white/52">for this order</p>
       </div>
     </aside>
   );
@@ -103,45 +103,45 @@ function TabletCheckoutLine({
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
   return (
-    <article className="grid grid-cols-[86px_1fr] gap-4 py-4 first:pt-0 last:pb-0">
-      <div className="relative h-[76px] overflow-hidden rounded-[10px] bg-white/[0.04]">
+    <article className="grid grid-cols-[68px_1fr] gap-3 py-2.5 first:pt-0 last:pb-0">
+      <div className="relative h-[56px] overflow-hidden rounded-[10px] bg-white/[0.04]">
         <Image
           alt={item.menuItem.image.alt || item.menuItem.name}
           className="object-cover"
           fill
           loading="eager"
-          sizes="86px"
+          sizes="68px"
           src={item.menuItem.image.publicUrl}
         />
       </div>
       <div className="min-w-0">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="text-[15px] font-semibold text-white">
+            <h3 className="text-[14px] font-semibold text-white">
               {item.menuItem.name}
             </h3>
-            <p className="mt-1 line-clamp-2 text-[13px] leading-5 text-white/52">
+            <p className="mt-0.5 line-clamp-1 text-[12px] leading-4 text-white/52">
               {item.menuItem.description}
             </p>
           </div>
           <button
             aria-label={`Remove ${item.menuItem.name}`}
-            className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-gold)]/32 text-[var(--sb-gold-soft)]"
+            className="grid h-6 w-6 place-items-center rounded-full border border-[var(--sb-gold)]/32 text-[var(--sb-gold-soft)]"
             onClick={() => onRemoveItem(item.id)}
             type="button"
           >
             x
           </button>
         </div>
-        <div className="mt-3 flex items-center justify-between gap-3">
+        <div className="mt-1.5 flex items-center justify-between gap-3">
           <QuantityControl
-            className="h-9 grid-cols-[2.25rem_2.5rem_2.25rem] rounded-[10px] border-[var(--sb-gold)]/28"
+            className="h-7 grid-cols-[1.85rem_2.1rem_1.85rem] rounded-[10px] border-[var(--sb-gold)]/28"
             max={99}
             min={0}
             onChange={(quantity) => onUpdateQuantity(item.id, quantity)}
             value={item.quantity}
           />
-          <span className="font-mono text-[15px] text-white">
+          <span className="font-mono text-[13px] text-white">
             {formatMoney(calculateCartLineSubtotal(item))}
           </span>
         </div>
@@ -163,13 +163,13 @@ function SummaryRow({
 }) {
   return (
     <div className="flex items-center justify-between gap-4">
-      <span className={large ? "text-[20px] uppercase" : "text-white/72"}>
+      <span className={large ? "text-[18px] uppercase" : "text-white/72"}>
         {label}
       </span>
       <span
         className={classNames(
           large
-            ? "font-mono text-[30px] text-[var(--sb-gold-soft)]"
+            ? "font-mono text-[26px] text-[var(--sb-gold-soft)]"
             : "font-mono text-white",
           valueClassName,
         )}

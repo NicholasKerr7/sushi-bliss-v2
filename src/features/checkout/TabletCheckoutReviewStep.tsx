@@ -10,6 +10,7 @@ import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { CartLineItem } from "@/types/order";
 
+import { TabletCheckoutProgress } from "./TabletCheckoutProgress";
 import { TabletCheckoutSummary } from "./TabletCheckoutSummary";
 import type { TabletCheckoutState } from "./tabletCheckoutTypes";
 
@@ -40,24 +41,24 @@ export function TabletCheckoutReviewStep({
   const payment = checkout.selectedPaymentMethod;
 
   return (
-    <section className="mt-5 rounded-[22px] border border-white/10 bg-white/[0.035] p-8">
-      <div className="flex items-start justify-between gap-6">
+    <section className="mt-3 rounded-[20px] border border-white/10 bg-white/[0.035] p-5">
+      <div className="flex items-start justify-between gap-5">
         <div>
-          <p className="text-[15px] uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
+          <p className="text-[14px] uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
             Checkout
           </p>
           <h1
-            className="editorial-title mt-3 whitespace-nowrap text-[42px] uppercase leading-none tracking-[0.08em] lg:text-[46px]"
+            className="editorial-title mt-1.5 whitespace-nowrap text-[36px] uppercase leading-none tracking-[0.08em] lg:text-[40px]"
             id="tablet-checkout-title"
           >
             Review & Confirm
           </h1>
-          <p className="mt-3 text-[17px] text-[var(--sb-gold-soft)]">
+          <p className="mt-1 text-[15px] text-[var(--sb-gold-soft)]">
             Almost there! Please review your order details.
           </p>
         </div>
         <Button
-          className="shrink-0 whitespace-nowrap"
+          className="min-h-10 shrink-0 whitespace-nowrap px-5 py-2 text-[13px]"
           onClick={onBackToDetails}
           variant="secondary"
         >
@@ -65,8 +66,10 @@ export function TabletCheckoutReviewStep({
         </Button>
       </div>
 
-      <div className="mt-7 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_390px]">
-        <div className="space-y-4">
+      <TabletCheckoutProgress activeStep={3} />
+
+      <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_390px]">
+        <div className="space-y-2.5">
           <ReviewCard
             action={onBackToDetails}
             icon={icons.location}
@@ -146,7 +149,7 @@ export function TabletCheckoutReviewStep({
           ) : null}
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-2.5">
           <TabletCheckoutSummary
             itemCount={itemCount}
             items={items}
@@ -155,11 +158,11 @@ export function TabletCheckoutReviewStep({
             onUpdateQuantity={onUpdateQuantity}
             totals={checkout.reviewTotals}
           />
-          <div className="rounded-[16px] border border-white/10 bg-white/[0.04] p-5">
-            <h2 className="text-[16px] font-semibold uppercase tracking-[0.08em] text-white/72">
+          <div className="rounded-[14px] border border-white/10 bg-white/[0.04] p-3">
+            <h2 className="text-[14px] font-semibold uppercase tracking-[0.08em] text-white/72">
               SSL encrypted checkout
             </h2>
-            <p className="mt-2 text-[14px] leading-6 text-white/54">
+            <p className="mt-1 text-[13px] leading-5 text-white/54">
               Your payment information is secure and encrypted.
             </p>
           </div>
@@ -167,7 +170,7 @@ export function TabletCheckoutReviewStep({
       </div>
 
       <Button
-        className="red-glow-button mt-6 h-[64px] w-full rounded-[12px] text-[18px] uppercase tracking-[0.08em]"
+        className="red-glow-button mt-3 h-[52px] w-full rounded-[12px] text-[16px] uppercase tracking-[0.08em]"
         disabled={items.length === 0}
         onClick={onPlaceOrder}
       >
@@ -191,10 +194,10 @@ function ReviewCard({
   title: string;
 }) {
   return (
-    <article className="rounded-[16px] border border-white/10 bg-black/22 p-5">
+    <article className="rounded-[14px] border border-white/10 bg-black/22 p-3">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="flex items-center gap-3 text-[18px] font-semibold uppercase tracking-[0.08em]">
-          <span className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-gold)]/50 text-[var(--sb-gold-soft)]">
+        <h2 className="flex items-center gap-2.5 text-[15px] font-semibold uppercase tracking-[0.08em]">
+          <span className="grid h-6 w-6 place-items-center rounded-full border border-[var(--sb-gold)]/50 text-[var(--sb-gold-soft)]">
             {number}
           </span>
           {title}
@@ -207,8 +210,8 @@ function ReviewCard({
           Change
         </button>
       </div>
-      <div className="mt-4 flex gap-4 text-[15px] leading-7 text-white/68">
-        <AssetIcon size={28} src={icon} />
+      <div className="mt-2 flex gap-2.5 text-[13px] leading-5 text-white/68">
+        <AssetIcon size={21} src={icon} />
         <div>{children}</div>
       </div>
     </article>

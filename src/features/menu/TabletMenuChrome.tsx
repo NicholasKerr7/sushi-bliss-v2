@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { brand, icons, mobileNav } from "@/features/home/visualHomeData";
+import { classNames } from "@/lib/classNames";
 
 interface TabletMenuHeaderProps {
   cartCount: number;
@@ -116,24 +117,39 @@ function TabletHeaderIcon({
   );
 }
 
-export function TabletMenuBottomNav({ activeIndex }: { activeIndex: number }) {
+interface TabletMenuBottomNavProps {
+  activeIndex: number;
+  compact?: boolean;
+}
+
+export function TabletMenuBottomNav({
+  activeIndex,
+  compact = false,
+}: TabletMenuBottomNavProps) {
   return (
     <nav
       aria-label="Tablet menu navigation"
-      className="mt-4 rounded-[14px] border border-white/10 bg-white/[0.035] p-1"
+      className={classNames(
+        "rounded-[14px] border border-white/10 bg-white/[0.035] p-1",
+        compact ? "mt-3" : "mt-4",
+      )}
     >
       <ul className="grid grid-cols-5">
         {mobileNav.map((item, index) => (
           <li key={item.label}>
             <Link
-              className={`flex min-h-[78px] flex-col items-center justify-center gap-2 rounded-[12px] text-[15px] ${
+              className={classNames(
+                "flex flex-col items-center justify-center rounded-[12px]",
+                compact
+                  ? "min-h-[62px] gap-1 text-[13px]"
+                  : "min-h-[78px] gap-2 text-[15px]",
                 index === activeIndex
                   ? "text-[var(--sb-red-bright)]"
-                  : "text-white/62"
-              }`}
+                  : "text-white/62",
+              )}
               href={item.href}
             >
-              <AssetIcon size={30} src={item.icon} />
+              <AssetIcon size={compact ? 25 : 30} src={item.icon} />
               {item.label}
             </Link>
           </li>

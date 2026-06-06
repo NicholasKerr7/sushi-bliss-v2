@@ -49,7 +49,7 @@ export const mockUser: UserProfile = {
   ],
   preferences: {
     dietaryTags: ["no shellfish", "low sodium"],
-    fulfillmentMode: "pickup",
+    fulfillmentMode: "delivery",
     marketingOptIn: true,
     notifications: {
       conciergeMessages: true,
