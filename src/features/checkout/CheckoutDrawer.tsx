@@ -20,6 +20,7 @@ import { CheckoutPromoSection } from "./CheckoutPromoSection";
 import { CheckoutReview } from "./CheckoutReview";
 import { OrderConfirmation } from "./OrderConfirmation";
 import { TabletCheckoutDialog } from "./TabletCheckoutDialog";
+import { TabletOrderConfirmation } from "./TabletOrderConfirmation";
 
 interface CheckoutDrawerProps {
   onBackToCart?: () => void;
@@ -80,7 +81,7 @@ export function CheckoutDrawer({
           onUpdateQuantity={updateQuantity}
           open={open}
         />
-        <OrderConfirmation
+        <TabletOrderConfirmation
           onClose={() => {
             setConfirmedOrder(null);
             setConfirmedPoints(0);
