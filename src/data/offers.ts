@@ -53,4 +53,56 @@ export const offers: Offer[] = [
     ],
     title: "Referral Gift",
   },
+  {
+    accent: "neutral",
+    code: "TUNAROLL",
+    description:
+      "Add a complimentary spicy tuna roll to qualifying pickup and delivery orders.",
+    eligibility: "Checkout subtotals over $75 before tax and service fee.",
+    expiresAt: "2026-06-10T03:59:00.000Z",
+    id: "spicy-tuna-roll",
+    imageUrl: "/assets/menu/sushi/spicy-tuna-roll.webp",
+    subtitle: "Free spicy tuna roll",
+    terms: [
+      "One complimentary roll per checkout.",
+      "Cannot be combined with another complimentary item.",
+      "Valid while daily roll allocation lasts.",
+    ],
+    title: "Free Spicy Tuna Roll",
+  },
+  {
+    accent: "premium",
+    code: "BIRTHDAY",
+    description:
+      "Celebrate with a complimentary dessert course during your birthday month.",
+    eligibility: "Members with a birthday saved to their profile.",
+    expiresAt: "2026-06-30T03:59:00.000Z",
+    id: "birthday-treat",
+    imageUrl:
+      "/assets/editorial/elegant-matcha-mousse-with-golden-accents.webp",
+    subtitle: "Complimentary dessert course",
+    terms: [
+      "Valid once during the member birthday month.",
+      "Dine-in reservation or pickup order required.",
+      "Member profile must be active before redemption.",
+    ],
+    title: "Birthday Treat",
+  },
+  {
+    accent: "neutral",
+    code: "LUNCH10",
+    description:
+      "Take 10% off chef-selected lunch orders placed before the afternoon rush.",
+    eligibility: "Lunch orders placed before 2:00 PM.",
+    expiresAt: "2026-07-01T18:00:00.000Z",
+    id: "early-lunch",
+    imageUrl: "/assets/food/sushi-rolls-with-warm-cinematic-glow.webp",
+    subtitle: "10% off lunch orders",
+    terms: [
+      "Valid daily from 11:00 AM to 2:00 PM.",
+      "Discount applies before tax and service fee.",
+      "Availability may vary by location.",
+    ],
+    title: "Early Lunch",
+  },
 ];

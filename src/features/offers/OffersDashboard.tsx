@@ -10,13 +10,20 @@ import { Card } from "@/components/ui/Card";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { offers } from "@/data/offers";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { formatDateTime } from "@/lib/dates";
 import type { Offer } from "@/types/offer";
 
 import { OfferDetailModal } from "./OfferDetailModal";
+import { TabletOffersDashboard } from "./TabletOffersDashboard";
 
 export function OffersDashboard() {
+  const mode = useResponsiveMode();
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+
+  if (mode === "tablet") {
+    return <TabletOffersDashboard />;
+  }
 
   return (
     <section
@@ -31,13 +38,16 @@ export function OffersDashboard() {
         />
 
         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {offers.map((offer) => (
+          {offers.map((offer, index) => (
             <Card className="overflow-hidden" key={offer.id}>
               <div className="relative aspect-[4/3] bg-sb-panel-soft">
                 <Image
                   alt={offer.title}
                   className="object-cover"
+                  fetchPriority={index < 2 ? "high" : "auto"}
                   fill
+                  loading={index < 2 ? undefined : "lazy"}
+                  priority={index < 2}
                   sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
                   src={offer.imageUrl}
                 />
