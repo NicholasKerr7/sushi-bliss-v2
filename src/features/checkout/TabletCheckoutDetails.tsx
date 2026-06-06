@@ -4,7 +4,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/features/home/visualHomeData";
 import { formatDateTime } from "@/lib/dates";
-import { formatMoney } from "@/lib/money";
+import { calculateTipCents, formatMoney } from "@/lib/money";
 import type { FulfillmentMode } from "@/types/common";
 import type { CartLineItem } from "@/types/order";
 
@@ -53,6 +53,7 @@ const fulfillmentOptions: Array<{
     value: "pickup",
   },
 ];
+const tipPercentOptions = [10, 15, 20] as const;
 
 export function TabletCheckoutDetails({
   addressExpanded,
@@ -86,7 +87,7 @@ export function TabletCheckoutDetails({
       <TabletCheckoutProgress activeStep={1} />
 
       <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_390px]">
-        <section className="rounded-[18px] border border-white/10 bg-white/[0.04] p-5">
+        <section className="rounded-[18px] border border-white/10 bg-white/[0.04] p-4">
           <TabletCheckoutStepTitle number={1} title="Delivery or pickup" />
           <div className="mt-4 grid grid-cols-2 gap-3">
             {fulfillmentOptions.map((option) => (
@@ -114,7 +115,7 @@ export function TabletCheckoutDetails({
             ))}
           </div>
 
-          <div className="mt-5 border-t border-white/10 pt-5">
+          <div className="mt-4 border-t border-white/10 pt-4">
             <TabletCheckoutStepTitle
               action={
                 checkout.mode === "delivery" ? (
@@ -141,7 +142,7 @@ export function TabletCheckoutDetails({
             />
           </div>
 
-          <div className="mt-5 border-t border-white/10 pt-5">
+          <div className="mt-4 border-t border-white/10 pt-4">
             <TabletCheckoutStepTitle number={3} title="Date & time" />
             <div className="mt-3 grid grid-cols-2 gap-3">
               <TabletCheckoutSelectLike
@@ -180,7 +181,7 @@ export function TabletCheckoutDetails({
             ) : null}
           </div>
 
-          <div className="mt-5 border-t border-white/10 pt-5">
+          <div className="mt-4 border-t border-white/10 pt-4">
             <label
               className="text-[18px] font-semibold uppercase tracking-[0.08em]"
               htmlFor="tablet-checkout-instructions"
@@ -188,7 +189,7 @@ export function TabletCheckoutDetails({
               Special instructions
             </label>
             <textarea
-              className="mt-3 min-h-[72px] w-full resize-none rounded-[12px] border border-white/10 bg-black/22 px-4 py-3 text-[15px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
+              className="mt-3 min-h-[64px] w-full resize-none rounded-[12px] border border-white/10 bg-black/22 px-4 py-3 text-[15px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
               id="tablet-checkout-instructions"
               maxLength={250}
               onChange={(event) => onInstructionsChange(event.target.value)}
@@ -200,7 +201,47 @@ export function TabletCheckoutDetails({
             </p>
           </div>
 
-          <div className="mt-5 border-t border-white/10 pt-5">
+          <div className="mt-4 border-t border-white/10 pt-4">
+            <TabletCheckoutStepTitle number={5} title="Add a tip" />
+            <p className="mt-2 text-[13px] text-white/56">
+              100% of tips go to our team.
+            </p>
+            <div className="mt-3 grid grid-cols-4 gap-3">
+              {tipPercentOptions.map((option) => (
+                <button
+                  aria-pressed={checkout.tipPercent === option}
+                  className={`min-h-[58px] rounded-[12px] border text-center transition ${
+                    checkout.tipPercent === option
+                      ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 text-white shadow-[0_0_22px_var(--sb-red-glow)]"
+                      : "border-white/10 bg-black/22 text-white/72"
+                  }`}
+                  key={option}
+                  onClick={() => checkout.setTipPercent(option)}
+                  type="button"
+                >
+                  <span className="block text-[16px]">{option}%</span>
+                  <span className="mt-1 block font-mono text-[12px] text-white/54">
+                    {formatMoney(
+                      calculateTipCents(
+                        checkout.reviewTotals.subtotalCents,
+                        option,
+                      ),
+                    )}
+                  </span>
+                </button>
+              ))}
+              <button
+                className="min-h-[58px] rounded-[12px] border border-white/10 bg-black/22 text-[13px] uppercase text-white/42"
+                disabled
+                title="Custom tip coming soon"
+                type="button"
+              >
+                Custom
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-4 border-t border-white/10 pt-4">
             <TabletCheckoutStepTitle
               action={
                 <button
@@ -211,7 +252,7 @@ export function TabletCheckoutDetails({
                   Change
                 </button>
               }
-              number={4}
+              number={6}
               title="Payment method"
             />
             <TabletCheckoutPaymentPanel
@@ -221,37 +262,8 @@ export function TabletCheckoutDetails({
             />
           </div>
 
-          <div className="mt-5 border-t border-white/10 pt-5">
-            <TabletCheckoutStepTitle number={5} title="Promo code" />
-            <div className="mt-3 grid grid-cols-[1fr_94px] gap-3">
-              <input
-                className="h-12 rounded-[12px] border border-white/10 bg-black/22 px-4 text-[15px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
-                onChange={(event) => checkout.setPromoCode(event.target.value)}
-                placeholder="BLISS10"
-                value={checkout.promoCode}
-              />
-              <button
-                className="rounded-[12px] border border-[var(--sb-gold)]/36 bg-[var(--sb-gold)]/10 text-[13px] font-semibold uppercase text-[var(--sb-gold-soft)]"
-                onClick={checkout.applyPromoCode}
-                type="button"
-              >
-                Apply
-              </button>
-            </div>
-            {checkout.validation.promo ? (
-              <p className="mt-2 text-[12px] text-[var(--sb-red-bright)]">
-                {checkout.validation.promo}
-              </p>
-            ) : checkout.appliedPromo ? (
-              <p className="mt-2 text-[12px] text-[var(--sb-wasabi)]">
-                {checkout.appliedPromo.code}:{" "}
-                {checkout.appliedPromo.description}
-              </p>
-            ) : null}
-          </div>
-
           <Button
-            className="red-glow-button mt-5 h-[58px] w-full rounded-[12px] text-[17px] uppercase tracking-[0.08em]"
+            className="red-glow-button mt-4 h-[58px] w-full rounded-[12px] text-[17px] uppercase tracking-[0.08em]"
             disabled={items.length === 0}
             onClick={onContinueToReview}
           >

@@ -21,6 +21,7 @@ interface CartDrawerProps {
 export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
   const mode = useResponsiveMode();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [tabletTipPercent, setTabletTipPercent] = useState(15);
   const {
     clearCart,
     isEmpty,
@@ -43,14 +44,18 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
           itemCount={itemCount}
           items={items}
           open={open}
+          tipPercent={tabletTipPercent}
           totals={totals}
           onClearCart={clearCart}
           onClose={() => onOpenChange(false)}
           onOpenCheckout={openCheckout}
           onRemove={removeItem}
+          onTipPercentChange={setTabletTipPercent}
           onUpdateQuantity={updateQuantity}
         />
         <CheckoutDrawer
+          initialTipPercent={tabletTipPercent}
+          key={`tablet-checkout-${tabletTipPercent}`}
           onBackToCart={() => onOpenChange(true)}
           onOpenChange={setCheckoutOpen}
           open={checkoutOpen}

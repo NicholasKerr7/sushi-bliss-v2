@@ -9,7 +9,7 @@ import {
   findCheckoutPromo,
   getCheckoutTimeSlots,
 } from "@/lib/checkout";
-import { calculateOrderTotals } from "@/lib/money";
+import { calculateOrderTotals, calculateTipCents } from "@/lib/money";
 import {
   addressToDraft,
   createAddressFromDraft,
@@ -27,7 +27,7 @@ import type { CartLineItem, Order } from "@/types/order";
 type AddressDraftField = keyof CheckoutAddressDraft;
 
 /** Tracks checkout form selections shared by pickup and delivery flows. */
-export function useCheckout(subtotalCents = 0) {
+export function useCheckout(subtotalCents = 0, initialTipPercent = 0) {
   const { profile, saveAddress } = useProfile();
   const initialMode = profile.preferences.fulfillmentMode;
   const [mode, setModeState] = useState<FulfillmentMode>(initialMode);
@@ -48,6 +48,7 @@ export function useCheckout(subtotalCents = 0) {
   const [selectedTime, setSelectedTime] = useState(
     () => getCheckoutTimeSlots(initialMode)[0]?.value || "",
   );
+  const [tipPercent, setTipPercent] = useState(initialTipPercent);
   const [promoCode, setPromoCodeState] = useState("");
   const [appliedPromoCode, setAppliedPromoCode] = useState<string | null>(null);
   const [addressDraft, setAddressDraft] = useState<CheckoutAddressDraft>(
@@ -78,9 +79,13 @@ export function useCheckout(subtotalCents = 0) {
   const discountCents = appliedPromo
     ? calculatePromoDiscount(subtotalCents, appliedPromo.code)
     : 0;
+  const tipCents = useMemo(
+    () => calculateTipCents(subtotalCents, tipPercent),
+    [subtotalCents, tipPercent],
+  );
   const reviewTotals = useMemo(
-    () => calculateOrderTotals(subtotalCents, discountCents),
-    [discountCents, subtotalCents],
+    () => calculateOrderTotals(subtotalCents, discountCents, tipCents),
+    [discountCents, subtotalCents, tipCents],
   );
 
   const setMode = useCallback((nextMode: FulfillmentMode) => {
@@ -261,8 +266,11 @@ export function useCheckout(subtotalCents = 0) {
     setSelectedAddressId,
     setSelectedPaymentMethodId,
     setSelectedTime,
+    setTipPercent,
     startEditSelectedAddress,
     startNewAddress,
+    tipCents,
+    tipPercent,
     timeSlots,
     updateAddressDraft,
     validateCheckout,

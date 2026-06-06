@@ -73,6 +73,7 @@ export interface OrderTotals {
   taxCents: number;
   serviceFeeCents: number;
   discountCents: number;
+  tipCents: number;
   totalCents: number;
 }
 

@@ -69,10 +69,13 @@ export function TabletCheckoutSummary({
           />
         ) : null}
         <SummaryRow
-          label="Service fee"
+          label="Delivery fee"
           value={formatMoney(totals.serviceFeeCents)}
         />
         <SummaryRow label="Tax" value={formatMoney(totals.taxCents)} />
+        {totals.tipCents > 0 ? (
+          <SummaryRow label="Tip" value={formatMoney(totals.tipCents)} />
+        ) : null}
       </div>
 
       <div className="mt-3 border-t border-white/10 pt-3">

@@ -31,6 +31,9 @@ export function CartSummary({ className, totals }: CartSummaryProps) {
         label="Service fee"
         value={formatMoney(totals.serviceFeeCents)}
       />
+      {totals.tipCents > 0 ? (
+        <SummaryRow label="Tip" value={formatMoney(totals.tipCents)} />
+      ) : null}
       <div className="flex items-center justify-between gap-4 border-t border-sb-line pt-3">
         <span className="text-sm font-semibold text-sb-rice">Total</span>
         <span className="font-mono text-lg font-semibold text-sb-gold-soft">

@@ -9,7 +9,11 @@ import {
   TabletMenuBottomNav,
   TabletMenuHeader,
 } from "@/features/menu/TabletMenuChrome";
-import { formatMoney } from "@/lib/money";
+import {
+  calculateOrderTotals,
+  calculateTipCents,
+  formatMoney,
+} from "@/lib/money";
 import type { CartLineItem, OrderTotals } from "@/types/order";
 
 import { TabletCartLine } from "./TabletCartLine";
@@ -21,12 +25,15 @@ interface TabletCartDialogProps {
   onClose: () => void;
   onOpenCheckout: () => void;
   onRemove: (id: string) => void;
+  onTipPercentChange: (tipPercent: number) => void;
   onUpdateQuantity: (id: string, quantity: number) => void;
   open: boolean;
+  tipPercent: number;
   totals: OrderTotals;
 }
 
 const FREE_DELIVERY_THRESHOLD_CENTS = 7500;
+const tipPercentOptions = [10, 15, 20] as const;
 const benefitItems = [
   { icon: icons.flower, label: "Premium ingredients", value: "Sourced Daily" },
   {
@@ -54,8 +61,10 @@ export function TabletCartDialog({
   onClose,
   onOpenCheckout,
   onRemove,
+  onTipPercentChange,
   onUpdateQuantity,
   open,
+  tipPercent,
   totals,
 }: TabletCartDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -69,6 +78,12 @@ export function TabletCartDialog({
   const progressPercent = Math.min(
     (totals.subtotalCents / FREE_DELIVERY_THRESHOLD_CENTS) * 100,
     100,
+  );
+  const tipCents = calculateTipCents(totals.subtotalCents, tipPercent);
+  const previewTotals = calculateOrderTotals(
+    totals.subtotalCents,
+    totals.discountCents,
+    tipCents,
   );
 
   useEffect(() => {
@@ -207,27 +222,33 @@ export function TabletCartDialog({
               <div className="mt-5 space-y-4 text-[15px]">
                 <SummaryRow
                   label={`Subtotal (${itemCount} items)`}
-                  value={formatMoney(totals.subtotalCents)}
+                  value={formatMoney(previewTotals.subtotalCents)}
                 />
                 <SummaryRow
-                  label="Service fee"
-                  value={formatMoney(totals.serviceFeeCents)}
+                  label="Delivery fee"
+                  value={formatMoney(previewTotals.serviceFeeCents)}
                 />
                 <SummaryRow
                   label="Estimated tax"
-                  value={formatMoney(totals.taxCents)}
+                  value={formatMoney(previewTotals.taxCents)}
                 />
+                {previewTotals.tipCents > 0 ? (
+                  <SummaryRow
+                    label={`Tip (${tipPercent}%)`}
+                    value={formatMoney(previewTotals.tipCents)}
+                  />
+                ) : null}
               </div>
               <div className="mt-6 border-t border-white/10 pt-5">
                 <SummaryRow
                   label="Total"
-                  value={formatMoney(totals.totalCents)}
+                  value={formatMoney(previewTotals.totalCents)}
                   large
                 />
               </div>
               <p className="mt-5 text-[14px] font-semibold text-[var(--sb-gold-soft)]">
-                You&apos;ll earn {Math.floor(totals.totalCents / 100)} Bliss
-                Points on this order
+                You&apos;ll earn {Math.floor(previewTotals.totalCents / 100)}{" "}
+                Bliss Points on this order
               </p>
               <div className="mt-5 border-t border-white/10 pt-5">
                 <label
@@ -257,6 +278,44 @@ export function TabletCartDialog({
                     {promoMessage}
                   </p>
                 ) : null}
+              </div>
+              <div className="mt-5 border-t border-white/10 pt-5">
+                <h3 className="text-[15px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+                  Add a tip
+                </h3>
+                <p className="mt-1 text-[12px] text-white/58">
+                  100% of tips go to our team.
+                </p>
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  {tipPercentOptions.map((option) => (
+                    <button
+                      aria-pressed={tipPercent === option}
+                      className={`rounded-[12px] border px-3 py-3 text-center transition ${
+                        tipPercent === option
+                          ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 text-white shadow-[0_0_22px_var(--sb-red-glow)]"
+                          : "border-white/10 bg-black/20 text-white/74"
+                      }`}
+                      key={option}
+                      onClick={() => onTipPercentChange(option)}
+                      type="button"
+                    >
+                      <span className="block text-[16px]">{option}%</span>
+                      <span className="mt-1 block font-mono text-[12px] text-white/54">
+                        {formatMoney(
+                          calculateTipCents(totals.subtotalCents, option),
+                        )}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <button
+                  className="mt-3 h-11 w-full rounded-[12px] border border-white/12 bg-black/20 text-[13px] uppercase text-white/42"
+                  disabled
+                  title="Custom tip coming soon"
+                  type="button"
+                >
+                  Custom
+                </button>
               </div>
             </section>
 

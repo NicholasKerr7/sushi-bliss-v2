@@ -83,6 +83,9 @@ export function TabletOrderReceipt({
           value={formatMoney(order.totals.serviceFeeCents)}
         />
         <ReceiptRow label="Tax" value={formatMoney(order.totals.taxCents)} />
+        {order.totals.tipCents > 0 ? (
+          <ReceiptRow label="Tip" value={formatMoney(order.totals.tipCents)} />
+        ) : null}
       </div>
 
       <div className="mt-5 border-t border-white/10 pt-5">
