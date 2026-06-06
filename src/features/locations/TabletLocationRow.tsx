@@ -26,8 +26,8 @@ export function TabletLocationRow({
   )}`;
 
   return (
-    <article className="grid gap-5 rounded-[18px] border border-[var(--sb-red)]/26 bg-white/[0.04] p-4 lg:grid-cols-[260px_minmax(0,1fr)_220px]">
-      <div className="relative min-h-[190px] overflow-hidden rounded-[12px] bg-black/30">
+    <article className="grid grid-cols-[156px_minmax(0,1fr)_154px] gap-3 rounded-[16px] border border-[var(--sb-red)]/26 bg-white/[0.04] p-3 min-[1080px]:grid-cols-[260px_minmax(0,1fr)_220px] min-[1080px]:gap-5 min-[1080px]:rounded-[18px] min-[1080px]:p-4">
+      <div className="relative min-h-[146px] overflow-hidden rounded-[10px] bg-black/30 min-[1080px]:min-h-[190px] min-[1080px]:rounded-[12px]">
         <Image
           alt={location.name}
           className="object-cover"
@@ -39,21 +39,21 @@ export function TabletLocationRow({
         />
       </div>
 
-      <div className="grid min-w-0 gap-4 py-2 lg:grid-cols-[minmax(0,1fr)_180px]">
+      <div className="grid min-w-0 gap-3 py-1 min-[1080px]:grid-cols-[minmax(0,1fr)_180px] min-[1080px]:gap-4 min-[1080px]:py-2">
         <div>
           {featured ? <StatusBadge tone="danger">Flagship</StatusBadge> : null}
-          <h2 className="editorial-title mt-3 text-[28px] text-white">
+          <h2 className="editorial-title mt-2 text-[23px] leading-[1.04] text-white min-[1080px]:mt-3 min-[1080px]:text-[28px] min-[1080px]:leading-normal">
             {location.name}
           </h2>
-          <p className="mt-2 text-[15px] leading-6 text-white/58">
+          <p className="mt-2 text-[13px] leading-5 text-white/58 min-[1080px]:text-[15px] min-[1080px]:leading-6">
             {location.address}
           </p>
-          <p className="mt-4 flex items-center gap-2 text-[14px] text-white/54">
+          <p className="mt-2 flex items-center gap-2 text-[12px] text-white/54 min-[1080px]:mt-4 min-[1080px]:text-[14px]">
             <AssetIcon size={18} src="/assets/icons/phone-icon.png" />
             {location.phone}
           </p>
           <a
-            className="mt-2 inline-flex items-center gap-2 text-[14px] text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+            className="mt-1 inline-flex items-center gap-2 text-[12px] text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[1080px]:mt-2 min-[1080px]:text-[14px]"
             href={directionsUrl}
             rel="noreferrer"
             target="_blank"
@@ -63,15 +63,15 @@ export function TabletLocationRow({
           </a>
         </div>
 
-        <div className="border-white/10 lg:border-l lg:pl-6">
-          <p className="flex items-center gap-2 text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+        <div className="border-white/10 min-[1080px]:border-l min-[1080px]:pl-6">
+          <p className="flex items-center gap-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[1080px]:text-[15px]">
             <AssetIcon size={20} src={icons.clock} />
             Hours
           </p>
-          <p className="mt-3 text-[14px] leading-6 text-white/58">
+          <p className="mt-1 text-[12px] leading-5 text-white/58 min-[1080px]:mt-3 min-[1080px]:text-[14px] min-[1080px]:leading-6">
             {location.hours}
           </p>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-2 hidden flex-wrap gap-2 min-[1080px]:mt-4 min-[1080px]:flex">
             {location.features.slice(0, 3).map((feature) => (
               <span
                 className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[12px] text-white/52"
@@ -84,8 +84,8 @@ export function TabletLocationRow({
         </div>
       </div>
 
-      <div className="grid min-w-0 content-center gap-3">
-        <div className="relative h-[132px] overflow-hidden rounded-[10px] border border-white/10 bg-black/30">
+      <div className="grid min-w-0 content-center gap-2 min-[1080px]:gap-3">
+        <div className="relative h-[78px] overflow-hidden rounded-[9px] border border-white/10 bg-black/30 min-[1080px]:h-[132px] min-[1080px]:rounded-[10px]">
           <Image
             alt={`${location.name} map`}
             className="object-cover"
@@ -101,14 +101,14 @@ export function TabletLocationRow({
         </div>
         {featured ? (
           <Button
-            className="red-glow-button h-[52px] rounded-[12px] uppercase tracking-[0.08em]"
+            className="red-glow-button h-[44px] rounded-[11px] text-[12px] uppercase tracking-[0.08em] min-[1080px]:h-[52px] min-[1080px]:rounded-[12px] min-[1080px]:text-[14px]"
             href="/reservations"
           >
             Reserve here
           </Button>
         ) : (
           <Button
-            className="h-[52px] rounded-[12px] uppercase tracking-[0.08em]"
+            className="h-[44px] rounded-[11px] text-[12px] uppercase tracking-[0.08em] min-[1080px]:h-[52px] min-[1080px]:rounded-[12px] min-[1080px]:text-[14px]"
             onClick={() => onViewDetails(location)}
             variant="secondary"
           >
