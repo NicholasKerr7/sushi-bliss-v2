@@ -296,6 +296,7 @@ function PastOrderRow({
             alt={firstItem.menuItem.image.alt || firstItem.menuItem.name}
             className="object-cover"
             fill
+            loading="eager"
             sizes="250px"
             src={firstItem.menuItem.image.publicUrl}
           />
@@ -349,6 +350,7 @@ function OrderItemPreview({ item }: { item: Order["items"][number] }) {
         alt={item.menuItem.image.alt || item.menuItem.name}
         className="object-cover"
         fill
+        loading="eager"
         sizes="140px"
         src={item.menuItem.image.publicUrl}
       />
