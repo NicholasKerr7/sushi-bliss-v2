@@ -11,8 +11,8 @@ import type { Reservation } from "@/types/reservation";
 
 interface TabletReservationHistoryViewProps {
   onBack: () => void;
-  onCancelReservation: (reservationId: string) => void;
   onModifyReservation: (reservation: Reservation) => void;
+  onRequestCancel: (reservation: Reservation) => void;
   onViewReservation: (reservation: Reservation) => void;
   pastReservations: Reservation[];
   upcomingReservations: Reservation[];
@@ -21,8 +21,8 @@ interface TabletReservationHistoryViewProps {
 
 export function TabletReservationHistoryView({
   onBack,
-  onCancelReservation,
   onModifyReservation,
+  onRequestCancel,
   onViewReservation,
   pastReservations,
   upcomingReservations,
@@ -53,8 +53,8 @@ export function TabletReservationHistoryView({
         {reservations.map((reservation) => (
           <TabletReservationHistoryCard
             key={reservation.id}
-            onCancelReservation={onCancelReservation}
             onModifyReservation={onModifyReservation}
+            onRequestCancel={onRequestCancel}
             onViewReservation={onViewReservation}
             reservation={reservation}
           />
@@ -65,13 +65,13 @@ export function TabletReservationHistoryView({
 }
 
 function TabletReservationHistoryCard({
-  onCancelReservation,
   onModifyReservation,
+  onRequestCancel,
   onViewReservation,
   reservation,
 }: {
-  onCancelReservation: (reservationId: string) => void;
   onModifyReservation: (reservation: Reservation) => void;
+  onRequestCancel: (reservation: Reservation) => void;
   onViewReservation: (reservation: Reservation) => void;
   reservation: Reservation;
 }) {
@@ -129,7 +129,7 @@ function TabletReservationHistoryCard({
               Modify
             </Button>
             <Button
-              onClick={() => onCancelReservation(reservation.id)}
+              onClick={() => onRequestCancel(reservation)}
               variant="danger"
             >
               Cancel

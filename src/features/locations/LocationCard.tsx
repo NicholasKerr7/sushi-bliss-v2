@@ -8,11 +8,16 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import type { RestaurantLocation } from "@/types/location";
 
 interface LocationCardProps {
+  imagePriority?: boolean;
   location: RestaurantLocation;
   onViewDetails: (location: RestaurantLocation) => void;
 }
 
-export function LocationCard({ location, onViewDetails }: LocationCardProps) {
+export function LocationCard({
+  imagePriority = false,
+  location,
+  onViewDetails,
+}: LocationCardProps) {
   return (
     <Card className="flex h-full flex-col overflow-hidden">
       <div className="relative aspect-[4/3] bg-sb-panel-soft">
@@ -20,6 +25,8 @@ export function LocationCard({ location, onViewDetails }: LocationCardProps) {
           alt={location.name}
           className="object-cover"
           fill
+          loading={imagePriority ? "eager" : "lazy"}
+          preload={imagePriority}
           sizes="(min-width: 1024px) 33vw, 100vw"
           src={location.imageUrl}
         />

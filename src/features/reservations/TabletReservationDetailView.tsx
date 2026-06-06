@@ -13,16 +13,16 @@ import type { Reservation } from "@/types/reservation";
 
 interface TabletReservationDetailViewProps {
   onBack: () => void;
-  onCancelReservation: (reservationId: string) => void;
   onModifyReservation: (reservation: Reservation) => void;
+  onRequestCancel: (reservation: Reservation) => void;
   reservation: Reservation;
 }
 
 /** Presents a focused tablet reservation detail screen for history rows. */
 export function TabletReservationDetailView({
   onBack,
-  onCancelReservation,
   onModifyReservation,
+  onRequestCancel,
   reservation,
 }: TabletReservationDetailViewProps) {
   const experience = reservationExperiences.find(
@@ -119,7 +119,7 @@ export function TabletReservationDetailView({
               {cancellable ? (
                 <Button
                   className="h-[58px] rounded-[14px] uppercase tracking-[0.08em]"
-                  onClick={() => onCancelReservation(reservation.id)}
+                  onClick={() => onRequestCancel(reservation)}
                   variant="danger"
                 >
                   Cancel reservation

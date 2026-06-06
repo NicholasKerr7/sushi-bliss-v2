@@ -14,6 +14,7 @@ import type {
 } from "@/types/reservation";
 
 import { TabletReservationBookingView } from "./TabletReservationBookingView";
+import { TabletReservationCancelView } from "./TabletReservationCancelView";
 import { TabletReservationConfirmationView } from "./TabletReservationConfirmationView";
 import { TabletReservationDetailView } from "./TabletReservationDetailView";
 import { TabletReservationHistoryView } from "./TabletReservationHistoryView";
@@ -24,12 +25,14 @@ import { TabletReservationsMainView } from "./TabletReservationsMainView";
 type ReservationView = "upcoming" | "past";
 type TabletReservationSurface =
   | "booking"
+  | "cancel"
   | "confirmation"
   | "detail"
   | "history"
   | "main"
   | "review"
   | "upcoming";
+type CancelReturnSurface = "detail" | "history" | "main" | "upcoming";
 
 interface TabletReservationsDashboardProps {
   cartCount: number;
@@ -81,6 +84,10 @@ export function TabletReservationsDashboard({
   const [surface, setSurface] = useState<TabletReservationSurface>("main");
   const [selectedReservation, setSelectedReservation] =
     useState<Reservation | null>(null);
+  const [cancelContext, setCancelContext] = useState<{
+    returnSurface: CancelReturnSurface;
+    reservation: Reservation;
+  } | null>(null);
 
   const openBooking = () => {
     setSelectedReservation(null);
@@ -119,13 +126,41 @@ export function TabletReservationsDashboard({
     setSurface("booking");
   };
 
-  const cancelReservation = (reservationId: string) => {
-    onCancelReservation(reservationId);
-    setSelectedReservation((current) =>
-      current?.id === reservationId
-        ? { ...current, status: "cancelled" }
-        : current,
-    );
+  const requestCancel = (
+    reservation: Reservation,
+    returnSurface: CancelReturnSurface,
+  ) => {
+    setSelectedReservation(reservation);
+    setCancelContext({ reservation, returnSurface });
+    setSurface("cancel");
+  };
+
+  const confirmCancel = () => {
+    if (!cancelContext) {
+      return;
+    }
+
+    const { reservation, returnSurface } = cancelContext;
+    const cancelledReservation: Reservation = {
+      ...reservation,
+      status: "cancelled",
+    };
+
+    onCancelReservation(reservation.id);
+    setSelectedReservation(cancelledReservation);
+    setCancelContext(null);
+
+    if (returnSurface === "detail") {
+      setSurface("detail");
+      return;
+    }
+
+    openHistory("history");
+  };
+
+  const keepReservation = () => {
+    setSurface(cancelContext?.returnSurface || "main");
+    setCancelContext(null);
   };
 
   const closeConfirmation = () => {
@@ -167,12 +202,20 @@ export function TabletReservationsDashboard({
         reservation={confirmedReservation}
       />
     );
+  } else if (surface === "cancel" && cancelContext) {
+    content = (
+      <TabletReservationCancelView
+        onConfirmCancel={confirmCancel}
+        onKeepReservation={keepReservation}
+        reservation={cancelContext.reservation}
+      />
+    );
   } else if (surface === "detail" && selectedReservation) {
     content = (
       <TabletReservationDetailView
         onBack={() => openHistory(view === "upcoming" ? "upcoming" : "history")}
-        onCancelReservation={cancelReservation}
         onModifyReservation={modifyReservation}
+        onRequestCancel={(reservation) => requestCancel(reservation, "detail")}
         reservation={selectedReservation}
       />
     );
@@ -180,8 +223,8 @@ export function TabletReservationsDashboard({
     content = (
       <TabletReservationHistoryView
         onBack={() => setSurface("main")}
-        onCancelReservation={cancelReservation}
         onModifyReservation={modifyReservation}
+        onRequestCancel={(reservation) => requestCancel(reservation, surface)}
         onViewReservation={viewReservation}
         pastReservations={pastReservations}
         upcomingReservations={upcomingReservations}
@@ -191,10 +234,10 @@ export function TabletReservationsDashboard({
   } else {
     content = (
       <TabletReservationsMainView
-        onCancelReservation={cancelReservation}
         onModifyReservation={modifyReservation}
         onOpenBooking={openBooking}
         onOpenHistory={() => openHistory("history")}
+        onRequestCancel={(reservation) => requestCancel(reservation, "main")}
         onViewReservation={viewReservation}
         pastReservations={pastReservations}
         upcomingReservations={upcomingReservations}

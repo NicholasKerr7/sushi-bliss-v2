@@ -12,10 +12,10 @@ import { formatDateTime } from "@/lib/dates";
 import type { Reservation } from "@/types/reservation";
 
 interface TabletReservationsMainViewProps {
-  onCancelReservation: (reservationId: string) => void;
   onModifyReservation: (reservation: Reservation) => void;
   onOpenBooking: () => void;
   onOpenHistory: () => void;
+  onRequestCancel: (reservation: Reservation) => void;
   onViewReservation: (reservation: Reservation) => void;
   pastReservations: Reservation[];
   upcomingReservations: Reservation[];
@@ -28,10 +28,10 @@ const benefits = [
 ] as const;
 
 export function TabletReservationsMainView({
-  onCancelReservation,
   onModifyReservation,
   onOpenBooking,
   onOpenHistory,
+  onRequestCancel,
   onViewReservation,
   pastReservations,
   upcomingReservations,
@@ -82,8 +82,8 @@ export function TabletReservationsMainView({
 
       {upcoming ? (
         <UpcomingReservationCard
-          onCancelReservation={onCancelReservation}
           onModifyReservation={onModifyReservation}
+          onRequestCancel={onRequestCancel}
           onViewReservation={onViewReservation}
           reservation={upcoming}
         />
@@ -132,13 +132,13 @@ export function TabletReservationsMainView({
 }
 
 function UpcomingReservationCard({
-  onCancelReservation,
   onModifyReservation,
+  onRequestCancel,
   onViewReservation,
   reservation,
 }: {
-  onCancelReservation: (reservationId: string) => void;
   onModifyReservation: (reservation: Reservation) => void;
+  onRequestCancel: (reservation: Reservation) => void;
   onViewReservation: (reservation: Reservation) => void;
   reservation: Reservation;
 }) {
@@ -182,10 +182,7 @@ function UpcomingReservationCard({
           >
             Modify reservation
           </Button>
-          <Button
-            onClick={() => onCancelReservation(reservation.id)}
-            variant="ghost"
-          >
+          <Button onClick={() => onRequestCancel(reservation)} variant="ghost">
             Cancel
           </Button>
         </div>
