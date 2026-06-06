@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { TabletExperienceHeader } from "@/components/layout/TabletExperienceHeader";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
@@ -26,6 +27,12 @@ interface TabletGiftExperienceProps {
 }
 
 type TabletGiftView = "selection" | "checkout" | "confirmation";
+
+const giftViewTitle: Record<TabletGiftView, string> = {
+  checkout: "Gift checkout",
+  confirmation: "Gift confirmed",
+  selection: "Gift experience",
+};
 
 function getDefaultDeliveryDate() {
   const date = new Date();
@@ -104,11 +111,9 @@ export function TabletGiftExperience({
     <>
       <section className="flex h-dvh min-h-dvh flex-col overflow-hidden bg-[#050607] px-[10px] pb-[10px] pt-[10px] text-white">
         <TabletExperienceHeader
-          active={view === "selection" ? undefined : "contact"}
           cartCount={itemCount}
-          navVariant="gifts"
           onOpenCart={() => setCartOpen(true)}
-          showContact={view !== "selection"}
+          title={giftViewTitle[view]}
         />
         {view === "confirmation" && confirmation ? (
           <TabletGiftConfirmation
@@ -138,6 +143,7 @@ export function TabletGiftExperience({
           />
         )}
       </section>
+      <TabletBottomNavigation />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
     </>
   );

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { TabletExperienceHeader } from "@/components/layout/TabletExperienceHeader";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
@@ -40,10 +41,9 @@ export function TabletOmakaseExperience() {
     <>
       <section className="flex h-dvh min-h-dvh flex-col overflow-hidden bg-[#050607] px-[10px] pb-[10px] pt-[10px] text-white">
         <TabletExperienceHeader
-          active={reviewVisible ? "reservations" : "omakase"}
           cartCount={itemCount}
-          navVariant="omakase"
           onOpenCart={() => setCartOpen(true)}
+          title={reviewVisible ? "Reservation review" : "Omakase"}
         />
         {reviewVisible ? (
           <TabletOmakaseReview
@@ -62,6 +62,7 @@ export function TabletOmakaseExperience() {
           />
         )}
       </section>
+      <TabletBottomNavigation activeId="reservations" />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
     </>
   );

@@ -62,7 +62,7 @@ export function TabletGiftSelection({
 }: TabletGiftSelectionProps) {
   return (
     <main className="mx-auto w-full max-w-[1034px]">
-      <section className="relative min-h-[282px] overflow-hidden rounded-b-[18px] border-x border-b border-white/10">
+      <section className="relative min-h-[196px] overflow-hidden rounded-b-[18px] border-x border-b border-white/10">
         <Image
           alt=""
           className="object-cover object-[72%_50%] opacity-82"
@@ -72,7 +72,7 @@ export function TabletGiftSelection({
           src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98)_0%,rgba(5,6,7,0.82)_35%,rgba(5,6,7,0.18)_78%,rgba(5,6,7,0.06)_100%)]" />
-        <div className="relative z-10 p-8">
+        <div className="relative z-10 p-6">
           <Link
             className="flex items-center gap-4 text-[13px] uppercase tracking-[0.08em] text-white/72"
             href="/home"
@@ -80,13 +80,13 @@ export function TabletGiftSelection({
             <span aria-hidden="true">&lt;</span>
             Back to home
           </Link>
-          <h1 className="editorial-title mt-8 text-[56px] uppercase leading-[0.94] text-white min-[1080px]:text-[64px]">
+          <h1 className="editorial-title mt-4 text-[48px] uppercase leading-[0.94] text-white min-[1080px]:text-[54px]">
             Gift an
             <span className="block text-[var(--sb-red-bright)]">
               Experience
             </span>
           </h1>
-          <p className="mt-5 max-w-[360px] text-[16px] leading-6 text-[var(--sb-gold-soft)]">
+          <p className="mt-3 max-w-[360px] text-[15px] leading-6 text-[var(--sb-gold-soft)]">
             Give the gift of unforgettable moments. Sushi Bliss omakase and
             dining experiences crafted with care.
           </p>
