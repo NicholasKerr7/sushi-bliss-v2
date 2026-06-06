@@ -11,8 +11,10 @@ import {
   getDefaultReservationDraft,
   getMockReservations,
 } from "@/data/reservations";
+import { useCart } from "@/hooks/useCart";
 import { useProfile } from "@/hooks/useProfile";
 import { useReservations } from "@/hooks/useReservations";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { classNames } from "@/lib/classNames";
 import {
   createReservationFromDraft,
@@ -29,11 +31,14 @@ import type {
 import { ReservationBookingForm } from "./ReservationBookingForm";
 import { ReservationCard } from "./ReservationCard";
 import { ReservationConfirmation } from "./ReservationConfirmation";
+import { TabletReservationsDashboard } from "./TabletReservationsDashboard";
 
 type ReservationView = "upcoming" | "past";
 
 export function ReservationsDashboard() {
   const { profile } = useProfile();
+  const mode = useResponsiveMode();
+  const { itemCount } = useCart();
   const mockReservations = useMemo(() => getMockReservations(), []);
   const currentTime = useMemo(() => new Date().getTime(), []);
   const {
@@ -51,6 +56,7 @@ export function ReservationsDashboard() {
     useState<Reservation | null>(null);
   const [confirmedReservation, setConfirmedReservation] =
     useState<Reservation | null>(null);
+  const [cartOpen, setCartOpen] = useState(false);
   const visibleReservations =
     view === "upcoming" ? upcomingReservations : pastReservations;
 
@@ -81,7 +87,7 @@ export function ReservationsDashboard() {
 
     if (hasReservationValidationErrors(nextValidation)) {
       setValidation(nextValidation);
-      return;
+      return false;
     }
 
     const reservation = createReservationFromDraft(
@@ -93,6 +99,19 @@ export function ReservationsDashboard() {
     setConfirmedReservation(reservation);
     resetForm();
     setView("upcoming");
+    return true;
+  };
+
+  const handleReview = () => {
+    const nextValidation = validateReservationDraft(draft);
+
+    if (hasReservationValidationErrors(nextValidation)) {
+      setValidation(nextValidation);
+      return false;
+    }
+
+    setValidation({});
+    return true;
   };
 
   const handleModify = (reservation: Reservation) => {
@@ -101,6 +120,32 @@ export function ReservationsDashboard() {
     setValidation({});
     setView("upcoming");
   };
+
+  if (mode === "tablet") {
+    return (
+      <TabletReservationsDashboard
+        cartCount={itemCount}
+        cartOpen={cartOpen}
+        confirmedReservation={confirmedReservation}
+        draft={draft}
+        editingReservation={editingReservation}
+        onCancelReservation={cancelReservation}
+        onCartOpenChange={setCartOpen}
+        onConfirmedReservationChange={setConfirmedReservation}
+        onDraftChange={updateDraft}
+        onModifyReservation={handleModify}
+        onOpenCart={() => setCartOpen(true)}
+        onResetForm={resetForm}
+        onReview={handleReview}
+        onSubmit={handleSubmit}
+        onViewChange={setView}
+        pastReservations={pastReservations}
+        upcomingReservations={upcomingReservations}
+        validation={validation}
+        view={view}
+      />
+    );
+  }
 
   return (
     <section
