@@ -45,7 +45,7 @@ export function TabletMenuExplorer({
     filteredItems.length > 0 ? filteredItems : tabletSearchFallbackItems;
 
   return (
-    <div className="hidden bg-[#050607] px-[26px] pb-4 pt-3 text-white md:block xl:hidden">
+    <div className="hidden h-dvh min-h-dvh flex-col overflow-hidden bg-[#050607] px-[26px] pb-4 pt-3 text-white md:flex xl:hidden">
       <TabletMenuHeader
         cartCount={cartItemCount}
         query={query}
@@ -53,38 +53,40 @@ export function TabletMenuExplorer({
         onOpenCart={onOpenCart}
         onQueryChange={onQueryChange}
       />
-      {hasSearch ? (
-        <TabletSearchFilter
-          category={category}
-          categories={categories}
-          isFavorite={isFavorite}
-          results={searchResults}
-          onAddToCart={onAddToCart}
-          onClearFilters={onClearFilters}
-          onQueryChange={onQueryChange}
-          onSelectCategory={onSelectCategory}
-          onToggleFavorite={onToggleFavorite}
-          onViewDetails={onViewDetails}
-        />
-      ) : category === "nigiri" ? (
-        <TabletNigiriCategoryView
-          categories={categories}
-          onAddToCart={onAddToCart}
-          onQueryChange={onQueryChange}
-          onSelectCategory={onSelectCategory}
-          onViewDetails={onViewDetails}
-        />
-      ) : (
-        <TabletMenuOverview
-          category={category}
-          categories={categories}
-          isFavorite={isFavorite}
-          onAddToCart={onAddToCart}
-          onSelectCategory={onSelectCategory}
-          onToggleFavorite={onToggleFavorite}
-          onViewDetails={onViewDetails}
-        />
-      )}
+      <div className="flex-1">
+        {hasSearch ? (
+          <TabletSearchFilter
+            category={category}
+            categories={categories}
+            isFavorite={isFavorite}
+            results={searchResults}
+            onAddToCart={onAddToCart}
+            onClearFilters={onClearFilters}
+            onQueryChange={onQueryChange}
+            onSelectCategory={onSelectCategory}
+            onToggleFavorite={onToggleFavorite}
+            onViewDetails={onViewDetails}
+          />
+        ) : category === "nigiri" ? (
+          <TabletNigiriCategoryView
+            categories={categories}
+            onAddToCart={onAddToCart}
+            onQueryChange={onQueryChange}
+            onSelectCategory={onSelectCategory}
+            onViewDetails={onViewDetails}
+          />
+        ) : (
+          <TabletMenuOverview
+            category={category}
+            categories={categories}
+            isFavorite={isFavorite}
+            onAddToCart={onAddToCart}
+            onSelectCategory={onSelectCategory}
+            onToggleFavorite={onToggleFavorite}
+            onViewDetails={onViewDetails}
+          />
+        )}
+      </div>
       <TabletMenuBottomNav activeIndex={1} />
     </div>
   );

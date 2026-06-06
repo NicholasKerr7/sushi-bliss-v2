@@ -85,9 +85,9 @@ export function TabletCompactMenuRow({
   onViewDetails,
 }: TabletCompactMenuRowProps) {
   return (
-    <article className="grid grid-cols-[104px_minmax(0,1fr)_38px] items-center gap-3 rounded-[8px] border border-[var(--sb-border)] bg-black/34 p-1.5">
+    <article className="grid grid-cols-[118px_minmax(0,1fr)_38px] items-center gap-3 rounded-[8px] border border-[var(--sb-border)] bg-black/34 p-2">
       <button
-        className="relative h-[58px] overflow-hidden rounded-[6px]"
+        className="relative h-[88px] overflow-hidden rounded-[6px]"
         onClick={() => onViewDetails(item)}
         type="button"
       >
@@ -114,7 +114,7 @@ export function TabletCompactMenuRow({
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border)]"
+        className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border)]"
         onClick={() => onAddToCart(item)}
         type="button"
       >
