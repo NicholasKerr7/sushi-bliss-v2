@@ -48,9 +48,9 @@ export function TabletOrdersDashboard({
   const fallbackOrder = activeOrders[0] || pastOrders[0] || null;
   const trackedOrder = selectedOrder || fallbackOrder;
 
-  const handleSelectOrder = (order: Order) => {
+  const handleSelectOrder = (order: Order, showDetails = false) => {
     onSelectOrder(order);
-    setDetailsOpen(false);
+    setDetailsOpen(showDetails);
     setSurface("tracking");
   };
 
@@ -63,7 +63,7 @@ export function TabletOrdersDashboard({
 
   return (
     <section
-      className="min-h-dvh bg-[#050607] px-[26px] pb-4 pt-3 text-white"
+      className="min-h-dvh bg-[#050607] px-[26px] pb-2 pt-3 text-white"
       id="orders"
     >
       <TabletOrdersHeader cartCount={cartCount} onOpenCart={onOpenCart} />
@@ -85,7 +85,8 @@ export function TabletOrdersDashboard({
           activeCount={activeOrders.length}
           activeOrders={activeOrders}
           onReorder={onReorder}
-          onSelectOrder={handleSelectOrder}
+          onSelectOrder={(order) => handleSelectOrder(order, true)}
+          onTrackOrder={(order) => handleSelectOrder(order)}
           onViewChange={handleViewChange}
           pastCount={pastOrders.length}
           pastOrders={pastOrders}

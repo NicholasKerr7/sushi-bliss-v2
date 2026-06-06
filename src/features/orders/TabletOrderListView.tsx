@@ -19,12 +19,19 @@ import {
 import type { Order } from "@/types/order";
 
 type OrderView = "active" | "past";
+const dashboardProgressLabels = [
+  "Placed",
+  "Preparing",
+  "On the way",
+  "Delivered",
+] as const;
 
 interface TabletOrderListViewProps {
   activeCount: number;
   activeOrders: Order[];
   onReorder: (order: Order) => void;
   onSelectOrder: (order: Order) => void;
+  onTrackOrder: (order: Order) => void;
   onViewChange: (view: OrderView) => void;
   pastCount: number;
   pastOrders: Order[];
@@ -37,6 +44,7 @@ export function TabletOrderListView({
   activeOrders,
   onReorder,
   onSelectOrder,
+  onTrackOrder,
   onViewChange,
   pastCount,
   pastOrders,
@@ -98,6 +106,7 @@ export function TabletOrderListView({
           {currentOrder ? (
             <FeaturedCurrentOrder
               onSelectOrder={onSelectOrder}
+              onTrackOrder={onTrackOrder}
               order={currentOrder}
             />
           ) : (
@@ -105,9 +114,11 @@ export function TabletOrderListView({
           )}
 
           <PastOrdersPanel
+            onViewAllPast={() => onViewChange("past")}
             onReorder={onReorder}
             onSelectOrder={onSelectOrder}
             orders={visiblePastOrders}
+            showViewAll={pastOrders.length > 0}
           />
         </>
       ) : (
@@ -124,9 +135,11 @@ export function TabletOrderListView({
 
 function FeaturedCurrentOrder({
   onSelectOrder,
+  onTrackOrder,
   order,
 }: {
   onSelectOrder: (order: Order) => void;
+  onTrackOrder: (order: Order) => void;
   order: Order;
 }) {
   const timeline = getOrderTimeline(order).slice(0, 4);
@@ -178,7 +191,7 @@ function FeaturedCurrentOrder({
             {etaLabel}
           </p>
           <div className="mt-4 grid grid-cols-4 gap-2">
-            {timeline.map((step) => (
+            {timeline.map((step, index) => (
               <div className="min-w-0" key={step.id}>
                 <span
                   className={classNames(
@@ -196,7 +209,7 @@ function FeaturedCurrentOrder({
                       : "text-white/46",
                   )}
                 >
-                  {step.label}
+                  {dashboardProgressLabels[index]}
                 </span>
               </div>
             ))}
@@ -204,8 +217,8 @@ function FeaturedCurrentOrder({
         </div>
 
         <div className="min-w-0">
-          <div className="grid grid-cols-5 gap-3">
-            {order.items.slice(0, 5).map((item) => (
+          <div className="grid grid-cols-4 gap-3">
+            {order.items.slice(0, 4).map((item) => (
               <OrderItemPreview item={item} key={item.id} />
             ))}
           </div>
@@ -232,7 +245,7 @@ function FeaturedCurrentOrder({
             </Button>
             <Button
               className="red-glow-button h-[54px] rounded-[12px] uppercase tracking-[0.08em]"
-              onClick={() => onSelectOrder(order)}
+              onClick={() => onTrackOrder(order)}
             >
               Track order
             </Button>
@@ -244,14 +257,18 @@ function FeaturedCurrentOrder({
 }
 
 function PastOrdersPanel({
+  onViewAllPast,
   onReorder,
   onSelectOrder,
   orders,
+  showViewAll = false,
   standalone = false,
 }: {
+  onViewAllPast?: () => void;
   onReorder: (order: Order) => void;
   onSelectOrder: (order: Order) => void;
   orders: Order[];
+  showViewAll?: boolean;
   standalone?: boolean;
 }) {
   return (
@@ -273,6 +290,17 @@ function PastOrdersPanel({
       ) : (
         <OrdersEmptyState label="No past orders" />
       )}
+      {showViewAll && onViewAllPast ? (
+        <button
+          className="mt-3 flex h-[58px] w-full items-center justify-center gap-5 rounded-[14px] border border-[var(--sb-gold)]/24 bg-white/[0.025] text-[14px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.055] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+          onClick={onViewAllPast}
+          type="button"
+        >
+          <AssetIcon size={24} src={icons.bag} />
+          View all past orders
+          <span aria-hidden="true">&gt;</span>
+        </button>
+      ) : null}
     </section>
   );
 }
@@ -289,7 +317,7 @@ function PastOrderRow({
   const firstItem = order.items[0];
 
   return (
-    <article className="grid min-h-[128px] gap-4 rounded-[14px] border border-white/10 bg-white/[0.035] p-3 min-[1080px]:grid-cols-[250px_minmax(0,1fr)_150px_230px] min-[1080px]:items-center min-[1080px]:gap-5">
+    <article className="grid min-h-[128px] gap-4 rounded-[14px] border border-white/10 bg-white/[0.035] p-3 lg:grid-cols-[250px_minmax(0,1fr)_150px_230px] lg:items-center lg:gap-5">
       <div className="relative h-[104px] overflow-hidden rounded-[10px] bg-black/30">
         {firstItem ? (
           <Image
@@ -314,7 +342,7 @@ function PastOrderRow({
         </p>
         <p className="mt-1 text-[13px] text-[var(--sb-wasabi)]">Delivered</p>
       </div>
-      <div className="border-y border-white/10 py-3 min-[1080px]:border-x min-[1080px]:border-y-0 min-[1080px]:px-5 min-[1080px]:py-0">
+      <div className="border-y border-white/10 py-3 lg:border-x lg:border-y-0 lg:px-5 lg:py-0">
         <p className="text-[13px] text-white/48">Total</p>
         <p className="mt-1 font-mono text-[23px] text-[var(--sb-gold-soft)]">
           {formatMoney(order.totals.totalCents)}
