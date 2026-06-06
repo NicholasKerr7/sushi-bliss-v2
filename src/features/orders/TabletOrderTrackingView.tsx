@@ -74,7 +74,7 @@ export function TabletOrderTrackingView({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 px-6 py-5 lg:grid-cols-[1fr_1fr_1fr]">
+        <div className="grid grid-cols-1 gap-4 px-6 py-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <TrackingMetric
             icon={icons.bag}
             label={
@@ -243,7 +243,7 @@ function TrackingMetric({
   valueTone?: "red";
 }) {
   return (
-    <div className="flex items-center gap-4 rounded-[14px] border border-white/10 bg-black/22 p-4">
+    <div className="flex min-w-0 items-center gap-4 rounded-[14px] border border-white/10 bg-black/22 p-4">
       <span className="grid h-14 w-14 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-[var(--sb-gold)]/8">
         <AssetIcon size={30} src={icon} />
       </span>

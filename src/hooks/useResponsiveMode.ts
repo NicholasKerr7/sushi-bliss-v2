@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from "react";
 
+import { RESPONSIVE_BREAKPOINTS } from "@/lib/constants";
+
 export type ResponsiveMode = "mobile" | "tablet" | "desktop";
 
-/** Maps viewport width to the app's layout mode breakpoints. */
+/** Maps viewport width to Tailwind's md/xl layout mode breakpoints. */
 function getResponsiveMode(width: number): ResponsiveMode {
-  if (width >= 1280) {
+  if (width >= RESPONSIVE_BREAKPOINTS.desktop) {
     return "desktop";
   }
 
-  if (width >= 768) {
+  if (width >= RESPONSIVE_BREAKPOINTS.tablet) {
     return "tablet";
   }
 

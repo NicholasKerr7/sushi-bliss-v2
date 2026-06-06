@@ -2,10 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import {
-  TabletMenuBottomNav,
-  TabletMenuStatusBar,
-} from "@/features/menu/TabletMenuChrome";
+import { TabletMenuBottomNav } from "@/features/menu/TabletMenuChrome";
 import type { CartLineItem } from "@/types/order";
 
 import { TabletCheckoutBenefitStrip } from "./TabletCheckoutBenefitStrip";
@@ -106,7 +103,6 @@ export function TabletCheckoutDialog({
       role="dialog"
       tabIndex={-1}
     >
-      <TabletMenuStatusBar />
       <TabletCheckoutHeader cartCount={itemCount} onBackToCart={onBackToCart} />
 
       <main className="mx-auto max-w-[1034px]">

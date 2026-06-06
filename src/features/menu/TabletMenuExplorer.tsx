@@ -2,11 +2,7 @@
 
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
-import {
-  TabletMenuBottomNav,
-  TabletMenuHeader,
-  TabletMenuStatusBar,
-} from "./TabletMenuChrome";
+import { TabletMenuBottomNav, TabletMenuHeader } from "./TabletMenuChrome";
 import { TabletMenuOverview } from "./TabletMenuOverview";
 import { TabletNigiriCategoryView } from "./TabletNigiriCategoryView";
 import { TabletSearchFilter } from "./TabletSearchFilter";
@@ -50,7 +46,6 @@ export function TabletMenuExplorer({
 
   return (
     <div className="hidden bg-[#050607] px-[26px] pb-4 pt-3 text-white md:block xl:hidden">
-      <TabletMenuStatusBar />
       <TabletMenuHeader
         cartCount={cartItemCount}
         query={query}

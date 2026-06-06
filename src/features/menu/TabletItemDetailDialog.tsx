@@ -8,11 +8,7 @@ import type { CartAddOnDefinition, CartCustomization } from "@/types/order";
 
 import { TabletCustomizeView } from "./TabletItemCustomizeView";
 import { TabletDetailView } from "./TabletItemDetailView";
-import {
-  TabletMenuBottomNav,
-  TabletMenuHeader,
-  TabletMenuStatusBar,
-} from "./TabletMenuChrome";
+import { TabletMenuBottomNav, TabletMenuHeader } from "./TabletMenuChrome";
 
 type TabletItemView = "detail" | "customize";
 
@@ -139,7 +135,6 @@ export function TabletItemDetailDialog({
       role="dialog"
       tabIndex={-1}
     >
-      <TabletMenuStatusBar />
       <TabletMenuHeader
         cartCount={cartItemCount}
         query={headerQuery}

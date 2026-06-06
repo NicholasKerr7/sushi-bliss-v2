@@ -8,7 +8,6 @@ import { icons } from "@/features/home/visualHomeData";
 import {
   TabletMenuBottomNav,
   TabletMenuHeader,
-  TabletMenuStatusBar,
 } from "@/features/menu/TabletMenuChrome";
 import { formatMoney } from "@/lib/money";
 import type { CartLineItem, OrderTotals } from "@/types/order";
@@ -128,7 +127,6 @@ export function TabletCartDialog({
       role="dialog"
       tabIndex={-1}
     >
-      <TabletMenuStatusBar />
       <TabletMenuHeader
         cartCount={itemCount}
         query={query}

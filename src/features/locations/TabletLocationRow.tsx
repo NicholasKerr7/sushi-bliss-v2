@@ -26,7 +26,7 @@ export function TabletLocationRow({
   )}`;
 
   return (
-    <article className="grid gap-5 rounded-[18px] border border-[var(--sb-red)]/26 bg-white/[0.04] p-4 lg:grid-cols-[300px_1fr_260px]">
+    <article className="grid gap-5 rounded-[18px] border border-[var(--sb-red)]/26 bg-white/[0.04] p-4 lg:grid-cols-[260px_minmax(0,1fr)_220px]">
       <div className="relative min-h-[190px] overflow-hidden rounded-[12px] bg-black/30">
         <Image
           alt={location.name}
@@ -39,7 +39,7 @@ export function TabletLocationRow({
         />
       </div>
 
-      <div className="grid gap-4 py-2 lg:grid-cols-[1fr_220px]">
+      <div className="grid min-w-0 gap-4 py-2 lg:grid-cols-[minmax(0,1fr)_180px]">
         <div>
           {featured ? <StatusBadge tone="danger">Flagship</StatusBadge> : null}
           <h2 className="editorial-title mt-3 text-[28px] text-white">
@@ -84,7 +84,7 @@ export function TabletLocationRow({
         </div>
       </div>
 
-      <div className="grid content-center gap-3">
+      <div className="grid min-w-0 content-center gap-3">
         <div className="relative h-[132px] overflow-hidden rounded-[10px] border border-white/10 bg-black/30">
           <Image
             alt={`${location.name} map`}

@@ -3,10 +3,7 @@
 import { useState } from "react";
 
 import { CartDrawer } from "@/features/cart/CartDrawer";
-import {
-  TabletMenuBottomNav,
-  TabletMenuStatusBar,
-} from "@/features/menu/TabletMenuChrome";
+import { TabletMenuBottomNav } from "@/features/menu/TabletMenuChrome";
 import type { Order } from "@/types/order";
 
 import { TabletOrderListView } from "./TabletOrderListView";
@@ -70,7 +67,6 @@ export function TabletOrdersDashboard({
       className="min-h-dvh bg-[#050607] px-[26px] pb-4 pt-3 text-white"
       id="orders"
     >
-      <TabletMenuStatusBar />
       <TabletOrdersHeader cartCount={cartCount} onOpenCart={onOpenCart} />
 
       {surface === "tracking" && trackedOrder ? (

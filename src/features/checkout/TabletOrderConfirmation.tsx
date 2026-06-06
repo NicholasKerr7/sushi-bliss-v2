@@ -7,10 +7,7 @@ import { useEffect, useRef } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { brand, icons } from "@/features/home/visualHomeData";
-import {
-  TabletMenuBottomNav,
-  TabletMenuStatusBar,
-} from "@/features/menu/TabletMenuChrome";
+import { TabletMenuBottomNav } from "@/features/menu/TabletMenuChrome";
 import { formatDateTime } from "@/lib/dates";
 import { getOrderItemCount } from "@/lib/orders";
 import type { Order } from "@/types/order";
@@ -71,7 +68,6 @@ export function TabletOrderConfirmation({
       role="dialog"
       tabIndex={-1}
     >
-      <TabletMenuStatusBar />
       <TabletOrderConfirmationHeader onClose={onClose} />
 
       <main className="mx-auto max-w-[1034px]">
@@ -157,24 +153,28 @@ export function TabletOrderConfirmation({
 
 function TabletOrderConfirmationHeader({ onClose }: { onClose: () => void }) {
   return (
-    <header className="mt-1 grid h-[82px] grid-cols-[260px_1fr_268px] items-center gap-5">
-      <Link className="flex items-center gap-8" href="/home" onClick={onClose}>
+    <header className="mt-1 grid h-[82px] grid-cols-[190px_minmax(0,1fr)_190px] items-center gap-3 lg:grid-cols-[260px_minmax(0,1fr)_268px] lg:gap-5">
+      <Link
+        className="flex items-center gap-3 lg:gap-8"
+        href="/home"
+        onClick={onClose}
+      >
         <AssetIcon
           alt={brand.name}
           className="rounded-full"
           size={66}
           src={brand.assets.floralEmblem.publicUrl}
         />
-        <span className="editorial-title text-[27px] uppercase leading-[0.98] tracking-[0.35em]">
+        <span className="editorial-title text-[22px] uppercase leading-[0.98] tracking-[0.24em] lg:text-[27px] lg:tracking-[0.35em]">
           Sushi
           <br />
           Bliss
         </span>
       </Link>
-      <p className="mx-auto text-[16px] uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
+      <p className="mx-auto text-[13px] uppercase tracking-[0.14em] text-[var(--sb-gold-soft)] lg:text-[16px] lg:tracking-[0.18em]">
         Confirmed
       </p>
-      <div className="flex items-center justify-end gap-6">
+      <div className="flex items-center justify-end gap-3 lg:gap-6">
         <Link
           className="relative grid h-11 w-11 place-items-center"
           href="/notifications"
@@ -200,7 +200,7 @@ function TabletOrderConfirmationHeader({ onClose }: { onClose: () => void }) {
         >
           <Image
             alt=""
-            className="h-[58px] w-[58px] rounded-full border border-[var(--sb-border)] object-cover"
+            className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"
             height={58}
             src="/assets/chefs/aiko-nakamura-pastry-chef-standing.webp"
             width={58}

@@ -8,7 +8,6 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { locations } from "@/data/locations";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { icons } from "@/features/home/visualHomeData";
-import { TabletMenuStatusBar } from "@/features/menu/TabletMenuChrome";
 import type { RestaurantLocation } from "@/types/location";
 
 import { LocationDetailDrawer } from "./LocationDetailDrawer";
@@ -88,7 +87,6 @@ export function TabletLocationsDirectory({
       className="min-h-dvh bg-[#050607] px-[26px] pb-4 pt-3 text-white"
       id="locations"
     >
-      <TabletMenuStatusBar />
       <TabletLocationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
 
       <main className="mx-auto max-w-[1034px]">
