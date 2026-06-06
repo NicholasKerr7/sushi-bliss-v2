@@ -58,7 +58,7 @@ export function TabletCategoryBar({
   return (
     <nav
       aria-label="Tablet menu categories"
-      className="mt-3 grid grid-cols-7 rounded-[12px] border border-white/14 bg-white/[0.035]"
+      className="mt-3 grid grid-cols-7 rounded-[12px] border border-white/14 bg-white/[0.035] lg:grid-cols-[1.08fr_0.8fr_0.78fr_0.88fr_1.08fr_0.98fr_0.74fr]"
     >
       {tabletCategoryTabs.map((item) => {
         const disabled =
@@ -67,8 +67,9 @@ export function TabletCategoryBar({
 
         return (
           <button
+            aria-label={item.label}
             aria-pressed={category === item.id}
-            className={`flex min-h-[46px] items-center justify-center gap-3 border-r border-white/10 px-4 text-sm uppercase last:border-r-0 disabled:cursor-not-allowed disabled:opacity-45 ${
+            className={`flex min-h-[46px] min-w-0 items-center justify-center gap-0 border-r border-white/10 px-2 text-[13px] uppercase last:border-r-0 disabled:cursor-not-allowed disabled:opacity-45 lg:gap-2 lg:px-2.5 ${
               category === item.id
                 ? "bg-[var(--sb-gold)]/28 text-[var(--sb-gold)]"
                 : "text-white/72"
@@ -79,8 +80,10 @@ export function TabletCategoryBar({
             title={"disabledReason" in item ? item.disabledReason : undefined}
             type="button"
           >
-            <AssetIcon size={22} src={item.icon} />
-            {item.label}
+            <AssetIcon size={20} src={item.icon} />
+            <span className="hidden min-w-0 whitespace-nowrap lg:inline">
+              {item.label}
+            </span>
           </button>
         );
       })}
