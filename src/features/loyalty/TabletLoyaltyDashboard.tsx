@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { referralProgress, rewards } from "@/data/loyalty";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
@@ -16,7 +17,6 @@ import type {
 } from "@/types/loyalty";
 
 import { RewardDetailModal } from "./RewardDetailModal";
-import { TabletLoyaltyBottomNav } from "./TabletLoyaltyBottomNav";
 import { TabletLoyaltyHeader } from "./TabletLoyaltyHeader";
 import {
   TabletPointsActivityPanel,
@@ -139,7 +139,10 @@ export function TabletLoyaltyDashboard({
         </section>
       </main>
 
-      <TabletLoyaltyBottomNav />
+      <TabletBottomNavigation
+        ariaLabel="Tablet loyalty navigation"
+        fixed={false}
+      />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
       <RewardDetailModal
         memberPoints={memberPoints}

@@ -4,13 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { formatDateTime } from "@/lib/dates";
 import type { Offer } from "@/types/offer";
-
-import { TabletOffersBottomNav } from "./TabletOffersBottomNav";
 
 interface TabletOfferDetailViewProps {
   copyMessage: string;
@@ -229,7 +228,10 @@ export function TabletOfferDetailView({
         </section>
       </main>
 
-      <TabletOffersBottomNav />
+      <TabletBottomNavigation
+        ariaLabel="Tablet offers navigation"
+        fixed={false}
+      />
     </section>
   );
 }

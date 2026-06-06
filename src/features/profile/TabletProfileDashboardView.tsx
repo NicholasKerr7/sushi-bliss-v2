@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { locations } from "@/data/locations";
 import { icons } from "@/features/home/visualHomeData";
@@ -14,7 +15,6 @@ import type { LoyaltyAccount } from "@/types/loyalty";
 import type { Reservation } from "@/types/reservation";
 import type { PaymentMethod, UserProfile } from "@/types/user";
 
-import { TabletProfileBottomNav } from "./TabletProfileBottomNav";
 import { TabletProfileHeader } from "./TabletProfileHeader";
 
 interface TabletProfileDashboardViewProps {
@@ -551,7 +551,10 @@ export function TabletProfileDashboardView({
         </section>
       </main>
 
-      <TabletProfileBottomNav active="profile" />
+      <TabletBottomNavigation
+        activeId="profile"
+        ariaLabel="Tablet profile navigation"
+      />
     </section>
   );
 }

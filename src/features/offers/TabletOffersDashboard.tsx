@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { offers } from "@/data/offers";
@@ -11,7 +12,6 @@ import type { Offer } from "@/types/offer";
 
 import { TabletFeaturedOffer } from "./TabletFeaturedOffer";
 import { TabletOfferDetailView } from "./TabletOfferDetailView";
-import { TabletOffersBottomNav } from "./TabletOffersBottomNav";
 import { TabletOffersHeader } from "./TabletOffersHeader";
 import { TabletOfferTile } from "./TabletOfferTile";
 
@@ -180,7 +180,10 @@ export function TabletOffersDashboard() {
         </section>
       </main>
 
-      <TabletOffersBottomNav />
+      <TabletBottomNavigation
+        ariaLabel="Tablet offers navigation"
+        fixed={false}
+      />
     </section>
   );
 }

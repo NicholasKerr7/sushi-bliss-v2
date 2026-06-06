@@ -5,13 +5,13 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { locations } from "@/data/locations";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 import { togglePreferenceTag } from "@/lib/profile";
 import type { PaymentMethod, UserPreferences, UserProfile } from "@/types/user";
 
-import { TabletProfileBottomNav } from "./TabletProfileBottomNav";
 import { TabletProfileHeader } from "./TabletProfileHeader";
 
 type PreferencesUpdate =
@@ -602,7 +602,10 @@ export function TabletProfilePreferencesView({
         <p className="sr-only">App Version 2.3.0 - You are up to date</p>
       </main>
 
-      <TabletProfileBottomNav active="profile" />
+      <TabletBottomNavigation
+        activeId="profile"
+        ariaLabel="Tablet profile navigation"
+      />
     </section>
   );
 }

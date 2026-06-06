@@ -44,10 +44,10 @@ export function OffersDashboard() {
                 <Image
                   alt={offer.title}
                   className="object-cover"
-                  fetchPriority={index < 2 ? "high" : "auto"}
+                  fetchPriority={index < 3 ? "high" : "auto"}
                   fill
-                  loading={index < 2 ? undefined : "lazy"}
-                  priority={index < 2}
+                  loading={index < 3 ? "eager" : "lazy"}
+                  priority={index < 3}
                   sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
                   src={offer.imageUrl}
                 />

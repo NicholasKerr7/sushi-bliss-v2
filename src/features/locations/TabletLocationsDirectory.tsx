@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { locations } from "@/data/locations";
@@ -12,7 +13,6 @@ import type { RestaurantLocation } from "@/types/location";
 
 import { LocationDetailDrawer } from "./LocationDetailDrawer";
 import { TabletLocationRow } from "./TabletLocationRow";
-import { TabletLocationsBottomNav } from "./TabletLocationsBottomNav";
 import { TabletLocationsHeader } from "./TabletLocationsHeader";
 
 interface TabletLocationsDirectoryProps {
@@ -184,7 +184,10 @@ export function TabletLocationsDirectory({
         </section>
       </main>
 
-      <TabletLocationsBottomNav />
+      <TabletBottomNavigation
+        ariaLabel="Tablet locations navigation"
+        fixed={false}
+      />
       <LocationDetailDrawer
         location={selectedLocation}
         onOpenChange={(open) => {

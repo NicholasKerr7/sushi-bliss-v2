@@ -15,7 +15,7 @@ export const primaryNavigation: NavigationItem[] = [
   },
   {
     id: "reservations",
-    label: "Reserve",
+    label: "Reservations",
     href: "/reservations",
     iconUrl: "/assets/icons/calendar-icon.png",
   },
