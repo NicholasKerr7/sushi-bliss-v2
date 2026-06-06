@@ -28,7 +28,7 @@ export function OrderTrackingPanel({ order }: OrderTrackingPanelProps) {
           className="object-cover"
           fill
           sizes="(min-width: 768px) 36rem, 100vw"
-          src="/assets/maps/live-delivery-tracking-map.webp"
+          src="/assets/maps/map-route.webp"
         />
         <div className="absolute left-3 top-3">
           <StatusBadge tone="warning">Live tracking</StatusBadge>

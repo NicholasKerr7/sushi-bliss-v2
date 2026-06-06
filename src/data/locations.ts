@@ -11,13 +11,13 @@ export const locations: RestaurantLocation[] = [
     id: "tokyo-rooftop",
     imageUrl:
       "/assets/gallery/serene-illuminated-courtyard-with-red-blossoms.webp",
-    mapImageUrl: "/assets/maps/sushi-bliss-tokyo-map-transparent.webp",
-    name: "Sushi Bliss Rooftop",
+    mapImageUrl: "/assets/maps/map-ginza.webp",
+    name: "Sushi Bliss Ginza",
     neighborhood: "Ginza",
     phone: "+81 3 0000 0000",
   },
   {
-    address: "18 Lantern Lane, Tokyo",
+    address: "18 Lantern Lane, Shibuya, Tokyo",
     description:
       "An intimate sushi bar focused on chef interaction, premium nigiri, and sake-led pairings.",
     email: "bar@sushibliss.example",
@@ -25,13 +25,13 @@ export const locations: RestaurantLocation[] = [
     hours: "Tue - Sun, 4:30 PM - 12:00 AM",
     id: "sushi-bar",
     imageUrl: "/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp",
-    mapImageUrl: "/assets/maps/stylised-navigation-map-of-tokyo.webp",
-    name: "Sushi Bliss Bar",
-    neighborhood: "Akasaka",
+    mapImageUrl: "/assets/maps/map-shibuya.webp",
+    name: "Sushi Bliss Shibuya",
+    neighborhood: "Shibuya",
     phone: "+81 3 1111 1111",
   },
   {
-    address: "7 Kintsugi Court, Tokyo",
+    address: "7 Kintsugi Court, Chuo City, Tokyo",
     description:
       "A serene courtyard dining room for celebrations, tasting menus, and larger parties.",
     email: "courtyard@sushibliss.example",
@@ -39,9 +39,9 @@ export const locations: RestaurantLocation[] = [
     hours: "Wed - Sun, 12:00 PM - 10:00 PM",
     id: "kintsugi-courtyard",
     imageUrl: "/assets/ui/cards/kintsugi-bowl-with-golden-accents.webp",
-    mapImageUrl: "/assets/maps/tokyo-city-map-with-sushi-markers.webp",
-    name: "Kintsugi Courtyard",
-    neighborhood: "Omotesando",
+    mapImageUrl: "/assets/maps/map-location.webp",
+    name: "Sushi Bliss Downtown",
+    neighborhood: "Chuo City",
     phone: "+81 3 2222 2222",
   },
 ];

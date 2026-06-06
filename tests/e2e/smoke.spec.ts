@@ -80,11 +80,9 @@ test.describe("admin experience", () => {
       page.getByRole("button", { name: "Mark completed" }),
     ).toBeVisible();
 
-    await page
-      .getByRole("button", { name: "Close Sushi Bliss Rooftop" })
-      .click();
+    await page.getByRole("button", { name: "Close Sushi Bliss Ginza" }).click();
     await expect(
-      page.getByRole("button", { name: "Open Sushi Bliss Rooftop" }),
+      page.getByRole("button", { name: "Open Sushi Bliss Ginza" }),
     ).toBeVisible();
 
     await page.getByRole("button", { name: "Mark contacted" }).click();

@@ -12,7 +12,7 @@ export const initialNotifications: AppNotification[] = [
     tone: "success",
   },
   {
-    body: "Chef Omakase at Sushi Bliss Rooftop is confirmed for Jun 9 at 7:30 PM.",
+    body: "Chef Omakase at Sushi Bliss Ginza is confirmed for Jun 9 at 7:30 PM.",
     category: "reservation",
     createdAt: "2026-06-04T18:30:00.000Z",
     href: "/reservations",
