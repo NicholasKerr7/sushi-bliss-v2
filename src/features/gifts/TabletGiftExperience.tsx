@@ -108,6 +108,7 @@ export function TabletGiftExperience({
           cartCount={itemCount}
           navVariant="gifts"
           onOpenCart={() => setCartOpen(true)}
+          showContact={view !== "selection"}
         />
         {view === "confirmation" && confirmation ? (
           <TabletGiftConfirmation

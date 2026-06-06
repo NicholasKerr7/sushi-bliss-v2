@@ -21,6 +21,7 @@ interface TabletExperienceHeaderProps {
   cartCount: number;
   navVariant?: "gifts" | "omakase";
   onOpenCart: () => void;
+  showContact?: boolean;
 }
 
 const omakaseLinks = [
@@ -47,8 +48,14 @@ export function TabletExperienceHeader({
   cartCount,
   navVariant = "omakase",
   onOpenCart,
+  showContact = false,
 }: TabletExperienceHeaderProps) {
-  const tabletLinks = navVariant === "gifts" ? giftLinks : omakaseLinks;
+  const tabletLinks =
+    navVariant === "gifts"
+      ? showContact
+        ? giftLinks
+        : giftLinks.filter((link) => link.activeKey !== "contact")
+      : omakaseLinks;
 
   return (
     <header className="mt-1 grid h-[64px] grid-cols-[160px_minmax(0,1fr)_238px] items-center gap-3 rounded-[14px] border border-white/10 bg-white/[0.025] px-3 lg:h-[76px] lg:grid-cols-[190px_minmax(0,1fr)_274px] min-[1080px]:grid-cols-[210px_minmax(0,1fr)_300px]">
@@ -70,7 +77,7 @@ export function TabletExperienceHeader({
         aria-label="Tablet premium navigation"
         className={classNames(
           "mx-auto grid w-full items-center text-center text-[10px] uppercase tracking-[0.02em] text-white/84 lg:text-[12px]",
-          navVariant === "gifts"
+          navVariant === "gifts" && showContact
             ? "max-w-[690px] grid-cols-7"
             : "max-w-[620px] grid-cols-6",
         )}
