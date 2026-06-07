@@ -72,7 +72,12 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
           onRemove={removeItem}
           onUpdateQuantity={updateQuantity}
         />
-        <CheckoutDrawer onOpenChange={setCheckoutOpen} open={checkoutOpen} />
+        <CheckoutDrawer
+          initialTipPercent={15}
+          onBackToCart={() => onOpenChange(true)}
+          onOpenChange={setCheckoutOpen}
+          open={checkoutOpen}
+        />
       </>
     );
   }

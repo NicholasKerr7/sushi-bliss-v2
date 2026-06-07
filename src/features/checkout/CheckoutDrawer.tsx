@@ -18,6 +18,8 @@ import { CheckoutModeSelector } from "./CheckoutModeSelector";
 import { CheckoutPaymentSection } from "./CheckoutPaymentSection";
 import { CheckoutPromoSection } from "./CheckoutPromoSection";
 import { CheckoutReview } from "./CheckoutReview";
+import { MobileCheckoutDialog } from "./MobileCheckoutDialog";
+import { MobileOrderConfirmation } from "./MobileOrderConfirmation";
 import { OrderConfirmation } from "./OrderConfirmation";
 import { TabletCheckoutDialog } from "./TabletCheckoutDialog";
 import { TabletOrderConfirmation } from "./TabletOrderConfirmation";
@@ -65,6 +67,35 @@ export function CheckoutDrawer({
     setConfirmedOrder(order);
   };
 
+  if (mode === "mobile") {
+    return (
+      <>
+        <MobileCheckoutDialog
+          checkout={checkout}
+          itemCount={itemCount}
+          items={items}
+          key={open ? "mobile-checkout-open" : "mobile-checkout-closed"}
+          onBackToCart={() => {
+            onOpenChange(false);
+            onBackToCart?.();
+          }}
+          onClose={() => onOpenChange(false)}
+          onPlaceOrder={handlePlaceOrder}
+          onRemoveItem={removeItem}
+          open={open}
+        />
+        <MobileOrderConfirmation
+          onClose={() => {
+            setConfirmedOrder(null);
+            setConfirmedPoints(0);
+          }}
+          order={confirmedOrder}
+          pointsAwarded={confirmedPoints}
+        />
+      </>
+    );
+  }
+
   if (mode === "tablet") {
     return (
       <>
@@ -103,7 +134,7 @@ export function CheckoutDrawer({
         labelledById="checkout-drawer-title"
         onOpenChange={onOpenChange}
         open={open}
-        side={mode === "mobile" ? "bottom" : "right"}
+        side="right"
         title="Checkout"
         footer={
           isEmpty ? null : (
