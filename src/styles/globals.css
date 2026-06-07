@@ -195,7 +195,10 @@ textarea {
 }
 
 .tablet-bottom-nav-link[data-current="true"] {
-  color: var(--sb-red-bright);
+  color: #ff2b1f;
+  text-shadow:
+    0 0 9px rgb(255 43 31 / 0.42),
+    0 2px 1px rgb(0 0 0 / 0.98);
 }
 
 .stone-gradient {
