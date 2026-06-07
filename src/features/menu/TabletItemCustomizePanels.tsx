@@ -19,9 +19,13 @@ const itemHighlights = [
 
 const addOnIconById: Record<string, string | undefined> = {
   "caviar-5g": icons.crown,
+  "edamame-side": icons.leaf,
   "gold-flakes": icons.flower,
   "green-onion": icons.leaf,
   "ikura-salmon-roe": icons.nigiri,
+  "miso-soup-side": icons.miso,
+  "pickled-ginger-side": icons.star,
+  "seaweed-salad-side": icons.leaf,
   "truffle-oil": icons.miso,
   "yuzu-zest": icons.star,
 };
@@ -41,7 +45,7 @@ export function ProductStoryCard({
 }: ProductStoryCardProps) {
   return (
     <article className="rounded-[22px] border border-white/10 bg-[#101112] p-4">
-      <div className="relative h-[420px] overflow-hidden rounded-[18px] bg-white/[0.04]">
+      <div className="relative h-[320px] overflow-hidden rounded-[18px] bg-white/[0.04] min-[1080px]:h-[392px]">
         <Image
           alt={item.image.alt || item.name}
           className="object-cover object-[54%_50%]"
@@ -76,7 +80,7 @@ export function ProductStoryCard({
         </div>
       </div>
 
-      <div className="mt-4 grid grid-cols-4 gap-3">
+      <div className="mt-3 grid grid-cols-4 gap-3">
         {itemHighlights.map((highlight) => (
           <div className="grid gap-1 text-center" key={highlight.label}>
             <AssetIcon className="mx-auto" size={24} src={highlight.icon} />
@@ -86,27 +90,27 @@ export function ProductStoryCard({
         ))}
       </div>
 
-      <section className="mt-4 rounded-[16px] border border-white/10 bg-black/18 p-4">
+      <section className="mt-3 rounded-[16px] border border-white/10 bg-black/18 p-3">
         <p className="font-serif text-[15px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
           Chef&apos;s recommendation
         </p>
-        <blockquote className="mt-3 text-[15px] leading-6 text-white/72">
+        <blockquote className="mt-2 text-[15px] leading-6 text-white/72">
           Enhance the rich, buttery texture with a light garnish and a clean soy
           finish for a harmonious balance.
         </blockquote>
-        <p className="mt-4 text-[15px] text-[var(--sb-gold-soft)]">
+        <p className="mt-3 text-[15px] text-[var(--sb-gold-soft)]">
           - Chef Takahashi
         </p>
       </section>
 
-      <section className="mt-4">
+      <section className="mt-3">
         <h2 className="font-serif text-[16px] uppercase tracking-[0.1em] text-white/78">
           Item gallery
         </h2>
-        <div className="mt-3 grid grid-cols-4 gap-3">
+        <div className="mt-2.5 grid grid-cols-4 gap-3">
           {galleryImages.slice(0, 4).map((imageUrl, index) => (
             <div
-              className="relative h-[88px] overflow-hidden rounded-[12px] border border-[var(--sb-gold)]/22 bg-white/[0.035]"
+              className="relative h-[70px] overflow-hidden rounded-[12px] border border-[var(--sb-gold)]/22 bg-white/[0.035] min-[1080px]:h-[80px]"
               key={imageUrl}
             >
               <Image
@@ -143,7 +147,7 @@ export function OptionPanel({
   title,
 }: OptionPanelProps) {
   return (
-    <section className="rounded-[18px] border border-white/10 bg-white/[0.035] p-3">
+    <section className="rounded-[18px] border border-white/10 bg-white/[0.035] p-2.5">
       <div className="mb-2 flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
           <AssetIcon size={23} src={icon} />
@@ -166,6 +170,7 @@ export function OptionPanel({
 interface AddOnCardProps {
   addOn: CartAddOnDefinition;
   checked: boolean;
+  compact?: boolean;
   itemId: string;
   onToggle: (addOnId: string) => void;
 }
@@ -173,6 +178,7 @@ interface AddOnCardProps {
 export function AddOnCard({
   addOn,
   checked,
+  compact = false,
   itemId,
   onToggle,
 }: AddOnCardProps) {
@@ -188,13 +194,33 @@ export function AddOnCard({
         onChange={() => onToggle(addOn.id)}
         type="checkbox"
       />
-      <span className="grid min-h-[58px] grid-cols-[34px_1fr_28px] items-center gap-3 rounded-[12px] border border-white/10 bg-black/20 px-3 py-2 transition peer-checked:border-[var(--sb-red-bright)] peer-checked:bg-[var(--sb-red)]/10">
-        <AssetIcon size={26} src={addOnIconById[addOn.id] || icons.star} />
+      <span
+        className={classNames(
+          "grid items-center rounded-[12px] border border-white/10 bg-black/20 transition peer-checked:border-[var(--sb-red-bright)] peer-checked:bg-[var(--sb-red)]/10",
+          compact
+            ? "min-h-[44px] grid-cols-[28px_1fr_24px] gap-2 px-2.5 py-1"
+            : "min-h-[58px] grid-cols-[34px_1fr_28px] gap-3 px-3 py-2",
+        )}
+      >
+        <AssetIcon
+          size={compact ? 22 : 26}
+          src={addOnIconById[addOn.id] || icons.star}
+        />
         <span>
-          <span className="block text-[13px] font-semibold text-white/82">
+          <span
+            className={classNames(
+              "block font-semibold leading-tight text-white/82",
+              compact ? "text-[12px]" : "text-[13px]",
+            )}
+          >
             {addOn.label}
           </span>
-          <span className="mt-1 block font-mono text-[13px] text-white/62">
+          <span
+            className={classNames(
+              "mt-1 block font-mono text-white/62",
+              compact ? "text-[12px]" : "text-[13px]",
+            )}
+          >
             +{formatMoney(addOn.priceCents)}
           </span>
         </span>

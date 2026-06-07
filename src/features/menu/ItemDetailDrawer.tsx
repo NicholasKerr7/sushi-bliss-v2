@@ -14,6 +14,7 @@ import {
   calculateCartLineUnitPrice,
   createCustomizationSelection,
   getAvailableAddOns,
+  getAvailableSidePairings,
   getDefaultCustomizations,
 } from "@/lib/cart";
 import { formatMoney } from "@/lib/money";
@@ -44,16 +45,21 @@ export function ItemDetailDrawer({
   const { addItem, itemCount: cartItemCount } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
   const availableAddOns = useMemo(() => getAvailableAddOns(item), [item]);
+  const availableSidePairings = useMemo(() => getAvailableSidePairings(), []);
   const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState("");
   const [selectedAddOnIds, setSelectedAddOnIds] = useState<string[]>([]);
   const [customizations, setCustomizations] = useState(
     getDefaultCustomizations,
   );
+  const selectableAddOns = useMemo(
+    () => [...availableAddOns, ...availableSidePairings],
+    [availableAddOns, availableSidePairings],
+  );
   const selectedAddOns = useMemo(
     () =>
-      availableAddOns.filter((addOn) => selectedAddOnIds.includes(addOn.id)),
-    [availableAddOns, selectedAddOnIds],
+      selectableAddOns.filter((addOn) => selectedAddOnIds.includes(addOn.id)),
+    [selectableAddOns, selectedAddOnIds],
   );
   const unitPriceCents = calculateCartLineUnitPrice(item, selectedAddOns);
   const totalCents = unitPriceCents * quantity;
@@ -104,6 +110,7 @@ export function ItemDetailDrawer({
     return (
       <TabletItemDetailDialog
         availableAddOns={availableAddOns}
+        availableSidePairings={availableSidePairings}
         cartItemCount={cartItemCount}
         customizations={customizations}
         isFavorite={isFavorite(item.id)}

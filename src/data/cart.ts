@@ -104,3 +104,30 @@ export const cartAddOns: CartAddOnDefinition[] = [
     priceCents: 50,
   },
 ];
+
+export const cartSidePairings: CartAddOnDefinition[] = [
+  {
+    id: "miso-soup-side",
+    label: "Miso soup",
+    description: "Warm miso broth with tofu, wakame, and scallion.",
+    priceCents: 400,
+  },
+  {
+    id: "seaweed-salad-side",
+    label: "Seaweed salad",
+    description: "Chilled wakame salad with toasted sesame.",
+    priceCents: 400,
+  },
+  {
+    id: "pickled-ginger-side",
+    label: "Pickled ginger",
+    description: "House pickled ginger to reset the palate.",
+    priceCents: 200,
+  },
+  {
+    id: "edamame-side",
+    label: "Edamame",
+    description: "Steamed edamame finished with sea salt.",
+    priceCents: 400,
+  },
+];

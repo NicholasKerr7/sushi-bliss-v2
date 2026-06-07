@@ -1,4 +1,8 @@
-import { cartAddOns, cartCustomizationGroups } from "@/data/cart";
+import {
+  cartAddOns,
+  cartCustomizationGroups,
+  cartSidePairings,
+} from "@/data/cart";
 import { slugify } from "@/lib/format";
 import type { MenuItem } from "@/types/menu";
 import type {
@@ -18,6 +22,11 @@ export function getAvailableAddOns(menuItem: MenuItem): CartAddOnDefinition[] {
     menuItem.category === "nigiri";
 
   return cartAddOns.filter((addOn) => !addOn.premiumOnly || isPremiumItem);
+}
+
+/** Returns side pairings that can be selected from tablet customization. */
+export function getAvailableSidePairings(): CartAddOnDefinition[] {
+  return cartSidePairings;
 }
 
 /** Builds the default customization state from the first option in each group. */

@@ -24,6 +24,7 @@ export function TabletCartLine({
 }: TabletCartLineProps) {
   const unitPriceCents = calculateCartLineUnitPrice(item.menuItem, item.addOns);
   const lineSubtotalCents = calculateCartLineSubtotal(item);
+  const selectedAddOns = item.addOns.map((addOn) => addOn.label).join(" · ");
 
   return (
     <article className="grid grid-cols-[160px_1fr_126px_82px] items-center gap-5 border-b border-white/10 py-4 first:pt-0 last:border-b-0 last:pb-0">
@@ -47,6 +48,11 @@ export function TabletCartLine({
         <p className="mt-2 line-clamp-2 text-[14px] leading-5 text-white/56">
           {item.menuItem.description}
         </p>
+        {selectedAddOns ? (
+          <p className="mt-2 line-clamp-2 text-[12px] leading-5 text-white/48">
+            Extras: {selectedAddOns}
+          </p>
+        ) : null}
         <p className="mt-2 font-mono text-[18px] text-[var(--sb-gold-soft)]">
           {formatMoney(unitPriceCents)}
         </p>

@@ -21,6 +21,7 @@ import { TabletQuantityStepper } from "./TabletItemQuantityStepper";
 
 interface TabletCustomizeViewProps {
   availableAddOns: CartAddOnDefinition[];
+  availableSidePairings: CartAddOnDefinition[];
   customizations: CartCustomization[];
   item: MenuItem;
   notes: string;
@@ -46,6 +47,7 @@ const dietaryPreferences = [
 
 export function TabletCustomizeView({
   availableAddOns,
+  availableSidePairings,
   customizations,
   item,
   notes,
@@ -74,9 +76,9 @@ export function TabletCustomizeView({
 
   return (
     <>
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-2 flex items-center justify-between">
         <button
-          className="flex h-11 items-center gap-3 rounded-full border border-white/12 bg-white/[0.035] px-5 text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          className="flex h-10 items-center gap-3 rounded-full border border-white/12 bg-white/[0.035] px-5 text-[14px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
           onClick={onViewDetail}
           type="button"
         >
@@ -88,7 +90,7 @@ export function TabletCustomizeView({
         </p>
       </div>
 
-      <section className="mt-4 grid grid-cols-[500px_1fr] gap-4 rounded-[26px] border border-white/10 bg-[#0d0f10] p-4">
+      <section className="mt-2 grid grid-cols-[minmax(310px,0.92fr)_minmax(0,1fr)] gap-3 rounded-[26px] border border-white/10 bg-[#0d0f10] p-4 min-[1080px]:grid-cols-[500px_1fr] min-[1080px]:gap-4">
         <ProductStoryCard
           galleryImages={galleryImages}
           heroImage={heroImage}
@@ -96,8 +98,8 @@ export function TabletCustomizeView({
           unitPriceCents={unitPriceCents}
         />
 
-        <div className="grid content-start gap-3">
-          <section className="flex min-h-[66px] items-center justify-between rounded-[18px] border border-white/10 bg-white/[0.035] px-5">
+        <div className="grid content-start gap-2">
+          <section className="flex min-h-[56px] items-center justify-between rounded-[18px] border border-white/10 bg-white/[0.035] px-4 min-[1080px]:min-h-[62px] min-[1080px]:px-5">
             <div className="flex items-center gap-3">
               <AssetIcon size={24} src={icons.nigiri} />
               <h2 className="font-serif text-[17px] uppercase tracking-[0.08em] text-white/86">
@@ -116,11 +118,12 @@ export function TabletCustomizeView({
             icon={icons.crown}
             title="Add-ons"
           >
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {availableAddOns.map((addOn) => (
                 <AddOnCard
                   addOn={addOn}
                   checked={selectedAddOnIds.includes(addOn.id)}
+                  compact
                   itemId={item.id}
                   key={addOn.id}
                   onToggle={onAddOnToggle}
@@ -134,7 +137,7 @@ export function TabletCustomizeView({
             icon={icons.flower}
             title="Sauces and seasonings"
           >
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2">
               {cartCustomizationGroups.map((group) => {
                 const selected = customizations.find(
                   (customization) => customization.groupId === group.id,
@@ -142,17 +145,17 @@ export function TabletCustomizeView({
 
                 return (
                   <fieldset
-                    className="rounded-[16px] border border-white/10 bg-black/20 p-3"
+                    className="rounded-[14px] border border-white/10 bg-black/20 p-2"
                     key={group.id}
                   >
-                    <legend className="px-1 text-[13px] font-semibold text-white/78">
+                    <legend className="px-1 text-[12px] font-semibold text-white/78">
                       {group.label}
                     </legend>
-                    <div className="mt-2 grid gap-2">
+                    <div className="mt-1 grid gap-1">
                       {group.options.map((option) => (
                         <label
                           className={classNames(
-                            "flex min-h-[34px] cursor-pointer items-center justify-between gap-2 rounded-[10px] border px-3 text-[12px] transition",
+                            "flex min-h-[26px] cursor-pointer items-center justify-between gap-2 rounded-[9px] border px-2 text-[11px] transition",
                             selected?.optionId === option.id
                               ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12 text-white"
                               : "border-white/10 bg-white/[0.025] text-white/58",
@@ -189,6 +192,25 @@ export function TabletCustomizeView({
           </OptionPanel>
 
           <OptionPanel
+            description="Recommended pairings"
+            icon={icons.flower}
+            title="Pair with sides"
+          >
+            <div className="grid grid-cols-2 gap-2">
+              {availableSidePairings.map((sidePairing) => (
+                <AddOnCard
+                  addOn={sidePairing}
+                  checked={selectedAddOnIds.includes(sidePairing.id)}
+                  compact
+                  itemId={item.id}
+                  key={sidePairing.id}
+                  onToggle={onAddOnToggle}
+                />
+              ))}
+            </div>
+          </OptionPanel>
+
+          <OptionPanel
             description="Tell us about allergies or requirements"
             icon={icons.leaf}
             title="Dietary preferences"
@@ -197,7 +219,7 @@ export function TabletCustomizeView({
               {dietaryPreferences.map((preference) => (
                 <span
                   className={classNames(
-                    "rounded-[10px] border px-3 py-2 text-[12px]",
+                    "rounded-[10px] border px-3 py-1 text-[12px]",
                     preference === "None"
                       ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12 text-white"
                       : "border-white/10 bg-black/18 text-white/58",
@@ -219,7 +241,7 @@ export function TabletCustomizeView({
               Special instructions
             </label>
             <textarea
-              className="min-h-[52px] w-full resize-none rounded-[12px] border border-white/10 bg-black/24 px-4 py-3 text-[13px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
+              className="min-h-[36px] w-full resize-none rounded-[12px] border border-white/10 bg-black/24 px-4 py-2 text-[13px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
               id={`tablet-notes-${item.id}`}
               maxLength={180}
               onChange={(event) => onNotesChange(event.target.value)}
@@ -233,7 +255,7 @@ export function TabletCustomizeView({
         </div>
       </section>
 
-      <div className="mt-4 grid grid-cols-[260px_1fr_180px_270px] items-center gap-6 rounded-[20px] border border-[var(--sb-gold)]/28 bg-[#111111]/95 p-4 shadow-[0_24px_70px_rgb(0_0_0_/_0.56)] backdrop-blur">
+      <div className="mt-3 grid grid-cols-[260px_1fr_180px_270px] items-center gap-6 rounded-[20px] border border-[var(--sb-gold)]/28 bg-[#111111]/95 p-4 shadow-[0_24px_70px_rgb(0_0_0_/_0.56)] backdrop-blur">
         <div className="grid grid-cols-[64px_1fr] items-center gap-4">
           <div className="relative h-[64px] overflow-hidden rounded-[10px] border border-white/12">
             <Image

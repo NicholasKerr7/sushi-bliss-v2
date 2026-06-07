@@ -14,6 +14,7 @@ type TabletItemView = "detail" | "customize";
 
 interface TabletItemDetailDialogProps {
   availableAddOns: CartAddOnDefinition[];
+  availableSidePairings: CartAddOnDefinition[];
   cartItemCount: number;
   customizations: CartCustomization[];
   isFavorite: boolean;
@@ -45,6 +46,7 @@ const relatedItemIds = [
 /** Tablet-only product overlay matching the item detail and add-on reference screens. */
 export function TabletItemDetailDialog({
   availableAddOns,
+  availableSidePairings,
   cartItemCount,
   customizations,
   isFavorite,
@@ -130,7 +132,7 @@ export function TabletItemDetailDialog({
     <div
       aria-labelledby={`tablet-item-detail-${item.id}`}
       aria-modal="true"
-      className="fixed inset-0 z-50 hidden overflow-y-auto bg-[#050607] px-[26px] pb-4 pt-3 text-white md:block xl:hidden"
+      className="fixed inset-0 z-50 hidden h-dvh min-h-dvh flex-col overflow-hidden bg-[#050607] px-[26px] pb-4 pt-3 text-white md:flex xl:hidden"
       ref={dialogRef}
       role="dialog"
       tabIndex={-1}
@@ -144,7 +146,7 @@ export function TabletItemDetailDialog({
         onSubmitQuery={handleSubmitQuery}
       />
 
-      <main className="mx-auto max-w-[1034px]">
+      <main className="mx-auto min-h-0 w-full max-w-[1034px] flex-1 overflow-x-hidden overflow-y-auto">
         {view === "detail" ? (
           <TabletDetailView
             isFavorite={isFavorite}
@@ -162,6 +164,7 @@ export function TabletItemDetailDialog({
         ) : (
           <TabletCustomizeView
             availableAddOns={availableAddOns}
+            availableSidePairings={availableSidePairings}
             customizations={customizations}
             item={item}
             notes={notes}
