@@ -12,6 +12,7 @@ import type { RestaurantLocation } from "@/types/location";
 
 import { LocationCard } from "./LocationCard";
 import { LocationDetailDrawer } from "./LocationDetailDrawer";
+import { MobileLocationsDirectory } from "./MobileLocationsDirectory";
 import { TabletLocationsDirectory } from "./TabletLocationsDirectory";
 
 export function LocationsDirectory() {
@@ -20,6 +21,18 @@ export function LocationsDirectory() {
   const [selectedLocation, setSelectedLocation] =
     useState<RestaurantLocation | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
+
+  if (mode === "mobile") {
+    return (
+      <MobileLocationsDirectory
+        cartCount={itemCount}
+        cartOpen={cartOpen}
+        locations={locations}
+        onCartOpenChange={setCartOpen}
+        onOpenCart={() => setCartOpen(true)}
+      />
+    );
+  }
 
   if (mode === "tablet") {
     return (
