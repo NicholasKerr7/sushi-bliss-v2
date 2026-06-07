@@ -1,6 +1,7 @@
 interface AssetIconProps {
   alt?: string;
   className?: string;
+  loading?: "eager" | "lazy";
   size?: number;
   src?: string;
 }
@@ -9,6 +10,7 @@ interface AssetIconProps {
 export function AssetIcon({
   alt = "",
   className = "",
+  loading = "lazy",
   size = 24,
   src,
 }: AssetIconProps) {
@@ -23,7 +25,7 @@ export function AssetIcon({
       className={`inline-block shrink-0 object-contain ${className}`}
       decoding="async"
       height={size}
-      loading="lazy"
+      loading={loading}
       src={src}
       width={size}
     />

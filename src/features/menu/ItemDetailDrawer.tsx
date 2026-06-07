@@ -22,6 +22,7 @@ import type { MenuItem } from "@/types/menu";
 
 import { ItemAddOnSelector } from "./ItemAddOnSelector";
 import { ItemCustomizationControls } from "./ItemCustomizationControls";
+import { MobileItemDetailDialog } from "./MobileItemDetailDialog";
 import { TabletItemDetailDialog } from "./TabletItemDetailDialog";
 
 interface ItemDetailDrawerProps {
@@ -106,6 +107,30 @@ export function ItemDetailDrawer({
     });
   };
 
+  if (mode === "mobile") {
+    return (
+      <MobileItemDetailDialog
+        availableAddOns={availableAddOns}
+        customizations={customizations}
+        isFavorite={isFavorite(item.id)}
+        item={item}
+        notes={notes}
+        open={open}
+        quantity={quantity}
+        selectedAddOnIds={selectedAddOnIds}
+        totalCents={totalCents}
+        unitPriceCents={unitPriceCents}
+        onAddOnToggle={handleAddOnToggle}
+        onAddToCart={handleAddToCart}
+        onClose={() => onOpenChange(false)}
+        onCustomizationChange={handleCustomizationChange}
+        onNotesChange={setNotes}
+        onQuantityChange={setQuantity}
+        onToggleFavorite={() => toggleFavorite(item.id)}
+      />
+    );
+  }
+
   if (mode === "tablet") {
     return (
       <TabletItemDetailDialog
@@ -142,7 +167,7 @@ export function ItemDetailDrawer({
       labelledById={`item-detail-${item.id}`}
       onOpenChange={onOpenChange}
       open={open}
-      side={mode === "mobile" ? "bottom" : "right"}
+      side="right"
       title={item.name}
       footer={
         <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
