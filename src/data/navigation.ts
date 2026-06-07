@@ -33,6 +33,14 @@ export const primaryNavigation: NavigationItem[] = [
   },
 ];
 
+export const primaryNavigationActivePositionClasses: Record<string, string> = {
+  home: "left-[10%]",
+  menu: "left-[30%]",
+  reservations: "left-[50%]",
+  orders: "left-[70%]",
+  profile: "left-[90%]",
+};
+
 export const desktopNavigation: NavigationItem[] = [
   ...primaryNavigation,
   {

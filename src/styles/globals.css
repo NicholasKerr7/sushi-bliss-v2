@@ -201,6 +201,17 @@ textarea {
     0 2px 1px rgb(0 0 0 / 0.98);
 }
 
+.bottom-nav-link {
+  color: rgb(255 255 255 / 0.62);
+}
+
+.bottom-nav-link[data-current="true"] {
+  color: #ff2b1f;
+  text-shadow:
+    0 0 9px rgb(255 43 31 / 0.42),
+    0 2px 1px rgb(0 0 0 / 0.98);
+}
+
 .stone-gradient {
   background:
     radial-gradient(circle at 8% 16%, rgb(184 20 20 / 0.08), transparent 26%),

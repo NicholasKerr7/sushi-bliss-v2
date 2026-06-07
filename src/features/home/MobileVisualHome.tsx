@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import type { MenuItem } from "@/types/menu";
 
 import { HomeMenuCard } from "./HomeMenuCard";
@@ -13,7 +14,6 @@ import {
   dashboardCategories,
   featuredAssets,
   icons,
-  mobileNav,
 } from "./visualHomeData";
 
 interface MobileDashboardProps {
@@ -177,7 +177,7 @@ function CategoryRail({ activeCategory, onCategoryChange }: CategoryRailProps) {
         const active = activeCategory === id;
         return (
           <button
-            className={`flex min-h-[70px] min-w-0 flex-col items-center justify-center gap-1 rounded-[15px] border text-[11px] uppercase transition ${
+            className={`flex min-h-[70px] min-w-0 flex-col items-center justify-center gap-1 rounded-[15px] border px-1 uppercase transition ${
               active
                 ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/28 text-[var(--sb-red-bright)] shadow-[0_0_28px_var(--sb-red-glow)]"
                 : "border-transparent text-white/78 hover:text-[var(--sb-gold)]"
@@ -188,10 +188,12 @@ function CategoryRail({ activeCategory, onCategoryChange }: CategoryRailProps) {
           >
             <AssetIcon
               className={active ? "brightness-125" : "opacity-82 grayscale"}
-              size={25}
+              size={23}
               src={icon}
             />
-            <span className="truncate">{label}</span>
+            <span className="block max-w-full truncate text-center text-[9px] leading-3">
+              {label}
+            </span>
           </button>
         );
       })}
@@ -241,27 +243,29 @@ function QuickActionGrid() {
   return (
     <div className="mt-5 grid grid-cols-2 gap-3">
       <Link
-        className="red-glow-button flex min-h-[82px] items-center gap-3 rounded-[18px] px-4 text-left uppercase tracking-[0.12em] text-white"
+        className="red-glow-button flex min-h-[82px] items-center gap-2 rounded-[18px] px-3 text-left uppercase tracking-[0.04em] text-white min-[390px]:gap-3 min-[390px]:px-4"
         href="/reservations"
       >
-        <AssetIcon size={34} src={icons.calendar} />
-        <span>
-          <span className="editorial-title block text-[15px]">
+        <AssetIcon size={30} src={icons.calendar} />
+        <span className="min-w-0">
+          <span className="editorial-title block text-[12px] leading-[1.15] min-[390px]:text-[13px]">
             Reserve a Table
           </span>
-          <span className="mt-1 block text-[11px] normal-case tracking-normal text-white/75">
+          <span className="mt-1 block text-[10px] leading-[1.25] normal-case tracking-normal text-white/75 min-[390px]:text-[11px]">
             Unforgettable dining awaits
           </span>
         </span>
       </Link>
       <Link
-        className="flex min-h-[82px] items-center gap-3 rounded-[18px] border border-[var(--sb-border-strong)] bg-black/58 px-4 text-left uppercase tracking-[0.12em] text-[var(--sb-gold)] shadow-[0_0_24px_rgba(202,164,93,0.12)]"
+        className="flex min-h-[82px] items-center gap-2 rounded-[18px] border border-[var(--sb-border-strong)] bg-black/58 px-3 text-left uppercase tracking-[0.04em] text-[var(--sb-gold)] shadow-[0_0_24px_rgba(202,164,93,0.12)] min-[390px]:gap-3 min-[390px]:px-4"
         href="/menu"
       >
-        <AssetIcon size={34} src={icons.bag} />
-        <span>
-          <span className="editorial-title block text-[15px]">Order Now</span>
-          <span className="mt-1 block text-[11px] normal-case tracking-normal text-white/75">
+        <AssetIcon size={30} src={icons.bag} />
+        <span className="min-w-0">
+          <span className="editorial-title block text-[12px] leading-[1.15] min-[390px]:text-[13px]">
+            Order Now
+          </span>
+          <span className="mt-1 block text-[10px] leading-[1.25] normal-case tracking-normal text-white/75 min-[390px]:text-[11px]">
             Sushi delivered to you
           </span>
         </span>
@@ -331,27 +335,12 @@ function MemberCard({
 
 function MobileDashboardNav() {
   return (
-    <nav
-      aria-label="Mobile home navigation"
-      className="mt-6 rounded-[18px] border border-white/[0.06] bg-white/[0.035] p-1 backdrop-blur-xl"
-    >
-      <ul className="grid grid-cols-5 gap-1">
-        {mobileNav.map((item, index) => (
-          <li key={item.label}>
-            <Link
-              className={`flex min-h-[74px] flex-col items-center justify-center gap-2 rounded-[15px] text-[11px] uppercase ${
-                index === 0
-                  ? "border border-[var(--sb-red-bright)] bg-[var(--sb-red)]/18 text-[var(--sb-red-bright)] shadow-[0_0_24px_var(--sb-red-glow)]"
-                  : "text-white/64"
-              }`}
-              href={item.href}
-            >
-              <AssetIcon size={25} src={item.icon} />
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className="mt-6">
+      <BottomNavigation
+        activeId="home"
+        ariaLabel="Mobile home navigation"
+        fixed={false}
+      />
+    </div>
   );
 }
