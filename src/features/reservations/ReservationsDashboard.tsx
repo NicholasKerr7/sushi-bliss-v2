@@ -28,6 +28,7 @@ import type {
   ReservationValidationState,
 } from "@/types/reservation";
 
+import { MobileReservationsDashboard } from "./MobileReservationsDashboard";
 import { ReservationBookingForm } from "./ReservationBookingForm";
 import { ReservationCard } from "./ReservationCard";
 import { ReservationConfirmation } from "./ReservationConfirmation";
@@ -120,6 +121,33 @@ export function ReservationsDashboard() {
     setValidation({});
     setView("upcoming");
   };
+
+  if (mode === "mobile") {
+    return (
+      <MobileReservationsDashboard
+        cartCount={itemCount}
+        cartOpen={cartOpen}
+        confirmedReservation={confirmedReservation}
+        currentTime={currentTime}
+        draft={draft}
+        editingReservation={editingReservation}
+        onCancelReservation={cancelReservation}
+        onCartOpenChange={setCartOpen}
+        onConfirmedReservationChange={setConfirmedReservation}
+        onDraftChange={updateDraft}
+        onModifyReservation={handleModify}
+        onOpenCart={() => setCartOpen(true)}
+        onResetForm={resetForm}
+        onReview={handleReview}
+        onSubmit={handleSubmit}
+        onViewChange={setView}
+        pastReservations={pastReservations}
+        upcomingReservations={upcomingReservations}
+        validation={validation}
+        view={view}
+      />
+    );
+  }
 
   if (mode === "tablet") {
     return (

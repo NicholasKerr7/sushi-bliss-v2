@@ -17,6 +17,9 @@ const RESERVATION_TIMES = [
   "20:00",
   "20:30",
   "21:00",
+  "21:30",
+  "22:00",
+  "22:30",
 ];
 
 export function getReservationTimeOptions(date: string) {
