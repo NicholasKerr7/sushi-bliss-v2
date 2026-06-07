@@ -25,20 +25,41 @@ test.describe("customer experience", () => {
     await expectNoFrameworkErrorOverlay(page);
 
     const menuSection = page.locator("#menu");
+    const isMobileProject = test.info().project.name.includes("mobile");
 
-    await expect(
-      menuSection.getByRole("heading", { name: "Explore the menu" }),
-    ).toBeVisible();
+    if (isMobileProject) {
+      await expect(
+        menuSection.getByRole("heading", { name: "Otoro Nigiri" }).first(),
+      ).toBeVisible();
 
-    await menuSection.locator("#menu-search").fill("Otoro Nigiri");
-    await expect(
-      menuSection.getByRole("heading", { name: "Otoro Nigiri" }),
-    ).toBeVisible();
-    await expect(
-      menuSection.getByText(/Showing\s+1\s+item\s+in\s+All/i),
-    ).toBeVisible();
+      await menuSection
+        .getByPlaceholder("Search sushi, rolls, or dishes...")
+        .fill("Otoro Nigiri");
+      await expect(
+        menuSection.getByRole("heading", { name: "Search & Filter" }),
+      ).toBeVisible();
+      await expect(menuSection.getByText(/1 results found/i)).toBeVisible();
 
-    await menuSection.getByRole("button", { name: "Details" }).click();
+      await menuSection
+        .getByRole("button", { name: /Otoro Nigiri/i })
+        .first()
+        .click();
+    } else {
+      await expect(
+        menuSection.getByRole("heading", { name: "Explore the menu" }),
+      ).toBeVisible();
+
+      await menuSection.locator("#menu-search").fill("Otoro Nigiri");
+      await expect(
+        menuSection.getByRole("heading", { name: "Otoro Nigiri" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByText(/Showing\s+1\s+item\s+in\s+All/i),
+      ).toBeVisible();
+
+      await menuSection.getByRole("button", { name: "Details" }).click();
+    }
+
     await expect(
       page.getByRole("dialog", { name: "Otoro Nigiri" }),
     ).toBeVisible();

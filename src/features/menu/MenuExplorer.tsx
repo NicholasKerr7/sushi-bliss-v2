@@ -20,6 +20,7 @@ import type { MenuItem } from "@/types/menu";
 import { ItemDetailDrawer } from "./ItemDetailDrawer";
 import { MenuCard } from "./MenuCard";
 import { MenuCategoryTabs } from "./MenuCategoryTabs";
+import { MobileMenuExplorer } from "./MobileMenuExplorer";
 import { TabletMenuExplorer } from "./TabletMenuExplorer";
 
 export function MenuExplorer() {
@@ -76,7 +77,20 @@ export function MenuExplorer() {
         onToggleFavorite={toggleFavorite}
         onViewDetails={setSelectedItem}
       />
-      <PageContainer className="md:hidden xl:block">
+      <MobileMenuExplorer
+        cartItemCount={cartItemCount}
+        categories={categories}
+        category={category}
+        filteredItems={filteredItems}
+        query={query}
+        onAddToCart={handleAddToCart}
+        onClearFilters={clearFilters}
+        onOpenCart={() => setCartOpen(true)}
+        onQueryChange={setQuery}
+        onSelectCategory={setCategory}
+        onViewDetails={setSelectedItem}
+      />
+      <PageContainer className="hidden xl:block">
         <SectionHeader
           actions={
             <>
