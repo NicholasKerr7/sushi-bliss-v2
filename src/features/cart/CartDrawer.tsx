@@ -5,12 +5,15 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Drawer } from "@/components/ui/Drawer";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { menuItemById } from "@/data/menu";
 import { CheckoutDrawer } from "@/features/checkout/CheckoutDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
+import { getDefaultCustomizations } from "@/lib/cart";
 
 import { CartLineItemRow } from "./CartLineItemRow";
 import { CartSummary } from "./CartSummary";
+import { MobileCartDialog } from "./MobileCartDialog";
 import { TabletCartDialog } from "./TabletCartDialog";
 
 interface CartDrawerProps {
@@ -23,6 +26,7 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [tabletTipPercent, setTabletTipPercent] = useState(15);
   const {
+    addItem,
     clearCart,
     isEmpty,
     itemCount,
@@ -31,11 +35,47 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
     totals,
     updateQuantity,
   } = useCart();
+  const suggestedMobileItem =
+    menuItemById.get("uni-nigiri") || menuItemById.get("spicy-tuna-roll");
 
   const openCheckout = () => {
     onOpenChange(false);
     setCheckoutOpen(true);
   };
+
+  const handleAddSuggestedItem = () => {
+    if (!suggestedMobileItem) {
+      return;
+    }
+
+    addItem({
+      addOns: [],
+      customizations: getDefaultCustomizations(),
+      menuItem: suggestedMobileItem,
+      quantity: 1,
+    });
+  };
+
+  if (mode === "mobile") {
+    return (
+      <>
+        <MobileCartDialog
+          itemCount={itemCount}
+          items={items}
+          open={open}
+          suggestedItem={suggestedMobileItem}
+          totals={totals}
+          onAddSuggestedItem={handleAddSuggestedItem}
+          onClearCart={clearCart}
+          onClose={() => onOpenChange(false)}
+          onOpenCheckout={openCheckout}
+          onRemove={removeItem}
+          onUpdateQuantity={updateQuantity}
+        />
+        <CheckoutDrawer onOpenChange={setCheckoutOpen} open={checkoutOpen} />
+      </>
+    );
+  }
 
   if (mode === "tablet") {
     return (
@@ -76,7 +116,7 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
         labelledById="cart-drawer-title"
         onOpenChange={onOpenChange}
         open={open}
-        side={mode === "mobile" ? "bottom" : "right"}
+        side="right"
         title="Cart"
         footer={
           isEmpty ? null : (

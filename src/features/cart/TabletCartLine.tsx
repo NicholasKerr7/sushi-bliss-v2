@@ -27,14 +27,14 @@ export function TabletCartLine({
   const selectedAddOns = item.addOns.map((addOn) => addOn.label).join(" · ");
 
   return (
-    <article className="grid grid-cols-[160px_1fr_126px_82px] items-center gap-5 border-b border-white/10 py-4 first:pt-0 last:border-b-0 last:pb-0">
-      <div className="relative h-[96px] overflow-hidden rounded-[12px] bg-white/[0.04]">
+    <article className="grid grid-cols-[138px_minmax(0,1fr)] gap-5 border-b border-white/10 py-4 first:pt-0 last:border-b-0 last:pb-0">
+      <div className="relative h-[118px] overflow-hidden rounded-[12px] bg-white/[0.04]">
         <Image
           alt={item.menuItem.image.alt || item.menuItem.name}
           className="object-cover"
           fill
           loading="eager"
-          sizes="160px"
+          sizes="138px"
           src={getTabletPresentationImage(item.menuItem)}
         />
       </div>
@@ -56,25 +56,27 @@ export function TabletCartLine({
         <p className="mt-2 font-mono text-[18px] text-[var(--sb-gold-soft)]">
           {formatMoney(unitPriceCents)}
         </p>
-      </div>
-      <QuantityControl
-        className="rounded-[12px] border-[var(--sb-gold)]/28"
-        max={99}
-        min={0}
-        onChange={(quantity) => onUpdateQuantity(item.id, quantity)}
-        value={item.quantity}
-      />
-      <div className="text-right">
-        <p className="font-mono text-[17px] text-white">
-          {formatMoney(lineSubtotalCents)}
-        </p>
-        <button
-          className="mt-3 text-[13px] text-[var(--sb-red-bright)] underline underline-offset-4"
-          onClick={() => onRemove(item.id)}
-          type="button"
-        >
-          Remove
-        </button>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+          <QuantityControl
+            className="rounded-[12px] border-[var(--sb-gold)]/28"
+            max={99}
+            min={0}
+            onChange={(quantity) => onUpdateQuantity(item.id, quantity)}
+            value={item.quantity}
+          />
+          <div className="text-right">
+            <p className="font-mono text-[17px] text-white">
+              {formatMoney(lineSubtotalCents)}
+            </p>
+            <button
+              className="mt-3 text-[13px] text-[var(--sb-red-bright)] underline underline-offset-4"
+              onClick={() => onRemove(item.id)}
+              type="button"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
       </div>
     </article>
   );
