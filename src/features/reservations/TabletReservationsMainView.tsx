@@ -155,10 +155,7 @@ function UpcomingReservationCard({
           className="object-cover"
           fill
           sizes="330px"
-          src={
-            experience?.imageUrl ||
-            "/assets/gallery/cozy-night-at-sushi-bliss.webp"
-          }
+          src="/assets/gallery/intimate-upscale-dining-room-setting.webp"
         />
       </div>
       <div className="py-2">
@@ -220,11 +217,11 @@ function HistoryReservationRow({
 
   return (
     <button
-      className="grid grid-cols-[220px_1fr_150px_30px] items-center gap-5 rounded-[14px] border border-white/10 bg-white/[0.035] p-3 text-left"
+      className="grid grid-cols-[220px_1fr_150px_30px] items-center gap-5 rounded-[14px] border border-white/10 bg-white/[0.035] p-2.5 text-left"
       onClick={() => onViewReservation(reservation)}
       type="button"
     >
-      <span className="relative h-[88px] overflow-hidden rounded-[10px] bg-black/30">
+      <span className="relative h-[76px] overflow-hidden rounded-[10px] bg-black/30">
         <Image
           alt={experience?.title || "Reservation"}
           className="object-cover"

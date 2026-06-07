@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
+import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
@@ -12,8 +14,13 @@ import {
   reservationOccasions,
   seatingPreferences,
 } from "@/data/reservations";
+import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
-import { getReservationTimeOptions } from "@/lib/reservations";
+import { formatDateTime } from "@/lib/dates";
+import {
+  createReservationDateTime,
+  getReservationTimeOptions,
+} from "@/lib/reservations";
 import type {
   Reservation,
   ReservationDraft,
@@ -47,7 +54,15 @@ export function TabletReservationBookingView({
   onReview,
   validation,
 }: TabletReservationBookingViewProps) {
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const today = new Date().toISOString().slice(0, 10);
+  const hasValidationErrors = Object.values(validation).some(Boolean);
+  const detailsVisible =
+    detailsOpen || Boolean(editingReservation) || hasValidationErrors;
+  const selectedDateTime = createReservationDateTime(draft.date, draft.time);
+  const selectedExperience =
+    reservationExperiences.find((item) => item.id === draft.experienceId) ||
+    reservationExperiences[0];
   const timeOptions = [
     {
       disabled: true,
@@ -144,133 +159,194 @@ export function TabletReservationBookingView({
         ) : null}
       </section>
 
-      <section className="mt-5 rounded-[20px] border border-white/10 bg-white/[0.035] p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-[20px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-              Reservation details
-            </h2>
-            <p className="mt-2 text-[14px] text-white/52">
-              Select date, time, party, seating, and guest details.
-            </p>
-          </div>
-          {editingReservation ? (
-            <StatusBadge tone="warning">Editing</StatusBadge>
-          ) : null}
-        </div>
-
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
-          <Select
-            error={validation.location}
-            id="tablet-reservation-location"
-            label="Location"
-            onChange={(event) =>
-              onDraftChange("locationId", event.target.value)
-            }
-            options={locations.map((location) => ({
-              label: location.name,
-              value: location.id,
-            }))}
-            value={draft.locationId}
-          />
-          <Select
-            id="tablet-reservation-party"
-            label="Party size"
-            onChange={(event) =>
-              onDraftChange("partySize", Number(event.target.value))
-            }
-            options={partySizeOptions}
-            value={String(draft.partySize)}
-          />
-          <Input
-            error={validation.date}
-            id="tablet-reservation-date"
+      <section className="mt-4 rounded-[20px] border border-white/10 bg-white/[0.035] p-5">
+        <div className="grid items-center gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_220px]">
+          <ReservationSummaryItem
+            icon={icons.calendar}
             label="Date"
-            min={today}
-            onChange={(event) => onDraftChange("date", event.target.value)}
-            type="date"
-            value={draft.date}
-          />
-          <Select
-            error={validation.time}
-            id="tablet-reservation-time"
-            label="Time"
-            onChange={(event) => onDraftChange("time", event.target.value)}
-            options={timeOptions}
-            value={draft.time}
-          />
-          <Select
-            id="tablet-reservation-seating"
-            label="Seating"
-            onChange={(event) =>
-              onDraftChange("seatingPreference", event.target.value)
+            value={
+              selectedDateTime
+                ? formatDateTime(selectedDateTime)
+                : "Choose date and time"
             }
-            options={seatingPreferences.map((preference) => ({
-              label: preference,
-              value: preference,
-            }))}
-            value={draft.seatingPreference}
           />
-          <Select
-            id="tablet-reservation-occasion"
-            label="Occasion"
-            onChange={(event) => onDraftChange("occasion", event.target.value)}
-            options={reservationOccasions.map((occasion) => ({
-              label: occasion,
-              value: occasion,
-            }))}
-            value={draft.occasion}
+          <ReservationSummaryItem
+            icon={icons.profile}
+            label="Party size"
+            value={`${draft.partySize} ${draft.partySize === 1 ? "guest" : "guests"}`}
           />
-          <Input
-            error={validation.guest}
-            id="tablet-reservation-guest-name"
-            label="Guest name"
-            onChange={(event) => onDraftChange("guestName", event.target.value)}
-            value={draft.guestName}
+          <ReservationSummaryItem
+            icon={icons.flower}
+            label="Experience"
+            value={selectedExperience?.title || "Choose experience"}
           />
-          <Input
-            id="tablet-reservation-guest-phone"
-            label="Guest phone"
-            onChange={(event) =>
-              onDraftChange("guestPhone", event.target.value)
-            }
-            value={draft.guestPhone}
-          />
-        </div>
-
-        <label
-          className="mt-5 block text-sm font-semibold text-sb-rice"
-          htmlFor="tablet-reservation-notes"
-        >
-          Special requests
-        </label>
-        <textarea
-          className="mt-2 min-h-24 w-full resize-none rounded-card border border-sb-line bg-sb-ink/70 px-4 py-3 text-sm text-sb-rice outline-none transition placeholder:text-sb-dim focus:border-sb-gold/70 focus:ring-2 focus:ring-sb-gold/25"
-          id="tablet-reservation-notes"
-          maxLength={220}
-          onChange={(event) => onDraftChange("notes", event.target.value)}
-          placeholder="Allergies, celebrations, accessibility needs"
-          value={draft.notes}
-        />
-
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <Button
-            className="red-glow-button h-[58px] rounded-[14px] uppercase tracking-[0.08em]"
-            onClick={onReview}
+          <button
+            aria-expanded={detailsVisible}
+            className="h-[50px] rounded-[12px] border border-[var(--sb-gold)]/30 bg-black/22 text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.045] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+            onClick={() => setDetailsOpen((current) => !current)}
+            type="button"
           >
-            Continue to review
-          </Button>
-          {editingReservation ? (
-            <Button
-              className="h-[58px] rounded-[14px]"
-              onClick={onCancelEdit}
-              variant="ghost"
-            >
-              Cancel edit
-            </Button>
-          ) : null}
+            Modify selection
+          </button>
         </div>
+
+        {detailsVisible ? (
+          <div className="mt-5 border-t border-white/10 pt-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-[18px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+                  Reservation details
+                </h2>
+                <p className="mt-2 text-[13px] text-white/52">
+                  Select date, time, party, seating, and guest details.
+                </p>
+              </div>
+              {editingReservation ? (
+                <StatusBadge tone="warning">Editing</StatusBadge>
+              ) : null}
+            </div>
+
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <Select
+                error={validation.location}
+                id="tablet-reservation-location"
+                label="Location"
+                onChange={(event) =>
+                  onDraftChange("locationId", event.target.value)
+                }
+                options={locations.map((location) => ({
+                  label: location.name,
+                  value: location.id,
+                }))}
+                value={draft.locationId}
+              />
+              <Select
+                id="tablet-reservation-party"
+                label="Party size"
+                onChange={(event) =>
+                  onDraftChange("partySize", Number(event.target.value))
+                }
+                options={partySizeOptions}
+                value={String(draft.partySize)}
+              />
+              <Input
+                error={validation.date}
+                id="tablet-reservation-date"
+                label="Date"
+                min={today}
+                onChange={(event) => onDraftChange("date", event.target.value)}
+                type="date"
+                value={draft.date}
+              />
+              <Select
+                error={validation.time}
+                id="tablet-reservation-time"
+                label="Time"
+                onChange={(event) => onDraftChange("time", event.target.value)}
+                options={timeOptions}
+                value={draft.time}
+              />
+              <Select
+                id="tablet-reservation-seating"
+                label="Seating"
+                onChange={(event) =>
+                  onDraftChange("seatingPreference", event.target.value)
+                }
+                options={seatingPreferences.map((preference) => ({
+                  label: preference,
+                  value: preference,
+                }))}
+                value={draft.seatingPreference}
+              />
+              <Select
+                id="tablet-reservation-occasion"
+                label="Occasion"
+                onChange={(event) =>
+                  onDraftChange("occasion", event.target.value)
+                }
+                options={reservationOccasions.map((occasion) => ({
+                  label: occasion,
+                  value: occasion,
+                }))}
+                value={draft.occasion}
+              />
+              <Input
+                error={validation.guest}
+                id="tablet-reservation-guest-name"
+                label="Guest name"
+                onChange={(event) =>
+                  onDraftChange("guestName", event.target.value)
+                }
+                value={draft.guestName}
+              />
+              <Input
+                id="tablet-reservation-guest-phone"
+                label="Guest phone"
+                onChange={(event) =>
+                  onDraftChange("guestPhone", event.target.value)
+                }
+                value={draft.guestPhone}
+              />
+            </div>
+
+            <label
+              className="mt-4 block text-sm font-semibold text-sb-rice"
+              htmlFor="tablet-reservation-notes"
+            >
+              Special requests
+            </label>
+            <textarea
+              className="mt-2 min-h-20 w-full resize-none rounded-card border border-sb-line bg-sb-ink/70 px-4 py-3 text-sm text-sb-rice outline-none transition placeholder:text-sb-dim focus:border-sb-gold/70 focus:ring-2 focus:ring-sb-gold/25"
+              id="tablet-reservation-notes"
+              maxLength={220}
+              onChange={(event) => onDraftChange("notes", event.target.value)}
+              placeholder="Allergies, celebrations, accessibility needs"
+              value={draft.notes}
+            />
+
+            {editingReservation ? (
+              <Button
+                className="mt-4 h-[48px] rounded-[12px]"
+                onClick={onCancelEdit}
+                variant="ghost"
+              >
+                Cancel edit
+              </Button>
+            ) : null}
+          </div>
+        ) : null}
+
+        <Button
+          className="red-glow-button mt-4 h-[58px] w-full rounded-[14px] uppercase tracking-[0.08em]"
+          onClick={onReview}
+        >
+          Continue to review
+        </Button>
       </section>
     </main>
+  );
+}
+
+function ReservationSummaryItem({
+  icon,
+  label,
+  value,
+}: {
+  icon?: string;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex min-w-0 items-center gap-3">
+      <AssetIcon size={28} src={icon} />
+      <span className="min-w-0">
+        <span className="block text-[11px] uppercase tracking-[0.08em] text-white/46">
+          {label}
+        </span>
+        <span className="mt-1 block truncate text-[14px] text-white">
+          {value}
+        </span>
+      </span>
+    </div>
   );
 }

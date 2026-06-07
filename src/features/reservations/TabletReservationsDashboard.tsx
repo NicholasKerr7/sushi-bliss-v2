@@ -244,7 +244,7 @@ export function TabletReservationsDashboard({
 
   return (
     <section
-      className="flex min-h-dvh flex-col bg-[#050607] px-[26px] pb-4 pt-3 text-white"
+      className="flex min-h-dvh flex-col bg-[#050607] px-[26px] pb-1 pt-3 text-white"
       id="reservations"
     >
       <TabletReservationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />

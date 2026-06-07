@@ -10,32 +10,40 @@ import type { UserProfile } from "@/types/user";
 export const reservationExperiences: ReservationExperience[] = [
   {
     description:
-      "Chef-led seasonal tasting with nigiri, sashimi, and a closing dessert.",
-    durationMinutes: 120,
-    id: "chef-omakase",
-    imageUrl: "/assets/editorial/premium-sushi-preparation-still-life.webp",
-    premium: true,
-    priceLabel: "$185 per guest",
-    title: "Chef Omakase",
+      "An elevated dining experience in our elegant main dining room.",
+    durationMinutes: 105,
+    id: "dining-room",
+    imageUrl: "/assets/gallery/intimate-upscale-dining-room-setting.webp",
+    priceLabel: "A la carte",
+    title: "Main Dining Room",
   },
   {
     description:
-      "A focused counter experience built around premium nigiri and sake pairings.",
+      "Sit at the sushi bar and watch our chefs craft each piece with precision.",
     durationMinutes: 90,
     id: "sushi-counter",
     imageUrl: "/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp",
     priceLabel: "$95 per guest",
-    title: "Sushi Counter",
+    title: "Sushi Bar Seating",
+  },
+  {
+    description: "An intimate multi-course journey curated by our head chef.",
+    durationMinutes: 120,
+    id: "chef-omakase",
+    imageUrl: "/assets/chefs/hiroshi-tanaka-head-chef-plating.webp",
+    premium: true,
+    priceLabel: "$185 per guest",
+    title: "Chef's Counter Omakase",
   },
   {
     description:
-      "A relaxed table reservation for a la carte dining and shared plates.",
-    durationMinutes: 105,
-    id: "dining-room",
-    imageUrl:
-      "/assets/gallery/serene-illuminated-courtyard-with-red-blossoms.webp",
-    priceLabel: "A la carte",
-    title: "Dining Room",
+      "Enjoy a private and exclusive dining experience for you and your guests.",
+    durationMinutes: 150,
+    id: "private-dining",
+    imageUrl: "/assets/gallery/intimate-dining-in-warm-moody-tones.webp",
+    premium: true,
+    priceLabel: "$240 per guest",
+    title: "Private Dining",
   },
 ];
 
@@ -57,8 +65,11 @@ export const reservationOccasions = [
 export function getDefaultReservationDraft(
   profile: Pick<UserProfile, "name" | "phone"> = mockUser,
 ): ReservationDraft {
+  const defaultDate = new Date();
+  defaultDate.setDate(defaultDate.getDate() + 5);
+
   return {
-    date: "",
+    date: defaultDate.toISOString().slice(0, 10),
     experienceId: reservationExperiences[0]?.id || "",
     guestName: profile.name,
     guestPhone: profile.phone,
@@ -67,7 +78,7 @@ export function getDefaultReservationDraft(
     occasion: reservationOccasions[0],
     partySize: 2,
     seatingPreference: seatingPreferences[0],
-    time: "",
+    time: "19:00",
   };
 }
 
@@ -79,6 +90,14 @@ export function getMockReservations(): Reservation[] {
   const pastDate = new Date();
   pastDate.setDate(pastDate.getDate() - 10);
   pastDate.setHours(18, 0, 0, 0);
+
+  const secondPastDate = new Date();
+  secondPastDate.setDate(secondPastDate.getDate() - 24);
+  secondPastDate.setHours(18, 30, 0, 0);
+
+  const thirdPastDate = new Date();
+  thirdPastDate.setDate(thirdPastDate.getDate() - 47);
+  thirdPastDate.setHours(20, 0, 0, 0);
 
   return [
     {
@@ -106,6 +125,32 @@ export function getMockReservations(): Reservation[] {
       seatingPreference: "Dining table",
       startsAt: pastDate.toISOString(),
       status: "modified",
+    },
+    {
+      confirmationCode: "RSV-PAST-1842",
+      experienceId: "sushi-counter",
+      guestName: mockUser.name,
+      guestPhone: mockUser.phone,
+      id: "mock-past-counter-reservation",
+      locationId: "sushi-bar",
+      occasion: "Date night",
+      partySize: 2,
+      seatingPreference: "Sushi bar",
+      startsAt: secondPastDate.toISOString(),
+      status: "confirmed",
+    },
+    {
+      confirmationCode: "RSV-PAST-0322",
+      experienceId: "private-dining",
+      guestName: mockUser.name,
+      guestPhone: mockUser.phone,
+      id: "mock-past-private-reservation",
+      locationId: "tokyo-rooftop",
+      occasion: "Birthday",
+      partySize: 3,
+      seatingPreference: "Private booth",
+      startsAt: thirdPastDate.toISOString(),
+      status: "confirmed",
     },
   ];
 }
