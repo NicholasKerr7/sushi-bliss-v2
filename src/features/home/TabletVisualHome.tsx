@@ -5,16 +5,11 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
-import {
-  appContent,
-  brand,
-  featuredAssets,
-  icons,
-  mobileNav,
-} from "./visualHomeData";
+import { appContent, brand, featuredAssets, icons } from "./visualHomeData";
 
 interface TabletDashboardProps {
   cartCount: number;
@@ -448,25 +443,12 @@ function TabletBenefitsStrip() {
 
 function TabletBottomNav() {
   return (
-    <nav
-      aria-label="Tablet home navigation"
-      className="mt-9 rounded-[14px] border border-white/10 bg-white/[0.035] p-1"
-    >
-      <ul className="grid grid-cols-5">
-        {mobileNav.map((item, index) => (
-          <li key={item.label}>
-            <Link
-              className={`flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-[12px] text-[15px] ${
-                index === 0 ? "text-[var(--sb-red-bright)]" : "text-white/62"
-              }`}
-              href={item.href}
-            >
-              <AssetIcon size={30} src={item.icon} />
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className="mt-9">
+      <TabletBottomNavigation
+        activeId="home"
+        ariaLabel="Tablet home navigation"
+        fixed={false}
+      />
+    </div>
   );
 }

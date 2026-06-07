@@ -190,6 +190,14 @@ textarea {
   transform: none;
 }
 
+.tablet-bottom-nav-link {
+  color: rgb(255 255 255 / 0.62);
+}
+
+.tablet-bottom-nav-link[data-current="true"] {
+  color: var(--sb-red-bright);
+}
+
 .stone-gradient {
   background:
     radial-gradient(circle at 8% 16%, rgb(184 20 20 / 0.08), transparent 26%),
