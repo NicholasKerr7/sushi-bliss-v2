@@ -36,13 +36,13 @@ type ButtonLinkProps = BaseButtonProps &
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "border-sb-red bg-sb-red text-sb-rice hover:bg-sb-red-deep focus-visible:outline-sb-gold",
+    "red-glow-button border-[#ef3326]/70 text-[#e2dcda] focus-visible:outline-sb-gold",
   secondary:
     "border-sb-gold/70 bg-sb-gold/10 text-sb-gold-soft hover:bg-sb-gold/20 focus-visible:outline-sb-gold",
   ghost:
     "border-sb-line bg-transparent text-sb-muted hover:bg-sb-rice/5 focus-visible:outline-sb-gold",
   danger:
-    "border-sb-red-deep bg-sb-red-deep/70 text-sb-rice hover:bg-sb-red focus-visible:outline-sb-gold",
+    "red-glow-button border-[#ef3326]/70 text-[#e2dcda] focus-visible:outline-sb-gold",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
