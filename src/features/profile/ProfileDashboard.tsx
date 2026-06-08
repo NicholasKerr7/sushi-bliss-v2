@@ -16,6 +16,7 @@ import { useReservations } from "@/hooks/useReservations";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 
 import { AddressBook } from "./AddressBook";
+import { MobileProfileExperience } from "./MobileProfileExperience";
 import { PaymentMethodsPanel } from "./PaymentMethodsPanel";
 import { PreferencesPanel } from "./PreferencesPanel";
 import { ProfileDetailsForm } from "./ProfileDetailsForm";
@@ -46,6 +47,26 @@ export function ProfileDashboard() {
     mockReservations,
     currentTime,
   );
+
+  if (mode === "mobile") {
+    return (
+      <MobileProfileExperience
+        account={account}
+        activeOrderCount={activeOrders.length}
+        profile={profile}
+        upcomingReservations={upcomingReservations}
+        onDeleteAddress={deleteAddress}
+        onDeletePaymentMethod={deletePaymentMethod}
+        onMakeDefaultAddress={makeDefaultAddress}
+        onMakeDefaultPaymentMethod={makeDefaultPaymentMethod}
+        onResetProfile={resetProfile}
+        onSaveAddress={saveAddress}
+        onSavePaymentMethod={savePaymentMethod}
+        onSaveProfileDetails={saveProfileDetails}
+        onUpdatePreferences={updateProfilePreferences}
+      />
+    );
+  }
 
   if (mode === "tablet") {
     return (
