@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useSyncExternalStore } from "react";
 
+import { defaultLoyaltyState } from "@/data/loyalty";
 import { awardOrderPointsToState, redeemRewardFromState } from "@/lib/loyalty";
 import {
   getLoyaltySnapshot,
@@ -18,7 +19,7 @@ export function useLoyalty() {
   const snapshot = useSyncExternalStore(
     subscribeToLoyalty,
     getLoyaltySnapshot,
-    getLoyaltySnapshot,
+    () => JSON.stringify(defaultLoyaltyState),
   );
   const state = useMemo(() => parseStoredLoyaltyState(snapshot), [snapshot]);
 

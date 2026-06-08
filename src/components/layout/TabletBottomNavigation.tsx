@@ -39,11 +39,11 @@ export function TabletBottomNavigation({
     <nav
       aria-label={ariaLabel}
       className={classNames(
-        "relative z-40 grid grid-cols-5 items-center overflow-hidden rounded-[22px] border border-white/10 bg-[#070909] shadow-[inset_0_0_28px_rgba(0,0,0,.88),inset_0_1px_0_rgba(255,255,255,.08),0_12px_35px_rgba(0,0,0,.44)]",
+        "z-40 grid grid-cols-5 items-center overflow-hidden rounded-[22px] border border-white/10 bg-[#070909] shadow-[inset_0_0_28px_rgba(0,0,0,.88),inset_0_1px_0_rgba(255,255,255,.08),0_12px_35px_rgba(0,0,0,.44)]",
         compact ? "h-[82px]" : "h-[114px]",
         fixed
           ? "fixed bottom-3 left-1/2 w-[calc(100%-36px)] max-w-[1034px] -translate-x-1/2"
-          : "mx-auto mt-auto w-full max-w-[1034px]",
+          : "relative mx-auto mt-auto w-full max-w-[1034px]",
       )}
     >
       {activePositionClass ? (

@@ -16,6 +16,7 @@ import { getNextTier, getTierLabel, getTierProgress } from "@/lib/loyalty";
 import type { Reward } from "@/types/loyalty";
 
 import { MemberPass } from "./MemberPass";
+import { MobileLoyaltyDashboard } from "./MobileLoyaltyDashboard";
 import { ReferralPanel } from "./ReferralPanel";
 import { RewardCard } from "./RewardCard";
 import { RewardDetailModal } from "./RewardDetailModal";
@@ -51,6 +52,22 @@ export function LoyaltyDashboard() {
 
     return result;
   };
+
+  if (mode === "mobile") {
+    return (
+      <MobileLoyaltyDashboard
+        account={account}
+        memberPoints={account.points}
+        onRedeemReward={handleRedeemReward}
+        redeemedRewards={redeemedRewards}
+        redemptionMessage={redemptionMessage}
+        selectedReward={selectedReward}
+        setRedemptionMessage={setRedemptionMessage}
+        setSelectedReward={setSelectedReward}
+        transactions={transactions}
+      />
+    );
+  }
 
   if (mode === "tablet") {
     return (

@@ -31,10 +31,10 @@ export function BottomNavigation({
     <nav
       aria-label={ariaLabel}
       className={classNames(
-        "relative z-40 grid h-[88px] grid-cols-5 items-center overflow-hidden rounded-[20px] border border-white/10 bg-[#070909] shadow-[inset_0_0_28px_rgba(0,0,0,.88),inset_0_1px_0_rgba(255,255,255,.08),0_12px_35px_rgba(0,0,0,.44)] md:hidden",
+        "z-40 grid h-[88px] grid-cols-5 items-center overflow-hidden rounded-[20px] border border-white/10 bg-[#070909] shadow-[inset_0_0_28px_rgba(0,0,0,.88),inset_0_1px_0_rgba(255,255,255,.08),0_12px_35px_rgba(0,0,0,.44)] md:hidden",
         fixed
           ? "fixed bottom-[calc(10px+var(--sb-safe-bottom))] left-1/2 w-[calc(100vw-28px)] max-w-[430px] -translate-x-1/2"
-          : "mx-auto w-full max-w-[430px]",
+          : "relative mx-auto w-full max-w-[430px]",
       )}
     >
       <span
