@@ -845,7 +845,155 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
 
       await expect(menuSection).toBeVisible();
       await expect(
-        menuSection.getByRole("heading", { name: "Explore the menu" }),
+        menuSection.getByRole("heading", {
+          name: /Exceptional\s+Japanese Cuisine/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("heading", { exact: true, name: "Your Cart" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop menu category nigiri",
+    prepare: openDesktopNigiriCategory,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-03-menu-category-nigiri.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/menu",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const menuSection = page.locator("#menu");
+
+      await expect(
+        menuSection.getByRole("heading", { exact: true, name: "Nigiri" }),
+      ).toBeVisible();
+      await expect(menuSection.getByText("Nigiri Menu")).toBeVisible();
+      await expect(
+        menuSection.getByRole("heading", { name: "Otoro Nigiri" }).first(),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop item detail otoro nigiri",
+    prepare: openDesktopOtoroDetail,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-04-item-detail-otoro-nigiri.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/menu",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: "Otoro Nigiri" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Add to Cart" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Customize" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop item customization add ons",
+    prepare: openDesktopOtoroCustomization,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-05-item-customization-add-ons.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/menu",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      await expect(page.getByText("Your selection")).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Add-ons" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: /Add to cart/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop cart",
+    prepare: seedDesktopCart,
+    projectName: "chromium-desktop",
+    referencePath: "public/assets/screenshots/desktop/desktop-06-cart.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/menu",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const menuSection = page.locator("#menu");
+
+      const cartPanel = menuSection.getByRole("complementary");
+
+      await expect(
+        cartPanel.getByRole("heading", { exact: true, name: "Your Cart" }),
+      ).toBeVisible();
+      await expect(
+        cartPanel.getByRole("heading", { exact: true, name: "Otoro Nigiri" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("button", { name: /View cart & checkout/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop checkout",
+    prepare: openDesktopCheckout,
+    projectName: "chromium-desktop",
+    referencePath: "public/assets/screenshots/desktop/desktop-07-checkout.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/menu",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: "Checkout" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Fulfillment" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: /Continue to review/i }).first(),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop checkout review",
+    prepare: openDesktopCheckoutReview,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-08-checkout-review.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/menu",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      await expect(page.getByText("Review your order")).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Almost there." }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: /Place order/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop order confirmation",
+    prepare: openDesktopOrderConfirmation,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-09-order-confirmation.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/menu",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: /Thank you/i }),
+      ).toBeVisible();
+      await expect(page.getByText("Order confirmation")).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Back to menu" }),
       ).toBeVisible();
     },
   },
@@ -1151,6 +1299,94 @@ async function openTabletReferralEarn(page: Page) {
   await expect(
     page.getByRole("heading", { name: /Referral & Earn/i }),
   ).toBeVisible();
+}
+
+async function openDesktopNigiriCategory(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await expect(
+    menuSection.getByRole("navigation", { name: "Desktop menu categories" }),
+  ).toBeVisible();
+  await menuSection
+    .getByRole("button", { exact: true, name: "Nigiri" })
+    .click();
+  await expect(
+    menuSection.getByRole("heading", { exact: true, name: "Nigiri" }),
+  ).toBeVisible();
+}
+
+async function openDesktopOtoroDetail(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await expect(
+    menuSection.getByRole("button", { name: "View details for Otoro Nigiri" }),
+  ).toBeVisible();
+  await menuSection
+    .getByRole("button", { name: "View details for Otoro Nigiri" })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Otoro Nigiri" }),
+  ).toBeVisible();
+}
+
+async function openDesktopOtoroCustomization(page: Page) {
+  await openDesktopOtoroDetail(page);
+  await page.getByRole("button", { name: "Customize" }).click();
+  await page
+    .getByRole("button", { name: /Increase Otoro Nigiri quantity/i })
+    .click();
+  await page.getByLabel(/Gold flakes/i).click();
+  await page.getByLabel(/Miso soup/i).click();
+  await expect(page.getByText("Your selection")).toBeVisible();
+}
+
+async function seedDesktopCart(page: Page) {
+  const menuSection = page.locator("#menu");
+  const itemNames = [
+    "Otoro Nigiri",
+    "Spicy Tuna Roll",
+    "Salmon Sashimi",
+    "Dragon Roll",
+  ];
+
+  for (const itemName of itemNames) {
+    await expect(
+      menuSection.getByRole("button", { name: `Add ${itemName} to cart` }),
+    ).toBeVisible();
+    await menuSection
+      .getByRole("button", { name: `Add ${itemName} to cart` })
+      .first()
+      .click();
+  }
+
+  await expect(
+    menuSection.getByRole("button", { name: /View cart & checkout/i }),
+  ).toBeVisible();
+}
+
+async function openDesktopCheckout(page: Page) {
+  await seedDesktopCart(page);
+  await page
+    .getByRole("button", { name: /View cart & checkout/i })
+    .first()
+    .click();
+  await expect(page.getByRole("heading", { name: "Checkout" })).toBeVisible();
+}
+
+async function openDesktopCheckoutReview(page: Page) {
+  await openDesktopCheckout(page);
+  await page
+    .getByRole("button", { name: /Continue to review/i })
+    .first()
+    .click();
+  await expect(page.getByText("Review your order")).toBeVisible();
+}
+
+async function openDesktopOrderConfirmation(page: Page) {
+  await openDesktopCheckoutReview(page);
+  await page.getByRole("button", { name: /Place order/i }).click();
+  await expect(page.getByText("Order confirmation")).toBeVisible();
 }
 
 function getPngSize(buffer: Buffer) {

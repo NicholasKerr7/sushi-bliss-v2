@@ -95,6 +95,19 @@ Current audit targets:
 - desktop home dashboard: `/home` against
   `desktop/desktop-01-home-dashboard.png`
 - desktop menu overview: `/menu` against `desktop/desktop-02-menu-overview.png`
+- desktop menu category nigiri: `/menu` interaction against
+  `desktop/desktop-03-menu-category-nigiri.png`
+- desktop item detail otoro nigiri: `/menu` interaction against
+  `desktop/desktop-04-item-detail-otoro-nigiri.png`
+- desktop item customization add-ons: `/menu` interaction against
+  `desktop/desktop-05-item-customization-add-ons.png`
+- desktop cart: `/menu` interaction against `desktop/desktop-06-cart.png`
+- desktop checkout: `/menu` interaction against
+  `desktop/desktop-07-checkout.png`
+- desktop checkout review: `/menu` interaction against
+  `desktop/desktop-08-checkout-review.png`
+- desktop order confirmation: `/menu` interaction against
+  `desktop/desktop-09-order-confirmation.png`
 
 The audit asserts the rendered viewport size, reference image dimensions, route
 health, and absence of horizontal overflow. Full pixel assertions should be

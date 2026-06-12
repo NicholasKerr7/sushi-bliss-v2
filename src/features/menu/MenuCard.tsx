@@ -68,7 +68,12 @@ export function MenuCard({
             {item.ingredients.slice(0, 4).join(", ") || item.texture}
           </p>
           <div className="grid grid-cols-2 gap-2">
-            <Button onClick={() => onViewDetails(item)}>Details</Button>
+            <Button
+              aria-label={`View details for ${item.name}`}
+              onClick={() => onViewDetails(item)}
+            >
+              Details
+            </Button>
             <Button
               aria-pressed={isFavorite}
               onClick={() => onToggleFavorite(item.id)}

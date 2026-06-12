@@ -67,18 +67,33 @@ test.describe("customer experience", () => {
         .click();
     } else {
       await expect(
-        menuSection.getByRole("heading", { name: "Explore the menu" }),
+        menuSection.getByRole("heading", {
+          name: /Exceptional\s+Japanese Cuisine/i,
+        }),
       ).toBeVisible();
 
-      await menuSection.locator("#menu-search").fill("Otoro Nigiri");
+      await menuSection
+        .getByPlaceholder("Search menu items...")
+        .fill("Otoro Nigiri");
       await expect(
-        menuSection.getByRole("heading", { name: "Otoro Nigiri" }),
+        menuSection.getByRole("heading", { name: "Otoro Nigiri" }).first(),
       ).toBeVisible();
-      await expect(
-        menuSection.getByText(/Showing\s+1\s+item\s+in\s+All/i),
-      ).toBeVisible();
+      await expect(menuSection.getByText(/Showing\s+1\s+of/i)).toBeVisible();
 
-      await menuSection.getByRole("button", { name: "Details" }).click();
+      await menuSection
+        .getByRole("button", { name: "Add Otoro Nigiri to cart" })
+        .first()
+        .click();
+
+      const cartPanel = menuSection.getByRole("complementary");
+
+      await expect(
+        cartPanel.getByRole("heading", { exact: true, name: "Otoro Nigiri" }),
+      ).toBeVisible();
+      await expect(
+        cartPanel.getByRole("button", { name: /View cart & checkout/i }),
+      ).toBeVisible();
+      return;
     }
 
     await expect(
