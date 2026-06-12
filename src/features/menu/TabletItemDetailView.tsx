@@ -176,14 +176,18 @@ export function TabletDetailView({
             <aside className="pt-8">
               <div className="grid grid-cols-[170px_1fr] gap-4">
                 <TabletQuantityStepper
+                  className="w-[148px] grid-cols-[42px_1fr_42px] rounded-[12px] border-[var(--sb-gold)]/28 bg-black/24 p-1 [&_button]:h-9 [&_button]:w-9 [&_button]:rounded-[10px] [&_span:first-child]:hidden"
                   onChange={onQuantityChange}
                   value={quantity}
                 />
                 <Button
+                  aria-label="Add to Cart"
                   className="h-[64px] rounded-[17px] text-[16px] uppercase tracking-[0.08em]"
                   onClick={onAddToCart}
                 >
                   Add to Cart
+                  <span aria-hidden="true">•</span>
+                  <span aria-hidden="true">{formatMoney(totalCents)}</span>
                 </Button>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-4">

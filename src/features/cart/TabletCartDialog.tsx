@@ -344,6 +344,7 @@ export function TabletCartDialog({
               onClick={onOpenCheckout}
             >
               Proceed to checkout
+              <span aria-hidden="true">→</span>
             </Button>
             <p className="text-center text-[13px] text-white/48">
               Secure checkout powered by SSL encryption

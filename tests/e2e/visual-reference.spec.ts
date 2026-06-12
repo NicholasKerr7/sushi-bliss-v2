@@ -6,6 +6,7 @@ import type { Page } from "@playwright/test";
 
 interface VisualReferenceTarget {
   name: string;
+  prepare?: (page: Page) => Promise<void>;
   projectName: string;
   referencePath: string;
   referenceSize: {
@@ -73,6 +74,81 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "tablet item detail",
+    prepare: openTabletOtoroDetail,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-06-item-detail-expanded.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/menu",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Otoro Nigiri" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Add to Cart" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Customize" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet item customization",
+    prepare: async (page) => {
+      await openTabletOtoroDetail(page);
+      await page.getByRole("button", { name: "Customize" }).click();
+      await page.getByRole("button", { name: "Increase quantity" }).click();
+      await page
+        .locator('label[for="tablet-addon-otoro-nigiri-gold-flakes"]')
+        .click();
+      await page
+        .locator('label[for="tablet-addon-otoro-nigiri-truffle-oil"]')
+        .click();
+      await page
+        .locator('label[for="tablet-addon-otoro-nigiri-miso-soup-side"]')
+        .click();
+    },
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-07-item-customization-add-ons.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/menu",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(page.getByText("Customize order")).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Add-ons" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: /Add to cart/i }).last(),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet cart",
+    prepare: async (page) => {
+      await openTabletOtoroDetail(page);
+      await page.getByRole("button", { name: "Increase quantity" }).click();
+      await page.getByRole("button", { name: "Add to Cart" }).click();
+    },
+    projectName: "chromium-tablet",
+    referencePath: "public/assets/screenshots/tablet/tablet-08-cart.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/menu",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Your Cart" });
+
+      await expect(dialog).toBeVisible();
+      await expect(dialog.getByText("Otoro Nigiri")).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Proceed to checkout" }),
+      ).toBeVisible();
+    },
+  },
+  {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
     referencePath:
@@ -128,6 +204,22 @@ async function expectNoHorizontalOverflow(page: Page, routePath: string) {
   ).toBeLessThanOrEqual(1);
 }
 
+async function openTabletOtoroDetail(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await expect(menuSection).toBeVisible();
+  await expect(
+    menuSection.getByRole("heading", { name: "Otoro Nigiri" }).first(),
+  ).toBeVisible();
+  await menuSection
+    .getByRole("button", { name: /Otoro Nigiri Premium fatty/i })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("dialog", { name: "Otoro Nigiri" }),
+  ).toBeVisible();
+}
+
 function getPngSize(buffer: Buffer) {
   const signature = buffer.subarray(1, 4).toString("ascii");
 
@@ -159,6 +251,7 @@ test.describe("visual reference audit", () => {
       await page.goto(target.routePath);
       await page.waitForLoadState("networkidle");
       await page.waitForFunction(() => document.fonts.status === "loaded");
+      await target.prepare?.(page);
 
       await expectNoFrameworkErrorOverlay(page);
       await target.verify(page);
