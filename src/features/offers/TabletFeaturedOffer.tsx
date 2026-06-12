@@ -4,10 +4,16 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { formatDateTime } from "@/lib/dates";
+import {
+  getOfferStatusLabel,
+  getOfferTone,
+  isOfferExpired,
+} from "@/lib/offers";
 import type { Offer } from "@/types/offer";
 
 interface TabletFeaturedOfferProps {
   copyMessage: string;
+  currentTime: number;
   offer: Offer;
   onApplyOffer: (offer: Offer) => void;
   onViewOffer: (offer: Offer) => void;
@@ -30,16 +36,23 @@ const featurePoints = [
 
 export function TabletFeaturedOffer({
   copyMessage,
+  currentTime,
   offer,
   onApplyOffer,
   onViewOffer,
 }: TabletFeaturedOfferProps) {
+  const expired = isOfferExpired(offer, currentTime);
+
   return (
     <article className="mt-3 grid min-h-[162px] grid-cols-[minmax(0,1fr)_230px] gap-4 rounded-[18px] border border-[var(--sb-gold)]/26 bg-[linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.025))] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.32)] lg:mt-4 min-[1080px]:mt-5 min-[1080px]:min-h-[206px] min-[1080px]:grid-cols-[minmax(0,1fr)_310px] min-[1080px]:gap-6 min-[1080px]:p-6">
       <div className="min-w-0">
         <div className="flex items-center gap-3">
-          <StatusBadge tone="premium">Featured offer</StatusBadge>
-          <StatusBadge tone={offer.accent === "premium" ? "danger" : "neutral"}>
+          <StatusBadge tone={getOfferTone(offer, currentTime)}>
+            {getOfferStatusLabel(offer, currentTime)}
+          </StatusBadge>
+          <StatusBadge
+            tone={offer.accent === "premium" ? "premium" : "neutral"}
+          >
             {offer.code}
           </StatusBadge>
         </div>
@@ -77,9 +90,10 @@ export function TabletFeaturedOffer({
         </div>
         <Button
           className="red-glow-button h-[44px] rounded-[12px] text-[12px] uppercase tracking-[0.1em] min-[1080px]:h-[52px] min-[1080px]:text-[14px]"
+          disabled={expired}
           onClick={() => onApplyOffer(offer)}
         >
-          {copyMessage || "Apply offer"}
+          {expired ? "Expired" : copyMessage || "Apply offer"}
         </Button>
         <button
           className="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/62 transition hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"

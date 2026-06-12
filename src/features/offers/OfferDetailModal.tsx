@@ -7,21 +7,29 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { formatDateTime } from "@/lib/dates";
+import {
+  getOfferStatusLabel,
+  getOfferTone,
+  isOfferExpired,
+} from "@/lib/offers";
 import type { Offer } from "@/types/offer";
 
 interface OfferDetailModalProps {
+  currentTime: number;
   offer: Offer | null;
   onOpenChange: (open: boolean) => void;
 }
 
 export function OfferDetailModal({
+  currentTime,
   offer,
   onOpenChange,
 }: OfferDetailModalProps) {
   const [copyMessage, setCopyMessage] = useState("");
+  const expired = offer ? isOfferExpired(offer, currentTime) : false;
 
   const handleCopyCode = async () => {
-    if (!offer) {
+    if (!offer || expired) {
       return;
     }
 
@@ -47,8 +55,12 @@ export function OfferDetailModal({
       title={offer?.title || "Offer"}
       footer={
         offer ? (
-          <Button className="w-full" onClick={handleCopyCode}>
-            Copy {offer.code}
+          <Button
+            className="w-full"
+            disabled={expired}
+            onClick={handleCopyCode}
+          >
+            {expired ? "Offer expired" : `Copy ${offer.code}`}
           </Button>
         ) : null
       }
@@ -66,6 +78,9 @@ export function OfferDetailModal({
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
+            <StatusBadge tone={getOfferTone(offer, currentTime)}>
+              {getOfferStatusLabel(offer, currentTime)}
+            </StatusBadge>
             <StatusBadge
               tone={offer.accent === "premium" ? "premium" : "neutral"}
             >

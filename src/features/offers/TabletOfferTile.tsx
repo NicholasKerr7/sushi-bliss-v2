@@ -3,9 +3,15 @@
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { formatDateTime } from "@/lib/dates";
+import {
+  getOfferStatusLabel,
+  getOfferTone,
+  isOfferExpired,
+} from "@/lib/offers";
 import type { Offer } from "@/types/offer";
 
 interface TabletOfferTileProps {
+  currentTime: number;
   imagePriority: boolean;
   offer: Offer;
   onApplyOffer: (offer: Offer) => void;
@@ -13,11 +19,14 @@ interface TabletOfferTileProps {
 }
 
 export function TabletOfferTile({
+  currentTime,
   imagePriority,
   offer,
   onApplyOffer,
   onViewOffer,
 }: TabletOfferTileProps) {
+  const expired = isOfferExpired(offer, currentTime);
+
   return (
     <article className="grid min-h-[112px] grid-cols-[76px_minmax(0,1fr)] overflow-hidden rounded-[15px] border border-[var(--sb-gold)]/22 bg-white/[0.04] lg:min-h-[118px] lg:grid-cols-[108px_minmax(0,1fr)] min-[1080px]:min-h-[150px] min-[1080px]:grid-cols-[156px_minmax(0,1fr)]">
       <div className="relative min-h-full bg-black/30">
@@ -35,9 +44,9 @@ export function TabletOfferTile({
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge
               className="px-1.5 py-0.5 text-[9px] lg:px-2 lg:text-[10px]"
-              tone={offer.accent === "premium" ? "premium" : "danger"}
+              tone={getOfferTone(offer, currentTime)}
             >
-              {offer.code}
+              {expired ? getOfferStatusLabel(offer, currentTime) : offer.code}
             </StatusBadge>
           </div>
           <h3 className="mt-1.5 line-clamp-2 text-[12px] font-semibold uppercase tracking-[0.02em] text-white lg:mt-2 lg:text-[16px] min-[1080px]:text-[18px]">
@@ -53,7 +62,12 @@ export function TabletOfferTile({
           </span>
           <Button
             className="h-8 min-h-0 rounded-[9px] px-2 text-[10px] uppercase tracking-[0.08em] lg:h-9 lg:rounded-[10px] lg:px-3 lg:text-[11px]"
+            disabled={expired}
             onClick={() => {
+              if (expired) {
+                return;
+              }
+
               if (offer.accent === "premium") {
                 onViewOffer(offer);
                 return;
@@ -62,9 +76,19 @@ export function TabletOfferTile({
               onApplyOffer(offer);
             }}
             size="sm"
-            variant={offer.accent === "premium" ? "secondary" : "primary"}
+            variant={
+              expired
+                ? "ghost"
+                : offer.accent === "premium"
+                  ? "secondary"
+                  : "primary"
+            }
           >
-            {offer.accent === "premium" ? "View" : "Apply"}
+            {expired
+              ? "Expired"
+              : offer.accent === "premium"
+                ? "View"
+                : "Apply"}
           </Button>
         </div>
       </div>

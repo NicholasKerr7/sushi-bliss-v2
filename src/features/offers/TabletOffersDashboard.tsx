@@ -8,6 +8,11 @@ import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigati
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { offers } from "@/data/offers";
+import {
+  isOfferExpired,
+  offerMatchesQuery,
+  sortOffersByAvailability,
+} from "@/lib/offers";
 import type { Offer } from "@/types/offer";
 
 import { TabletFeaturedOffer } from "./TabletFeaturedOffer";
@@ -19,29 +24,32 @@ export function TabletOffersDashboard() {
   const [query, setQuery] = useState("");
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [copyMessage, setCopyMessage] = useState("");
-  const featuredOffer = offers[0];
+  const currentTime = useMemo(() => new Date().getTime(), []);
+  const sortedOffers = useMemo(
+    () => sortOffersByAvailability(offers, currentTime),
+    [currentTime],
+  );
+  const featuredOffer =
+    sortedOffers.find(
+      (offer) =>
+        offer.accent === "premium" && !isOfferExpired(offer, currentTime),
+    ) || sortedOffers[0];
   const normalizedQuery = query.trim().toLowerCase();
 
   const visibleOffers = useMemo(() => {
     if (!normalizedQuery) {
-      return offers.slice(1);
+      return sortedOffers.filter((offer) => offer.id !== featuredOffer?.id);
     }
 
-    return offers.filter((offer) =>
-      [
-        offer.code,
-        offer.description,
-        offer.eligibility,
-        offer.subtitle,
-        offer.title,
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(normalizedQuery),
-    );
-  }, [normalizedQuery]);
+    return sortedOffers.filter((offer) => offerMatchesQuery(offer, query));
+  }, [featuredOffer?.id, normalizedQuery, query, sortedOffers]);
 
   const handleApplyOffer = async (offer: Offer) => {
+    if (isOfferExpired(offer, currentTime)) {
+      setCopyMessage(`${offer.code} expired`);
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(offer.code);
       setCopyMessage(`${offer.code} copied`);
@@ -54,6 +62,7 @@ export function TabletOffersDashboard() {
     return (
       <TabletOfferDetailView
         copyMessage={copyMessage}
+        currentTime={currentTime}
         offer={selectedOffer}
         onApplyOffer={handleApplyOffer}
         onBack={() => {
@@ -102,6 +111,7 @@ export function TabletOffersDashboard() {
         {featuredOffer ? (
           <TabletFeaturedOffer
             copyMessage={copyMessage}
+            currentTime={currentTime}
             offer={featuredOffer}
             onApplyOffer={handleApplyOffer}
             onViewOffer={setSelectedOffer}
@@ -136,6 +146,7 @@ export function TabletOffersDashboard() {
               visibleOffers.map((offer, index) => (
                 <TabletOfferTile
                   imagePriority={index < 4}
+                  currentTime={currentTime}
                   key={offer.id}
                   offer={offer}
                   onApplyOffer={handleApplyOffer}

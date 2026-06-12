@@ -9,10 +9,16 @@ import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { formatDateTime } from "@/lib/dates";
+import {
+  getOfferStatusLabel,
+  getOfferTone,
+  isOfferExpired,
+} from "@/lib/offers";
 import type { Offer } from "@/types/offer";
 
 interface TabletOfferDetailViewProps {
   copyMessage: string;
+  currentTime: number;
   offer: Offer;
   onApplyOffer: (offer: Offer) => void;
   onBack: () => void;
@@ -27,10 +33,13 @@ const benefitLabels = [
 
 export function TabletOfferDetailView({
   copyMessage,
+  currentTime,
   offer,
   onApplyOffer,
   onBack,
 }: TabletOfferDetailViewProps) {
+  const expired = isOfferExpired(offer, currentTime);
+
   return (
     <section className="flex min-h-dvh flex-col bg-[#050607] px-[18px] pb-3 pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pb-4 min-[1080px]:pt-3">
       <header className="mt-1 grid h-[82px] grid-cols-[210px_minmax(0,1fr)_180px] items-center gap-3 lg:grid-cols-[260px_minmax(0,1fr)_260px]">
@@ -92,8 +101,11 @@ export function TabletOfferDetailView({
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98),rgba(5,6,7,0.76)_44%,rgba(5,6,7,0.14)_76%,rgba(5,6,7,0.04))]" />
           <div className="relative z-10 max-w-[560px] p-6 min-[1080px]:p-9">
+            <StatusBadge tone={getOfferTone(offer, currentTime)}>
+              {getOfferStatusLabel(offer, currentTime)}
+            </StatusBadge>
             <StatusBadge
-              tone={offer.accent === "premium" ? "premium" : "danger"}
+              tone={offer.accent === "premium" ? "premium" : "neutral"}
             >
               {offer.code}
             </StatusBadge>
@@ -220,9 +232,10 @@ export function TabletOfferDetailView({
             </Button>
             <Button
               className="red-glow-button h-full rounded-[14px] uppercase tracking-[0.08em]"
+              disabled={expired}
               onClick={() => onApplyOffer(offer)}
             >
-              {copyMessage || "Reserve with offer"}
+              {expired ? "Offer expired" : copyMessage || "Reserve with offer"}
             </Button>
           </div>
         </section>
