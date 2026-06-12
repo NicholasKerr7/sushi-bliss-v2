@@ -30,6 +30,7 @@ export function TabletGiftSummaryCard({
             alt=""
             className="object-cover"
             fill
+            loading="eager"
             sizes="120px"
             src={gift.image.publicUrl}
           />

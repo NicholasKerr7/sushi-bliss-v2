@@ -330,6 +330,7 @@ function DesktopRecentOrder({
             alt=""
             className="pointer-events-none object-cover"
             fill
+            loading="eager"
             sizes="128px"
             src={item.image.publicUrl}
           />

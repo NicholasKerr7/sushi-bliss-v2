@@ -10,7 +10,8 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - Next.js App Router scaffolded in `src/app`.
 - Tailwind v4 global tokens live in `src/styles/globals.css`.
 - Legacy runtime assets and data are copied into `public/assets`.
-- Reference screenshots are available through top-level `assets/*` symlinks.
+- Reference screenshots live in `public/assets/screenshots`, with top-level
+  `assets/*` notes pointing to the canonical files.
 - App shell placeholder is implemented with mobile and desktop navigation.
 - Shared types, utilities, hooks, and seed data modules are in place.
 
@@ -146,9 +147,12 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 
 ## Sprint 14 Status
 
-- Playwright is configured for desktop and mobile Chromium smoke coverage.
+- Playwright is configured for desktop, tablet, and mobile Chromium smoke
+  coverage.
 - E2E tests verify the customer home/menu/add-to-cart path and the admin
   dashboard controls.
+- Visual reference audits attach current and source reference screenshots for
+  the first core home/menu breakpoints.
 - Image loading and icon sizing warnings from the browser QA pass were cleaned
   up.
 - Browser verification confirms `/` and `/admin` render content without a
@@ -185,6 +189,11 @@ Supabase or Stripe secrets.
 
 See `docs/deployment.md` for the release checklist, GitHub Actions workflow,
 and Vercel CLI flow.
+
+## Visual QA
+
+See `docs/visual-qa.md` for the reference screenshot inventory and Playwright
+visual audit targets.
 
 ## Asset Source
 

@@ -356,6 +356,7 @@ function TabletRecentOrder({ item }: { item: MenuItem }) {
             alt=""
             className="object-cover"
             fill
+            loading="eager"
             sizes="160px"
             src={item.image.publicUrl}
           />
