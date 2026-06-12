@@ -15,26 +15,44 @@ import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import type { GiftConfirmation, GiftExperience } from "@/types/gift";
 
 import { TabletGiftExperience } from "./TabletGiftExperience";
+import { MobileGiftExperience } from "./MobileGiftExperience";
 
+/** Routes gift experiences to mobile, tablet, or expanded desktop flows. */
 export function GiftExperienceSection() {
   const mode = useResponsiveMode();
+
+  if (mode === "mobile") {
+    return <MobileGiftExperience />;
+  }
+
+  if (mode === "tablet") {
+    return <TabletGiftExperienceShell />;
+  }
+
+  return <DesktopGiftExperience />;
+}
+
+function TabletGiftExperienceShell() {
+  const { profile } = useProfile();
+  const { giftExperiences, sendGift } = useGifts();
+
+  return (
+    <TabletGiftExperience
+      giftExperiences={giftExperiences}
+      paymentMethods={profile.paymentMethods}
+      profile={profile}
+      onSubmitGift={(draft) => sendGift(draft, profile.paymentMethods)}
+    />
+  );
+}
+
+function DesktopGiftExperience() {
   const { profile } = useProfile();
   const { confirmations, giftExperiences, sendGift } = useGifts();
   const [selectedGift, setSelectedGift] = useState<GiftExperience | null>(null);
   const [confirmation, setConfirmation] = useState<GiftConfirmation | null>(
     null,
   );
-
-  if (mode === "tablet") {
-    return (
-      <TabletGiftExperience
-        giftExperiences={giftExperiences}
-        paymentMethods={profile.paymentMethods}
-        profile={profile}
-        onSubmitGift={(draft) => sendGift(draft, profile.paymentMethods)}
-      />
-    );
-  }
 
   return (
     <section
@@ -49,8 +67,9 @@ export function GiftExperienceSection() {
         />
 
         <div className="mt-6 grid gap-4 lg:grid-cols-3">
-          {giftExperiences.map((gift) => (
+          {giftExperiences.map((gift, index) => (
             <GiftExperienceCard
+              eagerImage={index === 0}
               gift={gift}
               key={gift.id}
               onSelectGift={setSelectedGift}

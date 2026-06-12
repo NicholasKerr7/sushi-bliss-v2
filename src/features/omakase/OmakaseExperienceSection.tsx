@@ -15,11 +15,26 @@ import { formatMoney } from "@/lib/money";
 
 import { OmakasePackageCard } from "./OmakasePackageCard";
 import { OmakaseReviewModal } from "./OmakaseReviewModal";
+import { MobileOmakaseExperience } from "./MobileOmakaseExperience";
 import { PremiumReservationCard } from "./PremiumReservationCard";
 import { TabletOmakaseExperience } from "./TabletOmakaseExperience";
 
+/** Routes omakase experiences to mobile, tablet, or expanded desktop flows. */
 export function OmakaseExperienceSection() {
   const mode = useResponsiveMode();
+
+  if (mode === "mobile") {
+    return <MobileOmakaseExperience />;
+  }
+
+  if (mode === "tablet") {
+    return <TabletOmakaseExperience />;
+  }
+
+  return <DesktopOmakaseExperience />;
+}
+
+function DesktopOmakaseExperience() {
   const [reviewOpen, setReviewOpen] = useState(false);
   const {
     guestCount,
@@ -32,10 +47,6 @@ export function OmakaseExperienceSection() {
     setSakePairingId,
     updateGuestCount,
   } = useOmakase();
-
-  if (mode === "tablet") {
-    return <TabletOmakaseExperience />;
-  }
 
   return (
     <section
@@ -61,6 +72,7 @@ export function OmakaseExperienceSection() {
                 alt={selectedPackage.image.alt || selectedPackage.title}
                 className="object-cover"
                 fill
+                loading="eager"
                 sizes="(min-width: 1280px) 46vw, 100vw"
                 src={selectedPackage.image.publicUrl}
               />
@@ -105,8 +117,9 @@ export function OmakaseExperienceSection() {
           </Card>
 
           <div className="grid gap-4">
-            {omakasePackages.map((omakasePackage) => (
+            {omakasePackages.map((omakasePackage, index) => (
               <OmakasePackageCard
+                eagerImage={index === 0}
                 isSelected={selectedPackage.id === omakasePackage.id}
                 key={omakasePackage.id}
                 omakasePackage={omakasePackage}

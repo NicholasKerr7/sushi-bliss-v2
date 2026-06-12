@@ -10,6 +10,7 @@ import { formatMoney } from "@/lib/money";
 import type { OmakasePackage } from "@/types/omakase";
 
 interface OmakasePackageCardProps {
+  eagerImage?: boolean;
   isSelected: boolean;
   onReview: () => void;
   onSelect: (packageId: string) => void;
@@ -17,6 +18,7 @@ interface OmakasePackageCardProps {
 }
 
 export function OmakasePackageCard({
+  eagerImage = false,
   isSelected,
   onReview,
   onSelect,
@@ -35,6 +37,7 @@ export function OmakasePackageCard({
           alt={omakasePackage.image.alt || omakasePackage.title}
           className="object-cover"
           fill
+          loading={eagerImage ? "eager" : "lazy"}
           sizes="(min-width: 1180px) 25vw, (min-width: 760px) 33vw, 100vw"
           src={omakasePackage.image.publicUrl}
         />

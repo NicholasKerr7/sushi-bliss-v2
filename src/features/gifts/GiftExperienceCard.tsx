@@ -10,11 +10,13 @@ import { formatMoney } from "@/lib/money";
 import type { GiftExperience } from "@/types/gift";
 
 interface GiftExperienceCardProps {
+  eagerImage?: boolean;
   gift: GiftExperience;
   onSelectGift: (gift: GiftExperience) => void;
 }
 
 export function GiftExperienceCard({
+  eagerImage = false,
   gift,
   onSelectGift,
 }: GiftExperienceCardProps) {
@@ -25,6 +27,7 @@ export function GiftExperienceCard({
           alt={gift.image.alt || gift.title}
           className="object-cover"
           fill
+          loading={eagerImage ? "eager" : "lazy"}
           sizes="(min-width: 1180px) 28vw, (min-width: 760px) 42vw, 100vw"
           src={gift.image.publicUrl}
         />
