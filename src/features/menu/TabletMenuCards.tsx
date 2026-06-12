@@ -85,9 +85,9 @@ export function TabletCompactMenuRow({
   onViewDetails,
 }: TabletCompactMenuRowProps) {
   return (
-    <article className="grid grid-cols-[118px_minmax(0,1fr)_38px] items-center gap-3 rounded-[8px] border border-[var(--sb-border)] bg-black/34 p-2">
+    <article className="grid grid-cols-[108px_minmax(0,1fr)_38px] items-center gap-3 rounded-[8px] border border-[var(--sb-border)] bg-black/34 p-1.5">
       <button
-        className="relative h-[88px] overflow-hidden rounded-[6px]"
+        className="relative h-[74px] overflow-hidden rounded-[6px]"
         onClick={() => onViewDetails(item)}
         type="button"
       >
@@ -108,7 +108,7 @@ export function TabletCompactMenuRow({
         <p className="mt-0.5 line-clamp-1 text-[13px] text-white/58">
           {item.description}
         </p>
-        <p className="mt-0.5 text-[16px] text-[var(--sb-gold)]">
+        <p className="text-[16px] text-[var(--sb-gold)]">
           {formatMoney(item.priceCents)}
         </p>
       </button>

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
 
 interface TabletMenuHeaderProps {
   cartCount: number;
@@ -29,9 +29,9 @@ export function TabletMenuHeader({
           alt={brand.name}
           className="rounded-full"
           size={66}
-          src={brand.assets.floralEmblem.publicUrl}
+          src={icons.flower}
         />
-        <span className="editorial-title text-[22px] font-normal uppercase leading-[0.98] tracking-[0.36em] lg:text-[27px] lg:tracking-[0.43em]">
+        <span className="font-serif text-[22px] font-normal uppercase leading-[0.98] tracking-[0.36em] lg:text-[27px] lg:tracking-[0.43em]">
           Sushi
           <br />
           Bliss
@@ -87,7 +87,7 @@ export function TabletMenuHeader({
             className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"
             height={58}
             loading="eager"
-            src="/assets/chefs/aiko-nakamura-pastry-chef-standing.webp"
+            src={chefAvatar}
             width={58}
           />
           <span className="text-[var(--sb-gold)]" aria-hidden="true">
