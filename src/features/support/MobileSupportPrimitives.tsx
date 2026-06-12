@@ -9,12 +9,14 @@ import { classNames } from "@/lib/classNames";
 
 interface MobileSupportHeaderProps {
   cartCount: number;
+  unreadNotificationCount: number;
   onOpenCart: () => void;
 }
 
 /** Shared mobile support header with cart and profile access. */
 export function MobileSupportHeader({
   cartCount,
+  unreadNotificationCount,
   onOpenCart,
 }: MobileSupportHeaderProps) {
   return (
@@ -57,7 +59,11 @@ export function MobileSupportHeader({
           href="/notifications"
         >
           <AssetIcon loading="eager" size={27} src={icons.bell} />
-          <span className="absolute right-2.5 top-2 h-3 w-3 rounded-full bg-[var(--sb-red-bright)]" />
+          {unreadNotificationCount > 0 ? (
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red-bright)] px-1 text-[10px] font-bold text-white">
+              {unreadNotificationCount > 9 ? "9+" : unreadNotificationCount}
+            </span>
+          ) : null}
         </Link>
       </div>
     </header>

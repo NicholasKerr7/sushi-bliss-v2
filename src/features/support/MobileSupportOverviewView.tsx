@@ -16,11 +16,12 @@ import {
   MobileSupportIcon,
   MobileSupportPanel,
 } from "./MobileSupportPrimitives";
+import { MobileSupportCommandCenter } from "./MobileSupportCommandCenter";
 
 interface MobileSupportOverviewViewProps {
   messages: SupportMessage[];
   onOpenArticle: (article: HelpArticle) => void;
-  onOpenRequest: () => void;
+  onOpenRequest: (topicId?: string) => void;
 }
 
 const contactIcons: Record<string, string> = {
@@ -73,7 +74,7 @@ export function MobileSupportOverviewView({
               </a>
               <button
                 className="red-glow-button min-h-[52px] rounded-[13px] border text-[12px]"
-                onClick={onOpenRequest}
+                onClick={() => onOpenRequest()}
                 type="button"
               >
                 Send request
@@ -82,6 +83,12 @@ export function MobileSupportOverviewView({
           </div>
         </div>
       </MobileSupportPanel>
+
+      <MobileSupportCommandCenter
+        articleCount={helpArticles.length}
+        messages={messages}
+        onOpenRequest={onOpenRequest}
+      />
 
       <section className="mt-4">
         <div className="flex items-center justify-between gap-4">
@@ -95,7 +102,7 @@ export function MobileSupportOverviewView({
           </div>
           <button
             className="rounded-full border border-[var(--sb-border)] px-4 py-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-            onClick={onOpenRequest}
+            onClick={() => onOpenRequest()}
             type="button"
           >
             Form
@@ -125,7 +132,7 @@ export function MobileSupportOverviewView({
           </div>
           <button
             className="rounded-full border border-[var(--sb-border)] px-4 py-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-            onClick={onOpenRequest}
+            onClick={() => onOpenRequest()}
             type="button"
           >
             New
@@ -207,7 +214,7 @@ function MobileContactMethodCard({
   onOpenRequest,
 }: {
   method: ContactMethod;
-  onOpenRequest: () => void;
+  onOpenRequest: (topicId?: string) => void;
 }) {
   const icon = contactIcons[method.id] || "/assets/icons/headset-icon.png";
   const content = (
@@ -229,7 +236,7 @@ function MobileContactMethodCard({
     return (
       <button
         className="grid grid-cols-[58px_minmax(0,1fr)] gap-4 rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl"
-        onClick={onOpenRequest}
+        onClick={() => onOpenRequest()}
         type="button"
       >
         {content}

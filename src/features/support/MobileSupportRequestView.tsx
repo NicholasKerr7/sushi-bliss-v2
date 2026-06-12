@@ -20,6 +20,7 @@ import {
 } from "./MobileSupportPrimitives";
 
 interface MobileSupportRequestViewProps {
+  initialTopicId?: string;
   profile: UserProfile;
   onBack: () => void;
   onSubmitSupportMessage: (
@@ -33,13 +34,19 @@ const topicOptions = supportTopics.map((topic) => ({
 }));
 
 export function MobileSupportRequestView({
+  initialTopicId,
   profile,
   onBack,
   onSubmitSupportMessage,
 }: MobileSupportRequestViewProps) {
-  const [draft, setDraft] = useState<SupportMessageDraft>(() =>
-    getDefaultSupportDraft(profile),
-  );
+  const [draft, setDraft] = useState<SupportMessageDraft>(() => {
+    const defaultDraft = getDefaultSupportDraft(profile);
+
+    return {
+      ...defaultDraft,
+      topicId: initialTopicId || defaultDraft.topicId,
+    };
+  });
   const [validation, setValidation] = useState<SupportValidationState>({});
   const [statusMessage, setStatusMessage] = useState("");
 

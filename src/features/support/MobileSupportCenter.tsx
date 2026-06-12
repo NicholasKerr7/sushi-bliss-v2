@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
+import { useNotifications } from "@/hooks/useNotifications";
 import { useProfile } from "@/hooks/useProfile";
 import { useSupport } from "@/hooks/useSupport";
 import type { HelpArticle } from "@/types/support";
@@ -20,15 +21,18 @@ type MobileSupportView = "overview" | "request";
 export function MobileSupportCenter() {
   const { profile } = useProfile();
   const { itemCount } = useCart();
+  const { unreadCount } = useNotifications();
   const { messages, submitSupportMessage } = useSupport();
   const [cartOpen, setCartOpen] = useState(false);
+  const [requestTopicId, setRequestTopicId] = useState<string | undefined>();
   const [selectedArticle, setSelectedArticle] = useState<HelpArticle | null>(
     null,
   );
   const [view, setView] = useState<MobileSupportView>("overview");
 
-  const openRequest = () => {
+  const openRequest = (topicId?: string) => {
     setSelectedArticle(null);
+    setRequestTopicId(topicId);
     setView("request");
   };
 
@@ -49,6 +53,7 @@ export function MobileSupportCenter() {
       <div className="relative z-10 mx-auto max-w-[430px]">
         <MobileSupportHeader
           cartCount={itemCount}
+          unreadNotificationCount={unreadCount}
           onOpenCart={() => setCartOpen(true)}
         />
 
@@ -60,8 +65,13 @@ export function MobileSupportCenter() {
           />
         ) : view === "request" ? (
           <MobileSupportRequestView
+            initialTopicId={requestTopicId}
+            key={requestTopicId || "general-support-request"}
             profile={profile}
-            onBack={() => setView("overview")}
+            onBack={() => {
+              setRequestTopicId(undefined);
+              setView("overview");
+            }}
             onSubmitSupportMessage={submitSupportMessage}
           />
         ) : (
