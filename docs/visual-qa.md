@@ -53,6 +53,16 @@ Current audit targets:
 - tablet locations: `/locations` against `tablet/tablet-19-locations.png`
 - tablet cancel reservation: `/reservations` interaction against
   `tablet/tablet-20-cancel-reservation.png`
+- tablet omakase experience: `/omakase` against
+  `tablet/tablet-21-omakase-experience.png`
+- tablet omakase package review: `/omakase` interaction against
+  `tablet/tablet-22-omakase-package-review.png`
+- tablet gift experience: `/gifts` against
+  `tablet/tablet-23-gift-experience.png`
+- tablet gift checkout: `/gifts` interaction against
+  `tablet/tablet-24-gift-checkout.png`
+- tablet gift confirmation: `/gifts` interaction against
+  `tablet/tablet-25-gift-confirmation.png`
 - desktop home dashboard: `/home` against
   `desktop/desktop-01-home-dashboard.png`
 - desktop menu overview: `/menu` against `desktop/desktop-02-menu-overview.png`

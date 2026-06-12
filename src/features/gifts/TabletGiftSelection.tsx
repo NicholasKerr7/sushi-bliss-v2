@@ -61,7 +61,7 @@ export function TabletGiftSelection({
   onUpdateDraft,
 }: TabletGiftSelectionProps) {
   return (
-    <main className="mx-auto w-full max-w-[1034px]">
+    <main className="mx-auto w-full max-w-[1034px] pb-[136px]">
       <section className="relative min-h-[196px] overflow-hidden rounded-b-[18px] border-x border-b border-white/10">
         <Image
           alt=""

@@ -437,6 +437,107 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "tablet omakase experience",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-21-omakase-experience.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/omakase",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: /The Art of Omakase/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Choose your experience" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: /Reserve your experience/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet omakase package review",
+    prepare: openTabletOmakaseReview,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-22-omakase-package-review.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/omakase",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: "Omakase package review" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Course preview" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("link", { name: /Continue to reservation/i }).first(),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet gift experience",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-23-gift-experience.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/gifts",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: /Gift an Experience/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "1. Choose gift experience" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: /Continue to review/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet gift checkout",
+    prepare: openTabletGiftCheckout,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-24-gift-checkout.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/gifts",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: /Give the gift of Exceptional/i }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Gift summary" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: /Complete payment/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet gift confirmation",
+    prepare: openTabletGiftConfirmation,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-25-gift-confirmation.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/gifts",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: "Gift confirmed" }),
+      ).toBeVisible();
+      await expect(page.getByText("Order reference")).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "View gift details" }),
+      ).toBeVisible();
+    },
+  },
+  {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
     referencePath:
@@ -632,6 +733,37 @@ async function openTabletCancelReservation(page: Page) {
     reservationsSection.getByRole("heading", {
       name: "Cancel Reservation",
     }),
+  ).toBeVisible();
+}
+
+async function openTabletOmakaseReview(page: Page) {
+  await expect(
+    page.getByRole("button", { name: /Reserve your experience/i }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: /Reserve your experience/i }).click();
+  await expect(
+    page.getByRole("heading", { name: "Omakase package review" }),
+  ).toBeVisible();
+}
+
+async function openTabletGiftCheckout(page: Page) {
+  await expect(
+    page.getByRole("button", { name: /Continue to review/i }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: /Continue to review/i }).click();
+  await expect(
+    page.getByRole("heading", { name: /Give the gift of Exceptional/i }),
+  ).toBeVisible();
+}
+
+async function openTabletGiftConfirmation(page: Page) {
+  await openTabletGiftCheckout(page);
+  await expect(
+    page.getByRole("button", { name: /Complete payment/i }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: /Complete payment/i }).click();
+  await expect(
+    page.getByRole("heading", { name: "Gift confirmed" }),
   ).toBeVisible();
 }
 

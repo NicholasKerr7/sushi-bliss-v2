@@ -17,7 +17,7 @@ current viewport and attaches the matching reference PNG.
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
-| Tablet     |         40 |      18 |                  22 |             0 |
+| Tablet     |         40 |      23 |                  17 |             0 |
 | Desktop    |         40 |       2 |                  38 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
@@ -48,11 +48,11 @@ confirmation until the reference filename is corrected.
 | `tablet-18-modify-reservation.png`            | modify reservation flow           | Audited             |
 | `tablet-19-locations.png`                     | `/locations`                      | Audited             |
 | `tablet-20-cancel-reservation.png`            | cancel reservation modal          | Audited             |
-| `tablet-21-omakase-experience.png`            | `/omakase`                        | Built / needs audit |
-| `tablet-22-omakase-package-review.png`        | omakase review state              | Built / needs audit |
-| `tablet-23-gift-experience.png`               | `/gifts`                          | Built / needs audit |
-| `tablet-24-gift-checkout.png`                 | gift checkout state               | Built / needs audit |
-| `tablet-25-gift-confirmation.png`             | gift confirmation state           | Built / needs audit |
+| `tablet-21-omakase-experience.png`            | `/omakase`                        | Audited             |
+| `tablet-22-omakase-package-review.png`        | omakase review state              | Audited             |
+| `tablet-23-gift-experience.png`               | `/gifts`                          | Audited             |
+| `tablet-24-gift-checkout.png`                 | gift checkout state               | Audited             |
+| `tablet-25-gift-confirmation.png`             | gift confirmation state           | Audited             |
 | `tablet-26-loyalty-dashboard.png`             | `/loyalty`                        | Built / needs audit |
 | `tablet-27-member-pass-rewards.png`           | loyalty rewards state             | Built / needs audit |
 | `tablet-28-profile-dashboard.png`             | `/profile`                        | Built / needs audit |
