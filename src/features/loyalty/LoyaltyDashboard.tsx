@@ -9,6 +9,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { referralProgress, rewards } from "@/data/loyalty";
 import { useLoyalty } from "@/hooks/useLoyalty";
+import { useNotifications } from "@/hooks/useNotifications";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { classNames } from "@/lib/classNames";
 import { formatDateTime } from "@/lib/dates";
@@ -30,6 +31,7 @@ function getProgressCells(progress: number) {
 
 export function LoyaltyDashboard() {
   const { account, redeemReward, redeemedRewards, transactions } = useLoyalty();
+  const { unreadCount } = useNotifications();
   const mode = useResponsiveMode();
   const [selectedReward, setSelectedReward] = useState<Reward | null>(null);
   const [redemptionMessage, setRedemptionMessage] = useState("");
@@ -65,6 +67,7 @@ export function LoyaltyDashboard() {
         setRedemptionMessage={setRedemptionMessage}
         setSelectedReward={setSelectedReward}
         transactions={transactions}
+        unreadNotificationCount={unreadCount}
       />
     );
   }

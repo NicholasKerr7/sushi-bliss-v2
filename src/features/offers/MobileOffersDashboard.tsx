@@ -6,6 +6,7 @@ import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { offers as allOffers } from "@/data/offers";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
+import { useNotifications } from "@/hooks/useNotifications";
 import {
   isOfferExpired,
   offerMatchesQuery,
@@ -32,6 +33,7 @@ export function MobileOffersDashboard() {
   const [query, setQuery] = useState("");
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const { itemCount } = useCart();
+  const { unreadCount } = useNotifications();
 
   const sortedOffers = useMemo(
     () => sortOffersByAvailability(allOffers, currentTime),
@@ -117,6 +119,7 @@ export function MobileOffersDashboard() {
         <MobileOffersHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}
+          unreadNotificationCount={unreadCount}
         />
 
         {selectedOffer ? (

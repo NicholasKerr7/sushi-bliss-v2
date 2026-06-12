@@ -24,6 +24,9 @@ export function RewardDetailModal({
   reward,
 }: RewardDetailModalProps) {
   const affordable = reward ? memberPoints >= reward.pointsCost : false;
+  const neededPoints = reward
+    ? Math.max(reward.pointsCost - memberPoints, 0)
+    : 0;
 
   return (
     <Modal
@@ -35,12 +38,14 @@ export function RewardDetailModal({
         reward ? (
           <Button
             className="w-full"
-            disabled={!reward.isAvailable}
+            disabled={!reward.isAvailable || !affordable}
             onClick={() => onRedeemReward(reward)}
           >
-            {reward.isAvailable
-              ? `Redeem ${reward.pointsCost} points`
-              : "Unavailable"}
+            {!reward.isAvailable
+              ? "Unavailable"
+              : affordable
+                ? `Redeem ${reward.pointsCost} points`
+                : `Need ${neededPoints.toLocaleString()} more points`}
           </Button>
         ) : null
       }

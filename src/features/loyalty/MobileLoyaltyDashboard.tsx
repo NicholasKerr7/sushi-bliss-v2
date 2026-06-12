@@ -23,6 +23,7 @@ import type {
 } from "@/types/loyalty";
 
 import { MobileLoyaltyActivityView } from "./MobileLoyaltyActivityView";
+import { MobileLoyaltyCommandCenter } from "./MobileLoyaltyCommandCenter";
 import { MobileLoyaltyPassView } from "./MobileLoyaltyPassView";
 import {
   MobileLoyaltyHeader,
@@ -44,6 +45,7 @@ interface MobileLoyaltyDashboardProps {
   setRedemptionMessage: (message: string) => void;
   setSelectedReward: (reward: Reward | null) => void;
   transactions: LoyaltyTransaction[];
+  unreadNotificationCount: number;
 }
 
 const mobileTabs: { id: MobileLoyaltyTab; label: string }[] = [
@@ -64,6 +66,7 @@ export function MobileLoyaltyDashboard({
   setRedemptionMessage,
   setSelectedReward,
   transactions,
+  unreadNotificationCount,
 }: MobileLoyaltyDashboardProps) {
   const [activeTab, setActiveTab] = useState<MobileLoyaltyTab>("rewards");
   const [cartOpen, setCartOpen] = useState(false);
@@ -101,6 +104,7 @@ export function MobileLoyaltyDashboard({
         <MobileLoyaltyHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}
+          unreadNotificationCount={unreadNotificationCount}
         />
 
         <section className="mt-8 overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-black/54 shadow-[0_24px_70px_rgba(0,0,0,0.42)]">
@@ -172,6 +176,15 @@ export function MobileLoyaltyDashboard({
             </div>
           </div>
         </section>
+
+        <MobileLoyaltyCommandCenter
+          account={account}
+          memberPoints={memberPoints}
+          onViewReward={(reward) => {
+            setSelectedReward(reward);
+            setRedemptionMessage("");
+          }}
+        />
 
         <nav
           aria-label="Loyalty sections"
