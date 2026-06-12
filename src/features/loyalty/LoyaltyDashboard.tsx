@@ -153,7 +153,7 @@ export function LoyaltyDashboard() {
               <div className="mt-4 grid gap-4 md:grid-cols-2">
                 {rewards.map((reward, index) => (
                   <RewardCard
-                    imagePriority={index < 2}
+                    imagePriority={index < 4}
                     key={reward.id}
                     memberPoints={account.points}
                     onViewReward={handleViewReward}

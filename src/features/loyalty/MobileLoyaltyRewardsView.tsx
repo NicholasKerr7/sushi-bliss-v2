@@ -52,7 +52,7 @@ export function MobileLoyaltyRewardsView({
                   alt={reward.title}
                   className="object-cover"
                   fill
-                  loading={index < 2 ? "eager" : "lazy"}
+                  loading={index < 4 ? "eager" : "lazy"}
                   sizes="112px"
                   src={reward.imageUrl}
                 />

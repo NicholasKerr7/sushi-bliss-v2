@@ -94,6 +94,7 @@ export function ReservationBookingForm({
                     alt={experience.title}
                     className="object-cover"
                     fill
+                    loading="eager"
                     sizes="92px"
                     src={experience.imageUrl}
                   />
