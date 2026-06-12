@@ -10,6 +10,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { mockOrders } from "@/data/orders";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
+import { useNotifications } from "@/hooks/useNotifications";
 import { useOrders } from "@/hooks/useOrders";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { classNames } from "@/lib/classNames";
@@ -30,6 +31,7 @@ export function OrdersDashboard() {
   const [reorderMessage, setReorderMessage] = useState("");
   const mode = useResponsiveMode();
   const { addItem, itemCount } = useCart();
+  const { unreadCount } = useNotifications();
   const { activeOrders, pastOrders } = useOrders(mockOrders);
   const visibleOrders = view === "active" ? activeOrders : pastOrders;
 
@@ -54,6 +56,7 @@ export function OrdersDashboard() {
         pastOrders={pastOrders}
         reorderMessage={reorderMessage}
         selectedOrder={selectedOrder}
+        unreadNotificationCount={unreadCount}
         view={view}
       />
     );

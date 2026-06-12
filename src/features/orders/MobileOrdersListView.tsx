@@ -23,6 +23,7 @@ import {
   MobileOrderProgress,
   MobileOrdersHeader,
 } from "./MobileOrdersPrimitives";
+import { MobileOrdersCommandCenter } from "./MobileOrdersCommandCenter";
 
 type OrderView = "active" | "past";
 
@@ -31,10 +32,12 @@ interface MobileOrdersListViewProps {
   cartCount: number;
   onOpenCart: () => void;
   onReorder: (order: Order) => void;
+  onTrackOrder: (order: Order) => void;
   onViewChange: (view: OrderView) => void;
   onViewDetails: (order: Order) => void;
   pastOrders: Order[];
   reorderMessage: string;
+  unreadNotificationCount: number;
   view: OrderView;
 }
 
@@ -44,10 +47,12 @@ export function MobileOrdersListView({
   cartCount,
   onOpenCart,
   onReorder,
+  onTrackOrder,
   onViewChange,
   onViewDetails,
   pastOrders,
   reorderMessage,
+  unreadNotificationCount,
   view,
 }: MobileOrdersListViewProps) {
   const visibleOrders = view === "active" ? activeOrders : pastOrders;
@@ -57,7 +62,11 @@ export function MobileOrdersListView({
   return (
     <>
       <div className="relative z-10 mx-auto max-w-[430px]">
-        <MobileOrdersHeader onOpenCart={onOpenCart} showCart={cartCount > 0} />
+        <MobileOrdersHeader
+          cartCount={cartCount}
+          onOpenCart={onOpenCart}
+          unreadNotificationCount={unreadNotificationCount}
+        />
 
         <section className="pt-12 text-center">
           <h1 className="editorial-title text-[44px] leading-none tracking-[0.14em]">
@@ -90,6 +99,15 @@ export function MobileOrdersListView({
             {reorderMessage}
           </div>
         ) : null}
+
+        <MobileOrdersCommandCenter
+          activeOrders={activeOrders}
+          featuredOrder={featuredOrder}
+          onTrackOrder={onTrackOrder}
+          onViewChange={onViewChange}
+          pastOrders={pastOrders}
+          view={view}
+        />
 
         {view === "active" ? (
           <section className="mt-8">

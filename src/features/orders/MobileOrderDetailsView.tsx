@@ -27,6 +27,7 @@ interface MobileOrderDetailsViewProps {
   onReorder: (order: Order) => void;
   onTrackOrder: (order: Order) => void;
   order: Order;
+  unreadNotificationCount: number;
 }
 
 /** Mobile receipt and order detail screen backed by the selected order data. */
@@ -37,6 +38,7 @@ export function MobileOrderDetailsView({
   onReorder,
   onTrackOrder,
   order,
+  unreadNotificationCount,
 }: MobileOrderDetailsViewProps) {
   const canTrack =
     order.status !== "completed" &&
@@ -50,7 +52,11 @@ export function MobileOrderDetailsView({
   return (
     <>
       <div className="relative z-10 mx-auto max-w-[430px]">
-        <MobileOrdersHeader onOpenCart={onOpenCart} showCart={cartCount > 0} />
+        <MobileOrdersHeader
+          cartCount={cartCount}
+          onOpenCart={onOpenCart}
+          unreadNotificationCount={unreadNotificationCount}
+        />
 
         <div className="mt-7 grid grid-cols-[52px_1fr_52px] items-center">
           <MobileBackButton label="Back to orders" onClick={onBack} />

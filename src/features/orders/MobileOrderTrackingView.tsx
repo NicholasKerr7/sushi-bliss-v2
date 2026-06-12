@@ -26,6 +26,7 @@ interface MobileOrderTrackingViewProps {
   onBack: () => void;
   onOpenCart: () => void;
   order: Order;
+  unreadNotificationCount: number;
 }
 
 /** Mobile live tracking view for active delivery and pickup orders. */
@@ -34,6 +35,7 @@ export function MobileOrderTrackingView({
   onBack,
   onOpenCart,
   order,
+  unreadNotificationCount,
 }: MobileOrderTrackingViewProps) {
   const address =
     order.mode === "delivery" && order.deliveryAddress
@@ -48,7 +50,11 @@ export function MobileOrderTrackingView({
   return (
     <>
       <div className="relative z-10 mx-auto max-w-[430px]">
-        <MobileOrdersHeader onOpenCart={onOpenCart} showCart={cartCount > 0} />
+        <MobileOrdersHeader
+          cartCount={cartCount}
+          onOpenCart={onOpenCart}
+          unreadNotificationCount={unreadNotificationCount}
+        />
 
         <section className="mt-9 grid grid-cols-[58px_1fr] gap-4">
           <MobileBackButton label="Back to order details" onClick={onBack} />

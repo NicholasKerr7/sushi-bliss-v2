@@ -10,8 +10,9 @@ import { formatTime } from "@/lib/dates";
 import type { Order, OrderStatus } from "@/types/order";
 
 interface MobileOrdersHeaderProps {
+  cartCount?: number;
   onOpenCart?: () => void;
-  showCart?: boolean;
+  unreadNotificationCount?: number;
 }
 
 const orderStatusWeight: Record<OrderStatus, number> = {
@@ -26,8 +27,9 @@ const orderStatusWeight: Record<OrderStatus, number> = {
 
 /** Shared mobile orders header matching the reference logo and alert treatment. */
 export function MobileOrdersHeader({
+  cartCount = 0,
   onOpenCart,
-  showCart = false,
+  unreadNotificationCount = 0,
 }: MobileOrdersHeaderProps) {
   return (
     <header className="flex items-center justify-between">
@@ -50,14 +52,17 @@ export function MobileOrdersHeader({
       </Link>
 
       <div className="flex items-center gap-3">
-        {showCart && onOpenCart ? (
+        {cartCount > 0 && onOpenCart ? (
           <button
             aria-label="Open cart"
-            className="grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
+            className="relative grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
             onClick={onOpenCart}
             type="button"
           >
             <AssetIcon loading="eager" size={25} src={icons.cart} />
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold text-white">
+              {cartCount > 9 ? "9+" : cartCount}
+            </span>
           </button>
         ) : null}
         <Link
@@ -66,7 +71,11 @@ export function MobileOrdersHeader({
           href="/notifications"
         >
           <AssetIcon loading="eager" size={27} src={icons.bell} />
-          <span className="absolute right-2.5 top-2 h-3 w-3 rounded-full bg-[var(--sb-red-bright)]" />
+          {unreadNotificationCount > 0 ? (
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red-bright)] px-1 text-[10px] font-bold text-white">
+              {unreadNotificationCount > 9 ? "9+" : unreadNotificationCount}
+            </span>
+          ) : null}
         </Link>
       </div>
     </header>

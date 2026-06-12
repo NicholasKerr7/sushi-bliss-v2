@@ -24,6 +24,7 @@ interface MobileOrdersDashboardProps {
   pastOrders: Order[];
   reorderMessage: string;
   selectedOrder: Order | null;
+  unreadNotificationCount: number;
   view: OrderView;
 }
 
@@ -40,6 +41,7 @@ export function MobileOrdersDashboard({
   pastOrders,
   reorderMessage,
   selectedOrder,
+  unreadNotificationCount,
   view,
 }: MobileOrdersDashboardProps) {
   const [surface, setSurface] = useState<MobileOrdersSurface>("list");
@@ -93,6 +95,7 @@ export function MobileOrdersDashboard({
           onReorder={handleReorder}
           onTrackOrder={handleTrackOrder}
           order={currentOrder}
+          unreadNotificationCount={unreadNotificationCount}
         />
       ) : surface === "tracking" && currentOrder ? (
         <MobileOrderTrackingView
@@ -100,6 +103,7 @@ export function MobileOrdersDashboard({
           onBack={() => setSurface("details")}
           onOpenCart={onOpenCart}
           order={currentOrder}
+          unreadNotificationCount={unreadNotificationCount}
         />
       ) : (
         <MobileOrdersListView
@@ -107,10 +111,12 @@ export function MobileOrdersDashboard({
           cartCount={cartCount}
           onOpenCart={onOpenCart}
           onReorder={handleReorder}
+          onTrackOrder={handleTrackOrder}
           onViewChange={handleViewChange}
           onViewDetails={handleViewDetails}
           pastOrders={pastOrders}
           reorderMessage={reorderMessage}
+          unreadNotificationCount={unreadNotificationCount}
           view={view}
         />
       )}
