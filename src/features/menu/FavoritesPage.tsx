@@ -11,11 +11,25 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useCart } from "@/hooks/useCart";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { getDefaultCustomizations } from "@/lib/cart";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
+import { MobileFavoritesPage } from "./MobileFavoritesPage";
+
+/** Routes favorites to a mobile-first reorder flow or expanded desktop layout. */
 export function FavoritesPage() {
+  const mode = useResponsiveMode();
+
+  if (mode === "mobile") {
+    return <MobileFavoritesPage />;
+  }
+
+  return <DesktopFavoritesPage />;
+}
+
+function DesktopFavoritesPage() {
   const { addItem } = useCart();
   const { clearFavorites, favoriteItems, hasFavorites, toggleFavorite } =
     useFavorites();

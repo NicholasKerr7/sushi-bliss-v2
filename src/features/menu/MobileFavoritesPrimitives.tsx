@@ -1,0 +1,84 @@
+"use client";
+
+import Link from "next/link";
+import type { ReactNode } from "react";
+
+import { AssetIcon } from "@/components/icons/AssetIcon";
+import { brand, icons } from "@/features/home/visualHomeData";
+import { classNames } from "@/lib/classNames";
+
+interface MobileFavoritesHeaderProps {
+  cartCount: number;
+  onOpenCart: () => void;
+}
+
+/** Shared mobile favorites header with brand, cart, and alerts access. */
+export function MobileFavoritesHeader({
+  cartCount,
+  onOpenCart,
+}: MobileFavoritesHeaderProps) {
+  return (
+    <header className="flex items-center justify-between">
+      <Link
+        className="flex min-w-0 items-center gap-3 rounded-[14px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+        href="/home"
+      >
+        <AssetIcon
+          alt={brand.name}
+          className="rounded-full"
+          loading="eager"
+          size={54}
+          src={brand.assets.floralEmblem.publicUrl}
+        />
+        <span className="editorial-title text-[18px] leading-[0.95] tracking-[0.34em] text-white">
+          Sushi
+          <br />
+          Bliss
+        </span>
+      </Link>
+
+      <div className="flex items-center gap-3">
+        {cartCount > 0 ? (
+          <button
+            aria-label="Open cart"
+            className="relative grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
+            onClick={onOpenCart}
+            type="button"
+          >
+            <AssetIcon loading="eager" size={25} src={icons.cart} />
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold">
+              {cartCount}
+            </span>
+          </button>
+        ) : null}
+        <Link
+          aria-label="Notifications"
+          className="relative grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
+          href="/notifications"
+        >
+          <AssetIcon loading="eager" size={27} src={icons.bell} />
+          <span className="absolute right-2.5 top-2 h-3 w-3 rounded-full bg-[var(--sb-red-bright)]" />
+        </Link>
+      </div>
+    </header>
+  );
+}
+
+export function MobileFavoritesPanel({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <section
+      className={classNames(
+        "rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl",
+        className,
+      )}
+    >
+      {children}
+    </section>
+  );
+}
