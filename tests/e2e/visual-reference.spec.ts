@@ -997,6 +997,127 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       ).toBeVisible();
     },
   },
+  {
+    name: "desktop orders dashboard",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-10-orders-dashboard.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/orders",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const ordersSection = page.locator("#orders");
+
+      await expect(ordersSection).toBeVisible();
+      await expect(
+        ordersSection.getByRole("heading", { exact: true, name: "Orders" }),
+      ).toBeVisible();
+      await expect(ordersSection.getByText("Active order")).toBeVisible();
+      await expect(ordersSection.getByText("Past orders")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop reservations main",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-11-reservations-main.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/reservations",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(reservationsSection).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("heading", { name: /Reservations/i }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: /Choose your experience/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: "Confirm reservation",
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop choose reservation experience",
+    prepare: openDesktopReservationExperience,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-12-choose-reservation-experience.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/reservations",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: /Choose your experience/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: /Continue to confirmation/i,
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop reservation review",
+    prepare: openDesktopReservationReview,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-13-reservation-review.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/reservations",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: /Review your reservation/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: "Confirm reservation",
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop reservation history",
+    prepare: openDesktopReservationHistory,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-14-reservation-history.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/reservations",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: /Reservation history/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: /Modify reservation/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByText("Past reservations"),
+      ).toBeVisible();
+    },
+  },
 ];
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
@@ -1387,6 +1508,48 @@ async function openDesktopOrderConfirmation(page: Page) {
   await openDesktopCheckoutReview(page);
   await page.getByRole("button", { name: /Place order/i }).click();
   await expect(page.getByText("Order confirmation")).toBeVisible();
+}
+
+async function openDesktopReservationExperience(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await expect(reservationsSection).toBeVisible();
+  await reservationsSection
+    .getByRole("button", { name: /Open experience chooser/i })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: /Choose your experience/i,
+    }),
+  ).toBeVisible();
+}
+
+async function openDesktopReservationReview(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await openDesktopReservationExperience(page);
+  await reservationsSection
+    .getByRole("button", { name: /Continue to confirmation/i })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: /Review your reservation/i,
+    }),
+  ).toBeVisible();
+}
+
+async function openDesktopReservationHistory(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await expect(reservationsSection).toBeVisible();
+  await reservationsSection
+    .getByRole("button", { name: /View history/i })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: /Reservation history/i,
+    }),
+  ).toBeVisible();
 }
 
 function getPngSize(buffer: Buffer) {

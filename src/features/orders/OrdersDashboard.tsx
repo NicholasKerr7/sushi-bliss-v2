@@ -17,6 +17,7 @@ import { classNames } from "@/lib/classNames";
 import { getReorderDrafts } from "@/lib/orders";
 import type { Order } from "@/types/order";
 
+import { DesktopOrdersDashboard } from "./DesktopOrdersDashboard";
 import { MobileOrdersDashboard } from "./MobileOrdersDashboard";
 import { OrderCard } from "./OrderCard";
 import { OrderDetailDrawer } from "./OrderDetailDrawer";
@@ -78,6 +79,32 @@ export function OrdersDashboard() {
         selectedOrder={selectedOrder}
         view={view}
       />
+    );
+  }
+
+  if (mode === "desktop") {
+    return (
+      <>
+        <DesktopOrdersDashboard
+          activeOrders={activeOrders}
+          cartCount={itemCount}
+          onReorder={handleReorder}
+          onSelectOrder={setSelectedOrder}
+          pastOrders={pastOrders}
+          reorderMessage={reorderMessage}
+        />
+        <OrderDetailDrawer
+          onOpenChange={(open) => {
+            if (!open) {
+              setSelectedOrder(null);
+            }
+          }}
+          onReorder={handleReorder}
+          open={Boolean(selectedOrder)}
+          order={selectedOrder}
+        />
+        <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
+      </>
     );
   }
 

@@ -18,7 +18,7 @@ current viewport and attaches the matching reference PNG.
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
 | Tablet     |         40 |      40 |                   0 |             0 |
-| Desktop    |         40 |       9 |                  31 |             0 |
+| Desktop    |         40 |      14 |                  26 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
 order confirmation composition, so the visual audit maps it to tablet order
@@ -82,11 +82,11 @@ confirmation until the reference filename is corrected.
 | `desktop-07-checkout.png`                      | checkout state               | Audited             |
 | `desktop-08-checkout-review.png`               | checkout review              | Audited             |
 | `desktop-09-order-confirmation.png`            | order confirmation           | Audited             |
-| `desktop-10-orders-dashboard.png`              | `/orders`                    | Built / needs audit |
-| `desktop-11-reservations-main.png`             | `/reservations`              | Built / needs audit |
-| `desktop-12-choose-reservation-experience.png` | reservation experience step  | Built / needs audit |
-| `desktop-13-reservation-review.png`            | reservation review step      | Built / needs audit |
-| `desktop-14-reservation-history.png`           | reservation history state    | Built / needs audit |
+| `desktop-10-orders-dashboard.png`              | `/orders`                    | Audited             |
+| `desktop-11-reservations-main.png`             | `/reservations`              | Audited             |
+| `desktop-12-choose-reservation-experience.png` | reservation experience step  | Audited             |
+| `desktop-13-reservation-review.png`            | reservation review step      | Audited             |
+| `desktop-14-reservation-history.png`           | reservation history state    | Audited             |
 | `desktop-15-omakase-experience.png`            | `/omakase`                   | Built / needs audit |
 | `desktop-16-omakase-package-review.png`        | omakase review state         | Built / needs audit |
 | `desktop-17-loyalty-dashboard.png`             | `/loyalty`                   | Built / needs audit |

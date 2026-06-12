@@ -13,6 +13,7 @@ const navItems = [
   ["loyalty", "Loyalty", "/loyalty"],
   ["about", "About Us", "/about"],
   ["contact", "Contact", "/support"],
+  ["orders", "Orders", "/orders"],
 ] as const;
 
 interface DesktopMenuHeaderProps {
@@ -43,7 +44,7 @@ export function DesktopMenuHeader({
       </Link>
       <nav
         aria-label="Desktop primary"
-        className="flex flex-1 items-center justify-center gap-[2.35vw]"
+        className="flex flex-1 items-center justify-center gap-[1.85vw]"
       >
         {navItems.map(([id, label, href]) => {
           const active = id === activeId;

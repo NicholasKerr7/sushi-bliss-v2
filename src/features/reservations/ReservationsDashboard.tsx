@@ -29,6 +29,8 @@ import type {
   ReservationValidationState,
 } from "@/types/reservation";
 
+import { CartDrawer } from "@/features/cart/CartDrawer";
+import { DesktopReservationsDashboard } from "./DesktopReservationsDashboard";
 import { MobileReservationsDashboard } from "./MobileReservationsDashboard";
 import { ReservationBookingForm } from "./ReservationBookingForm";
 import { ReservationCard } from "./ReservationCard";
@@ -175,6 +177,29 @@ export function ReservationsDashboard() {
         validation={validation}
         view={view}
       />
+    );
+  }
+
+  if (mode === "desktop") {
+    return (
+      <>
+        <DesktopReservationsDashboard
+          cartCount={itemCount}
+          draft={draft}
+          editingReservation={editingReservation}
+          onCancelReservation={cancelReservation}
+          onDraftChange={updateDraft}
+          onModifyReservation={handleModify}
+          onResetForm={resetForm}
+          onReview={handleReview}
+          onSubmit={handleSubmit}
+          onViewChange={setView}
+          pastReservations={pastReservations}
+          upcomingReservations={upcomingReservations}
+          validation={validation}
+        />
+        <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
+      </>
     );
   }
 

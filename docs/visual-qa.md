@@ -108,6 +108,16 @@ Current audit targets:
   `desktop/desktop-08-checkout-review.png`
 - desktop order confirmation: `/menu` interaction against
   `desktop/desktop-09-order-confirmation.png`
+- desktop orders dashboard: `/orders` against
+  `desktop/desktop-10-orders-dashboard.png`
+- desktop reservations main: `/reservations` against
+  `desktop/desktop-11-reservations-main.png`
+- desktop choose reservation experience: `/reservations` interaction against
+  `desktop/desktop-12-choose-reservation-experience.png`
+- desktop reservation review: `/reservations` interaction against
+  `desktop/desktop-13-reservation-review.png`
+- desktop reservation history: `/reservations` interaction against
+  `desktop/desktop-14-reservation-history.png`
 
 The audit asserts the rendered viewport size, reference image dimensions, route
 health, and absence of horizontal overflow. Full pixel assertions should be
