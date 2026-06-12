@@ -538,6 +538,105 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "tablet loyalty dashboard",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-26-loyalty-dashboard.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/loyalty",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(loyaltySection).toBeVisible();
+      await expect(
+        loyaltySection.getByRole("heading", {
+          exact: true,
+          name: "Rewards",
+        }),
+      ).toBeVisible();
+      await expect(loyaltySection.getByText("Reward catalog")).toBeVisible();
+    },
+  },
+  {
+    name: "tablet member pass rewards",
+    prepare: openTabletRewardDetails,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-27-member-pass-rewards.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/loyalty",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Chef Hand Roll" });
+
+      await expect(dialog).toBeVisible();
+      await expect(dialog.getByText("Terms")).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: /Redeem 450 points/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet profile dashboard",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-28-profile-dashboard.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/profile",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(profileSection).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Hiroshi Tanaka" }),
+      ).toBeVisible();
+      await expect(profileSection.getByText("Quick actions")).toBeVisible();
+    },
+  },
+  {
+    name: "tablet favorites",
+    prepare: seedTabletFavorites,
+    projectName: "chromium-tablet",
+    referencePath: "public/assets/screenshots/tablet/tablet-29-favorites.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/favorites",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const favoritesSection = page.locator("#favorites");
+
+      await expect(favoritesSection).toBeVisible();
+      await expect(
+        favoritesSection.getByRole("heading", { name: "My Favorites" }),
+      ).toBeVisible();
+      await expect(
+        favoritesSection.getByRole("heading", { name: "Saved menu items" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet account settings preferences",
+    prepare: openTabletProfilePreferences,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-30-account-settings-preferences.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/profile",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { exact: true, name: "Preferences" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Dining preferences" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "Saved cards" }),
+      ).toBeVisible();
+    },
+  },
+  {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
     referencePath:
@@ -764,6 +863,48 @@ async function openTabletGiftConfirmation(page: Page) {
   await page.getByRole("button", { name: /Complete payment/i }).click();
   await expect(
     page.getByRole("heading", { name: "Gift confirmed" }),
+  ).toBeVisible();
+}
+
+async function openTabletRewardDetails(page: Page) {
+  const loyaltySection = page.locator("#loyalty");
+
+  await expect(
+    loyaltySection.getByRole("button", { name: "Details" }).first(),
+  ).toBeVisible();
+  await loyaltySection.getByRole("button", { name: "Details" }).first().click();
+  await expect(
+    page.getByRole("dialog", { name: "Chef Hand Roll" }),
+  ).toBeVisible();
+}
+
+async function seedTabletFavorites(page: Page) {
+  await page.evaluate(() => {
+    window.localStorage.setItem(
+      "sushi-bliss:favorites",
+      JSON.stringify([
+        "otoro-nigiri",
+        "spicy-tuna-roll",
+        "salmon-sashimi",
+        "dragon-roll",
+      ]),
+    );
+    window.dispatchEvent(new Event("sushi-bliss:favorites-changed"));
+  });
+  await expect(page.getByText("Otoro Nigiri")).toBeVisible();
+}
+
+async function openTabletProfilePreferences(page: Page) {
+  const profileSection = page.locator("#profile");
+
+  await expect(
+    profileSection.getByRole("button", { name: /Add new address/i }),
+  ).toBeVisible();
+  await profileSection
+    .getByRole("button", { name: /Add new address/i })
+    .click();
+  await expect(
+    page.getByRole("heading", { exact: true, name: "Preferences" }),
   ).toBeVisible();
 }
 

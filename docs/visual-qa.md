@@ -63,6 +63,16 @@ Current audit targets:
   `tablet/tablet-24-gift-checkout.png`
 - tablet gift confirmation: `/gifts` interaction against
   `tablet/tablet-25-gift-confirmation.png`
+- tablet loyalty dashboard: `/loyalty` against
+  `tablet/tablet-26-loyalty-dashboard.png`
+- tablet member pass rewards: `/loyalty` reward detail interaction against
+  `tablet/tablet-27-member-pass-rewards.png`
+- tablet profile dashboard: `/profile` against
+  `tablet/tablet-28-profile-dashboard.png`
+- tablet favorites: `/favorites` with seeded favorites against
+  `tablet/tablet-29-favorites.png`
+- tablet account settings preferences: `/profile` interaction against
+  `tablet/tablet-30-account-settings-preferences.png`
 - desktop home dashboard: `/home` against
   `desktop/desktop-01-home-dashboard.png`
 - desktop menu overview: `/menu` against `desktop/desktop-02-menu-overview.png`

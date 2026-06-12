@@ -17,7 +17,7 @@ current viewport and attaches the matching reference PNG.
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
-| Tablet     |         40 |      23 |                  17 |             0 |
+| Tablet     |         40 |      28 |                  12 |             0 |
 | Desktop    |         40 |       2 |                  38 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
@@ -53,11 +53,11 @@ confirmation until the reference filename is corrected.
 | `tablet-23-gift-experience.png`               | `/gifts`                          | Audited             |
 | `tablet-24-gift-checkout.png`                 | gift checkout state               | Audited             |
 | `tablet-25-gift-confirmation.png`             | gift confirmation state           | Audited             |
-| `tablet-26-loyalty-dashboard.png`             | `/loyalty`                        | Built / needs audit |
-| `tablet-27-member-pass-rewards.png`           | loyalty rewards state             | Built / needs audit |
-| `tablet-28-profile-dashboard.png`             | `/profile`                        | Built / needs audit |
-| `tablet-29-favorites.png`                     | `/favorites`                      | Built / needs audit |
-| `tablet-30-account-settings-preferences.png`  | profile settings state            | Built / needs audit |
+| `tablet-26-loyalty-dashboard.png`             | `/loyalty`                        | Audited             |
+| `tablet-27-member-pass-rewards.png`           | loyalty reward detail state       | Audited             |
+| `tablet-28-profile-dashboard.png`             | `/profile`                        | Audited             |
+| `tablet-29-favorites.png`                     | `/favorites`                      | Audited             |
+| `tablet-30-account-settings-preferences.png`  | profile settings state            | Audited             |
 | `tablet-31-contact.png`                       | `/support` contact state          | Built / needs audit |
 | `tablet-32-help-center.png`                   | `/support` help center state      | Built / needs audit |
 | `tablet-33-faq-article-detail.png`            | help article detail               | Built / needs audit |

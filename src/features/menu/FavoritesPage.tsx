@@ -17,6 +17,7 @@ import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
 import { MobileFavoritesPage } from "./MobileFavoritesPage";
+import { TabletFavoritesPage } from "./TabletFavoritesPage";
 
 /** Routes favorites to a mobile-first reorder flow or expanded desktop layout. */
 export function FavoritesPage() {
@@ -24,6 +25,10 @@ export function FavoritesPage() {
 
   if (mode === "mobile") {
     return <MobileFavoritesPage />;
+  }
+
+  if (mode === "tablet") {
+    return <TabletFavoritesPage />;
   }
 
   return <DesktopFavoritesPage />;
