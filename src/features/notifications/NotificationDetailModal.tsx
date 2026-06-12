@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { formatDateTime } from "@/lib/dates";
+import { notificationCategoryLabels } from "@/lib/notifications";
 import type { AppNotification } from "@/types/notification";
 
 interface NotificationDetailModalProps {
@@ -48,7 +49,7 @@ export function NotificationDetailModal({
       {notification ? (
         <div className="space-y-5">
           <StatusBadge tone={notification.tone}>
-            {notification.category}
+            {notificationCategoryLabels[notification.category]}
           </StatusBadge>
 
           <p className="text-sm leading-6 text-sb-muted">{notification.body}</p>

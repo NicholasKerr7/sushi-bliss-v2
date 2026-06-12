@@ -4,23 +4,13 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { formatDateTime } from "@/lib/dates";
-import type {
-  AppNotification,
-  NotificationCategory,
-} from "@/types/notification";
+import { notificationCategoryLabels } from "@/lib/notifications";
+import type { AppNotification } from "@/types/notification";
 
 interface NotificationCardProps {
   notification: AppNotification;
   onViewDetails: (notification: AppNotification) => void;
 }
-
-const categoryLabels: Record<NotificationCategory, string> = {
-  offer: "Offer",
-  order: "Order",
-  reservation: "Reservation",
-  reward: "Reward",
-  support: "Support",
-};
 
 export function NotificationCard({
   notification,
@@ -34,7 +24,7 @@ export function NotificationCard({
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge tone={notification.tone}>
-              {categoryLabels[notification.category]}
+              {notificationCategoryLabels[notification.category]}
             </StatusBadge>
             {unread ? <StatusBadge tone="warning">Unread</StatusBadge> : null}
           </div>

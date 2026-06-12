@@ -8,28 +8,30 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useNotifications } from "@/hooks/useNotifications";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { classNames } from "@/lib/classNames";
-import type {
-  AppNotification,
-  NotificationCategory,
-} from "@/types/notification";
+import {
+  filterNotifications,
+  notificationFilters,
+  type NotificationFilter,
+} from "@/lib/notifications";
+import type { AppNotification } from "@/types/notification";
 
+import { MobileNotificationsCenter } from "./MobileNotificationsCenter";
 import { NotificationCard } from "./NotificationCard";
 import { NotificationDetailModal } from "./NotificationDetailModal";
 
-type NotificationFilter = "all" | "unread" | NotificationCategory;
-
-const filterOptions: Array<{ id: NotificationFilter; label: string }> = [
-  { id: "all", label: "All" },
-  { id: "unread", label: "Unread" },
-  { id: "order", label: "Orders" },
-  { id: "reservation", label: "Reservations" },
-  { id: "reward", label: "Rewards" },
-  { id: "offer", label: "Offers" },
-  { id: "support", label: "Support" },
-];
-
 export function NotificationsCenter() {
+  const mode = useResponsiveMode();
+
+  if (mode === "mobile") {
+    return <MobileNotificationsCenter />;
+  }
+
+  return <DesktopNotificationsCenter />;
+}
+
+function DesktopNotificationsCenter() {
   const { markAllRead, markRead, notifications, unreadCount } =
     useNotifications();
   const [activeFilter, setActiveFilter] = useState<NotificationFilter>("all");
@@ -37,18 +39,7 @@ export function NotificationsCenter() {
     useState<AppNotification | null>(null);
 
   const filteredNotifications = useMemo(
-    () =>
-      notifications.filter((notification) => {
-        if (activeFilter === "all") {
-          return true;
-        }
-
-        if (activeFilter === "unread") {
-          return !notification.readAt;
-        }
-
-        return notification.category === activeFilter;
-      }),
+    () => filterNotifications(notifications, activeFilter),
     [activeFilter, notifications],
   );
 
@@ -84,7 +75,7 @@ export function NotificationsCenter() {
           className="mt-6 flex gap-2 overflow-x-auto pb-2"
           role="toolbar"
         >
-          {filterOptions.map((option) => (
+          {notificationFilters.map((option) => (
             <button
               aria-pressed={activeFilter === option.id}
               className={classNames(
