@@ -82,6 +82,16 @@ Current audit targets:
   `tablet/tablet-34-notifications-center.png`
 - tablet notification detail: `/notifications` interaction against
   `tablet/tablet-35-notification-detail.png`
+- tablet promotions offers: `/offers` against
+  `tablet/tablet-36-promotions-offers.png`
+- tablet offer detail: `/offers` interaction against
+  `tablet/tablet-37-offer-detail.png`
+- tablet referral earn: `/loyalty` interaction against
+  `tablet/tablet-38-referral-earn.png`
+- tablet about our story: `/about` against
+  `tablet/tablet-39-about-our-story.png`
+- tablet master chefs team: `/chefs` against
+  `tablet/tablet-40-master-chefs-team.png`
 - desktop home dashboard: `/home` against
   `desktop/desktop-01-home-dashboard.png`
 - desktop menu overview: `/menu` against `desktop/desktop-02-menu-overview.png`

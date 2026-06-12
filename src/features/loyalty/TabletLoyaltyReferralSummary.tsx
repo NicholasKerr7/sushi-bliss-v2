@@ -8,11 +8,13 @@ import { referralProgress } from "@/data/loyalty";
 interface TabletLoyaltyReferralSummaryProps {
   copyMessage: string;
   onCopyCode: () => void;
+  onOpenReferral: () => void;
 }
 
 export function TabletLoyaltyReferralSummary({
   copyMessage,
   onCopyCode,
+  onOpenReferral,
 }: TabletLoyaltyReferralSummaryProps) {
   return (
     <article className="grid min-h-[190px] content-between rounded-[18px] border border-[var(--sb-red)]/24 bg-white/[0.04] p-4 min-[1080px]:min-h-[234px] min-[1080px]:p-5">
@@ -52,6 +54,14 @@ export function TabletLoyaltyReferralSummary({
           </Button>
         </div>
       </div>
+
+      <button
+        className="mt-3 h-10 rounded-[10px] border border-[var(--sb-border)] text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.05] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+        onClick={onOpenReferral}
+        type="button"
+      >
+        Referral & earn
+      </button>
 
       <div className="mt-3 grid grid-cols-3 gap-2">
         {referralProgress.milestones.map((milestone) => (

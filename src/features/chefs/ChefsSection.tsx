@@ -12,6 +12,7 @@ import type { Chef } from "@/types/chef";
 import { ChefCard } from "./ChefCard";
 import { ChefDetailModal } from "./ChefDetailModal";
 import { MobileChefsSection } from "./MobileChefsSection";
+import { TabletChefsSection } from "./TabletChefsSection";
 
 /** Switches chef pages between mobile roster flow and expanded grid views. */
 export function ChefsSection() {
@@ -19,6 +20,10 @@ export function ChefsSection() {
 
   if (mode === "mobile") {
     return <MobileChefsSection />;
+  }
+
+  if (mode === "tablet") {
+    return <TabletChefsSection />;
   }
 
   return <DesktopChefsSection />;

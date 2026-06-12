@@ -12,6 +12,7 @@ import { featuredAssets } from "@/data/assets";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 
 import { MobileAboutSection } from "./MobileAboutSection";
+import { TabletAboutSection } from "./TabletAboutSection";
 
 /** Switches the brand story between mobile-first and expanded editorial layouts. */
 export function AboutSection() {
@@ -19,6 +20,10 @@ export function AboutSection() {
 
   if (mode === "mobile") {
     return <MobileAboutSection />;
+  }
+
+  if (mode === "tablet") {
+    return <TabletAboutSection />;
   }
 
   return <DesktopAboutSection />;

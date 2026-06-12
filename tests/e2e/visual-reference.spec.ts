@@ -727,6 +727,97 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "tablet promotions offers",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-36-promotions-offers.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/offers",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const offersSection = page.locator("#offers");
+
+      await expect(offersSection).toBeVisible();
+      await expect(
+        offersSection.getByRole("heading", { name: /Promotions/i }),
+      ).toBeVisible();
+      await expect(offersSection.getByText("Current offers")).toBeVisible();
+    },
+  },
+  {
+    name: "tablet offer detail",
+    prepare: openTabletOfferDetail,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-37-offer-detail.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/offers",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(page.getByText("Offer detail")).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: /Terms & conditions/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet referral earn",
+    prepare: openTabletReferralEarn,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-38-referral-earn.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/loyalty",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: /Referral & Earn/i }),
+      ).toBeVisible();
+      await expect(page.getByText("Your referral code")).toBeVisible();
+    },
+  },
+  {
+    name: "tablet about our story",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-39-about-our-story.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/about",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const aboutSection = page.locator("#about");
+
+      await expect(aboutSection).toBeVisible();
+      await expect(
+        aboutSection.getByRole("heading", { name: /Our Story/i }),
+      ).toBeVisible();
+      await expect(aboutSection.getByText("Our journey")).toBeVisible();
+    },
+  },
+  {
+    name: "tablet master chefs team",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-40-master-chefs-team.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/chefs",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const chefsSection = page.locator("#chefs");
+
+      await expect(chefsSection).toBeVisible();
+      await expect(
+        chefsSection.getByRole("heading", { name: /Master Chefs/i }),
+      ).toBeVisible();
+      await expect(
+        chefsSection.getByRole("heading", {
+          exact: true,
+          name: "Hiroshi Tanaka",
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
     referencePath:
@@ -1037,6 +1128,28 @@ async function openTabletNotificationDetail(page: Page) {
     .click();
   await expect(
     page.getByRole("heading", { name: /Notification detail/i }),
+  ).toBeVisible();
+}
+
+async function openTabletOfferDetail(page: Page) {
+  const offersSection = page.locator("#offers");
+
+  await expect(
+    offersSection.getByRole("button", { name: "View details" }),
+  ).toBeVisible();
+  await offersSection.getByRole("button", { name: "View details" }).click();
+  await expect(page.getByText("Offer detail")).toBeVisible();
+}
+
+async function openTabletReferralEarn(page: Page) {
+  const loyaltySection = page.locator("#loyalty");
+
+  await expect(
+    loyaltySection.getByRole("button", { name: "Referral & earn" }),
+  ).toBeVisible();
+  await loyaltySection.getByRole("button", { name: "Referral & earn" }).click();
+  await expect(
+    page.getByRole("heading", { name: /Referral & Earn/i }),
   ).toBeVisible();
 }
 
