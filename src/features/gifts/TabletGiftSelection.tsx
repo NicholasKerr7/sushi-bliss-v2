@@ -120,6 +120,7 @@ export function TabletGiftSelection({
                       alt=""
                       className="object-cover opacity-72"
                       fill
+                      loading="eager"
                       sizes="280px"
                       src={gift.image.publicUrl}
                     />

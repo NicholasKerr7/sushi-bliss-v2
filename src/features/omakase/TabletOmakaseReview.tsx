@@ -76,6 +76,7 @@ export function TabletOmakaseReview({
               alt=""
               className="object-cover"
               fill
+              loading="eager"
               sizes="280px"
               src="/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp"
             />
@@ -176,6 +177,7 @@ export function TabletOmakaseReview({
                 alt=""
                 className="object-cover"
                 fill
+                loading="eager"
                 sizes="300px"
                 src="/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp"
               />

@@ -154,6 +154,7 @@ function UpcomingReservationCard({
           alt={experience?.title || "Upcoming reservation"}
           className="object-cover"
           fill
+          loading="eager"
           sizes="330px"
           src="/assets/gallery/intimate-upscale-dining-room-setting.webp"
         />
@@ -226,6 +227,7 @@ function HistoryReservationRow({
           alt={experience?.title || "Reservation"}
           className="object-cover"
           fill
+          loading="eager"
           sizes="220px"
           src={
             experience?.imageUrl ||

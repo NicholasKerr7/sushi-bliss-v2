@@ -51,6 +51,7 @@ export function TabletOrdersHeader({
             alt=""
             className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"
             height={58}
+            loading="eager"
             src="/assets/chefs/aiko-nakamura-pastry-chef-standing.webp"
             width={58}
           />

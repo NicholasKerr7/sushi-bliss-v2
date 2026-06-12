@@ -34,6 +34,7 @@ export function TabletOmakasePackageTile({
         alt=""
         className="object-cover opacity-64"
         fill
+        loading="eager"
         sizes="320px"
         src={omakasePackage.image.publicUrl}
       />

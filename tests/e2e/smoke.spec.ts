@@ -25,7 +25,9 @@ test.describe("customer experience", () => {
     await expectNoFrameworkErrorOverlay(page);
 
     const menuSection = page.locator("#menu");
-    const isMobileProject = test.info().project.name.includes("mobile");
+    const projectName = test.info().project.name;
+    const isMobileProject = projectName.includes("mobile");
+    const isTabletProject = projectName.includes("tablet");
 
     if (isMobileProject) {
       await expect(
@@ -43,6 +45,25 @@ test.describe("customer experience", () => {
       await menuSection
         .getByRole("button", { name: /Otoro Nigiri/i })
         .first()
+        .click();
+    } else if (isTabletProject) {
+      await expect(
+        menuSection.getByRole("heading", { name: "Otoro Nigiri" }).first(),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("navigation", {
+          name: "Tablet menu categories",
+        }),
+      ).toBeVisible();
+
+      await menuSection.locator("#tablet-menu-search").fill("Otoro Nigiri");
+      await expect(
+        menuSection.getByRole("heading", { name: "Search & Filter" }),
+      ).toBeVisible();
+      await expect(menuSection.getByText("4 results found")).toBeVisible();
+
+      await menuSection
+        .getByRole("button", { name: /Otoro Nigiri Premium fatty/i })
         .click();
     } else {
       await expect(
@@ -64,7 +85,11 @@ test.describe("customer experience", () => {
       page.getByRole("dialog", { name: "Otoro Nigiri" }),
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Add 1 to cart" }).click();
+    await page
+      .getByRole("button", {
+        name: isTabletProject ? "Add to Cart" : "Add 1 to cart",
+      })
+      .click();
     const cartDialog = page.getByRole("dialog", { name: "Cart" });
 
     await expect(cartDialog).toBeVisible();

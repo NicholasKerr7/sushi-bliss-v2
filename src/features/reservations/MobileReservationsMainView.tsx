@@ -227,6 +227,7 @@ function FeaturedReservationCard({
           alt={display.experience?.title || "Upcoming reservation"}
           className="object-cover"
           fill
+          loading="eager"
           sizes="430px"
           src={
             display.experience?.imageUrl ||
@@ -322,6 +323,7 @@ function CompactReservationRow({
           alt={display.experience?.title || "Reservation"}
           className="object-cover"
           fill
+          loading="eager"
           sizes="104px"
           src={
             display.experience?.imageUrl ||

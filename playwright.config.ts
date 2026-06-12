@@ -13,6 +13,14 @@ export default defineConfig({
       },
     },
     {
+      name: "chromium-tablet",
+      use: {
+        ...devices["Desktop Chrome"],
+        hasTouch: true,
+        viewport: { height: 1194, width: 834 },
+      },
+    },
+    {
       name: "chromium-mobile",
       use: {
         ...devices["Pixel 7"],

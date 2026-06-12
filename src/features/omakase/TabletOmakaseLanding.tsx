@@ -33,6 +33,7 @@ export function TabletOmakaseLanding({
           alt=""
           className="object-cover object-[68%_46%] opacity-82"
           fill
+          loading="eager"
           priority
           sizes="1034px"
           src="/assets/chefs/hiroshi-tanaka-head-chef-plating.webp"
@@ -115,6 +116,7 @@ export function TabletOmakaseLanding({
               alt=""
               className="object-cover"
               fill
+              loading="eager"
               sizes="324px"
               src="/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp"
             />
