@@ -5,12 +5,31 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { chefAvatar, icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 
-const navItems = [
+const baseNavItems = [
   ["home", "Home", "/home"],
   ["menu", "Menu", "/menu"],
   ["reservations", "Reservations", "/reservations"],
   ["order", "Order Online", "/menu"],
   ["loyalty", "Loyalty", "/loyalty"],
+  ["about", "About Us", "/about"],
+  ["contact", "Contact", "/support"],
+] as const;
+
+const omakaseNavItems = [
+  ["home", "Home", "/home"],
+  ["menu", "Menu", "/menu"],
+  ["reservations", "Reservations", "/reservations"],
+  ["order", "Order Online", "/menu"],
+  ["omakase", "Omakase", "/omakase"],
+  ["about", "About Us", "/about"],
+  ["contact", "Contact", "/support"],
+] as const;
+
+const ordersNavItems = [
+  ["home", "Home", "/home"],
+  ["menu", "Menu", "/menu"],
+  ["reservations", "Reservations", "/reservations"],
+  ["order", "Order Online", "/menu"],
   ["about", "About Us", "/about"],
   ["contact", "Contact", "/support"],
   ["orders", "Orders", "/orders"],
@@ -25,6 +44,13 @@ export function DesktopMenuHeader({
   activeId = "menu",
   cartCount,
 }: DesktopMenuHeaderProps) {
+  const navItems =
+    activeId === "orders"
+      ? ordersNavItems
+      : activeId === "omakase"
+        ? omakaseNavItems
+        : baseNavItems;
+
   return (
     <header className="flex h-[88px] items-center border-b border-white/[0.08] bg-[#07090a]/96 px-[3vw]">
       <Link

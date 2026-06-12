@@ -118,6 +118,14 @@ Current audit targets:
   `desktop/desktop-13-reservation-review.png`
 - desktop reservation history: `/reservations` interaction against
   `desktop/desktop-14-reservation-history.png`
+- desktop omakase experience: `/omakase` against
+  `desktop/desktop-15-omakase-experience.png`
+- desktop omakase package review: `/omakase` interaction against
+  `desktop/desktop-16-omakase-package-review.png`
+- desktop loyalty dashboard: `/loyalty` against
+  `desktop/desktop-17-loyalty-dashboard.png`
+- desktop member pass rewards: `/loyalty` interaction against
+  `desktop/desktop-18-member-pass-rewards.png`
 
 The audit asserts the rendered viewport size, reference image dimensions, route
 health, and absence of horizontal overflow. Full pixel assertions should be

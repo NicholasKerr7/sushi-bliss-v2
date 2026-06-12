@@ -1118,6 +1118,109 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       ).toBeVisible();
     },
   },
+  {
+    name: "desktop omakase experience",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-15-omakase-experience.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/omakase",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const omakaseSection = page.locator("#omakase");
+
+      await expect(omakaseSection).toBeVisible();
+      await expect(
+        omakaseSection.getByRole("heading", {
+          exact: true,
+          name: "Omakase",
+        }),
+      ).toBeVisible();
+      await expect(
+        omakaseSection.getByRole("heading", {
+          exact: true,
+          name: "Omakase packages",
+        }),
+      ).toBeVisible();
+      await expect(
+        omakaseSection.getByRole("button", { name: /Reserve omakase/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop omakase package review",
+    prepare: openDesktopOmakaseReview,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-16-omakase-package-review.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/omakase",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const omakaseSection = page.locator("#omakase");
+
+      await expect(
+        omakaseSection.getByRole("heading", {
+          name: /Omakase\s+Experience/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        omakaseSection.getByText("Review your reservation"),
+      ).toBeVisible();
+      await expect(
+        omakaseSection.getByRole("link", { name: /Confirm reservation/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop loyalty dashboard",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-17-loyalty-dashboard.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/loyalty",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(loyaltySection).toBeVisible();
+      await expect(
+        loyaltySection.getByRole("heading", { name: /Loyalty\s+Rewards/i }),
+      ).toBeVisible();
+      await expect(
+        loyaltySection.getByText("Redeem your points"),
+      ).toBeVisible();
+      await expect(
+        loyaltySection.getByRole("button", { name: /View benefits/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop member pass rewards",
+    prepare: openDesktopLoyaltyPassRewards,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-18-member-pass-rewards.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/loyalty",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(
+        loyaltySection.getByRole("heading", { name: /Your member pass/i }),
+      ).toBeVisible();
+      await expect(
+        loyaltySection.getByRole("heading", {
+          exact: true,
+          name: "Available rewards",
+        }),
+      ).toBeVisible();
+      await expect(
+        loyaltySection.getByRole("navigation", { name: "Reward filters" }),
+      ).toBeVisible();
+    },
+  },
 ];
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
@@ -1549,6 +1652,30 @@ async function openDesktopReservationHistory(page: Page) {
     reservationsSection.getByRole("heading", {
       name: /Reservation history/i,
     }),
+  ).toBeVisible();
+}
+
+async function openDesktopOmakaseReview(page: Page) {
+  const omakaseSection = page.locator("#omakase");
+
+  await expect(omakaseSection).toBeVisible();
+  await omakaseSection
+    .getByRole("button", { name: /Reserve omakase/i })
+    .click();
+  await expect(
+    omakaseSection.getByRole("heading", {
+      name: /Omakase\s+Experience/i,
+    }),
+  ).toBeVisible();
+}
+
+async function openDesktopLoyaltyPassRewards(page: Page) {
+  const loyaltySection = page.locator("#loyalty");
+
+  await expect(loyaltySection).toBeVisible();
+  await loyaltySection.getByRole("button", { name: /View benefits/i }).click();
+  await expect(
+    loyaltySection.getByRole("heading", { name: /Your member pass/i }),
   ).toBeVisible();
 }
 
