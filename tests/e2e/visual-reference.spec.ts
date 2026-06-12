@@ -128,11 +128,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   },
   {
     name: "tablet cart",
-    prepare: async (page) => {
-      await openTabletOtoroDetail(page);
-      await page.getByRole("button", { name: "Increase quantity" }).click();
-      await page.getByRole("button", { name: "Add to Cart" }).click();
-    },
+    prepare: openTabletCartWithOtoro,
     projectName: "chromium-tablet",
     referencePath: "public/assets/screenshots/tablet/tablet-08-cart.png",
     referenceSize: { height: 1448, width: 1086 },
@@ -145,6 +141,71 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       await expect(dialog.getByText("Otoro Nigiri")).toBeVisible();
       await expect(
         dialog.getByRole("button", { name: "Proceed to checkout" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet checkout delivery pickup",
+    prepare: openTabletCheckoutDetails,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-09-checkout-delivery-pickup.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/menu",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Checkout" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: /Delivery/i }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: /Continue to payment/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet checkout review confirm",
+    prepare: openTabletCheckoutReview,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-10-checkout-review-confirm.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/menu",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Review & Confirm" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: /Place order/i }),
+      ).toBeVisible();
+      await expect(
+        dialog
+          .getByRole("button", { name: "Back to cart" })
+          .filter({ hasText: "Back to cart" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet order confirmation",
+    prepare: openTabletOrderConfirmation,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-05-item-detail-otoro-nigiri.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/menu",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Thank you!" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("heading", { name: "Thank you!" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("link", { name: /Track order/i }),
       ).toBeVisible();
     },
   },
@@ -218,6 +279,33 @@ async function openTabletOtoroDetail(page: Page) {
   await expect(
     page.getByRole("dialog", { name: "Otoro Nigiri" }),
   ).toBeVisible();
+}
+
+async function openTabletCartWithOtoro(page: Page) {
+  await openTabletOtoroDetail(page);
+  await page.getByRole("button", { name: "Increase quantity" }).click();
+  await page.getByRole("button", { name: "Add to Cart" }).click();
+  await expect(page.getByRole("dialog", { name: "Your Cart" })).toBeVisible();
+}
+
+async function openTabletCheckoutDetails(page: Page) {
+  await openTabletCartWithOtoro(page);
+  await page.getByRole("button", { name: "Proceed to checkout" }).click();
+  await expect(page.getByRole("dialog", { name: "Checkout" })).toBeVisible();
+}
+
+async function openTabletCheckoutReview(page: Page) {
+  await openTabletCheckoutDetails(page);
+  await page.getByRole("button", { name: /Continue to payment/i }).click();
+  await expect(
+    page.getByRole("dialog", { name: "Review & Confirm" }),
+  ).toBeVisible();
+}
+
+async function openTabletOrderConfirmation(page: Page) {
+  await openTabletCheckoutReview(page);
+  await page.getByRole("button", { name: /Place order/i }).click();
+  await expect(page.getByRole("dialog", { name: "Thank you!" })).toBeVisible();
 }
 
 function getPngSize(buffer: Buffer) {

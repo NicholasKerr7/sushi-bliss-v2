@@ -267,7 +267,8 @@ export function TabletCheckoutDetails({
             disabled={items.length === 0}
             onClick={onContinueToReview}
           >
-            Continue to review - {formatMoney(checkout.reviewTotals.totalCents)}
+            Continue to payment •{" "}
+            {formatMoney(checkout.reviewTotals.totalCents)}
           </Button>
         </section>
 

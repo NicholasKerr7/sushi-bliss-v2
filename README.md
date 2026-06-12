@@ -192,8 +192,8 @@ and Vercel CLI flow.
 
 ## Visual QA
 
-See `docs/visual-qa.md` for the reference screenshot inventory and Playwright
-visual audit targets.
+See `docs/visual-qa.md` and `docs/screenshot-coverage.md` for the reference
+screenshot inventory, coverage status, and Playwright visual audit targets.
 
 ## Asset Source
 

@@ -59,10 +59,10 @@ export function TabletCheckoutReviewStep({
         </div>
         <Button
           className="min-h-10 shrink-0 whitespace-nowrap px-5 py-2 text-[13px]"
-          onClick={onBackToDetails}
+          onClick={onEditCart}
           variant="secondary"
         >
-          Back to checkout
+          Back to cart
         </Button>
       </div>
 
@@ -174,7 +174,7 @@ export function TabletCheckoutReviewStep({
         disabled={items.length === 0}
         onClick={onPlaceOrder}
       >
-        Place order - {formatMoney(checkout.reviewTotals.totalCents)}
+        Place order • {formatMoney(checkout.reviewTotals.totalCents)}
       </Button>
     </section>
   );
