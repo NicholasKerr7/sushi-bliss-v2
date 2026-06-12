@@ -9,10 +9,15 @@ import type { Chef } from "@/types/chef";
 
 interface ChefCardProps {
   chef: Chef;
+  eagerImage?: boolean;
   onViewChef: (chef: Chef) => void;
 }
 
-export function ChefCard({ chef, onViewChef }: ChefCardProps) {
+export function ChefCard({
+  chef,
+  eagerImage = false,
+  onViewChef,
+}: ChefCardProps) {
   return (
     <Card className="overflow-hidden">
       <div className="relative aspect-[4/5] bg-sb-panel-soft">
@@ -20,6 +25,7 @@ export function ChefCard({ chef, onViewChef }: ChefCardProps) {
           alt={chef.standingImage.alt || chef.name}
           className="object-cover"
           fill
+          loading={eagerImage ? "eager" : "lazy"}
           sizes="(min-width: 1280px) 24vw, (min-width: 768px) 45vw, 100vw"
           src={chef.standingImage.publicUrl}
         />

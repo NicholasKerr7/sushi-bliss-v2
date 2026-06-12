@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -7,8 +9,22 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { appContent, brandContent } from "@/data/brand";
 import { featuredAssets } from "@/data/assets";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 
+import { MobileAboutSection } from "./MobileAboutSection";
+
+/** Switches the brand story between mobile-first and expanded editorial layouts. */
 export function AboutSection() {
+  const mode = useResponsiveMode();
+
+  if (mode === "mobile") {
+    return <MobileAboutSection />;
+  }
+
+  return <DesktopAboutSection />;
+}
+
+function DesktopAboutSection() {
   const primaryAmbience =
     featuredAssets.ambience[0]?.image || featuredAssets.heroSushi;
   const detailAmbience =
@@ -32,6 +48,7 @@ export function AboutSection() {
               alt={primaryAmbience.alt || "Sushi Bliss dining room"}
               className="object-cover"
               fill
+              loading="eager"
               sizes="(min-width: 1280px) 52vw, 100vw"
               src={primaryAmbience.publicUrl}
             />
