@@ -9,6 +9,7 @@ import { formatMoney } from "@/lib/money";
 import type { OmakasePackage } from "@/types/omakase";
 
 import { MobileOmakasePanel } from "./MobileOmakasePrimitives";
+import { MobileOmakaseCommandCenter } from "./MobileOmakaseCommandCenter";
 
 interface MobileOmakaseLandingViewProps {
   packages: OmakasePackage[];
@@ -77,6 +78,12 @@ export function MobileOmakaseLandingView({
           </div>
         </div>
       </MobileOmakasePanel>
+
+      <MobileOmakaseCommandCenter
+        packageCount={packages.length}
+        selectedPackage={selectedPackage}
+        onOpenReview={onOpenReview}
+      />
 
       <div className="mt-5 grid gap-3">
         {packages.map((omakasePackage) => (

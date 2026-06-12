@@ -7,6 +7,7 @@ import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { GiftConfirmation, GiftExperience } from "@/types/gift";
 
+import { MobileGiftCommandCenter } from "./MobileGiftCommandCenter";
 import { MobileGiftPanel } from "./MobileGiftPrimitives";
 
 interface MobileGiftSelectionViewProps {
@@ -71,6 +72,12 @@ export function MobileGiftSelectionView({
           </div>
         </div>
       </MobileGiftPanel>
+
+      <MobileGiftCommandCenter
+        confirmations={confirmations}
+        onContinue={onContinue}
+        selectedGift={selectedGift}
+      />
 
       <div className="mt-5 grid gap-3">
         {giftExperiences.map((gift) => (

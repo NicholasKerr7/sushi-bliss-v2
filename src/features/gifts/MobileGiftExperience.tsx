@@ -6,6 +6,7 @@ import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useGifts } from "@/hooks/useGifts";
+import { useNotifications } from "@/hooks/useNotifications";
 import { useProfile } from "@/hooks/useProfile";
 import { addDays } from "@/lib/dates";
 import { getDefaultGiftCheckoutDraft } from "@/lib/gifts";
@@ -21,6 +22,7 @@ type MobileGiftView = "selection" | "checkout" | "confirmation";
 /** Coordinates mobile gift package selection, checkout, confirmation, and cart access. */
 export function MobileGiftExperience() {
   const { itemCount } = useCart();
+  const { unreadCount } = useNotifications();
   const { profile } = useProfile();
   const { confirmations, giftExperiences, sendGift } = useGifts();
   const [cartOpen, setCartOpen] = useState(false);
@@ -117,6 +119,7 @@ export function MobileGiftExperience() {
         <MobileGiftHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}
+          unreadNotificationCount={unreadCount}
         />
 
         {view === "confirmation" && confirmation ? (

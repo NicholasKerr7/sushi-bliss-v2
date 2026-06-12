@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
+import { useNotifications } from "@/hooks/useNotifications";
 import { useOmakase } from "@/hooks/useOmakase";
 
 import { MobileOmakaseLandingView } from "./MobileOmakaseLandingView";
@@ -16,6 +17,7 @@ export function MobileOmakaseExperience() {
   const [cartOpen, setCartOpen] = useState(false);
   const [reviewVisible, setReviewVisible] = useState(false);
   const { itemCount } = useCart();
+  const { unreadCount } = useNotifications();
   const {
     guestCount,
     omakasePackages,
@@ -46,6 +48,7 @@ export function MobileOmakaseExperience() {
         <MobileOmakaseHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}
+          unreadNotificationCount={unreadCount}
         />
 
         {reviewVisible ? (
