@@ -6,6 +6,7 @@ import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { chefs } from "@/data/chefs";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
+import { useNotifications } from "@/hooks/useNotifications";
 import type { Chef } from "@/types/chef";
 
 import { MobileChefDetailView } from "./MobileChefDetailView";
@@ -15,6 +16,7 @@ import { MobileChefsHeader } from "./MobileChefsPrimitives";
 /** Coordinates the mobile chef roster, detail profile, cart drawer, and nav. */
 export function MobileChefsSection() {
   const { itemCount } = useCart();
+  const { unreadCount } = useNotifications();
   const [cartOpen, setCartOpen] = useState(false);
   const [selectedChef, setSelectedChef] = useState<Chef | null>(null);
 
@@ -36,6 +38,7 @@ export function MobileChefsSection() {
         <MobileChefsHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}
+          unreadNotificationCount={unreadCount}
         />
 
         {selectedChef ? (

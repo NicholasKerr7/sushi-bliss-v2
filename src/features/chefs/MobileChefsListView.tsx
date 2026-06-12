@@ -8,7 +8,8 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { icons } from "@/features/home/visualHomeData";
 import type { Chef } from "@/types/chef";
 
-import { MobileChefIcon, MobileChefsPanel } from "./MobileChefsPrimitives";
+import { MobileChefsCommandCenter } from "./MobileChefsCommandCenter";
+import { MobileChefsPanel } from "./MobileChefsPrimitives";
 
 interface MobileChefsListViewProps {
   chefs: Chef[];
@@ -71,7 +72,7 @@ export function MobileChefsListView({
         </div>
       </MobileChefsPanel>
 
-      <MobileChefsFeatureStrip />
+      <MobileChefsCommandCenter chefs={chefs} onSelectChef={onSelectChef} />
 
       <div className="mt-5 grid gap-3">
         {chefs.map((chef) => (
@@ -135,39 +136,5 @@ function MobileChefCard({
         </div>
       </div>
     </article>
-  );
-}
-
-function MobileChefsFeatureStrip() {
-  return (
-    <div className="mt-4 grid grid-cols-3 gap-2">
-      <MobileChefsPanel className="p-3 text-center">
-        <MobileChefIcon
-          className="mx-auto h-[52px] w-[52px]"
-          icon={icons.nigiri}
-        />
-        <p className="mt-3 text-[10px] uppercase tracking-[0.08em] text-white/46">
-          Nigiri
-        </p>
-      </MobileChefsPanel>
-      <MobileChefsPanel className="p-3 text-center">
-        <MobileChefIcon
-          className="mx-auto h-[52px] w-[52px]"
-          icon={icons.sashimi}
-        />
-        <p className="mt-3 text-[10px] uppercase tracking-[0.08em] text-white/46">
-          Sashimi
-        </p>
-      </MobileChefsPanel>
-      <MobileChefsPanel className="p-3 text-center">
-        <MobileChefIcon
-          className="mx-auto h-[52px] w-[52px]"
-          icon={icons.crown}
-        />
-        <p className="mt-3 text-[10px] uppercase tracking-[0.08em] text-white/46">
-          Omakase
-        </p>
-      </MobileChefsPanel>
-    </div>
   );
 }
