@@ -44,6 +44,15 @@ Current audit targets:
   `tablet/tablet-14-choose-reservation-experience.png`
 - tablet reservation review: `/reservations` interaction against
   `tablet/tablet-15-reservation-review.png`
+- tablet reservation confirmation: `/reservations` interaction against
+  `tablet/tablet-16-reservation-confirmation.png`
+- tablet reservation history: `/reservations` interaction against
+  `tablet/tablet-17-reservation-history.png`
+- tablet modify reservation: `/reservations` interaction against
+  `tablet/tablet-18-modify-reservation.png`
+- tablet locations: `/locations` against `tablet/tablet-19-locations.png`
+- tablet cancel reservation: `/reservations` interaction against
+  `tablet/tablet-20-cancel-reservation.png`
 - desktop home dashboard: `/home` against
   `desktop/desktop-01-home-dashboard.png`
 - desktop menu overview: `/menu` against `desktop/desktop-02-menu-overview.png`

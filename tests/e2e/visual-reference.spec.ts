@@ -316,6 +316,127 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "tablet reservation confirmation",
+    prepare: openTabletReservationConfirmation,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-16-reservation-confirmation.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/reservations",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Reservation Confirmed",
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", { name: "View reservations" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet reservation history",
+    prepare: openTabletReservationHistory,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-17-reservation-history.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/reservations",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Reservation History",
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection
+          .getByRole("button", { name: /View details/i })
+          .first(),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet modify reservation",
+    prepare: openTabletModifyReservation,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-18-modify-reservation.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/reservations",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Reservation Experience",
+        }),
+      ).toBeVisible();
+      await expect(reservationsSection.getByText("Editing")).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", { name: "Cancel edit" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet locations",
+    projectName: "chromium-tablet",
+    referencePath: "public/assets/screenshots/tablet/tablet-19-locations.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/locations",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const locationsSection = page.locator("#locations");
+
+      await expect(locationsSection).toBeVisible();
+      await expect(
+        locationsSection.getByRole("heading", {
+          exact: true,
+          name: "Locations",
+        }),
+      ).toBeVisible();
+      await expect(
+        locationsSection.getByLabel("Search locations"),
+      ).toBeVisible();
+      await expect(
+        locationsSection.getByText("Sushi Bliss Ginza"),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet cancel reservation",
+    prepare: openTabletCancelReservation,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-20-cancel-reservation.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/reservations",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Cancel Reservation",
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", { name: "Keep reservation" }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: "Cancel reservation",
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
     referencePath:
@@ -452,6 +573,64 @@ async function openTabletReservationReview(page: Page) {
   await expect(
     reservationsSection.getByRole("heading", {
       name: "Review Your Reservation",
+    }),
+  ).toBeVisible();
+}
+
+async function openTabletReservationConfirmation(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await openTabletReservationReview(page);
+  await reservationsSection
+    .getByRole("button", { name: "Confirm reservation" })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: "Reservation Confirmed",
+    }),
+  ).toBeVisible();
+}
+
+async function openTabletReservationHistory(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await expect(
+    reservationsSection.getByRole("button", { name: "View all" }),
+  ).toBeVisible();
+  await reservationsSection.getByRole("button", { name: "View all" }).click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: "Reservation History",
+    }),
+  ).toBeVisible();
+}
+
+async function openTabletModifyReservation(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await expect(
+    reservationsSection.getByRole("button", { name: "Modify reservation" }),
+  ).toBeVisible();
+  await reservationsSection
+    .getByRole("button", { name: "Modify reservation" })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: "Reservation Experience",
+    }),
+  ).toBeVisible();
+}
+
+async function openTabletCancelReservation(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await expect(
+    reservationsSection.getByRole("button", { name: "Cancel" }),
+  ).toBeVisible();
+  await reservationsSection.getByRole("button", { name: "Cancel" }).click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: "Cancel Reservation",
     }),
   ).toBeVisible();
 }

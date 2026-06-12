@@ -17,7 +17,7 @@ current viewport and attaches the matching reference PNG.
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
-| Tablet     |         40 |      13 |                  27 |             0 |
+| Tablet     |         40 |      18 |                  22 |             0 |
 | Desktop    |         40 |       2 |                  38 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
@@ -43,11 +43,11 @@ confirmation until the reference filename is corrected.
 | `tablet-13-reservations-main.png`             | `/reservations`                   | Audited             |
 | `tablet-14-choose-reservation-experience.png` | reservation experience step       | Audited             |
 | `tablet-15-reservation-review.png`            | reservation review step           | Audited             |
-| `tablet-16-reservation-confirmation.png`      | reservation confirmation          | Built / needs audit |
-| `tablet-17-reservation-history.png`           | reservation history state         | Built / needs audit |
-| `tablet-18-modify-reservation.png`            | modify reservation flow           | Built / needs audit |
-| `tablet-19-locations.png`                     | `/locations`                      | Built / needs audit |
-| `tablet-20-cancel-reservation.png`            | cancel reservation modal          | Built / needs audit |
+| `tablet-16-reservation-confirmation.png`      | reservation confirmation          | Audited             |
+| `tablet-17-reservation-history.png`           | reservation history state         | Audited             |
+| `tablet-18-modify-reservation.png`            | modify reservation flow           | Audited             |
+| `tablet-19-locations.png`                     | `/locations`                      | Audited             |
+| `tablet-20-cancel-reservation.png`            | cancel reservation modal          | Audited             |
 | `tablet-21-omakase-experience.png`            | `/omakase`                        | Built / needs audit |
 | `tablet-22-omakase-package-review.png`        | omakase review state              | Built / needs audit |
 | `tablet-23-gift-experience.png`               | `/gifts`                          | Built / needs audit |
