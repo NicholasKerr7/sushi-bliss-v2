@@ -24,6 +24,7 @@ import {
 interface MobileProfileAddressesViewProps {
   addresses: Address[];
   cartCount: number;
+  unreadNotificationCount: number;
   onBack: () => void;
   onDeleteAddress: (id: string) => void;
   onMakeDefaultAddress: (id: string) => void;
@@ -35,6 +36,7 @@ interface MobileProfileAddressesViewProps {
 export function MobileProfileAddressesView({
   addresses,
   cartCount,
+  unreadNotificationCount,
   onBack,
   onDeleteAddress,
   onMakeDefaultAddress,
@@ -91,7 +93,11 @@ export function MobileProfileAddressesView({
   return (
     <>
       <div className="relative z-10 mx-auto max-w-[430px] pb-16">
-        <MobileProfileHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+        <MobileProfileHeader
+          cartCount={cartCount}
+          unreadNotificationCount={unreadNotificationCount}
+          onOpenCart={onOpenCart}
+        />
 
         <div className="mt-7 grid grid-cols-[52px_1fr_52px] items-center">
           <MobileProfileBackButton label="Back to profile" onClick={onBack} />

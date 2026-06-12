@@ -22,6 +22,7 @@ import {
 
 interface MobileProfileAccountViewProps {
   cartCount: number;
+  unreadNotificationCount: number;
   profile: UserProfile;
   onBack: () => void;
   onOpenCart: () => void;
@@ -31,6 +32,7 @@ interface MobileProfileAccountViewProps {
 /** Mobile account details editor backed by shared profile validation. */
 export function MobileProfileAccountView({
   cartCount,
+  unreadNotificationCount,
   profile,
   onBack,
   onOpenCart,
@@ -63,7 +65,11 @@ export function MobileProfileAccountView({
   return (
     <>
       <div className="relative z-10 mx-auto max-w-[430px] pb-16">
-        <MobileProfileHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+        <MobileProfileHeader
+          cartCount={cartCount}
+          unreadNotificationCount={unreadNotificationCount}
+          onOpenCart={onOpenCart}
+        />
 
         <div className="mt-7 grid grid-cols-[52px_1fr_52px] items-center">
           <MobileProfileBackButton label="Back to profile" onClick={onBack} />

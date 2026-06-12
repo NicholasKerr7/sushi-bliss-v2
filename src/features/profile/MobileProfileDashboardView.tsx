@@ -21,6 +21,7 @@ import {
   MobileProfileIconCircle,
   MobileProfilePanel,
 } from "./MobileProfilePrimitives";
+import { MobileProfileCommandCenter } from "./MobileProfileCommandCenter";
 
 export type MobileProfileSurface =
   | "account"
@@ -33,7 +34,9 @@ interface MobileProfileDashboardViewProps {
   account: LoyaltyAccount;
   activeOrderCount: number;
   cartCount: number;
+  favoriteCount: number;
   profile: UserProfile;
+  unreadNotificationCount: number;
   upcomingReservations: Reservation[];
   onOpenCart: () => void;
   onOpenSurface: (surface: MobileProfileSurface) => void;
@@ -51,7 +54,9 @@ export function MobileProfileDashboardView({
   account,
   activeOrderCount,
   cartCount,
+  favoriteCount,
   profile,
+  unreadNotificationCount,
   upcomingReservations,
   onOpenCart,
   onOpenSurface,
@@ -73,7 +78,11 @@ export function MobileProfileDashboardView({
   return (
     <>
       <div className="relative z-10 mx-auto max-w-[430px] pb-16">
-        <MobileProfileHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+        <MobileProfileHeader
+          cartCount={cartCount}
+          unreadNotificationCount={unreadNotificationCount}
+          onOpenCart={onOpenCart}
+        />
 
         <section className="mt-8 overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-black/48 shadow-[0_24px_70px_rgba(0,0,0,0.42)]">
           <div className="relative min-h-[250px] p-5">
@@ -170,6 +179,14 @@ export function MobileProfileDashboardView({
             value={profile.paymentMethods.length}
           />
         </section>
+
+        <MobileProfileCommandCenter
+          activeOrderCount={activeOrderCount}
+          favoriteCount={favoriteCount}
+          unreadNotificationCount={unreadNotificationCount}
+          upcomingReservationCount={upcomingReservations.length}
+          onOpenPreferences={() => onOpenSurface("preferences")}
+        />
 
         <MobileProfilePanel className="mt-4 overflow-hidden">
           <ProfilePreviewHeader

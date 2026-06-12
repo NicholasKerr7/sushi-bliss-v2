@@ -25,6 +25,7 @@ import {
 
 interface MobileProfilePaymentsViewProps {
   cartCount: number;
+  unreadNotificationCount: number;
   onBack: () => void;
   onDeletePaymentMethod: (id: string) => void;
   onMakeDefaultPaymentMethod: (id: string) => void;
@@ -36,6 +37,7 @@ interface MobileProfilePaymentsViewProps {
 /** Mobile payment manager for checkout-ready mock payment methods. */
 export function MobileProfilePaymentsView({
   cartCount,
+  unreadNotificationCount,
   onBack,
   onDeletePaymentMethod,
   onMakeDefaultPaymentMethod,
@@ -96,7 +98,11 @@ export function MobileProfilePaymentsView({
   return (
     <>
       <div className="relative z-10 mx-auto max-w-[430px] pb-16">
-        <MobileProfileHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+        <MobileProfileHeader
+          cartCount={cartCount}
+          unreadNotificationCount={unreadNotificationCount}
+          onOpenCart={onOpenCart}
+        />
 
         <div className="mt-7 grid grid-cols-[52px_1fr_52px] items-center">
           <MobileProfileBackButton label="Back to profile" onClick={onBack} />

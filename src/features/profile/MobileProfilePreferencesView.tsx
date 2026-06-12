@@ -25,6 +25,7 @@ type PreferencesUpdate =
 
 interface MobileProfilePreferencesViewProps {
   cartCount: number;
+  unreadNotificationCount: number;
   onBack: () => void;
   onOpenCart: () => void;
   onResetProfile: () => void;
@@ -86,6 +87,7 @@ const privacyRows = [
 /** Mobile preferences and privacy screen with persisted profile settings. */
 export function MobileProfilePreferencesView({
   cartCount,
+  unreadNotificationCount,
   onBack,
   onOpenCart,
   onResetProfile,
@@ -119,7 +121,11 @@ export function MobileProfilePreferencesView({
   return (
     <>
       <div className="relative z-10 mx-auto max-w-[430px] pb-16">
-        <MobileProfileHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+        <MobileProfileHeader
+          cartCount={cartCount}
+          unreadNotificationCount={unreadNotificationCount}
+          onOpenCart={onOpenCart}
+        />
 
         <div className="mt-7 grid grid-cols-[52px_1fr_52px] items-center">
           <MobileProfileBackButton label="Back to profile" onClick={onBack} />

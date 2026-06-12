@@ -8,8 +8,10 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { mockOrders } from "@/data/orders";
 import { getMockReservations } from "@/data/reservations";
 import { GiftHistoryPanel } from "@/features/gifts/GiftHistoryPanel";
+import { useFavorites } from "@/hooks/useFavorites";
 import { useGifts } from "@/hooks/useGifts";
 import { useLoyalty } from "@/hooks/useLoyalty";
+import { useNotifications } from "@/hooks/useNotifications";
 import { useOrders } from "@/hooks/useOrders";
 import { useProfile } from "@/hooks/useProfile";
 import { useReservations } from "@/hooks/useReservations";
@@ -40,8 +42,10 @@ export function ProfileDashboard() {
   } = useProfile();
   const mockReservations = useMemo(() => getMockReservations(), []);
   const currentTime = useMemo(() => new Date().getTime(), []);
+  const { favoriteItems } = useFavorites();
   const { confirmations } = useGifts();
   const { account } = useLoyalty();
+  const { unreadCount } = useNotifications();
   const { activeOrders } = useOrders(mockOrders);
   const { upcomingReservations } = useReservations(
     mockReservations,
@@ -53,7 +57,9 @@ export function ProfileDashboard() {
       <MobileProfileExperience
         account={account}
         activeOrderCount={activeOrders.length}
+        favoriteCount={favoriteItems.length}
         profile={profile}
+        unreadNotificationCount={unreadCount}
         upcomingReservations={upcomingReservations}
         onDeleteAddress={deleteAddress}
         onDeletePaymentMethod={deletePaymentMethod}

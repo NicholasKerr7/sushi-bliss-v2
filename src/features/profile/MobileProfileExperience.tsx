@@ -30,7 +30,9 @@ type PreferencesUpdate =
 interface MobileProfileExperienceProps {
   account: LoyaltyAccount;
   activeOrderCount: number;
+  favoriteCount: number;
   profile: UserProfile;
+  unreadNotificationCount: number;
   upcomingReservations: Reservation[];
   onDeleteAddress: (id: string) => void;
   onDeletePaymentMethod: (id: string) => void;
@@ -47,7 +49,9 @@ interface MobileProfileExperienceProps {
 export function MobileProfileExperience({
   account,
   activeOrderCount,
+  favoriteCount,
   profile,
+  unreadNotificationCount,
   upcomingReservations,
   onDeleteAddress,
   onDeletePaymentMethod,
@@ -87,6 +91,7 @@ export function MobileProfileExperience({
       {surface === "account" ? (
         <MobileProfileAccountView
           cartCount={itemCount}
+          unreadNotificationCount={unreadNotificationCount}
           profile={profile}
           onBack={goDashboard}
           onOpenCart={openCart}
@@ -96,6 +101,7 @@ export function MobileProfileExperience({
         <MobileProfileAddressesView
           addresses={profile.addresses}
           cartCount={itemCount}
+          unreadNotificationCount={unreadNotificationCount}
           onBack={goDashboard}
           onDeleteAddress={onDeleteAddress}
           onMakeDefaultAddress={onMakeDefaultAddress}
@@ -105,6 +111,7 @@ export function MobileProfileExperience({
       ) : surface === "payments" ? (
         <MobileProfilePaymentsView
           cartCount={itemCount}
+          unreadNotificationCount={unreadNotificationCount}
           onBack={goDashboard}
           onDeletePaymentMethod={onDeletePaymentMethod}
           onMakeDefaultPaymentMethod={onMakeDefaultPaymentMethod}
@@ -115,6 +122,7 @@ export function MobileProfileExperience({
       ) : surface === "preferences" ? (
         <MobileProfilePreferencesView
           cartCount={itemCount}
+          unreadNotificationCount={unreadNotificationCount}
           preferences={profile.preferences}
           onBack={goDashboard}
           onOpenCart={openCart}
@@ -126,7 +134,9 @@ export function MobileProfileExperience({
           account={account}
           activeOrderCount={activeOrderCount}
           cartCount={itemCount}
+          favoriteCount={favoriteCount}
           profile={profile}
+          unreadNotificationCount={unreadNotificationCount}
           upcomingReservations={upcomingReservations}
           onOpenCart={openCart}
           onOpenSurface={setSurface}
