@@ -6,16 +6,28 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { Badge } from "@/components/ui/Badge";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useProfile } from "@/hooks/useProfile";
+import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { useSupport } from "@/hooks/useSupport";
 import type { HelpArticle } from "@/types/support";
 
 import { ContactMethodsPanel } from "./ContactMethodsPanel";
 import { HelpArticleList } from "./HelpArticleList";
 import { HelpArticleModal } from "./HelpArticleModal";
+import { MobileSupportCenter } from "./MobileSupportCenter";
 import { RecentSupportRequests } from "./RecentSupportRequests";
 import { SupportRequestForm } from "./SupportRequestForm";
 
 export function SupportCenter() {
+  const mode = useResponsiveMode();
+
+  if (mode === "mobile") {
+    return <MobileSupportCenter />;
+  }
+
+  return <DesktopSupportCenter />;
+}
+
+function DesktopSupportCenter() {
   const { profile } = useProfile();
   const { messages, submitSupportMessage } = useSupport();
   const [selectedArticle, setSelectedArticle] = useState<HelpArticle | null>(
