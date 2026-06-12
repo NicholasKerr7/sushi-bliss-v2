@@ -637,6 +637,96 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "tablet contact",
+    projectName: "chromium-tablet",
+    referencePath: "public/assets/screenshots/tablet/tablet-31-contact.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/support",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const supportSection = page.locator("#support");
+
+      await expect(supportSection).toBeVisible();
+      await expect(
+        supportSection.getByRole("heading", { name: "Contact" }),
+      ).toBeVisible();
+      await expect(
+        supportSection.getByRole("heading", { name: "Send us a message" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet help center",
+    prepare: openTabletSupportHelpCenter,
+    projectName: "chromium-tablet",
+    referencePath: "public/assets/screenshots/tablet/tablet-32-help-center.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/support",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const supportSection = page.locator("#support");
+
+      await expect(
+        supportSection.getByRole("heading", { name: /How can we/i }),
+      ).toBeVisible();
+      await expect(supportSection.getByText("Popular topics")).toBeVisible();
+    },
+  },
+  {
+    name: "tablet faq article detail",
+    prepare: openTabletFaqArticle,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-33-faq-article-detail.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/support",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: "Tracking your order" }),
+      ).toBeVisible();
+      await expect(page.getByText("How to track your order")).toBeVisible();
+    },
+  },
+  {
+    name: "tablet notifications center",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-34-notifications-center.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/notifications",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const notificationsSection = page.locator("#notifications");
+
+      await expect(notificationsSection).toBeVisible();
+      await expect(
+        notificationsSection.getByRole("heading", {
+          name: "Notifications Center",
+        }),
+      ).toBeVisible();
+      await expect(
+        notificationsSection.getByRole("button", { name: "Mark all read" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet notification detail",
+    prepare: openTabletNotificationDetail,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-35-notification-detail.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/notifications",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      await expect(
+        page.getByRole("heading", { name: /Notification detail/i }),
+      ).toBeVisible();
+      await expect(page.getByText("Order is being prepared")).toBeVisible();
+    },
+  },
+  {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
     referencePath:
@@ -905,6 +995,48 @@ async function openTabletProfilePreferences(page: Page) {
     .click();
   await expect(
     page.getByRole("heading", { exact: true, name: "Preferences" }),
+  ).toBeVisible();
+}
+
+async function openTabletSupportHelpCenter(page: Page) {
+  const supportSection = page.locator("#support");
+
+  await expect(
+    supportSection.getByRole("button", { name: "Help center" }),
+  ).toBeVisible();
+  await supportSection.getByRole("button", { name: "Help center" }).click();
+  await expect(
+    supportSection.getByRole("heading", { name: /How can we/i }),
+  ).toBeVisible();
+}
+
+async function openTabletFaqArticle(page: Page) {
+  const supportSection = page.locator("#support");
+
+  await openTabletSupportHelpCenter(page);
+  await expect(
+    supportSection.getByRole("button", { name: /Track or reorder an order/i }),
+  ).toBeVisible();
+  await supportSection
+    .getByRole("button", { name: /Track or reorder an order/i })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Tracking your order" }),
+  ).toBeVisible();
+}
+
+async function openTabletNotificationDetail(page: Page) {
+  const notificationsSection = page.locator("#notifications");
+
+  await expect(
+    notificationsSection.getByRole("button", { name: "View" }).first(),
+  ).toBeVisible();
+  await notificationsSection
+    .getByRole("button", { name: "View" })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("heading", { name: /Notification detail/i }),
   ).toBeVisible();
 }
 

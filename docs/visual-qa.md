@@ -73,6 +73,15 @@ Current audit targets:
   `tablet/tablet-29-favorites.png`
 - tablet account settings preferences: `/profile` interaction against
   `tablet/tablet-30-account-settings-preferences.png`
+- tablet contact: `/support` against `tablet/tablet-31-contact.png`
+- tablet help center: `/support` interaction against
+  `tablet/tablet-32-help-center.png`
+- tablet FAQ article detail: `/support` interaction against
+  `tablet/tablet-33-faq-article-detail.png`
+- tablet notifications center: `/notifications` against
+  `tablet/tablet-34-notifications-center.png`
+- tablet notification detail: `/notifications` interaction against
+  `tablet/tablet-35-notification-detail.png`
 - desktop home dashboard: `/home` against
   `desktop/desktop-01-home-dashboard.png`
 - desktop menu overview: `/menu` against `desktop/desktop-02-menu-overview.png`

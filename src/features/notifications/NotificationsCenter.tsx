@@ -20,12 +20,17 @@ import type { AppNotification } from "@/types/notification";
 import { MobileNotificationsCenter } from "./MobileNotificationsCenter";
 import { NotificationCard } from "./NotificationCard";
 import { NotificationDetailModal } from "./NotificationDetailModal";
+import { TabletNotificationsCenter } from "./TabletNotificationsCenter";
 
 export function NotificationsCenter() {
   const mode = useResponsiveMode();
 
   if (mode === "mobile") {
     return <MobileNotificationsCenter />;
+  }
+
+  if (mode === "tablet") {
+    return <TabletNotificationsCenter />;
   }
 
   return <DesktopNotificationsCenter />;

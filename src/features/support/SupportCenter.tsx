@@ -16,12 +16,17 @@ import { HelpArticleModal } from "./HelpArticleModal";
 import { MobileSupportCenter } from "./MobileSupportCenter";
 import { RecentSupportRequests } from "./RecentSupportRequests";
 import { SupportRequestForm } from "./SupportRequestForm";
+import { TabletSupportCenter } from "./TabletSupportCenter";
 
 export function SupportCenter() {
   const mode = useResponsiveMode();
 
   if (mode === "mobile") {
     return <MobileSupportCenter />;
+  }
+
+  if (mode === "tablet") {
+    return <TabletSupportCenter />;
   }
 
   return <DesktopSupportCenter />;

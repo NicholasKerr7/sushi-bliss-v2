@@ -17,7 +17,7 @@ current viewport and attaches the matching reference PNG.
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
-| Tablet     |         40 |      28 |                  12 |             0 |
+| Tablet     |         40 |      33 |                   7 |             0 |
 | Desktop    |         40 |       2 |                  38 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
@@ -58,11 +58,11 @@ confirmation until the reference filename is corrected.
 | `tablet-28-profile-dashboard.png`             | `/profile`                        | Audited             |
 | `tablet-29-favorites.png`                     | `/favorites`                      | Audited             |
 | `tablet-30-account-settings-preferences.png`  | profile settings state            | Audited             |
-| `tablet-31-contact.png`                       | `/support` contact state          | Built / needs audit |
-| `tablet-32-help-center.png`                   | `/support` help center state      | Built / needs audit |
-| `tablet-33-faq-article-detail.png`            | help article detail               | Built / needs audit |
-| `tablet-34-notifications-center.png`          | `/notifications`                  | Built / needs audit |
-| `tablet-35-notification-detail.png`           | notification detail               | Built / needs audit |
+| `tablet-31-contact.png`                       | `/support` contact state          | Audited             |
+| `tablet-32-help-center.png`                   | `/support` help center state      | Audited             |
+| `tablet-33-faq-article-detail.png`            | help article detail               | Audited             |
+| `tablet-34-notifications-center.png`          | `/notifications`                  | Audited             |
+| `tablet-35-notification-detail.png`           | notification detail               | Audited             |
 | `tablet-36-promotions-offers.png`             | `/offers`                         | Built / needs audit |
 | `tablet-37-offer-detail.png`                  | offer detail                      | Built / needs audit |
 | `tablet-38-referral-earn.png`                 | referral state                    | Built / needs audit |
