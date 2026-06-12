@@ -2,16 +2,23 @@
 
 import Link from "next/link";
 
-import { StatusBadge } from "@/components/ui/StatusBadge";
 import { classNames } from "@/lib/classNames";
-import { formatDateTime } from "@/lib/dates";
 import {
   notificationCategoryLabels,
   notificationFilters,
   type NotificationFilter,
 } from "@/lib/notifications";
-import type { AppNotification } from "@/types/notification";
+import type {
+  AppNotification,
+  NotificationCategory,
+} from "@/types/notification";
 
+import { MobileNotificationCard } from "./MobileNotificationCard";
+import {
+  getNotificationActionLabel,
+  getNoticeCountLabel,
+  mobileNotificationCategoryOrder,
+} from "./mobileNotificationContent";
 import {
   MobileNotificationIcon,
   MobileNotificationsPanel,
@@ -19,6 +26,7 @@ import {
 
 interface MobileNotificationsListViewProps {
   activeFilter: NotificationFilter;
+  allNotifications: AppNotification[];
   notifications: AppNotification[];
   unreadCount: number;
   onFilterChange: (filter: NotificationFilter) => void;
@@ -28,12 +36,24 @@ interface MobileNotificationsListViewProps {
 
 export function MobileNotificationsListView({
   activeFilter,
+  allNotifications,
   notifications,
   unreadCount,
   onFilterChange,
   onMarkAllRead,
   onViewNotification,
 }: MobileNotificationsListViewProps) {
+  const priorityNotification =
+    allNotifications.find((notification) => !notification.readAt) ||
+    allNotifications[0] ||
+    null;
+  const categoryCounts = mobileNotificationCategoryOrder.map((category) => ({
+    category,
+    count: allNotifications.filter(
+      (notification) => notification.category === category,
+    ).length,
+  }));
+
   return (
     <>
       <section className="mt-8">
@@ -50,7 +70,7 @@ export function MobileNotificationsListView({
       </section>
 
       <MobileNotificationsPanel className="mt-6 overflow-hidden">
-        <div className="relative min-h-[184px] p-5">
+        <div className="relative min-h-[236px] p-5">
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-[url('/assets/editorial/hero-otoro-nigiri-no-red-moon.webp')] bg-cover bg-center opacity-42"
@@ -79,9 +99,53 @@ export function MobileNotificationsListView({
               Every update stays grouped by dining activity, membership, and
               concierge care.
             </p>
+            {priorityNotification ? (
+              <button
+                className="mt-4 rounded-[14px] border border-white/12 bg-black/38 p-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+                onClick={() => onViewNotification(priorityNotification)}
+                type="button"
+              >
+                <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+                  {priorityNotification.readAt
+                    ? "Latest notice"
+                    : "Next priority"}
+                </span>
+                <span className="mt-1 block text-[16px] font-semibold leading-5 text-white">
+                  {priorityNotification.title}
+                </span>
+                <span className="mt-2 block text-[12px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]">
+                  {getNotificationActionLabel(priorityNotification)}
+                </span>
+              </button>
+            ) : null}
           </div>
         </div>
       </MobileNotificationsPanel>
+
+      <section className="mt-4" aria-labelledby="notification-category-title">
+        <div className="flex items-center justify-between gap-3">
+          <h2
+            className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]"
+            id="notification-category-title"
+          >
+            Categories
+          </h2>
+          <p className="text-[12px] text-white/42">
+            {getNoticeCountLabel(allNotifications.length)}
+          </p>
+        </div>
+        <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+          {categoryCounts.map(({ category, count }) => (
+            <NotificationCategoryButton
+              active={activeFilter === category}
+              category={category}
+              count={count}
+              key={category}
+              onClick={() => onFilterChange(category)}
+            />
+          ))}
+        </div>
+      </section>
 
       <div
         aria-label="Notification filters"
@@ -127,10 +191,12 @@ export function MobileNotificationsListView({
 
         <div className="mt-3 grid gap-3">
           {notifications.length > 0 ? (
-            notifications.map((notification) => (
+            notifications.map((notification, index) => (
               <MobileNotificationCard
                 key={notification.id}
                 notification={notification}
+                position={index + 1}
+                total={notifications.length}
                 onViewNotification={onViewNotification}
               />
             ))
@@ -152,71 +218,35 @@ export function MobileNotificationsListView({
   );
 }
 
-function MobileNotificationCard({
-  notification,
-  onViewNotification,
+function NotificationCategoryButton({
+  active,
+  category,
+  count,
+  onClick,
 }: {
-  notification: AppNotification;
-  onViewNotification: (notification: AppNotification) => void;
+  active: boolean;
+  category: NotificationCategory;
+  count: number;
+  onClick: () => void;
 }) {
-  const unread = !notification.readAt;
-
   return (
-    <MobileNotificationsPanel
+    <button
+      aria-pressed={active}
       className={classNames(
-        "overflow-hidden",
-        unread && "border-[var(--sb-gold)]/38",
+        "grid min-h-[102px] min-w-[112px] place-items-center rounded-[16px] border bg-black/30 px-3 py-3 text-center transition disabled:cursor-not-allowed disabled:opacity-45",
+        active
+          ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/16 text-[var(--sb-red-bright)]"
+          : "border-white/12 text-white/62",
       )}
+      disabled={count === 0}
+      onClick={onClick}
+      type="button"
     >
-      <div className="grid grid-cols-[58px_minmax(0,1fr)] gap-4 p-4">
-        <MobileNotificationIcon category={notification.category} />
-        <div className="min-w-0">
-          <div className="flex flex-wrap gap-2">
-            <StatusBadge tone={notification.tone}>
-              {notificationCategoryLabels[notification.category]}
-            </StatusBadge>
-            {unread ? <StatusBadge tone="warning">Unread</StatusBadge> : null}
-          </div>
-          <button
-            className="mt-3 block text-left text-[17px] font-semibold leading-5 text-white"
-            onClick={() => onViewNotification(notification)}
-            type="button"
-          >
-            {notification.title}
-          </button>
-          <p className="mt-2 line-clamp-2 text-[13px] leading-5 text-white/56">
-            {notification.body}
-          </p>
-          <p className="mt-2 text-[12px] text-white/42">
-            {formatDateTime(notification.createdAt)}
-          </p>
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <button
-              className="min-h-[40px] rounded-[11px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]"
-              onClick={() => onViewNotification(notification)}
-              type="button"
-            >
-              Details
-            </button>
-            {notification.href ? (
-              <Link
-                className="grid min-h-[40px] place-items-center rounded-[11px] border border-[var(--sb-red-bright)]/45 text-[12px] uppercase tracking-[0.06em] text-[var(--sb-red-bright)]"
-                href={notification.href}
-              >
-                Open
-              </Link>
-            ) : (
-              <button
-                className="min-h-[40px] rounded-[11px] border border-white/12 text-[12px] uppercase tracking-[0.06em] text-white/34"
-                disabled
-                type="button"
-              >
-                No link
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </MobileNotificationsPanel>
+      <MobileNotificationIcon category={category} className="h-11 w-11" />
+      <span className="mt-2 text-[11px] uppercase tracking-[0.08em]">
+        {notificationCategoryLabels[category]}
+      </span>
+      <span className="mt-1 font-mono text-[20px] leading-none">{count}</span>
+    </button>
   );
 }

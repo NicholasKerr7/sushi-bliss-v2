@@ -12,6 +12,10 @@ import {
   MobileNotificationsBackButton,
   MobileNotificationsPanel,
 } from "./MobileNotificationsPrimitives";
+import {
+  getNotificationActionLabel,
+  getNotificationFlowCopy,
+} from "./mobileNotificationContent";
 
 interface MobileNotificationDetailViewProps {
   notification: AppNotification;
@@ -22,6 +26,8 @@ export function MobileNotificationDetailView({
   notification,
   onBack,
 }: MobileNotificationDetailViewProps) {
+  const flowCopy = getNotificationFlowCopy(notification.category);
+
   return (
     <>
       <div className="mt-6 flex items-center justify-between gap-4">
@@ -65,13 +71,22 @@ export function MobileNotificationDetailView({
           </div>
         ) : null}
 
+        <div className="mt-5 rounded-[14px] border border-[var(--sb-border)] bg-black/30 p-4">
+          <p className="text-[11px] uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
+            {flowCopy.title}
+          </p>
+          <p className="mt-2 text-[14px] leading-6 text-white/58">
+            {flowCopy.body}
+          </p>
+        </div>
+
         <div className="mt-5 grid grid-cols-2 gap-3">
           {notification.href ? (
             <Link
               className="red-glow-button grid min-h-[54px] place-items-center rounded-[13px] border text-[12px]"
               href={notification.href}
             >
-              Open
+              {getNotificationActionLabel(notification)}
             </Link>
           ) : (
             <button
@@ -94,11 +109,11 @@ export function MobileNotificationDetailView({
 
       <MobileNotificationsPanel className="mt-4 p-5">
         <h2 className="text-[16px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
-          Connected flow
+          Inbox state
         </h2>
         <p className="mt-3 text-[14px] leading-6 text-white/56">
-          The related order, reservation, reward, offer, or support thread stays
-          attached for quick follow-up.
+          Opening a notice marks it read locally. The related action stays
+          available until Supabase events replace this mock notification source.
         </p>
       </MobileNotificationsPanel>
     </>

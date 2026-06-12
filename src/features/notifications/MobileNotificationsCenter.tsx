@@ -72,6 +72,7 @@ export function MobileNotificationsCenter() {
         ) : (
           <MobileNotificationsListView
             activeFilter={activeFilter}
+            allNotifications={sortedNotifications}
             notifications={filteredNotifications}
             unreadCount={unreadCount}
             onFilterChange={setActiveFilter}
