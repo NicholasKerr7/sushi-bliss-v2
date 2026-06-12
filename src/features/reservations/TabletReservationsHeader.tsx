@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { mockUser } from "@/data/mockUser";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
 
 interface TabletReservationsHeaderProps {
   cartCount: number;
@@ -23,9 +23,9 @@ export function TabletReservationsHeader({
           alt={brand.name}
           className="rounded-full"
           size={66}
-          src={brand.assets.floralEmblem.publicUrl}
+          src={icons.flower}
         />
-        <span className="editorial-title text-[22px] uppercase leading-[0.98] tracking-[0.24em] lg:text-[27px] lg:tracking-[0.35em]">
+        <span className="font-serif text-[22px] font-normal uppercase leading-[0.98] tracking-[0.36em] lg:text-[27px] lg:tracking-[0.43em]">
           Sushi
           <br />
           Bliss
@@ -51,7 +51,7 @@ export function TabletReservationsHeader({
             alt=""
             className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"
             height={58}
-            src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"
+            src={chefAvatar}
             width={58}
           />
           <span className="hidden text-left lg:block">

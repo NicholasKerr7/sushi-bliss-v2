@@ -34,6 +34,16 @@ Current audit targets:
   `tablet/tablet-10-checkout-review-confirm.png`
 - tablet order confirmation: `/menu` interaction against
   `tablet/tablet-05-item-detail-otoro-nigiri.png`
+- tablet orders dashboard: `/orders` against
+  `tablet/tablet-11-orders-dashboard.png`
+- tablet live order tracking: `/orders` interaction against
+  `tablet/tablet-12-live-order-tracking.png`
+- tablet reservations main: `/reservations` against
+  `tablet/tablet-13-reservations-main.png`
+- tablet choose reservation experience: `/reservations` interaction against
+  `tablet/tablet-14-choose-reservation-experience.png`
+- tablet reservation review: `/reservations` interaction against
+  `tablet/tablet-15-reservation-review.png`
 - desktop home dashboard: `/home` against
   `desktop/desktop-01-home-dashboard.png`
 - desktop menu overview: `/menu` against `desktop/desktop-02-menu-overview.png`

@@ -210,6 +210,112 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "tablet orders dashboard",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-11-orders-dashboard.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/orders",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const ordersSection = page.locator("#orders");
+
+      await expect(ordersSection).toBeVisible();
+      await expect(
+        ordersSection.getByRole("heading", { exact: true, name: "Orders" }),
+      ).toBeVisible();
+      await expect(
+        ordersSection.getByRole("button", { name: "Track order" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet live order tracking",
+    prepare: openTabletLiveOrderTracking,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-12-live-order-tracking.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/orders",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const ordersSection = page.locator("#orders");
+
+      await expect(
+        ordersSection.getByRole("heading", { name: "Live Order Tracking" }),
+      ).toBeVisible();
+      await expect(
+        ordersSection.getByRole("button", { name: "Back to orders" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet reservations main",
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-13-reservations-main.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/reservations",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(reservationsSection).toBeVisible();
+      await expect(
+        reservationsSection.getByText("Crafted for You"),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", { name: "Make a reservation" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet choose reservation experience",
+    prepare: openTabletReservationBooking,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-14-choose-reservation-experience.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/reservations",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Reservation Experience",
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", { name: "Continue to review" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet reservation review",
+    prepare: openTabletReservationReview,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-15-reservation-review.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/reservations",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Review Your Reservation",
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: "Confirm reservation",
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
     referencePath:
@@ -306,6 +412,48 @@ async function openTabletOrderConfirmation(page: Page) {
   await openTabletCheckoutReview(page);
   await page.getByRole("button", { name: /Place order/i }).click();
   await expect(page.getByRole("dialog", { name: "Thank you!" })).toBeVisible();
+}
+
+async function openTabletLiveOrderTracking(page: Page) {
+  const ordersSection = page.locator("#orders");
+
+  await expect(
+    ordersSection.getByRole("button", { name: "Track order" }),
+  ).toBeVisible();
+  await ordersSection.getByRole("button", { name: "Track order" }).click();
+  await expect(
+    ordersSection.getByRole("heading", { name: "Live Order Tracking" }),
+  ).toBeVisible();
+}
+
+async function openTabletReservationBooking(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await expect(
+    reservationsSection.getByRole("button", { name: "Make a reservation" }),
+  ).toBeVisible();
+  await reservationsSection
+    .getByRole("button", { name: "Make a reservation" })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: "Reservation Experience",
+    }),
+  ).toBeVisible();
+}
+
+async function openTabletReservationReview(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await openTabletReservationBooking(page);
+  await reservationsSection
+    .getByRole("button", { name: "Continue to review" })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: "Review Your Reservation",
+    }),
+  ).toBeVisible();
 }
 
 function getPngSize(buffer: Buffer) {

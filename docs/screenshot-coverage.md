@@ -17,7 +17,7 @@ current viewport and attaches the matching reference PNG.
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
-| Tablet     |         40 |       8 |                  32 |             0 |
+| Tablet     |         40 |      13 |                  27 |             0 |
 | Desktop    |         40 |       2 |                  38 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
@@ -38,11 +38,11 @@ confirmation until the reference filename is corrected.
 | `tablet-08-cart.png`                          | cart dialog                       | Audited             |
 | `tablet-09-checkout-delivery-pickup.png`      | checkout details dialog           | Audited             |
 | `tablet-10-checkout-review-confirm.png`       | checkout review dialog            | Audited             |
-| `tablet-11-orders-dashboard.png`              | `/orders`                         | Built / needs audit |
-| `tablet-12-live-order-tracking.png`           | `/orders` active order detail     | Built / needs audit |
-| `tablet-13-reservations-main.png`             | `/reservations`                   | Built / needs audit |
-| `tablet-14-choose-reservation-experience.png` | reservation experience step       | Built / needs audit |
-| `tablet-15-reservation-review.png`            | reservation review step           | Built / needs audit |
+| `tablet-11-orders-dashboard.png`              | `/orders`                         | Audited             |
+| `tablet-12-live-order-tracking.png`           | `/orders` active order detail     | Audited             |
+| `tablet-13-reservations-main.png`             | `/reservations`                   | Audited             |
+| `tablet-14-choose-reservation-experience.png` | reservation experience step       | Audited             |
+| `tablet-15-reservation-review.png`            | reservation review step           | Audited             |
 | `tablet-16-reservation-confirmation.png`      | reservation confirmation          | Built / needs audit |
 | `tablet-17-reservation-history.png`           | reservation history state         | Built / needs audit |
 | `tablet-18-modify-reservation.png`            | modify reservation flow           | Built / needs audit |
