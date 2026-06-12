@@ -42,7 +42,7 @@ export function getSupabaseServerClientPlaceholder(): SupabaseClientPlaceholder<
     driver: "supabase",
     ready: false,
     reason:
-      "Keep service role usage server-only and initialize SDK clients lazily inside request handlers.",
+      "Keep Supabase secret or service role keys server-only and initialize SDK clients lazily inside request handlers.",
   };
 }
 

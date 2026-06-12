@@ -3,8 +3,10 @@ type EnvKey =
   | "NEXT_PUBLIC_SUPABASE_ANON_KEY"
   | "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
   | "NEXT_PUBLIC_SUPABASE_URL"
+  | "STRIPE_PUBLISHABLE_KEY"
   | "STRIPE_SECRET_KEY"
   | "STRIPE_WEBHOOK_SECRET"
+  | "SUPABASE_SECRET_KEY"
   | "SUPABASE_SERVICE_ROLE_KEY";
 
 type EnvRecord = NodeJS.ProcessEnv &
@@ -17,10 +19,12 @@ export interface PublicSupabaseEnv {
 }
 
 export interface ServerSupabaseEnv extends PublicSupabaseEnv {
+  secretKey?: string;
   serviceRoleKey?: string;
 }
 
 export interface StripeEnv {
+  browserPublishableKey?: string;
   publishableKey?: string;
   secretKey?: string;
   webhookSecret?: string;
@@ -64,14 +68,21 @@ export function getServerSupabaseEnv(
 
   return {
     ...publicEnv,
+    secretKey: cleanEnvValue(env.SUPABASE_SECRET_KEY),
     serviceRoleKey: cleanEnvValue(env.SUPABASE_SERVICE_ROLE_KEY),
   };
 }
 
 /** Reads Stripe placeholders for future checkout session and webhook services. */
 export function getStripeEnv(env: EnvRecord = process.env): StripeEnv {
+  const browserPublishableKey = cleanEnvValue(
+    env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+  );
+
   return {
-    publishableKey: cleanEnvValue(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY),
+    browserPublishableKey,
+    publishableKey:
+      browserPublishableKey || cleanEnvValue(env.STRIPE_PUBLISHABLE_KEY),
     secretKey: cleanEnvValue(env.STRIPE_SECRET_KEY),
     webhookSecret: cleanEnvValue(env.STRIPE_WEBHOOK_SECRET),
   };

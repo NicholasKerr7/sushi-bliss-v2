@@ -12,7 +12,7 @@ export function getStripeReadiness(): StripeReadiness {
 
   return {
     canCreateCheckoutSessions: Boolean(env.secretKey),
-    canRenderPaymentElements: Boolean(env.publishableKey),
+    canRenderPaymentElements: Boolean(env.browserPublishableKey),
     canVerifyWebhooks: Boolean(env.webhookSecret),
   };
 }

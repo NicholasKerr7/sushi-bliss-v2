@@ -3,6 +3,11 @@
 Sprint 12 keeps the app on mock/local data while defining the seams where
 Supabase, Stripe, and route handlers can plug in later.
 
+Docs checked June 12, 2026: Supabase now recommends publishable keys for
+browser-safe clients, secret/service-role keys stay server-only, and SSR
+clients should be created through `@supabase/ssr` with cookie handling when
+auth is added.
+
 ## Current Boundary
 
 - `src/services/*Service.ts` exposes typed async functions returning
@@ -13,6 +18,9 @@ Supabase, Stripe, and route handlers can plug in later.
   only the internals of each service.
 - No SDK clients are created at module scope. Initialize Supabase or Stripe
   lazily inside route handlers, server actions, or explicit client factories.
+- The service layer now covers menu, checkout order creation, orders,
+  reservations, locations, gifts, loyalty, offers, profile, support,
+  notifications, and admin dashboard snapshots.
 
 ## Supabase Placeholder
 
@@ -20,8 +28,8 @@ Supabase, Stripe, and route handlers can plug in later.
   without importing `@supabase/supabase-js` or `@supabase/ssr` yet.
 - Browser code may only use `NEXT_PUBLIC_SUPABASE_URL` plus
   `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` or the legacy anon key fallback.
-- `SUPABASE_SERVICE_ROLE_KEY` is server-only and must never be referenced from
-  client components.
+- `SUPABASE_SECRET_KEY` and `SUPABASE_SERVICE_ROLE_KEY` are server-only and
+  must never be referenced from client components.
 - When real Supabase wiring starts, install the SDKs and add lazy client
   creation functions rather than exporting singleton clients.
 
@@ -29,6 +37,9 @@ Supabase, Stripe, and route handlers can plug in later.
 
 - `src/services/payments/stripe.ts` only reports readiness based on env
   presence.
+- `STRIPE_PUBLISHABLE_KEY` is accepted for Vercel Marketplace compatibility,
+  while `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` remains the only client-exposed
+  browser alias.
 - Future checkout should use server-created Stripe Checkout Sessions or Payment
   Intents.
 - Webhook verification must run server-side with `STRIPE_WEBHOOK_SECRET`.
