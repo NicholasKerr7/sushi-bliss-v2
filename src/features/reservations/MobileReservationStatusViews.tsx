@@ -23,6 +23,7 @@ interface MobileReservationDetailViewProps {
   onOpenCart: () => void;
   onRequestCancel: (reservation: Reservation) => void;
   reservation: Reservation;
+  unreadNotificationCount: number;
 }
 
 interface MobileReservationConfirmationViewProps {
@@ -31,6 +32,7 @@ interface MobileReservationConfirmationViewProps {
   onOpenCart: () => void;
   onViewReservations: () => void;
   reservation: Reservation;
+  unreadNotificationCount: number;
 }
 
 interface MobileReservationCancelViewProps {
@@ -39,6 +41,7 @@ interface MobileReservationCancelViewProps {
   onKeepReservation: () => void;
   onOpenCart: () => void;
   reservation: Reservation;
+  unreadNotificationCount: number;
 }
 
 export function MobileReservationDetailView({
@@ -49,12 +52,17 @@ export function MobileReservationDetailView({
   onOpenCart,
   onRequestCancel,
   reservation,
+  unreadNotificationCount,
 }: MobileReservationDetailViewProps) {
   const display = getReservationDisplay(reservation);
 
   return (
     <div className="relative z-10 mx-auto max-w-[430px]">
-      <MobileReservationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+      <MobileReservationsHeader
+        cartCount={cartCount}
+        onOpenCart={onOpenCart}
+        unreadNotificationCount={unreadNotificationCount}
+      />
 
       <div className="mt-7 grid grid-cols-[50px_1fr] items-center gap-4">
         <MobileReservationBackButton
@@ -175,12 +183,17 @@ export function MobileReservationConfirmationView({
   onOpenCart,
   onViewReservations,
   reservation,
+  unreadNotificationCount,
 }: MobileReservationConfirmationViewProps) {
   const display = getReservationDisplay(reservation);
 
   return (
     <div className="relative z-10 mx-auto max-w-[430px] text-center">
-      <MobileReservationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+      <MobileReservationsHeader
+        cartCount={cartCount}
+        onOpenCart={onOpenCart}
+        unreadNotificationCount={unreadNotificationCount}
+      />
 
       <main className="pt-14">
         <div className="mx-auto grid h-[132px] w-[132px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/42 shadow-[0_0_34px_rgb(215_168_79_/_0.24)]">
@@ -250,12 +263,17 @@ export function MobileReservationCancelView({
   onKeepReservation,
   onOpenCart,
   reservation,
+  unreadNotificationCount,
 }: MobileReservationCancelViewProps) {
   const display = getReservationDisplay(reservation);
 
   return (
     <div className="relative z-10 mx-auto max-w-[430px]">
-      <MobileReservationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+      <MobileReservationsHeader
+        cartCount={cartCount}
+        onOpenCart={onOpenCart}
+        unreadNotificationCount={unreadNotificationCount}
+      />
 
       <div className="mt-7">
         <MobileReservationBackButton

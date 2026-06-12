@@ -36,6 +36,7 @@ interface MobileReservationExperienceViewProps {
     value: ReservationDraft[TField],
   ) => void;
   onOpenCart: () => void;
+  unreadNotificationCount: number;
   validation: ReservationValidationState;
 }
 
@@ -48,6 +49,7 @@ export function MobileReservationExperienceView({
   onContinue,
   onDraftChange,
   onOpenCart,
+  unreadNotificationCount,
   validation,
 }: MobileReservationExperienceViewProps) {
   const display = getReservationDraftDisplay(draft);
@@ -55,7 +57,11 @@ export function MobileReservationExperienceView({
 
   return (
     <div className="relative z-10 mx-auto max-w-[430px]">
-      <MobileReservationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+      <MobileReservationsHeader
+        cartCount={cartCount}
+        onOpenCart={onOpenCart}
+        unreadNotificationCount={unreadNotificationCount}
+      />
 
       <div className="mt-7 grid grid-cols-[50px_1fr] items-center gap-4">
         <MobileReservationBackButton

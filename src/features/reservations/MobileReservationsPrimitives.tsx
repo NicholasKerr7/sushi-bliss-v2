@@ -17,6 +17,7 @@ import type {
 interface MobileReservationsHeaderProps {
   cartCount?: number;
   onOpenCart?: () => void;
+  unreadNotificationCount?: number;
 }
 
 const statusLabels: Record<ReservationStatus, string> = {
@@ -29,6 +30,7 @@ const statusLabels: Record<ReservationStatus, string> = {
 export function MobileReservationsHeader({
   cartCount = 0,
   onOpenCart,
+  unreadNotificationCount = 0,
 }: MobileReservationsHeaderProps) {
   return (
     <header className="flex items-center justify-between">
@@ -58,8 +60,8 @@ export function MobileReservationsHeader({
             type="button"
           >
             <AssetIcon loading="eager" size={25} src={icons.cart} />
-            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold">
-              {cartCount}
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold text-white">
+              {cartCount > 9 ? "9+" : cartCount}
             </span>
           </button>
         ) : null}
@@ -69,7 +71,11 @@ export function MobileReservationsHeader({
           href="/notifications"
         >
           <AssetIcon loading="eager" size={27} src={icons.bell} />
-          <span className="absolute right-2.5 top-2 h-3 w-3 rounded-full bg-[var(--sb-red-bright)]" />
+          {unreadNotificationCount > 0 ? (
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red-bright)] px-1 text-[10px] font-bold text-white">
+              {unreadNotificationCount > 9 ? "9+" : unreadNotificationCount}
+            </span>
+          ) : null}
         </Link>
       </div>
     </header>

@@ -12,6 +12,7 @@ import {
   getMockReservations,
 } from "@/data/reservations";
 import { useCart } from "@/hooks/useCart";
+import { useNotifications } from "@/hooks/useNotifications";
 import { useProfile } from "@/hooks/useProfile";
 import { useReservations } from "@/hooks/useReservations";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
@@ -40,6 +41,7 @@ export function ReservationsDashboard() {
   const { profile } = useProfile();
   const mode = useResponsiveMode();
   const { itemCount } = useCart();
+  const { unreadCount } = useNotifications();
   const mockReservations = useMemo(() => getMockReservations(), []);
   const currentTime = useMemo(() => new Date().getTime(), []);
   const {
@@ -143,6 +145,7 @@ export function ReservationsDashboard() {
         onViewChange={setView}
         pastReservations={pastReservations}
         upcomingReservations={upcomingReservations}
+        unreadNotificationCount={unreadCount}
         validation={validation}
         view={view}
       />

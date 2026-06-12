@@ -14,11 +14,13 @@ import {
   MobileReservationPanel,
   MobileReservationsHeader,
 } from "./MobileReservationsPrimitives";
+import { MobileReservationCommandCenter } from "./MobileReservationCommandCenter";
 
 type ReservationView = "upcoming" | "past";
 
 interface MobileReservationsMainViewProps {
   cartCount: number;
+  currentTime: number;
   onModifyReservation: (reservation: Reservation) => void;
   onOpenBooking: () => void;
   onOpenCart: () => void;
@@ -27,12 +29,14 @@ interface MobileReservationsMainViewProps {
   onViewReservation: (reservation: Reservation) => void;
   pastReservations: Reservation[];
   upcomingReservations: Reservation[];
+  unreadNotificationCount: number;
   view: ReservationView;
 }
 
 /** Mobile reservations dashboard matching the reference list and booking entry. */
 export function MobileReservationsMainView({
   cartCount,
+  currentTime,
   onModifyReservation,
   onOpenBooking,
   onOpenCart,
@@ -41,6 +45,7 @@ export function MobileReservationsMainView({
   onViewReservation,
   pastReservations,
   upcomingReservations,
+  unreadNotificationCount,
   view,
 }: MobileReservationsMainViewProps) {
   const featuredReservation = upcomingReservations[0];
@@ -55,6 +60,7 @@ export function MobileReservationsMainView({
         <MobileReservationsHeader
           cartCount={cartCount}
           onOpenCart={onOpenCart}
+          unreadNotificationCount={unreadNotificationCount}
         />
 
         <section className="relative mt-10 overflow-hidden rounded-[22px] border border-transparent pb-5">
@@ -78,6 +84,16 @@ export function MobileReservationsMainView({
             </p>
           </div>
         </section>
+
+        <MobileReservationCommandCenter
+          featuredReservation={featuredReservation}
+          onOpenBooking={onOpenBooking}
+          onViewChange={onViewChange}
+          onViewReservation={onViewReservation}
+          pastReservations={pastReservations}
+          upcomingReservations={upcomingReservations}
+          view={view}
+        />
 
         <section className="mt-4">
           <h2 className="editorial-title text-[23px] uppercase text-[var(--sb-gold-soft)]">
@@ -133,6 +149,7 @@ export function MobileReservationsMainView({
           {visibleReservations.length > 0 ? (
             visibleReservations.map((reservation) => (
               <CompactReservationRow
+                currentTime={currentTime}
                 key={reservation.id}
                 onModifyReservation={onModifyReservation}
                 onRequestCancel={onRequestCancel}
@@ -277,18 +294,22 @@ function FeaturedReservationCard({
 }
 
 function CompactReservationRow({
+  currentTime,
   onModifyReservation,
   onRequestCancel,
   onViewReservation,
   reservation,
 }: {
+  currentTime: number;
   onModifyReservation: (reservation: Reservation) => void;
   onRequestCancel: (reservation: Reservation) => void;
   onViewReservation: (reservation: Reservation) => void;
   reservation: Reservation;
 }) {
   const display = getReservationDisplay(reservation);
-  const canManage = reservation.status !== "cancelled";
+  const canManage =
+    reservation.status !== "cancelled" &&
+    new Date(reservation.startsAt).getTime() >= currentTime;
 
   return (
     <MobileReservationPanel className="grid grid-cols-[104px_1fr] gap-4 p-3">

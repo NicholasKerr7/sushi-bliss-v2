@@ -22,6 +22,7 @@ interface MobileReservationReviewViewProps {
   onConfirm: () => void;
   onEditDetails: () => void;
   onOpenCart: () => void;
+  unreadNotificationCount: number;
 }
 
 /** Mobile reservation review step before writing the reservation to local storage. */
@@ -32,12 +33,17 @@ export function MobileReservationReviewView({
   onConfirm,
   onEditDetails,
   onOpenCart,
+  unreadNotificationCount,
 }: MobileReservationReviewViewProps) {
   const display = getReservationDraftDisplay(draft);
 
   return (
     <div className="relative z-10 mx-auto max-w-[430px]">
-      <MobileReservationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
+      <MobileReservationsHeader
+        cartCount={cartCount}
+        onOpenCart={onOpenCart}
+        unreadNotificationCount={unreadNotificationCount}
+      />
 
       <div className="mt-7 grid grid-cols-[50px_1fr] items-center gap-4">
         <MobileReservationBackButton

@@ -51,6 +51,7 @@ interface MobileReservationsDashboardProps {
   onViewChange: (view: ReservationView) => void;
   pastReservations: Reservation[];
   upcomingReservations: Reservation[];
+  unreadNotificationCount: number;
   validation: ReservationValidationState;
   view: ReservationView;
 }
@@ -75,6 +76,7 @@ export function MobileReservationsDashboard({
   onViewChange,
   pastReservations,
   upcomingReservations,
+  unreadNotificationCount,
   validation,
   view,
 }: MobileReservationsDashboardProps) {
@@ -179,6 +181,7 @@ export function MobileReservationsDashboard({
           onContinue={openExperience}
           onDraftChange={onDraftChange}
           onOpenCart={onOpenCart}
+          unreadNotificationCount={unreadNotificationCount}
           validation={validation}
         />
       ) : surface === "experience" ? (
@@ -190,6 +193,7 @@ export function MobileReservationsDashboard({
           onContinue={openReview}
           onDraftChange={onDraftChange}
           onOpenCart={onOpenCart}
+          unreadNotificationCount={unreadNotificationCount}
           validation={validation}
         />
       ) : surface === "review" ? (
@@ -200,6 +204,7 @@ export function MobileReservationsDashboard({
           onConfirm={confirmReservation}
           onEditDetails={() => setSurface("date-time")}
           onOpenCart={onOpenCart}
+          unreadNotificationCount={unreadNotificationCount}
         />
       ) : surface === "confirmation" && confirmedReservation ? (
         <MobileReservationConfirmationView
@@ -208,6 +213,7 @@ export function MobileReservationsDashboard({
           onOpenCart={onOpenCart}
           onViewReservations={closeConfirmation}
           reservation={confirmedReservation}
+          unreadNotificationCount={unreadNotificationCount}
         />
       ) : surface === "detail" && selectedReservation ? (
         <MobileReservationDetailView
@@ -218,6 +224,7 @@ export function MobileReservationsDashboard({
           onOpenCart={onOpenCart}
           onRequestCancel={requestCancel}
           reservation={selectedReservation}
+          unreadNotificationCount={unreadNotificationCount}
         />
       ) : surface === "cancel" && selectedReservation ? (
         <MobileReservationCancelView
@@ -226,10 +233,12 @@ export function MobileReservationsDashboard({
           onKeepReservation={() => setSurface("detail")}
           onOpenCart={onOpenCart}
           reservation={selectedReservation}
+          unreadNotificationCount={unreadNotificationCount}
         />
       ) : (
         <MobileReservationsMainView
           cartCount={cartCount}
+          currentTime={currentTime}
           onModifyReservation={modifyReservation}
           onOpenBooking={openBooking}
           onOpenCart={onOpenCart}
@@ -238,6 +247,7 @@ export function MobileReservationsDashboard({
           onViewReservation={viewReservation}
           pastReservations={pastReservations}
           upcomingReservations={upcomingReservations}
+          unreadNotificationCount={unreadNotificationCount}
           view={view}
         />
       )}
