@@ -20,6 +20,7 @@ import {
   MobileProfileHeader,
   MobileProfilePanel,
 } from "./MobileProfilePrimitives";
+import { MobileProfileSubflowSummary } from "./MobileProfileSubflowSummary";
 
 interface MobileProfileAddressesViewProps {
   addresses: Address[];
@@ -50,12 +51,15 @@ export function MobileProfileAddressesView({
 
   const editingAddress =
     addresses.find((address) => address.id === editingId) || null;
+  const defaultAddress = addresses.find((address) => address.isDefault) || null;
 
-  const resetForm = () => {
+  const resetForm = (clearMessage = true) => {
     setDraft(getDefaultAddressDraft());
     setEditingId(null);
     setFormOpen(false);
-    setMessage("");
+    if (clearMessage) {
+      setMessage("");
+    }
   };
 
   const updateDraft = (field: keyof AddressDraft, value: string) => {
@@ -87,7 +91,8 @@ export function MobileProfileAddressesView({
         editingAddress?.isDefault || addresses.length === 0,
       ),
     );
-    resetForm();
+    setMessage(editingId ? "Address updated." : "Address saved.");
+    resetForm(false);
   };
 
   return (
@@ -129,6 +134,42 @@ export function MobileProfileAddressesView({
           </p>
         </section>
 
+        <MobileProfileSubflowSummary
+          eyebrow="Delivery profile"
+          icon={icons.location}
+          metrics={[
+            { label: "Saved", value: addresses.length },
+            { label: "Default", value: defaultAddress?.label || "None" },
+            { label: "Status", value: addresses.length > 0 ? "Ready" : "Add" },
+          ]}
+          subtitle={
+            defaultAddress
+              ? formatAddressLine(defaultAddress)
+              : "Add one delivery address to unlock faster checkout."
+          }
+          title={defaultAddress ? "Checkout ready" : "No delivery address"}
+          action={
+            <button
+              className="min-h-[48px] w-full rounded-[13px] border border-[var(--sb-border)] bg-black/28 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              onClick={() => {
+                setDraft(getDefaultAddressDraft());
+                setEditingId(null);
+                setFormOpen(true);
+                setMessage("");
+              }}
+              type="button"
+            >
+              Add delivery address
+            </button>
+          }
+        />
+
+        {message && !formOpen ? (
+          <p className="mt-4 rounded-[14px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/10 p-3 text-[14px] text-[var(--sb-gold-soft)]">
+            {message}
+          </p>
+        ) : null}
+
         <div className="mt-6 grid gap-3">
           {addresses.map((address) => (
             <MobileProfilePanel className="p-4" key={address.id}>
@@ -152,7 +193,10 @@ export function MobileProfileAddressesView({
                 <button
                   className="min-h-[42px] rounded-[11px] border border-white/12 text-[12px] uppercase tracking-[0.06em] text-white/62 disabled:opacity-40"
                   disabled={address.isDefault}
-                  onClick={() => onMakeDefaultAddress(address.id)}
+                  onClick={() => {
+                    onMakeDefaultAddress(address.id);
+                    setMessage(`${address.label} is now the default address.`);
+                  }}
                   type="button"
                 >
                   Default
@@ -166,7 +210,10 @@ export function MobileProfileAddressesView({
                 </button>
                 <button
                   className="min-h-[42px] rounded-[11px] border border-[var(--sb-red-bright)]/45 text-[12px] uppercase tracking-[0.06em] text-[var(--sb-red-bright)]"
-                  onClick={() => onDeleteAddress(address.id)}
+                  onClick={() => {
+                    onDeleteAddress(address.id);
+                    setMessage(`${address.label} removed.`);
+                  }}
                   type="button"
                 >
                   Remove
@@ -228,7 +275,7 @@ export function MobileProfileAddressesView({
                 </button>
                 <button
                   className="min-h-[58px] rounded-[13px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-                  onClick={resetForm}
+                  onClick={() => resetForm()}
                   type="button"
                 >
                   Cancel

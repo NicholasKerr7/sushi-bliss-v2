@@ -10,6 +10,7 @@ import { icons } from "@/features/home/visualHomeData";
 import {
   createPaymentMethodFromDraft,
   getDefaultPaymentMethodDraft,
+  isPaymentMethodUsable,
   paymentMethodToDraft,
   validatePaymentMethodDraft,
 } from "@/lib/profile";
@@ -22,6 +23,7 @@ import {
   MobileProfileHeader,
   MobileProfilePanel,
 } from "./MobileProfilePrimitives";
+import { MobileProfileSubflowSummary } from "./MobileProfileSubflowSummary";
 
 interface MobileProfilePaymentsViewProps {
   cartCount: number;
@@ -55,12 +57,19 @@ export function MobileProfilePaymentsView({
   const editingPaymentMethod =
     paymentMethods.find((paymentMethod) => paymentMethod.id === editingId) ||
     null;
+  const defaultPaymentMethod =
+    paymentMethods.find((paymentMethod) => paymentMethod.isDefault) || null;
+  const usablePaymentCount = paymentMethods.filter(
+    isPaymentMethodUsable,
+  ).length;
 
-  const resetForm = () => {
+  const resetForm = (clearMessage = true) => {
     setDraft(getDefaultPaymentMethodDraft());
     setEditingId(null);
     setFormOpen(false);
-    setMessage("");
+    if (clearMessage) {
+      setMessage("");
+    }
   };
 
   const updateDraft = (field: keyof PaymentMethodDraft, value: string) => {
@@ -92,7 +101,8 @@ export function MobileProfilePaymentsView({
         editingPaymentMethod?.isDefault || paymentMethods.length === 0,
       ),
     );
-    resetForm();
+    setMessage(editingId ? "Payment method updated." : "Payment method saved.");
+    resetForm(false);
   };
 
   return (
@@ -134,6 +144,51 @@ export function MobileProfilePaymentsView({
           </p>
         </section>
 
+        <MobileProfileSubflowSummary
+          eyebrow="Checkout wallet"
+          icon="/assets/icons/credit-card-icon.png"
+          metrics={[
+            { label: "Saved", value: paymentMethods.length },
+            { label: "Usable", value: usablePaymentCount },
+            {
+              label: "Default",
+              value: defaultPaymentMethod
+                ? getPaymentMark(defaultPaymentMethod)
+                : "None",
+            },
+          ]}
+          subtitle={
+            defaultPaymentMethod
+              ? `${formatPaymentLabel(defaultPaymentMethod)} is selected first at checkout.`
+              : "Add a tokenized mock payment method for checkout review."
+          }
+          title={
+            defaultPaymentMethod
+              ? "Default card ready"
+              : "No default payment method"
+          }
+          action={
+            <button
+              className="min-h-[48px] w-full rounded-[13px] border border-[var(--sb-border)] bg-black/28 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              onClick={() => {
+                setDraft(getDefaultPaymentMethodDraft());
+                setEditingId(null);
+                setFormOpen(true);
+                setMessage("");
+              }}
+              type="button"
+            >
+              Add payment method
+            </button>
+          }
+        />
+
+        {message && !formOpen ? (
+          <p className="mt-4 rounded-[14px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/10 p-3 text-[14px] text-[var(--sb-gold-soft)]">
+            {message}
+          </p>
+        ) : null}
+
         <div className="mt-6 grid gap-3">
           {paymentMethods.map((paymentMethod) => (
             <MobileProfilePanel className="p-4" key={paymentMethod.id}>
@@ -156,6 +211,11 @@ export function MobileProfilePaymentsView({
                     <p className="mt-2 text-[13px] text-white/50">
                       Expires {paymentMethod.expiresAt}
                     </p>
+                    {!isPaymentMethodUsable(paymentMethod) ? (
+                      <p className="mt-2 text-[12px] font-semibold text-[var(--sb-red-bright)]">
+                        Expired - update before checkout.
+                      </p>
+                    ) : null}
                   </div>
                 </div>
                 <AssetIcon className="mt-1" size={28} src={icons.cart} />
@@ -164,7 +224,12 @@ export function MobileProfilePaymentsView({
                 <button
                   className="min-h-[42px] rounded-[11px] border border-white/12 text-[12px] uppercase tracking-[0.06em] text-white/62 disabled:opacity-40"
                   disabled={paymentMethod.isDefault}
-                  onClick={() => onMakeDefaultPaymentMethod(paymentMethod.id)}
+                  onClick={() => {
+                    onMakeDefaultPaymentMethod(paymentMethod.id);
+                    setMessage(
+                      `${formatPaymentLabel(paymentMethod)} is now default.`,
+                    );
+                  }}
                   type="button"
                 >
                   Default
@@ -178,7 +243,10 @@ export function MobileProfilePaymentsView({
                 </button>
                 <button
                   className="min-h-[42px] rounded-[11px] border border-[var(--sb-red-bright)]/45 text-[12px] uppercase tracking-[0.06em] text-[var(--sb-red-bright)]"
-                  onClick={() => onDeletePaymentMethod(paymentMethod.id)}
+                  onClick={() => {
+                    onDeletePaymentMethod(paymentMethod.id);
+                    setMessage(`${formatPaymentLabel(paymentMethod)} removed.`);
+                  }}
                   type="button"
                 >
                   Remove
@@ -250,7 +318,7 @@ export function MobileProfilePaymentsView({
                 </button>
                 <button
                   className="min-h-[58px] rounded-[13px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-                  onClick={resetForm}
+                  onClick={() => resetForm()}
                   type="button"
                 >
                   Cancel

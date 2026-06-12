@@ -18,6 +18,7 @@ import {
   MobileProfilePanel,
   MobileProfileSwitch,
 } from "./MobileProfilePrimitives";
+import { MobileProfileSubflowSummary } from "./MobileProfileSubflowSummary";
 
 type PreferencesUpdate =
   | Partial<UserPreferences>
@@ -95,6 +96,15 @@ export function MobileProfilePreferencesView({
   preferences,
 }: MobileProfilePreferencesViewProps) {
   const [message, setMessage] = useState("");
+  const enabledNotificationCount = Object.values(
+    preferences.notifications,
+  ).filter(Boolean).length;
+  const enabledPrivacyCount = Object.values(preferences.privacy).filter(
+    Boolean,
+  ).length;
+  const activeDietaryCount = preferences.dietaryTags.includes("No Preference")
+    ? 0
+    : preferences.dietaryTags.length;
 
   const updateFulfillmentMode = (fulfillmentMode: FulfillmentMode) => {
     onUpdatePreferences({ fulfillmentMode });
@@ -147,6 +157,26 @@ export function MobileProfilePreferencesView({
             controls.
           </p>
         </section>
+
+        <MobileProfileSubflowSummary
+          eyebrow="Personalization"
+          icon={icons.settings}
+          metrics={[
+            { label: "Mode", value: preferences.fulfillmentMode },
+            { label: "Diet", value: activeDietaryCount },
+            { label: "Alerts", value: enabledNotificationCount },
+          ]}
+          subtitle={`${enabledPrivacyCount} privacy controls are enabled. Dietary notes currently read: ${preferences.dietaryTags.join(", ")}.`}
+          title="Preferences synced locally"
+          action={
+            <Link
+              className="grid min-h-[48px] place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/28 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              href="/notifications"
+            >
+              Open notification center
+            </Link>
+          }
+        />
 
         {message ? (
           <p className="mt-5 rounded-[14px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/10 p-3 text-[14px] text-[var(--sb-gold-soft)]">
