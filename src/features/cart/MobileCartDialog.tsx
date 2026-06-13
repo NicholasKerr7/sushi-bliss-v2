@@ -7,10 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { brand, icons } from "@/features/home/visualHomeData";
-import {
-  calculateCartLineSubtotal,
-  calculateCartLineUnitPrice,
-} from "@/lib/cart";
+import { calculateCartLineSubtotal } from "@/lib/cart";
 import { getTabletPresentationImage } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
@@ -50,7 +47,6 @@ export function MobileCartDialog({
   const [noteOpen, setNoteOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
   const isEmpty = items.length === 0;
-  const pointsEarned = Math.max(0, Math.floor(totals.totalCents / 100));
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -95,7 +91,7 @@ export function MobileCartDialog({
       role="dialog"
       tabIndex={-1}
     >
-      <div className="relative h-dvh overflow-y-auto px-5 pb-[126px] pt-6">
+      <div className="relative h-dvh overflow-y-auto px-5 pb-[126px] pt-4">
         <div className="pointer-events-none fixed inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_8%,rgba(202,164,93,0.08),transparent_22%),radial-gradient(circle_at_100%_28%,rgba(172,20,19,0.12),transparent_26%),linear-gradient(180deg,#040404_0%,#080807_42%,#030303_100%)]" />
         </div>
@@ -108,11 +104,11 @@ export function MobileCartDialog({
             showClear={!isEmpty}
           />
 
-          <main className="mt-9">
-            <p className="editorial-title text-[38px] leading-none tracking-[0.18em]">
+          <main className="mt-4">
+            <p className="editorial-title text-[32px] leading-none tracking-[0.16em]">
               Your <span className="text-[var(--sb-red-bright)]">Cart</span>
             </p>
-            <p className="mt-3 text-[17px] text-[var(--sb-gold)]">
+            <p className="mt-2 text-[16px] text-[var(--sb-gold)]">
               Review your items and proceed to checkout.
             </p>
 
@@ -120,7 +116,10 @@ export function MobileCartDialog({
               <MobileEmptyCart onClose={onClose} />
             ) : (
               <>
-                <section aria-label="Cart items" className="mt-6 grid gap-4">
+                <section
+                  aria-label="Cart items"
+                  className="mt-2.5 grid gap-2.5"
+                >
                   {items.map((item) => (
                     <MobileCartLine
                       item={item}
@@ -138,11 +137,7 @@ export function MobileCartDialog({
                   onToggleNote={() => setNoteOpen((current) => !current)}
                 />
 
-                <MobileCartSummary
-                  itemCount={itemCount}
-                  pointsEarned={pointsEarned}
-                  totals={totals}
-                />
+                <MobileCartSummary itemCount={itemCount} totals={totals} />
 
                 {suggestedItem ? (
                   <MobileSuggestedItem
@@ -153,7 +148,7 @@ export function MobileCartDialog({
 
                 <button
                   aria-label="Checkout"
-                  className="red-glow-button mt-5 min-h-[74px] w-full rounded-[14px] text-[18px] uppercase tracking-[0.08em]"
+                  className="red-glow-button mt-4 min-h-[56px] w-full rounded-[14px] text-[16px] uppercase tracking-[0.08em]"
                   onClick={onOpenCheckout}
                   type="button"
                 >
@@ -254,17 +249,16 @@ function MobileCartLine({
   onRemove: (id: string) => void;
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
-  const unitPriceCents = calculateCartLineUnitPrice(item.menuItem, item.addOns);
   const lineSubtotalCents = calculateCartLineSubtotal(item);
 
   return (
-    <article className="grid min-h-[126px] grid-cols-[112px_minmax(0,1fr)] gap-4 rounded-[15px] border border-[var(--sb-border)] bg-black/42 p-3">
-      <div className="relative overflow-hidden rounded-[10px] border border-white/10 bg-black/40">
+    <article className="grid min-h-[88px] grid-cols-[98px_minmax(0,1fr)] gap-3 rounded-[15px] border border-[var(--sb-border)] bg-black/42 p-2">
+      <div className="relative h-[72px] overflow-hidden rounded-[10px] border border-white/10 bg-black/40">
         <Image
           alt={item.menuItem.image.alt || item.menuItem.name}
           className="object-cover"
           fill
-          sizes="112px"
+          sizes="98px"
           src={getTabletPresentationImage(item.menuItem)}
         />
       </div>
@@ -272,32 +266,32 @@ function MobileCartLine({
       <div className="min-w-0">
         <div className="grid grid-cols-[1fr_auto] gap-3">
           <div className="min-w-0">
-            <h2 className="editorial-title line-clamp-2 text-[19px] leading-6">
+            <h2 className="editorial-title line-clamp-1 text-[16px] leading-5">
               {item.menuItem.name}
             </h2>
-            <p className="mt-1 line-clamp-2 text-[14px] leading-5 text-white/62">
+            <p className="mt-0.5 line-clamp-1 text-[12px] leading-4 text-white/62">
               {item.menuItem.description}
             </p>
           </div>
-          <p className="text-[19px] text-[var(--sb-gold)]">
+          <p className="whitespace-nowrap text-[16px] text-[var(--sb-gold)]">
             {formatMoney(lineSubtotalCents)}
           </p>
         </div>
 
-        <div className="mt-4 flex items-center justify-between gap-3">
+        <div className="mt-1.5 flex items-center justify-between gap-2">
           <MobileCartQuantity
             onChange={(quantity) => onUpdateQuantity(item.id, quantity)}
             value={item.quantity}
           />
           <button
             aria-label={`Remove ${item.menuItem.name}`}
-            className="grid h-10 w-10 place-items-center rounded-full text-[var(--sb-red-bright)] transition hover:bg-[var(--sb-red)]/14 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-red-bright)]"
+            className="grid h-8 w-8 place-items-center rounded-full text-[var(--sb-red-bright)] transition hover:bg-[var(--sb-red)]/14 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-red-bright)]"
             onClick={() => onRemove(item.id)}
             type="button"
           >
             <svg
               aria-hidden="true"
-              className="h-6 w-6"
+              className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
             >
@@ -311,10 +305,6 @@ function MobileCartLine({
             </svg>
           </button>
         </div>
-
-        <p className="mt-2 text-[12px] text-white/42">
-          {formatMoney(unitPriceCents)} each
-        </p>
       </div>
     </article>
   );
@@ -328,22 +318,22 @@ function MobileCartQuantity({
   value: number;
 }) {
   return (
-    <div className="grid h-[42px] w-[134px] grid-cols-3 overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/32 text-[20px]">
+    <div className="flex h-7 items-center gap-3 text-[17px]">
       <button
         aria-label="Decrease quantity"
-        className="grid place-items-center text-[var(--sb-gold)] disabled:opacity-35"
+        className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)] disabled:opacity-35"
         disabled={value <= 1}
         onClick={() => onChange(Math.max(1, value - 1))}
         type="button"
       >
         -
       </button>
-      <output aria-label="Quantity" className="grid place-items-center">
+      <output aria-label="Quantity" className="grid min-w-5 place-items-center">
         {value}
       </output>
       <button
         aria-label="Increase quantity"
-        className="grid place-items-center text-[var(--sb-gold)]"
+        className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)]"
         onClick={() => onChange(Math.min(99, value + 1))}
         type="button"
       >
@@ -365,16 +355,16 @@ function MobileCartActionPanels({
   onToggleNote: () => void;
 }) {
   return (
-    <section className="mt-4 grid gap-3" aria-label="Cart options">
+    <section className="mt-2 grid gap-2" aria-label="Cart options">
       <div className="rounded-[14px] border border-[var(--sb-border)] bg-black/36">
         <button
           aria-expanded={noteOpen}
-          className="grid min-h-[64px] w-full grid-cols-[44px_1fr_auto] items-center gap-3 px-4 text-left"
+          className="grid min-h-9 w-full grid-cols-[28px_1fr_auto] items-center gap-3 px-4 text-left"
           onClick={onToggleNote}
           type="button"
         >
-          <AssetIcon size={27} src={icons.settings} />
-          <span className="text-[16px] text-white/72">
+          <AssetIcon size={20} src={icons.settings} />
+          <span className="text-[14px] text-white/72">
             {orderNote ? "Edit order note" : "Add a note for your order"}
           </span>
           <span aria-hidden="true" className="text-[var(--sb-gold)]">
@@ -403,15 +393,13 @@ function MobileCartActionPanels({
 
       <button
         aria-label="Promo code entry is unavailable in cart"
-        className="grid min-h-[64px] w-full grid-cols-[44px_1fr_auto] items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/36 px-4 text-left opacity-70"
+        className="grid min-h-9 w-full grid-cols-[28px_1fr_auto] items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/36 px-4 text-left opacity-70"
         disabled
         title="Promo codes are entered during checkout."
         type="button"
       >
-        <AssetIcon size={27} src={icons.star} />
-        <span className="text-[16px] text-white/72">
-          Promo code available at checkout
-        </span>
+        <AssetIcon size={20} src={icons.star} />
+        <span className="text-[14px] text-white/72">Add a promo code</span>
         <span aria-hidden="true" className="text-[var(--sb-gold)]">
           <ChevronIcon direction="right" size={18} />
         </span>
@@ -422,16 +410,14 @@ function MobileCartActionPanels({
 
 function MobileCartSummary({
   itemCount,
-  pointsEarned,
   totals,
 }: {
   itemCount: number;
-  pointsEarned: number;
   totals: OrderTotals;
 }) {
   return (
-    <section className="mt-4 rounded-[15px] border border-[var(--sb-border)] bg-black/42 p-4">
-      <div className="space-y-3 text-[15px]">
+    <section className="mt-2 rounded-[15px] border border-[var(--sb-border)] bg-black/42 p-2.5">
+      <div className="space-y-0.5 text-[13px]">
         <SummaryLine
           label={`Subtotal (${itemCount} ${itemCount === 1 ? "item" : "items"})`}
           value={formatMoney(totals.subtotalCents)}
@@ -446,16 +432,12 @@ function MobileCartSummary({
         />
       </div>
 
-      <div className="mt-4 border-t border-white/10 pt-4">
+      <div className="mt-1 border-t border-white/10 pt-1">
         <SummaryLine
           label="Total"
           large
           value={formatMoney(totals.totalCents)}
         />
-        <p className="mt-3 flex items-center gap-2 text-[13px] text-[var(--sb-gold)]">
-          <AssetIcon size={20} src={icons.flower} />
-          You will earn {pointsEarned} Bliss Points with this order
-        </p>
       </div>
     </section>
   );
@@ -491,33 +473,33 @@ function MobileSuggestedItem({
   onAddSuggestedItem: () => void;
 }) {
   return (
-    <section className="mt-4 grid grid-cols-[116px_1fr] gap-4 overflow-hidden rounded-[15px] border border-[var(--sb-border)] bg-black/42 p-3">
-      <div className="relative min-h-[118px] overflow-hidden rounded-[10px] border border-white/10">
+    <section className="mt-3 grid grid-cols-[84px_1fr] gap-3 overflow-hidden rounded-[15px] border border-[var(--sb-border)] bg-black/42 p-2.5">
+      <div className="relative min-h-[84px] overflow-hidden rounded-[10px] border border-white/10">
         <Image
           alt={item.image.alt || item.name}
           className="object-cover"
           fill
-          sizes="116px"
+          sizes="84px"
           src={getTabletPresentationImage(item)}
         />
       </div>
-      <div className="min-w-0 py-1">
-        <p className="text-[12px] uppercase tracking-[0.12em] text-[var(--sb-gold)]">
+      <div className="min-w-0">
+        <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--sb-gold)]">
           Complete your meal
         </p>
-        <h2 className="editorial-title mt-2 text-[23px] leading-7">
+        <h2 className="editorial-title mt-0.5 text-[18px] leading-5">
           Add {item.name}
         </h2>
-        <p className="mt-1 line-clamp-2 text-[14px] leading-5 text-white/62">
+        <p className="mt-0.5 line-clamp-1 text-[12px] leading-4 text-white/62">
           {item.description}
         </p>
-        <div className="mt-4 flex items-center justify-between gap-3">
-          <p className="text-[20px] text-[var(--sb-gold)]">
+        <div className="mt-1.5 flex items-center justify-between gap-3">
+          <p className="text-[16px] text-[var(--sb-gold)]">
             {formatMoney(item.priceCents)}
           </p>
           <button
             aria-label={`Add ${item.name} to cart`}
-            className="h-[44px] rounded-full border border-[var(--sb-gold)]/55 px-6 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold)]"
+            className="h-8 rounded-full border border-[var(--sb-gold)]/55 px-4 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold)]"
             onClick={onAddSuggestedItem}
             type="button"
           >
