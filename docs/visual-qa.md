@@ -30,6 +30,14 @@ To attach pixel-diff overlays and diff metadata without failing the suite, run:
 npm run test:visual:diff
 ```
 
+Diff mode writes per-screen artifacts to
+`test-results/visual-reference-diffs`:
+
+- `*.current.png`: the current rendered viewport capture.
+- `*.reference.png`: the matching source reference screenshot.
+- `*.diff.png`: a red-overlay visual drift map.
+- `*.metadata.json`: route, viewport, size, and diff-ratio stats.
+
 To fail the suite when a reference drifts past the configured ratio, run:
 
 ```bash

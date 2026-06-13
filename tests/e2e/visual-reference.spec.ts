@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { expect, test } from "@playwright/test";
@@ -59,6 +59,9 @@ const visualPixelThreshold = getNumberEnv(
   "VISUAL_REFERENCE_PIXEL_THRESHOLD",
   32,
 );
+const visualDiffOutputDir =
+  process.env.VISUAL_REFERENCE_DIFF_DIR ??
+  path.join("test-results", "visual-reference-diffs");
 
 const visualReferenceTargets: VisualReferenceTarget[] = [
   {
@@ -951,13 +954,16 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
 
       await expect(omakaseSection).toBeVisible();
       await expect(
-        omakaseSection.getByRole("heading", { name: "Chef Journey" }),
+        omakaseSection.getByRole("heading", {
+          name: /Omakase The Chef's Journey/i,
+        }),
       ).toBeVisible();
-      await expect(omakaseSection.getByText("Course preview")).toBeVisible();
+      await expect(
+        omakaseSection.getByText("Experience Preview"),
+      ).toBeVisible();
       await expect(
         omakaseSection.getByRole("button", {
-          exact: true,
-          name: "Review",
+          name: /Choose Experience/i,
         }),
       ).toBeVisible();
     },
@@ -981,8 +987,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       ).toHaveAttribute("aria-pressed", "true");
       await expect(
         omakaseSection.getByRole("button", {
-          exact: true,
-          name: "Review",
+          name: /Choose Experience/i,
         }),
       ).toBeVisible();
     },
@@ -3433,10 +3438,12 @@ async function openMobileOmakaseReview(page: Page) {
 
   await openMobileOmakasePackageSelection(page);
   await expect(
-    omakaseSection.getByRole("button", { exact: true, name: "Review" }),
+    omakaseSection.getByRole("button", {
+      name: /Choose Experience/i,
+    }),
   ).toBeVisible();
   await omakaseSection
-    .getByRole("button", { exact: true, name: "Review" })
+    .getByRole("button", { name: /Choose Experience/i })
     .click();
   await expect(omakaseSection.getByText("Reservation review")).toBeVisible();
 }
@@ -4223,6 +4230,49 @@ function createPngDataUrl(buffer: Buffer) {
   return `data:image/png;base64,${buffer.toString("base64")}`;
 }
 
+function createVisualArtifactSlug(target: VisualReferenceTarget) {
+  return `${target.projectName}-${target.name}`
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+/** Persists current, reference, diff, and metadata files for visual QA review. */
+async function writeVisualDiffArtifacts({
+  currentScreenshot,
+  metadata,
+  referenceScreenshot,
+  target,
+  visualDiff,
+}: {
+  currentScreenshot: Buffer;
+  metadata: Record<string, unknown>;
+  referenceScreenshot: Buffer;
+  target: VisualReferenceTarget;
+  visualDiff: VisualDiffResult;
+}) {
+  const outputDirectory = path.resolve(process.cwd(), visualDiffOutputDir);
+  const slug = createVisualArtifactSlug(target);
+  const basePath = path.join(outputDirectory, slug);
+  const { diffPngBase64, ...visualDiffMetadata } = visualDiff;
+  const persistedMetadata = {
+    ...metadata,
+    ...visualDiffMetadata,
+    targetName: target.name,
+  };
+
+  await mkdir(outputDirectory, { recursive: true });
+  await Promise.all([
+    writeFile(`${basePath}.current.png`, currentScreenshot),
+    writeFile(`${basePath}.reference.png`, referenceScreenshot),
+    writeFile(`${basePath}.diff.png`, Buffer.from(diffPngBase64, "base64")),
+    writeFile(
+      `${basePath}.metadata.json`,
+      JSON.stringify(persistedMetadata, null, 2),
+    ),
+  ]);
+}
+
 /** Compares visual-reference screenshots inside Chromium to avoid extra image dependencies. */
 async function compareVisualReference(
   page: Page,
@@ -4451,6 +4501,13 @@ test.describe("visual reference audit", () => {
         );
         const { diffPngBase64, ...visualDiffMetadata } = visualDiff;
 
+        await writeVisualDiffArtifacts({
+          currentScreenshot,
+          metadata,
+          referenceScreenshot,
+          target,
+          visualDiff,
+        });
         await testInfo.attach(`${target.name} diff`, {
           body: Buffer.from(diffPngBase64, "base64"),
           contentType: "image/png",

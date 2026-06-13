@@ -41,7 +41,7 @@ export function MobileOmakaseExperience() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[430px] bg-[url('/assets/editorial/luxury-seafood-and-wagyu-selection.webp')] bg-cover bg-center opacity-20"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[linear-gradient(180deg,rgba(17,6,5,0.78),transparent)]"
       />
 
       <div className="relative z-10 mx-auto max-w-[430px]">
@@ -71,10 +71,7 @@ export function MobileOmakaseExperience() {
         )}
       </div>
 
-      <BottomNavigation
-        activeId="reservations"
-        ariaLabel="Mobile omakase navigation"
-      />
+      <BottomNavigation activeId="home" ariaLabel="Mobile omakase navigation" />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
     </section>
   );
