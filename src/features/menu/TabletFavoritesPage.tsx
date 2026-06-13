@@ -1,13 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
-import { TabletExperienceHeader } from "@/components/layout/TabletExperienceHeader";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CartDrawer } from "@/features/cart/CartDrawer";
@@ -18,107 +15,135 @@ import { getDefaultCustomizations } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
 import { TabletFavoriteMenuCard } from "./TabletFavoriteMenuCard";
+import { TabletFavoritesTopNav } from "./TabletFavoritesTopNav";
+import { TabletSavedExperienceCard } from "./TabletSavedExperienceCard";
 import {
   tabletFavoriteBenefits,
   tabletSavedExperiences,
 } from "./tabletFavoritesContent";
 
-/** Tablet favorites surface with saved dishes, experiences, and bottom nav. */
+const favoriteFilterTabs = [
+  ["all", "All favorites", "/assets/icons/heart-icon.png"],
+  ["food", "Food & drinks", "/assets/icons/sushi-roll-icon.png"],
+  ["experiences", "Experiences", "/assets/icons/star-icon.png"],
+  ["recent", "Recently saved", "/assets/icons/clock-icon.png"],
+] as const;
+
+type FavoriteFilterId = (typeof favoriteFilterTabs)[number][0];
+
+/** Tablet favorites surface matching the saved-item reference dashboard. */
 export function TabletFavoritesPage() {
   const { addItem, itemCount } = useCart();
   const { clearFavorites, favoriteItems, hasFavorites, toggleFavorite } =
     useFavorites();
+  const [activeFilter, setActiveFilter] = useState<FavoriteFilterId>("all");
   const [cartOpen, setCartOpen] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
+  const visibleFavoriteItems =
+    activeFilter === "experiences"
+      ? []
+      : activeFilter === "recent"
+        ? favoriteItems.slice(0, 2)
+        : favoriteItems;
+  const visibleExperiences =
+    activeFilter === "food"
+      ? []
+      : activeFilter === "recent"
+        ? tabletSavedExperiences.slice(0, 1)
+        : tabletSavedExperiences;
+  const totalFavoriteCount =
+    favoriteItems.length + tabletSavedExperiences.length;
 
-  const addFavoriteToCart = (item: MenuItem) => {
+  const getFilterCount = (filterId: FavoriteFilterId) => {
+    if (filterId === "food") {
+      return favoriteItems.length;
+    }
+
+    if (filterId === "experiences") {
+      return tabletSavedExperiences.length;
+    }
+
+    if (filterId === "recent") {
+      return Math.min(2, totalFavoriteCount);
+    }
+
+    return totalFavoriteCount;
+  };
+
+  const addFavoriteToCart = (item: MenuItem, quantity: number) => {
     addItem({
       addOns: [],
       customizations: getDefaultCustomizations(),
       menuItem: item,
-      quantity: 1,
+      quantity,
     });
-    setStatusMessage(`${item.name} added to cart.`);
+    setStatusMessage(
+      `${quantity} ${item.name}${quantity > 1 ? "s" : ""} added to cart.`,
+    );
     setCartOpen(true);
   };
 
   return (
     <>
       <section
-        className="min-h-dvh overflow-x-hidden bg-[#050607] px-[18px] pb-[150px] pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pt-3"
+        className="min-h-dvh overflow-x-hidden border border-white/10 bg-[#040506] text-white"
         id="favorites"
       >
-        <TabletExperienceHeader
+        <TabletFavoritesTopNav
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}
-          title="Favorites"
         />
 
-        <main className="mx-auto w-full max-w-[1034px]">
-          <section className="mt-4 grid grid-cols-[minmax(0,1fr)_220px] items-end gap-5 rounded-[14px] border border-white/10 bg-white/[0.035] p-5 min-[1080px]:mt-5 min-[1080px]:grid-cols-[minmax(0,1fr)_260px] min-[1080px]:p-7">
+        <main className="mx-auto w-full max-w-[1086px] px-12 pb-8 pt-8">
+          <section className="flex items-start justify-between gap-8">
             <div>
-              <p className="text-[13px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-                Saved items and experiences
-              </p>
-              <h1 className="editorial-title mt-2 text-[44px] uppercase leading-none text-white min-[1080px]:text-[58px]">
+              <h1 className="editorial-title text-[50px] uppercase leading-none tracking-[0.08em] text-white">
                 My Favorites
               </h1>
-              <p className="mt-3 max-w-[560px] text-[15px] leading-6 text-[var(--sb-gold-soft)]">
-                Your saved Sushi Bliss dishes and premium experiences stay ready
-                for quick reorder and reservation planning.
+              <p className="mt-3 text-[17px] leading-6 text-[var(--sb-gold-soft)]">
+                Your saved items and experiences, all in one place.
               </p>
             </div>
-            <div className="grid gap-3">
-              <Button
-                className="h-11 rounded-[10px] uppercase tracking-[0.08em]"
-                disabled={!hasFavorites}
-                onClick={clearFavorites}
-                variant="secondary"
-              >
-                Manage favorites
-              </Button>
-              <Button
-                className="h-11 rounded-[10px] uppercase tracking-[0.08em]"
-                href="/menu"
-                variant="ghost"
-              >
-                Browse menu
-              </Button>
-            </div>
+            <Button
+              className="mt-1 h-[46px] rounded-[8px] border-[var(--sb-gold)]/58 px-6 text-[12px] uppercase tracking-[0.08em]"
+              disabled={!hasFavorites}
+              onClick={clearFavorites}
+              variant="secondary"
+            >
+              <AssetIcon size={18} src="/assets/icons/user-settings-icon.png" />
+              Manage favorites
+            </Button>
           </section>
 
-          <section className="mt-4 grid grid-cols-4 gap-3">
-            {[
-              [
-                "All favorites",
-                favoriteItems.length + tabletSavedExperiences.length,
-              ],
-              ["Food & drinks", favoriteItems.length],
-              ["Experiences", tabletSavedExperiences.length],
-              ["Recently saved", 2],
-            ].map(([label, count], index) => (
-              <button
-                aria-pressed={index === 0}
-                className={classNames(
-                  "flex h-[54px] items-center justify-center gap-3 rounded-[12px] border text-[12px] uppercase tracking-[0.08em]",
-                  index === 0
-                    ? "border-[var(--sb-gold)] bg-[var(--sb-gold)] text-black"
-                    : "border-white/10 bg-white/[0.035] text-white/70",
-                )}
-                key={label}
-                type="button"
-              >
-                <AssetIcon
-                  size={22}
-                  src={
-                    index === 0
-                      ? "/assets/icons/heart-icon.png"
-                      : "/assets/icons/star-icon.png"
-                  }
-                />
-                {label} ({count})
-              </button>
-            ))}
+          <section
+            aria-label="Favorite filters"
+            className="mt-8 grid grid-cols-4 gap-3"
+          >
+            {favoriteFilterTabs.map(([id, label, icon]) => {
+              const isActive = activeFilter === id;
+
+              return (
+                <button
+                  aria-pressed={isActive}
+                  className={classNames(
+                    "flex h-[48px] items-center justify-center gap-3 rounded-[8px] border px-3 text-[14px] uppercase tracking-[0.055em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                    isActive
+                      ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,#f2c665,#d9a347)] text-black shadow-[0_0_22px_rgb(215_168_79_/_0.24)]"
+                      : "border-[var(--sb-border)] bg-black/24 text-white/70 hover:border-[var(--sb-gold)]/50 hover:text-[var(--sb-gold-soft)]",
+                  )}
+                  key={id}
+                  onClick={() => setActiveFilter(id)}
+                  type="button"
+                >
+                  <AssetIcon
+                    loading={isActive ? "eager" : "lazy"}
+                    size={22}
+                    src={icon}
+                  />
+                  {label} ({getFilterCount(id)})
+                </button>
+              );
+            })}
           </section>
 
           {statusMessage ? (
@@ -136,21 +161,22 @@ export function TabletFavoritesPage() {
                 Saved menu items
               </h2>
               <Link
-                className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:text-white"
                 href="/menu"
               >
                 View all <ChevronIcon direction="right" size={18} />
               </Link>
             </div>
-            {hasFavorites ? (
+            {visibleFavoriteItems.length > 0 ? (
               <div className="mt-3 grid grid-cols-4 gap-3">
-                {favoriteItems.slice(0, 4).map((item, index) => (
+                {visibleFavoriteItems.slice(0, 4).map((item, index) => (
                   <TabletFavoriteMenuCard
                     eagerImage={index === 0}
                     item={item}
                     key={item.id}
                     onAddToCart={addFavoriteToCart}
                     onRemove={toggleFavorite}
+                    showQuantityControls={index !== 2}
                   />
                 ))}
               </div>
@@ -170,66 +196,35 @@ export function TabletFavoritesPage() {
                 Saved experiences
               </h2>
               <Link
-                className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:text-white"
                 href="/omakase"
               >
                 View all <ChevronIcon direction="right" size={18} />
               </Link>
             </div>
             <div className="mt-3 grid gap-3">
-              {tabletSavedExperiences.map((experience, index) => (
-                <article
-                  className="grid min-h-[120px] grid-cols-[220px_minmax(0,1fr)_196px] overflow-hidden rounded-[14px] border border-white/10 bg-white/[0.035] min-[1080px]:grid-cols-[258px_minmax(0,1fr)_220px]"
+              {visibleExperiences.map((experience, index) => (
+                <TabletSavedExperienceCard
+                  eagerImage={index < 2}
+                  experience={experience}
                   key={experience.title}
-                >
-                  <div className="relative bg-black/30">
-                    <Image
-                      alt=""
-                      className="object-cover"
-                      fill
-                      loading={index === 0 ? "eager" : "lazy"}
-                      priority={index === 0}
-                      sizes="280px"
-                      src={experience.image}
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-[20px] font-semibold text-white">
-                      {experience.title}
-                    </h3>
-                    <p className="mt-2 text-[13px] leading-5 text-white/58">
-                      {experience.meta}
-                    </p>
-                    <p className="mt-3 inline-flex rounded-full border border-[var(--sb-gold)]/28 px-3 py-1 text-[12px] text-[var(--sb-gold-soft)]">
-                      Member favorite
-                    </p>
-                  </div>
-                  <div className="grid content-center gap-3 p-4">
-                    <Button
-                      className="red-glow-button h-10 rounded-[10px] text-[11px] uppercase tracking-[0.08em]"
-                      href="/reservations"
-                      size="sm"
-                    >
-                      Reserve again
-                    </Button>
-                    <Button
-                      className="h-10 rounded-[10px] text-[11px] uppercase tracking-[0.08em]"
-                      href={experience.href}
-                      size="sm"
-                      variant="secondary"
-                    >
-                      View details
-                    </Button>
-                  </div>
-                </article>
+                />
               ))}
+              {visibleExperiences.length === 0 ? (
+                <div className="rounded-[14px] border border-white/10 bg-white/[0.035] p-6 text-center">
+                  <StatusBadge tone="neutral">No saved experiences</StatusBadge>
+                  <p className="mt-3 text-[15px] text-white/62">
+                    Saved reservations and pairings will appear here.
+                  </p>
+                </div>
+              ) : null}
             </div>
           </section>
 
-          <section className="mt-6 grid grid-cols-4 rounded-[14px] border border-white/10 bg-white/[0.035]">
+          <section className="mt-10 grid grid-cols-4 rounded-[12px] border border-[var(--sb-border)] bg-white/[0.035]">
             {tabletFavoriteBenefits.map(([title, subtitle, icon]) => (
               <div
-                className="grid min-h-[70px] grid-cols-[34px_minmax(0,1fr)] items-center gap-3 border-r border-white/10 px-4 last:border-r-0"
+                className="grid min-h-[78px] grid-cols-[34px_minmax(0,1fr)] items-center gap-4 border-r border-white/10 px-5 last:border-r-0"
                 key={title}
               >
                 <AssetIcon size={30} src={icon} />
@@ -247,10 +242,6 @@ export function TabletFavoritesPage() {
         </main>
       </section>
 
-      <TabletBottomNavigation
-        activeId="profile"
-        ariaLabel="Tablet favorites navigation"
-      />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
     </>
   );

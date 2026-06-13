@@ -1,23 +1,38 @@
 export const tabletSavedExperiences = [
   {
+    date: "May 24, 2024",
+    description:
+      "An immersive multi-course journey crafted by our master chefs.",
     href: "/omakase",
-    image: "/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp",
-    meta: "May 24, 2024 - 7:00 PM - 2 guests",
+    image: "/assets/gallery/intimate-upscale-dining-room-setting.webp",
+    location: "Sushi Bliss Downtown",
+    partySize: "2 Guests",
+    time: "7:00 PM",
     title: "Chef's Omakase Experience",
   },
   {
+    date: "May 24, 2024",
+    description: "Hand-selected sake to elevate your sushi experience.",
     href: "/gifts",
     image: "/assets/editorial/sake-vase-set-black-gold-floral.webp",
-    meta: "Premium pairing - Member favorite",
+    location: "Sushi Bliss Downtown",
+    partySize: "2 Guests",
+    time: "7:00 PM",
     title: "Premium Sake Pairing",
   },
   {
+    date: "Aug 15, 2024",
+    description: "Make your special day unforgettable.",
     href: "/reservations",
-    image: "/assets/omakase/desserts/matcha-mousse-dessert.webp",
-    meta: "Aug 15, 2024 - 8:00 PM - 4 guests",
+    image: "/assets/editorial/elegant-matcha-mousse-with-golden-accents.webp",
+    location: "Sushi Bliss Downtown",
+    partySize: "4 Guests",
+    time: "8:00 PM",
     title: "Birthday Celebration",
   },
 ] as const;
+
+export type TabletSavedExperience = (typeof tabletSavedExperiences)[number];
 
 export const tabletFavoriteBenefits = [
   [
