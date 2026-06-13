@@ -51,6 +51,24 @@ Current audit targets:
 - mobile reservation review: `/reservations` interaction against
   `mobile/mobile-20.png`
 - mobile loyalty dashboard: `/loyalty` against `mobile/mobile-21.png`
+- mobile available rewards: `/loyalty` interaction against
+  `mobile/mobile-22.png`
+- mobile member benefits: `/loyalty` interaction against
+  `mobile/mobile-23.png`
+- mobile points activity: `/loyalty` interaction against
+  `mobile/mobile-24.png`
+- mobile member pass: `/loyalty` interaction against `mobile/mobile-25.png`
+- mobile profile dashboard: `/profile` against `mobile/mobile-26.png`
+- mobile saved addresses: `/profile` interaction against
+  `mobile/mobile-27.png`
+- mobile add address: `/profile` interaction against `mobile/mobile-28.png`
+- mobile payment methods: `/profile` interaction against
+  `mobile/mobile-29.png`
+- mobile add card: `/profile` interaction against `mobile/mobile-30.png`
+- mobile notifications center: `/notifications` against
+  `mobile/mobile-31.png`
+- mobile dietary preferences: `/profile` interaction against
+  `mobile/mobile-32.png`
 - tablet home dashboard: `/home` against `tablet/tablet-01-home-dashboard.png`
 - tablet menu overview: `/menu` against `tablet/tablet-03-menu-overview.png`
 - tablet item detail: `/menu` interaction against

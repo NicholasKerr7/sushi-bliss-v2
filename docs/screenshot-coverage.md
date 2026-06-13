@@ -16,7 +16,7 @@ current viewport and attaches the matching reference PNG.
 
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
-| Mobile     |         60 |      21 |                   0 |            39 |
+| Mobile     |         60 |      32 |                   0 |            28 |
 | Tablet     |         40 |      38 |                   2 |             0 |
 | Desktop    |         40 |      40 |                   0 |             0 |
 
@@ -24,9 +24,9 @@ The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
 order confirmation composition, so the visual audit maps it to tablet order
 confirmation until the reference filename is corrected.
 
-The mobile reference `mobile-21.png` is stored in the mobile folder but has
-941x1672 source dimensions, so the audit records that file's true reference
-size while still exercising the mobile `/loyalty` route viewport.
+The mobile references `mobile-21.png` through `mobile-30.png` are stored in the
+mobile folder but have 941x1672 source dimensions, so the audit records each
+file's true reference size while still exercising the mobile viewport.
 
 ## Tablet References
 
@@ -143,6 +143,17 @@ size while still exercising the mobile `/loyalty` route viewport.
 | `mobile-19.png` | reservation experience  | Audited |
 | `mobile-20.png` | reservation review      | Audited |
 | `mobile-21.png` | `/loyalty` dashboard    | Audited |
+| `mobile-22.png` | loyalty rewards state   | Audited |
+| `mobile-23.png` | loyalty benefits state  | Audited |
+| `mobile-24.png` | loyalty activity state  | Audited |
+| `mobile-25.png` | loyalty member pass     | Audited |
+| `mobile-26.png` | `/profile` dashboard    | Audited |
+| `mobile-27.png` | saved addresses state   | Audited |
+| `mobile-28.png` | add address state       | Audited |
+| `mobile-29.png` | payment methods state   | Audited |
+| `mobile-30.png` | add payment state       | Audited |
+| `mobile-31.png` | `/notifications`        | Audited |
+| `mobile-32.png` | dietary preferences     | Audited |
 
-`mobile-22.png` through `mobile-60.png` still need a manual naming pass before
+`mobile-33.png` through `mobile-60.png` still need a manual naming pass before
 we can map each reference to a route and interaction with confidence.

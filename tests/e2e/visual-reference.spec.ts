@@ -22,6 +22,7 @@ interface VisualReferenceTarget {
 }
 
 const mobileReferenceSize = { height: 1822, width: 863 };
+const mobileLargeReferenceSize = { height: 1672, width: 941 };
 const mobileViewport = { height: 911, width: 430 };
 
 const visualReferenceTargets: VisualReferenceTarget[] = [
@@ -443,7 +444,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile loyalty dashboard",
     projectName: "chromium-mobile",
     referencePath: "public/assets/screenshots/mobile/mobile-21.png",
-    referenceSize: { height: 1672, width: 941 },
+    referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -453,6 +454,222 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       await expect(loyaltySection.getByText("Bliss rewards")).toBeVisible();
       await expect(loyaltySection.getByText("Points balance")).toBeVisible();
       await expect(loyaltySection.getByText("Reward catalog")).toBeVisible();
+    },
+  },
+  {
+    name: "mobile available rewards",
+    prepare: openMobileLoyaltyRewards,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-22.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/loyalty",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(loyaltySection.getByText("Reward catalog")).toBeVisible();
+      await expect(
+        loyaltySection.getByRole("heading", {
+          name: "Available experiences",
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile member benefits",
+    prepare: openMobileLoyaltyPass,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-23.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/loyalty",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(loyaltySection.getByText("Member pass")).toBeVisible();
+      await expect(
+        loyaltySection.getByText("Priority pickup windows"),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile points activity",
+    prepare: openMobileLoyaltyActivity,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-24.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/loyalty",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(
+        loyaltySection.getByRole("heading", { name: "Points activity" }),
+      ).toBeVisible();
+      await expect(
+        loyaltySection.getByRole("heading", { name: "Redeemed rewards" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile member pass",
+    prepare: openMobileLoyaltyPass,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-25.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/loyalty",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(loyaltySection.getByText("Member pass")).toBeVisible();
+      await expect(loyaltySection.getByLabel(/Mock QR code/i)).toBeVisible();
+    },
+  },
+  {
+    name: "mobile profile dashboard",
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-26.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/profile",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(profileSection).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Hiroshi Tanaka" }),
+      ).toBeVisible();
+      await expect(profileSection.getByText("Saved addresses")).toBeVisible();
+      await expect(profileSection.getByText("Payment methods")).toBeVisible();
+    },
+  },
+  {
+    name: "mobile saved addresses",
+    prepare: openMobileProfileAddresses,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-27.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/profile",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(
+        profileSection.getByRole("heading", {
+          exact: true,
+          name: "Addresses",
+        }),
+      ).toBeVisible();
+      await expect(profileSection.getByText("Checkout ready")).toBeVisible();
+      await expect(profileSection.getByText("Home")).toBeVisible();
+    },
+  },
+  {
+    name: "mobile add address",
+    prepare: openMobileProfileAddAddress,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-28.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/profile",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(
+        profileSection.getByRole("heading", { name: "Add address" }),
+      ).toBeVisible();
+      await expect(profileSection.getByLabel("Street")).toBeVisible();
+      await expect(
+        profileSection.getByRole("button", { name: "Save" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile payment methods",
+    prepare: openMobileProfilePayments,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-29.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/profile",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(
+        profileSection.getByRole("heading", { name: "Payments" }),
+      ).toBeVisible();
+      await expect(
+        profileSection.getByText("Default card ready"),
+      ).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Visa ending 4242" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile add card",
+    prepare: openMobileProfileAddPayment,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-30.png",
+    referenceSize: mobileLargeReferenceSize,
+    routePath: "/profile",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(
+        profileSection.getByRole("heading", { name: "Add payment" }),
+      ).toBeVisible();
+      await expect(profileSection.getByLabel("Last four")).toBeVisible();
+      await expect(
+        profileSection.getByRole("button", { name: "Save" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile notifications center",
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-31.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/notifications",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const notificationsSection = page.locator("#notifications");
+
+      await expect(notificationsSection).toBeVisible();
+      await expect(
+        notificationsSection.getByRole("heading", { name: /Alerts/i }),
+      ).toBeVisible();
+      await expect(
+        notificationsSection.getByRole("toolbar", {
+          name: "Notification filters",
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile dietary preferences",
+    prepare: openMobileProfilePreferences,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-32.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/profile",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(
+        profileSection.getByRole("heading", {
+          name: "Preferences & Security",
+        }),
+      ).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Dietary preferences" }),
+      ).toBeVisible();
+      await expect(
+        profileSection.getByRole("button", { name: "Gluten-Free" }),
+      ).toBeVisible();
     },
   },
   {
@@ -2355,6 +2572,94 @@ async function openMobileReservationReview(page: Page) {
     .click();
   await expect(
     reservationsSection.getByRole("heading", { name: "Confirmation" }),
+  ).toBeVisible();
+}
+
+async function openMobileLoyaltyRewards(page: Page) {
+  const loyaltySection = page.locator("#loyalty");
+
+  await expect(
+    loyaltySection.getByRole("button", { name: "Rewards" }),
+  ).toBeVisible();
+  await loyaltySection.getByRole("button", { name: "Rewards" }).click();
+  await expect(
+    loyaltySection.getByRole("heading", { name: "Available experiences" }),
+  ).toBeVisible();
+}
+
+async function openMobileLoyaltyPass(page: Page) {
+  const loyaltySection = page.locator("#loyalty");
+
+  await expect(
+    loyaltySection.getByRole("button", { name: "Pass" }),
+  ).toBeVisible();
+  await loyaltySection.getByRole("button", { name: "Pass" }).click();
+  await expect(loyaltySection.getByText("Member pass")).toBeVisible();
+}
+
+async function openMobileLoyaltyActivity(page: Page) {
+  const loyaltySection = page.locator("#loyalty");
+
+  await expect(
+    loyaltySection.getByRole("button", { name: "Activity" }),
+  ).toBeVisible();
+  await loyaltySection.getByRole("button", { name: "Activity" }).click();
+  await expect(loyaltySection.getByText("Points activity")).toBeVisible();
+}
+
+async function openMobileProfileSurface(page: Page, name: string) {
+  const profileSection = page.locator("#profile");
+  const surfaceButton = profileSection.getByRole("button", { name }).first();
+
+  await expect(surfaceButton).toBeVisible();
+  await surfaceButton.scrollIntoViewIfNeeded();
+  await surfaceButton.click();
+}
+
+async function openMobileProfileAddresses(page: Page) {
+  const profileSection = page.locator("#profile");
+
+  await openMobileProfileSurface(page, "Saved addresses");
+  await expect(
+    profileSection.getByRole("heading", { exact: true, name: "Addresses" }),
+  ).toBeVisible();
+}
+
+async function openMobileProfileAddAddress(page: Page) {
+  const profileSection = page.locator("#profile");
+
+  await openMobileProfileAddresses(page);
+  await profileSection.getByLabel("Add address").click();
+  await expect(
+    profileSection.getByRole("heading", { name: "Add address" }),
+  ).toBeVisible();
+}
+
+async function openMobileProfilePayments(page: Page) {
+  const profileSection = page.locator("#profile");
+
+  await openMobileProfileSurface(page, "Payment methods");
+  await expect(
+    profileSection.getByRole("heading", { name: "Payments" }),
+  ).toBeVisible();
+}
+
+async function openMobileProfileAddPayment(page: Page) {
+  const profileSection = page.locator("#profile");
+
+  await openMobileProfilePayments(page);
+  await profileSection.getByLabel("Add payment method").click();
+  await expect(
+    profileSection.getByRole("heading", { name: "Add payment" }),
+  ).toBeVisible();
+}
+
+async function openMobileProfilePreferences(page: Page) {
+  const profileSection = page.locator("#profile");
+
+  await openMobileProfileSurface(page, "Preferences & security");
+  await expect(
+    profileSection.getByRole("heading", { name: "Preferences & Security" }),
   ).toBeVisible();
 }
 
