@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
@@ -172,7 +173,7 @@ function TabletHero() {
             href="/reservations"
           >
             Reserve a Table
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
           </Link>
           <Link
             className="flex h-14 w-[210px] items-center justify-center gap-6 rounded-[10px] border border-[var(--sb-border-strong)] bg-black/32 text-base uppercase tracking-[0.08em] text-[var(--sb-gold)]"
@@ -218,7 +219,7 @@ function TabletFeaturedMenu({
           href="/menu"
         >
           View All
-          <span aria-hidden="true">&gt;</span>
+          <ChevronIcon direction="right" size={18} />
         </Link>
       </div>
       <div className="mt-6 grid grid-cols-4 gap-2.5">
@@ -379,7 +380,7 @@ function TabletRecentOrder({ item }: { item: MenuItem }) {
           </span>
         </span>
         <span className="text-[28px] text-[var(--sb-gold)]" aria-hidden="true">
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </Link>
     </section>

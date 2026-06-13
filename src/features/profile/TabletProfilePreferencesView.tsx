@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { locations } from "@/data/locations";
 import { icons } from "@/features/home/visualHomeData";
@@ -234,7 +235,7 @@ export function TabletProfilePreferencesView({
               onClick={onBack}
               type="button"
             >
-              <span aria-hidden="true">&lt;</span>
+              <ChevronIcon direction="left" size={18} />
               Account settings
             </button>
             <h1 className="editorial-title text-[42px] uppercase leading-none tracking-[0.06em] text-white min-[1080px]:text-[58px]">
@@ -275,7 +276,7 @@ export function TabletProfilePreferencesView({
                     className="text-[var(--sb-gold-soft)]"
                     aria-hidden="true"
                   >
-                    &gt;
+                    <ChevronIcon direction="right" size={18} />
                   </span>
                 </button>
               ))}
@@ -415,7 +416,7 @@ export function TabletProfilePreferencesView({
                       className="text-[var(--sb-gold-soft)]"
                       aria-hidden="true"
                     >
-                      &gt;
+                      <ChevronIcon direction="right" size={18} />
                     </span>
                   </Link>
                 ))}
@@ -527,7 +528,7 @@ export function TabletProfilePreferencesView({
                       className="text-[var(--sb-gold-soft)]"
                       aria-hidden="true"
                     >
-                      &gt;
+                      <ChevronIcon direction="right" size={18} />
                     </span>
                   </button>
                 ))}
@@ -580,7 +581,7 @@ export function TabletProfilePreferencesView({
                       className="text-[var(--sb-gold-soft)]"
                       aria-hidden="true"
                     >
-                      &gt;
+                      <ChevronIcon direction="right" size={18} />
                     </span>
                   </button>
                 ))}

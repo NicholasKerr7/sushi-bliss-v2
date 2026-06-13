@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
@@ -287,7 +288,7 @@ function FeaturedReservationCard({
           type="button"
         >
           View Reservation
-          <span aria-hidden="true">&gt;</span>
+          <ChevronIcon direction="right" size={18} />
         </button>
       </div>
     </MobileReservationPanel>

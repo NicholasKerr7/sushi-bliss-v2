@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import Link from "next/link";
 
 import { featuredAssets, icons } from "@/features/home/visualHomeData";
@@ -53,14 +54,14 @@ export function TabletMenuOverview({
           className="absolute left-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)]"
           href="/menu"
         >
-          &lt;
+          <ChevronIcon direction="left" size={18} />
         </Link>
         <Link
           aria-label="Next recommendation"
           className="absolute right-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)]"
           href="/menu"
         >
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </Link>
         <div className="relative z-10 flex min-h-[342px] flex-col justify-center px-[104px]">
           <p className="text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">

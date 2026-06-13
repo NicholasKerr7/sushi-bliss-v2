@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
@@ -298,7 +299,7 @@ function MobileActiveOrderCard({
           type="button"
         >
           View Details
-          <span aria-hidden="true">&gt;</span>
+          <ChevronIcon direction="right" size={18} />
         </button>
       </div>
     </MobileOrderPanel>

@@ -15,7 +15,7 @@ export function MobileHeader() {
           aria-label="Go to Sushi Bliss home"
         >
           <Image
-            src={brand.assets.icon.publicUrl}
+            src={brand.assets.floralEmblem.publicUrl}
             alt=""
             width={36}
             height={36}

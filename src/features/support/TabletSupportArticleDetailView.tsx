@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import type { HelpArticle } from "@/types/support";
 
 interface TabletSupportArticleDetailViewProps {
@@ -27,7 +28,7 @@ export function TabletSupportArticleDetailView({
           onClick={onBack}
           type="button"
         >
-          ← Back to help center
+          <ChevronIcon direction="left" size={18} /> Back to help center
         </button>
       </div>
 

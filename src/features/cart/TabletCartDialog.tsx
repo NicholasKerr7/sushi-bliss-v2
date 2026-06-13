@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/features/home/visualHomeData";
 import {
@@ -344,7 +345,7 @@ export function TabletCartDialog({
               onClick={onOpenCheckout}
             >
               Proceed to checkout
-              <span aria-hidden="true">→</span>
+              <ChevronIcon direction="right" size={18} />
             </Button>
             <p className="text-center text-[13px] text-white/48">
               Secure checkout powered by SSL encryption

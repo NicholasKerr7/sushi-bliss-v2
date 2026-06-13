@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 import type { MenuCategory } from "@/types/menu";
@@ -52,7 +53,7 @@ export function MobileMenuHeader({
               </span>
             </span>
             <span className="sr-only">Open cart</span>
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
           </button>
         ) : null}
         <Link
@@ -166,7 +167,7 @@ export function MobileSectionHeader({ title }: { title: string }) {
         className="flex items-center gap-2 text-[15px] text-[var(--sb-red-bright)]"
         href="/menu"
       >
-        View All <span aria-hidden="true">&gt;</span>
+        View All <ChevronIcon direction="right" size={18} />
       </Link>
     </div>
   );

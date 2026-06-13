@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { offers } from "@/data/offers";
 import {
@@ -185,7 +186,7 @@ export function DesktopOffersDashboard() {
                   href="/menu"
                 >
                   Browse eligible items
-                  <span aria-hidden="true">&gt;</span>
+                  <ChevronIcon direction="right" size={18} />
                 </Link>
               </article>
 
@@ -210,7 +211,8 @@ export function DesktopOffersDashboard() {
                   className="mt-6 block w-full text-right text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                   href="/support"
                 >
-                  View full terms & conditions &gt;
+                  View full terms & conditions{" "}
+                  <ChevronIcon direction="right" size={18} />
                 </Link>
               </article>
             </aside>
@@ -278,7 +280,7 @@ function OfferHero({ onOpenDetail }: { onOpenDetail: () => void }) {
             href="/reservations"
           >
             Book experience
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
           </Button>
           <button
             className="h-[54px] rounded-[10px] border border-[var(--sb-gold)]/38 px-6 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"

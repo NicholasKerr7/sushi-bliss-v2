@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { premiumReservationCards } from "@/data/omakase";
 import {
   DesktopBenefitStrip,
@@ -114,7 +115,7 @@ export function DesktopOmakaseExperience() {
                     type="button"
                   >
                     Reserve omakase
-                    <span aria-hidden="true">&gt;</span>
+                    <ChevronIcon direction="right" size={18} />
                   </button>
                   <Link
                     className="flex h-[50px] w-[230px] items-center justify-center gap-4 rounded-[10px] border border-[var(--sb-border)] bg-black/42 text-[13px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"

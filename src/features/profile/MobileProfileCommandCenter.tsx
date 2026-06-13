@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 
@@ -163,7 +164,7 @@ function CommandTileContent({
           <AssetIcon size={24} src={icon} />
         </span>
         <span aria-hidden="true" className="text-[24px] text-white/34">
-          &rsaquo;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </span>
       <span className="mt-5 block text-[13px] uppercase tracking-[0.1em] text-white/48">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
@@ -158,9 +159,11 @@ export function OptionPanel({
             <p className="mt-1 text-[12px] text-white/50">{description}</p>
           </div>
         </div>
-        <span className="text-[var(--sb-gold)]" aria-hidden="true">
-          ^
-        </span>
+        <ChevronIcon
+          className="text-[var(--sb-gold)]"
+          direction="up"
+          size={18}
+        />
       </div>
       {children}
     </section>

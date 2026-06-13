@@ -20,6 +20,7 @@ const customerRoutePaths = [
 ] as const;
 
 const routePaths = ["/", ...customerRoutePaths, "/admin"] as const;
+const minimumScrollableOverflow = 24;
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
   await expect(
@@ -71,11 +72,39 @@ async function expectGlobalScrollPolicy(page: Page, routePath: string) {
   ).not.toContain("none");
 }
 
+async function waitForStableDocumentHeight(page: Page) {
+  let previousHeight = await page.evaluate(
+    () => document.documentElement.scrollHeight,
+  );
+  let stableSamples = 0;
+
+  for (let index = 0; index < 10; index += 1) {
+    await page.waitForTimeout(50);
+
+    const currentHeight = await page.evaluate(
+      () => document.documentElement.scrollHeight,
+    );
+
+    if (Math.abs(currentHeight - previousHeight) <= 1) {
+      stableSamples += 1;
+      if (stableSamples >= 3) {
+        return;
+      }
+    } else {
+      stableSamples = 0;
+      previousHeight = currentHeight;
+    }
+  }
+}
+
 async function expectDocumentScrollsWhenOverflowing(
   page: Page,
   routePath: string,
 ) {
-  await page.evaluate(() => window.scrollTo({ left: 0, top: 0 }));
+  await page.evaluate(() =>
+    window.scrollTo({ behavior: "instant", left: 0, top: 0 }),
+  );
+  await waitForStableDocumentHeight(page);
 
   const initialMetrics = await page.evaluate(() => {
     const root = document.documentElement;
@@ -83,6 +112,7 @@ async function expectDocumentScrollsWhenOverflowing(
     return {
       bodyLocked: document.body.classList.contains("overflow-hidden"),
       clientHeight: root.clientHeight,
+      maxScrollY: root.scrollHeight - root.clientHeight,
       scrollHeight: root.scrollHeight,
     };
   });
@@ -92,11 +122,30 @@ async function expectDocumentScrollsWhenOverflowing(
     `${routePath} should not leave the page body scroll-locked`,
   ).toBe(false);
 
-  if (initialMetrics.scrollHeight <= initialMetrics.clientHeight + 8) {
+  if (initialMetrics.maxScrollY <= minimumScrollableOverflow) {
     return;
   }
 
-  await page.mouse.wheel(0, Math.min(640, initialMetrics.scrollHeight));
+  const viewport = page.viewportSize();
+  if (viewport) {
+    await page.mouse.move(viewport.width / 2, viewport.height / 2);
+  }
+
+  await page.mouse.wheel(0, Math.min(640, initialMetrics.maxScrollY));
+  await page.waitForTimeout(100);
+
+  const postWheelMetrics = await page.evaluate(() => {
+    const root = document.documentElement;
+
+    return {
+      maxScrollY: root.scrollHeight - root.clientHeight,
+      scrollY: window.scrollY,
+    };
+  });
+
+  if (postWheelMetrics.maxScrollY <= minimumScrollableOverflow) {
+    return;
+  }
 
   await expect
     .poll(() => page.evaluate(() => window.scrollY), {

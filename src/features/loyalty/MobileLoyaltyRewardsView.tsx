@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -79,7 +80,7 @@ export function MobileLoyaltyRewardsView({
                     {reward.pointsCost.toLocaleString()} pts
                   </span>
                   <span className="text-[23px] leading-none text-[var(--sb-gold-soft)]">
-                    &rsaquo;
+                    <ChevronIcon direction="right" size={18} />
                   </span>
                 </span>
               </span>

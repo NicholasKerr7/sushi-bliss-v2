@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { DesktopBenefitStrip } from "@/features/menu/DesktopMenuChrome";
 import { classNames } from "@/lib/classNames";
@@ -410,7 +411,7 @@ function UpcomingReservationCard({
           className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
           href="/reservations"
         >
-          View all &gt;
+          View all <ChevronIcon direction="right" size={18} />
         </Link>
       </div>
       <div className="mt-4 grid grid-cols-[270px_1fr] overflow-hidden rounded-[12px] border border-white/10 bg-black/24">
@@ -454,7 +455,7 @@ function RecentActivityCard() {
           className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
           type="button"
         >
-          View all &gt;
+          View all <ChevronIcon direction="right" size={18} />
         </button>
       </div>
       <div className="mt-4 overflow-hidden rounded-[12px] border border-white/10">
@@ -468,7 +469,7 @@ function RecentActivityCard() {
             <span className="text-white/56">{date}</span>
             <span className="text-white/56">{detail}</span>
             <span className="text-[var(--sb-gold-soft)]" aria-hidden="true">
-              &gt;
+              <ChevronIcon direction="right" size={18} />
             </span>
           </button>
         ))}

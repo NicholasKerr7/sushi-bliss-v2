@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { icons } from "@/features/home/visualHomeData";
@@ -298,7 +299,7 @@ function PastOrdersPanel({
         >
           <AssetIcon size={24} src={icons.bag} />
           View all past orders
-          <span aria-hidden="true">&gt;</span>
+          <ChevronIcon direction="right" size={18} />
         </button>
       ) : null}
     </section>

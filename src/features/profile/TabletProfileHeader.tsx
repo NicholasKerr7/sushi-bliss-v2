@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 import type { UserProfile } from "@/types/user";
 
@@ -69,12 +70,11 @@ export function TabletProfileHeader({
             </span>
           </span>
         </Link>
-        <span
-          aria-hidden="true"
-          className="hidden text-[var(--sb-gold-soft)] lg:inline"
-        >
-          v
-        </span>
+        <ChevronIcon
+          className="hidden text-[var(--sb-gold-soft)] lg:inline-block"
+          direction="down"
+          size={18}
+        />
       </div>
     </header>
   );

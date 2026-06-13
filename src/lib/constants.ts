@@ -14,7 +14,7 @@ export const RESPONSIVE_BREAKPOINTS = {
 export const ASSET_FALLBACKS = {
   menuItem: "/assets/food/luxury-sushi-platter-on-marble-surface.webp",
   brandLogo: "/assets/brand/sushi-bliss-primary-logo.png",
-  brandIcon: "/assets/brand/sushi-bliss-app-icon.png",
+  brandIcon: "/assets/brand/sushi-bliss-floral-emblem-icon.png",
 } as const;
 
 export const ENV_KEYS = {

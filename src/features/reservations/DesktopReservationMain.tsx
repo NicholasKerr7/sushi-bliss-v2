@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { reservationExperiences } from "@/data/reservations";
 import { DesktopBenefitStrip } from "@/features/menu/DesktopMenuChrome";
@@ -185,7 +186,8 @@ export function DesktopReservationMain({
               onClick={onOpenExperience}
               type="button"
             >
-              Open experience chooser &gt;
+              Open experience chooser{" "}
+              <ChevronIcon direction="right" size={18} />
             </button>
           </div>
         </section>

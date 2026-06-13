@@ -1,6 +1,7 @@
 "use client";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { pickupLocation } from "@/data/checkout";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
@@ -142,9 +143,11 @@ export function FulfillmentStep({
               {formatMoney(checkout.reviewTotals.totalCents)}
             </span>
           </span>
-          <span aria-hidden="true" className="text-[var(--sb-gold-soft)]">
-            {summaryOpen ? "^" : "v"}
-          </span>
+          <ChevronIcon
+            className="text-[var(--sb-gold-soft)]"
+            direction={summaryOpen ? "up" : "down"}
+            size={20}
+          />
         </button>
       </section>
 
@@ -327,9 +330,11 @@ export function PaymentStep({
               Manage cards in profile settings
             </span>
           </span>
-          <span aria-hidden="true" className="text-[var(--sb-gold-soft)]">
-            &gt;
-          </span>
+          <ChevronIcon
+            className="text-[var(--sb-gold-soft)]"
+            direction="right"
+            size={20}
+          />
         </button>
       </section>
 

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { featuredAssets } from "@/data/assets";
 import { appContent, brandContent } from "@/data/brand";
@@ -370,7 +371,7 @@ function DesktopSourcingView({
             onClick={() => onSurfaceChange("atmosphere")}
             type="button"
           >
-            View atmosphere &gt;
+            View atmosphere <ChevronIcon direction="right" size={18} />
           </button>
         </article>
       </section>
@@ -477,7 +478,7 @@ function DesktopAtmosphereView({
             onClick={() => onSurfaceChange("story")}
             type="button"
           >
-            Return to story &gt;
+            Return to story <ChevronIcon direction="right" size={18} />
           </button>
         </article>
       </section>

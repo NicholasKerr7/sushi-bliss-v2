@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -25,7 +26,7 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
         <AssetIcon
           className="rounded-full"
           size={52}
-          src={brand.assets.icon.publicUrl}
+          src={brand.assets.floralEmblem.publicUrl}
         />
         <span className="editorial-title text-[24px] leading-[0.88] tracking-[0.34em]">
           Sushi
@@ -136,7 +137,7 @@ export function DesktopDashboard({
                 >
                   Reserve a Table
                   <span className="ml-3" aria-hidden="true">
-                    &gt;
+                    <ChevronIcon direction="right" size={18} />
                   </span>
                 </Link>
                 <Link
@@ -175,7 +176,7 @@ export function DesktopDashboard({
                 href="/menu"
               >
                 View Full Menu
-                <span aria-hidden="true">&gt;</span>
+                <ChevronIcon direction="right" size={18} />
               </Link>
             </div>
             <div className="mt-3 grid grid-cols-4 gap-3">
@@ -249,7 +250,7 @@ function DesktopInfoCard() {
         href="/locations"
       >
         View Details
-        <span aria-hidden="true">&gt;</span>
+        <ChevronIcon direction="right" size={18} />
       </Link>
     </aside>
   );
@@ -346,7 +347,7 @@ function DesktopRecentOrder({
           </span>
         </span>
         <span className="text-[var(--sb-gold)]" aria-hidden="true">
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </Link>
     </section>
@@ -416,7 +417,7 @@ function DesktopChefSpecial({
           </span>
         </span>
         <span className="text-[var(--sb-gold)]" aria-hidden="true">
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </Link>
     </section>

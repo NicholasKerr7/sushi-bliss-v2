@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -137,7 +138,7 @@ export function TabletOffersDashboard() {
               type="button"
             >
               View all offers
-              <span aria-hidden="true">→</span>
+              <ChevronIcon direction="right" size={18} />
             </button>
           </div>
 

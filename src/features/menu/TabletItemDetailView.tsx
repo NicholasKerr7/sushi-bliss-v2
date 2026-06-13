@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/features/home/visualHomeData";
 import { getTabletPresentationImage } from "@/lib/assets";
@@ -96,13 +97,13 @@ export function TabletDetailView({
               onClick={onClose}
               type="button"
             >
-              <span aria-hidden="true">‹</span>
+              <ChevronIcon direction="left" size={18} />
               Back
             </button>
             <Link className="hover:text-white" href="/home">
               Home
             </Link>
-            <span aria-hidden="true">›</span>
+            <ChevronIcon direction="right" size={18} />
             <button
               className="hover:text-white"
               onClick={onClose}
@@ -110,7 +111,7 @@ export function TabletDetailView({
             >
               Menu
             </button>
-            <span aria-hidden="true">›</span>
+            <ChevronIcon direction="right" size={18} />
             <span className="text-[var(--sb-red-bright)]">{item.name}</span>
           </nav>
           <button
@@ -119,7 +120,7 @@ export function TabletDetailView({
             onClick={showPreviousImage}
             type="button"
           >
-            ‹
+            <ChevronIcon direction="left" size={18} />
           </button>
           <button
             aria-label="Show next image"
@@ -127,7 +128,7 @@ export function TabletDetailView({
             onClick={showNextImage}
             type="button"
           >
-            ›
+            <ChevronIcon direction="right" size={18} />
           </button>
           <div
             aria-label="Item gallery"

@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import {
   DesktopBenefitStrip,
@@ -41,7 +42,7 @@ export function DesktopLocationDetail({
             >
               Home
             </button>
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
             <button
               className="text-[var(--sb-gold-soft)]"
               onClick={onBack}
@@ -49,7 +50,7 @@ export function DesktopLocationDetail({
             >
               Locations
             </button>
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
             <span className="text-white">{location.neighborhood}</span>
           </div>
 

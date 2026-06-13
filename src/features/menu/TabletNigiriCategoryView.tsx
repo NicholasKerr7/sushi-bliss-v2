@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
 import { TABLET_OTORO_HERO_IMAGE } from "@/lib/assets";
 import { formatMoney } from "@/lib/money";
@@ -118,7 +119,7 @@ export function TabletNigiriCategoryView({
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.78)_43%,rgba(0,0,0,0.16)_100%)]" />
         <div className="relative z-10 flex min-h-[280px] flex-col justify-center px-[64px] min-[1080px]:min-h-[342px] min-[1080px]:px-[86px]">
           <p className="text-[16px] uppercase tracking-[0.16em] text-[var(--sb-gold)] min-[1080px]:text-[18px]">
-            Menu &gt; Nigiri
+            Menu <ChevronIcon direction="right" size={18} /> Nigiri
           </p>
           <h1 className="editorial-title mt-4 text-[64px] uppercase leading-[0.9] tracking-[0.18em] text-white min-[1080px]:mt-5 min-[1080px]:text-[86px]">
             Nigiri

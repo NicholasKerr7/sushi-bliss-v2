@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
@@ -56,7 +57,7 @@ export function TabletOmakaseReview({
             onClick={onBack}
             type="button"
           >
-            <span aria-hidden="true">&lt;</span>
+            <ChevronIcon direction="left" size={18} />
             Reservations / Select omakase / Review
           </button>
           <h1 className="editorial-title mt-5 text-[44px] uppercase leading-none text-white min-[1080px]:text-[50px]">
@@ -332,7 +333,7 @@ export function TabletOmakaseReview({
             onClick={onBack}
             variant="secondary"
           >
-            ← Back to selection
+            <ChevronIcon direction="left" size={18} /> Back to selection
           </Button>
           <p className="text-center text-[12px] text-white/54">
             Secure checkout powered by SSL encryption
@@ -341,7 +342,7 @@ export function TabletOmakaseReview({
             className="red-glow-button h-[46px] rounded-[10px] uppercase tracking-[0.08em]"
             href="/reservations"
           >
-            Continue to reservation →
+            Continue to reservation <ChevronIcon direction="right" size={18} />
           </Button>
         </div>
       </section>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { locations } from "@/data/locations";
@@ -345,7 +346,7 @@ export function TabletProfileDashboardView({
                 onClick={onOpenSettings}
                 type="button"
               >
-                View all &gt;
+                View all <ChevronIcon direction="right" size={18} />
               </button>
             </div>
             <div className="mt-4 overflow-hidden rounded-[12px] border border-white/10">
@@ -400,7 +401,7 @@ export function TabletProfileDashboardView({
                 onClick={onOpenSettings}
                 type="button"
               >
-                View all &gt;
+                View all <ChevronIcon direction="right" size={18} />
               </button>
             </div>
             <div className="mt-4 grid gap-2 min-[1080px]:gap-3">
@@ -451,7 +452,7 @@ export function TabletProfileDashboardView({
                 className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                 href="/loyalty"
               >
-                View all &gt;
+                View all <ChevronIcon direction="right" size={18} />
               </Link>
             </div>
             <div className="mt-4 grid gap-0 overflow-hidden rounded-[12px] border border-white/10">
@@ -495,7 +496,7 @@ export function TabletProfileDashboardView({
                 className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                 href="/reservations"
               >
-                View details &gt;
+                View details <ChevronIcon direction="right" size={18} />
               </Link>
             </div>
             <div className="mt-4 grid grid-cols-[150px_minmax(0,1fr)] overflow-hidden rounded-[12px] border border-white/10">
@@ -572,7 +573,7 @@ export function TabletProfileDashboardView({
                   </span>
                 </span>
                 <span className="text-[var(--sb-gold-soft)]" aria-hidden="true">
-                  &gt;
+                  <ChevronIcon direction="right" size={18} />
                 </span>
               </button>
             ))}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { pickupLocation } from "@/data/checkout";
 import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
@@ -211,7 +212,7 @@ export function TabletOrderConfirmation({
               onClick={onClose}
             >
               Track order
-              <span aria-hidden="true">›</span>
+              <ChevronIcon direction="right" size={18} />
             </Button>
             <Button
               className="h-full rounded-[12px] border-[var(--sb-gold)]/46 text-[15px] uppercase tracking-[0.08em]"
@@ -370,7 +371,7 @@ function ConfirmationInfoCard({
             onClick={onAction}
           >
             {actionLabel}
-            <span aria-hidden="true">›</span>
+            <ChevronIcon direction="right" size={18} />
           </Link>
         ) : null}
       </div>
@@ -516,7 +517,7 @@ function StackedDetailCard({
               onClick={onAction}
             >
               {actionLabel}
-              <span aria-hidden="true">›</span>
+              <ChevronIcon direction="right" size={18} />
             </Link>
           ) : null}
         </div>

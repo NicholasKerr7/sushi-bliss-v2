@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import type { MenuItem } from "@/types/menu";
 
@@ -79,7 +80,7 @@ function MobileDashboardHeader() {
           alt="Sushi Bliss"
           className="rounded-full"
           size={48}
-          src={brand.assets.icon.publicUrl}
+          src={brand.assets.floralEmblem.publicUrl}
         />
         <span className="editorial-title text-[18px] leading-[0.95] tracking-[0.34em] text-white">
           Sushi
@@ -219,7 +220,7 @@ function FeaturedMenuRail({ items, onAddToCart }: FeaturedMenuRailProps) {
           href="/menu"
         >
           View All
-          <span aria-hidden="true">&gt;</span>
+          <ChevronIcon direction="right" size={18} />
         </Link>
       </div>
       <div className="mt-3 grid grid-cols-3 gap-3">
@@ -324,7 +325,7 @@ function MemberCard({
             href="/loyalty"
           >
             View Benefits
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
           </Link>
         </div>
       </div>

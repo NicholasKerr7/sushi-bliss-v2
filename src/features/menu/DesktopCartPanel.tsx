@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import {
   calculateCartLineSubtotal,
   calculateCartLineUnitPrice,
@@ -116,7 +117,7 @@ export function DesktopCartPanel({
       >
         {ctaLabel}
         <span className="ml-4" aria-hidden="true">
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </button>
 

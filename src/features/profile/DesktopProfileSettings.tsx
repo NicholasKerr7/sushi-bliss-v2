@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { classNames } from "@/lib/classNames";
 import type { LoyaltyAccount } from "@/types/loyalty";
 import type { UserPreferences, UserProfile } from "@/types/user";
@@ -132,7 +133,7 @@ export function DesktopAccountSettings({
                 className="mt-4 block text-[13px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]"
                 href="/support"
               >
-                Contact support &gt;
+                Contact support <ChevronIcon direction="right" size={18} />
               </Link>
             </article>
           </aside>
@@ -395,7 +396,7 @@ function AccountShortcutsCard({ onBack }: { onBack: () => void }) {
           type="button"
         >
           {label}
-          <span aria-hidden="true">&gt;</span>
+          <ChevronIcon direction="right" size={18} />
         </button>
       ))}
     </SettingsCard>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 
 import { Button } from "@/components/ui/Button";
 import { reservationExperiences } from "@/data/reservations";
@@ -129,7 +130,7 @@ export function DesktopExperienceChooser({
             onClick={onOpenReview}
           >
             Continue to confirmation
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
           </Button>
           <button
             className="mt-3 h-12 w-full rounded-[12px] border border-white/12 text-[13px] uppercase tracking-[0.08em] text-white/70"

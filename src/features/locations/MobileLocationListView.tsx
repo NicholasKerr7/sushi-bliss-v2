@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 import type { RestaurantLocation } from "@/types/location";
@@ -195,7 +196,7 @@ function MobileLocationCard({
             onClick={() => onOpenDetail(location)}
             type="button"
           >
-            <span aria-hidden="true">&rsaquo;</span>
+            <ChevronIcon direction="right" size={18} />
           </button>
         </div>
 

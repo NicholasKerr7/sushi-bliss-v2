@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { brand, icons } from "@/features/home/visualHomeData";
 import {
@@ -377,7 +378,7 @@ function MobileCartActionPanels({
             {orderNote ? "Edit order note" : "Add a note for your order"}
           </span>
           <span aria-hidden="true" className="text-[var(--sb-gold)]">
-            &gt;
+            <ChevronIcon direction="right" size={18} />
           </span>
         </button>
         {noteOpen ? (
@@ -412,7 +413,7 @@ function MobileCartActionPanels({
           Promo code available at checkout
         </span>
         <span aria-hidden="true" className="text-[var(--sb-gold)]">
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </button>
     </section>

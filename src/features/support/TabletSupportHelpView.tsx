@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { helpArticles, supportTopics } from "@/data/support";
 import { classNames } from "@/lib/classNames";
@@ -188,7 +189,7 @@ export function TabletSupportHelpView({
                   className="text-[24px] leading-none text-white/54"
                   aria-hidden="true"
                 >
-                  ›
+                  <ChevronIcon direction="right" size={18} />
                 </span>
               </button>
             ))}

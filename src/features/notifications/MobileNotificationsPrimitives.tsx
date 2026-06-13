@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 import { notificationCategoryIcons } from "@/lib/notifications";
@@ -79,7 +80,7 @@ export function MobileNotificationsBackButton({
       onClick={onClick}
       type="button"
     >
-      <span aria-hidden="true">&lsaquo;</span>
+      <ChevronIcon direction="left" size={24} />
     </button>
   );
 }

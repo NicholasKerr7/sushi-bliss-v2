@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { mockUser } from "@/data/mockUser";
 import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
 
@@ -62,9 +63,11 @@ export function TabletLocationsHeader({
               Bliss member
             </span>
           </span>
-          <span aria-hidden="true" className="text-[var(--sb-gold)]">
-            v
-          </span>
+          <ChevronIcon
+            className="text-[var(--sb-gold)]"
+            direction="down"
+            size={18}
+          />
         </Link>
         <Link
           className="relative grid h-11 w-11 place-items-center"

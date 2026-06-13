@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { cartCustomizationGroups } from "@/data/cart";
 import { icons } from "@/features/home/visualHomeData";
 import { getTabletPresentationImage } from "@/lib/assets";
@@ -77,7 +78,7 @@ export function MobileItemCustomizeView({
             onClick={onBack}
             type="button"
           >
-            &lt;
+            <ChevronIcon direction="left" size={18} />
           </button>
           <h1 className="editorial-title text-center text-[19px] uppercase tracking-[0.14em] text-[var(--sb-gold)]">
             Customize Your Item

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { getSushiIconAssets } from "@/data/iconAssets";
 import { getBrandContent, getFeaturedAssets } from "@/lib/data";
 
@@ -77,7 +78,7 @@ export function WelcomeScreen() {
               <AssetIcon className="mr-4" size={28} src={icons.flower} />
               <span className="flex-1">Explore Menu</span>
               <span className="text-[var(--sb-gold)]" aria-hidden="true">
-                &gt;
+                <ChevronIcon direction="right" size={18} />
               </span>
             </Link>
             <Link
@@ -86,14 +87,14 @@ export function WelcomeScreen() {
             >
               <AssetIcon className="mr-4" size={28} src={icons.profile} />
               <span className="flex-1">Sign In</span>
-              <span aria-hidden="true">&gt;</span>
+              <ChevronIcon direction="right" size={18} />
             </Link>
             <Link
               className="mx-auto flex h-12 items-center justify-center gap-4 px-4 text-[15px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
               href="/home"
             >
               Continue As Guest
-              <span aria-hidden="true">&gt;</span>
+              <ChevronIcon direction="right" size={18} />
             </Link>
           </div>
         </div>

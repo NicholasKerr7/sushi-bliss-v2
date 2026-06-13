@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { contactMethods, helpArticles, supportTopics } from "@/data/support";
 import {
@@ -190,7 +191,7 @@ function DesktopContactView({
           >
             <AssetIcon size={28} src="/assets/icons/calendar-icon.png" />
             Reserve a table
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
           </Link>
           <Link
             className="grid h-[68px] grid-cols-[50px_1fr_24px] items-center rounded-[12px] border border-[var(--sb-gold)]/36 bg-black/38 px-8 text-[18px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]"
@@ -198,7 +199,7 @@ function DesktopContactView({
           >
             <AssetIcon size={28} src="/assets/icons/takeaway-bag-icon.png" />
             Order now
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
           </Link>
         </div>
       </section>
@@ -219,7 +220,7 @@ function DesktopContactView({
             >
               {card.cta}
               <span className="ml-4" aria-hidden="true">
-                &gt;
+                <ChevronIcon direction="right" size={18} />
               </span>
             </button>
           </article>
@@ -292,7 +293,7 @@ function DesktopContactView({
             onClick={onSubmit}
           >
             Send message
-            <span aria-hidden="true">&gt;</span>
+            <ChevronIcon direction="right" size={18} />
           </Button>
         </article>
 
@@ -403,7 +404,7 @@ function DesktopHelpCenter({
               className="mt-4 block text-[var(--sb-gold-soft)]"
               aria-hidden="true"
             >
-              &gt;
+              <ChevronIcon direction="right" size={18} />
             </span>
           </button>
         ))}
@@ -419,7 +420,7 @@ function DesktopHelpCenter({
               className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
               type="button"
             >
-              View all articles &gt;
+              View all articles <ChevronIcon direction="right" size={18} />
             </button>
           </div>
           <div className="mt-4 overflow-hidden rounded-[10px] border border-white/10">
@@ -435,7 +436,7 @@ function DesktopHelpCenter({
                   {article.summary}
                 </span>
                 <span className="text-[var(--sb-gold-soft)]" aria-hidden="true">
-                  &gt;
+                  <ChevronIcon direction="right" size={18} />
                 </span>
               </button>
             ))}

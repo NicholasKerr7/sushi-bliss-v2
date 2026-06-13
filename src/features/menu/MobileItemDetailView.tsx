@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { getTabletPresentationImage } from "@/lib/assets";
@@ -60,7 +61,7 @@ export function MobileItemDetailView({
           onClick={onClose}
           type="button"
         >
-          &lt;
+          <ChevronIcon direction="left" size={18} />
         </button>
         <div className="flex items-center gap-3">
           <AssetIcon
@@ -293,7 +294,7 @@ function DetailPanelButton({
           {label}
         </span>
         <span className="text-[28px] text-[var(--sb-gold)]" aria-hidden="true">
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </button>
       {expanded ? (

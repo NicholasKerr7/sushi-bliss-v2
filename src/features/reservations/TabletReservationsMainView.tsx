@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { locations } from "@/data/locations";
@@ -254,7 +255,7 @@ function HistoryReservationRow({
         </StatusBadge>
       </span>
       <span aria-hidden="true" className="text-[var(--sb-gold-soft)]">
-        &gt;
+        <ChevronIcon direction="right" size={18} />
       </span>
     </button>
   );

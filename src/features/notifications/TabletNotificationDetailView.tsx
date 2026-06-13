@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { formatDateTime } from "@/lib/dates";
 import { notificationCategoryLabels } from "@/lib/notifications";
@@ -33,7 +34,7 @@ export function TabletNotificationDetailView({
           onClick={onBack}
           type="button"
         >
-          ← Back to notifications
+          <ChevronIcon direction="left" size={18} /> Back to notifications
         </button>
         <h1 className="editorial-title mt-6 text-[52px] leading-none text-white min-[1080px]:text-[64px]">
           Notification{" "}

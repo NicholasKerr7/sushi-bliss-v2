@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { rewards } from "@/data/loyalty";
 import { DesktopMenuHeader } from "@/features/menu/DesktopMenuChrome";
 import { classNames } from "@/lib/classNames";
@@ -69,7 +70,7 @@ export function DesktopLoyaltyPassRewards({
             onClick={onBack}
             type="button"
           >
-            <span aria-hidden="true">&lt;</span>
+            <ChevronIcon direction="left" size={18} />
             Back to loyalty
           </button>
           {notice ? (
@@ -300,7 +301,7 @@ export function DesktopLoyaltyPassRewards({
                   type="button"
                 >
                   View all activity
-                  <span aria-hidden="true">&gt;</span>
+                  <ChevronIcon direction="right" size={18} />
                 </button>
               </DesktopLoyaltyPanel>
             </aside>

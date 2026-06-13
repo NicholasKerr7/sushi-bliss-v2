@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { DesktopMenuHeader } from "@/features/menu/DesktopMenuChrome";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
@@ -97,7 +98,7 @@ export function DesktopOmakaseReview({
                 onClick={onBack}
                 type="button"
               >
-                <span aria-hidden="true">&lt;</span>
+                <ChevronIcon direction="left" size={18} />
                 Reservations
               </button>
               <h1 className="editorial-title mt-5 text-[58px] uppercase leading-[0.92] text-white">
@@ -295,10 +296,10 @@ export function DesktopOmakaseReview({
               href="/reservations"
             >
               Confirm reservation
-              <span aria-hidden="true">-&gt;</span>
+              <ChevronIcon direction="right" size={18} />
             </Link>
             <p className="mt-5 flex items-center justify-center gap-2 text-[12px] text-white/54">
-              <AssetIcon size={16} src="/assets/icons/lock-icon.png" />
+              <AssetIcon size={16} src="/assets/icons/credit-card-icon.png" />
               Secure reservation powered by SSL encryption
             </p>
           </aside>

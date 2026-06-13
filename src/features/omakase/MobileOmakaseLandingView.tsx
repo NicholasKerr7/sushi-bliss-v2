@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { premiumReservationCards } from "@/data/omakase";
 import { icons } from "@/features/home/visualHomeData";
@@ -132,7 +133,7 @@ export function MobileOmakaseLandingView({
           >
             View Full Menu
             <span aria-hidden="true" className="text-[23px] leading-none">
-              &rsaquo;
+              <ChevronIcon direction="right" size={18} />
             </span>
           </Link>
         </div>
@@ -188,7 +189,7 @@ export function MobileOmakaseLandingView({
       >
         Choose Experience
         <span aria-hidden="true" className="text-[30px] leading-none">
-          &rsaquo;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </button>
 

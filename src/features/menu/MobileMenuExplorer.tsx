@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { icons } from "@/features/home/visualHomeData";
 import { getTabletPresentationImage } from "@/lib/assets";
@@ -220,7 +221,7 @@ function MobileMenuOverview({
           </span>
         </span>
         <span className="text-[var(--sb-gold)]" aria-hidden="true">
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </button>
     </>
@@ -261,7 +262,7 @@ function MobileCategoryView({
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.58)_54%,rgba(0,0,0,0.08)_100%),linear-gradient(180deg,rgba(0,0,0,0.18)_0%,#050505_96%)]" />
         <div className="relative z-10 flex min-h-[232px] flex-col justify-end pb-7">
           <p className="text-[20px] text-[var(--sb-gold)]">
-            Menu &gt;{" "}
+            Menu <ChevronIcon direction="right" size={18} />{" "}
             <span className="text-[var(--sb-red-bright)]">
               {category.label}
             </span>
@@ -319,7 +320,7 @@ function MobileCategoryView({
           </span>
         </span>
         <span className="text-[var(--sb-gold)]" aria-hidden="true">
-          &gt;
+          <ChevronIcon direction="right" size={18} />
         </span>
       </button>
     </>

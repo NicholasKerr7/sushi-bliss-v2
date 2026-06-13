@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { locations } from "@/data/locations";
 import {
   reservationExperiences,
@@ -266,7 +267,7 @@ export function MobileReservationExperienceView({
         type="button"
       >
         Continue to Confirm
-        <span aria-hidden="true">&gt;</span>
+        <ChevronIcon direction="right" size={18} />
       </button>
       <p className="mt-4 text-center text-[12px] text-white/42">
         Secure reservation. Card details will be requested later.

@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { cartCustomizationGroups } from "@/data/cart";
 import { icons } from "@/features/home/visualHomeData";
@@ -82,7 +83,7 @@ export function TabletCustomizeView({
           onClick={onViewDetail}
           type="button"
         >
-          <span aria-hidden="true">←</span>
+          <ChevronIcon direction="left" size={18} />
           Back to menu
         </button>
         <p className="text-[14px] uppercase tracking-[0.28em] text-white/40">

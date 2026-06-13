@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
 import type { MenuCategory } from "@/types/menu";
 
@@ -241,7 +242,7 @@ export function TabletSection({ children, icon, title }: TabletSectionProps) {
             className="text-sm uppercase text-[var(--sb-gold)]"
             href="/menu"
           >
-            View All &gt;
+            View All <ChevronIcon direction="right" size={18} />
           </Link>
         ) : null}
       </div>

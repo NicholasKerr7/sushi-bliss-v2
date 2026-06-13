@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { dietaryPreferenceOptions } from "@/data/profile";
 import { icons } from "@/features/home/visualHomeData";
@@ -371,7 +372,7 @@ function LinkRow({ href, label }: { href: string; label: string }) {
         aria-hidden="true"
         className="text-[24px] text-[var(--sb-gold-soft)]"
       >
-        &rsaquo;
+        <ChevronIcon direction="right" size={18} />
       </span>
     </Link>
   );

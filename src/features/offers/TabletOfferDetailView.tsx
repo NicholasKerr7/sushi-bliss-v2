@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -51,7 +52,7 @@ export function TabletOfferDetailView({
             type="button"
           >
             <span aria-hidden="true" className="text-[22px] leading-none">
-              ‹
+              <ChevronIcon direction="left" size={18} />
             </span>
           </button>
           <Link className="flex items-center gap-3" href="/home">

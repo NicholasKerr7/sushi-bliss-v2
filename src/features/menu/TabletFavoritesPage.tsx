@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { TabletExperienceHeader } from "@/components/layout/TabletExperienceHeader";
 import { Button } from "@/components/ui/Button";
@@ -138,7 +139,7 @@ export function TabletFavoritesPage() {
                 className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                 href="/menu"
               >
-                View all &gt;
+                View all <ChevronIcon direction="right" size={18} />
               </Link>
             </div>
             {hasFavorites ? (
@@ -172,7 +173,7 @@ export function TabletFavoritesPage() {
                 className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                 href="/omakase"
               >
-                View all &gt;
+                View all <ChevronIcon direction="right" size={18} />
               </Link>
             </div>
             <div className="mt-3 grid gap-3">

@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { featuredAssets } from "@/features/home/visualHomeData";
 import { useCart } from "@/hooks/useCart";
 import { classNames } from "@/lib/classNames";
@@ -412,7 +413,7 @@ function DesktopMenuSection({
         </h2>
         {action ? (
           <span className="text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
-            {action} &gt;
+            {action} <ChevronIcon direction="right" size={18} />
           </span>
         ) : null}
       </div>

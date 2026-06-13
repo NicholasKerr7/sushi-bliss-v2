@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { menuItemById } from "@/data/menu";
 import { featuredAssets, icons } from "@/features/home/visualHomeData";
 import type { MenuCategory, MenuItem } from "@/types/menu";
@@ -173,7 +174,7 @@ export function TabletSearchFilter({
             </span>
           </span>
           <span className="rounded-[9px] border border-[var(--sb-border)] px-6 py-3 text-sm uppercase text-[var(--sb-gold)]">
-            Request a Custom Dish &gt;
+            Request a Custom Dish <ChevronIcon direction="right" size={18} />
           </span>
         </Link>
       </div>

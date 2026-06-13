@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { OmakasePackage, OmakasePackageCourse } from "@/types/omakase";
@@ -167,7 +168,7 @@ export function DesktopCourseJourney({
               aria-hidden="true"
               className="absolute -left-3 top-[72px] z-10 text-[var(--sb-gold-soft)]"
             >
-              &gt;
+              <ChevronIcon direction="right" size={18} />
             </span>
           ) : null}
           <div className="overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-black/36">

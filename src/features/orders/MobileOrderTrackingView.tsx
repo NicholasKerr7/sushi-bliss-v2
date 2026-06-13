@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { icons } from "@/features/home/visualHomeData";
 import { calculateCartLineSubtotal } from "@/lib/cart";
@@ -119,7 +120,7 @@ export function MobileOrderTrackingView({
               className="text-[30px] text-[var(--sb-gold-soft)]"
               aria-hidden
             >
-              &rsaquo;
+              <ChevronIcon direction="right" size={18} />
             </span>
           </div>
         </MobileOrderPanel>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
@@ -77,7 +78,7 @@ export function TabletGiftSelection({
             className="flex items-center gap-4 text-[13px] uppercase tracking-[0.08em] text-white/72"
             href="/home"
           >
-            <span aria-hidden="true">&lt;</span>
+            <ChevronIcon direction="left" size={17} />
             Back to home
           </Link>
           <h1 className="editorial-title mt-4 text-[48px] uppercase leading-[0.94] text-white min-[1080px]:text-[54px]">
@@ -241,7 +242,11 @@ export function TabletGiftSelection({
                       : "Dinner (6:00 PM - 9:00 PM)"}
                   </span>
                 </span>
-                <span className="text-[var(--sb-gold-soft)]">v</span>
+                <ChevronIcon
+                  className="text-[var(--sb-gold-soft)]"
+                  direction="down"
+                  size={18}
+                />
               </button>
             </div>
           </article>
@@ -275,7 +280,8 @@ export function TabletGiftSelection({
         onClick={onContinue}
       >
         <AssetIcon size={26} src="/assets/icons/gift-icon.png" />
-        Continue to review →
+        Continue to review
+        <ChevronIcon direction="right" size={22} />
       </Button>
       <p className="mt-3 text-center text-[12px] text-white/42">
         Secure checkout powered by SSL encryption · {TABLET_GIFT_QUANTITY} guest

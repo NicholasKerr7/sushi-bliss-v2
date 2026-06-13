@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { locations } from "@/data/locations";
 import { icons } from "@/features/home/visualHomeData";
@@ -330,7 +331,7 @@ function ProfilePreviewHeader({
         aria-hidden="true"
         className="text-[28px] text-[var(--sb-gold-soft)]"
       >
-        &rsaquo;
+        <ChevronIcon direction="right" size={18} />
       </span>
     </>
   );

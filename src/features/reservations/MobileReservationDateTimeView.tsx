@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -242,7 +243,7 @@ export function MobileReservationDateTimeView({
         type="button"
       >
         Continue to Experience
-        <span aria-hidden="true">&gt;</span>
+        <ChevronIcon direction="right" size={18} />
       </button>
 
       <p className="mt-4 text-center text-[12px] text-white/42">

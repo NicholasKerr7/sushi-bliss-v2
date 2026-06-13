@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
@@ -79,7 +80,7 @@ export function TabletGiftCheckout({
             onClick={onBack}
             type="button"
           >
-            <span aria-hidden="true">&lt;</span>
+            <ChevronIcon direction="left" size={17} />
             Gift checkout
           </button>
           <h1 className="editorial-title mt-5 text-[48px] uppercase leading-[0.92] text-white min-[1080px]:text-[56px]">
@@ -232,7 +233,11 @@ export function TabletGiftCheckout({
               >
                 <AssetIcon size={22} src="/assets/icons/clock-icon.png" />
                 10:00 AM
-                <span className="text-[var(--sb-gold-soft)]">v</span>
+                <ChevronIcon
+                  className="text-[var(--sb-gold-soft)]"
+                  direction="down"
+                  size={18}
+                />
               </button>
             </div>
           </article>
