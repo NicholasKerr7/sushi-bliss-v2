@@ -135,6 +135,19 @@ Current audit targets:
   `desktop/desktop-22-help-center.png`
 - desktop notifications center: `/notifications` against
   `desktop/desktop-23-notifications-center.png`
+- desktop favorites: `/favorites` with seeded favorites against
+  `desktop/desktop-24-favorites.png`
+- desktop promotions offers: `/offers` against
+  `desktop/desktop-25-promotions-offers.png`
+- desktop referral earn: `/loyalty` interaction against
+  `desktop/desktop-26-referral-earn.png`
+- desktop locations: `/locations` against `desktop/desktop-27-locations.png`
+- desktop gift experience: `/gifts` against
+  `desktop/desktop-28-gift-experience.png`
+- desktop gift checkout: `/gifts` interaction against
+  `desktop/desktop-29-gift-checkout.png`
+- desktop gift confirmation: `/gifts` interaction against
+  `desktop/desktop-30-gift-confirmation.png`
 
 The audit asserts the rendered viewport size, reference image dimensions, route
 health, and absence of horizontal overflow. Full pixel assertions should be

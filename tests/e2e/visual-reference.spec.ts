@@ -1340,6 +1340,162 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       ).toBeVisible();
     },
   },
+  {
+    name: "desktop favorites",
+    prepare: seedDesktopFavorites,
+    projectName: "chromium-desktop",
+    referencePath: "public/assets/screenshots/desktop/desktop-24-favorites.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/favorites",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const favoritesSection = page.locator("#favorites");
+
+      await expect(favoritesSection).toBeVisible();
+      await expect(
+        favoritesSection.getByRole("heading", { name: /Your\s+Favorites/i }),
+      ).toBeVisible();
+      await expect(
+        favoritesSection.getByText("Your favorite summary"),
+      ).toBeVisible();
+      await expect(
+        favoritesSection.getByText("Recommended for you"),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop promotions offers",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-25-promotions-offers.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/offers",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const offersSection = page.locator("#offers");
+
+      await expect(offersSection).toBeVisible();
+      await expect(
+        offersSection.getByRole("heading", {
+          name: /Spring Omakase\s+Tasting Journey/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        offersSection.getByText("Exclusive offers for you"),
+      ).toBeVisible();
+      await expect(offersSection.getByText("Redeem your offer")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop referral earn",
+    prepare: openDesktopReferralEarn,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-26-referral-earn.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/loyalty",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(
+        loyaltySection.getByRole("heading", { name: /Refer\s+&\s+Earn/i }),
+      ).toBeVisible();
+      await expect(
+        loyaltySection.getByText("Your referral code"),
+      ).toBeVisible();
+      await expect(
+        loyaltySection.getByText("Your referral activity"),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop locations",
+    projectName: "chromium-desktop",
+    referencePath: "public/assets/screenshots/desktop/desktop-27-locations.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/locations",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const locationsSection = page.locator("#locations");
+
+      await expect(locationsSection).toBeVisible();
+      await expect(
+        locationsSection.getByRole("heading", { name: /Our\s+Locations/i }),
+      ).toBeVisible();
+      await expect(
+        locationsSection.getByText("Sushi Bliss Downtown"),
+      ).toBeVisible();
+      await expect(locationsSection.getByText("Tokyo map")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop gift experience",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-28-gift-experience.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/gifts",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const giftsSection = page.locator("#gifts");
+
+      await expect(giftsSection).toBeVisible();
+      await expect(
+        giftsSection.getByRole("heading", { name: /Gift an Experience/i }),
+      ).toBeVisible();
+      await expect(
+        giftsSection.getByText("Choose your gift experience"),
+      ).toBeVisible();
+      await expect(
+        giftsSection.getByRole("button", { name: /Continue to review/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop gift checkout",
+    prepare: openDesktopGiftCheckout,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-29-gift-checkout.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/gifts",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const giftsSection = page.locator("#gifts");
+
+      await expect(
+        giftsSection.getByRole("heading", { name: "Gift Checkout" }),
+      ).toBeVisible();
+      await expect(giftsSection.getByText("Order summary")).toBeVisible();
+      await expect(
+        giftsSection.getByRole("button", { name: "Purchase gift" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop gift confirmation",
+    prepare: openDesktopGiftConfirmation,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-30-gift-confirmation.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/gifts",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const giftsSection = page.locator("#gifts");
+
+      await expect(
+        giftsSection.getByRole("heading", {
+          name: /Your gift has been confirmed/i,
+        }),
+      ).toBeVisible();
+      await expect(giftsSection.getByText("Gift order")).toBeVisible();
+      await expect(
+        giftsSection.getByRole("button", { name: "Send another gift" }),
+      ).toBeVisible();
+    },
+  },
 ];
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
@@ -1819,6 +1975,63 @@ async function openDesktopHelpCenter(page: Page) {
   await supportSection.getByRole("button", { name: "View all FAQs" }).click();
   await expect(
     supportSection.getByRole("heading", { name: /How can\s+we help/i }),
+  ).toBeVisible();
+}
+
+async function seedDesktopFavorites(page: Page) {
+  await page.evaluate(() => {
+    window.localStorage.setItem(
+      "sushi-bliss:favorites",
+      JSON.stringify([
+        "otoro-nigiri",
+        "spicy-tuna-roll",
+        "dragon-roll",
+        "salmon-nigiri",
+      ]),
+    );
+    window.dispatchEvent(new Event("sushi-bliss:favorites-changed"));
+  });
+  await expect(page.getByText("Otoro Nigiri")).toBeVisible();
+}
+
+async function openDesktopReferralEarn(page: Page) {
+  const loyaltySection = page.locator("#loyalty");
+
+  await expect(
+    loyaltySection.getByRole("button", { name: "Invite friends" }),
+  ).toBeVisible();
+  await loyaltySection.getByRole("button", { name: "Invite friends" }).click();
+  await expect(
+    loyaltySection.getByRole("heading", { name: /Refer\s+&\s+Earn/i }),
+  ).toBeVisible();
+}
+
+async function openDesktopGiftCheckout(page: Page) {
+  const giftsSection = page.locator("#gifts");
+
+  await expect(
+    giftsSection.getByRole("button", { name: /Continue to review/i }),
+  ).toBeVisible();
+  await giftsSection
+    .getByRole("button", { name: /Continue to review/i })
+    .click();
+  await expect(
+    giftsSection.getByRole("heading", { name: "Gift Checkout" }),
+  ).toBeVisible();
+}
+
+async function openDesktopGiftConfirmation(page: Page) {
+  const giftsSection = page.locator("#gifts");
+
+  await openDesktopGiftCheckout(page);
+  await expect(
+    giftsSection.getByRole("button", { name: "Purchase gift" }),
+  ).toBeVisible();
+  await giftsSection.getByRole("button", { name: "Purchase gift" }).click();
+  await expect(
+    giftsSection.getByRole("heading", {
+      name: /Your gift has been confirmed/i,
+    }),
   ).toBeVisible();
 }
 

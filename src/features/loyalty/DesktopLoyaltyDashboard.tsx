@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -30,6 +29,7 @@ import {
   desktopLoyaltyTextureImage,
 } from "./DesktopLoyaltyPrimitives";
 import { DesktopLoyaltyPassRewards } from "./DesktopLoyaltyPassRewards";
+import { DesktopReferralEarn } from "./DesktopReferralEarn";
 import { RewardDetailModal } from "./RewardDetailModal";
 
 interface DesktopLoyaltyDashboardProps {
@@ -53,7 +53,9 @@ export function DesktopLoyaltyDashboard({
   setSelectedReward,
   transactions,
 }: DesktopLoyaltyDashboardProps) {
-  const [surface, setSurface] = useState<"dashboard" | "pass">("dashboard");
+  const [surface, setSurface] = useState<"dashboard" | "pass" | "referral">(
+    "dashboard",
+  );
   const { itemCount } = useCart();
   const progress = getTierProgress(account);
 
@@ -73,6 +75,33 @@ export function DesktopLoyaltyDashboard({
           transactions={transactions}
           onBack={() => setSurface("dashboard")}
           onViewReward={openReward}
+        />
+        <RewardDetailModal
+          memberPoints={memberPoints}
+          onOpenChange={(open) => {
+            if (!open) {
+              setSelectedReward(null);
+              setRedemptionMessage("");
+            }
+          }}
+          onRedeemReward={onRedeemReward}
+          redemptionMessage={redemptionMessage}
+          reward={selectedReward}
+        />
+      </>
+    );
+  }
+
+  if (surface === "referral") {
+    return (
+      <>
+        <DesktopReferralEarn
+          account={account}
+          cartCount={itemCount}
+          progress={progress}
+          transactions={transactions}
+          onBack={() => setSurface("dashboard")}
+          onViewRewards={() => setSurface("pass")}
         />
         <RewardDetailModal
           memberPoints={memberPoints}
@@ -170,12 +199,13 @@ export function DesktopLoyaltyDashboard({
                     Share Sushi Bliss with friends. You both earn{" "}
                     {referralProgress.rewardPoints} points.
                   </p>
-                  <Link
+                  <button
                     className="mt-5 inline-grid h-10 place-items-center rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-                    href="/offers"
+                    onClick={() => setSurface("referral")}
+                    type="button"
                   >
                     Invite friends
-                  </Link>
+                  </button>
                 </div>
               </DesktopLoyaltyPanel>
             </div>

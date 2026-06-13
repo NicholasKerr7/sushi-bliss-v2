@@ -57,6 +57,36 @@ const notificationsNavItems = [
   ["notifications", "Notifications", "/notifications"],
 ] as const;
 
+const offersNavItems = [
+  ["home", "Home", "/home"],
+  ["menu", "Menu", "/menu"],
+  ["reservations", "Reservations", "/reservations"],
+  ["order", "Order Online", "/menu"],
+  ["offers", "Special Offers", "/offers"],
+  ["about", "About Us", "/about"],
+  ["contact", "Contact", "/support"],
+] as const;
+
+const locationsNavItems = [
+  ["home", "Home", "/home"],
+  ["menu", "Menu", "/menu"],
+  ["reservations", "Reservations", "/reservations"],
+  ["order", "Order Online", "/menu"],
+  ["locations", "Locations", "/locations"],
+  ["about", "About Us", "/about"],
+  ["contact", "Contact", "/support"],
+] as const;
+
+const giftsNavItems = [
+  ["home", "Home", "/home"],
+  ["menu", "Menu", "/menu"],
+  ["reservations", "Reservations", "/reservations"],
+  ["order", "Order Online", "/menu"],
+  ["gifts", "Gift an Experience", "/gifts"],
+  ["about", "About Us", "/about"],
+  ["contact", "Contact", "/support"],
+] as const;
+
 interface DesktopMenuHeaderProps {
   activeId?: string;
   cartCount: number;
@@ -73,9 +103,15 @@ export function DesktopMenuHeader({
         ? helpNavItems
         : activeId === "notifications"
           ? notificationsNavItems
-          : activeId === "omakase"
-            ? omakaseNavItems
-            : baseNavItems;
+          : activeId === "offers"
+            ? offersNavItems
+            : activeId === "locations"
+              ? locationsNavItems
+              : activeId === "gifts"
+                ? giftsNavItems
+                : activeId === "omakase"
+                  ? omakaseNavItems
+                  : baseNavItems;
 
   return (
     <header className="flex h-[88px] items-center border-b border-white/[0.08] bg-[#07090a]/96 px-[3vw]">

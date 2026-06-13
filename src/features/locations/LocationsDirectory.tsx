@@ -2,15 +2,12 @@
 
 import { useState } from "react";
 
-import { PageContainer } from "@/components/layout/PageContainer";
-import { Badge } from "@/components/ui/Badge";
-import { SectionHeader } from "@/components/ui/SectionHeader";
 import { locations } from "@/data/locations";
 import { useCart } from "@/hooks/useCart";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import type { RestaurantLocation } from "@/types/location";
 
-import { LocationCard } from "./LocationCard";
+import { DesktopLocationsDirectory } from "./DesktopLocationsDirectory";
 import { LocationDetailDrawer } from "./LocationDetailDrawer";
 import { MobileLocationsDirectory } from "./MobileLocationsDirectory";
 import { TabletLocationsDirectory } from "./TabletLocationsDirectory";
@@ -46,29 +43,12 @@ export function LocationsDirectory() {
   }
 
   return (
-    <section
-      className="border-b border-sb-line bg-sb-ink py-12 md:py-16"
-      id="locations"
-    >
-      <PageContainer>
-        <SectionHeader
-          eyebrow={<Badge>Locations</Badge>}
-          subtitle="Choose from intimate chef counters, rooftop dining, and celebration-ready private rooms."
-          title="Dining rooms"
-        />
-
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {locations.map((location, index) => (
-            <LocationCard
-              imagePriority={index < 3}
-              key={location.id}
-              location={location}
-              onViewDetails={setSelectedLocation}
-            />
-          ))}
-        </div>
-      </PageContainer>
-
+    <>
+      <DesktopLocationsDirectory
+        cartCount={itemCount}
+        locations={locations}
+        onViewDetails={setSelectedLocation}
+      />
       <LocationDetailDrawer
         location={selectedLocation}
         onOpenChange={(open) => {
@@ -78,6 +58,6 @@ export function LocationsDirectory() {
         }}
         open={Boolean(selectedLocation)}
       />
-    </section>
+    </>
   );
 }

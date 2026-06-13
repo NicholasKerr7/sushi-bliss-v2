@@ -18,7 +18,7 @@ current viewport and attaches the matching reference PNG.
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
 | Tablet     |         40 |      40 |                   0 |             0 |
-| Desktop    |         40 |      23 |                  17 |             0 |
+| Desktop    |         40 |      30 |                  10 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
 order confirmation composition, so the visual audit maps it to tablet order
@@ -96,13 +96,13 @@ confirmation until the reference filename is corrected.
 | `desktop-21-contact.png`                       | `/support` contact state     | Audited             |
 | `desktop-22-help-center.png`                   | `/support` help center state | Audited             |
 | `desktop-23-notifications-center.png`          | `/notifications`             | Audited             |
-| `desktop-24-favorites.png`                     | `/favorites`                 | Built / needs audit |
-| `desktop-25-promotions-offers.png`             | `/offers`                    | Built / needs audit |
-| `desktop-26-referral-earn.png`                 | referral state               | Built / needs audit |
-| `desktop-27-locations.png`                     | `/locations`                 | Built / needs audit |
-| `desktop-28-gift-experience.png`               | `/gifts`                     | Built / needs audit |
-| `desktop-29-gift-checkout.png`                 | gift checkout state          | Built / needs audit |
-| `desktop-30-gift-confirmation.png`             | gift confirmation state      | Built / needs audit |
+| `desktop-24-favorites.png`                     | `/favorites`                 | Audited             |
+| `desktop-25-promotions-offers.png`             | `/offers`                    | Audited             |
+| `desktop-26-referral-earn.png`                 | referral state               | Audited             |
+| `desktop-27-locations.png`                     | `/locations`                 | Audited             |
+| `desktop-28-gift-experience.png`               | `/gifts`                     | Audited             |
+| `desktop-29-gift-checkout.png`                 | gift checkout state          | Audited             |
+| `desktop-30-gift-confirmation.png`             | gift confirmation state      | Audited             |
 | `desktop-31-about-our-story.png`               | `/about`                     | Built / needs audit |
 | `desktop-32-master-chefs-team.png`             | `/chefs`                     | Built / needs audit |
 | `desktop-33-sourcing-ingredients.png`          | `/about` sourcing section    | Built / needs audit |
