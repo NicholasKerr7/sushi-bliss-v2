@@ -18,6 +18,29 @@ Run the audit with the normal test command:
 npm run test
 ```
 
+For a faster visual-only pass, run:
+
+```bash
+npm run test:visual
+```
+
+To attach pixel-diff overlays and diff metadata without failing the suite, run:
+
+```bash
+npm run test:visual:diff
+```
+
+To fail the suite when a reference drifts past the configured ratio, run:
+
+```bash
+npm run test:visual:strict
+```
+
+The strict mode defaults to `VISUAL_REFERENCE_MAX_DIFF_RATIO=0.08` and
+`VISUAL_REFERENCE_PIXEL_THRESHOLD=32`. Mobile references are compared after the
+current viewport capture is scaled to the source reference dimensions because
+several legacy mobile screenshots are stored at larger source sizes.
+
 Current audit targets:
 
 - mobile welcome: `/` against `mobile/mobile-01.png`
@@ -264,10 +287,11 @@ Current audit targets:
 - desktop cancel reservation modal: `/reservations` interaction against
   `desktop/desktop-40-cancel-reservation-modal.png`
 
-The audit asserts the rendered viewport size, reference image dimensions, route
-health, and absence of horizontal overflow. Full pixel assertions should be
-enabled screen by screen once the rendered layout is intentionally aligned with
-the corresponding reference.
+The default audit asserts the rendered viewport size, reference image
+dimensions, route health, and absence of horizontal overflow. The opt-in diff
+mode adds scaled pixel comparisons and attaches a red-overlay difference image
+plus JSON metadata for each target. Strict mode uses the same comparison path and
+fails when the diff ratio exceeds the configured threshold.
 
 See `docs/screenshot-coverage.md` for the full reference inventory and the
 current built-versus-audited status.

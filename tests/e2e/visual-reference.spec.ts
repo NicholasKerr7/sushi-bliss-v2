@@ -21,9 +21,44 @@ interface VisualReferenceTarget {
   verify: (page: Page) => Promise<void>;
 }
 
+interface VisualDiffResult {
+  comparedSize: {
+    height: number;
+    width: number;
+  };
+  currentSize: {
+    height: number;
+    width: number;
+  };
+  differentPixels: number;
+  diffPngBase64: string;
+  diffRatio: number;
+  maxChannelDelta: number;
+  meanAbsoluteChannelDelta: number;
+  pixelThreshold: number;
+  referenceSize: {
+    height: number;
+    width: number;
+  };
+  scaledCurrent: boolean;
+  totalPixels: number;
+}
+
 const mobileReferenceSize = { height: 1822, width: 863 };
 const mobileLargeReferenceSize = { height: 1672, width: 941 };
 const mobileViewport = { height: 911, width: 430 };
+const visualDiffEnabled =
+  process.env.VISUAL_REFERENCE_DIFF === "1" ||
+  process.env.VISUAL_REFERENCE_STRICT === "1";
+const visualStrictEnabled = process.env.VISUAL_REFERENCE_STRICT === "1";
+const visualMaxDiffRatio = getNumberEnv(
+  "VISUAL_REFERENCE_MAX_DIFF_RATIO",
+  0.08,
+);
+const visualPixelThreshold = getNumberEnv(
+  "VISUAL_REFERENCE_PIXEL_THRESHOLD",
+  32,
+);
 
 const visualReferenceTargets: VisualReferenceTarget[] = [
   {
@@ -4177,6 +4212,175 @@ function getPngSize(buffer: Buffer) {
   };
 }
 
+function getNumberEnv(name: string, fallback: number) {
+  const rawValue = process.env[name];
+  const value = rawValue ? Number(rawValue) : fallback;
+
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function createPngDataUrl(buffer: Buffer) {
+  return `data:image/png;base64,${buffer.toString("base64")}`;
+}
+
+/** Compares visual-reference screenshots inside Chromium to avoid extra image dependencies. */
+async function compareVisualReference(
+  page: Page,
+  currentScreenshot: Buffer,
+  referenceScreenshot: Buffer,
+  currentSize: { height: number; width: number },
+  referenceSize: { height: number; width: number },
+): Promise<VisualDiffResult> {
+  return page.evaluate(
+    async ({
+      currentDataUrl,
+      currentSize,
+      pixelThreshold,
+      referenceDataUrl,
+      referenceSize,
+    }) => {
+      const loadBitmap = async (dataUrl: string) => {
+        const response = await fetch(dataUrl);
+        const blob = await response.blob();
+
+        return createImageBitmap(blob);
+      };
+      const createCanvas = (width: number, height: number) => {
+        const canvas = document.createElement("canvas");
+
+        canvas.height = height;
+        canvas.width = width;
+
+        const context = canvas.getContext("2d", {
+          willReadFrequently: true,
+        });
+
+        if (!context) {
+          throw new Error("Unable to create visual diff canvas context");
+        }
+
+        return { canvas, context };
+      };
+      const currentBitmap = await loadBitmap(currentDataUrl);
+      const referenceBitmap = await loadBitmap(referenceDataUrl);
+      const comparedWidth = referenceSize.width;
+      const comparedHeight = referenceSize.height;
+      const currentCanvas = createCanvas(comparedWidth, comparedHeight);
+      const referenceCanvas = createCanvas(comparedWidth, comparedHeight);
+      const diffCanvas = createCanvas(comparedWidth, comparedHeight);
+
+      currentCanvas.context.imageSmoothingEnabled = true;
+      currentCanvas.context.imageSmoothingQuality = "high";
+      currentCanvas.context.drawImage(
+        currentBitmap,
+        0,
+        0,
+        comparedWidth,
+        comparedHeight,
+      );
+      referenceCanvas.context.drawImage(referenceBitmap, 0, 0);
+
+      const currentPixels = currentCanvas.context.getImageData(
+        0,
+        0,
+        comparedWidth,
+        comparedHeight,
+      ).data;
+      const referencePixels = referenceCanvas.context.getImageData(
+        0,
+        0,
+        comparedWidth,
+        comparedHeight,
+      ).data;
+      const diffPixels = diffCanvas.context.createImageData(
+        comparedWidth,
+        comparedHeight,
+      );
+      let differentPixels = 0;
+      let totalChannelDelta = 0;
+      let maxChannelDelta = 0;
+
+      for (let index = 0; index < currentPixels.length; index += 4) {
+        const redDelta = Math.abs(
+          currentPixels[index] - referencePixels[index],
+        );
+        const greenDelta = Math.abs(
+          currentPixels[index + 1] - referencePixels[index + 1],
+        );
+        const blueDelta = Math.abs(
+          currentPixels[index + 2] - referencePixels[index + 2],
+        );
+        const alphaDelta = Math.abs(
+          currentPixels[index + 3] - referencePixels[index + 3],
+        );
+        const channelDelta = Math.max(
+          redDelta,
+          greenDelta,
+          blueDelta,
+          alphaDelta,
+        );
+        const grayscaleReference =
+          (referencePixels[index] +
+            referencePixels[index + 1] +
+            referencePixels[index + 2]) /
+          3;
+        const diffIndex = index;
+
+        totalChannelDelta += (redDelta + greenDelta + blueDelta) / 3;
+        maxChannelDelta = Math.max(maxChannelDelta, channelDelta);
+
+        if (channelDelta > pixelThreshold) {
+          differentPixels += 1;
+          diffPixels.data[diffIndex] = 255;
+          diffPixels.data[diffIndex + 1] = Math.max(24, 92 - greenDelta);
+          diffPixels.data[diffIndex + 2] = 48;
+          diffPixels.data[diffIndex + 3] = 230;
+        } else {
+          const mutedReference = Math.round(grayscaleReference * 0.22);
+
+          diffPixels.data[diffIndex] = mutedReference;
+          diffPixels.data[diffIndex + 1] = mutedReference;
+          diffPixels.data[diffIndex + 2] = mutedReference;
+          diffPixels.data[diffIndex + 3] = 120;
+        }
+      }
+
+      diffCanvas.context.putImageData(diffPixels, 0, 0);
+
+      const totalPixels = comparedWidth * comparedHeight;
+      const diffPngBase64 = diffCanvas.canvas
+        .toDataURL("image/png")
+        .replace(/^data:image\/png;base64,/, "");
+
+      return {
+        comparedSize: {
+          height: comparedHeight,
+          width: comparedWidth,
+        },
+        currentSize,
+        differentPixels,
+        diffPngBase64,
+        diffRatio: differentPixels / totalPixels,
+        maxChannelDelta,
+        meanAbsoluteChannelDelta: totalChannelDelta / totalPixels,
+        pixelThreshold,
+        referenceSize,
+        scaledCurrent:
+          currentSize.height !== referenceSize.height ||
+          currentSize.width !== referenceSize.width,
+        totalPixels,
+      };
+    },
+    {
+      currentDataUrl: createPngDataUrl(currentScreenshot),
+      currentSize,
+      pixelThreshold: visualPixelThreshold,
+      referenceDataUrl: createPngDataUrl(referenceScreenshot),
+      referenceSize,
+    },
+  );
+}
+
 test.describe("visual reference audit", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
@@ -4236,6 +4440,33 @@ test.describe("visual reference audit", () => {
         body: Buffer.from(JSON.stringify(metadata, null, 2)),
         contentType: "application/json",
       });
+
+      if (visualDiffEnabled) {
+        const visualDiff = await compareVisualReference(
+          page,
+          currentScreenshot,
+          referenceScreenshot,
+          currentSize,
+          referenceSize,
+        );
+        const { diffPngBase64, ...visualDiffMetadata } = visualDiff;
+
+        await testInfo.attach(`${target.name} diff`, {
+          body: Buffer.from(diffPngBase64, "base64"),
+          contentType: "image/png",
+        });
+        await testInfo.attach(`${target.name} diff metadata`, {
+          body: Buffer.from(JSON.stringify(visualDiffMetadata, null, 2)),
+          contentType: "application/json",
+        });
+
+        if (visualStrictEnabled) {
+          expect(
+            visualDiff.diffRatio,
+            `${target.name} visual drift ratio should stay at or below ${visualMaxDiffRatio}`,
+          ).toBeLessThanOrEqual(visualMaxDiffRatio);
+        }
+      }
     });
   }
 });
