@@ -28,6 +28,7 @@ import { menuHeroItem, tabletNigiriItems } from "./tabletMenuData";
 
 interface MobileMenuExplorerProps {
   cartItemCount: number;
+  cartSubtotalCents: number;
   categories: MenuCategory[];
   category: string;
   filteredItems: MenuItem[];
@@ -51,6 +52,7 @@ const mobileCategoryOrder = [
 /** Mobile-first menu browser modeled after the reference menu screens. */
 export function MobileMenuExplorer({
   cartItemCount,
+  cartSubtotalCents,
   categories,
   category,
   filteredItems,
@@ -79,6 +81,7 @@ export function MobileMenuExplorer({
       <div className="relative z-10 mx-auto max-w-[430px]">
         <MobileMenuHeader
           cartItemCount={cartItemCount}
+          cartSubtotalCents={cartSubtotalCents}
           onOpenCart={onOpenCart}
         />
 

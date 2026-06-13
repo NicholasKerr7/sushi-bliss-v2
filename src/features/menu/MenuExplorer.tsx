@@ -31,7 +31,12 @@ export function MenuExplorer() {
     totalItemCount,
   } = useMenu();
   const { isFavorite, toggleFavorite } = useFavorites();
-  const { addItem, itemCount: cartItemCount, uniqueItemCount } = useCart();
+  const {
+    addItem,
+    itemCount: cartItemCount,
+    subtotalCents: cartSubtotalCents,
+    uniqueItemCount,
+  } = useCart();
 
   const handleItemAdded = () => {
     setSelectedItem(null);
@@ -70,6 +75,7 @@ export function MenuExplorer() {
       />
       <MobileMenuExplorer
         cartItemCount={cartItemCount}
+        cartSubtotalCents={cartSubtotalCents}
         categories={categories}
         category={category}
         filteredItems={filteredItems}

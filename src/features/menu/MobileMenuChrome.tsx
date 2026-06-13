@@ -7,6 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
+import { formatMoney } from "@/lib/money";
 import type { MenuCategory } from "@/types/menu";
 
 export const recentMobileSearches = [
@@ -19,30 +20,48 @@ export const recentMobileSearches = [
 
 export function MobileMenuHeader({
   cartItemCount,
+  cartSubtotalCents,
   onOpenCart,
 }: {
   cartItemCount: number;
+  cartSubtotalCents: number;
   onOpenCart: () => void;
 }) {
+  const cartSummary =
+    cartItemCount > 0
+      ? `${cartItemCount} ${cartItemCount === 1 ? "Item" : "Items"}, ${formatMoney(cartSubtotalCents)}`
+      : "";
+
   return (
-    <header className="flex items-center justify-between">
-      <Link className="flex items-center gap-3" href="/home">
-        <AssetIcon
-          alt="Sushi Bliss"
-          className="rounded-full"
-          size={54}
-          src={brand.assets.floralEmblem.publicUrl}
-        />
-        <span className="editorial-title text-[18px] leading-[0.95] tracking-[0.34em] text-white">
-          Sushi
-          <br />
-          Bliss
-        </span>
-      </Link>
-      <div className="flex items-center gap-3">
-        {cartItemCount > 0 ? (
+    <>
+      <header className="flex items-center justify-between">
+        <Link className="flex items-center gap-3" href="/home">
+          <AssetIcon
+            alt="Sushi Bliss"
+            className="rounded-full"
+            size={54}
+            src={brand.assets.floralEmblem.publicUrl}
+          />
+          <span className="editorial-title text-[18px] leading-[0.95] tracking-[0.34em] text-white">
+            Sushi
+            <br />
+            Bliss
+          </span>
+        </Link>
+        <Link
+          aria-label="Notifications"
+          className="relative grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
+          href="/notifications"
+        >
+          <AssetIcon size={27} src={icons.bell} />
+          <span className="absolute right-3 top-2.5 h-2.5 w-2.5 rounded-full bg-[var(--sb-red-bright)]" />
+        </Link>
+      </header>
+      {cartItemCount > 0 ? (
+        <div className="mt-4 flex justify-end">
           <button
-            className="flex h-[52px] items-center gap-2 rounded-[18px] border border-[var(--sb-border)] bg-black/46 px-4 text-[15px] text-white/86 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
+            aria-label={`Open cart with ${cartSummary}`}
+            className="flex h-[52px] items-center gap-3 rounded-full border border-[var(--sb-border)] bg-black/46 px-5 text-[15px] text-white/86 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
             onClick={onOpenCart}
             type="button"
           >
@@ -52,20 +71,16 @@ export function MobileMenuHeader({
                 {cartItemCount}
               </span>
             </span>
-            <span className="sr-only">Open cart</span>
+            <span className="whitespace-nowrap">
+              {cartItemCount} {cartItemCount === 1 ? "Item" : "Items"}{" "}
+              <span aria-hidden="true">&bull;</span>{" "}
+              {formatMoney(cartSubtotalCents)}
+            </span>
             <ChevronIcon direction="right" size={18} />
           </button>
-        ) : null}
-        <Link
-          aria-label="Notifications"
-          className="relative grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
-          href="/notifications"
-        >
-          <AssetIcon size={27} src={icons.bell} />
-          <span className="absolute right-3 top-2.5 h-2.5 w-2.5 rounded-full bg-[var(--sb-red-bright)]" />
-        </Link>
-      </div>
-    </header>
+        </div>
+      ) : null}
+    </>
   );
 }
 

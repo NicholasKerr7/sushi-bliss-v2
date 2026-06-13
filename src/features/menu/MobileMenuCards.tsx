@@ -21,47 +21,49 @@ export function MobileMenuGridCard({
   onViewDetails: (item: MenuItem) => void;
 }) {
   return (
-    <article className="relative overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-black/48">
+    <article className="relative grid min-h-[96px] grid-cols-[44%_1fr] overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-black/48">
       {badge ? (
         <span className="absolute left-0 top-0 z-10 rounded-br-[10px] bg-[var(--sb-red)] px-2.5 py-1 text-[10px] uppercase text-white">
           {badge}
         </span>
       ) : null}
       <button
-        className="block w-full text-left"
+        className="relative min-h-[96px]"
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <div className="relative h-[92px]">
-          <Image
-            alt=""
-            className="object-cover"
-            fill
-            loading={eagerImage ? "eager" : "lazy"}
-            priority={eagerImage}
-            sizes="180px"
-            src={item.image.publicUrl}
-          />
-        </div>
-        <div className="min-h-[124px] p-3">
-          <h3 className="line-clamp-2 text-[16px] leading-5 text-white">
-            {item.name}
-          </h3>
-          <p className="mt-1 line-clamp-2 text-[12px] leading-4 text-white/64">
-            {item.description}
-          </p>
-          <p className="mt-3 text-[19px] text-[var(--sb-gold)]">
-            {formatMoney(item.priceCents)}
-          </p>
-        </div>
+        <Image
+          alt=""
+          className="object-cover"
+          fill
+          loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
+          sizes="90px"
+          src={item.image.publicUrl}
+        />
+      </button>
+      <button
+        className="min-w-0 px-3 py-3 text-left"
+        onClick={() => onViewDetails(item)}
+        type="button"
+      >
+        <h3 className="line-clamp-2 text-[15px] leading-[18px] text-white">
+          {item.name}
+        </h3>
+        <p className="mt-1 line-clamp-2 text-[11px] leading-[14px] text-white/64">
+          {item.description}
+        </p>
+        <p className="mt-2 text-[16px] text-[var(--sb-gold)]">
+          {formatMoney(item.priceCents)}
+        </p>
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/62"
+        className="absolute bottom-2 right-2 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/62"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <AssetIcon size={23} src={icons.plus} />
+        <AssetIcon size={21} src={icons.plus} />
       </button>
     </article>
   );

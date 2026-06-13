@@ -123,6 +123,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   },
   {
     name: "mobile menu overview",
+    prepare: seedMobileMenuOverviewCart,
     projectName: "chromium-mobile",
     referencePath: "public/assets/screenshots/mobile/mobile-04.png",
     referenceSize: mobileReferenceSize,
@@ -3131,6 +3132,46 @@ async function seedMobileCart(page: Page) {
     window.localStorage.setItem("sushi-bliss:cart", JSON.stringify(items));
     window.dispatchEvent(new Event("sushi-bliss:cart-changed"));
   });
+}
+
+async function seedMobileMenuOverviewCart(page: Page) {
+  await page.evaluate(() => {
+    const defaultCustomizations = [
+      {
+        groupId: "wasabi",
+        groupLabel: "Wasabi",
+        optionId: "chef-balance",
+        optionLabel: "Chef balance",
+      },
+      {
+        groupId: "soy",
+        groupLabel: "Soy",
+        optionId: "house",
+        optionLabel: "House soy",
+      },
+      {
+        groupId: "cut",
+        groupLabel: "Cut",
+        optionId: "classic",
+        optionLabel: "Classic",
+      },
+    ];
+    const customizationId = "cut:classic,soy:house,wasabi:chef-balance";
+    const items = ["otoro-nigiri", "spicy-tuna-roll"].map((menuItemId) => ({
+      addOns: [],
+      customizations: defaultCustomizations,
+      id: `${menuItemId}|${customizationId}`,
+      menuItemId,
+      quantity: 1,
+    }));
+
+    window.localStorage.setItem("sushi-bliss:cart", JSON.stringify(items));
+    window.dispatchEvent(new Event("sushi-bliss:cart-changed"));
+  });
+
+  await expect(
+    page.locator("#menu").getByRole("button", { name: /Open cart with/i }),
+  ).toBeVisible();
 }
 
 async function openMobileCartWithSeededItems(page: Page) {
