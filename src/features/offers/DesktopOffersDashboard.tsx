@@ -15,6 +15,8 @@ import { useCart } from "@/hooks/useCart";
 import { isOfferExpired, sortOffersByAvailability } from "@/lib/offers";
 import type { Offer } from "@/types/offer";
 
+import { DesktopOfferDetail } from "./DesktopOfferDetail";
+
 const heroImage =
   "/assets/omakase/specialties/lead-chef-omakase-nigiri-flight.webp";
 
@@ -73,6 +75,7 @@ export function DesktopOffersDashboard() {
   );
   const [promoCode, setPromoCode] = useState(featuredOffer?.code || "");
   const [statusMessage, setStatusMessage] = useState("");
+  const [detailOpen, setDetailOpen] = useState(false);
 
   const applyCode = () => {
     const normalizedCode = promoCode.trim().toUpperCase();
@@ -91,6 +94,15 @@ export function DesktopOffersDashboard() {
     setStatusMessage(`${matchingOffer.code} is ready for checkout.`);
   };
 
+  if (detailOpen) {
+    return (
+      <DesktopOfferDetail
+        cartCount={itemCount}
+        onBack={() => setDetailOpen(false)}
+      />
+    );
+  }
+
   return (
     <section
       className="hidden min-h-dvh bg-[#040506] text-white xl:block"
@@ -99,7 +111,7 @@ export function DesktopOffersDashboard() {
       <div className="mx-auto min-h-dvh max-w-[1550px] border-x border-[var(--sb-border)] bg-[#050607]">
         <DesktopMenuHeader activeId="offers" cartCount={itemCount} />
         <main className="px-7 pb-6">
-          <OfferHero />
+          <OfferHero onOpenDetail={() => setDetailOpen(true)} />
 
           <section className="mt-3 grid grid-cols-[minmax(0,1fr)_476px] gap-4">
             <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-6">
@@ -213,7 +225,7 @@ export function DesktopOffersDashboard() {
   );
 }
 
-function OfferHero() {
+function OfferHero({ onOpenDetail }: { onOpenDetail: () => void }) {
   return (
     <section className="relative min-h-[370px] overflow-hidden border-b border-[var(--sb-border)]">
       <Image
@@ -268,6 +280,13 @@ function OfferHero() {
             Book experience
             <span aria-hidden="true">&gt;</span>
           </Button>
+          <button
+            className="h-[54px] rounded-[10px] border border-[var(--sb-gold)]/38 px-6 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            onClick={onOpenDetail}
+            type="button"
+          >
+            View offer details
+          </button>
           <p className="text-[28px] text-[var(--sb-gold-soft)]">
             $180{" "}
             <span className="text-[13px] uppercase text-white/64">

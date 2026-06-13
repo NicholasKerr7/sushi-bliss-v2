@@ -16,6 +16,8 @@ import { useProfile } from "@/hooks/useProfile";
 import { useSupport } from "@/hooks/useSupport";
 import type { HelpArticle, SupportMessageDraft } from "@/types/support";
 
+import { DesktopHelpArticleDetail } from "./DesktopHelpArticleDetail";
+
 type SupportView = "contact" | "help";
 
 const contactCards = [
@@ -115,7 +117,17 @@ export function DesktopSupportExperience() {
         activeId={view === "help" ? "help" : "contact"}
         cartCount={itemCount}
       />
-      {view === "help" ? (
+      {view === "help" && selectedArticle ? (
+        <DesktopHelpArticleDetail
+          article={selectedArticle}
+          onBack={() => setSelectedArticle(null)}
+          onContactSupport={() => {
+            setSelectedArticle(null);
+            setView("contact");
+          }}
+          onOpenArticle={setSelectedArticle}
+        />
+      ) : view === "help" ? (
         <DesktopHelpCenter
           selectedArticle={selectedArticle}
           onOpenArticle={setSelectedArticle}

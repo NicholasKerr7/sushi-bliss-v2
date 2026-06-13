@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -17,6 +16,8 @@ import type {
   AppNotification,
   NotificationCategory,
 } from "@/types/notification";
+
+import { DesktopNotificationDetailPanel } from "./DesktopNotificationDetailPanel";
 
 const categoryIcons: Record<NotificationCategory, string> = {
   offer: "/assets/icons/golden-ticket-icon.png",
@@ -63,6 +64,8 @@ export function DesktopNotificationsCenter() {
   const { markAllRead, markRead, notifications, unreadCount } =
     useNotifications();
   const [activeFilter, setActiveFilter] = useState<NotificationFilter>("all");
+  const [selectedNotification, setSelectedNotification] =
+    useState<AppNotification | null>(null);
   const [preferenceToggles, setPreferenceToggles] = useState([
     true,
     true,
@@ -137,22 +140,32 @@ export function DesktopNotificationsCenter() {
                   <DesktopNotificationRow
                     key={notification.id}
                     notification={notification}
-                    onRead={markRead}
+                    onOpen={(selected) => {
+                      markRead(selected.id);
+                      setSelectedNotification(selected);
+                    }}
                   />
                 ))}
               </div>
             </div>
 
-            <NotificationPreferencesPanel
-              toggles={preferenceToggles}
-              onToggle={(index) =>
-                setPreferenceToggles((current) =>
-                  current.map((value, currentIndex) =>
-                    currentIndex === index ? !value : value,
-                  ),
-                )
-              }
-            />
+            {selectedNotification ? (
+              <DesktopNotificationDetailPanel
+                notification={selectedNotification}
+                onBack={() => setSelectedNotification(null)}
+              />
+            ) : (
+              <NotificationPreferencesPanel
+                toggles={preferenceToggles}
+                onToggle={(index) =>
+                  setPreferenceToggles((current) =>
+                    current.map((value, currentIndex) =>
+                      currentIndex === index ? !value : value,
+                    ),
+                  )
+                }
+              />
+            )}
           </div>
         </section>
       </main>
@@ -162,10 +175,10 @@ export function DesktopNotificationsCenter() {
 
 function DesktopNotificationRow({
   notification,
-  onRead,
+  onOpen,
 }: {
   notification: AppNotification;
-  onRead: (id: string) => void;
+  onOpen: (notification: AppNotification) => void;
 }) {
   const isUnread = !notification.readAt;
   const timeLabel = new Intl.DateTimeFormat("en-US", {
@@ -191,15 +204,15 @@ function DesktopNotificationRow({
         </p>
       </div>
       <p className="text-[14px] text-white/58">{timeLabel}</p>
-      <Link
+      <button
         className={classNames(
           "grid h-11 place-items-center rounded-[10px] border text-[12px] uppercase tracking-[0.08em]",
           isUnread
             ? "border-[var(--sb-red-bright)]/48 text-[var(--sb-red-bright)]"
             : "border-white/14 text-white/54",
         )}
-        href={notification.href || "/notifications"}
-        onClick={() => onRead(notification.id)}
+        onClick={() => onOpen(notification)}
+        type="button"
       >
         {notification.category === "reservation"
           ? "Review reservation"
@@ -210,7 +223,7 @@ function DesktopNotificationRow({
               : notification.category === "support"
                 ? "Contact support"
                 : "View order"}
-      </Link>
+      </button>
     </article>
   );
 }

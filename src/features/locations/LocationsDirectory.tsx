@@ -7,8 +7,8 @@ import { useCart } from "@/hooks/useCart";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import type { RestaurantLocation } from "@/types/location";
 
+import { DesktopLocationDetail } from "./DesktopLocationDetail";
 import { DesktopLocationsDirectory } from "./DesktopLocationsDirectory";
-import { LocationDetailDrawer } from "./LocationDetailDrawer";
 import { MobileLocationsDirectory } from "./MobileLocationsDirectory";
 import { TabletLocationsDirectory } from "./TabletLocationsDirectory";
 
@@ -42,22 +42,21 @@ export function LocationsDirectory() {
     );
   }
 
-  return (
-    <>
-      <DesktopLocationsDirectory
+  if (selectedLocation) {
+    return (
+      <DesktopLocationDetail
         cartCount={itemCount}
-        locations={locations}
-        onViewDetails={setSelectedLocation}
-      />
-      <LocationDetailDrawer
         location={selectedLocation}
-        onOpenChange={(open) => {
-          if (!open) {
-            setSelectedLocation(null);
-          }
-        }}
-        open={Boolean(selectedLocation)}
+        onBack={() => setSelectedLocation(null)}
       />
-    </>
+    );
+  }
+
+  return (
+    <DesktopLocationsDirectory
+      cartCount={itemCount}
+      locations={locations}
+      onViewDetails={setSelectedLocation}
+    />
   );
 }

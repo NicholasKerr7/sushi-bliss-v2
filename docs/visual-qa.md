@@ -148,6 +148,26 @@ Current audit targets:
   `desktop/desktop-29-gift-checkout.png`
 - desktop gift confirmation: `/gifts` interaction against
   `desktop/desktop-30-gift-confirmation.png`
+- desktop about our story: `/about` against
+  `desktop/desktop-31-about-our-story.png`
+- desktop master chefs team: `/chefs` against
+  `desktop/desktop-32-master-chefs-team.png`
+- desktop sourcing ingredients: `/about` interaction against
+  `desktop/desktop-33-sourcing-ingredients.png`
+- desktop restaurant atmosphere gallery: `/about` interaction against
+  `desktop/desktop-34-restaurant-atmosphere-gallery.png`
+- desktop FAQ article detail: `/support` interaction against
+  `desktop/desktop-35-faq-article-detail.png`
+- desktop notification detail: `/notifications` interaction against
+  `desktop/desktop-36-notification-detail.png`
+- desktop offer detail: `/offers` interaction against
+  `desktop/desktop-37-offer-detail.png`
+- desktop location detail: `/locations` interaction against
+  `desktop/desktop-38-location-detail.png`
+- desktop modify reservation: `/reservations` interaction against
+  `desktop/desktop-39-modify-reservation.png`
+- desktop cancel reservation modal: `/reservations` interaction against
+  `desktop/desktop-40-cancel-reservation-modal.png`
 
 The audit asserts the rendered viewport size, reference image dimensions, route
 health, and absence of horizontal overflow. Full pixel assertions should be

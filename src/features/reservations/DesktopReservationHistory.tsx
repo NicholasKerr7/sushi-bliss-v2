@@ -11,7 +11,7 @@ import {
 
 interface DesktopReservationHistoryProps {
   onBack: () => void;
-  onCancelReservation: (reservationId: string) => void;
+  onCancelReservation: (reservation: Reservation) => void;
   onModifyReservation: (reservation: Reservation) => void;
   pastReservations: Reservation[];
   upcomingReservations: Reservation[];
@@ -70,7 +70,7 @@ export function DesktopReservationHistory({
               </Button>
               <button
                 className="h-12 rounded-[12px] border border-white/12 text-[13px] uppercase tracking-[0.08em] text-white/78"
-                onClick={() => onCancelReservation(upcoming.id)}
+                onClick={() => onCancelReservation(upcoming)}
                 type="button"
               >
                 Cancel reservation

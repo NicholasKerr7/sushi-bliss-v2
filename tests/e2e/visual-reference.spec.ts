@@ -1496,6 +1496,203 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       ).toBeVisible();
     },
   },
+  {
+    name: "desktop about our story",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-31-about-our-story.png",
+    referenceSize: { height: 992, width: 1586 },
+    routePath: "/about",
+    viewport: { height: 992, width: 1586 },
+    verify: async (page) => {
+      const aboutSection = page.locator("#about");
+
+      await expect(aboutSection).toBeVisible();
+      await expect(
+        aboutSection.getByRole("heading", {
+          name: /Crafted with Passion/i,
+        }),
+      ).toBeVisible();
+      await expect(aboutSection.getByText("Our Philosophy")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop master chefs team",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-32-master-chefs-team.png",
+    referenceSize: { height: 992, width: 1586 },
+    routePath: "/chefs",
+    viewport: { height: 992, width: 1586 },
+    verify: async (page) => {
+      const chefsSection = page.locator("#chefs");
+
+      await expect(chefsSection).toBeVisible();
+      await expect(
+        chefsSection.getByRole("heading", {
+          name: /The Art Behind\s+Every Bite/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        chefsSection.getByRole("heading", { name: "Chef Team" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop sourcing ingredients",
+    prepare: openDesktopAboutSourcing,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-33-sourcing-ingredients.png",
+    referenceSize: { height: 992, width: 1586 },
+    routePath: "/about",
+    viewport: { height: 992, width: 1586 },
+    verify: async (page) => {
+      const aboutSection = page.locator("#about");
+
+      await expect(aboutSection.getByText("Trusted Sourcing.")).toBeVisible();
+      await expect(aboutSection.getByText("Chef sourcing note")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop restaurant atmosphere gallery",
+    prepare: openDesktopAboutAtmosphere,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-34-restaurant-atmosphere-gallery.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/about",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const aboutSection = page.locator("#about");
+
+      await expect(
+        aboutSection.getByRole("heading", { name: /Our\s+Atmosphere/i }),
+      ).toBeVisible();
+      await expect(aboutSection.getByText("What to expect")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop faq article detail",
+    prepare: openDesktopFaqArticleDetail,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-35-faq-article-detail.png",
+    referenceSize: { height: 992, width: 1586 },
+    routePath: "/support",
+    viewport: { height: 992, width: 1586 },
+    verify: async (page) => {
+      const supportSection = page.locator("#support");
+
+      await expect(
+        supportSection.getByRole("heading", {
+          name: "How do reservations work?",
+        }),
+      ).toBeVisible();
+      await expect(supportSection.getByText("Related articles")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop notification detail",
+    prepare: openDesktopNotificationDetail,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-36-notification-detail.png",
+    referenceSize: { height: 992, width: 1586 },
+    routePath: "/notifications",
+    viewport: { height: 992, width: 1586 },
+    verify: async (page) => {
+      const notificationsSection = page.locator("#notifications");
+
+      await expect(
+        notificationsSection.getByRole("heading", { name: "Order Delivered" }),
+      ).toBeVisible();
+      await expect(
+        notificationsSection.getByText("Order details"),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop offer detail",
+    prepare: openDesktopOfferDetail,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-37-offer-detail.png",
+    referenceSize: { height: 992, width: 1586 },
+    routePath: "/offers",
+    viewport: { height: 992, width: 1586 },
+    verify: async (page) => {
+      const offersSection = page.locator("#offers");
+
+      await expect(
+        offersSection.getByRole("heading", { name: "Sakura Dragon Roll" }),
+      ).toBeVisible();
+      await expect(offersSection.getByText("SAKURA20")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop location detail",
+    prepare: openDesktopLocationDetail,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-38-location-detail.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/locations",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const locationsSection = page.locator("#locations");
+
+      await expect(
+        locationsSection.getByRole("heading", {
+          name: "Sushi Bliss Downtown",
+        }),
+      ).toBeVisible();
+      await expect(locationsSection.getByText("Contact details")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop modify reservation",
+    prepare: openDesktopModifyReservation,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-39-modify-reservation.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/reservations",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Modify Reservation",
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByText("Change summary"),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop cancel reservation modal",
+    prepare: openDesktopCancelReservationModal,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-40-cancel-reservation-modal.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/reservations",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Cancel Reservation" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Keep reservation" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Cancel reservation" }),
+      ).toBeVisible();
+    },
+  },
 ];
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
@@ -2032,6 +2229,121 @@ async function openDesktopGiftConfirmation(page: Page) {
     giftsSection.getByRole("heading", {
       name: /Your gift has been confirmed/i,
     }),
+  ).toBeVisible();
+}
+
+async function openDesktopAboutSourcing(page: Page) {
+  const aboutSection = page.locator("#about");
+
+  await expect(
+    aboutSection.getByRole("button", { name: "Sourcing & Ingredients" }),
+  ).toBeVisible();
+  await aboutSection
+    .getByRole("button", { name: "Sourcing & Ingredients" })
+    .click();
+  await expect(aboutSection.getByText("Trusted Sourcing.")).toBeVisible();
+}
+
+async function openDesktopAboutAtmosphere(page: Page) {
+  const aboutSection = page.locator("#about");
+
+  await expect(
+    aboutSection.getByRole("button", { name: "Atmosphere" }),
+  ).toBeVisible();
+  await aboutSection.getByRole("button", { name: "Atmosphere" }).click();
+  await expect(
+    aboutSection.getByRole("heading", { name: /Our\s+Atmosphere/i }),
+  ).toBeVisible();
+}
+
+async function openDesktopFaqArticleDetail(page: Page) {
+  const supportSection = page.locator("#support");
+
+  await openDesktopHelpCenter(page);
+  await expect(
+    supportSection.getByRole("button", { name: /Change a reservation/i }),
+  ).toBeVisible();
+  await supportSection
+    .getByRole("button", { name: /Change a reservation/i })
+    .click();
+  await expect(
+    supportSection.getByRole("heading", {
+      name: "How do reservations work?",
+    }),
+  ).toBeVisible();
+}
+
+async function openDesktopNotificationDetail(page: Page) {
+  const notificationsSection = page.locator("#notifications");
+
+  await expect(
+    notificationsSection.getByRole("button", { name: "View order" }),
+  ).toBeVisible();
+  await notificationsSection
+    .getByRole("button", { name: "View order" })
+    .click();
+  await expect(
+    notificationsSection.getByRole("heading", { name: "Order Delivered" }),
+  ).toBeVisible();
+}
+
+async function openDesktopOfferDetail(page: Page) {
+  const offersSection = page.locator("#offers");
+
+  await expect(
+    offersSection.getByRole("button", { name: "View offer details" }),
+  ).toBeVisible();
+  await offersSection
+    .getByRole("button", { name: "View offer details" })
+    .click();
+  await expect(
+    offersSection.getByRole("heading", { name: "Sakura Dragon Roll" }),
+  ).toBeVisible();
+}
+
+async function openDesktopLocationDetail(page: Page) {
+  const locationsSection = page.locator("#locations");
+
+  await expect(
+    locationsSection.getByRole("button", { name: "Details" }).first(),
+  ).toBeVisible();
+  await locationsSection
+    .getByRole("button", { name: "Details" })
+    .first()
+    .click();
+  await expect(
+    locationsSection.getByRole("heading", {
+      name: "Sushi Bliss Downtown",
+    }),
+  ).toBeVisible();
+}
+
+async function openDesktopModifyReservation(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await openDesktopReservationHistory(page);
+  await expect(
+    reservationsSection.getByRole("button", { name: /Modify reservation/i }),
+  ).toBeVisible();
+  await reservationsSection
+    .getByRole("button", { name: /Modify reservation/i })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: "Modify Reservation",
+    }),
+  ).toBeVisible();
+}
+
+async function openDesktopCancelReservationModal(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await openDesktopModifyReservation(page);
+  await reservationsSection
+    .getByRole("button", { name: "Cancel reservation" })
+    .click();
+  await expect(
+    page.getByRole("dialog", { name: "Cancel Reservation" }),
   ).toBeVisible();
 }
 

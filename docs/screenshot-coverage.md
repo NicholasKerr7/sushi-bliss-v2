@@ -18,7 +18,7 @@ current viewport and attaches the matching reference PNG.
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
 | Tablet     |         40 |      40 |                   0 |             0 |
-| Desktop    |         40 |      30 |                  10 |             0 |
+| Desktop    |         40 |      40 |                   0 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
 order confirmation composition, so the visual audit maps it to tablet order
@@ -71,48 +71,48 @@ confirmation until the reference filename is corrected.
 
 ## Desktop References
 
-| Reference                                      | Route / interaction          | Status              |
-| ---------------------------------------------- | ---------------------------- | ------------------- |
-| `desktop-01-home-dashboard.png`                | `/home`                      | Audited             |
-| `desktop-02-menu-overview.png`                 | `/menu`                      | Audited             |
-| `desktop-03-menu-category-nigiri.png`          | `/menu` category filter      | Audited             |
-| `desktop-04-item-detail-otoro-nigiri.png`      | `/menu` item detail state    | Audited             |
-| `desktop-05-item-customization-add-ons.png`    | `/menu` item customization   | Audited             |
-| `desktop-06-cart.png`                          | cart panel                   | Audited             |
-| `desktop-07-checkout.png`                      | checkout state               | Audited             |
-| `desktop-08-checkout-review.png`               | checkout review              | Audited             |
-| `desktop-09-order-confirmation.png`            | order confirmation           | Audited             |
-| `desktop-10-orders-dashboard.png`              | `/orders`                    | Audited             |
-| `desktop-11-reservations-main.png`             | `/reservations`              | Audited             |
-| `desktop-12-choose-reservation-experience.png` | reservation experience step  | Audited             |
-| `desktop-13-reservation-review.png`            | reservation review step      | Audited             |
-| `desktop-14-reservation-history.png`           | reservation history state    | Audited             |
-| `desktop-15-omakase-experience.png`            | `/omakase`                   | Audited             |
-| `desktop-16-omakase-package-review.png`        | omakase review state         | Audited             |
-| `desktop-17-loyalty-dashboard.png`             | `/loyalty`                   | Audited             |
-| `desktop-18-member-pass-rewards.png`           | loyalty rewards state        | Audited             |
-| `desktop-19-profile-dashboard.png`             | `/profile`                   | Audited             |
-| `desktop-20-account-settings-preferences.png`  | profile settings state       | Audited             |
-| `desktop-21-contact.png`                       | `/support` contact state     | Audited             |
-| `desktop-22-help-center.png`                   | `/support` help center state | Audited             |
-| `desktop-23-notifications-center.png`          | `/notifications`             | Audited             |
-| `desktop-24-favorites.png`                     | `/favorites`                 | Audited             |
-| `desktop-25-promotions-offers.png`             | `/offers`                    | Audited             |
-| `desktop-26-referral-earn.png`                 | referral state               | Audited             |
-| `desktop-27-locations.png`                     | `/locations`                 | Audited             |
-| `desktop-28-gift-experience.png`               | `/gifts`                     | Audited             |
-| `desktop-29-gift-checkout.png`                 | gift checkout state          | Audited             |
-| `desktop-30-gift-confirmation.png`             | gift confirmation state      | Audited             |
-| `desktop-31-about-our-story.png`               | `/about`                     | Built / needs audit |
-| `desktop-32-master-chefs-team.png`             | `/chefs`                     | Built / needs audit |
-| `desktop-33-sourcing-ingredients.png`          | `/about` sourcing section    | Built / needs audit |
-| `desktop-34-restaurant-atmosphere-gallery.png` | `/about` gallery section     | Built / needs audit |
-| `desktop-35-faq-article-detail.png`            | help article detail          | Built / needs audit |
-| `desktop-36-notification-detail.png`           | notification detail          | Built / needs audit |
-| `desktop-37-offer-detail.png`                  | offer detail                 | Built / needs audit |
-| `desktop-38-location-detail.png`               | location detail              | Built / needs audit |
-| `desktop-39-modify-reservation.png`            | modify reservation flow      | Built / needs audit |
-| `desktop-40-cancel-reservation-modal.png`      | cancel reservation modal     | Built / needs audit |
+| Reference                                      | Route / interaction          | Status  |
+| ---------------------------------------------- | ---------------------------- | ------- |
+| `desktop-01-home-dashboard.png`                | `/home`                      | Audited |
+| `desktop-02-menu-overview.png`                 | `/menu`                      | Audited |
+| `desktop-03-menu-category-nigiri.png`          | `/menu` category filter      | Audited |
+| `desktop-04-item-detail-otoro-nigiri.png`      | `/menu` item detail state    | Audited |
+| `desktop-05-item-customization-add-ons.png`    | `/menu` item customization   | Audited |
+| `desktop-06-cart.png`                          | cart panel                   | Audited |
+| `desktop-07-checkout.png`                      | checkout state               | Audited |
+| `desktop-08-checkout-review.png`               | checkout review              | Audited |
+| `desktop-09-order-confirmation.png`            | order confirmation           | Audited |
+| `desktop-10-orders-dashboard.png`              | `/orders`                    | Audited |
+| `desktop-11-reservations-main.png`             | `/reservations`              | Audited |
+| `desktop-12-choose-reservation-experience.png` | reservation experience step  | Audited |
+| `desktop-13-reservation-review.png`            | reservation review step      | Audited |
+| `desktop-14-reservation-history.png`           | reservation history state    | Audited |
+| `desktop-15-omakase-experience.png`            | `/omakase`                   | Audited |
+| `desktop-16-omakase-package-review.png`        | omakase review state         | Audited |
+| `desktop-17-loyalty-dashboard.png`             | `/loyalty`                   | Audited |
+| `desktop-18-member-pass-rewards.png`           | loyalty rewards state        | Audited |
+| `desktop-19-profile-dashboard.png`             | `/profile`                   | Audited |
+| `desktop-20-account-settings-preferences.png`  | profile settings state       | Audited |
+| `desktop-21-contact.png`                       | `/support` contact state     | Audited |
+| `desktop-22-help-center.png`                   | `/support` help center state | Audited |
+| `desktop-23-notifications-center.png`          | `/notifications`             | Audited |
+| `desktop-24-favorites.png`                     | `/favorites`                 | Audited |
+| `desktop-25-promotions-offers.png`             | `/offers`                    | Audited |
+| `desktop-26-referral-earn.png`                 | referral state               | Audited |
+| `desktop-27-locations.png`                     | `/locations`                 | Audited |
+| `desktop-28-gift-experience.png`               | `/gifts`                     | Audited |
+| `desktop-29-gift-checkout.png`                 | gift checkout state          | Audited |
+| `desktop-30-gift-confirmation.png`             | gift confirmation state      | Audited |
+| `desktop-31-about-our-story.png`               | `/about`                     | Audited |
+| `desktop-32-master-chefs-team.png`             | `/chefs`                     | Audited |
+| `desktop-33-sourcing-ingredients.png`          | `/about` sourcing section    | Audited |
+| `desktop-34-restaurant-atmosphere-gallery.png` | `/about` gallery section     | Audited |
+| `desktop-35-faq-article-detail.png`            | help article detail          | Audited |
+| `desktop-36-notification-detail.png`           | notification detail          | Audited |
+| `desktop-37-offer-detail.png`                  | offer detail                 | Audited |
+| `desktop-38-location-detail.png`               | location detail              | Audited |
+| `desktop-39-modify-reservation.png`            | modify reservation flow      | Audited |
+| `desktop-40-cancel-reservation-modal.png`      | cancel reservation modal     | Audited |
 
 ## Mobile References
 

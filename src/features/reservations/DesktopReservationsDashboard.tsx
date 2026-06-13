@@ -15,12 +15,19 @@ import type {
   ReservationValidationState,
 } from "@/types/reservation";
 
+import { DesktopCancelReservationModal } from "./DesktopCancelReservationModal";
 import { DesktopExperienceChooser } from "./DesktopReservationExperience";
 import { DesktopReservationHistory } from "./DesktopReservationHistory";
 import { DesktopReservationMain } from "./DesktopReservationMain";
+import { DesktopReservationModify } from "./DesktopReservationModify";
 import { DesktopReservationReview } from "./DesktopReservationReview";
 
-type DesktopReservationSurface = "experience" | "history" | "main" | "review";
+type DesktopReservationSurface =
+  | "experience"
+  | "history"
+  | "main"
+  | "modify"
+  | "review";
 type ReservationView = "upcoming" | "past";
 
 interface DesktopReservationsDashboardProps {
@@ -58,6 +65,7 @@ export function DesktopReservationsDashboard({
   validation,
 }: DesktopReservationsDashboardProps) {
   const [surface, setSurface] = useState<DesktopReservationSurface>("main");
+  const [cancelTarget, setCancelTarget] = useState<Reservation | null>(null);
   const selectedExperience =
     reservationExperiences.find((item) => item.id === draft.experienceId) ||
     reservationExperiences[0];
@@ -84,6 +92,13 @@ export function DesktopReservationsDashboard({
     setSurface("history");
   };
 
+  const confirmCancelReservation = (reservation: Reservation) => {
+    onCancelReservation(reservation.id);
+    setCancelTarget(null);
+    onViewChange("past");
+    setSurface("history");
+  };
+
   return (
     <section
       className="hidden min-h-dvh bg-[#040506] text-white xl:block"
@@ -104,19 +119,38 @@ export function DesktopReservationsDashboard({
           experience={selectedExperience}
           location={selectedLocation}
           selectedDateTime={selectedDateTime}
-          onBack={() => setSurface("experience")}
+          onBack={() =>
+            setSurface(editingReservation ? "modify" : "experience")
+          }
           onConfirm={confirmReservation}
         />
       ) : surface === "history" ? (
         <DesktopReservationHistory
           onBack={() => setSurface("main")}
-          onCancelReservation={onCancelReservation}
+          onCancelReservation={setCancelTarget}
           onModifyReservation={(reservation) => {
             onModifyReservation(reservation);
-            setSurface("main");
+            setSurface("modify");
           }}
           pastReservations={pastReservations}
           upcomingReservations={upcomingReservations}
+        />
+      ) : surface === "modify" ? (
+        <DesktopReservationModify
+          draft={draft}
+          editingReservation={editingReservation}
+          selectedDateTime={selectedDateTime}
+          selectedExperience={selectedExperience}
+          timeOptions={timeOptions}
+          validation={validation}
+          onBack={openHistory}
+          onDraftChange={onDraftChange}
+          onOpenReview={openReview}
+          onRequestCancel={setCancelTarget}
+          onResetForm={() => {
+            onResetForm();
+            setSurface("main");
+          }}
         />
       ) : (
         <DesktopReservationMain
@@ -133,6 +167,11 @@ export function DesktopReservationsDashboard({
           onResetForm={onResetForm}
         />
       )}
+      <DesktopCancelReservationModal
+        reservation={cancelTarget}
+        onConfirm={confirmCancelReservation}
+        onKeepReservation={() => setCancelTarget(null)}
+      />
     </section>
   );
 }
