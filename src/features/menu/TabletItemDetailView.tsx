@@ -7,8 +7,12 @@ import { useMemo, useState } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
+import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { icons } from "@/features/home/visualHomeData";
-import { getTabletPresentationImage } from "@/lib/assets";
+import {
+  getMenuItemGalleryImages,
+  getTabletPresentationImage,
+} from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
@@ -49,30 +53,24 @@ export function TabletDetailView({
   onQuantityChange,
   onToggleFavorite,
 }: TabletDetailViewProps) {
-  const galleryImages = useMemo(
-    () =>
-      [
-        getTabletPresentationImage(item),
-        item.ingredientImage?.publicUrl,
-        item.sakePairing?.image?.publicUrl,
-        item.image.publicUrl,
-      ].filter((imageUrl, index, imageUrls): imageUrl is string =>
-        Boolean(imageUrl && imageUrls.indexOf(imageUrl) === index),
-      ),
-    [item],
-  );
-  const [imageIndex, setImageIndex] = useState(0);
+  const galleryImages = useMemo(() => getMenuItemGalleryImages(item), [item]);
+  const [galleryState, setGalleryState] = useState({
+    imageIndex: 0,
+    itemId: item.id,
+  });
+  const imageIndex =
+    galleryState.itemId === item.id ? galleryState.imageIndex : 0;
   const activeImage =
     galleryImages[imageIndex] || getTabletPresentationImage(item);
+  const selectImage = (nextImageIndex: number) => {
+    setGalleryState({ imageIndex: nextImageIndex, itemId: item.id });
+  };
+
   const showPreviousImage = () => {
-    setImageIndex((current) =>
-      current === 0 ? galleryImages.length - 1 : current - 1,
-    );
+    selectImage(imageIndex === 0 ? galleryImages.length - 1 : imageIndex - 1);
   };
   const showNextImage = () => {
-    setImageIndex((current) =>
-      current === galleryImages.length - 1 ? 0 : current + 1,
-    );
+    selectImage(imageIndex === galleryImages.length - 1 ? 0 : imageIndex + 1);
   };
 
   return (
@@ -114,44 +112,34 @@ export function TabletDetailView({
             <ChevronIcon direction="right" size={18} />
             <span className="text-[var(--sb-red-bright)]">{item.name}</span>
           </nav>
-          <button
-            aria-label="Show previous image"
-            className="absolute left-8 top-1/2 grid h-[54px] w-[54px] -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/34 text-[34px] text-[var(--sb-gold-soft)] shadow-soft backdrop-blur"
-            onClick={showPreviousImage}
-            type="button"
-          >
-            <ChevronIcon direction="left" size={18} />
-          </button>
-          <button
-            aria-label="Show next image"
-            className="absolute right-8 top-1/2 grid h-[54px] w-[54px] -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/34 text-[34px] text-[var(--sb-gold-soft)] shadow-soft backdrop-blur"
-            onClick={showNextImage}
-            type="button"
-          >
-            <ChevronIcon direction="right" size={18} />
-          </button>
-          <div
-            aria-label="Item gallery"
-            className="absolute inset-x-0 bottom-6 flex justify-center gap-2"
-            role="tablist"
-          >
-            {galleryImages.map((imageUrl, index) => (
+          {galleryImages.length > 1 ? (
+            <>
               <button
-                aria-label={`Show image ${index + 1}`}
-                aria-selected={imageIndex === index}
-                className={classNames(
-                  "h-2.5 w-2.5 rounded-full transition",
-                  imageIndex === index
-                    ? "bg-[var(--sb-red-bright)]"
-                    : "bg-white/34",
-                )}
-                key={imageUrl}
-                onClick={() => setImageIndex(index)}
-                role="tab"
+                aria-label="Show previous image"
+                className="absolute left-8 top-1/2 grid h-[54px] w-[54px] -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/34 text-[34px] text-[var(--sb-gold-soft)] shadow-soft backdrop-blur"
+                onClick={showPreviousImage}
                 type="button"
-              />
-            ))}
-          </div>
+              >
+                <ChevronIcon direction="left" size={18} />
+              </button>
+              <button
+                aria-label="Show next image"
+                className="absolute right-8 top-1/2 grid h-[54px] w-[54px] -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/34 text-[34px] text-[var(--sb-gold-soft)] shadow-soft backdrop-blur"
+                onClick={showNextImage}
+                type="button"
+              >
+                <ChevronIcon direction="right" size={18} />
+              </button>
+            </>
+          ) : null}
+          <CarouselIndicator
+            activeIndex={imageIndex}
+            ariaLabel="Item image gallery"
+            className="absolute inset-x-0 bottom-6 flex justify-center"
+            count={galleryImages.length}
+            labelPrefix="Show image"
+            onSelect={selectImage}
+          />
         </div>
 
         <div className="px-8 pb-6 pt-3">

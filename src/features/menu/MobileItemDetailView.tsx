@@ -1,13 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
+import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { brand, icons } from "@/features/home/visualHomeData";
-import { getTabletPresentationImage } from "@/lib/assets";
+import {
+  getMenuItemGalleryImages,
+  getTabletPresentationImage,
+} from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
@@ -38,7 +42,18 @@ export function MobileItemDetailView({
   onToggleFavorite,
 }: MobileItemDetailViewProps) {
   const [expandedPanel, setExpandedPanel] = useState<DetailPanel | null>(null);
-  const heroImage = getTabletPresentationImage(item);
+  const [galleryState, setGalleryState] = useState({
+    imageIndex: 0,
+    itemId: item.id,
+  });
+  const galleryImages = useMemo(() => getMenuItemGalleryImages(item), [item]);
+  const imageIndex =
+    galleryState.itemId === item.id ? galleryState.imageIndex : 0;
+  const heroImage =
+    galleryImages[imageIndex] || getTabletPresentationImage(item);
+  const selectImage = (nextImageIndex: number) => {
+    setGalleryState({ imageIndex: nextImageIndex, itemId: item.id });
+  };
 
   const togglePanel = (panel: DetailPanel) => {
     setExpandedPanel((current) => (current === panel ? null : panel));
@@ -138,17 +153,14 @@ export function MobileItemDetailView({
             src={heroImage}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.86)_86%,#050505_100%)]" />
-          <div className="absolute bottom-[22px] left-1/2 flex -translate-x-1/2 gap-3">
-            {[0, 1, 2, 3, 4].map((dot) => (
-              <span
-                className={classNames(
-                  "h-2.5 w-2.5 rounded-full",
-                  dot === 0 ? "bg-[var(--sb-red-bright)]" : "bg-white/28",
-                )}
-                key={dot}
-              />
-            ))}
-          </div>
+          <CarouselIndicator
+            activeIndex={imageIndex}
+            ariaLabel="Item image gallery"
+            className="absolute bottom-[22px] left-1/2 -translate-x-1/2"
+            count={galleryImages.length}
+            labelPrefix="Show image"
+            onSelect={selectImage}
+          />
         </section>
 
         <section className="-mt-3 px-8">

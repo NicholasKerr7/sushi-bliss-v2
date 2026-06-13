@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
+import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -97,37 +101,86 @@ interface DesktopDashboardProps {
   onAddToCart: (item: MenuItem) => void;
 }
 
+const desktopHeroSlides = [
+  {
+    accent: "Bliss",
+    description:
+      "An unforgettable dining experience where tradition meets perfection.",
+    eyebrow: "Timeless Japanese Artistry.",
+    imageAlt: "Otoro nigiri presented on a dark luxury surface",
+    imageUrl: featuredAssets.heroSushi.publicUrl,
+    title: "Sushi",
+  },
+  {
+    accent: "Counter",
+    description:
+      "Seasonal chef selections, warm pacing, and intimate omakase service.",
+    eyebrow: "Chef-Led Evenings.",
+    imageAlt: "Premium sushi preparation still life",
+    imageUrl:
+      featuredAssets.ambience[1]?.image.publicUrl ||
+      "/assets/ambience/intimate-sushi-bar-dining-experience.webp",
+    title: "Omakase",
+  },
+  {
+    accent: "Pairings",
+    description:
+      "Rare sake, precise temperatures, and pours chosen for each course.",
+    eyebrow: "Cellar Curated.",
+    imageAlt: "Luxury sake set in black and gold",
+    imageUrl:
+      featuredAssets.sakeSets[0]?.publicUrl ||
+      "/assets/editorial/sake-vase-set-black-gold-floral.webp",
+    title: "Sake",
+  },
+  {
+    accent: "Nights",
+    description:
+      "Dark wood, lantern glow, and a dining room designed for quiet celebration.",
+    eyebrow: "Tokyo After Dark.",
+    imageAlt: "Elegant sushi bar ambience at night",
+    imageUrl:
+      featuredAssets.ambience[0]?.image.publicUrl ||
+      "/assets/ambience/elegant-sushi-bar-ambience-at-night.webp",
+    title: "Bliss",
+  },
+] as const;
+
 export function DesktopDashboard({
   items,
   memberItem,
   specialItem,
   onAddToCart,
 }: DesktopDashboardProps) {
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const activeHero = desktopHeroSlides[activeHeroIndex] || desktopHeroSlides[0];
+
   return (
     <div className="hidden px-[3.2vw] pb-3 pt-0 xl:block xl:min-h-[calc(100svh-88px)]">
       <div className="overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-black/68 shadow-[0_30px_110px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
         <section className="relative min-h-[272px] overflow-hidden border-b border-[var(--sb-border)] px-8 py-5 xl:px-[6vw]">
           <Image
-            alt=""
+            alt={activeHero.imageAlt}
             className="object-cover"
             fill
             priority
             sizes="1200px"
-            src={featuredAssets.heroSushi.publicUrl}
+            src={activeHero.imageUrl}
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.62)_34%,rgba(0,0,0,0.18)_72%,rgba(0,0,0,0.8)_100%)]" />
           <div className="relative z-10 grid min-h-[232px] grid-cols-1 gap-8 xl:grid-cols-[1fr_280px]">
             <div className="flex flex-col justify-center">
               <p className="text-sm uppercase tracking-[0.24em] text-[var(--sb-gold)]">
-                Timeless Japanese Artistry.
+                {activeHero.eyebrow}
               </p>
               <h1 className="editorial-title mt-3 text-[56px] leading-[0.9] text-white xl:text-[72px]">
-                Sushi
-                <span className="block text-[var(--sb-red-bright)]">Bliss</span>
+                {activeHero.title}
+                <span className="block text-[var(--sb-red-bright)]">
+                  {activeHero.accent}
+                </span>
               </h1>
               <p className="mt-4 max-w-sm text-base leading-6 text-white/78">
-                An unforgettable dining experience where tradition meets
-                perfection.
+                {activeHero.description}
               </p>
               <div className="mt-6 flex gap-4">
                 <Link
@@ -147,16 +200,14 @@ export function DesktopDashboard({
                   <AssetIcon className="ml-3" size={20} src={icons.bag} />
                 </Link>
               </div>
-              <div className="mt-5 flex gap-2">
-                {[0, 1, 2, 3].map((index) => (
-                  <span
-                    className={`h-2 w-2 rounded-full ${
-                      index === 0 ? "bg-[var(--sb-red-bright)]" : "bg-white/24"
-                    }`}
-                    key={index}
-                  />
-                ))}
-              </div>
+              <CarouselIndicator
+                activeIndex={activeHeroIndex}
+                ariaLabel="Desktop hero slides"
+                className="mt-5"
+                count={desktopHeroSlides.length}
+                variant="progress"
+                onSelect={setActiveHeroIndex}
+              />
             </div>
             <DesktopInfoCard />
           </div>

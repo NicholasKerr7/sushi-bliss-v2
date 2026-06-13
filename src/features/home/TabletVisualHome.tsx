@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
+import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -27,6 +28,48 @@ interface TabletDashboardProps {
   onQueryChange: (query: string) => void;
   onSearchSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
+
+const tabletHeroSlides = [
+  {
+    accent: "Bliss",
+    description:
+      "An unforgettable dining experience where tradition meets perfection.",
+    eyebrow: "Timeless Japanese Artistry.",
+    imageAlt: "Otoro nigiri presented on a dark luxury surface",
+    imageUrl: featuredAssets.heroSushi.publicUrl,
+    title: "Sushi",
+  },
+  {
+    accent: "Counter",
+    description: "Seasonal omakase experiences prepared seat by seat.",
+    eyebrow: "Chef-Led Evenings.",
+    imageAlt: "Intimate sushi bar dining room",
+    imageUrl:
+      featuredAssets.ambience[1]?.image.publicUrl ||
+      "/assets/ambience/intimate-sushi-bar-dining-experience.webp",
+    title: "Omakase",
+  },
+  {
+    accent: "Pairings",
+    description: "Rare sake selections matched to each signature course.",
+    eyebrow: "Cellar Curated.",
+    imageAlt: "Luxury sake set in black and gold",
+    imageUrl:
+      featuredAssets.sakeSets[0]?.publicUrl ||
+      "/assets/editorial/sake-vase-set-black-gold-floral.webp",
+    title: "Sake",
+  },
+  {
+    accent: "Nights",
+    description: "A dark, polished dining room designed for celebration.",
+    eyebrow: "Tokyo After Dark.",
+    imageAlt: "Elegant sushi bar ambience at night",
+    imageUrl:
+      featuredAssets.ambience[0]?.image.publicUrl ||
+      "/assets/ambience/elegant-sushi-bar-ambience-at-night.webp",
+    title: "Bliss",
+  },
+] as const;
 
 export function TabletDashboard({
   cartCount,
@@ -143,27 +186,32 @@ function TabletIconLink({
 }
 
 function TabletHero() {
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const activeHero = tabletHeroSlides[activeHeroIndex] || tabletHeroSlides[0];
+
   return (
     <section className="relative mt-[18px] min-h-[460px] overflow-hidden rounded-[14px] border border-white/16">
       <Image
-        alt=""
+        alt={activeHero.imageAlt}
         className="object-cover object-[74%_54%]"
         fill
         priority
         sizes="1034px"
-        src={featuredAssets.heroSushi.publicUrl}
+        src={activeHero.imageUrl}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.66)_38%,rgba(0,0,0,0.12)_72%,rgba(0,0,0,0.36)_100%)]" />
       <div className="relative z-10 flex min-h-[460px] flex-col justify-center px-[86px]">
         <p className="text-[20px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">
-          Timeless Japanese Artistry.
+          {activeHero.eyebrow}
         </p>
         <h1 className="editorial-title mt-4 text-[84px] uppercase leading-[0.86] text-white">
-          Sushi
-          <span className="block text-[var(--sb-red-bright)]">Bliss</span>
+          {activeHero.title}
+          <span className="block text-[var(--sb-red-bright)]">
+            {activeHero.accent}
+          </span>
         </h1>
         <p className="mt-6 max-w-[370px] text-[22px] leading-[1.32] text-[var(--sb-gold)]">
-          An unforgettable dining experience where tradition meets perfection.
+          {activeHero.description}
         </p>
         <div className="mt-8 flex gap-5">
           <Link
@@ -181,16 +229,13 @@ function TabletHero() {
             <AssetIcon size={22} src={icons.bag} />
           </Link>
         </div>
-        <div className="mt-7 flex gap-5">
-          {[0, 1, 2, 3, 4].map((index) => (
-            <span
-              className={`h-[11px] w-[11px] rounded-full ${
-                index === 0 ? "bg-[var(--sb-red-bright)]" : "bg-white/22"
-              }`}
-              key={index}
-            />
-          ))}
-        </div>
+        <CarouselIndicator
+          activeIndex={activeHeroIndex}
+          ariaLabel="Tablet hero slides"
+          className="mt-7"
+          count={tabletHeroSlides.length}
+          onSelect={setActiveHeroIndex}
+        />
       </div>
     </section>
   );

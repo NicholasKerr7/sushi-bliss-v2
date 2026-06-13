@@ -28,6 +28,18 @@ export function getTabletPresentationImage(item: MenuItem) {
     : item.image.publicUrl;
 }
 
+/** Builds a de-duplicated gallery for item detail carousels. */
+export function getMenuItemGalleryImages(item: MenuItem): string[] {
+  return [
+    getTabletPresentationImage(item),
+    item.ingredientImage?.publicUrl,
+    item.sakePairing?.image?.publicUrl,
+    item.image.publicUrl,
+  ].filter((imageUrl, index, imageUrls): imageUrl is string =>
+    Boolean(imageUrl && imageUrls.indexOf(imageUrl) === index),
+  );
+}
+
 /** Returns the normalized asset manifest as a stable, read-only list. */
 export function getAssetManifest(): AssetManifestEntry[] {
   return assetEntries;
