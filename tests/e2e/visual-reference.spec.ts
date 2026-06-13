@@ -284,6 +284,178 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "mobile orders dashboard",
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-14.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/orders",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const ordersSection = page.locator("#orders");
+
+      await expect(ordersSection).toBeVisible();
+      await expect(
+        ordersSection.getByRole("heading", { name: /My\s+Orders/i }),
+      ).toBeVisible();
+      await expect(
+        ordersSection.getByRole("button", { name: "View Details" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile order details",
+    prepare: openMobileOrderDetails,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-15.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/orders",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const ordersSection = page.locator("#orders");
+
+      await expect(
+        ordersSection.getByRole("heading", { name: "Order Details" }),
+      ).toBeVisible();
+      await expect(
+        ordersSection.getByRole("heading", { name: "Ordered Items" }),
+      ).toBeVisible();
+      await expect(
+        ordersSection.getByRole("button", { name: "Track Order" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile live order tracking",
+    prepare: openMobileLiveOrderTracking,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-16.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/orders",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const ordersSection = page.locator("#orders");
+
+      await expect(
+        ordersSection.getByRole("heading", { name: "In Preparation" }),
+      ).toBeVisible();
+      await expect(ordersSection.getByText("ETA")).toBeVisible();
+      await expect(
+        ordersSection.getByRole("heading", { name: "Order Summary" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile reservations dashboard",
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-17.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/reservations",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(reservationsSection).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("heading", { name: "Reservations" }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", { name: "Reserve a Table" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile reservation date time",
+    prepare: openMobileReservationDateTime,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-18.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/reservations",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Select Your Table Time",
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByText("Available Times"),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: /Continue to Experience/i,
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile reservation experience",
+    prepare: openMobileReservationExperience,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-19.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/reservations",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", { name: /Choose Your/i }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", { name: /Main Dining Room/i }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: /Continue to Confirm/i,
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile reservation review",
+    prepare: openMobileReservationReview,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-20.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/reservations",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const reservationsSection = page.locator("#reservations");
+
+      await expect(
+        reservationsSection.getByRole("heading", { name: "Confirmation" }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("heading", {
+          name: "Reservation Summary",
+        }),
+      ).toBeVisible();
+      await expect(
+        reservationsSection.getByRole("button", {
+          name: "Confirm Reservation",
+        }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile loyalty dashboard",
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-21.png",
+    referenceSize: { height: 1672, width: 941 },
+    routePath: "/loyalty",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const loyaltySection = page.locator("#loyalty");
+
+      await expect(loyaltySection).toBeVisible();
+      await expect(loyaltySection.getByText("Bliss rewards")).toBeVisible();
+      await expect(loyaltySection.getByText("Points balance")).toBeVisible();
+      await expect(loyaltySection.getByText("Reward catalog")).toBeVisible();
+    },
+  },
+  {
     name: "tablet home dashboard",
     projectName: "chromium-tablet",
     referencePath:
@@ -2121,6 +2293,68 @@ async function openMobileOrderConfirmation(page: Page) {
   await checkoutDialog.getByRole("button", { name: /Place order/i }).click();
   await expect(
     page.getByRole("dialog", { name: "Order confirmed" }),
+  ).toBeVisible();
+}
+
+async function openMobileOrderDetails(page: Page) {
+  const ordersSection = page.locator("#orders");
+
+  await expect(
+    ordersSection.getByRole("button", { name: "View Details" }),
+  ).toBeVisible();
+  await ordersSection.getByRole("button", { name: "View Details" }).click();
+  await expect(
+    ordersSection.getByRole("heading", { name: "Order Details" }),
+  ).toBeVisible();
+}
+
+async function openMobileLiveOrderTracking(page: Page) {
+  const ordersSection = page.locator("#orders");
+
+  await openMobileOrderDetails(page);
+  await ordersSection.getByRole("button", { name: "Track Order" }).click();
+  await expect(
+    ordersSection.getByRole("heading", { name: "In Preparation" }),
+  ).toBeVisible();
+}
+
+async function openMobileReservationDateTime(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await expect(
+    reservationsSection.getByRole("button", { name: "Reserve a Table" }),
+  ).toBeVisible();
+  await reservationsSection
+    .getByRole("button", { name: "Reserve a Table" })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", {
+      name: "Select Your Table Time",
+    }),
+  ).toBeVisible();
+}
+
+async function openMobileReservationExperience(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await openMobileReservationDateTime(page);
+  await reservationsSection
+    .getByRole("button", { name: /Continue to Experience/i })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", { name: /Choose Your/i }),
+  ).toBeVisible();
+}
+
+async function openMobileReservationReview(page: Page) {
+  const reservationsSection = page.locator("#reservations");
+
+  await openMobileReservationExperience(page);
+  await reservationsSection
+    .getByRole("button", { name: /Continue to Confirm/i })
+    .click();
+  await expect(
+    reservationsSection.getByRole("heading", { name: "Confirmation" }),
   ).toBeVisible();
 }
 

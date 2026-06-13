@@ -38,6 +38,19 @@ Current audit targets:
 - mobile checkout review: `/menu` interaction against `mobile/mobile-12.png`
 - mobile order confirmation: `/menu` interaction against
   `mobile/mobile-13.png`
+- mobile orders dashboard: `/orders` against `mobile/mobile-14.png`
+- mobile order details: `/orders` interaction against `mobile/mobile-15.png`
+- mobile live order tracking: `/orders` interaction against
+  `mobile/mobile-16.png`
+- mobile reservations dashboard: `/reservations` against
+  `mobile/mobile-17.png`
+- mobile reservation date time: `/reservations` interaction against
+  `mobile/mobile-18.png`
+- mobile reservation experience: `/reservations` interaction against
+  `mobile/mobile-19.png`
+- mobile reservation review: `/reservations` interaction against
+  `mobile/mobile-20.png`
+- mobile loyalty dashboard: `/loyalty` against `mobile/mobile-21.png`
 - tablet home dashboard: `/home` against `tablet/tablet-01-home-dashboard.png`
 - tablet menu overview: `/menu` against `tablet/tablet-03-menu-overview.png`
 - tablet item detail: `/menu` interaction against

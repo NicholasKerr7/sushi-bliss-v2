@@ -16,13 +16,17 @@ current viewport and attaches the matching reference PNG.
 
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
-| Mobile     |         60 |      13 |                   0 |            47 |
+| Mobile     |         60 |      21 |                   0 |            39 |
 | Tablet     |         40 |      38 |                   2 |             0 |
 | Desktop    |         40 |      40 |                   0 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
 order confirmation composition, so the visual audit maps it to tablet order
 confirmation until the reference filename is corrected.
+
+The mobile reference `mobile-21.png` is stored in the mobile folder but has
+941x1672 source dimensions, so the audit records that file's true reference
+size while still exercising the mobile `/loyalty` route viewport.
 
 ## Tablet References
 
@@ -131,6 +135,14 @@ confirmation until the reference filename is corrected.
 | `mobile-11.png` | checkout payment        | Audited |
 | `mobile-12.png` | checkout review         | Audited |
 | `mobile-13.png` | order confirmation      | Audited |
+| `mobile-14.png` | `/orders` dashboard     | Audited |
+| `mobile-15.png` | order detail state      | Audited |
+| `mobile-16.png` | live order tracking     | Audited |
+| `mobile-17.png` | `/reservations`         | Audited |
+| `mobile-18.png` | reservation date/time   | Audited |
+| `mobile-19.png` | reservation experience  | Audited |
+| `mobile-20.png` | reservation review      | Audited |
+| `mobile-21.png` | `/loyalty` dashboard    | Audited |
 
-`mobile-14.png` through `mobile-60.png` still need a manual naming pass before
+`mobile-22.png` through `mobile-60.png` still need a manual naming pass before
 we can map each reference to a route and interaction with confidence.
