@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
+import { classNames } from "@/lib/classNames";
 import type { MenuCategory } from "@/types/menu";
 
 interface TabletCategoryControlProps {
@@ -63,11 +64,12 @@ export function TabletCategoryBar({
   return (
     <nav
       aria-label="Tablet menu categories"
-      className={
+      className={classNames(
+        "grid grid-cols-4 gap-2",
         isPillVariant
-          ? "mt-4 grid grid-cols-7 gap-2 min-[1080px]:grid-cols-[1.05fr_0.72fr_0.72fr_0.82fr_1.08fr_0.96fr_0.72fr] min-[1080px]:gap-3"
-          : "mt-3 grid grid-cols-7 rounded-[12px] border border-white/14 bg-white/[0.035] lg:grid-cols-[1.08fr_0.8fr_0.78fr_0.88fr_1.08fr_0.98fr_0.74fr]"
-      }
+          ? "mt-4 lg:grid-cols-[1.16fr_0.74fr_0.74fr_0.84fr_1.18fr_1fr_0.74fr] lg:gap-3"
+          : "mt-3 lg:grid-cols-[1.16fr_0.74fr_0.74fr_0.84fr_1.18fr_1fr_0.74fr] lg:gap-0 lg:overflow-hidden lg:rounded-[12px] lg:border lg:border-white/14 lg:bg-white/[0.035]",
+      )}
     >
       {tabletCategoryTabs.map((item) => {
         const disabled =
@@ -79,21 +81,20 @@ export function TabletCategoryBar({
           <button
             aria-label={item.label}
             aria-pressed={isActive}
-            className={`flex min-h-[46px] min-w-0 items-center justify-center gap-0 px-2 text-[13px] uppercase disabled:cursor-not-allowed disabled:opacity-45 ${
+            className={classNames(
+              "flex min-h-[46px] min-w-0 items-center justify-center gap-2 whitespace-nowrap px-2 text-[12px] uppercase transition disabled:cursor-not-allowed disabled:opacity-45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] lg:text-[13px]",
               isPillVariant
-                ? "min-[1080px]:gap-2 min-[1080px]:px-2.5"
-                : "lg:gap-2 lg:px-2.5"
-            } ${
+                ? "rounded-[10px] border lg:px-3"
+                : "rounded-[10px] border lg:rounded-none lg:border-y-0 lg:border-l-0 lg:border-r lg:last:border-r-0",
               isPillVariant
-                ? "rounded-[10px] border border-white/14 bg-black/24"
-                : "border-r border-white/10 last:border-r-0"
-            } ${
-              isActive
-                ? isPillVariant
+                ? isActive
                   ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] text-black shadow-[0_0_24px_rgb(215_168_79_/_0.22)]"
-                  : "bg-[var(--sb-gold)]/28 text-[var(--sb-gold)]"
-                : "text-white/72"
-            }`}
+                  : "border-white/14 bg-black/24 text-white/72 hover:border-[var(--sb-gold)]/36 hover:bg-white/[0.055] hover:text-white"
+                : isActive
+                  ? "border-[var(--sb-gold)] bg-[var(--sb-gold)]/28 text-[var(--sb-gold)] lg:border-white/10"
+                  : "border-white/14 bg-black/24 text-white/72 hover:bg-white/[0.045] hover:text-white lg:bg-transparent",
+              disabled ? "hover:border-white/14 hover:bg-black/24" : "",
+            )}
             disabled={disabled}
             key={item.id}
             onClick={() => onSelectCategory(item.id)}
@@ -101,13 +102,7 @@ export function TabletCategoryBar({
             type="button"
           >
             <AssetIcon size={20} src={item.icon} />
-            <span
-              className={`hidden min-w-0 whitespace-nowrap ${
-                isPillVariant ? "min-[1080px]:inline" : "lg:inline"
-              }`}
-            >
-              {item.label}
-            </span>
+            <span>{item.label}</span>
           </button>
         );
       })}
