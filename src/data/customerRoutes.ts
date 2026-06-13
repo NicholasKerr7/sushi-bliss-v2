@@ -12,6 +12,7 @@ export const customerRoutes = [
   { id: "omakase", label: "Omakase" },
   { id: "orders", label: "Orders" },
   { id: "profile", label: "Profile" },
+  { id: "recently-viewed", label: "Recently Viewed" },
   { id: "reservations", label: "Reservations" },
   { id: "support", label: "Support" },
 ] as const;

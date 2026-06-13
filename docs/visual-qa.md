@@ -69,6 +69,49 @@ Current audit targets:
   `mobile/mobile-31.png`
 - mobile dietary preferences: `/profile` interaction against
   `mobile/mobile-32.png`
+- mobile reservation history: `/reservations` interaction against
+  `mobile/mobile-33.png`
+- mobile reservation detail: `/reservations` interaction against
+  `mobile/mobile-34.png`
+- mobile personal information: `/profile` interaction against
+  `mobile/mobile-35.png`
+- mobile account settings: `/profile` interaction against
+  `mobile/mobile-36.png`
+- mobile privacy security: `/profile` interaction against
+  `mobile/mobile-37.png`
+- mobile about story: `/about` against `mobile/mobile-38.png`
+- mobile contact support: `/support` against `mobile/mobile-39.png`
+- mobile help center: `/support` against `mobile/mobile-40.png`
+- mobile support request: `/support` interaction against
+  `mobile/mobile-41.png`
+- mobile FAQ article detail: `/support` interaction against
+  `mobile/mobile-42.png`
+- mobile notification detail: `/notifications` interaction against
+  `mobile/mobile-43.png`
+- mobile omakase landing: `/omakase` against `mobile/mobile-44.png`
+- mobile omakase package selection: `/omakase` interaction against
+  `mobile/mobile-45.png`
+- mobile omakase review: `/omakase` interaction against
+  `mobile/mobile-46.png`
+- mobile locations directory: `/locations` against `mobile/mobile-47.png`
+- mobile location detail: `/locations` interaction against
+  `mobile/mobile-48.png`
+- mobile referral earn: `/loyalty` interaction against `mobile/mobile-49.png`
+- mobile gift experience: `/gifts` against `mobile/mobile-50.png`
+- mobile gift selection: `/gifts` against `mobile/mobile-51.png`
+- mobile gift checkout recipient: `/gifts` interaction against
+  `mobile/mobile-52.png`
+- mobile gift checkout payment: `/gifts` interaction against
+  `mobile/mobile-53.png`
+- mobile gift confirmation: `/gifts` interaction against
+  `mobile/mobile-54.png`
+- mobile promotions offers: `/offers` against `mobile/mobile-55.png`
+- mobile offer detail: `/offers` interaction against `mobile/mobile-56.png`
+- mobile favorites: `/favorites` with seeded favorites against
+  `mobile/mobile-57.png`
+- mobile saved item detail: `/menu` interaction against `mobile/mobile-58.png`
+- mobile recently viewed: `/recently-viewed` against `mobile/mobile-59.png`
+- mobile empty cart: `/menu` interaction against `mobile/mobile-60.png`
 - tablet home dashboard: `/home` against `tablet/tablet-01-home-dashboard.png`
 - tablet menu overview: `/menu` against `tablet/tablet-03-menu-overview.png`
 - tablet item detail: `/menu` interaction against

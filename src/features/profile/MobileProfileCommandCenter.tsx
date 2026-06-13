@@ -76,12 +76,18 @@ export function MobileProfileCommandCenter({
         />
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-3">
+      <div className="mt-3 grid grid-cols-3 gap-3">
         <CommandButton
           icon={icons.settings}
           label="Settings"
           value="Preferences"
           onClick={onOpenPreferences}
+        />
+        <CommandLink
+          href="/recently-viewed"
+          icon={icons.clock}
+          label="Viewed"
+          value="History"
         />
         <CommandLink
           href="/offers"

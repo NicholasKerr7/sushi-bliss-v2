@@ -16,7 +16,7 @@ current viewport and attaches the matching reference PNG.
 
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
-| Mobile     |         60 |      32 |                   0 |            28 |
+| Mobile     |         60 |      60 |                   0 |             0 |
 | Tablet     |         40 |      38 |                   2 |             0 |
 | Desktop    |         40 |      40 |                   0 |             0 |
 
@@ -24,9 +24,10 @@ The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
 order confirmation composition, so the visual audit maps it to tablet order
 confirmation until the reference filename is corrected.
 
-The mobile references `mobile-21.png` through `mobile-30.png` are stored in the
-mobile folder but have 941x1672 source dimensions, so the audit records each
-file's true reference size while still exercising the mobile viewport.
+The mobile references `mobile-21.png` through `mobile-30.png` and
+`mobile-51.png` through `mobile-60.png` are stored in the mobile folder but have
+941x1672 source dimensions, so the audit records each file's true reference size
+while still exercising the mobile viewport.
 
 ## Tablet References
 
@@ -154,6 +155,31 @@ file's true reference size while still exercising the mobile viewport.
 | `mobile-30.png` | add payment state       | Audited |
 | `mobile-31.png` | `/notifications`        | Audited |
 | `mobile-32.png` | dietary preferences     | Audited |
-
-`mobile-33.png` through `mobile-60.png` still need a manual naming pass before
-we can map each reference to a route and interaction with confidence.
+| `mobile-33.png` | reservation history     | Audited |
+| `mobile-34.png` | reservation detail      | Audited |
+| `mobile-35.png` | personal information    | Audited |
+| `mobile-36.png` | account settings        | Audited |
+| `mobile-37.png` | privacy security        | Audited |
+| `mobile-38.png` | `/about` story          | Audited |
+| `mobile-39.png` | `/support` contact      | Audited |
+| `mobile-40.png` | help center             | Audited |
+| `mobile-41.png` | support request         | Audited |
+| `mobile-42.png` | FAQ article detail      | Audited |
+| `mobile-43.png` | notification detail     | Audited |
+| `mobile-44.png` | `/omakase` landing      | Audited |
+| `mobile-45.png` | omakase package state   | Audited |
+| `mobile-46.png` | omakase review          | Audited |
+| `mobile-47.png` | `/locations` directory  | Audited |
+| `mobile-48.png` | location detail         | Audited |
+| `mobile-49.png` | referral earn           | Audited |
+| `mobile-50.png` | `/gifts` experience     | Audited |
+| `mobile-51.png` | gift selection          | Audited |
+| `mobile-52.png` | gift checkout recipient | Audited |
+| `mobile-53.png` | gift checkout payment   | Audited |
+| `mobile-54.png` | gift confirmation       | Audited |
+| `mobile-55.png` | promotions offers       | Audited |
+| `mobile-56.png` | offer detail            | Audited |
+| `mobile-57.png` | favorites               | Audited |
+| `mobile-58.png` | saved item detail       | Audited |
+| `mobile-59.png` | recently viewed         | Audited |
+| `mobile-60.png` | empty cart              | Audited |
