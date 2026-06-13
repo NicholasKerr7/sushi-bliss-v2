@@ -2,8 +2,6 @@
 
 import { useMemo, useState } from "react";
 
-import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
-import { TabletExperienceHeader } from "@/components/layout/TabletExperienceHeader";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -15,6 +13,8 @@ import {
 import type { AppNotification } from "@/types/notification";
 
 import { TabletNotificationDetailView } from "./TabletNotificationDetailView";
+import { TabletNotificationsBottomNav } from "./TabletNotificationsBottomNav";
+import { TabletNotificationsHeader } from "./TabletNotificationsHeader";
 import { TabletNotificationsListView } from "./TabletNotificationsListView";
 
 /** Coordinates tablet notification list, filtering, mark-read state, detail, and cart access. */
@@ -46,16 +46,16 @@ export function TabletNotificationsCenter() {
 
   return (
     <section
-      className="flex min-h-dvh flex-col bg-[#050607] px-[18px] pb-3 pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pb-4 min-[1080px]:pt-3"
+      className="flex min-h-dvh flex-col bg-[#050607] pb-[92px] text-white"
       id="notifications"
     >
-      <TabletExperienceHeader
+      <TabletNotificationsHeader
         cartCount={itemCount}
+        unreadCount={unreadCount}
         onOpenCart={() => setCartOpen(true)}
-        title="Notifications"
       />
 
-      <main className="mx-auto w-full max-w-[1034px]">
+      <main className="mx-auto w-full max-w-[974px]">
         {selectedNotification ? (
           <TabletNotificationDetailView
             notification={selectedNotification}
@@ -74,11 +74,7 @@ export function TabletNotificationsCenter() {
         )}
       </main>
 
-      <TabletBottomNavigation
-        activeId="profile"
-        ariaLabel="Tablet notifications navigation"
-        fixed={false}
-      />
+      <TabletNotificationsBottomNav unreadCount={unreadCount} />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
     </section>
   );
