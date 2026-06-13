@@ -97,9 +97,9 @@ export const defaultLoyaltyState: LoyaltyState = {
 };
 
 export const referralProgress: ReferralProgress = {
-  code: "NICHISUSHI",
-  completedInvites: 2,
-  invitedGuests: 5,
+  code: "SB-84217",
+  completedInvites: 3,
+  invitedGuests: 10,
   milestones: [
     {
       completed: true,
@@ -108,13 +108,13 @@ export const referralProgress: ReferralProgress = {
     },
     {
       completed: true,
-      count: 2,
-      label: "Two guests completed checkout",
+      count: 3,
+      label: "Three guests completed checkout",
     },
     {
       completed: false,
-      count: 5,
-      label: "Five guest orders unlock omakase points",
+      count: 10,
+      label: "Ten guest orders unlock omakase points",
     },
   ],
   rewardPoints: 500,
