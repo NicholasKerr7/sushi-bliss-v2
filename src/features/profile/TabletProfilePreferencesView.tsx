@@ -6,14 +6,14 @@ import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { locations } from "@/data/locations";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 import { togglePreferenceTag } from "@/lib/profile";
 import type { PaymentMethod, UserPreferences, UserProfile } from "@/types/user";
 
-import { TabletProfileHeader } from "./TabletProfileHeader";
+import { TabletAccountBottomNavigation } from "./TabletAccountBottomNavigation";
+import { TabletProfileAccountTopNav } from "./TabletProfileAccountTopNav";
 
 type PreferencesUpdate =
   | Partial<UserPreferences>
@@ -110,6 +110,16 @@ function getCardClassName(paymentMethod: PaymentMethod) {
   }
 
   return "text-[#3aa6ff]";
+}
+
+function formatExpiryDate(value: string) {
+  const [year, month] = value.split("-");
+
+  if (!year || !month) {
+    return value;
+  }
+
+  return `${month}/${year.slice(-2)}`;
 }
 
 function TabletSwitch({
@@ -210,44 +220,43 @@ export function TabletProfilePreferencesView({
   };
 
   return (
-    <section className="flex h-dvh min-h-dvh flex-col overflow-hidden bg-[#050607] px-[18px] pb-3 pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pb-4 min-[1080px]:pt-3">
-      <TabletProfileHeader
+    <section className="flex h-dvh min-h-dvh flex-col overflow-hidden bg-[#050607] pb-[84px] text-white">
+      <TabletProfileAccountTopNav
         cartCount={cartCount}
         profile={profile}
-        section="account"
         onOpenCart={onOpenCart}
       />
 
-      <main className="mx-auto w-full max-w-[1034px]">
-        <section className="relative mt-2 min-h-[122px] overflow-hidden rounded-[14px] border border-white/8 bg-black/30 lg:min-h-[158px] min-[1080px]:mt-4 min-[1080px]:min-h-[196px]">
-          <Image
-            alt=""
-            className="object-cover object-[70%_52%] opacity-82"
-            fill
-            priority
-            sizes="1034px"
-            src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98)_0%,rgba(5,6,7,0.82)_42%,rgba(5,6,7,0.22)_72%,rgba(5,6,7,0.08)_100%)]" />
-          <div className="relative z-10 p-5 min-[1080px]:p-8">
-            <button
-              className="mb-4 flex items-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-              onClick={onBack}
-              type="button"
-            >
-              <ChevronIcon direction="left" size={18} />
-              Account settings
-            </button>
-            <h1 className="editorial-title text-[42px] uppercase leading-none tracking-[0.06em] text-white min-[1080px]:text-[58px]">
-              Preferences
-            </h1>
-            <p className="mt-3 text-[14px] text-[var(--sb-gold-soft)] min-[1080px]:text-[17px]">
-              Manage your account, preferences, and privacy settings.
-            </p>
-          </div>
-        </section>
+      <section className="relative h-[181px] shrink-0 overflow-hidden bg-black/30">
+        <Image
+          alt=""
+          className="object-cover object-[70%_52%] opacity-82"
+          fill
+          priority
+          sizes="1086px"
+          src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.99)_0%,rgba(5,6,7,0.9)_36%,rgba(5,6,7,0.28)_70%,rgba(5,6,7,0.08)_100%)]" />
+        <div className="relative z-10 mx-auto w-full max-w-[992px] pt-10">
+          <button
+            className="mb-5 flex items-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            onClick={onBack}
+            type="button"
+          >
+            <ChevronIcon direction="left" size={18} />
+            Account settings
+          </button>
+          <h1 className="editorial-title text-[54px] uppercase leading-none tracking-[0.06em] text-white">
+            Preferences
+          </h1>
+          <p className="mt-3 text-[16px] text-[var(--sb-gold-soft)]">
+            Manage your account, preferences, and privacy settings.
+          </p>
+        </div>
+      </section>
 
-        <section className="mt-3 grid grid-cols-2 gap-3 min-[1080px]:mt-5 min-[1080px]:gap-5">
+      <main className="mx-auto w-full max-w-[992px]">
+        <section className="grid grid-cols-2 gap-3 min-[1080px]:gap-4">
           <article className="rounded-[14px] border border-white/10 bg-white/[0.035] p-4 min-[1080px]:p-5">
             <h2 className="flex items-center gap-3 text-[14px] uppercase tracking-[0.08em] text-white min-[1080px]:text-[16px]">
               <AssetIcon size={24} src="/assets/icons/floral-emblem-icon.png" />
@@ -256,7 +265,7 @@ export function TabletProfilePreferencesView({
             <div className="mt-4 overflow-hidden rounded-[12px] border border-white/10">
               {diningRows.map((row) => (
                 <button
-                  className="grid min-h-[48px] w-full grid-cols-[34px_minmax(0,1fr)_minmax(100px,150px)_18px] items-center gap-3 border-b border-white/10 px-3 text-left last:border-b-0 min-[1080px]:min-h-[58px]"
+                  className="grid min-h-[48px] w-full grid-cols-[34px_minmax(0,1fr)_minmax(100px,150px)_18px] items-center gap-3 border-b border-white/10 px-3 text-left last:border-b-0 min-[1080px]:min-h-[57px]"
                   key={row.label}
                   onClick={() =>
                     handleAccountAction(
@@ -399,7 +408,7 @@ export function TabletProfilePreferencesView({
               <div className="mt-4 overflow-hidden rounded-[12px] border border-white/10">
                 {supportRows.map((row) => (
                   <Link
-                    className="grid min-h-[50px] grid-cols-[34px_minmax(0,1fr)_18px] items-center gap-3 border-b border-white/10 px-3 text-left last:border-b-0"
+                    className="grid min-h-[49px] grid-cols-[34px_minmax(0,1fr)_18px] items-center gap-3 border-b border-white/10 px-3 text-left last:border-b-0"
                     href={row.href}
                     key={row.label}
                   >
@@ -450,7 +459,7 @@ export function TabletProfilePreferencesView({
                       .... {paymentMethod.last4}
                     </span>
                     <span className="hidden truncate text-[11px] text-white/42 min-[1080px]:block">
-                      Expires {paymentMethod.expiresAt}
+                      Expires {formatExpiryDate(paymentMethod.expiresAt)}
                     </span>
                     {paymentMethod.isDefault ? (
                       <span className="rounded-[5px] border border-[var(--sb-red-bright)] px-2 py-1 text-[9px] uppercase text-[var(--sb-red-bright)]">
@@ -600,13 +609,12 @@ export function TabletProfilePreferencesView({
           </div>
         </section>
 
-        <p className="sr-only">App Version 2.3.0 - You are up to date</p>
+        <p className="mt-4 text-center text-[12px] text-white/48">
+          App Version 2.3.0 - You are up to date
+        </p>
       </main>
 
-      <TabletBottomNavigation
-        activeId="profile"
-        ariaLabel="Tablet profile navigation"
-      />
+      <TabletAccountBottomNavigation />
     </section>
   );
 }
