@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { offers } from "@/data/offers";
@@ -17,9 +16,19 @@ import {
 import type { Offer } from "@/types/offer";
 
 import { TabletFeaturedOffer } from "./TabletFeaturedOffer";
+import { TabletOffersBottomNav } from "./TabletOffersBottomNav";
 import { TabletOfferDetailView } from "./TabletOfferDetailView";
 import { TabletOffersHeader } from "./TabletOffersHeader";
 import { TabletOfferTile } from "./TabletOfferTile";
+
+const tabletOfferOrder = [
+  "spicy-tuna-roll",
+  "double-points",
+  "birthday-treat",
+  "weekend-special",
+  "early-lunch",
+  "omakase-preview",
+] as const;
 
 export function TabletOffersDashboard() {
   const [query, setQuery] = useState("");
@@ -39,7 +48,13 @@ export function TabletOffersDashboard() {
 
   const visibleOffers = useMemo(() => {
     if (!normalizedQuery) {
-      return sortedOffers.filter((offer) => offer.id !== featuredOffer?.id);
+      return sortedOffers
+        .filter((offer) => offer.id !== featuredOffer?.id)
+        .sort(
+          (first, second) =>
+            getTabletOfferOrderIndex(first.id) -
+            getTabletOfferOrderIndex(second.id),
+        );
     }
 
     return sortedOffers.filter((offer) => offerMatchesQuery(offer, query));
@@ -76,7 +91,7 @@ export function TabletOffersDashboard() {
 
   return (
     <section
-      className="flex min-h-dvh flex-col bg-[#050607] px-[18px] pb-3 pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pb-4 min-[1080px]:pt-3"
+      className="flex min-h-dvh flex-col bg-[#050607] px-[26px] pt-0 text-white"
       id="offers"
     >
       <TabletOffersHeader
@@ -86,24 +101,25 @@ export function TabletOffersDashboard() {
       />
 
       <main className="mx-auto w-full max-w-[1034px]">
-        <section className="relative mt-3 min-h-[168px] overflow-hidden rounded-[18px] border border-white/10 bg-black/40 lg:min-h-[190px] min-[1080px]:mt-5 min-[1080px]:min-h-[248px]">
+        <section className="relative min-h-[248px] overflow-hidden bg-black/20">
           <Image
             alt=""
-            className="object-cover opacity-72"
+            className="translate-x-[28%] scale-[1.05] object-cover object-center opacity-92"
             fill
             loading="eager"
             priority
             sizes="1034px"
             src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
+            unoptimized
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98),rgba(5,6,7,0.76)_42%,rgba(5,6,7,0.12))]" />
-          <div className="relative z-10 p-5 min-[1080px]:p-8">
-            <h1 className="editorial-title text-[46px] leading-[0.94] text-white min-[1080px]:text-[62px]">
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1),rgba(5,6,7,0.84)_34%,rgba(5,6,7,0.18)_67%,rgba(5,6,7,0.66)),linear-gradient(180deg,rgba(5,6,7,0.15),rgba(5,6,7,0.96))]" />
+          <div className="relative z-10 flex min-h-[248px] flex-col justify-center px-8">
+            <h1 className="editorial-title text-[62px] leading-[0.94] text-white">
               Promotions
               <br />
               <span className="text-[var(--sb-red-bright)]">& Offers</span>
             </h1>
-            <p className="mt-3 max-w-[360px] text-[15px] leading-6 text-white/58 min-[1080px]:mt-5 min-[1080px]:text-[19px]">
+            <p className="mt-5 max-w-[360px] text-[19px] leading-7 text-white/62">
               Exclusive offers crafted to elevate your Sushi Bliss experience.
             </p>
           </div>
@@ -142,7 +158,7 @@ export function TabletOffersDashboard() {
             </button>
           </div>
 
-          <div className="mt-3 grid grid-cols-3 gap-2 lg:grid-cols-2 lg:gap-3 min-[1080px]:gap-4">
+          <div className="mt-3 grid grid-cols-2 gap-4">
             {visibleOffers.length > 0 ? (
               visibleOffers.map((offer, index) => (
                 <TabletOfferTile
@@ -170,7 +186,7 @@ export function TabletOffersDashboard() {
           </div>
         </section>
 
-        <section className="mt-3 hidden grid-cols-[auto_minmax(0,1fr)_220px] items-center gap-4 rounded-[16px] border border-white/10 bg-white/[0.04] p-4 lg:grid min-[1080px]:mt-5 min-[1080px]:grid-cols-[auto_minmax(0,1fr)_280px] min-[1080px]:p-5">
+        <section className="mt-5 grid grid-cols-[auto_minmax(0,1fr)_280px] items-center gap-4 rounded-[14px] border border-white/10 bg-white/[0.04] px-7 py-5">
           <span className="grid h-12 w-12 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/28 min-[1080px]:h-14 min-[1080px]:w-14">
             <AssetIcon size={30} src="/assets/icons/gift-icon.png" />
           </span>
@@ -192,10 +208,15 @@ export function TabletOffersDashboard() {
         </section>
       </main>
 
-      <TabletBottomNavigation
-        ariaLabel="Tablet offers navigation"
-        fixed={false}
-      />
+      <TabletOffersBottomNav />
     </section>
   );
+}
+
+function getTabletOfferOrderIndex(offerId: string) {
+  const index = tabletOfferOrder.indexOf(
+    offerId as (typeof tabletOfferOrder)[number],
+  );
+
+  return index === -1 ? tabletOfferOrder.length : index;
 }
