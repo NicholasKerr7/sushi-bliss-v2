@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
@@ -35,6 +35,12 @@ export function TabletNotificationsCenter() {
     () => filterNotifications(sortedNotifications, activeFilter),
     [activeFilter, sortedNotifications],
   );
+
+  useEffect(() => {
+    const heroImage = new window.Image();
+    heroImage.decoding = "async";
+    heroImage.src = "/assets/editorial/hero-otoro-nigiri-no-red-moon.webp";
+  }, []);
 
   const handleViewNotification = (notification: AppNotification) => {
     markRead(notification.id);
