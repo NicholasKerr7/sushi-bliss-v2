@@ -202,6 +202,7 @@ export function TabletSupportHelpView({
               alt=""
               className="object-cover"
               fill
+              loading="eager"
               sizes="340px"
               src="/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp"
             />

@@ -124,6 +124,7 @@ export function TabletMenuOverview({
                       ? "Signature"
                       : "Premium"
               }
+              eagerImage={index < 4}
               isFavorite={isFavorite(item.id)}
               item={item}
               key={item.id}
@@ -136,8 +137,9 @@ export function TabletMenuOverview({
       </TabletSection>
       <TabletSection title="All Menu Items">
         <div className="grid grid-cols-3 gap-3">
-          {allTabletMenuItems.map((item) => (
+          {allTabletMenuItems.map((item, index) => (
             <TabletCompactMenuRow
+              eagerImage={index < 3}
               item={item}
               key={item.id}
               onAddToCart={onAddToCart}

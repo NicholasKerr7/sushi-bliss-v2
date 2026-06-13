@@ -53,6 +53,7 @@ export function TabletSearchFilter({
         alt=""
         className="object-cover object-[75%_18%] opacity-70"
         fill
+        loading="eager"
         priority
         sizes="1034px"
         src={
@@ -149,6 +150,7 @@ export function TabletSearchFilter({
                     ? "Special"
                     : "Hot"
               }
+              eagerImage={index < 4}
               isFavorite={isFavorite(item.id)}
               item={item}
               key={item.id}

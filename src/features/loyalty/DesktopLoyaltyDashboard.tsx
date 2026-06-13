@@ -132,6 +132,7 @@ export function DesktopLoyaltyDashboard({
               alt=""
               className="object-cover object-[58%_45%]"
               fill
+              loading="eager"
               priority
               sizes="1568px"
               src={desktopLoyaltyHeroImage}
@@ -188,6 +189,7 @@ export function DesktopLoyaltyDashboard({
                   alt=""
                   className="object-cover opacity-42"
                   fill
+                  loading="eager"
                   sizes="318px"
                   src={desktopLoyaltyTextureImage}
                 />

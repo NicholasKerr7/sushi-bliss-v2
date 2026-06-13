@@ -7,6 +7,7 @@ import type { MenuItem } from "@/types/menu";
 
 interface TabletMenuCardProps {
   badge: string;
+  eagerImage?: boolean;
   isFavorite: boolean;
   item: MenuItem;
   onAddToCart: (item: MenuItem) => void;
@@ -15,6 +16,7 @@ interface TabletMenuCardProps {
 }
 
 interface TabletCompactMenuRowProps {
+  eagerImage?: boolean;
   item: MenuItem;
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
@@ -22,6 +24,7 @@ interface TabletCompactMenuRowProps {
 
 export function TabletMenuCard({
   badge,
+  eagerImage = false,
   isFavorite,
   item,
   onAddToCart,
@@ -51,6 +54,8 @@ export function TabletMenuCard({
             alt=""
             className="object-cover"
             fill
+            loading={eagerImage ? "eager" : "lazy"}
+            priority={eagerImage}
             sizes="250px"
             src={item.image.publicUrl}
           />
@@ -80,6 +85,7 @@ export function TabletMenuCard({
 }
 
 export function TabletCompactMenuRow({
+  eagerImage = false,
   item,
   onAddToCart,
   onViewDetails,
@@ -95,6 +101,8 @@ export function TabletCompactMenuRow({
           alt=""
           className="object-cover"
           fill
+          loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="120px"
           src={item.image.publicUrl}
         />

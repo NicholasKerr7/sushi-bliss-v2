@@ -164,7 +164,7 @@ export function DesktopReservationMain({
                     alt=""
                     className="object-cover"
                     fill
-                    loading={index === 0 ? "eager" : "lazy"}
+                    loading={index < 3 ? "eager" : "lazy"}
                     priority={index === 0}
                     sizes="260px"
                     src={experience.imageUrl}

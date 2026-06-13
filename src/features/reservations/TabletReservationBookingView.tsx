@@ -117,6 +117,7 @@ export function TabletReservationBookingView({
                     alt={experience.title}
                     className="object-cover"
                     fill
+                    loading={index < 3 ? "eager" : "lazy"}
                     priority={index === 0}
                     sizes="330px"
                     src={experience.imageUrl}

@@ -82,7 +82,7 @@ export function DesktopLocationsDirectory({
               <div className="grid grid-cols-3 gap-4">
                 {orderedLocations.map((location, index) => (
                   <LocationFeatureCard
-                    imagePriority={index === 0}
+                    imagePriority={index < 3}
                     key={location.id}
                     location={location}
                     onViewDetails={onViewDetails}

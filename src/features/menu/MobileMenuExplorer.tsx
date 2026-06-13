@@ -159,6 +159,7 @@ function MobileMenuOverview({
           alt=""
           className="object-cover object-[72%_48%]"
           fill
+          loading="eager"
           priority
           sizes="430px"
           src={getTabletPresentationImage(menuHeroItem)}
@@ -191,6 +192,7 @@ function MobileMenuOverview({
         {items.slice(0, 8).map((item, index) => (
           <MobileMenuGridCard
             badge={index === 0 ? "Hot" : index === 1 ? "Popular" : undefined}
+            eagerImage={index < 2}
             item={item}
             key={item.id}
             onAddToCart={onAddToCart}
@@ -297,6 +299,7 @@ function MobileCategoryView({
                     ? "Chef's Special"
                     : undefined
             }
+            eagerImage={index < 2}
             item={item}
             key={item.id}
             onAddToCart={onAddToCart}
@@ -420,6 +423,7 @@ function MobileSearchResults({
                       ? "Special"
                       : undefined
               }
+              eagerImage={index < 2}
               item={item}
               key={item.id}
               onAddToCart={onAddToCart}

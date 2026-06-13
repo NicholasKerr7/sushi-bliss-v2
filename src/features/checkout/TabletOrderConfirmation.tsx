@@ -321,9 +321,7 @@ function TabletOrderConfirmationHeader({
             src={chefAvatar}
             width={58}
           />
-          <span className="text-[var(--sb-gold)]" aria-hidden="true">
-            v
-          </span>
+          <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
         </Link>
       </div>
     </header>

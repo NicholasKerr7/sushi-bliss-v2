@@ -82,9 +82,7 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
               Bliss Member
             </span>
           </span>
-          <span className="text-[var(--sb-gold)]" aria-hidden="true">
-            v
-          </span>
+          <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
         </Link>
       </div>
     </header>

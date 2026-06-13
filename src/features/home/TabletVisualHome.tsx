@@ -116,9 +116,7 @@ function TabletHeader({
             src={chefAvatar}
             width={58}
           />
-          <span className="text-[var(--sb-gold)]" aria-hidden="true">
-            v
-          </span>
+          <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
         </Link>
       </div>
     </header>
@@ -314,9 +312,7 @@ function TabletReservationCard() {
             href="/reservations"
           >
             2 Guests
-            <span className="text-[var(--sb-gold)]" aria-hidden="true">
-              v
-            </span>
+            <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
           </Link>
         </div>
         <div className="flex gap-3 border-t border-[var(--sb-border)] px-5 py-2 text-sm text-white/78">

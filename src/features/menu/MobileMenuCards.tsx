@@ -9,11 +9,13 @@ import type { MenuItem } from "@/types/menu";
 
 export function MobileMenuGridCard({
   badge,
+  eagerImage = false,
   item,
   onAddToCart,
   onViewDetails,
 }: {
   badge?: string;
+  eagerImage?: boolean;
   item: MenuItem;
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
@@ -35,6 +37,8 @@ export function MobileMenuGridCard({
             alt=""
             className="object-cover"
             fill
+            loading={eagerImage ? "eager" : "lazy"}
+            priority={eagerImage}
             sizes="180px"
             src={item.image.publicUrl}
           />
@@ -65,11 +69,13 @@ export function MobileMenuGridCard({
 
 export function MobileMenuListCard({
   badge,
+  eagerImage = false,
   item,
   onAddToCart,
   onViewDetails,
 }: {
   badge?: string;
+  eagerImage?: boolean;
   item: MenuItem;
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
@@ -90,6 +96,8 @@ export function MobileMenuListCard({
           alt=""
           className="object-cover"
           fill
+          loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="190px"
           src={item.image.publicUrl}
         />
@@ -123,11 +131,13 @@ export function MobileMenuListCard({
 
 export function MobileSearchResultRow({
   badge,
+  eagerImage = false,
   item,
   onAddToCart,
   onViewDetails,
 }: {
   badge?: string;
+  eagerImage?: boolean;
   item: MenuItem;
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
@@ -148,6 +158,8 @@ export function MobileSearchResultRow({
           alt=""
           className="object-cover"
           fill
+          loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="160px"
           src={item.image.publicUrl}
         />

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
 
@@ -90,9 +91,7 @@ export function TabletMenuHeader({
             src={chefAvatar}
             width={58}
           />
-          <span className="text-[var(--sb-gold)]" aria-hidden="true">
-            v
-          </span>
+          <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
         </Link>
       </div>
     </header>

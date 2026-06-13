@@ -125,7 +125,7 @@ export function DesktopOffersDashboard() {
                     currentTime={currentTime}
                     key={offer.id}
                     offer={offer}
-                    priority={index === 0}
+                    priority={index < 4}
                   />
                 ))}
               </div>

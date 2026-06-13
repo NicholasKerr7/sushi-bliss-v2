@@ -187,9 +187,7 @@ export function TabletSelectButton({ label }: { label: string }) {
       type="button"
     >
       {label}
-      <span className="text-[var(--sb-gold)]" aria-hidden="true">
-        v
-      </span>
+      <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
     </button>
   );
 }
@@ -219,12 +217,10 @@ export function TabletFilterSelect({
           </option>
         ))}
       </select>
-      <span
-        aria-hidden="true"
+      <ChevronIcon
         className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--sb-gold)]"
-      >
-        v
-      </span>
+        direction="down"
+      />
     </label>
   );
 }

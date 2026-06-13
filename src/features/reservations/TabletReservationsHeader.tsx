@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { mockUser } from "@/data/mockUser";
 import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
 
@@ -62,9 +63,7 @@ export function TabletReservationsHeader({
               Bliss member
             </span>
           </span>
-          <span className="text-[var(--sb-gold)]" aria-hidden="true">
-            v
-          </span>
+          <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
         </Link>
         <Link
           className="relative grid h-11 w-11 place-items-center"

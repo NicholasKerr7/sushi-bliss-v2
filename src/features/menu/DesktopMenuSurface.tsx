@@ -165,6 +165,7 @@ export function DesktopMenuSurface({
               {activeCategoryItems.slice(0, 8).map((item, index) => (
                 <DesktopFeatureMenuCard
                   badge={index === 0 ? "Chef's Pick" : undefined}
+                  eagerImage={index < 4}
                   item={item}
                   key={item.id}
                   onAddToCart={onAddToCart}
@@ -188,6 +189,7 @@ export function DesktopMenuSurface({
                             ? "Signature"
                             : "Premium"
                     }
+                    eagerImage={index < 4}
                     item={item}
                     key={item.id}
                     onAddToCart={onAddToCart}
@@ -198,8 +200,9 @@ export function DesktopMenuSurface({
             </DesktopMenuSection>
             <DesktopMenuSection title="All Menu Items">
               <div className="grid grid-cols-3 gap-3">
-                {displayItems.slice(0, 9).map((item) => (
+                {displayItems.slice(0, 9).map((item, index) => (
                   <DesktopCompactMenuRow
+                    eagerImage={index < 3}
                     item={item}
                     key={item.id}
                     onAddToCart={onAddToCart}
@@ -292,11 +295,13 @@ function DesktopMenuHero({
 
 function DesktopFeatureMenuCard({
   badge,
+  eagerImage = false,
   item,
   onAddToCart,
   onViewDetails,
 }: {
   badge?: string;
+  eagerImage?: boolean;
   item: MenuItem;
   onAddToCart: DesktopMenuAddHandler;
   onViewDetails: DesktopMenuViewHandler;
@@ -319,6 +324,8 @@ function DesktopFeatureMenuCard({
             alt=""
             className="object-cover"
             fill
+            loading={eagerImage ? "eager" : "lazy"}
+            priority={eagerImage}
             sizes="300px"
             src={item.image.publicUrl}
           />
@@ -346,10 +353,12 @@ function DesktopFeatureMenuCard({
 }
 
 export function DesktopCompactMenuRow({
+  eagerImage = false,
   item,
   onAddToCart,
   onViewDetails,
 }: {
+  eagerImage?: boolean;
   item: MenuItem;
   onAddToCart: DesktopMenuAddHandler;
   onViewDetails: DesktopMenuViewHandler;
@@ -366,6 +375,8 @@ export function DesktopCompactMenuRow({
           alt=""
           className="object-cover"
           fill
+          loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="90px"
           src={item.image.publicUrl}
         />
@@ -429,9 +440,11 @@ function DesktopFilterButton({ label }: { label: string }) {
       type="button"
     >
       {label}
-      <span className="text-[var(--sb-gold-soft)]" aria-hidden="true">
-        v
-      </span>
+      <ChevronIcon
+        className="text-[var(--sb-gold-soft)]"
+        direction="down"
+        size={16}
+      />
     </button>
   );
 }

@@ -217,6 +217,7 @@ function DesktopStoryView({
             alt={heroImageAlt}
             className="object-cover"
             fill
+            loading="eager"
             priority
             sizes="900px"
             src={heroImage}
@@ -263,6 +264,7 @@ function DesktopStoryView({
               alt={detailImageAlt}
               className="object-cover"
               fill
+              loading="eager"
               sizes="390px"
               src={detailImage}
             />

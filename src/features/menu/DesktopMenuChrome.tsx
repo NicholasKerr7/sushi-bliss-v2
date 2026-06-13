@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { chefAvatar, icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
+import { getBrandContent } from "@/lib/data";
 
 const baseNavItems = [
   ["home", "Home", "/home"],
@@ -116,6 +118,7 @@ export function DesktopMenuHeader({
   activeId = "menu",
   cartCount,
 }: DesktopMenuHeaderProps) {
+  const brand = getBrandContent();
   const navItems =
     activeId === "orders"
       ? ordersNavItems
@@ -145,8 +148,9 @@ export function DesktopMenuHeader({
       >
         <AssetIcon
           className="rounded-full"
+          loading="eager"
           size={56}
-          src="/assets/icons/floral-emblem-icon.png"
+          src={brand.assets.floralEmblem.publicUrl}
         />
         <span className="editorial-title text-[25px] uppercase leading-[0.92] tracking-[0.34em]">
           Sushi
@@ -207,9 +211,11 @@ export function DesktopMenuHeader({
               Bliss Member
             </span>
           </span>
-          <span className="text-[var(--sb-gold)]" aria-hidden="true">
-            v
-          </span>
+          <ChevronIcon
+            className="text-[var(--sb-gold)]"
+            direction="down"
+            size={16}
+          />
         </Link>
       </div>
     </header>
