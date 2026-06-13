@@ -6,34 +6,125 @@ import { useMemo, useState } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
-import { TABLET_OTORO_HERO_IMAGE } from "@/lib/assets";
+import {
+  getTabletPresentationImage,
+  TABLET_OTORO_HERO_IMAGE,
+} from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
-import { tabletNigiriItems } from "./tabletMenuData";
 import { TabletCategoryBar, TabletFilterSelect } from "./TabletMenuControls";
 
-interface TabletNigiriCategoryViewProps {
+interface TabletMenuCategoryViewProps {
+  category: string;
   categories: MenuCategory[];
+  items: MenuItem[];
   onAddToCart: (item: MenuItem) => void;
   onSelectCategory: (categoryId: string) => void;
   onViewDetails: (item: MenuItem) => void;
 }
 
-const fishOptions = [
-  "Any Fish",
-  "Tuna",
-  "Salmon",
-  "Yellowtail",
-  "Shellfish",
-  "Roe",
-];
 const dietaryOptions = ["Any Diet", "Lean", "Rich", "Shellfish Free"];
 const spiceOptions = ["Any Heat", "Mild", "Hot"];
 const sortOptions = ["Featured", "Price Low", "Price High"];
 
-function matchesNigiriSearch(item: MenuItem, query: string) {
+const categoryContent: Record<
+  string,
+  {
+    description: string;
+    filterLabel: string;
+    filterOptions: string[];
+    heroImage: string;
+    heroPosition: string;
+    placeholder: string;
+    title: string;
+  }
+> = {
+  "chef-specials": {
+    description:
+      "Rare cuts, premium finishes, and chef-driven signatures prepared with ceremony.",
+    filterLabel: "Feature",
+    filterOptions: ["Any Feature", "Toro", "Wagyu", "Truffle", "Caviar"],
+    heroImage: "/assets/editorial/luxury-seafood-and-wagyu-selection.webp",
+    heroPosition: "object-[68%_46%]",
+    placeholder: "Wagyu, truffle, toro...",
+    title: "Chef Specials",
+  },
+  nigiri: {
+    description:
+      "Experience the pure art of nigiri. Hand-pressed perfection featuring the finest fish and seasonal ingredients.",
+    filterLabel: "Fish",
+    filterOptions: [
+      "Any Fish",
+      "Tuna",
+      "Salmon",
+      "Yellowtail",
+      "Shellfish",
+      "Roe",
+    ],
+    heroImage: TABLET_OTORO_HERO_IMAGE,
+    heroPosition: "object-[70%_46%]",
+    placeholder: "Otoro, uni, salmon...",
+    title: "Nigiri",
+  },
+  rolls: {
+    description:
+      "Layered maki, precise cuts, and signature rolls built for texture, balance, and richness.",
+    filterLabel: "Style",
+    filterOptions: ["Any Style", "Classic", "Spicy", "Tempura", "Premium"],
+    heroImage: "/assets/food/sushi-rolls-with-warm-cinematic-glow.webp",
+    heroPosition: "object-[66%_52%]",
+    placeholder: "Dragon, spicy tuna...",
+    title: "Rolls",
+  },
+  sashimi: {
+    description:
+      "Clean slices of premium fish served with restraint, clarity, and seasonal garnish.",
+    filterLabel: "Cut",
+    filterOptions: ["Any Cut", "Tuna", "Salmon", "Scallop", "Octopus"],
+    heroImage: "/assets/editorial/elegant-sashimi-platter-on-slate.webp",
+    heroPosition: "object-[72%_48%]",
+    placeholder: "Salmon, tuna, scallop...",
+    title: "Sashimi",
+  },
+  vegetarian: {
+    description:
+      "Plant-forward sushi with bright vegetables, seasoned rice, and elegant umami.",
+    filterLabel: "Ingredient",
+    filterOptions: [
+      "Any Ingredient",
+      "Avocado",
+      "Tofu",
+      "Cucumber",
+      "Shiitake",
+    ],
+    heroImage: "/assets/menu/sushi/vegetarian-temaki.webp",
+    heroPosition: "object-[70%_50%]",
+    placeholder: "Avocado, tofu, cucumber...",
+    title: "Vegetarian",
+  },
+};
+
+function getCategoryContent(category: string, categories: MenuCategory[]) {
+  const categoryLabel =
+    categories.find((item) => item.id === category)?.label || "Menu";
+
+  return (
+    categoryContent[category] || {
+      description:
+        "Explore refined Sushi Bliss selections prepared with premium ingredients.",
+      filterLabel: "Type",
+      filterOptions: ["Any Type"],
+      heroImage: TABLET_OTORO_HERO_IMAGE,
+      heroPosition: "object-[70%_46%]",
+      placeholder: `Search ${categoryLabel.toLowerCase()}...`,
+      title: categoryLabel,
+    }
+  );
+}
+
+function matchesCategorySearch(item: MenuItem, query: string) {
   const normalizedQuery = query.trim().toLowerCase();
 
   return (
@@ -41,18 +132,36 @@ function matchesNigiriSearch(item: MenuItem, query: string) {
   );
 }
 
-function matchesFishType(item: MenuItem, fishType: string) {
+function matchesPrimaryFilter(item: MenuItem, filter: string) {
   const searchText = `${item.name} ${item.description} ${item.ingredients.join(
     " ",
   )}`.toLowerCase();
 
-  if (fishType === "Tuna") return /tuna|toro/.test(searchText);
-  if (fishType === "Salmon") return searchText.includes("salmon");
-  if (fishType === "Yellowtail") return searchText.includes("yellowtail");
-  if (fishType === "Shellfish") return /shrimp|scallop/.test(searchText);
-  if (fishType === "Roe") return /roe|ikura/.test(searchText);
+  if (filter.startsWith("Any ")) return true;
 
-  return true;
+  const matchers: Record<string, RegExp> = {
+    Avocado: /avocado/,
+    Caviar: /caviar/,
+    Classic: /california|philadelphia|classic/,
+    Cucumber: /cucumber/,
+    Octopus: /octopus|tako/,
+    Premium: /premium|dragon|rainbow|wagyu|toro|uni|truffle/,
+    Roe: /roe|ikura/,
+    Salmon: /salmon/,
+    Scallop: /scallop/,
+    Shellfish: /shrimp|scallop|ebi/,
+    Shiitake: /shiitake|mushroom/,
+    Spicy: /spicy|hot|firecracker/,
+    Tempura: /tempura/,
+    Tofu: /tofu|inari/,
+    Toro: /toro|otoro|chutoro/,
+    Truffle: /truffle/,
+    Tuna: /tuna|toro/,
+    Wagyu: /wagyu|beef/,
+    Yellowtail: /yellowtail|hamachi/,
+  };
+
+  return matchers[filter]?.test(searchText) ?? true;
 }
 
 function matchesDietary(item: MenuItem, dietary: string) {
@@ -74,7 +183,7 @@ function matchesSpice(item: MenuItem, spice: string) {
   return true;
 }
 
-function sortNigiriItems(items: MenuItem[], sort: string) {
+function sortCategoryItems(items: MenuItem[], sort: string) {
   if (sort === "Price Low") {
     return [...items].sort((a, b) => a.priceCents - b.priceCents);
   }
@@ -86,33 +195,40 @@ function sortNigiriItems(items: MenuItem[], sort: string) {
   return items;
 }
 
-/** Recreates the tablet nigiri category reference with working local filters. */
-export function TabletNigiriCategoryView({
+/** Renders a consistent polished tablet category surface for every menu category. */
+export function TabletMenuCategoryView({
+  category,
   categories,
+  items,
   onAddToCart,
   onSelectCategory,
   onViewDetails,
-}: TabletNigiriCategoryViewProps) {
+}: TabletMenuCategoryViewProps) {
+  const content = getCategoryContent(category, categories);
   const [searchQuery, setSearchQuery] = useState("");
-  const [fishType, setFishType] = useState("Any Fish");
+  const [primaryFilter, setPrimaryFilter] = useState(
+    content.filterOptions[0] || "Any Type",
+  );
   const [dietary, setDietary] = useState("Any Diet");
   const [spice, setSpice] = useState("Any Heat");
   const [sort, setSort] = useState("Featured");
 
   const displayedItems = useMemo(
     () =>
-      sortNigiriItems(
-        tabletNigiriItems.filter(
+      sortCategoryItems(
+        items.filter(
           (item) =>
-            matchesNigiriSearch(item, searchQuery) &&
-            matchesFishType(item, fishType) &&
+            matchesCategorySearch(item, searchQuery) &&
+            matchesPrimaryFilter(item, primaryFilter) &&
             matchesDietary(item, dietary) &&
             matchesSpice(item, spice),
         ),
         sort,
       ),
-    [dietary, fishType, searchQuery, sort, spice],
+    [dietary, items, primaryFilter, searchQuery, sort, spice],
   );
+  const heroImage = content.heroImage;
+  const heroAlt = `${content.title} presentation`;
 
   const clearSearch = () => {
     setSearchQuery("");
@@ -122,30 +238,29 @@ export function TabletNigiriCategoryView({
     <>
       <section className="relative mt-[18px] min-h-[280px] overflow-hidden rounded-[14px] border border-white/16 min-[1080px]:min-h-[342px]">
         <Image
-          alt=""
-          className="object-cover object-[70%_46%]"
+          alt={heroAlt}
+          className={classNames("object-cover", content.heroPosition)}
           fill
           priority
           sizes="1034px"
-          src={TABLET_OTORO_HERO_IMAGE}
+          src={heroImage}
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.78)_43%,rgba(0,0,0,0.16)_100%)]" />
         <div className="relative z-10 flex min-h-[280px] flex-col justify-center px-[64px] min-[1080px]:min-h-[342px] min-[1080px]:px-[86px]">
           <p className="text-[16px] uppercase tracking-[0.16em] text-[var(--sb-gold)] min-[1080px]:text-[18px]">
-            Menu <ChevronIcon direction="right" size={18} /> Nigiri
+            Menu <ChevronIcon direction="right" size={18} /> {content.title}
           </p>
           <h1 className="editorial-title mt-4 text-[64px] uppercase leading-[0.9] tracking-[0.18em] text-white min-[1080px]:mt-5 min-[1080px]:text-[86px]">
-            Nigiri
+            {content.title}
           </h1>
           <p className="mt-4 max-w-[420px] text-[18px] leading-7 text-[var(--sb-gold)] min-[1080px]:mt-5 min-[1080px]:text-[20px] min-[1080px]:leading-8">
-            Experience the pure art of nigiri. Hand-pressed perfection featuring
-            the finest fish and seasonal ingredients.
+            {content.description}
           </p>
         </div>
       </section>
 
       <TabletCategoryBar
-        category="nigiri"
+        category={category}
         categories={categories}
         variant="pills"
         onSelectCategory={onSelectCategory}
@@ -163,22 +278,22 @@ export function TabletNigiriCategoryView({
             onSubmit={(event) => event.preventDefault()}
           >
             <AssetIcon className="mt-4" size={22} src={icons.search} />
-            <label className="sr-only" htmlFor="tablet-nigiri-search">
-              Search nigiri
+            <label className="sr-only" htmlFor="tablet-category-search">
+              Search {content.title}
             </label>
             <span className="pointer-events-none absolute left-[54px] top-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]/72">
               Search
             </span>
             <input
               className="h-full min-w-0 flex-1 bg-transparent pt-4 text-[15px] text-white outline-none placeholder:text-white/44"
-              id="tablet-nigiri-search"
+              id="tablet-category-search"
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Otoro, uni, salmon..."
+              placeholder={content.placeholder}
               value={searchQuery}
             />
             {searchQuery ? (
               <button
-                aria-label="Clear nigiri search"
+                aria-label={`Clear ${content.title} search`}
                 className="rounded-full border border-white/12 bg-black/34 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/42 hover:bg-white/[0.06]"
                 onClick={clearSearch}
                 type="button"
@@ -188,10 +303,10 @@ export function TabletNigiriCategoryView({
             ) : null}
           </form>
           <TabletFilterSelect
-            label="Fish"
-            options={fishOptions}
-            value={fishType}
-            onChange={setFishType}
+            label={content.filterLabel}
+            options={content.filterOptions}
+            value={primaryFilter}
+            onChange={setPrimaryFilter}
           />
           <TabletFilterSelect
             label="Diet"
@@ -218,7 +333,7 @@ export function TabletNigiriCategoryView({
         {displayedItems.length > 0 ? (
           <div className="grid grid-cols-3 gap-3">
             {displayedItems.map((item, index) => (
-              <TabletNigiriCard
+              <TabletCategoryCard
                 badge={index === 0 ? "Chef's Pick" : undefined}
                 item={item}
                 key={item.id}
@@ -230,10 +345,11 @@ export function TabletNigiriCategoryView({
         ) : (
           <div className="rounded-[12px] border border-[var(--sb-border)] bg-black/34 p-8 text-center">
             <p className="text-lg uppercase text-[var(--sb-gold)]">
-              No nigiri matches these refinements
+              No {content.title.toLowerCase()} matches these refinements
             </p>
             <p className="mt-2 text-sm text-white/64">
-              Adjust the search, fish type, diet, or heat level.
+              Adjust the search, {content.filterLabel.toLowerCase()}, diet, or
+              heat level.
             </p>
           </div>
         )}
@@ -257,7 +373,7 @@ export function TabletNigiriCategoryView({
   );
 }
 
-function TabletNigiriCard({
+function TabletCategoryCard({
   badge,
   item,
   onAddToCart,
@@ -286,7 +402,7 @@ function TabletNigiriCard({
             className="object-cover"
             fill
             sizes="320px"
-            src={item.image.publicUrl}
+            src={getTabletPresentationImage(item)}
           />
         </div>
         <div className="p-3 min-[1080px]:p-4">

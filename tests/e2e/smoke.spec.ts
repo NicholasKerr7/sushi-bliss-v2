@@ -113,6 +113,59 @@ test.describe("customer experience", () => {
       cartDialog.getByRole("button", { name: "Checkout" }),
     ).toBeVisible();
   });
+
+  test("uses the shared tablet category layout for menu tabs", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("tablet"),
+      "Tablet-only category surface check.",
+    );
+
+    const categoryChecks = [
+      { filterLabel: "Style", name: "Rolls" },
+      { filterLabel: "Cut", name: "Sashimi" },
+      { filterLabel: "Feature", name: "Chef Specials" },
+      { filterLabel: "Ingredient", name: "Vegetarian" },
+      { filterLabel: "Fish", name: "Nigiri" },
+    ] as const;
+
+    await page.goto("/menu");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const menuSection = page.locator("#menu");
+
+    for (const category of categoryChecks) {
+      await test.step(`open ${category.name}`, async () => {
+        const categoryButton = menuSection
+          .getByRole("button", { exact: true, name: category.name })
+          .first();
+
+        await categoryButton.click();
+        await expect(categoryButton).toHaveAttribute("aria-pressed", "true");
+        await expect(
+          menuSection.getByRole("heading", {
+            exact: true,
+            name: category.name,
+          }),
+        ).toBeVisible();
+        await expect(
+          menuSection.getByRole("textbox", {
+            name: `Search ${category.name}`,
+          }),
+        ).toBeVisible();
+        await expect(
+          menuSection.getByRole("button", {
+            exact: true,
+            name: category.filterLabel,
+          }),
+        ).toBeVisible();
+        await expect(
+          menuSection.getByText("Premium Ingredients"),
+        ).toBeVisible();
+      });
+    }
+  });
 });
 
 test.describe("admin experience", () => {
