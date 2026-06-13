@@ -116,6 +116,10 @@ textarea {
   color: var(--sb-rice);
 }
 
+.sb-gold-control-value {
+  color: #120b04;
+}
+
 .luxury-panel {
   border: 1px solid var(--sb-border);
   border-radius: 28px;

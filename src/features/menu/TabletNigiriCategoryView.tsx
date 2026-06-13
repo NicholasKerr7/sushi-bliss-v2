@@ -7,6 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
 import { TABLET_OTORO_HERO_IMAGE } from "@/lib/assets";
+import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
@@ -16,22 +17,29 @@ import { TabletCategoryBar, TabletFilterSelect } from "./TabletMenuControls";
 interface TabletNigiriCategoryViewProps {
   categories: MenuCategory[];
   onAddToCart: (item: MenuItem) => void;
-  onQueryChange: (query: string) => void;
   onSelectCategory: (categoryId: string) => void;
   onViewDetails: (item: MenuItem) => void;
 }
 
 const fishOptions = [
-  "Fish Type",
+  "Any Fish",
   "Tuna",
   "Salmon",
   "Yellowtail",
   "Shellfish",
   "Roe",
 ];
-const dietaryOptions = ["Dietary", "Lean", "Rich", "Shellfish Free"];
-const spiceOptions = ["Spicy Level", "Mild", "Hot"];
-const sortOptions = ["Sort By", "Price Low", "Price High"];
+const dietaryOptions = ["Any Diet", "Lean", "Rich", "Shellfish Free"];
+const spiceOptions = ["Any Heat", "Mild", "Hot"];
+const sortOptions = ["Featured", "Price Low", "Price High"];
+
+function matchesNigiriSearch(item: MenuItem, query: string) {
+  const normalizedQuery = query.trim().toLowerCase();
+
+  return (
+    normalizedQuery.length === 0 || item.searchText.includes(normalizedQuery)
+  );
+}
 
 function matchesFishType(item: MenuItem, fishType: string) {
   const searchText = `${item.name} ${item.description} ${item.ingredients.join(
@@ -82,28 +90,33 @@ function sortNigiriItems(items: MenuItem[], sort: string) {
 export function TabletNigiriCategoryView({
   categories,
   onAddToCart,
-  onQueryChange,
   onSelectCategory,
   onViewDetails,
 }: TabletNigiriCategoryViewProps) {
-  const [fishType, setFishType] = useState("Fish Type");
-  const [dietary, setDietary] = useState("Dietary");
-  const [spice, setSpice] = useState("Spicy Level");
-  const [sort, setSort] = useState("Sort By");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [fishType, setFishType] = useState("Any Fish");
+  const [dietary, setDietary] = useState("Any Diet");
+  const [spice, setSpice] = useState("Any Heat");
+  const [sort, setSort] = useState("Featured");
 
   const displayedItems = useMemo(
     () =>
       sortNigiriItems(
         tabletNigiriItems.filter(
           (item) =>
+            matchesNigiriSearch(item, searchQuery) &&
             matchesFishType(item, fishType) &&
             matchesDietary(item, dietary) &&
             matchesSpice(item, spice),
         ),
         sort,
       ),
-    [dietary, fishType, sort, spice],
+    [dietary, fishType, searchQuery, sort, spice],
   );
+
+  const clearSearch = () => {
+    setSearchQuery("");
+  };
 
   return (
     <>
@@ -138,46 +151,67 @@ export function TabletNigiriCategoryView({
         onSelectCategory={onSelectCategory}
       />
 
-      <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-[260px_1fr_1fr_1fr_1fr] min-[1080px]:grid-cols-[310px_1fr_1fr_1fr_1fr] min-[1080px]:gap-4">
-        <form
-          className="col-span-2 flex h-12 items-center gap-4 rounded-[9px] border border-[var(--sb-border)] bg-black/22 px-5 lg:col-span-1"
-          onSubmit={(event) => event.preventDefault()}
-        >
-          <AssetIcon size={22} src={icons.search} />
-          <label className="sr-only" htmlFor="tablet-nigiri-search">
-            Search nigiri
-          </label>
-          <input
-            className="h-full w-full bg-transparent text-sm text-white outline-none placeholder:text-white/58"
-            id="tablet-nigiri-search"
-            onChange={(event) => onQueryChange(event.target.value)}
-            placeholder="Search nigiri..."
+      <div className="mt-5 rounded-[18px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.018))] p-3 shadow-[0_18px_70px_rgba(0,0,0,0.34)]">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-[minmax(252px,1.28fr)_repeat(4,minmax(0,1fr))] min-[1080px]:gap-4">
+          <form
+            className={classNames(
+              "relative col-span-2 flex h-[58px] min-w-0 items-center gap-3 rounded-[13px] border px-4 transition focus-within:border-[var(--sb-gold)] focus-within:ring-2 focus-within:ring-[var(--sb-gold)]/25 lg:col-span-1",
+              searchQuery
+                ? "border-[var(--sb-gold)] bg-white/[0.06] shadow-[0_0_24px_rgb(215_168_79_/_0.12)]"
+                : "border-white/14 bg-black/28 hover:border-[var(--sb-gold)]/34 hover:bg-white/[0.055]",
+            )}
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <AssetIcon className="mt-4" size={22} src={icons.search} />
+            <label className="sr-only" htmlFor="tablet-nigiri-search">
+              Search nigiri
+            </label>
+            <span className="pointer-events-none absolute left-[54px] top-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]/72">
+              Search
+            </span>
+            <input
+              className="h-full min-w-0 flex-1 bg-transparent pt-4 text-[15px] text-white outline-none placeholder:text-white/44"
+              id="tablet-nigiri-search"
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Otoro, uni, salmon..."
+              value={searchQuery}
+            />
+            {searchQuery ? (
+              <button
+                aria-label="Clear nigiri search"
+                className="rounded-full border border-white/12 bg-black/34 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/42 hover:bg-white/[0.06]"
+                onClick={clearSearch}
+                type="button"
+              >
+                Clear
+              </button>
+            ) : null}
+          </form>
+          <TabletFilterSelect
+            label="Fish"
+            options={fishOptions}
+            value={fishType}
+            onChange={setFishType}
           />
-        </form>
-        <TabletFilterSelect
-          label="Fish type"
-          options={fishOptions}
-          value={fishType}
-          onChange={setFishType}
-        />
-        <TabletFilterSelect
-          label="Dietary"
-          options={dietaryOptions}
-          value={dietary}
-          onChange={setDietary}
-        />
-        <TabletFilterSelect
-          label="Spicy level"
-          options={spiceOptions}
-          value={spice}
-          onChange={setSpice}
-        />
-        <TabletFilterSelect
-          label="Sort by"
-          options={sortOptions}
-          value={sort}
-          onChange={setSort}
-        />
+          <TabletFilterSelect
+            label="Diet"
+            options={dietaryOptions}
+            value={dietary}
+            onChange={setDietary}
+          />
+          <TabletFilterSelect
+            label="Heat"
+            options={spiceOptions}
+            value={spice}
+            onChange={setSpice}
+          />
+          <TabletFilterSelect
+            label="Sort"
+            options={sortOptions}
+            value={sort}
+            onChange={setSort}
+          />
+        </div>
       </div>
 
       <section className="mt-4 rounded-[14px] border border-white/14 bg-white/[0.025] p-4">
@@ -196,10 +230,10 @@ export function TabletNigiriCategoryView({
         ) : (
           <div className="rounded-[12px] border border-[var(--sb-border)] bg-black/34 p-8 text-center">
             <p className="text-lg uppercase text-[var(--sb-gold)]">
-              No nigiri matches these filters
+              No nigiri matches these refinements
             </p>
             <p className="mt-2 text-sm text-white/64">
-              Adjust the fish type, dietary preference, or spice level.
+              Adjust the search, fish type, diet, or heat level.
             </p>
           </div>
         )}

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -198,25 +198,119 @@ export function TabletFilterSelect({
   value: string;
   onChange: (value: string) => void;
 }) {
+  const listboxId = useId();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const defaultValue = options[0] || "";
+  const isActive = value !== defaultValue;
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!wrapperRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
+
+  const selectOption = (option: string) => {
+    onChange(option);
+    setOpen(false);
+  };
+
   return (
-    <label className="relative block">
-      <span className="sr-only">{label}</span>
-      <select
-        className="h-12 min-w-[150px] appearance-none rounded-[9px] border border-[var(--sb-border)] bg-black/22 px-5 pr-10 text-sm uppercase text-white outline-none focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/25"
-        onChange={(event) => onChange(event.target.value)}
-        value={value}
+    <div className="relative min-w-0" ref={wrapperRef}>
+      <button
+        aria-controls={open ? listboxId : undefined}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        aria-label={label}
+        className={classNames(
+          "relative flex h-[58px] w-full min-w-0 items-center justify-between gap-3 rounded-[13px] border px-4 pb-2 pt-6 text-left uppercase outline-none transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
+          isActive
+            ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] text-[#120b04] shadow-[0_0_24px_rgb(215_168_79_/_0.22)]"
+            : "border-white/14 bg-black/28 text-white/82 hover:border-[var(--sb-gold)]/34 hover:bg-white/[0.055]",
+        )}
+        onClick={() => setOpen((current) => !current)}
+        type="button"
       >
-        {options.map((option) => (
-          <option className="bg-[#050607] text-white" key={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-      <ChevronIcon
-        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--sb-gold)]"
-        direction="down"
-      />
-    </label>
+        <span
+          className={classNames(
+            "pointer-events-none absolute left-4 top-2 text-[10px] font-semibold uppercase tracking-[0.14em]",
+            isActive ? "text-black/54" : "text-[var(--sb-gold-soft)]/72",
+          )}
+        >
+          {label}
+        </span>
+        <span
+          className={classNames(
+            "min-w-0 truncate text-[13px] font-semibold",
+            isActive ? "sb-gold-control-value" : "text-white/82",
+          )}
+        >
+          {value}
+        </span>
+        <ChevronIcon
+          className={classNames(
+            "transition",
+            isActive ? "sb-gold-control-value" : "text-[var(--sb-gold)]",
+            open ? "rotate-180" : "",
+          )}
+          direction="down"
+        />
+      </button>
+      {open ? (
+        <div
+          className="absolute left-0 right-0 top-[calc(100%+8px)] z-40 overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-[#070808] p-1 shadow-[0_20px_60px_rgba(0,0,0,0.52)]"
+          id={listboxId}
+          role="listbox"
+        >
+          {options.map((option) => {
+            const isSelected = value === option;
+
+            return (
+              <button
+                aria-selected={isSelected}
+                className={classNames(
+                  "flex h-10 w-full items-center justify-between rounded-[10px] px-3 text-left text-[12px] font-semibold uppercase tracking-[0.04em] transition",
+                  isSelected
+                    ? "bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] text-[#120b04]"
+                    : "text-white/72 hover:bg-white/[0.06] hover:text-white",
+                )}
+                key={option}
+                onClick={() => selectOption(option)}
+                role="option"
+                type="button"
+              >
+                {option}
+                {isSelected ? (
+                  <span
+                    aria-hidden="true"
+                    className="h-1.5 w-1.5 rounded-full bg-[#120b04]"
+                  />
+                ) : null}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
   );
 }
 

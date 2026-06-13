@@ -71,7 +71,6 @@ export function TabletMenuExplorer({
           <TabletNigiriCategoryView
             categories={categories}
             onAddToCart={onAddToCart}
-            onQueryChange={onQueryChange}
             onSelectCategory={onSelectCategory}
             onViewDetails={onViewDetails}
           />
