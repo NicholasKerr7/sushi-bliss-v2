@@ -17,7 +17,7 @@ current viewport and attaches the matching reference PNG.
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |      60 |                   0 |             0 |
-| Tablet     |         40 |      38 |                   2 |             0 |
+| Tablet     |         40 |      40 |                   0 |             0 |
 | Desktop    |         40 |      40 |                   0 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
@@ -31,48 +31,48 @@ while still exercising the mobile viewport.
 
 ## Tablet References
 
-| Reference                                     | Route / interaction               | Status              |
-| --------------------------------------------- | --------------------------------- | ------------------- |
-| `tablet-01-home-dashboard.png`                | `/home`                           | Audited             |
-| `tablet-02-search-filter.png`                 | `/menu` with search/filter state  | Built / needs audit |
-| `tablet-03-menu-overview.png`                 | `/menu`                           | Audited             |
-| `tablet-04-menu-category-nigiri.png`          | `/menu` category filter           | Built / needs audit |
-| `tablet-05-item-detail-otoro-nigiri.png`      | checkout confirmation             | Audited             |
-| `tablet-06-item-detail-expanded.png`          | `/menu` item detail dialog        | Audited             |
-| `tablet-07-item-customization-add-ons.png`    | `/menu` item customization dialog | Audited             |
-| `tablet-08-cart.png`                          | cart dialog                       | Audited             |
-| `tablet-09-checkout-delivery-pickup.png`      | checkout details dialog           | Audited             |
-| `tablet-10-checkout-review-confirm.png`       | checkout review dialog            | Audited             |
-| `tablet-11-orders-dashboard.png`              | `/orders`                         | Audited             |
-| `tablet-12-live-order-tracking.png`           | `/orders` active order detail     | Audited             |
-| `tablet-13-reservations-main.png`             | `/reservations`                   | Audited             |
-| `tablet-14-choose-reservation-experience.png` | reservation experience step       | Audited             |
-| `tablet-15-reservation-review.png`            | reservation review step           | Audited             |
-| `tablet-16-reservation-confirmation.png`      | reservation confirmation          | Audited             |
-| `tablet-17-reservation-history.png`           | reservation history state         | Audited             |
-| `tablet-18-modify-reservation.png`            | modify reservation flow           | Audited             |
-| `tablet-19-locations.png`                     | `/locations`                      | Audited             |
-| `tablet-20-cancel-reservation.png`            | cancel reservation modal          | Audited             |
-| `tablet-21-omakase-experience.png`            | `/omakase`                        | Audited             |
-| `tablet-22-omakase-package-review.png`        | omakase review state              | Audited             |
-| `tablet-23-gift-experience.png`               | `/gifts`                          | Audited             |
-| `tablet-24-gift-checkout.png`                 | gift checkout state               | Audited             |
-| `tablet-25-gift-confirmation.png`             | gift confirmation state           | Audited             |
-| `tablet-26-loyalty-dashboard.png`             | `/loyalty`                        | Audited             |
-| `tablet-27-member-pass-rewards.png`           | loyalty reward detail state       | Audited             |
-| `tablet-28-profile-dashboard.png`             | `/profile`                        | Audited             |
-| `tablet-29-favorites.png`                     | `/favorites`                      | Audited             |
-| `tablet-30-account-settings-preferences.png`  | profile settings state            | Audited             |
-| `tablet-31-contact.png`                       | `/support` contact state          | Audited             |
-| `tablet-32-help-center.png`                   | `/support` help center state      | Audited             |
-| `tablet-33-faq-article-detail.png`            | help article detail               | Audited             |
-| `tablet-34-notifications-center.png`          | `/notifications`                  | Audited             |
-| `tablet-35-notification-detail.png`           | notification detail               | Audited             |
-| `tablet-36-promotions-offers.png`             | `/offers`                         | Audited             |
-| `tablet-37-offer-detail.png`                  | offer detail                      | Audited             |
-| `tablet-38-referral-earn.png`                 | referral state                    | Audited             |
-| `tablet-39-about-our-story.png`               | `/about`                          | Audited             |
-| `tablet-40-master-chefs-team.png`             | `/chefs`                          | Audited             |
+| Reference                                     | Route / interaction               | Status  |
+| --------------------------------------------- | --------------------------------- | ------- |
+| `tablet-01-home-dashboard.png`                | `/home`                           | Audited |
+| `tablet-02-search-filter.png`                 | `/menu` with search/filter state  | Audited |
+| `tablet-03-menu-overview.png`                 | `/menu`                           | Audited |
+| `tablet-04-menu-category-nigiri.png`          | `/menu` category filter           | Audited |
+| `tablet-05-item-detail-otoro-nigiri.png`      | checkout confirmation             | Audited |
+| `tablet-06-item-detail-expanded.png`          | `/menu` item detail dialog        | Audited |
+| `tablet-07-item-customization-add-ons.png`    | `/menu` item customization dialog | Audited |
+| `tablet-08-cart.png`                          | cart dialog                       | Audited |
+| `tablet-09-checkout-delivery-pickup.png`      | checkout details dialog           | Audited |
+| `tablet-10-checkout-review-confirm.png`       | checkout review dialog            | Audited |
+| `tablet-11-orders-dashboard.png`              | `/orders`                         | Audited |
+| `tablet-12-live-order-tracking.png`           | `/orders` active order detail     | Audited |
+| `tablet-13-reservations-main.png`             | `/reservations`                   | Audited |
+| `tablet-14-choose-reservation-experience.png` | reservation experience step       | Audited |
+| `tablet-15-reservation-review.png`            | reservation review step           | Audited |
+| `tablet-16-reservation-confirmation.png`      | reservation confirmation          | Audited |
+| `tablet-17-reservation-history.png`           | reservation history state         | Audited |
+| `tablet-18-modify-reservation.png`            | modify reservation flow           | Audited |
+| `tablet-19-locations.png`                     | `/locations`                      | Audited |
+| `tablet-20-cancel-reservation.png`            | cancel reservation modal          | Audited |
+| `tablet-21-omakase-experience.png`            | `/omakase`                        | Audited |
+| `tablet-22-omakase-package-review.png`        | omakase review state              | Audited |
+| `tablet-23-gift-experience.png`               | `/gifts`                          | Audited |
+| `tablet-24-gift-checkout.png`                 | gift checkout state               | Audited |
+| `tablet-25-gift-confirmation.png`             | gift confirmation state           | Audited |
+| `tablet-26-loyalty-dashboard.png`             | `/loyalty`                        | Audited |
+| `tablet-27-member-pass-rewards.png`           | loyalty reward detail state       | Audited |
+| `tablet-28-profile-dashboard.png`             | `/profile`                        | Audited |
+| `tablet-29-favorites.png`                     | `/favorites`                      | Audited |
+| `tablet-30-account-settings-preferences.png`  | profile settings state            | Audited |
+| `tablet-31-contact.png`                       | `/support` contact state          | Audited |
+| `tablet-32-help-center.png`                   | `/support` help center state      | Audited |
+| `tablet-33-faq-article-detail.png`            | help article detail               | Audited |
+| `tablet-34-notifications-center.png`          | `/notifications`                  | Audited |
+| `tablet-35-notification-detail.png`           | notification detail               | Audited |
+| `tablet-36-promotions-offers.png`             | `/offers`                         | Audited |
+| `tablet-37-offer-detail.png`                  | offer detail                      | Audited |
+| `tablet-38-referral-earn.png`                 | referral state                    | Audited |
+| `tablet-39-about-our-story.png`               | `/about`                          | Audited |
+| `tablet-40-master-chefs-team.png`             | `/chefs`                          | Audited |
 
 ## Desktop References
 

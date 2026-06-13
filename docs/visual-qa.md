@@ -113,7 +113,11 @@ Current audit targets:
 - mobile recently viewed: `/recently-viewed` against `mobile/mobile-59.png`
 - mobile empty cart: `/menu` interaction against `mobile/mobile-60.png`
 - tablet home dashboard: `/home` against `tablet/tablet-01-home-dashboard.png`
+- tablet search filter: `/menu` interaction against
+  `tablet/tablet-02-search-filter.png`
 - tablet menu overview: `/menu` against `tablet/tablet-03-menu-overview.png`
+- tablet menu category nigiri: `/menu` interaction against
+  `tablet/tablet-04-menu-category-nigiri.png`
 - tablet item detail: `/menu` interaction against
   `tablet/tablet-06-item-detail-expanded.png`
 - tablet item customization: `/menu` interaction against

@@ -1280,6 +1280,32 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     },
   },
   {
+    name: "tablet search filter",
+    prepare: openTabletSearchFilter,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-02-search-filter.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/menu",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const menuSection = page.locator("#menu");
+
+      await expect(
+        menuSection.getByRole("heading", { name: "Search & Filter" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByText("Recent Searches", { exact: true }).first(),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("heading", { name: "Refine Your Search" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("button", { exact: true, name: "Clear Search" }),
+      ).toBeVisible();
+    },
+  },
+  {
     name: "tablet menu overview",
     projectName: "chromium-tablet",
     referencePath:
@@ -1299,6 +1325,30 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       await expect(
         menuSection.getByRole("heading", { name: "Otoro Nigiri" }).first(),
       ).toBeVisible();
+    },
+  },
+  {
+    name: "tablet menu category nigiri",
+    prepare: openTabletNigiriCategory,
+    projectName: "chromium-tablet",
+    referencePath:
+      "public/assets/screenshots/tablet/tablet-04-menu-category-nigiri.png",
+    referenceSize: { height: 1448, width: 1086 },
+    routePath: "/menu",
+    viewport: { height: 1448, width: 1086 },
+    verify: async (page) => {
+      const menuSection = page.locator("#menu");
+
+      await expect(
+        menuSection.getByRole("heading", { exact: true, name: "Nigiri" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("textbox", { name: "Search nigiri" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("heading", { name: "Otoro Nigiri" }),
+      ).toBeVisible();
+      await expect(menuSection.getByText("Premium Ingredients")).toBeVisible();
     },
   },
   {
@@ -3473,6 +3523,32 @@ async function openTabletOtoroDetail(page: Page) {
     .click();
   await expect(
     page.getByRole("dialog", { name: "Otoro Nigiri" }),
+  ).toBeVisible();
+}
+
+async function openTabletSearchFilter(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await expect(
+    menuSection.getByRole("textbox", { name: "Search menu items" }),
+  ).toBeVisible();
+  await menuSection
+    .getByRole("textbox", { name: "Search menu items" })
+    .fill("tuna");
+  await expect(
+    menuSection.getByRole("heading", { name: "Search & Filter" }),
+  ).toBeVisible();
+}
+
+async function openTabletNigiriCategory(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await expect(
+    menuSection.getByRole("button", { name: "Nigiri" }).first(),
+  ).toBeVisible();
+  await menuSection.getByRole("button", { name: "Nigiri" }).first().click();
+  await expect(
+    menuSection.getByRole("heading", { exact: true, name: "Nigiri" }),
   ).toBeVisible();
 }
 
