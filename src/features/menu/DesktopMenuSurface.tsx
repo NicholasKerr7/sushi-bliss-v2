@@ -74,7 +74,7 @@ export function DesktopMenuSurface({
   const displayItems = isCategoryPage ? filteredItems : allTabletMenuItems;
 
   return (
-    <main className="mx-auto grid min-h-[calc(100dvh-88px)] max-w-[1672px] grid-cols-[minmax(0,1fr)_386px] gap-7 px-7 pb-6 pt-3 min-[1500px]:mr-auto min-[1500px]:max-w-[1596px] min-[1500px]:grid-cols-[178px_minmax(0,980px)_382px] min-[1500px]:px-0 min-[1500px]:pb-0 min-[1500px]:pt-0">
+    <main className="mx-auto grid min-h-[calc(100dvh-76px)] max-w-[1672px] grid-cols-[minmax(0,1fr)_386px] gap-7 px-7 pb-6 pt-3 min-[1500px]:max-w-none min-[1500px]:grid-cols-[178px_minmax(0,980px)_382px] min-[1500px]:px-0 min-[1500px]:pb-0 min-[1500px]:pt-0">
       <DesktopMenuEditorialRail />
       <section className="min-w-0 rounded-[18px] border border-[var(--sb-border)] bg-black/58 p-4 shadow-[0_28px_90px_rgba(0,0,0,0.52)] min-[1500px]:rounded-none min-[1500px]:border-0 min-[1500px]:bg-transparent min-[1500px]:p-0 min-[1500px]:shadow-none">
         <DesktopMenuHero
@@ -233,7 +233,7 @@ function DesktopMenuEditorialRail() {
   return (
     <aside
       aria-hidden="true"
-      className="relative hidden min-h-[calc(100dvh-88px)] overflow-hidden border-r border-white/[0.08] min-[1500px]:block"
+      className="relative hidden min-h-[calc(100dvh-76px)] overflow-hidden border-r border-white/[0.08] min-[1500px]:block"
     >
       <Image
         alt=""
@@ -260,7 +260,7 @@ function DesktopMenuHero({
   const isNigiri = category === "nigiri";
 
   return (
-    <section className="relative min-h-[236px] overflow-hidden rounded-[16px] border border-white/10">
+    <section className="relative min-h-[236px] overflow-hidden rounded-[16px] border border-white/10 min-[1500px]:min-h-[174px]">
       <Image
         alt=""
         className="object-cover object-[72%_42%]"
@@ -270,7 +270,7 @@ function DesktopMenuHero({
         src={featuredAssets.heroSushi.publicUrl}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,5,6,0.96),rgba(4,5,6,0.78)_42%,rgba(4,5,6,0.12)_78%,rgba(4,5,6,0.78))]" />
-      <div className="relative z-10 flex min-h-[236px] flex-col justify-center px-9">
+      <div className="relative z-10 flex min-h-[236px] flex-col justify-center px-9 min-[1500px]:min-h-[174px]">
         <p className="text-[14px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           {isNigiri ? "Our Menu" : "Explore our menu"}
         </p>
@@ -292,7 +292,7 @@ function DesktopMenuHero({
             : "Sourced daily. Crafted by masters. Served with passion."}
         </p>
         {!isNigiri ? (
-          <div className="mt-4 flex gap-3">
+          <div className="mt-4 flex gap-3 min-[1500px]:hidden">
             <button
               className="red-glow-button h-11 w-[180px] rounded-[10px] text-[12px] uppercase tracking-[0.08em]"
               onClick={() => onAddToCart(menuHeroItem)}

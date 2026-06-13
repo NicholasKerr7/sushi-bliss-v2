@@ -2152,6 +2152,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   },
   {
     name: "desktop menu overview",
+    prepare: seedDesktopMenuOverviewCart,
     projectName: "chromium-desktop",
     referencePath:
       "public/assets/screenshots/desktop/desktop-02-menu-overview.png",
@@ -3919,6 +3920,54 @@ async function seedDesktopCart(page: Page) {
 
   await expect(
     menuSection.getByRole("button", { name: /View cart & checkout/i }),
+  ).toBeVisible();
+}
+
+async function seedDesktopMenuOverviewCart(page: Page) {
+  await page.evaluate(() => {
+    const defaultCustomizations = [
+      {
+        groupId: "wasabi",
+        groupLabel: "Wasabi",
+        optionId: "chef-balance",
+        optionLabel: "Chef balance",
+      },
+      {
+        groupId: "soy",
+        groupLabel: "Soy",
+        optionId: "house",
+        optionLabel: "House soy",
+      },
+      {
+        groupId: "cut",
+        groupLabel: "Cut",
+        optionId: "classic",
+        optionLabel: "Classic",
+      },
+    ];
+    const customizationId = "cut:classic,soy:house,wasabi:chef-balance";
+    const items = [
+      ["otoro-nigiri", 2],
+      ["spicy-tuna-roll", 1],
+      ["salmon-nigiri", 1],
+      ["dragon-roll", 1],
+    ].map(([menuItemId, quantity]) => ({
+      addOns: [],
+      customizations: defaultCustomizations,
+      id: `${menuItemId}|${customizationId}`,
+      menuItemId,
+      quantity,
+    }));
+
+    window.localStorage.setItem("sushi-bliss:cart", JSON.stringify(items));
+    window.dispatchEvent(new Event("sushi-bliss:cart-changed"));
+  });
+
+  await expect(
+    page
+      .locator("#menu")
+      .getByRole("complementary")
+      .getByRole("heading", { exact: true, name: "Otoro Nigiri" }),
   ).toBeVisible();
 }
 

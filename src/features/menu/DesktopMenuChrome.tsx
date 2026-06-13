@@ -142,7 +142,7 @@ export function DesktopMenuHeader({
 
   return (
     <header className="border-b border-white/[0.08] bg-[#07090a]/96 px-6 min-[1500px]:px-0">
-      <div className="mx-auto flex h-[88px] w-full max-w-[1328px] items-center">
+      <div className="mx-auto flex h-[76px] w-full max-w-[1328px] items-center">
         <Link
           className="flex min-w-[270px] items-center gap-4 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
           href="/home"
@@ -150,10 +150,10 @@ export function DesktopMenuHeader({
           <AssetIcon
             className="rounded-full"
             loading="eager"
-            size={56}
+            size={50}
             src={brand.assets.floralEmblem.publicUrl}
           />
-          <span className="editorial-title text-[25px] uppercase leading-[0.92] tracking-[0.34em]">
+          <span className="editorial-title text-[23px] uppercase leading-[0.92] tracking-[0.34em]">
             Sushi
             <br />
             Bliss
@@ -169,7 +169,7 @@ export function DesktopMenuHeader({
             return (
               <Link
                 className={classNames(
-                  "relative py-8 text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1500px]:text-[13px]",
+                  "relative flex h-[76px] items-center text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1500px]:text-[13px]",
                   active && "text-[var(--sb-red-bright)]",
                 )}
                 href={href}
@@ -177,7 +177,7 @@ export function DesktopMenuHeader({
               >
                 {label}
                 {active ? (
-                  <span className="absolute inset-x-0 bottom-[18px] h-px bg-[var(--sb-red-bright)] shadow-[0_0_18px_var(--sb-red-glow)]" />
+                  <span className="absolute inset-x-0 bottom-[14px] h-px bg-[var(--sb-red-bright)] shadow-[0_0_18px_var(--sb-red-glow)]" />
                 ) : null}
               </Link>
             );
@@ -186,10 +186,10 @@ export function DesktopMenuHeader({
         <div className="flex min-w-[300px] items-center justify-end gap-5">
           <Link
             aria-label="Open cart"
-            className="relative grid h-12 w-12 place-items-center text-[var(--sb-gold)]"
+            className="relative grid h-11 w-11 place-items-center text-[var(--sb-gold)]"
             href="/menu"
           >
-            <AssetIcon size={34} src={icons.cart} />
+            <AssetIcon size={31} src={icons.cart} />
             {cartCount > 0 ? (
               <span className="absolute right-0 top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold text-white">
                 {cartCount}
@@ -199,10 +199,10 @@ export function DesktopMenuHeader({
           <Link className="flex items-center gap-3" href="/profile">
             <Image
               alt=""
-              className="h-14 w-14 rounded-full border border-[var(--sb-border)] object-cover"
-              height={56}
+              className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover"
+              height={48}
               src={chefAvatar}
-              width={56}
+              width={48}
             />
             <span>
               <span className="block text-sm font-semibold text-white">

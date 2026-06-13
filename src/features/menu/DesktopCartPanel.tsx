@@ -30,7 +30,7 @@ export function DesktopCartPanel({
   onUpdateQuantity,
   totals,
 }: DesktopCartPanelProps) {
-  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
+  const itemCount = items.length;
 
   return (
     <aside className="rounded-[18px] border border-[var(--sb-border)] bg-[#070909]/92 p-5 shadow-[0_28px_90px_rgba(0,0,0,0.48)]">
@@ -56,7 +56,7 @@ export function DesktopCartPanel({
       </div>
 
       {items.length > 0 ? (
-        <div className="mt-5 grid gap-4">
+        <div className="mt-4 grid">
           {items.map((item) => (
             <DesktopCartLine
               item={item}
@@ -82,7 +82,19 @@ export function DesktopCartPanel({
         </div>
       )}
 
-      <div className="mt-5 space-y-2 border-t border-white/10 pt-4 text-[14px]">
+      {items.length > 0 ? (
+        <label className="mt-4 grid h-9 grid-cols-[28px_1fr] items-center rounded-[9px] border border-white/10 bg-black/28 px-3 text-[12px] text-white/50">
+          <AssetIcon size={18} src="/assets/icons/gift-icon.png" />
+          <span className="sr-only">Add a note</span>
+          <input
+            className="min-w-0 bg-transparent text-white outline-none placeholder:text-white/44"
+            placeholder="Add a note (optional)"
+            type="text"
+          />
+        </label>
+      ) : null}
+
+      <div className="mt-4 space-y-2 border-t border-white/10 pt-4 text-[14px]">
         <TotalRow label="Subtotal" value={formatMoney(totals.subtotalCents)} />
         <TotalRow
           label="Service Fee"
@@ -141,70 +153,68 @@ function DesktopCartLine({
   const unitPrice = calculateCartLineUnitPrice(item.menuItem, item.addOns);
 
   return (
-    <article className="grid grid-cols-[88px_minmax(0,1fr)_74px] gap-4 border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
-      <div className="relative h-[72px] overflow-hidden rounded-[8px] border border-white/10 bg-black/40">
+    <article className="relative grid min-h-[114px] grid-cols-[64px_minmax(0,1fr)_72px_52px] items-center gap-2 border-b border-white/10 py-3 last:border-b-0">
+      <div className="relative h-[68px] overflow-hidden rounded-[8px] border border-white/10 bg-black/40">
         <Image
           alt=""
           className="object-cover"
           fill
-          sizes="88px"
+          sizes="64px"
           src={item.menuItem.image.publicUrl}
         />
       </div>
       <div className="min-w-0">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <h3 className="truncate text-[15px] font-semibold text-white">
-              {item.menuItem.name}
-            </h3>
-            <p className="mt-1 line-clamp-2 text-[12px] leading-5 text-white/50">
-              {item.menuItem.ingredients.slice(0, 3).join(", ")}
-            </p>
-            <p className="mt-1 font-mono text-[14px] text-[var(--sb-gold-soft)]">
-              {formatMoney(unitPrice)}
-            </p>
-          </div>
-          {onRemove ? (
-            <button
-              aria-label={`Remove ${item.menuItem.name}`}
-              className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/18 text-white/58"
-              onClick={() => onRemove(item.id)}
-              type="button"
-            >
-              x
-            </button>
-          ) : null}
-        </div>
-        {onUpdateQuantity ? (
-          <div className="mt-2 inline-grid h-8 grid-cols-[32px_36px_32px] overflow-hidden rounded-[10px] border border-[var(--sb-gold)]/22">
-            <button
-              aria-label={`Decrease ${item.menuItem.name} quantity`}
-              className="text-[var(--sb-gold-soft)] disabled:opacity-35"
-              disabled={item.quantity <= 1}
-              onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-              type="button"
-            >
-              -
-            </button>
-            <span className="grid place-items-center border-x border-white/10 font-mono text-[13px] text-white">
-              {item.quantity}
-            </span>
-            <button
-              aria-label={`Increase ${item.menuItem.name} quantity`}
-              className="text-[var(--sb-gold-soft)]"
-              onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-              type="button"
-            >
-              +
-            </button>
-          </div>
-        ) : (
-          <p className="mt-2 text-[13px] text-white/56">x {item.quantity}</p>
-        )}
+        <h3 className="truncate text-[14px] font-semibold text-white">
+          {item.menuItem.name}
+        </h3>
+        <p className="mt-1 line-clamp-2 text-[12px] leading-4 text-white/50">
+          {item.menuItem.ingredients.slice(0, 3).join(", ")}
+        </p>
+        <p className="mt-1 font-mono text-[14px] text-[var(--sb-gold-soft)]">
+          {formatMoney(unitPrice)}
+        </p>
       </div>
-      <p className="self-center text-right font-mono text-[14px] text-white">
+      {onUpdateQuantity ? (
+        <div className="grid h-8 grid-cols-[22px_28px_22px] overflow-hidden rounded-[10px] border border-[var(--sb-gold)]/22">
+          <button
+            aria-label={`Decrease ${item.menuItem.name} quantity`}
+            className="text-[var(--sb-gold-soft)] disabled:opacity-35"
+            disabled={item.quantity <= 1}
+            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+            type="button"
+          >
+            -
+          </button>
+          <span className="grid place-items-center border-x border-white/10 font-mono text-[13px] text-white">
+            {item.quantity}
+          </span>
+          <button
+            aria-label={`Increase ${item.menuItem.name} quantity`}
+            className="text-[var(--sb-gold-soft)]"
+            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+            type="button"
+          >
+            +
+          </button>
+        </div>
+      ) : (
+        <p className="text-center text-[13px] text-white/56">
+          x {item.quantity}
+        </p>
+      )}
+      <p className="self-center text-right font-mono text-[13px] text-white">
         {formatMoney(calculateCartLineSubtotal(item))}
       </p>
+      {onRemove ? (
+        <button
+          aria-label={`Remove ${item.menuItem.name}`}
+          className="absolute right-0 top-4 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/18 text-white/58"
+          onClick={() => onRemove(item.id)}
+          type="button"
+        >
+          x
+        </button>
+      ) : null}
     </article>
   );
 }

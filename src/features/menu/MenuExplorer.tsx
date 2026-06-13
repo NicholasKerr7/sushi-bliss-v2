@@ -31,7 +31,7 @@ export function MenuExplorer() {
     totalItemCount,
   } = useMenu();
   const { isFavorite, toggleFavorite } = useFavorites();
-  const { addItem, itemCount: cartItemCount } = useCart();
+  const { addItem, itemCount: cartItemCount, uniqueItemCount } = useCart();
 
   const handleItemAdded = () => {
     setSelectedItem(null);
@@ -50,7 +50,7 @@ export function MenuExplorer() {
 
   return (
     <section
-      className="border-b border-sb-line bg-sb-charcoal py-12 md:py-0 xl:py-16"
+      className="border-b border-sb-line bg-sb-charcoal py-12 md:py-0"
       id="menu"
     >
       <TabletMenuExplorer
@@ -83,7 +83,7 @@ export function MenuExplorer() {
       />
       <DesktopMenuExperience
         category={category}
-        cartItemCount={cartItemCount}
+        cartItemCount={uniqueItemCount}
         categories={categories}
         filteredItems={filteredItems}
         hasActiveFilters={hasActiveFilters}
