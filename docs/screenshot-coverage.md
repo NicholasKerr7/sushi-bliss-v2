@@ -16,8 +16,8 @@ current viewport and attaches the matching reference PNG.
 
 | Breakpoint | References | Audited | Built / needs audit | Needs mapping |
 | ---------- | ---------: | ------: | ------------------: | ------------: |
-| Mobile     |         60 |       1 |                   0 |            59 |
-| Tablet     |         40 |      40 |                   0 |             0 |
+| Mobile     |         60 |      13 |                   0 |            47 |
+| Tablet     |         40 |      38 |                   2 |             0 |
 | Desktop    |         40 |      40 |                   0 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
@@ -116,6 +116,21 @@ confirmation until the reference filename is corrected.
 
 ## Mobile References
 
-`mobile-01.png` is audited against the welcome route at `/`. The remaining
-`mobile-02.png` through `mobile-60.png` need a manual naming pass before we can
-map each reference to a route and interaction with confidence.
+| Reference       | Route / interaction     | Status  |
+| --------------- | ----------------------- | ------- |
+| `mobile-01.png` | `/`                     | Audited |
+| `mobile-02.png` | `/home`                 | Audited |
+| `mobile-03.png` | `/menu` search state    | Audited |
+| `mobile-04.png` | `/menu`                 | Audited |
+| `mobile-05.png` | `/menu` category filter | Audited |
+| `mobile-06.png` | `/menu` item detail     | Audited |
+| `mobile-07.png` | `/menu` item customize  | Audited |
+| `mobile-08.png` | cart dialog             | Audited |
+| `mobile-09.png` | checkout fulfillment    | Audited |
+| `mobile-10.png` | checkout address        | Audited |
+| `mobile-11.png` | checkout payment        | Audited |
+| `mobile-12.png` | checkout review         | Audited |
+| `mobile-13.png` | order confirmation      | Audited |
+
+`mobile-14.png` through `mobile-60.png` still need a manual naming pass before
+we can map each reference to a route and interaction with confidence.

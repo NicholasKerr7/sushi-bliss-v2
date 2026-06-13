@@ -21,18 +21,265 @@ interface VisualReferenceTarget {
   verify: (page: Page) => Promise<void>;
 }
 
+const mobileReferenceSize = { height: 1822, width: 863 };
+const mobileViewport = { height: 911, width: 430 };
+
 const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile welcome",
     projectName: "chromium-mobile",
     referencePath: "public/assets/screenshots/mobile/mobile-01.png",
-    referenceSize: { height: 1822, width: 863 },
+    referenceSize: mobileReferenceSize,
     routePath: "/",
-    viewport: { height: 911, width: 430 },
+    viewport: mobileViewport,
     verify: async (page) => {
       await expect(page.locator("#welcome")).toBeVisible();
       await expect(
         page.getByRole("heading", { level: 1, name: "Sushi Bliss" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile home dashboard",
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-02.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/home",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const homeSection = page.locator("#home-dashboard");
+
+      await expect(homeSection).toBeVisible();
+      await expect(
+        homeSection.getByRole("link", {
+          name: /Japanese Artistry\.\s+Timeless Bliss\./i,
+        }),
+      ).toBeVisible();
+      await expect(
+        homeSection.getByRole("heading", { name: "Featured Menu" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile search filter",
+    prepare: openMobileSearchFilter,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-03.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const menuSection = page.locator("#menu");
+
+      await expect(
+        menuSection.getByRole("heading", { name: "Search & Filter" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("heading", { name: "Chutoro Nigiri" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("heading", { name: "Recent Searches" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile menu overview",
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-04.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const menuSection = page.locator("#menu");
+
+      await expect(menuSection).toBeVisible();
+      await expect(
+        menuSection.getByRole("navigation", {
+          name: "Mobile menu categories",
+        }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("heading", { name: "Popular Picks" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile menu category nigiri",
+    prepare: openMobileNigiriCategory,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-05.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const menuSection = page.locator("#menu");
+
+      await expect(
+        menuSection.getByRole("heading", { exact: true, name: "Nigiri" }),
+      ).toBeVisible();
+      await expect(
+        menuSection.getByRole("heading", { name: "Otoro Nigiri" }).first(),
+      ).toBeVisible();
+      await expect(menuSection.getByText("Nigiri Experience")).toBeVisible();
+    },
+  },
+  {
+    name: "mobile item detail otoro nigiri",
+    prepare: openMobileOtoroDetail,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-06.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Otoro Nigiri" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: /Add 1 to cart/i }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Customize item" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile item customization",
+    prepare: openMobileOtoroCustomization,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-07.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", {
+        name: "Customize Otoro Nigiri",
+      });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("heading", { name: "Customize Your Item" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("heading", { name: "Order summary" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile cart",
+    prepare: openMobileCartWithSeededItems,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-08.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Cart" });
+
+      await expect(dialog).toBeVisible();
+      await expect(dialog.getByText("Your Cart")).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Checkout" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile checkout delivery pickup",
+    prepare: openMobileCheckoutFulfillment,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-09.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Checkout" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("navigation", { name: "Checkout progress" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: /Delivery/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile checkout address",
+    prepare: openMobileCheckoutAddress,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-10.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Checkout" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("heading", { name: "Delivery address" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Continue to payment" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile checkout payment",
+    prepare: openMobileCheckoutPayment,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-11.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Checkout" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("heading", { name: "Payment method" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Continue to review" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile checkout review",
+    prepare: openMobileCheckoutReview,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-12.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Checkout" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("heading", { name: "Review your order" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: /Place order/i }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "mobile order confirmation",
+    prepare: openMobileOrderConfirmation,
+    projectName: "chromium-mobile",
+    referencePath: "public/assets/screenshots/mobile/mobile-13.png",
+    referenceSize: mobileReferenceSize,
+    routePath: "/menu",
+    viewport: mobileViewport,
+    verify: async (page) => {
+      const dialog = page.getByRole("dialog", { name: "Order confirmed" });
+
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("heading", { name: /Order Confirmed/i }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("link", { name: "Track order" }),
       ).toBeVisible();
     },
   },
@@ -1715,6 +1962,166 @@ async function expectNoHorizontalOverflow(page: Page, routePath: string) {
     Math.max(overflow.body, overflow.document),
     `${routePath} should not create horizontal overflow`,
   ).toBeLessThanOrEqual(1);
+}
+
+async function openMobileSearchFilter(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await expect(
+    menuSection.getByPlaceholder("Search sushi, rolls, or dishes..."),
+  ).toBeVisible();
+  await menuSection
+    .getByPlaceholder("Search sushi, rolls, or dishes...")
+    .fill("tuna");
+  await expect(
+    menuSection.getByRole("heading", { name: "Search & Filter" }),
+  ).toBeVisible();
+}
+
+async function openMobileNigiriCategory(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await expect(
+    menuSection.getByRole("navigation", { name: "Mobile menu categories" }),
+  ).toBeVisible();
+  await menuSection
+    .getByRole("button", { exact: true, name: "Nigiri" })
+    .click();
+  await expect(
+    menuSection.getByRole("heading", { exact: true, name: "Nigiri" }),
+  ).toBeVisible();
+}
+
+async function openMobileOtoroDetail(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await expect(
+    menuSection.getByRole("heading", { name: "Otoro Nigiri" }).first(),
+  ).toBeVisible();
+  await menuSection
+    .getByRole("button", { name: /Otoro Nigiri/i })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("dialog", { name: "Otoro Nigiri" }),
+  ).toBeVisible();
+}
+
+async function openMobileOtoroCustomization(page: Page) {
+  await openMobileOtoroDetail(page);
+  await page
+    .getByRole("dialog", { name: "Otoro Nigiri" })
+    .getByRole("button", { name: "Customize item" })
+    .click();
+
+  const dialog = page.getByRole("dialog", { name: "Customize Otoro Nigiri" });
+
+  await expect(dialog).toBeVisible();
+  await expect(
+    dialog.getByRole("heading", { name: "Customize Your Item" }),
+  ).toBeVisible();
+  await dialog.getByRole("button", { name: /Gold flakes/i }).click();
+}
+
+async function seedMobileCart(page: Page) {
+  await page.evaluate(() => {
+    const defaultCustomizations = [
+      {
+        groupId: "wasabi",
+        groupLabel: "Wasabi",
+        optionId: "chef-balance",
+        optionLabel: "Chef balance",
+      },
+      {
+        groupId: "soy",
+        groupLabel: "Soy",
+        optionId: "house",
+        optionLabel: "House soy",
+      },
+      {
+        groupId: "cut",
+        groupLabel: "Cut",
+        optionId: "classic",
+        optionLabel: "Classic",
+      },
+    ];
+    const customizationId = "cut:classic,soy:house,wasabi:chef-balance";
+    const items = ["otoro-nigiri", "spicy-tuna-roll", "salmon-nigiri"].map(
+      (menuItemId) => ({
+        addOns: [],
+        customizations: defaultCustomizations,
+        id: `${menuItemId}|${customizationId}`,
+        menuItemId,
+        quantity: 1,
+      }),
+    );
+
+    window.localStorage.setItem("sushi-bliss:cart", JSON.stringify(items));
+    window.dispatchEvent(new Event("sushi-bliss:cart-changed"));
+  });
+}
+
+async function openMobileCartWithSeededItems(page: Page) {
+  const menuSection = page.locator("#menu");
+
+  await seedMobileCart(page);
+  await expect(
+    menuSection.getByRole("button", { name: /Open cart/i }),
+  ).toBeVisible();
+  await menuSection.getByRole("button", { name: /Open cart/i }).click();
+  await expect(page.getByRole("dialog", { name: "Cart" })).toBeVisible();
+}
+
+async function openMobileCheckoutFulfillment(page: Page) {
+  const cartDialog = page.getByRole("dialog", { name: "Cart" });
+
+  await openMobileCartWithSeededItems(page);
+  await cartDialog.getByRole("button", { name: "Checkout" }).click();
+  await expect(page.getByRole("dialog", { name: "Checkout" })).toBeVisible();
+}
+
+async function openMobileCheckoutAddress(page: Page) {
+  const checkoutDialog = page.getByRole("dialog", { name: "Checkout" });
+
+  await openMobileCheckoutFulfillment(page);
+  await checkoutDialog.getByRole("button", { name: "Continue" }).click();
+  await expect(
+    checkoutDialog.getByRole("heading", { name: "Delivery address" }),
+  ).toBeVisible();
+}
+
+async function openMobileCheckoutPayment(page: Page) {
+  const checkoutDialog = page.getByRole("dialog", { name: "Checkout" });
+
+  await openMobileCheckoutAddress(page);
+  await checkoutDialog
+    .getByRole("button", { name: "Continue to payment" })
+    .click();
+  await expect(
+    checkoutDialog.getByRole("heading", { name: "Payment method" }),
+  ).toBeVisible();
+}
+
+async function openMobileCheckoutReview(page: Page) {
+  const checkoutDialog = page.getByRole("dialog", { name: "Checkout" });
+
+  await openMobileCheckoutPayment(page);
+  await checkoutDialog
+    .getByRole("button", { name: "Continue to review" })
+    .click();
+  await expect(
+    checkoutDialog.getByRole("heading", { name: "Review your order" }),
+  ).toBeVisible();
+}
+
+async function openMobileOrderConfirmation(page: Page) {
+  const checkoutDialog = page.getByRole("dialog", { name: "Checkout" });
+
+  await openMobileCheckoutReview(page);
+  await checkoutDialog.getByRole("button", { name: /Place order/i }).click();
+  await expect(
+    page.getByRole("dialog", { name: "Order confirmed" }),
+  ).toBeVisible();
 }
 
 async function openTabletOtoroDetail(page: Page) {

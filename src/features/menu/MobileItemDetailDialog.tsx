@@ -90,7 +90,7 @@ export function MobileItemDetailDialog({
 
   return (
     <div
-      aria-labelledby={`mobile-item-detail-${item.id}`}
+      aria-label={view === "detail" ? item.name : `Customize ${item.name}`}
       aria-modal="true"
       className="fixed inset-0 z-50 bg-black text-white md:hidden"
       ref={dialogRef}

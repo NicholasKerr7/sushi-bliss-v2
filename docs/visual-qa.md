@@ -7,10 +7,10 @@ The canonical reference screenshots live in `public/assets/screenshots`:
 - `desktop`: 40 desktop references
 
 The Playwright visual audit in `tests/e2e/visual-reference.spec.ts` captures
-current first-viewport screenshots for the main home/menu surfaces and tablet
-ordering surfaces, then attaches the matching reference PNGs to the test report.
-This keeps the normal test suite stable while giving us concrete side-by-side
-artifacts for pixel-level layout work.
+current first-viewport screenshots for the main mobile ordering flow plus the
+tablet and desktop reference surfaces, then attaches the matching reference PNGs
+to the test report. This keeps the normal test suite stable while giving us
+concrete side-by-side artifacts for pixel-level layout work.
 
 Run the audit with the normal test command:
 
@@ -21,6 +21,23 @@ npm run test
 Current audit targets:
 
 - mobile welcome: `/` against `mobile/mobile-01.png`
+- mobile home dashboard: `/home` against `mobile/mobile-02.png`
+- mobile search filter: `/menu` interaction against `mobile/mobile-03.png`
+- mobile menu overview: `/menu` against `mobile/mobile-04.png`
+- mobile menu category nigiri: `/menu` interaction against
+  `mobile/mobile-05.png`
+- mobile item detail otoro nigiri: `/menu` interaction against
+  `mobile/mobile-06.png`
+- mobile item customization: `/menu` interaction against
+  `mobile/mobile-07.png`
+- mobile cart: `/menu` interaction against `mobile/mobile-08.png`
+- mobile checkout delivery pickup: `/menu` interaction against
+  `mobile/mobile-09.png`
+- mobile checkout address: `/menu` interaction against `mobile/mobile-10.png`
+- mobile checkout payment: `/menu` interaction against `mobile/mobile-11.png`
+- mobile checkout review: `/menu` interaction against `mobile/mobile-12.png`
+- mobile order confirmation: `/menu` interaction against
+  `mobile/mobile-13.png`
 - tablet home dashboard: `/home` against `tablet/tablet-01-home-dashboard.png`
 - tablet menu overview: `/menu` against `tablet/tablet-03-menu-overview.png`
 - tablet item detail: `/menu` interaction against
