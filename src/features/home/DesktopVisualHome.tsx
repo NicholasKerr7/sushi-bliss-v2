@@ -25,6 +25,7 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
       >
         <AssetIcon
           className="rounded-full"
+          loading="eager"
           size={52}
           src={brand.assets.floralEmblem.publicUrl}
         />

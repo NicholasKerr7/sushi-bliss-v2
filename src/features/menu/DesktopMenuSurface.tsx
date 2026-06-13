@@ -74,13 +74,39 @@ export function DesktopMenuSurface({
   const displayItems = isCategoryPage ? filteredItems : allTabletMenuItems;
 
   return (
-    <main className="mx-auto grid min-h-[calc(100dvh-88px)] max-w-[1672px] grid-cols-[minmax(0,1fr)_386px] gap-7 px-7 pb-6 pt-3">
-      <section className="min-w-0 rounded-[18px] border border-[var(--sb-border)] bg-black/58 p-4 shadow-[0_28px_90px_rgba(0,0,0,0.52)]">
+    <main className="mx-auto grid min-h-[calc(100dvh-88px)] max-w-[1672px] grid-cols-[minmax(0,1fr)_386px] gap-7 px-7 pb-6 pt-3 min-[1500px]:mr-auto min-[1500px]:max-w-[1596px] min-[1500px]:grid-cols-[178px_minmax(0,980px)_382px] min-[1500px]:px-0 min-[1500px]:pb-0 min-[1500px]:pt-0">
+      <DesktopMenuEditorialRail />
+      <section className="min-w-0 rounded-[18px] border border-[var(--sb-border)] bg-black/58 p-4 shadow-[0_28px_90px_rgba(0,0,0,0.52)] min-[1500px]:rounded-none min-[1500px]:border-0 min-[1500px]:bg-transparent min-[1500px]:p-0 min-[1500px]:shadow-none">
         <DesktopMenuHero
           category={category}
           onAddToCart={onAddToCart}
           onViewDetails={onViewDetails}
         />
+
+        <div className="mt-4 grid grid-cols-[minmax(0,1fr)_150px_150px_150px] gap-3">
+          <label className="relative block">
+            <span className="sr-only">Search menu</span>
+            <AssetIcon
+              className="absolute left-4 top-1/2 -translate-y-1/2"
+              size={19}
+              src="/assets/icons/search-icon.png"
+            />
+            <input
+              className="h-12 w-full rounded-[10px] border border-[var(--sb-border)] bg-black/30 pl-12 pr-4 text-[14px] text-white outline-none placeholder:text-white/42 focus:border-[var(--sb-gold)]"
+              onChange={(event) => onQueryChange(event.target.value)}
+              placeholder={
+                category === "nigiri"
+                  ? "Search nigiri..."
+                  : "Search menu items..."
+              }
+              value={query}
+            />
+          </label>
+          <DesktopFilterButton label="Dietary" />
+          <DesktopFilterButton label="Spicy Level" />
+          <DesktopFilterButton label="Sort By" />
+        </div>
+
         <nav
           aria-label="Desktop menu categories"
           className="mt-4 grid grid-cols-7 gap-3"
@@ -113,30 +139,6 @@ export function DesktopMenuSurface({
             );
           })}
         </nav>
-
-        <div className="mt-4 grid grid-cols-[minmax(0,1fr)_150px_150px_150px] gap-3">
-          <label className="relative block">
-            <span className="sr-only">Search menu</span>
-            <AssetIcon
-              className="absolute left-4 top-1/2 -translate-y-1/2"
-              size={19}
-              src="/assets/icons/search-icon.png"
-            />
-            <input
-              className="h-12 w-full rounded-[10px] border border-[var(--sb-border)] bg-black/30 pl-12 pr-4 text-[14px] text-white outline-none placeholder:text-white/42 focus:border-[var(--sb-gold)]"
-              onChange={(event) => onQueryChange(event.target.value)}
-              placeholder={
-                category === "nigiri"
-                  ? "Search nigiri..."
-                  : "Search menu items..."
-              }
-              value={query}
-            />
-          </label>
-          <DesktopFilterButton label="Dietary" />
-          <DesktopFilterButton label="Spicy Level" />
-          <DesktopFilterButton label="Sort By" />
-        </div>
 
         <p className="mt-3 text-[13px] text-white/50">
           Showing{" "}
@@ -224,6 +226,25 @@ export function DesktopMenuSurface({
         onUpdateQuantity={onUpdateQuantity}
       />
     </main>
+  );
+}
+
+function DesktopMenuEditorialRail() {
+  return (
+    <aside
+      aria-hidden="true"
+      className="relative hidden min-h-[calc(100dvh-88px)] overflow-hidden border-r border-white/[0.08] min-[1500px]:block"
+    >
+      <Image
+        alt=""
+        className="object-cover object-left-top"
+        fill
+        priority
+        sizes="178px"
+        src="/assets/textures/red-moon-sakura-background.webp"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.08),rgba(0,0,0,0.28)_58%,rgba(0,0,0,0.78)_100%)]" />
+    </aside>
   );
 }
 

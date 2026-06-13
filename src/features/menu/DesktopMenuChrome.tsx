@@ -141,82 +141,84 @@ export function DesktopMenuHeader({
                       : baseNavItems;
 
   return (
-    <header className="flex h-[88px] items-center border-b border-white/[0.08] bg-[#07090a]/96 px-[3vw]">
-      <Link
-        className="flex min-w-[300px] items-center gap-4 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
-        href="/home"
-      >
-        <AssetIcon
-          className="rounded-full"
-          loading="eager"
-          size={56}
-          src={brand.assets.floralEmblem.publicUrl}
-        />
-        <span className="editorial-title text-[25px] uppercase leading-[0.92] tracking-[0.34em]">
-          Sushi
-          <br />
-          Bliss
-        </span>
-      </Link>
-      <nav
-        aria-label="Desktop primary"
-        className="flex flex-1 items-center justify-center gap-[1.55vw]"
-      >
-        {navItems.map(([id, label, href]) => {
-          const active = id === activeId;
-
-          return (
-            <Link
-              className={classNames(
-                "relative py-8 text-[13px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold",
-                active && "text-[var(--sb-red-bright)]",
-              )}
-              href={href}
-              key={id}
-            >
-              {label}
-              {active ? (
-                <span className="absolute inset-x-0 bottom-[18px] h-px bg-[var(--sb-red-bright)] shadow-[0_0_18px_var(--sb-red-glow)]" />
-              ) : null}
-            </Link>
-          );
-        })}
-      </nav>
-      <div className="flex min-w-[330px] items-center justify-end gap-5">
+    <header className="border-b border-white/[0.08] bg-[#07090a]/96 px-6 min-[1500px]:px-0">
+      <div className="mx-auto flex h-[88px] w-full max-w-[1328px] items-center">
         <Link
-          aria-label="Open cart"
-          className="relative grid h-12 w-12 place-items-center text-[var(--sb-gold)]"
-          href="/menu"
+          className="flex min-w-[270px] items-center gap-4 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+          href="/home"
         >
-          <AssetIcon size={34} src={icons.cart} />
-          {cartCount > 0 ? (
-            <span className="absolute right-0 top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold text-white">
-              {cartCount}
-            </span>
-          ) : null}
-        </Link>
-        <Link className="flex items-center gap-3" href="/profile">
-          <Image
-            alt=""
-            className="h-14 w-14 rounded-full border border-[var(--sb-border)] object-cover"
-            height={56}
-            src={chefAvatar}
-            width={56}
+          <AssetIcon
+            className="rounded-full"
+            loading="eager"
+            size={56}
+            src={brand.assets.floralEmblem.publicUrl}
           />
-          <span>
-            <span className="block text-sm font-semibold text-white">
-              Hiroshi Tanaka
-            </span>
-            <span className="block text-xs uppercase tracking-[0.12em] text-white/62">
-              Bliss Member
-            </span>
+          <span className="editorial-title text-[25px] uppercase leading-[0.92] tracking-[0.34em]">
+            Sushi
+            <br />
+            Bliss
           </span>
-          <ChevronIcon
-            className="text-[var(--sb-gold)]"
-            direction="down"
-            size={16}
-          />
         </Link>
+        <nav
+          aria-label="Desktop primary"
+          className="flex flex-1 items-center justify-center gap-5 min-[1500px]:gap-7"
+        >
+          {navItems.map(([id, label, href]) => {
+            const active = id === activeId;
+
+            return (
+              <Link
+                className={classNames(
+                  "relative py-8 text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1500px]:text-[13px]",
+                  active && "text-[var(--sb-red-bright)]",
+                )}
+                href={href}
+                key={id}
+              >
+                {label}
+                {active ? (
+                  <span className="absolute inset-x-0 bottom-[18px] h-px bg-[var(--sb-red-bright)] shadow-[0_0_18px_var(--sb-red-glow)]" />
+                ) : null}
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="flex min-w-[300px] items-center justify-end gap-5">
+          <Link
+            aria-label="Open cart"
+            className="relative grid h-12 w-12 place-items-center text-[var(--sb-gold)]"
+            href="/menu"
+          >
+            <AssetIcon size={34} src={icons.cart} />
+            {cartCount > 0 ? (
+              <span className="absolute right-0 top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold text-white">
+                {cartCount}
+              </span>
+            ) : null}
+          </Link>
+          <Link className="flex items-center gap-3" href="/profile">
+            <Image
+              alt=""
+              className="h-14 w-14 rounded-full border border-[var(--sb-border)] object-cover"
+              height={56}
+              src={chefAvatar}
+              width={56}
+            />
+            <span>
+              <span className="block text-sm font-semibold text-white">
+                Hiroshi Tanaka
+              </span>
+              <span className="block text-xs uppercase tracking-[0.12em] text-white/62">
+                Bliss Member
+              </span>
+            </span>
+            <ChevronIcon
+              className="text-[var(--sb-gold)]"
+              direction="down"
+              size={16}
+            />
+          </Link>
+        </div>
       </div>
     </header>
   );
