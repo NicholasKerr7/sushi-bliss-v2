@@ -44,6 +44,9 @@ export function TabletOffersDashboard() {
       (offer) =>
         offer.accent === "premium" && !isOfferExpired(offer, currentTime),
     ) || sortedOffers[0];
+  const featuredDetailOffer =
+    sortedOffers.find((offer) => offer.id === "omakase-preview") ||
+    featuredOffer;
   const normalizedQuery = query.trim().toLowerCase();
 
   const visibleOffers = useMemo(() => {
@@ -131,7 +134,7 @@ export function TabletOffersDashboard() {
             currentTime={currentTime}
             offer={featuredOffer}
             onApplyOffer={handleApplyOffer}
-            onViewOffer={setSelectedOffer}
+            onViewOffer={() => setSelectedOffer(featuredDetailOffer)}
           />
         ) : null}
 
