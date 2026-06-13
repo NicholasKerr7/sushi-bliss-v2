@@ -1221,6 +1221,125 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       ).toBeVisible();
     },
   },
+  {
+    name: "desktop profile dashboard",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-19-profile-dashboard.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/profile",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(profileSection).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Hiroshi Tanaka" }),
+      ).toBeVisible();
+      await expect(profileSection.getByText("Saved addresses")).toBeVisible();
+      await expect(profileSection.getByText("Recent activity")).toBeVisible();
+    },
+  },
+  {
+    name: "desktop account settings preferences",
+    prepare: openDesktopProfileSettings,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-20-account-settings-preferences.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/profile",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const profileSection = page.locator("#profile");
+
+      await expect(
+        profileSection.getByRole("heading", {
+          exact: true,
+          name: "My Account",
+        }),
+      ).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Personal information" }),
+      ).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Dietary preferences" }),
+      ).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Privacy & Security" }),
+      ).toBeVisible();
+      await expect(
+        profileSection.getByRole("heading", { name: "Notifications" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop contact",
+    projectName: "chromium-desktop",
+    referencePath: "public/assets/screenshots/desktop/desktop-21-contact.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/support",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const supportSection = page.locator("#support");
+
+      await expect(supportSection).toBeVisible();
+      await expect(
+        supportSection.getByRole("heading", { name: /Contact\s+Sushi Bliss/i }),
+      ).toBeVisible();
+      await expect(supportSection.getByText("Send us a message")).toBeVisible();
+      await expect(
+        supportSection.getByText("Frequently asked questions"),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop help center",
+    prepare: openDesktopHelpCenter,
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-22-help-center.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/support",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const supportSection = page.locator("#support");
+
+      await expect(
+        supportSection.getByRole("heading", { name: /How can\s+we help/i }),
+      ).toBeVisible();
+      await expect(
+        supportSection.getByText("Popular help topics"),
+      ).toBeVisible();
+      await expect(
+        supportSection.getByRole("button", { name: "Contact support" }),
+      ).toBeVisible();
+    },
+  },
+  {
+    name: "desktop notifications center",
+    projectName: "chromium-desktop",
+    referencePath:
+      "public/assets/screenshots/desktop/desktop-23-notifications-center.png",
+    referenceSize: { height: 941, width: 1672 },
+    routePath: "/notifications",
+    viewport: { height: 941, width: 1672 },
+    verify: async (page) => {
+      const notificationsSection = page.locator("#notifications");
+
+      await expect(notificationsSection).toBeVisible();
+      await expect(
+        notificationsSection.getByRole("heading", {
+          name: /Notifications\s+Center/i,
+        }),
+      ).toBeVisible();
+      await expect(
+        notificationsSection.getByText("Notification preferences"),
+      ).toBeVisible();
+      await expect(
+        notificationsSection.getByRole("button", { name: "Mark all as read" }),
+      ).toBeVisible();
+    },
+  },
 ];
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
@@ -1676,6 +1795,30 @@ async function openDesktopLoyaltyPassRewards(page: Page) {
   await loyaltySection.getByRole("button", { name: /View benefits/i }).click();
   await expect(
     loyaltySection.getByRole("heading", { name: /Your member pass/i }),
+  ).toBeVisible();
+}
+
+async function openDesktopProfileSettings(page: Page) {
+  const profileSection = page.locator("#profile");
+
+  await expect(
+    profileSection.getByRole("navigation", { name: "Profile dashboard tabs" }),
+  ).toBeVisible();
+  await profileSection.getByRole("button", { name: "Settings" }).click();
+  await expect(
+    profileSection.getByRole("heading", { exact: true, name: "My Account" }),
+  ).toBeVisible();
+}
+
+async function openDesktopHelpCenter(page: Page) {
+  const supportSection = page.locator("#support");
+
+  await expect(
+    supportSection.getByRole("button", { name: "View all FAQs" }),
+  ).toBeVisible();
+  await supportSection.getByRole("button", { name: "View all FAQs" }).click();
+  await expect(
+    supportSection.getByRole("heading", { name: /How can\s+we help/i }),
   ).toBeVisible();
 }
 

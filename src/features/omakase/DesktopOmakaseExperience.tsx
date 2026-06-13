@@ -85,6 +85,7 @@ export function DesktopOmakaseExperience() {
               alt=""
               className="object-cover object-[58%_42%]"
               fill
+              loading="eager"
               priority
               sizes="1672px"
               src={desktopOmakaseHeroImage}

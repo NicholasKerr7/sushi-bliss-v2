@@ -144,6 +144,7 @@ export function TabletOmakaseLanding({
             alt=""
             className="object-cover object-right opacity-34"
             fill
+            loading="eager"
             sizes="500px"
             src="/assets/menu/sushi/deluxe-toro-caviar-nigiri.webp"
           />

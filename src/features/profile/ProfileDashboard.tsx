@@ -8,6 +8,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { mockOrders } from "@/data/orders";
 import { getMockReservations } from "@/data/reservations";
 import { GiftHistoryPanel } from "@/features/gifts/GiftHistoryPanel";
+import { useCart } from "@/hooks/useCart";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useGifts } from "@/hooks/useGifts";
 import { useLoyalty } from "@/hooks/useLoyalty";
@@ -18,6 +19,7 @@ import { useReservations } from "@/hooks/useReservations";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 
 import { AddressBook } from "./AddressBook";
+import { DesktopProfileExperience } from "./DesktopProfileExperience";
 import { MobileProfileExperience } from "./MobileProfileExperience";
 import { PaymentMethodsPanel } from "./PaymentMethodsPanel";
 import { PreferencesPanel } from "./PreferencesPanel";
@@ -45,6 +47,7 @@ export function ProfileDashboard() {
   const { favoriteItems } = useFavorites();
   const { confirmations } = useGifts();
   const { account } = useLoyalty();
+  const { itemCount } = useCart();
   const { unreadCount } = useNotifications();
   const { activeOrders } = useOrders(mockOrders);
   const { upcomingReservations } = useReservations(
@@ -90,60 +93,70 @@ export function ProfileDashboard() {
   }
 
   return (
-    <section
-      className="border-b border-sb-line bg-sb-charcoal py-12 md:py-16"
-      id="profile"
-    >
-      <PageContainer>
-        <SectionHeader
-          eyebrow={<Badge tone="success">Profile</Badge>}
-          subtitle="Manage dining details used across checkout, reservations, loyalty, orders, and concierge support."
-          title="Member settings"
-        />
-
-        <div className="mt-6">
-          <ProfileSummary
-            activeOrderCount={activeOrders.length}
-            loyaltyAccount={account}
-            profile={profile}
-            upcomingReservationCount={upcomingReservations.length}
+    <>
+      <DesktopProfileExperience
+        account={account}
+        activeOrderCount={activeOrders.length}
+        cartCount={itemCount}
+        profile={profile}
+        upcomingReservations={upcomingReservations}
+        onUpdatePreferences={updateProfilePreferences}
+      />
+      <section
+        className="border-b border-sb-line bg-sb-charcoal py-12 md:py-16 xl:hidden"
+        id="profile-legacy"
+      >
+        <PageContainer>
+          <SectionHeader
+            eyebrow={<Badge tone="success">Profile</Badge>}
+            subtitle="Manage dining details used across checkout, reservations, loyalty, orders, and concierge support."
+            title="Member settings"
           />
-        </div>
 
-        <div className="mt-5 grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
-          <div className="space-y-5">
-            <ProfileDetailsForm
-              onSaveProfileDetails={saveProfileDetails}
+          <div className="mt-6">
+            <ProfileSummary
+              activeOrderCount={activeOrders.length}
+              loyaltyAccount={account}
               profile={profile}
-            />
-            <PreferencesPanel
-              onUpdatePreferences={updateProfilePreferences}
-              preferences={profile.preferences}
+              upcomingReservationCount={upcomingReservations.length}
             />
           </div>
 
-          <div className="space-y-5">
-            <AddressBook
-              addresses={profile.addresses}
-              onDeleteAddress={deleteAddress}
-              onMakeDefaultAddress={makeDefaultAddress}
-              onSaveAddress={saveAddress}
-            />
-            <PaymentMethodsPanel
-              onDeletePaymentMethod={deletePaymentMethod}
-              onMakeDefaultPaymentMethod={makeDefaultPaymentMethod}
-              onSavePaymentMethod={savePaymentMethod}
-              paymentMethods={profile.paymentMethods}
-            />
-            <GiftHistoryPanel confirmations={confirmations} />
-            <SecurityPanel
-              onResetProfile={resetProfile}
-              onUpdatePreferences={updateProfilePreferences}
-              preferences={profile.preferences}
-            />
+          <div className="mt-5 grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
+            <div className="space-y-5">
+              <ProfileDetailsForm
+                onSaveProfileDetails={saveProfileDetails}
+                profile={profile}
+              />
+              <PreferencesPanel
+                onUpdatePreferences={updateProfilePreferences}
+                preferences={profile.preferences}
+              />
+            </div>
+
+            <div className="space-y-5">
+              <AddressBook
+                addresses={profile.addresses}
+                onDeleteAddress={deleteAddress}
+                onMakeDefaultAddress={makeDefaultAddress}
+                onSaveAddress={saveAddress}
+              />
+              <PaymentMethodsPanel
+                onDeletePaymentMethod={deletePaymentMethod}
+                onMakeDefaultPaymentMethod={makeDefaultPaymentMethod}
+                onSavePaymentMethod={savePaymentMethod}
+                paymentMethods={profile.paymentMethods}
+              />
+              <GiftHistoryPanel confirmations={confirmations} />
+              <SecurityPanel
+                onResetProfile={resetProfile}
+                onUpdatePreferences={updateProfilePreferences}
+                preferences={profile.preferences}
+              />
+            </div>
           </div>
-        </div>
-      </PageContainer>
-    </section>
+        </PageContainer>
+      </section>
+    </>
   );
 }

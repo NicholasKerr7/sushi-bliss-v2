@@ -35,6 +35,28 @@ const ordersNavItems = [
   ["orders", "Orders", "/orders"],
 ] as const;
 
+const helpNavItems = [
+  ["home", "Home", "/home"],
+  ["menu", "Menu", "/menu"],
+  ["reservations", "Reservations", "/reservations"],
+  ["order", "Order Online", "/menu"],
+  ["loyalty", "Loyalty", "/loyalty"],
+  ["about", "About Us", "/about"],
+  ["contact", "Contact", "/support"],
+  ["help", "Help Center", "/support"],
+] as const;
+
+const notificationsNavItems = [
+  ["home", "Home", "/home"],
+  ["menu", "Menu", "/menu"],
+  ["reservations", "Reservations", "/reservations"],
+  ["order", "Order Online", "/menu"],
+  ["loyalty", "Loyalty", "/loyalty"],
+  ["about", "About Us", "/about"],
+  ["contact", "Contact", "/support"],
+  ["notifications", "Notifications", "/notifications"],
+] as const;
+
 interface DesktopMenuHeaderProps {
   activeId?: string;
   cartCount: number;
@@ -47,9 +69,13 @@ export function DesktopMenuHeader({
   const navItems =
     activeId === "orders"
       ? ordersNavItems
-      : activeId === "omakase"
-        ? omakaseNavItems
-        : baseNavItems;
+      : activeId === "help"
+        ? helpNavItems
+        : activeId === "notifications"
+          ? notificationsNavItems
+          : activeId === "omakase"
+            ? omakaseNavItems
+            : baseNavItems;
 
   return (
     <header className="flex h-[88px] items-center border-b border-white/[0.08] bg-[#07090a]/96 px-[3vw]">
@@ -70,7 +96,7 @@ export function DesktopMenuHeader({
       </Link>
       <nav
         aria-label="Desktop primary"
-        className="flex flex-1 items-center justify-center gap-[1.85vw]"
+        className="flex flex-1 items-center justify-center gap-[1.55vw]"
       >
         {navItems.map(([id, label, href]) => {
           const active = id === activeId;

@@ -18,7 +18,7 @@ current viewport and attaches the matching reference PNG.
 | ---------- | ---------: | ------: | ------------------: | ------------: |
 | Mobile     |         60 |       1 |                   0 |            59 |
 | Tablet     |         40 |      40 |                   0 |             0 |
-| Desktop    |         40 |      18 |                  22 |             0 |
+| Desktop    |         40 |      23 |                  17 |             0 |
 
 The tablet reference `tablet-05-item-detail-otoro-nigiri.png` currently shows an
 order confirmation composition, so the visual audit maps it to tablet order
@@ -91,11 +91,11 @@ confirmation until the reference filename is corrected.
 | `desktop-16-omakase-package-review.png`        | omakase review state         | Audited             |
 | `desktop-17-loyalty-dashboard.png`             | `/loyalty`                   | Audited             |
 | `desktop-18-member-pass-rewards.png`           | loyalty rewards state        | Audited             |
-| `desktop-19-profile-dashboard.png`             | `/profile`                   | Built / needs audit |
-| `desktop-20-account-settings-preferences.png`  | profile settings state       | Built / needs audit |
-| `desktop-21-contact.png`                       | `/support` contact state     | Built / needs audit |
-| `desktop-22-help-center.png`                   | `/support` help center state | Built / needs audit |
-| `desktop-23-notifications-center.png`          | `/notifications`             | Built / needs audit |
+| `desktop-19-profile-dashboard.png`             | `/profile`                   | Audited             |
+| `desktop-20-account-settings-preferences.png`  | profile settings state       | Audited             |
+| `desktop-21-contact.png`                       | `/support` contact state     | Audited             |
+| `desktop-22-help-center.png`                   | `/support` help center state | Audited             |
+| `desktop-23-notifications-center.png`          | `/notifications`             | Audited             |
 | `desktop-24-favorites.png`                     | `/favorites`                 | Built / needs audit |
 | `desktop-25-promotions-offers.png`             | `/offers`                    | Built / needs audit |
 | `desktop-26-referral-earn.png`                 | referral state               | Built / needs audit |

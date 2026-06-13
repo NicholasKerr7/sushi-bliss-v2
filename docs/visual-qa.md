@@ -126,6 +126,15 @@ Current audit targets:
   `desktop/desktop-17-loyalty-dashboard.png`
 - desktop member pass rewards: `/loyalty` interaction against
   `desktop/desktop-18-member-pass-rewards.png`
+- desktop profile dashboard: `/profile` against
+  `desktop/desktop-19-profile-dashboard.png`
+- desktop account settings preferences: `/profile` interaction against
+  `desktop/desktop-20-account-settings-preferences.png`
+- desktop contact: `/support` against `desktop/desktop-21-contact.png`
+- desktop help center: `/support` interaction against
+  `desktop/desktop-22-help-center.png`
+- desktop notifications center: `/notifications` against
+  `desktop/desktop-23-notifications-center.png`
 
 The audit asserts the rendered viewport size, reference image dimensions, route
 health, and absence of horizontal overflow. Full pixel assertions should be

@@ -85,6 +85,7 @@ export function DesktopOmakaseReview({
               alt=""
               className="object-cover object-[58%_28%] opacity-42"
               fill
+              loading="eager"
               priority
               sizes="1070px"
               src={desktopOmakaseHeroImage}

@@ -132,6 +132,7 @@ export function ReservationImage({
         alt=""
         className="object-cover"
         fill
+        loading={compact ? "lazy" : "eager"}
         sizes={compact ? "180px" : "330px"}
         src={experience?.imageUrl || desktopReservationHeroImage}
       />
