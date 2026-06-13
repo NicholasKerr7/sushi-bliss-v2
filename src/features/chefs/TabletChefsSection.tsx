@@ -129,7 +129,7 @@ export function TabletChefsSection() {
 
   return (
     <section
-      className="flex min-h-dvh flex-col bg-[#050607] px-[18px] pb-3 pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pb-4 min-[1080px]:pt-3"
+      className="flex min-h-dvh flex-col bg-[#050607] pb-[86px] text-white"
       id="chefs"
     >
       <TabletChefsHeader
@@ -138,28 +138,29 @@ export function TabletChefsSection() {
         onQueryChange={setQuery}
       />
 
-      <main className="mx-auto w-full max-w-[1034px]">
-        <section className="relative mt-2 h-[286px] overflow-hidden rounded-[18px] border border-white/10 bg-black/42 min-[1080px]:mt-3 min-[1080px]:h-[300px]">
+      <main className="w-full">
+        <section className="relative h-[288px] overflow-hidden border-y border-white/[0.04] bg-black/42">
           <Image
-            alt=""
-            className="object-cover object-[62%_76%] opacity-82"
+            alt="Chef preparing nigiri at Sushi Bliss"
+            className="object-cover object-[62%_77%] opacity-86"
             fill
             priority
-            sizes="1034px"
+            sizes="1086px"
             src="/assets/chefs/kenji-sato-sous-chef-plating.webp"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98),rgba(5,6,7,0.74)_44%,rgba(5,6,7,0.08))]" />
-          <div className="relative z-10 flex h-full flex-col justify-center px-7 min-[1080px]:px-9">
-            <h1 className="editorial-title max-w-[620px] text-[54px] leading-[0.94] text-white min-[1080px]:text-[64px]">
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1)_0%,rgba(5,6,7,0.94)_28%,rgba(5,6,7,0.48)_56%,rgba(5,6,7,0.18)_78%,rgba(5,6,7,0.64)),linear-gradient(180deg,rgba(5,6,7,0),rgba(5,6,7,0.72))]" />
+          <div className="relative z-10 mx-auto flex h-full w-full max-w-[950px] translate-y-3 flex-col justify-center">
+            <h1 className="editorial-title max-w-[610px] text-[52px] leading-[0.98] tracking-[0.12em] text-white">
               <span className="block whitespace-nowrap">Master Chefs</span>
-              <span className="block text-[var(--sb-red-bright)]">
+              <span className="block tracking-[0.16em] text-[var(--sb-red-bright)]">
                 Our Team
               </span>
             </h1>
-            <p className="mt-4 max-w-[360px] text-[17px] leading-7 text-white/62">
-              Meet the artisans behind your unforgettable dining experience.
+            <p className="mt-5 max-w-[390px] text-[18px] leading-7 text-white/68">
+              Meet the talented artisans behind your unforgettable dining
+              experience.
             </p>
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-7 flex items-center gap-4">
               <span className="h-px w-[150px] bg-[var(--sb-border)]" />
               <AssetIcon size={28} src="/assets/icons/floral-emblem-icon.png" />
               <span className="h-px w-[150px] bg-[var(--sb-border)]" />
@@ -167,77 +168,81 @@ export function TabletChefsSection() {
           </div>
         </section>
 
-        <nav
-          aria-label="Tablet chef teams"
-          className="mt-3 grid grid-cols-3 rounded-[14px] border border-white/12 bg-white/[0.035] p-1"
-        >
-          {chefTabs.map(([label, icon], index) => (
-            <button
-              aria-pressed={index === 0}
-              className={
-                index === 0
-                  ? "red-glow-button grid h-[50px] grid-cols-[32px_auto] place-content-center items-center gap-3 rounded-[11px] text-[12px] uppercase tracking-[0.08em]"
-                  : "grid h-[50px] grid-cols-[32px_auto] place-content-center items-center gap-3 rounded-[11px] text-[12px] uppercase tracking-[0.08em] text-white/62"
-              }
-              key={label}
-              type="button"
-            >
-              <AssetIcon size={25} src={icon} />
-              {label}
-            </button>
-          ))}
-        </nav>
-
-        <section className="mt-3 grid grid-cols-3 gap-3">
-          {displayedChefs.length > 0 ? (
-            displayedChefs.map((chef, index) => (
-              <TabletChefCard
-                chef={chef}
-                imagePriority={index < 3}
-                key={chef.id}
-                onViewChef={setSelectedChef}
-              />
-            ))
-          ) : (
-            <div className="col-span-3 rounded-[14px] border border-white/12 bg-white/[0.035] p-8 text-center">
-              <p className="text-[18px] uppercase text-[var(--sb-gold-soft)]">
-                No chefs match this search
-              </p>
+        <div className="mx-auto w-full max-w-[950px]">
+          <nav
+            aria-label="Tablet chef teams"
+            className="mt-3 grid h-[60px] grid-cols-3 rounded-[8px] border border-white/12 bg-white/[0.035] p-1"
+          >
+            {chefTabs.map(([label, icon], index) => (
               <button
-                className="mt-4 rounded-full border border-[var(--sb-border)] px-5 py-2 text-[12px] uppercase tracking-[0.08em] text-white/72"
-                onClick={() => setQuery("")}
+                aria-pressed={index === 0}
+                className={
+                  index === 0
+                    ? "red-glow-button grid h-full grid-cols-[32px_auto] place-content-center items-center gap-3 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
+                    : "grid h-full grid-cols-[32px_auto] place-content-center items-center gap-3 border-l border-white/10 text-[12px] uppercase tracking-[0.08em] text-white/62 first:border-l-0"
+                }
+                key={label}
                 type="button"
               >
-                Clear search
+                <AssetIcon size={25} src={icon} />
+                {label}
               </button>
-            </div>
-          )}
-        </section>
+            ))}
+          </nav>
 
-        <section className="mt-3 grid grid-cols-[auto_minmax(0,1fr)_290px] items-center gap-5 rounded-[16px] border border-white/10 bg-white/[0.04] p-4">
-          <AssetIcon size={62} src="/assets/icons/floral-emblem-icon.png" />
-          <div>
-            <h2 className="text-[16px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
-              Our philosophy
-            </h2>
-            <p className="mt-1 text-[14px] leading-5 text-white/56">
-              Respect for tradition. Passion for excellence. Each dish reflects
-              our commitment.
-            </p>
-          </div>
-          <Link
-            className="grid h-[46px] place-items-center rounded-[12px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-            href="/about"
-          >
-            Meet our full team
-          </Link>
-        </section>
+          <section className="mt-3 grid grid-cols-3 gap-3.5">
+            {displayedChefs.length > 0 ? (
+              displayedChefs.map((chef, index) => (
+                <TabletChefCard
+                  chef={chef}
+                  compact={index >= 3}
+                  imagePriority={index < 3}
+                  key={chef.id}
+                  onViewChef={setSelectedChef}
+                />
+              ))
+            ) : (
+              <div className="col-span-3 rounded-[14px] border border-white/12 bg-white/[0.035] p-8 text-center">
+                <p className="text-[18px] uppercase text-[var(--sb-gold-soft)]">
+                  No chefs match this search
+                </p>
+                <button
+                  className="mt-4 rounded-full border border-[var(--sb-border)] px-5 py-2 text-[12px] uppercase tracking-[0.08em] text-white/72"
+                  onClick={() => setQuery("")}
+                  type="button"
+                >
+                  Clear search
+                </button>
+              </div>
+            )}
+          </section>
+
+          <section className="mt-3 grid grid-cols-[78px_minmax(0,1fr)_308px] items-center gap-4 rounded-[8px] border border-white/10 bg-white/[0.04] px-5 py-2">
+            <AssetIcon size={58} src="/assets/icons/floral-emblem-icon.png" />
+            <div>
+              <h2 className="text-[16px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+                Our philosophy
+              </h2>
+              <p className="mt-1 text-[14px] leading-5 text-white/56">
+                Respect for tradition. Passion for excellence. Each dish
+                reflects our commitment.
+              </p>
+            </div>
+            <Link
+              className="grid h-[44px] place-items-center rounded-[12px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+              href="/about"
+            >
+              Meet our full team
+            </Link>
+          </section>
+        </div>
       </main>
 
       <TabletBottomNavigation
         activeId="profile"
         ariaLabel="Tablet chefs navigation"
         compact
+        edge
       />
       <ChefDetailModal
         chef={selectedChef}
@@ -261,16 +266,16 @@ function TabletChefsHeader({
   onQueryChange: (query: string) => void;
 }) {
   return (
-    <header className="mt-1 grid h-[82px] grid-cols-[210px_48px_minmax(0,1fr)_214px] items-center gap-4">
+    <header className="mx-auto grid h-[98px] w-full max-w-[1034px] grid-cols-[210px_48px_minmax(0,1fr)_214px] items-center gap-4">
       <Link className="flex items-center gap-5" href="/home">
         <AssetIcon
           alt={brand.name}
           className="rounded-full"
           loading="eager"
-          size={66}
+          size={70}
           src={brand.assets.floralEmblem.publicUrl}
         />
-        <span className="font-serif text-[27px] font-normal uppercase leading-[0.98] tracking-[0.36em] text-white">
+        <span className="editorial-title text-[23px] uppercase leading-[1.05] tracking-[0.34em] text-white">
           Sushi
           <br />
           Bliss
@@ -286,7 +291,7 @@ function TabletChefsHeader({
       </Link>
 
       <form
-        className="mx-auto flex h-[58px] w-full max-w-[486px] items-center gap-4 rounded-[24px] border border-white/16 bg-white/[0.035] px-6 focus-within:border-[var(--sb-gold)] focus-within:ring-2 focus-within:ring-[var(--sb-gold)]/20"
+        className="mx-auto flex h-[58px] w-full max-w-[360px] items-center gap-4 rounded-[24px] border border-white/16 bg-white/[0.035] px-6 focus-within:border-[var(--sb-gold)] focus-within:ring-2 focus-within:ring-[var(--sb-gold)]/20"
         onSubmit={(event) => event.preventDefault()}
       >
         <AssetIcon size={24} src={icons.search} />
@@ -294,7 +299,7 @@ function TabletChefsHeader({
           Search chefs
         </label>
         <input
-          className="h-full w-full bg-transparent text-[16px] text-white outline-none placeholder:text-white/58"
+          className="h-full min-w-0 flex-1 bg-transparent text-[16px] text-white outline-none placeholder:text-white/58"
           id="tablet-chefs-search"
           onChange={(event) => onQueryChange(event.target.value)}
           placeholder="Search menu, chefs, items..."
@@ -364,21 +369,29 @@ function TabletHeaderIcon({
 
 function TabletChefCard({
   chef,
+  compact,
   imagePriority,
   onViewChef,
 }: {
   chef: Chef;
+  compact: boolean;
   imagePriority: boolean;
   onViewChef: (chef: Chef) => void;
 }) {
   return (
-    <article className="overflow-hidden rounded-[10px] border border-white/12 bg-white/[0.04]">
-      <div className="relative h-[142px] bg-black/30 min-[1080px]:h-[150px]">
+    <article className="overflow-hidden rounded-[7px] border border-white/12 bg-white/[0.035]">
+      <div
+        className={
+          compact
+            ? "relative h-[136px] bg-black/30"
+            : "relative h-[178px] bg-black/30"
+        }
+      >
         <Image
           alt=""
           className="object-cover object-top"
           fill
-          loading={imagePriority ? undefined : "lazy"}
+          loading={imagePriority ? "eager" : "lazy"}
           priority={imagePriority || undefined}
           sizes="330px"
           src={chef.standingImage.publicUrl}
@@ -387,23 +400,47 @@ function TabletChefCard({
           <AssetIcon size={24} src="/assets/icons/floral-emblem-icon.png" />
         </span>
       </div>
-      <div className="p-3">
-        <h2 className="editorial-title text-[24px] leading-none text-white">
+      <div className={compact ? "px-4 pb-3 pt-3" : "p-4"}>
+        <h2
+          className={
+            compact
+              ? "font-serif text-[26px] leading-none text-white"
+              : "font-serif text-[27px] leading-none text-white"
+          }
+        >
           {chef.name}
         </h2>
         <p className="mt-1 text-[13px] font-semibold text-[var(--sb-gold-soft)]">
           {chef.position}
         </p>
-        <p className="mt-2 line-clamp-2 min-h-[36px] text-[12px] leading-[18px] text-white/58">
+        <p
+          className={
+            compact
+              ? "mt-3 line-clamp-2 min-h-9 text-[13px] leading-[18px] text-white/58"
+              : "mt-3 line-clamp-3 min-h-[54px] text-[13px] leading-[18px] text-white/58"
+          }
+        >
           {chef.about}
         </p>
-        <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
+        <p
+          className={
+            compact
+              ? "mt-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
+              : "mt-3 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
+          }
+        >
           Specialties
         </p>
-        <div className="mt-1.5 flex flex-wrap gap-2">
+        <div
+          className={
+            compact
+              ? "mt-1 flex flex-wrap gap-2"
+              : "mt-1.5 flex flex-wrap gap-2"
+          }
+        >
           {[chef.specialty, chef.sushi].map((specialty) => (
             <span
-              className="rounded-full border border-[var(--sb-border)] px-2.5 py-1 text-[10px] text-[var(--sb-gold-soft)]"
+              className="rounded-full border border-[var(--sb-border)] px-3 py-1 text-[10px] text-[var(--sb-gold-soft)]"
               key={specialty}
             >
               {specialty}
@@ -411,11 +448,16 @@ function TabletChefCard({
           ))}
         </div>
         <button
-          className="red-glow-button mt-2.5 h-8 w-full rounded-[10px] text-[11px] uppercase tracking-[0.08em]"
+          className={
+            compact
+              ? "red-glow-button mt-2 flex h-8 w-full items-center justify-center gap-14 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
+              : "red-glow-button mt-3 flex h-9 w-full items-center justify-center gap-14 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
+          }
           onClick={() => onViewChef(chef)}
           type="button"
         >
-          View profile
+          <span>View profile</span>
+          <ChevronIcon direction="right" size={16} />
         </button>
       </div>
     </article>

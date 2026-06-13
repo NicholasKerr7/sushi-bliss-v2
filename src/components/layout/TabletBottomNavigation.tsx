@@ -15,6 +15,7 @@ interface TabletBottomNavigationProps {
   activeIndex?: number;
   ariaLabel?: string;
   compact?: boolean;
+  edge?: boolean;
   fixed?: boolean;
 }
 
@@ -24,6 +25,7 @@ export function TabletBottomNavigation({
   activeIndex,
   ariaLabel = "Tablet bottom navigation",
   compact = false,
+  edge = false,
   fixed = true,
 }: TabletBottomNavigationProps) {
   const currentId =
@@ -34,6 +36,13 @@ export function TabletBottomNavigation({
   const activePositionClass = currentId
     ? primaryNavigationActivePositionClasses[currentId]
     : undefined;
+  const placementClassName = fixed
+    ? edge
+      ? "fixed bottom-0 left-1/2 w-full max-w-[1086px] -translate-x-1/2 rounded-none border-x-0 border-b-0"
+      : "fixed bottom-3 left-1/2 w-[calc(100%-36px)] max-w-[1034px] -translate-x-1/2"
+    : edge
+      ? "relative mx-auto mt-auto w-full max-w-[1086px] rounded-none border-x-0 border-b-0"
+      : "relative mx-auto mt-auto w-full max-w-[1034px]";
 
   return (
     <nav
@@ -41,9 +50,7 @@ export function TabletBottomNavigation({
       className={classNames(
         "z-40 grid grid-cols-5 items-center overflow-hidden rounded-[22px] border border-white/10 bg-[#070909] shadow-[inset_0_0_28px_rgba(0,0,0,.88),inset_0_1px_0_rgba(255,255,255,.08),0_12px_35px_rgba(0,0,0,.44)]",
         compact ? "h-[82px]" : "h-[114px]",
-        fixed
-          ? "fixed bottom-3 left-1/2 w-[calc(100%-36px)] max-w-[1034px] -translate-x-1/2"
-          : "relative mx-auto mt-auto w-full max-w-[1034px]",
+        placementClassName,
       )}
     >
       {activePositionClass ? (
@@ -76,6 +83,7 @@ export function TabletBottomNavigation({
           const current =
             item.id === activeId ||
             (activeId === undefined && activeIndex === index);
+          const label = item.id === "profile" ? "Account" : item.label;
 
           return (
             <li
@@ -123,7 +131,7 @@ export function TabletBottomNavigation({
                     id={item.id}
                   />
                 </span>
-                <span className="relative z-10 font-medium">{item.label}</span>
+                <span className="relative z-10 font-medium">{label}</span>
               </Link>
             </li>
           );
