@@ -169,7 +169,7 @@ export function DesktopGiftExperience({
 
 function DesktopGiftHero({ copy, title }: { copy: string; title: string }) {
   return (
-    <section className="relative min-h-[226px] border-b border-white/10 px-16 py-8">
+    <section className="relative min-h-[204px] border-b border-white/10 px-16 py-6">
       <Image
         alt=""
         className="object-cover object-[56%_45%] opacity-58"
@@ -180,14 +180,14 @@ function DesktopGiftHero({ copy, title }: { copy: string; title: string }) {
         src="/assets/gallery/intimate-upscale-dining-room-setting.webp"
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,4,5,0.98)_0%,rgba(3,4,5,0.78)_42%,rgba(3,4,5,0.34)_100%)]" />
-      <div className="relative z-10 flex min-h-[162px] max-w-[720px] flex-col justify-center">
+      <div className="relative z-10 flex min-h-[152px] max-w-[720px] flex-col justify-center">
         <p className="text-[16px] uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
           Sushi Bliss gifting
         </p>
-        <h1 className="editorial-title mt-3 text-[64px] uppercase leading-[0.9] text-white">
+        <h1 className="editorial-title mt-3 text-[58px] uppercase leading-[0.9] text-white">
           {title}
         </h1>
-        <p className="mt-5 max-w-[560px] text-[17px] leading-7 text-white/72">
+        <p className="mt-4 max-w-[560px] text-[17px] leading-7 text-white/72">
           {copy}
         </p>
       </div>
@@ -216,9 +216,9 @@ function DesktopGiftSelection({
         copy="Send an omakase reservation, private dining night, or hands-on class with concierge support."
         title="Gift an Experience"
       />
-      <div className="grid grid-cols-[minmax(0,1fr)_386px] gap-5 px-9 py-5">
-        <div className="grid gap-5">
-          <section className="rounded-[18px] border border-[var(--sb-border)] bg-[#07090a]/88 p-6">
+      <div className="grid grid-cols-[minmax(0,1fr)_372px] gap-4 px-9 py-4">
+        <div className="grid gap-4">
+          <section className="rounded-[18px] border border-[var(--sb-border)] bg-[#07090a]/88 p-5">
             <div className="flex items-end justify-between gap-6">
               <div>
                 <p className="text-[13px] uppercase tracking-[0.12em] text-white/42">
@@ -233,7 +233,7 @@ function DesktopGiftSelection({
                 and personalized delivery.
               </p>
             </div>
-            <div className="mt-5 grid grid-cols-3 gap-4">
+            <div className="mt-4 grid grid-cols-3 gap-3">
               {giftExperiences.map((gift, index) => (
                 <GiftPackageCard
                   gift={gift}
@@ -246,7 +246,7 @@ function DesktopGiftSelection({
             </div>
           </section>
 
-          <section className="grid grid-cols-[minmax(0,1fr)_320px] gap-5 rounded-[18px] border border-[var(--sb-border)] bg-[#07090a]/88 p-6">
+          <section className="grid grid-cols-[minmax(0,1fr)_306px] gap-4 rounded-[18px] border border-[var(--sb-border)] bg-[#07090a]/88 p-5">
             <div>
               <p className="text-[13px] uppercase tracking-[0.12em] text-white/42">
                 Step 2
@@ -254,7 +254,7 @@ function DesktopGiftSelection({
               <h2 className="mt-1 text-[20px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                 Recipient details
               </h2>
-              <div className="mt-5 grid grid-cols-2 gap-4">
+              <div className="mt-4 grid grid-cols-2 gap-4">
                 <Input
                   id="desktop-gift-recipient-name"
                   label="Recipient name"
@@ -280,7 +280,7 @@ function DesktopGiftSelection({
                 Gift message
               </label>
               <textarea
-                className="mt-2 min-h-[112px] w-full resize-none rounded-card border border-sb-line bg-sb-ink/70 px-4 py-3 text-sm text-sb-rice outline-none transition placeholder:text-sb-dim focus:border-sb-gold/70 focus:ring-2 focus:ring-sb-gold/25"
+                className="mt-2 min-h-[92px] w-full resize-none rounded-card border border-sb-line bg-sb-ink/70 px-4 py-3 text-sm text-sb-rice outline-none transition placeholder:text-sb-dim focus:border-sb-gold/70 focus:ring-2 focus:ring-sb-gold/25"
                 id="desktop-gift-message"
                 value={draft.message}
                 onChange={(event) =>
@@ -288,11 +288,11 @@ function DesktopGiftSelection({
                 }
               />
             </div>
-            <div className="rounded-[16px] border border-white/10 bg-black/28 p-5">
+            <div className="rounded-[16px] border border-white/10 bg-black/28 p-4">
               <h3 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                 Delivery options
               </h3>
-              <div className="mt-4 grid gap-3">
+              <div className="mt-3 grid gap-2.5">
                 {[
                   ["send-now", "Send instantly", "Email after purchase"],
                   ["scheduled", "Schedule delivery", "Pick a future date"],
@@ -301,8 +301,8 @@ function DesktopGiftSelection({
                     aria-pressed={draft.deliveryTiming === timing}
                     className={
                       draft.deliveryTiming === timing
-                        ? "rounded-[12px] border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/10 p-4 text-left"
-                        : "rounded-[12px] border border-white/10 bg-white/[0.035] p-4 text-left"
+                        ? "rounded-[12px] border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/10 p-3 text-left"
+                        : "rounded-[12px] border border-white/10 bg-white/[0.035] p-3 text-left"
                     }
                     key={timing}
                     onClick={() =>
@@ -329,7 +329,7 @@ function DesktopGiftSelection({
                 min={getDefaultDeliveryDate()}
                 type="date"
                 value={draft.deliveryDate}
-                wrapperClassName="mt-4"
+                wrapperClassName="mt-3"
                 onChange={(event) =>
                   onUpdateDraft("deliveryDate", event.target.value)
                 }
@@ -364,13 +364,13 @@ function GiftPackageCard({
       aria-pressed={isSelected}
       className={
         isSelected
-          ? "overflow-hidden rounded-[18px] border border-[var(--sb-gold)]/54 bg-[var(--sb-gold)]/10 text-left shadow-[0_0_24px_rgba(218,179,109,0.12)]"
-          : "overflow-hidden rounded-[18px] border border-white/10 bg-black/28 text-left transition hover:border-[var(--sb-gold)]/32"
+          ? "overflow-hidden rounded-[16px] border border-[var(--sb-gold)]/54 bg-[var(--sb-gold)]/10 text-left shadow-[0_0_24px_rgba(218,179,109,0.12)]"
+          : "overflow-hidden rounded-[16px] border border-white/10 bg-black/28 text-left transition hover:border-[var(--sb-gold)]/32"
       }
       onClick={() => onSelectGift(gift.id)}
       type="button"
     >
-      <div className="relative h-[168px]">
+      <div className="relative h-[136px]">
         <Image
           alt=""
           className="object-cover"
@@ -381,20 +381,20 @@ function GiftPackageCard({
           src={gift.image.publicUrl}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.76))]" />
-        <span className="absolute bottom-4 left-4 rounded-full border border-white/18 bg-black/50 px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-white/74">
+        <span className="absolute bottom-3 left-4 rounded-full border border-white/18 bg-black/50 px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-white/74">
           {gift.category}
         </span>
       </div>
-      <div className="p-4">
+      <div className="p-3.5">
         <div className="flex items-start justify-between gap-4">
-          <h3 className="text-[18px] font-semibold leading-6 text-white">
+          <h3 className="text-[17px] font-semibold leading-6 text-white">
             {gift.title}
           </h3>
           <p className="font-mono text-[14px] text-[var(--sb-gold-soft)]">
             {formatMoney(gift.priceCents)}
           </p>
         </div>
-        <p className="mt-3 min-h-[54px] text-[13px] leading-5 text-white/58">
+        <p className="mt-2 min-h-[42px] text-[13px] leading-5 text-white/58">
           {gift.description}
         </p>
       </div>
@@ -414,18 +414,18 @@ function GiftReviewRail({
   return (
     <aside className="grid content-start gap-4">
       <section className="overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[#07090a]/88">
-        <div className="relative h-[206px]">
+        <div className="relative h-[178px]">
           <Image
             alt=""
             className="object-cover"
             fill
             priority
-            sizes="386px"
+            sizes="372px"
             src={gift.image.publicUrl}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.72))]" />
         </div>
-        <div className="p-5">
+        <div className="p-4">
           <p className="text-[12px] uppercase tracking-[0.12em] text-white/42">
             Selected package
           </p>
@@ -435,14 +435,14 @@ function GiftReviewRail({
           <p className="mt-2 text-[13px] leading-6 text-white/56">
             {gift.deliveryNote}
           </p>
-          <div className="mt-4 divide-y divide-white/10 rounded-[12px] border border-white/10">
+          <div className="mt-3 divide-y divide-white/10 rounded-[12px] border border-white/10">
             {gift.inclusions.map((item) => (
-              <p className="px-4 py-3 text-[13px] text-white/66" key={item}>
+              <p className="px-4 py-2.5 text-[13px] text-white/66" key={item}>
                 {item}
               </p>
             ))}
           </div>
-          <div className="mt-5 flex items-center justify-between">
+          <div className="mt-4 flex items-center justify-between">
             <span className="text-[13px] uppercase tracking-[0.1em] text-white/46">
               Total
             </span>
@@ -450,17 +450,17 @@ function GiftReviewRail({
               {formatMoney(gift.priceCents)}
             </span>
           </div>
-          <Button className="mt-5 w-full" onClick={onAction}>
+          <Button className="mt-4 w-full" onClick={onAction}>
             {buttonLabel}
           </Button>
         </div>
       </section>
 
-      <section className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+      <section className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
         <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
           Gift FAQ
         </h2>
-        <div className="mt-4 grid gap-4">
+        <div className="mt-3 grid gap-3">
           {conciergeFaq.map(([question, answer]) => (
             <div key={question}>
               <p className="text-[13px] font-semibold text-white/82">
