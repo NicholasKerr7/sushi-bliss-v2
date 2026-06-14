@@ -115,33 +115,35 @@ export function TabletGiftExperience({
           onOpenCart={() => setCartOpen(true)}
           title={giftViewTitle[view]}
         />
-        {view === "confirmation" && confirmation ? (
-          <TabletGiftConfirmation
-            confirmation={confirmation}
-            draft={draft}
-            gift={selectedGift}
-            onViewDetails={() => setView("checkout")}
-          />
-        ) : view === "checkout" ? (
-          <TabletGiftCheckout
-            draft={draft}
-            gift={selectedGift}
-            paymentMethods={paymentMethods}
-            validationMessage={validationMessage}
-            onBack={() => setView("selection")}
-            onCompletePayment={completePayment}
-            onUpdateDraft={updateDraft}
-          />
-        ) : (
-          <TabletGiftSelection
-            draft={draft}
-            giftExperiences={giftExperiences}
-            selectedGift={selectedGift}
-            onContinue={() => setView("checkout")}
-            onSelectGift={selectGift}
-            onUpdateDraft={updateDraft}
-          />
-        )}
+        <div className="smooth-scroll-area min-h-0 flex-1 overflow-y-auto pb-[126px]">
+          {view === "confirmation" && confirmation ? (
+            <TabletGiftConfirmation
+              confirmation={confirmation}
+              draft={draft}
+              gift={selectedGift}
+              onViewDetails={() => setView("checkout")}
+            />
+          ) : view === "checkout" ? (
+            <TabletGiftCheckout
+              draft={draft}
+              gift={selectedGift}
+              paymentMethods={paymentMethods}
+              validationMessage={validationMessage}
+              onBack={() => setView("selection")}
+              onCompletePayment={completePayment}
+              onUpdateDraft={updateDraft}
+            />
+          ) : (
+            <TabletGiftSelection
+              draft={draft}
+              giftExperiences={giftExperiences}
+              selectedGift={selectedGift}
+              onContinue={() => setView("checkout")}
+              onSelectGift={selectGift}
+              onUpdateDraft={updateDraft}
+            />
+          )}
+        </div>
       </section>
       <TabletBottomNavigation />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />

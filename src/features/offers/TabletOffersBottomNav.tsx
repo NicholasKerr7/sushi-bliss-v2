@@ -90,17 +90,7 @@ function TabletOffersBottomIcon({
   }
 
   if (id === "more") {
-    return (
-      <span
-        aria-hidden="true"
-        className={classNames(
-          "relative z-10 flex h-[24px] w-[24px] items-center justify-center text-[23px] leading-none",
-          active && "drop-shadow-[0_0_7px_rgba(255,43,31,.75)]",
-        )}
-      >
-        ...
-      </span>
-    );
+    return <RouteNavGlyph className={iconClassName} id="profile" />;
   }
 
   return <RouteNavGlyph className={iconClassName} id={id} />;
