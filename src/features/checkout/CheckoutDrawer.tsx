@@ -25,6 +25,7 @@ import { TabletCheckoutDialog } from "./TabletCheckoutDialog";
 import { TabletOrderConfirmation } from "./TabletOrderConfirmation";
 
 interface CheckoutDrawerProps {
+  initialCustomTipCents?: number;
   initialTipPercent?: number;
   onBackToCart?: () => void;
   onOpenChange: (open: boolean) => void;
@@ -32,6 +33,7 @@ interface CheckoutDrawerProps {
 }
 
 export function CheckoutDrawer({
+  initialCustomTipCents = 0,
   initialTipPercent = 0,
   onBackToCart,
   onOpenChange,
@@ -51,7 +53,11 @@ export function CheckoutDrawer({
   const { addOrder } = useOrders();
   const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
   const [confirmedPoints, setConfirmedPoints] = useState(0);
-  const checkout = useCheckout(subtotalCents, initialTipPercent);
+  const checkout = useCheckout(
+    subtotalCents,
+    initialTipPercent,
+    initialCustomTipCents,
+  );
 
   const handlePlaceOrder = () => {
     const order = checkout.createCheckoutOrder(items);

@@ -34,19 +34,18 @@ const tabletCategoryTabs = [
   { id: "sashimi", icon: icons.sashimi, label: "Sashimi" },
   { id: "chef-specials", icon: icons.crown, label: "Chef Specials" },
   { id: "vegetarian", icon: icons.leaf, label: "Vegetarian" },
-  {
-    disabledReason: "Drinks coming soon",
-    id: "drinks",
-    icon: icons.miso,
-    label: "Drinks",
-  },
+  { id: "drinks", icon: icons.miso, label: "Drinks" },
 ] as const;
 
 function isAvailableTabletCategory(
   categories: MenuCategory[],
   categoryId: string,
 ) {
-  if (categoryId === "all" || categoryId === "chef-specials") {
+  if (
+    categoryId === "all" ||
+    categoryId === "chef-specials" ||
+    categoryId === "drinks"
+  ) {
     return true;
   }
 
@@ -72,9 +71,7 @@ export function TabletCategoryBar({
       )}
     >
       {tabletCategoryTabs.map((item) => {
-        const disabled =
-          "disabledReason" in item ||
-          !isAvailableTabletCategory(categories, item.id);
+        const disabled = !isAvailableTabletCategory(categories, item.id);
         const isActive = category === item.id;
 
         return (
@@ -98,7 +95,6 @@ export function TabletCategoryBar({
             disabled={disabled}
             key={item.id}
             onClick={() => onSelectCategory(item.id)}
-            title={"disabledReason" in item ? item.disabledReason : undefined}
             type="button"
           >
             <AssetIcon size={20} src={item.icon} />
@@ -118,9 +114,7 @@ export function TabletCategoryTiles({
   return (
     <div className="mt-4 grid grid-cols-7 gap-3">
       {tabletCategoryTabs.map((item) => {
-        const disabled =
-          "disabledReason" in item ||
-          !isAvailableTabletCategory(categories, item.id);
+        const disabled = !isAvailableTabletCategory(categories, item.id);
 
         return (
           <button
@@ -133,7 +127,6 @@ export function TabletCategoryTiles({
             disabled={disabled}
             key={item.id}
             onClick={() => onSelectCategory(item.id)}
-            title={"disabledReason" in item ? item.disabledReason : undefined}
             type="button"
           >
             <AssetIcon size={34} src={item.icon} />

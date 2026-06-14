@@ -10,6 +10,23 @@ export function dollarsToCents(amount: number): number {
   return Math.round(amount * 100);
 }
 
+/** Converts a user-entered dollar amount into bounded integer cents. */
+export function parseMoneyInputToCents(
+  value: string,
+  maxCents = 50000,
+): number {
+  const normalizedValue = value.replace(/[^\d.]/g, "");
+  const [dollarValue = "0", ...decimalParts] = normalizedValue.split(".");
+  const decimalValue = decimalParts.join("").slice(0, 2);
+  const amount = Number(`${dollarValue || "0"}.${decimalValue}`);
+
+  if (!Number.isFinite(amount)) {
+    return 0;
+  }
+
+  return Math.min(Math.max(dollarsToCents(amount), 0), maxCents);
+}
+
 /** Formats integer cents as localized currency display text. */
 export function formatMoney(
   cents: number,

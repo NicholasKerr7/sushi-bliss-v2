@@ -1,10 +1,16 @@
 "use client";
 
+import { useState } from "react";
+
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/features/home/visualHomeData";
 import { formatDateTime } from "@/lib/dates";
-import { calculateTipCents, formatMoney } from "@/lib/money";
+import {
+  calculateTipCents,
+  formatMoney,
+  parseMoneyInputToCents,
+} from "@/lib/money";
 import type { FulfillmentMode } from "@/types/common";
 import type { CartLineItem } from "@/types/order";
 
@@ -70,6 +76,20 @@ export function TabletCheckoutDetails({
   onUpdateQuantity,
   paymentsExpanded,
 }: TabletCheckoutDetailsProps) {
+  const [customTipValue, setCustomTipValue] = useState(
+    checkout.customTipCents > 0
+      ? (checkout.customTipCents / 100).toFixed(2)
+      : "",
+  );
+  const handlePresetTipChange = (nextTipPercent: number) => {
+    setCustomTipValue("");
+    checkout.setTipPercent(nextTipPercent);
+  };
+  const handleCustomTipChange = (value: string) => {
+    setCustomTipValue(value);
+    checkout.setCustomTipCents(parseMoneyInputToCents(value));
+  };
+
   return (
     <>
       <div className="mt-5 flex items-center gap-7">
@@ -209,14 +229,18 @@ export function TabletCheckoutDetails({
             <div className="mt-3 grid grid-cols-4 gap-3">
               {tipPercentOptions.map((option) => (
                 <button
-                  aria-pressed={checkout.tipPercent === option}
+                  aria-pressed={
+                    checkout.customTipCents === 0 &&
+                    checkout.tipPercent === option
+                  }
                   className={`min-h-[58px] rounded-[12px] border text-center transition ${
+                    checkout.customTipCents === 0 &&
                     checkout.tipPercent === option
                       ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 text-white shadow-[0_0_22px_var(--sb-red-glow)]"
                       : "border-white/10 bg-black/22 text-white/72"
                   }`}
                   key={option}
-                  onClick={() => checkout.setTipPercent(option)}
+                  onClick={() => handlePresetTipChange(option)}
                   type="button"
                 >
                   <span className="block text-[16px]">{option}%</span>
@@ -230,14 +254,41 @@ export function TabletCheckoutDetails({
                   </span>
                 </button>
               ))}
-              <button
-                className="min-h-[58px] rounded-[12px] border border-white/10 bg-black/22 text-[13px] uppercase text-white/42"
-                disabled
-                title="Custom tip coming soon"
-                type="button"
+              <label
+                className={`grid min-h-[58px] grid-cols-[1fr_auto] items-center gap-2 rounded-[12px] border bg-black/22 px-3 text-left transition ${
+                  checkout.customTipCents > 0
+                    ? "border-[var(--sb-red-bright)] text-white shadow-[0_0_22px_var(--sb-red-glow)]"
+                    : "border-white/10 text-white/72 focus-within:border-[var(--sb-gold)]"
+                }`}
+                htmlFor="tablet-checkout-custom-tip"
               >
-                Custom
-              </button>
+                <span>
+                  <span className="block text-[13px] uppercase tracking-[0.08em]">
+                    Custom
+                  </span>
+                  <span className="mt-1 block font-mono text-[12px] text-white/54">
+                    {checkout.customTipCents > 0
+                      ? formatMoney(checkout.customTipCents)
+                      : "Any amount"}
+                  </span>
+                </span>
+                <span className="flex min-w-0 items-center gap-1">
+                  <span className="font-mono text-[13px] text-[var(--sb-gold-soft)]">
+                    $
+                  </span>
+                  <input
+                    className="w-[66px] bg-transparent text-right font-mono text-[15px] text-white outline-none placeholder:text-white/34"
+                    id="tablet-checkout-custom-tip"
+                    inputMode="decimal"
+                    maxLength={7}
+                    onChange={(event) =>
+                      handleCustomTipChange(event.target.value)
+                    }
+                    placeholder="0.00"
+                    value={customTipValue}
+                  />
+                </span>
+              </label>
             </div>
           </div>
 

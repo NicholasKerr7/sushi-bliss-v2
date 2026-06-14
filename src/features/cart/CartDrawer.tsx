@@ -25,6 +25,7 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
   const mode = useResponsiveMode();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [tabletTipPercent, setTabletTipPercent] = useState(15);
+  const [tabletCustomTipCents, setTabletCustomTipCents] = useState(0);
   const {
     addItem,
     clearCart,
@@ -54,6 +55,16 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
       menuItem: suggestedMobileItem,
       quantity: 1,
     });
+  };
+
+  const handleTabletTipPercentChange = (tipPercent: number) => {
+    setTabletTipPercent(tipPercent);
+    setTabletCustomTipCents(0);
+  };
+
+  const handleTabletCustomTipChange = (tipCents: number) => {
+    setTabletCustomTipCents(tipCents);
+    setTabletTipPercent(0);
   };
 
   if (mode === "mobile") {
@@ -86,6 +97,7 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
     return (
       <>
         <TabletCartDialog
+          customTipCents={tabletCustomTipCents}
           itemCount={itemCount}
           items={items}
           open={open}
@@ -93,14 +105,16 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
           totals={totals}
           onClearCart={clearCart}
           onClose={() => onOpenChange(false)}
+          onCustomTipChange={handleTabletCustomTipChange}
           onOpenCheckout={openCheckout}
           onRemove={removeItem}
-          onTipPercentChange={setTabletTipPercent}
+          onTipPercentChange={handleTabletTipPercentChange}
           onUpdateQuantity={updateQuantity}
         />
         <CheckoutDrawer
+          initialCustomTipCents={tabletCustomTipCents}
           initialTipPercent={tabletTipPercent}
-          key={`tablet-checkout-${tabletTipPercent}`}
+          key={`tablet-checkout-${tabletTipPercent}-${tabletCustomTipCents}`}
           onBackToCart={() => onOpenChange(true)}
           onOpenChange={setCheckoutOpen}
           open={checkoutOpen}

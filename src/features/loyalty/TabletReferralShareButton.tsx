@@ -1,3 +1,5 @@
+"use client";
+
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
 
@@ -31,6 +33,22 @@ export function TabletReferralShareButton({
     "grid h-[50px] w-[50px] place-items-center rounded-full border border-white/12 text-white shadow-[0_10px_26px_rgba(0,0,0,0.35)] transition hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100",
     colorClass,
   );
+  const handleMoreShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          text: "Join me at Sushi Bliss.",
+          title: "Sushi Bliss invitation",
+          url: referralLink,
+        });
+        return;
+      }
+
+      await navigator.clipboard?.writeText(referralLink);
+    } catch {
+      await navigator.clipboard?.writeText(referralLink);
+    }
+  };
 
   if (action === "email") {
     return (
@@ -86,10 +104,9 @@ export function TabletReferralShareButton({
 
   return (
     <button
-      aria-label="More sharing options coming soon"
+      aria-label="Open more sharing options"
       className={commonClassName}
-      disabled
-      title="More sharing options coming soon"
+      onClick={handleMoreShare}
       type="button"
     >
       <ShareGlyph icon={icon} />

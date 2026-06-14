@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -153,19 +154,28 @@ export function DesktopMenuSurface({
         {isCategoryPage ? (
           <>
             <DesktopMenuSection title={`${selectedCategoryLabel} Menu`}>
-              <div className="grid grid-cols-4 gap-4">
-                {categoryDisplayItems.slice(0, 8).map((item, index) => (
-                  <DesktopFeatureMenuCard
-                    badge={index === 0 ? "Chef's Pick" : undefined}
-                    displayName={desktopNigiriDisplayNames[item.id]}
-                    eagerImage={index < 8}
-                    item={item}
-                    key={item.id}
-                    onAddToCart={onAddToCart}
-                    onViewDetails={onViewDetails}
-                  />
-                ))}
-              </div>
+              {categoryDisplayItems.length > 0 ? (
+                <div className="grid grid-cols-4 gap-4">
+                  {categoryDisplayItems.slice(0, 8).map((item, index) => (
+                    <DesktopFeatureMenuCard
+                      badge={index === 0 ? "Chef's Pick" : undefined}
+                      displayName={desktopNigiriDisplayNames[item.id]}
+                      eagerImage={index < 8}
+                      item={item}
+                      key={item.id}
+                      onAddToCart={onAddToCart}
+                      onViewDetails={onViewDetails}
+                    />
+                  ))}
+                </div>
+              ) : category === "drinks" ? (
+                <DesktopDrinksEmptyState />
+              ) : (
+                <DesktopCategoryEmptyState
+                  categoryLabel={selectedCategoryLabel}
+                  onClearFilters={onClearFilters}
+                />
+              )}
             </DesktopMenuSection>
             <DesktopCategoryBenefitStrip />
           </>
@@ -289,7 +299,7 @@ function DesktopCategoryNav({
       )}
     >
       {desktopCategoryButtons.map(([id, label, icon]) => {
-        const disabled = id === "drinks" || !categoryExists(id);
+        const disabled = !categoryExists(id);
         const active =
           (id === "recommended" &&
             (category === "all" || category === "recommended")) ||
@@ -310,7 +320,6 @@ function DesktopCategoryNav({
             disabled={disabled}
             key={id}
             onClick={() => onSelectCategory(id)}
-            title={disabled ? `${label} coming soon` : undefined}
             type="button"
           >
             <AssetIcon
@@ -387,25 +396,39 @@ function DesktopMenuHero({
   onViewDetails: DesktopMenuViewHandler;
 }) {
   const isNigiri = category === "nigiri";
+  const isDrinks = category === "drinks";
 
   return (
     <section className="relative min-h-[236px] overflow-hidden rounded-[16px] border border-white/10 min-[1500px]:min-h-[174px]">
       <Image
         alt=""
-        className="object-cover object-[72%_42%]"
+        className={classNames(
+          "object-cover",
+          isDrinks ? "object-[58%_48%]" : "object-[72%_42%]",
+        )}
         fill
         loading="eager"
         priority
         sizes="1200px"
-        src={featuredAssets.heroSushi.publicUrl}
+        src={
+          isDrinks
+            ? "/assets/editorial/luxurious-japanese-sake-still-life.webp"
+            : featuredAssets.heroSushi.publicUrl
+        }
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,5,6,0.96),rgba(4,5,6,0.78)_42%,rgba(4,5,6,0.12)_78%,rgba(4,5,6,0.78))]" />
       <div className="relative z-10 flex min-h-[236px] flex-col justify-center px-9 min-[1500px]:min-h-[174px] min-[1500px]:px-2">
         <p className="text-[14px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-          {isNigiri ? "Our Menu" : "Explore our menu"}
+          {isDrinks
+            ? "Beverage Pairings"
+            : isNigiri
+              ? "Our Menu"
+              : "Explore our menu"}
         </p>
         <h1 className="editorial-title mt-2 text-[44px] leading-[0.96] text-white min-[1500px]:text-[40px]">
-          {isNigiri ? (
+          {isDrinks ? (
+            "Drinks"
+          ) : isNigiri ? (
             "Nigiri"
           ) : (
             <>
@@ -417,11 +440,13 @@ function DesktopMenuHero({
           )}
         </h1>
         <p className="mt-3 max-w-[500px] text-[15px] leading-6 text-[var(--sb-gold-soft)]">
-          {isNigiri
-            ? "Experience the pure art of nigiri. Hand-pressed perfection, featuring the finest fish and seasonal ingredients."
-            : "Sourced daily. Crafted by masters. Served with passion."}
+          {isDrinks
+            ? "Seasonal sake, tea, and zero-proof pairings selected around each course."
+            : isNigiri
+              ? "Experience the pure art of nigiri. Hand-pressed perfection, featuring the finest fish and seasonal ingredients."
+              : "Sourced daily. Crafted by masters. Served with passion."}
         </p>
-        {!isNigiri ? (
+        {!isNigiri && !isDrinks ? (
           <div className="mt-4 flex gap-3 min-[1500px]:hidden">
             <button
               className="red-glow-button h-11 w-[180px] rounded-[10px] text-[12px] uppercase tracking-[0.08em]"
@@ -441,6 +466,84 @@ function DesktopMenuHero({
         ) : null}
       </div>
     </section>
+  );
+}
+
+function DesktopDrinksEmptyState() {
+  const pairings = [
+    ["Sake flight", "Three pours aligned to lean, rich, and umami courses."],
+    ["Tea service", "Roasted green tea, matcha, and warm seasonal infusions."],
+    ["Zero-proof", "Sparkling yuzu, shiso citrus, and mineral pairings."],
+  ] as const;
+
+  return (
+    <div className="grid min-h-[246px] grid-cols-[1fr_300px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-[linear-gradient(135deg,rgba(0,0,0,0.76),rgba(101,12,10,0.28)_48%,rgba(0,0,0,0.86))]">
+      <div className="p-7">
+        <p className="text-[12px] uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
+          Sommelier Guided
+        </p>
+        <h3 className="editorial-title mt-3 text-[34px] uppercase leading-none tracking-[0.1em] text-white">
+          Pairings served with your meal
+        </h3>
+        <p className="mt-4 max-w-[560px] text-[14px] leading-6 text-white/64">
+          The beverage selection is matched at the table so the pour follows the
+          fish, rice temperature, seasoning, and pacing of the order.
+        </p>
+        <div className="mt-6 flex gap-3">
+          <Link
+            className="red-glow-button grid h-11 w-[178px] place-items-center rounded-[9px] text-[11px] uppercase tracking-[0.08em]"
+            href="/reservations"
+          >
+            Reserve Pairing
+          </Link>
+          <Link
+            className="grid h-11 w-[154px] place-items-center rounded-[9px] border border-[var(--sb-border)] text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/42 hover:bg-white/[0.045]"
+            href="/support"
+          >
+            Ask Concierge
+          </Link>
+        </div>
+      </div>
+      <div className="grid content-center gap-3 border-l border-white/10 bg-black/30 p-4">
+        {pairings.map(([title, copy]) => (
+          <article
+            className="rounded-[10px] border border-white/12 bg-white/[0.035] p-3"
+            key={title}
+          >
+            <p className="text-[12px] uppercase tracking-[0.12em] text-[var(--sb-gold)]">
+              {title}
+            </p>
+            <p className="mt-1 text-[12px] leading-5 text-white/58">{copy}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DesktopCategoryEmptyState({
+  categoryLabel,
+  onClearFilters,
+}: {
+  categoryLabel: string;
+  onClearFilters: () => void;
+}) {
+  return (
+    <div className="rounded-[12px] border border-[var(--sb-border)] bg-black/34 p-8 text-center">
+      <p className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">
+        No {categoryLabel.toLowerCase()} matches these refinements
+      </p>
+      <p className="mt-2 text-[13px] text-white/58">
+        Reset the filters to return to the full menu.
+      </p>
+      <button
+        className="mt-5 rounded-[9px] border border-[var(--sb-border)] px-5 py-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/42 hover:bg-white/[0.045]"
+        onClick={onClearFilters}
+        type="button"
+      >
+        Reset filters
+      </button>
+    </div>
   );
 }
 

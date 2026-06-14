@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
@@ -31,8 +32,8 @@ const referralActivity = [
 const shareOptions = [
   ["Copy link", "copy"],
   ["Email", "email"],
-  ["Messages", "disabled"],
-  ["QR code", "disabled"],
+  ["Messages", "sms"],
+  ["More", "share"],
 ] as const;
 
 export function DesktopReferralEarn({
@@ -41,6 +42,7 @@ export function DesktopReferralEarn({
   onViewRewards,
   transactions,
 }: DesktopReferralEarnProps) {
+  const [shareMessage, setShareMessage] = useState("");
   const referralLink = `https://sushibliss.example/r/${referralProgress.code}`;
   const recentPoints = transactions
     .filter((transaction) => transaction.type === "earn")
@@ -48,13 +50,33 @@ export function DesktopReferralEarn({
 
   const copyReferral = async () => {
     if (!navigator.clipboard) {
+      setShareMessage(referralLink);
       return;
     }
 
     try {
       await navigator.clipboard.writeText(referralLink);
+      setShareMessage("Referral link copied.");
     } catch {
-      return;
+      setShareMessage(referralLink);
+    }
+  };
+
+  const shareReferral = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          text: "Join me at Sushi Bliss.",
+          title: "Sushi Bliss invitation",
+          url: referralLink,
+        });
+        setShareMessage("Share sheet opened.");
+        return;
+      }
+
+      await copyReferral();
+    } catch {
+      await copyReferral();
     }
   };
 
@@ -137,6 +159,14 @@ export function DesktopReferralEarn({
                     Copy link
                   </button>
                 </div>
+                {shareMessage ? (
+                  <p
+                    aria-live="polite"
+                    className="mt-3 rounded-[10px] border border-[var(--sb-wasabi)]/24 bg-[var(--sb-wasabi)]/8 px-3 py-2 text-[12px] text-[var(--sb-wasabi)]"
+                  >
+                    {shareMessage}
+                  </p>
+                ) : null}
               </DesktopLoyaltyPanel>
 
               <DesktopLoyaltyPanel className="p-4">
@@ -151,32 +181,44 @@ export function DesktopReferralEarn({
                   Invite your friends via your favorite platforms.
                 </p>
                 <div className="mt-4 grid grid-cols-5 gap-3">
-                  {shareOptions.map(([option, action]) =>
-                    action === "email" ? (
-                      <a
-                        className="grid h-[66px] place-items-center rounded-[10px] border border-white/12 bg-white/[0.035] text-center text-[11px] uppercase tracking-[0.04em] text-white/66"
-                        href={`mailto:?subject=Sushi Bliss invitation&body=${encodeURIComponent(referralLink)}`}
-                        key={option}
-                      >
-                        {option}
-                      </a>
-                    ) : (
+                  {shareOptions.map(([option, action]) => {
+                    if (action === "email") {
+                      return (
+                        <a
+                          className="grid h-[66px] place-items-center rounded-[10px] border border-white/12 bg-white/[0.035] text-center text-[11px] uppercase tracking-[0.04em] text-white/66"
+                          href={`mailto:?subject=Sushi Bliss invitation&body=${encodeURIComponent(referralLink)}`}
+                          key={option}
+                        >
+                          {option}
+                        </a>
+                      );
+                    }
+
+                    if (action === "sms") {
+                      return (
+                        <a
+                          className="grid h-[66px] place-items-center rounded-[10px] border border-white/12 bg-white/[0.035] text-center text-[11px] uppercase tracking-[0.04em] text-white/66"
+                          href={`sms:?body=${encodeURIComponent(referralLink)}`}
+                          key={option}
+                        >
+                          {option}
+                        </a>
+                      );
+                    }
+
+                    return (
                       <button
-                        className="h-[66px] rounded-[10px] border border-white/12 bg-white/[0.035] text-[11px] uppercase tracking-[0.04em] text-white/66 disabled:cursor-not-allowed disabled:opacity-45"
-                        disabled={action === "disabled"}
+                        className="h-[66px] rounded-[10px] border border-white/12 bg-white/[0.035] text-[11px] uppercase tracking-[0.04em] text-white/66 transition hover:border-[var(--sb-gold)]/38 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                         key={option}
-                        onClick={action === "copy" ? copyReferral : undefined}
-                        title={
-                          action === "disabled"
-                            ? `${option} sharing coming soon`
-                            : undefined
+                        onClick={
+                          action === "copy" ? copyReferral : shareReferral
                         }
                         type="button"
                       >
                         {option}
                       </button>
-                    ),
-                  )}
+                    );
+                  })}
                 </div>
                 <div className="mt-4 grid min-h-[112px] grid-cols-[1fr_210px] overflow-hidden rounded-[12px] border border-white/10 bg-black/24">
                   <p className="p-4 text-[18px] uppercase leading-7 text-white">

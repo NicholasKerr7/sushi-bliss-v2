@@ -14,16 +14,19 @@ import {
   calculateOrderTotals,
   calculateTipCents,
   formatMoney,
+  parseMoneyInputToCents,
 } from "@/lib/money";
 import type { CartLineItem, OrderTotals } from "@/types/order";
 
 import { TabletCartLine } from "./TabletCartLine";
 
 interface TabletCartDialogProps {
+  customTipCents: number;
   itemCount: number;
   items: CartLineItem[];
   onClearCart: () => void;
   onClose: () => void;
+  onCustomTipChange: (tipCents: number) => void;
   onOpenCheckout: () => void;
   onRemove: (id: string) => void;
   onTipPercentChange: (tipPercent: number) => void;
@@ -56,10 +59,12 @@ const benefitItems = [
 
 /** Tablet-only full cart view built from the live local cart state. */
 export function TabletCartDialog({
+  customTipCents,
   itemCount,
   items,
   onClearCart,
   onClose,
+  onCustomTipChange,
   onOpenCheckout,
   onRemove,
   onTipPercentChange,
@@ -69,6 +74,9 @@ export function TabletCartDialog({
   totals,
 }: TabletCartDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const [customTipValue, setCustomTipValue] = useState(
+    customTipCents > 0 ? (customTipCents / 100).toFixed(2) : "",
+  );
   const [query, setQuery] = useState("");
   const [promoCode, setPromoCode] = useState("");
   const [promoMessage, setPromoMessage] = useState("");
@@ -80,7 +88,10 @@ export function TabletCartDialog({
     (totals.subtotalCents / FREE_DELIVERY_THRESHOLD_CENTS) * 100,
     100,
   );
-  const tipCents = calculateTipCents(totals.subtotalCents, tipPercent);
+  const tipCents =
+    customTipCents > 0
+      ? customTipCents
+      : calculateTipCents(totals.subtotalCents, tipPercent);
   const previewTotals = calculateOrderTotals(
     totals.subtotalCents,
     totals.discountCents,
@@ -126,6 +137,16 @@ export function TabletCartDialog({
     }
 
     setPromoMessage(`${normalizedCode} will be validated during checkout.`);
+  };
+
+  const handlePresetTipChange = (nextTipPercent: number) => {
+    setCustomTipValue("");
+    onTipPercentChange(nextTipPercent);
+  };
+
+  const handleCustomTipChange = (value: string) => {
+    setCustomTipValue(value);
+    onCustomTipChange(parseMoneyInputToCents(value));
   };
 
   const handleSubmitSearch = (nextQuery: string) => {
@@ -235,7 +256,11 @@ export function TabletCartDialog({
                 />
                 {previewTotals.tipCents > 0 ? (
                   <SummaryRow
-                    label={`Tip (${tipPercent}%)`}
+                    label={
+                      customTipCents > 0
+                        ? "Tip (custom)"
+                        : `Tip (${tipPercent}%)`
+                    }
                     value={formatMoney(previewTotals.tipCents)}
                   />
                 ) : null}
@@ -290,14 +315,16 @@ export function TabletCartDialog({
                 <div className="mt-3 grid grid-cols-3 gap-2">
                   {tipPercentOptions.map((option) => (
                     <button
-                      aria-pressed={tipPercent === option}
+                      aria-pressed={
+                        customTipCents === 0 && tipPercent === option
+                      }
                       className={`rounded-[12px] border px-3 py-3 text-center transition ${
-                        tipPercent === option
+                        customTipCents === 0 && tipPercent === option
                           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 text-white shadow-[0_0_22px_var(--sb-red-glow)]"
                           : "border-white/10 bg-black/20 text-white/74"
                       }`}
                       key={option}
-                      onClick={() => onTipPercentChange(option)}
+                      onClick={() => handlePresetTipChange(option)}
                       type="button"
                     >
                       <span className="block text-[16px]">{option}%</span>
@@ -309,14 +336,32 @@ export function TabletCartDialog({
                     </button>
                   ))}
                 </div>
-                <button
-                  className="mt-3 h-11 w-full rounded-[12px] border border-white/12 bg-black/20 text-[13px] uppercase text-white/42"
-                  disabled
-                  title="Custom tip coming soon"
-                  type="button"
+                <label
+                  className={`mt-3 grid min-h-12 grid-cols-[auto_1fr_auto] items-center gap-3 rounded-[12px] border bg-black/20 px-4 transition ${
+                    customTipCents > 0
+                      ? "border-[var(--sb-red-bright)] text-white shadow-[0_0_18px_var(--sb-red-glow)]"
+                      : "border-white/12 text-white/70 focus-within:border-[var(--sb-gold)]"
+                  }`}
+                  htmlFor="tablet-cart-custom-tip"
                 >
-                  Custom
-                </button>
+                  <span className="text-[13px] uppercase tracking-[0.08em]">
+                    Custom
+                  </span>
+                  <span className="font-mono text-[15px] text-[var(--sb-gold-soft)]">
+                    $
+                  </span>
+                  <input
+                    className="min-w-0 bg-transparent text-right font-mono text-[16px] text-white outline-none placeholder:text-white/34"
+                    id="tablet-cart-custom-tip"
+                    inputMode="decimal"
+                    maxLength={7}
+                    onChange={(event) =>
+                      handleCustomTipChange(event.target.value)
+                    }
+                    placeholder="0.00"
+                    value={customTipValue}
+                  />
+                </label>
               </div>
             </section>
 

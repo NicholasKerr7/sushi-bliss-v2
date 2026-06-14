@@ -18,15 +18,28 @@ const chefSpecialCategory: MenuCategory = {
   label: "Chef Specials",
 };
 
+const drinksCategory: MenuCategory = {
+  id: "drinks",
+  itemCount: menuItems.filter((item) => item.category === "drinks").length,
+  label: "Drinks",
+};
+
 /** Filters normalized menu data by category and full search text. */
 export function useMenu() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
 
-  const categories = useMemo(
-    () => [allCategory, chefSpecialCategory, ...menuCategories],
-    [],
-  );
+  const categories = useMemo(() => {
+    const sourceCategories = [
+      allCategory,
+      chefSpecialCategory,
+      ...menuCategories,
+    ];
+
+    return sourceCategories.some((categoryItem) => categoryItem.id === "drinks")
+      ? sourceCategories
+      : [...sourceCategories, drinksCategory];
+  }, []);
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();

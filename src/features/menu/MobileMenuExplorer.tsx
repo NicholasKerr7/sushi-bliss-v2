@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -47,6 +48,7 @@ const mobileCategoryOrder = [
   "sashimi",
   "chef-specials",
   "vegetarian",
+  "drinks",
 ] as const;
 
 /** Mobile-first menu browser modeled after the reference menu screens. */
@@ -250,20 +252,28 @@ function MobileCategoryView({
   onSelectCategory: (categoryId: string) => void;
   onViewDetails: (item: MenuItem) => void;
 }) {
-  const displayItems = category.id === "nigiri" ? tabletNigiriItems : items;
+  const isDrinks = category.id === "drinks" && items.length === 0;
+  const displayItems =
+    category.id === "nigiri" ? tabletNigiriItems : isDrinks ? [] : items;
   const heroItem = displayItems[0] || menuHeroItem;
+  const heroImage = isDrinks
+    ? "/assets/editorial/luxurious-japanese-sake-still-life.webp"
+    : getTabletPresentationImage(heroItem);
 
   return (
     <>
       <section className="relative mt-7 min-h-[232px] overflow-hidden">
         <Image
           alt=""
-          className="object-cover object-[75%_38%]"
+          className={classNames(
+            "object-cover",
+            isDrinks ? "object-[58%_45%]" : "object-[75%_38%]",
+          )}
           fill
           loading="eager"
           priority
           sizes="430px"
-          src={getTabletPresentationImage(heroItem)}
+          src={heroImage}
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.58)_54%,rgba(0,0,0,0.08)_100%),linear-gradient(180deg,rgba(0,0,0,0.18)_0%,#050505_96%)]" />
         <div className="relative z-10 flex min-h-[232px] flex-col justify-end pb-7">
@@ -277,8 +287,9 @@ function MobileCategoryView({
             {category.label}
           </h1>
           <p className="mt-5 max-w-[350px] text-[17px] leading-7 text-[var(--sb-gold)]">
-            Hand-pressed perfection. The purest form of sushi, crafted with
-            balance and precision.
+            {isDrinks
+              ? "Sake, tea, and zero-proof pairings selected around each course."
+              : "Hand-pressed perfection. The purest form of sushi, crafted with balance and precision."}
           </p>
         </div>
       </section>
@@ -291,46 +302,102 @@ function MobileCategoryView({
 
       <div className="mt-5 h-px bg-[var(--sb-border)]" />
 
-      <div className="mt-4 grid gap-3">
-        {displayItems.slice(0, 8).map((item, index) => (
-          <MobileMenuListCard
-            badge={
-              index === 0
-                ? "Hot"
-                : index === 1
-                  ? "Popular"
-                  : item.tags.includes("chef-special")
-                    ? "Chef's Special"
-                    : undefined
-            }
-            eagerImage={index < 2}
-            item={item}
-            key={item.id}
-            onAddToCart={onAddToCart}
-            onViewDetails={onViewDetails}
-          />
+      {isDrinks ? (
+        <MobileDrinksEmptyState />
+      ) : (
+        <>
+          <div className="mt-4 grid gap-3">
+            {displayItems.slice(0, 8).map((item, index) => (
+              <MobileMenuListCard
+                badge={
+                  index === 0
+                    ? "Hot"
+                    : index === 1
+                      ? "Popular"
+                      : item.tags.includes("chef-special")
+                        ? "Chef's Special"
+                        : undefined
+                }
+                eagerImage={index < 2}
+                item={item}
+                key={item.id}
+                onAddToCart={onAddToCart}
+                onViewDetails={onViewDetails}
+              />
+            ))}
+          </div>
+
+          <button
+            className="mt-5 grid w-full grid-cols-[46px_1fr_auto] items-center gap-4 rounded-[18px] border border-[var(--sb-border)] bg-black/54 p-4 text-left"
+            onClick={() => onQueryChange(category.label)}
+            type="button"
+          >
+            <AssetIcon size={38} src={icons.flower} />
+            <span>
+              <span className="editorial-title block text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">
+                {category.label} Experience
+              </span>
+              <span className="mt-1 block text-[14px] leading-5 text-white/68">
+                Savor each piece fresh, balanced, and unforgettable.
+              </span>
+            </span>
+            <span className="text-[var(--sb-gold)]" aria-hidden="true">
+              <ChevronIcon direction="right" size={18} />
+            </span>
+          </button>
+        </>
+      )}
+    </>
+  );
+}
+
+function MobileDrinksEmptyState() {
+  const pairings = [
+    "Sake flight",
+    "Tea service",
+    "Zero-proof pairing",
+  ] as const;
+
+  return (
+    <section className="mt-4 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(0,0,0,0.72),rgba(99,12,10,0.34)_52%,rgba(0,0,0,0.86))] p-5">
+      <p className="text-[13px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+        Beverage Pairings
+      </p>
+      <h2 className="editorial-title mt-3 text-[28px] uppercase leading-none tracking-[0.1em] text-white">
+        Guided by the table
+      </h2>
+      <p className="mt-3 text-[14px] leading-6 text-white/66">
+        The drinks selection is matched to the order in person so each pour
+        follows the fish, rice temperature, and pacing of your meal.
+      </p>
+      <div className="mt-5 grid gap-2">
+        {pairings.map((pairing) => (
+          <div
+            className="grid grid-cols-[34px_1fr] items-center rounded-[13px] border border-white/12 bg-black/30 px-3 py-3"
+            key={pairing}
+          >
+            <AssetIcon size={25} src={icons.miso} />
+            <span className="text-[13px] uppercase tracking-[0.08em] text-white/76">
+              {pairing}
+            </span>
+          </div>
         ))}
       </div>
-
-      <button
-        className="mt-5 grid w-full grid-cols-[46px_1fr_auto] items-center gap-4 rounded-[18px] border border-[var(--sb-border)] bg-black/54 p-4 text-left"
-        onClick={() => onQueryChange(category.label)}
-        type="button"
-      >
-        <AssetIcon size={38} src={icons.flower} />
-        <span>
-          <span className="editorial-title block text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">
-            {category.label} Experience
-          </span>
-          <span className="mt-1 block text-[14px] leading-5 text-white/68">
-            Savor each piece fresh, balanced, and unforgettable.
-          </span>
-        </span>
-        <span className="text-[var(--sb-gold)]" aria-hidden="true">
-          <ChevronIcon direction="right" size={18} />
-        </span>
-      </button>
-    </>
+      <div className="mt-5 grid grid-cols-2 gap-3">
+        <Link
+          className="red-glow-button grid h-12 place-items-center rounded-[12px] text-[11px] uppercase tracking-[0.08em]"
+          href="/reservations"
+        >
+          Reserve
+        </Link>
+        <Link
+          className="grid h-12 place-items-center rounded-[12px] border border-[var(--sb-border)] text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          href="/support"
+        >
+          Concierge
+        </Link>
+      </div>
+    </section>
   );
 }
 
