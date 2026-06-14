@@ -227,8 +227,9 @@ export function DesktopLoyaltyDashboard({
                   </button>
                 </div>
                 <div className="mt-4 grid grid-cols-4 gap-4">
-                  {rewards.map((reward) => (
+                  {rewards.map((reward, index) => (
                     <DesktopRewardTile
+                      eagerImage={index < 4}
                       key={reward.id}
                       memberPoints={memberPoints}
                       reward={reward}

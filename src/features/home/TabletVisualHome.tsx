@@ -195,6 +195,7 @@ function TabletHero() {
         alt={activeHero.imageAlt}
         className="object-cover object-[74%_54%]"
         fill
+        loading="eager"
         priority
         sizes="1034px"
         src={activeHero.imageUrl}
@@ -302,6 +303,7 @@ function TabletMenuCard({
             alt=""
             className="object-cover"
             fill
+            loading={priority ? "eager" : "lazy"}
             priority={priority}
             sizes="170px"
             src={item.image.publicUrl}

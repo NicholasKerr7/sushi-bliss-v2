@@ -18,6 +18,7 @@ export function DesktopReservationHero() {
         alt=""
         className="object-cover object-[76%_45%]"
         fill
+        loading="eager"
         priority
         sizes="1500px"
         src={desktopReservationHeroImage}

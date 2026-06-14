@@ -22,6 +22,7 @@ export function WelcomeScreen() {
         alt=""
         className="object-cover object-[29%_50%] opacity-70"
         fill
+        loading="eager"
         priority
         sizes="(max-width: 767px) 100vw, 1px"
         src="/assets/textures/red-moon-sakura-background.webp"
@@ -31,6 +32,7 @@ export function WelcomeScreen() {
           alt=""
           className="object-contain opacity-95 [mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)]"
           fill
+          loading="eager"
           priority
           sizes="(max-width: 767px) 130vw, 1px"
           src={featuredAssets.heroSushi.publicUrl}

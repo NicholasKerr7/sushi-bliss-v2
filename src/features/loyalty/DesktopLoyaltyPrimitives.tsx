@@ -168,10 +168,12 @@ export function DesktopMemberPassCard({
 }
 
 export function DesktopRewardTile({
+  eagerImage = false,
   memberPoints,
   onViewReward,
   reward,
 }: {
+  eagerImage?: boolean;
   memberPoints: number;
   onViewReward: (reward: Reward) => void;
   reward: Reward;
@@ -185,7 +187,8 @@ export function DesktopRewardTile({
           alt=""
           className="object-cover"
           fill
-          loading="lazy"
+          loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="180px"
           src={reward.imageUrl}
         />

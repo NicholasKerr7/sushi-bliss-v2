@@ -163,8 +163,9 @@ export function DesktopLoyaltyPassRewards({
                   })}
                 </nav>
                 <div className="mt-4 grid grid-cols-4 gap-4">
-                  {visibleRewards.map((reward) => (
+                  {visibleRewards.map((reward, index) => (
                     <DesktopRewardTile
+                      eagerImage={index < 4}
                       key={reward.id}
                       memberPoints={memberPoints}
                       reward={reward}

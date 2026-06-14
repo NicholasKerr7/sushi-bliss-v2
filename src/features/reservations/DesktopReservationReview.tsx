@@ -51,6 +51,7 @@ export function DesktopReservationReview({
           alt=""
           className="object-cover object-[78%_42%] opacity-42"
           fill
+          loading="eager"
           priority
           sizes="1500px"
           src={desktopReservationHeroImage}

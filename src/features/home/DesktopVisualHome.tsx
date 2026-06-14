@@ -156,19 +156,20 @@ export function DesktopDashboard({
   const activeHero = desktopHeroSlides[activeHeroIndex] || desktopHeroSlides[0];
 
   return (
-    <div className="hidden px-[3.2vw] pb-3 pt-0 xl:block xl:min-h-[calc(100svh-88px)]">
+    <div className="hidden px-[3.2vw] pb-2 pt-0 xl:block xl:min-h-[calc(100svh-88px)]">
       <div className="overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-black/68 shadow-[0_30px_110px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
-        <section className="relative min-h-[272px] overflow-hidden border-b border-[var(--sb-border)] px-8 py-5 xl:px-[6vw]">
+        <section className="relative min-h-[260px] overflow-hidden border-b border-[var(--sb-border)] px-8 py-4 xl:px-[6vw]">
           <Image
             alt={activeHero.imageAlt}
             className="object-cover"
             fill
+            loading="eager"
             priority
             sizes="1200px"
             src={activeHero.imageUrl}
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.62)_34%,rgba(0,0,0,0.18)_72%,rgba(0,0,0,0.8)_100%)]" />
-          <div className="relative z-10 grid min-h-[232px] grid-cols-1 gap-8 xl:grid-cols-[1fr_280px]">
+          <div className="relative z-10 grid min-h-[228px] grid-cols-1 gap-8 xl:grid-cols-[1fr_280px]">
             <div className="flex flex-col justify-center">
               <p className="text-sm uppercase tracking-[0.24em] text-[var(--sb-gold)]">
                 {activeHero.eyebrow}
@@ -213,8 +214,8 @@ export function DesktopDashboard({
           </div>
         </section>
 
-        <div className="grid gap-3 p-3 lg:grid-cols-12">
-          <section className="rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-4 lg:col-span-8">
+        <div className="grid gap-1.5 p-2 lg:grid-cols-12">
+          <section className="rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 lg:col-span-8">
             <div className="flex items-center justify-between">
               <h2 className="flex items-center gap-3 text-lg uppercase tracking-[0.12em] text-white">
                 <AssetIcon size={24} src={icons.flower} />
@@ -311,7 +312,7 @@ function DesktopReservationCard({ className = "" }: { className?: string }) {
 
   return (
     <section
-      className={`rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
+      className={`h-[154px] rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-2.5 ${className}`}
     >
       <h2 className="flex items-center gap-3 text-lg uppercase tracking-[0.12em] text-white">
         <AssetIcon size={24} src={icons.flower} />
@@ -367,13 +368,13 @@ function DesktopRecentOrder({
 }) {
   return (
     <section
-      className={`rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
+      className={`h-[154px] rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-2.5 ${className}`}
     >
       <h2 className="text-base uppercase tracking-[0.12em] text-white">
         Recent Order
       </h2>
       <Link
-        className="mt-3 grid w-full grid-cols-[96px_1fr_auto] items-center gap-3 rounded-[10px] border border-[var(--sb-border)] bg-black/42 p-2 text-left"
+        className="mt-2 grid w-full grid-cols-[96px_1fr_auto] items-center gap-3 rounded-[10px] border border-[var(--sb-border)] bg-black/42 p-2 text-left"
         href="/orders"
       >
         <div className="relative h-14 overflow-hidden rounded-[8px]">
@@ -407,7 +408,7 @@ function DesktopRecentOrder({
 function DesktopRewardCard({ className = "" }: { className?: string }) {
   return (
     <section
-      className={`rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
+      className={`rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-2.5 ${className}`}
     >
       <h2 className="flex items-center gap-3 text-base uppercase tracking-[0.12em] text-[var(--sb-gold)]">
         <AssetIcon size={24} src={icons.flower} />
@@ -438,7 +439,7 @@ function DesktopChefSpecial({
 }) {
   return (
     <section
-      className={`relative overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
+      className={`relative h-[154px] overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-2.5 ${className}`}
     >
       <h2 className="flex items-center gap-3 text-base uppercase tracking-[0.12em] text-white">
         <AssetIcon size={24} src={icons.flower} />
@@ -476,21 +477,21 @@ function DesktopChefSpecial({
 
 function DesktopBenefitsStrip() {
   return (
-    <div className="mx-3 mb-3 grid grid-cols-4 rounded-[14px] border border-[var(--sb-border)] bg-white/[0.04]">
+    <div className="mx-2 mb-2 grid grid-cols-4 rounded-[14px] border border-[var(--sb-border)] bg-white/[0.04]">
       {appContent.benefits.map((benefit) => (
         <div
-          className="flex items-center justify-center gap-4 border-r border-[var(--sb-border)] px-6 py-4 last:border-r-0"
+          className="flex items-center justify-center gap-3 border-r border-[var(--sb-border)] px-6 py-2 last:border-r-0"
           key={benefit.id}
         >
           <AssetIcon
-            size={32}
+            size={28}
             src={icons[benefit.icon as keyof typeof icons]}
           />
           <span>
-            <span className="block text-sm uppercase tracking-[0.16em] text-white/82">
+            <span className="block text-[13px] uppercase tracking-[0.16em] text-white/82">
               {benefit.title}
             </span>
-            <span className="block text-sm text-white/58">{benefit.copy}</span>
+            <span className="block text-xs text-white/58">{benefit.copy}</span>
           </span>
         </div>
       ))}

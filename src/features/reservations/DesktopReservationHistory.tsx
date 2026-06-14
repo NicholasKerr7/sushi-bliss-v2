@@ -41,6 +41,7 @@ export function DesktopReservationHistory({
           alt=""
           className="object-cover object-[74%_48%] opacity-50"
           fill
+          loading="eager"
           priority
           sizes="1500px"
           src={desktopReservationHeroImage}

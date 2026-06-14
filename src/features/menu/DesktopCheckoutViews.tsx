@@ -247,6 +247,7 @@ export function DesktopConfirmationView({
               alt=""
               className="object-cover"
               fill
+              loading="eager"
               priority
               sizes="760px"
               src={featuredAssets.heroSushi.publicUrl}

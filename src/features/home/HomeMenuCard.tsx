@@ -33,6 +33,7 @@ export function HomeMenuCard({
             alt=""
             className="pointer-events-none object-cover"
             fill
+            loading={priority ? "eager" : "lazy"}
             priority={priority}
             sizes="180px"
             src={item.image.publicUrl}

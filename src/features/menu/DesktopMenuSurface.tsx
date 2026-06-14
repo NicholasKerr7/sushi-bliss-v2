@@ -265,6 +265,7 @@ function DesktopMenuHero({
         alt=""
         className="object-cover object-[72%_42%]"
         fill
+        loading="eager"
         priority
         sizes="1200px"
         src={featuredAssets.heroSushi.publicUrl}

@@ -144,6 +144,7 @@ function MobileHeroCard() {
         alt=""
         className="object-cover object-[72%_54%]"
         fill
+        loading="eager"
         priority
         sizes="430px"
         src={featuredAssets.heroSushi.publicUrl}
