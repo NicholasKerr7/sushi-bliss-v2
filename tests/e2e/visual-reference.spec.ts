@@ -2176,7 +2176,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   },
   {
     name: "desktop menu category nigiri",
-    prepare: openDesktopNigiriCategory,
+    prepare: openDesktopNigiriCategoryWithCart,
     projectName: "chromium-desktop",
     referencePath:
       "public/assets/screenshots/desktop/desktop-03-menu-category-nigiri.png",
@@ -3035,6 +3035,27 @@ async function expectNoHorizontalOverflow(page: Page, routePath: string) {
     Math.max(overflow.body, overflow.document),
     `${routePath} should not create horizontal overflow`,
   ).toBeLessThanOrEqual(1);
+}
+
+async function expectVisibleImagesLoaded(page: Page) {
+  await page.waitForFunction(() => {
+    const visibleImages = Array.from(document.images).filter((image) => {
+      const rect = image.getBoundingClientRect();
+
+      return (
+        rect.bottom > 0 &&
+        rect.right > 0 &&
+        rect.top < window.innerHeight &&
+        rect.left < window.innerWidth &&
+        rect.width > 1 &&
+        rect.height > 1
+      );
+    });
+
+    return visibleImages.every(
+      (image) => image.complete && image.naturalWidth > 0,
+    );
+  });
 }
 
 async function openMobileSearchFilter(page: Page) {
@@ -3914,6 +3935,11 @@ async function openDesktopNigiriCategory(page: Page) {
   ).toBeVisible();
 }
 
+async function openDesktopNigiriCategoryWithCart(page: Page) {
+  await seedDesktopNigiriCategoryCart(page);
+  await openDesktopNigiriCategory(page);
+}
+
 async function openDesktopOtoroDetail(page: Page) {
   const menuSection = page.locator("#menu");
 
@@ -3992,6 +4018,54 @@ async function seedDesktopMenuOverviewCart(page: Page) {
       ["spicy-tuna-roll", 1],
       ["salmon-nigiri", 1],
       ["dragon-roll", 1],
+    ].map(([menuItemId, quantity]) => ({
+      addOns: [],
+      customizations: defaultCustomizations,
+      id: `${menuItemId}|${customizationId}`,
+      menuItemId,
+      quantity,
+    }));
+
+    window.localStorage.setItem("sushi-bliss:cart", JSON.stringify(items));
+    window.dispatchEvent(new Event("sushi-bliss:cart-changed"));
+  });
+
+  await expect(
+    page
+      .locator("#menu")
+      .getByRole("complementary")
+      .getByRole("heading", { exact: true, name: "Otoro Nigiri" }),
+  ).toBeVisible();
+}
+
+async function seedDesktopNigiriCategoryCart(page: Page) {
+  await page.evaluate(() => {
+    const defaultCustomizations = [
+      {
+        groupId: "wasabi",
+        groupLabel: "Wasabi",
+        optionId: "chef-balance",
+        optionLabel: "Chef balance",
+      },
+      {
+        groupId: "soy",
+        groupLabel: "Soy",
+        optionId: "house",
+        optionLabel: "House soy",
+      },
+      {
+        groupId: "cut",
+        groupLabel: "Cut",
+        optionId: "classic",
+        optionLabel: "Classic",
+      },
+    ];
+    const customizationId = "cut:classic,soy:house,wasabi:chef-balance";
+    const items = [
+      ["otoro-nigiri", 1],
+      ["spicy-tuna-roll", 1],
+      ["salmon-nigiri", 1],
+      ["tamago-nigiri", 1],
     ].map(([menuItemId, quantity]) => ({
       addOns: [],
       customizations: defaultCustomizations,
@@ -4545,6 +4619,7 @@ test.describe("visual reference audit", () => {
 
       await expectNoFrameworkErrorOverlay(page);
       await target.verify(page);
+      await expectVisibleImagesLoaded(page);
       await expectNoHorizontalOverflow(page, target.routePath);
 
       const currentScreenshot = await page.screenshot({

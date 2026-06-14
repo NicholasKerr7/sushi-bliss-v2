@@ -17,6 +17,7 @@ import type {
 import {
   allTabletMenuItems,
   chefSpecialItems,
+  desktopNigiriItems,
   menuHeroItem,
 } from "./tabletMenuData";
 
@@ -29,6 +30,12 @@ const desktopCategoryButtons = [
   ["vegetarian", "Vegetarian", "/assets/icons/vegetarian-sushi-icon.webp"],
   ["drinks", "Drinks", "/assets/icons/miso-soup-icon.png"],
 ] as const;
+
+const desktopNigiriDisplayNames: Record<string, string> = {
+  "salmon-nigiri": "Sake Nigiri",
+  "scallop-nigiri": "Hotate Nigiri",
+  "tuna-nigiri": "Maguro Nigiri",
+};
 
 export function DesktopMenuSurface({
   activeCategoryItems,
@@ -72,10 +79,19 @@ export function DesktopMenuSurface({
   const { items, totals } = useCart();
   const isCategoryPage = category !== "all" && category !== "recommended";
   const displayItems = isCategoryPage ? filteredItems : allTabletMenuItems;
+  const categoryDisplayItems =
+    category === "nigiri" ? desktopNigiriItems : activeCategoryItems;
 
   return (
-    <main className="mx-auto grid min-h-[calc(100dvh-76px)] max-w-[1672px] grid-cols-[minmax(0,1fr)_386px] gap-7 px-7 pb-6 pt-3 min-[1500px]:max-w-none min-[1500px]:grid-cols-[178px_minmax(0,980px)_382px] min-[1500px]:px-0 min-[1500px]:pb-0 min-[1500px]:pt-0">
-      <DesktopMenuEditorialRail />
+    <main
+      className={classNames(
+        "mx-auto grid min-h-[calc(100dvh-76px)] max-w-[1672px] grid-cols-[minmax(0,1fr)_386px] gap-7 px-7 pb-6 pt-3",
+        isCategoryPage
+          ? "min-[1500px]:px-7 min-[1500px]:pb-0 min-[1500px]:pt-0"
+          : "min-[1500px]:max-w-none min-[1500px]:grid-cols-[178px_minmax(0,980px)_382px] min-[1500px]:px-0 min-[1500px]:pb-0 min-[1500px]:pt-0",
+      )}
+    >
+      {isCategoryPage ? null : <DesktopMenuEditorialRail />}
       <section className="min-w-0 rounded-[18px] border border-[var(--sb-border)] bg-black/58 p-4 shadow-[0_28px_90px_rgba(0,0,0,0.52)] min-[1500px]:rounded-none min-[1500px]:border-0 min-[1500px]:bg-transparent min-[1500px]:p-0 min-[1500px]:shadow-none">
         <DesktopMenuHero
           category={category}
@@ -83,66 +99,35 @@ export function DesktopMenuSurface({
           onViewDetails={onViewDetails}
         />
 
-        <div className="mt-4 grid grid-cols-[minmax(0,1fr)_150px_150px_150px] gap-3 min-[1500px]:mt-0 min-[1500px]:w-fit min-[1500px]:grid-cols-[346px_108px_128px_118px] min-[1500px]:gap-2.5">
-          <label className="relative block">
-            <span className="sr-only">Search menu</span>
-            <AssetIcon
-              className="absolute left-4 top-1/2 -translate-y-1/2"
-              size={19}
-              src="/assets/icons/search-icon.png"
+        {isCategoryPage ? (
+          <>
+            <DesktopCategoryNav
+              category={category}
+              categoryExists={categoryExists}
+              isCategoryPage
+              onSelectCategory={onSelectCategory}
             />
-            <input
-              className="h-12 w-full rounded-[10px] border border-[var(--sb-border)] bg-black/30 pl-12 pr-4 text-[14px] text-white outline-none placeholder:text-white/42 focus:border-[var(--sb-gold)] min-[1500px]:h-10 min-[1500px]:rounded-[8px] min-[1500px]:text-[13px]"
-              onChange={(event) => onQueryChange(event.target.value)}
-              placeholder={
-                category === "nigiri"
-                  ? "Search nigiri..."
-                  : "Search menu items..."
-              }
-              value={query}
+            <DesktopFilterControls
+              category={category}
+              isCategoryPage
+              query={query}
+              onQueryChange={onQueryChange}
             />
-          </label>
-          <DesktopFilterButton label="Dietary" />
-          <DesktopFilterButton label="Spicy Level" />
-          <DesktopFilterButton label="Sort By" />
-        </div>
-
-        <nav
-          aria-label="Desktop menu categories"
-          className="mt-4 grid grid-cols-7 gap-3 min-[1500px]:mt-4 min-[1500px]:flex min-[1500px]:w-fit min-[1500px]:gap-2"
-        >
-          {desktopCategoryButtons.map(([id, label, icon]) => {
-            const disabled = id === "drinks" || !categoryExists(id);
-            const active =
-              (id === "recommended" &&
-                (category === "all" || category === "recommended")) ||
-              category === id;
-
-            return (
-              <button
-                aria-pressed={active}
-                className={classNames(
-                  "grid min-h-[46px] grid-cols-[24px_auto] place-content-center items-center gap-2 rounded-[10px] border px-3 text-[12px] uppercase tracking-[0.04em] transition disabled:cursor-not-allowed disabled:opacity-45 min-[1500px]:flex min-[1500px]:min-h-9 min-[1500px]:grid-cols-none min-[1500px]:gap-1.5 min-[1500px]:rounded-[9px] min-[1500px]:px-3",
-                  active
-                    ? "border-[var(--sb-gold)]/60 bg-[var(--sb-gold)]/22 text-[var(--sb-gold-soft)]"
-                    : "border-[var(--sb-border)] bg-white/[0.025] text-white/76 hover:bg-white/[0.05]",
-                )}
-                disabled={disabled}
-                key={id}
-                onClick={() => onSelectCategory(id)}
-                title={disabled ? `${label} coming soon` : undefined}
-                type="button"
-              >
-                <AssetIcon
-                  className={id === "recommended" ? "" : "min-[1500px]:hidden"}
-                  size={22}
-                  src={icon}
-                />
-                {label}
-              </button>
-            );
-          })}
-        </nav>
+          </>
+        ) : (
+          <>
+            <DesktopFilterControls
+              category={category}
+              query={query}
+              onQueryChange={onQueryChange}
+            />
+            <DesktopCategoryNav
+              category={category}
+              categoryExists={categoryExists}
+              onSelectCategory={onSelectCategory}
+            />
+          </>
+        )}
 
         <p className="mt-3 text-[13px] text-white/50 min-[1500px]:sr-only">
           Showing{" "}
@@ -166,20 +151,24 @@ export function DesktopMenuSurface({
         </p>
 
         {isCategoryPage ? (
-          <DesktopMenuSection title={`${selectedCategoryLabel} Menu`}>
-            <div className="grid grid-cols-4 gap-4">
-              {activeCategoryItems.slice(0, 8).map((item, index) => (
-                <DesktopFeatureMenuCard
-                  badge={index === 0 ? "Chef's Pick" : undefined}
-                  eagerImage={index < 4}
-                  item={item}
-                  key={item.id}
-                  onAddToCart={onAddToCart}
-                  onViewDetails={onViewDetails}
-                />
-              ))}
-            </div>
-          </DesktopMenuSection>
+          <>
+            <DesktopMenuSection title={`${selectedCategoryLabel} Menu`}>
+              <div className="grid grid-cols-4 gap-4">
+                {categoryDisplayItems.slice(0, 8).map((item, index) => (
+                  <DesktopFeatureMenuCard
+                    badge={index === 0 ? "Chef's Pick" : undefined}
+                    displayName={desktopNigiriDisplayNames[item.id]}
+                    eagerImage={index < 8}
+                    item={item}
+                    key={item.id}
+                    onAddToCart={onAddToCart}
+                    onViewDetails={onViewDetails}
+                  />
+                ))}
+              </div>
+            </DesktopMenuSection>
+            <DesktopCategoryBenefitStrip />
+          </>
         ) : (
           <>
             <DesktopMenuSection action="View full menu" title="Chef's Specials">
@@ -195,6 +184,7 @@ export function DesktopMenuSurface({
                             ? "Signature"
                             : "Premium"
                     }
+                    compactDesktop
                     eagerImage={index < 4}
                     item={item}
                     key={item.id}
@@ -230,6 +220,141 @@ export function DesktopMenuSurface({
         onUpdateQuantity={onUpdateQuantity}
       />
     </main>
+  );
+}
+
+function DesktopFilterControls({
+  category,
+  isCategoryPage = false,
+  query,
+  onQueryChange,
+}: {
+  category: string;
+  isCategoryPage?: boolean;
+  query: string;
+  onQueryChange: (query: string) => void;
+}) {
+  return (
+    <div
+      className={classNames(
+        "mt-4 grid grid-cols-[minmax(0,1fr)_150px_150px_150px] gap-3 min-[1500px]:gap-2.5",
+        isCategoryPage
+          ? "min-[1500px]:mt-3 min-[1500px]:grid-cols-[326px_145px_132px_162px_128px]"
+          : "min-[1500px]:mt-0 min-[1500px]:w-fit min-[1500px]:grid-cols-[346px_108px_128px_118px]",
+      )}
+    >
+      <label className="relative block">
+        <span className="sr-only">Search menu</span>
+        <AssetIcon
+          className="absolute left-4 top-1/2 -translate-y-1/2"
+          size={19}
+          src="/assets/icons/search-icon.png"
+        />
+        <input
+          className="h-12 w-full rounded-[10px] border border-[var(--sb-border)] bg-black/30 pl-12 pr-4 text-[14px] text-white outline-none placeholder:text-white/42 focus:border-[var(--sb-gold)] min-[1500px]:h-10 min-[1500px]:rounded-[8px] min-[1500px]:text-[13px]"
+          onChange={(event) => onQueryChange(event.target.value)}
+          placeholder={
+            category === "nigiri" ? "Search nigiri..." : "Search menu items..."
+          }
+          value={query}
+        />
+      </label>
+      {isCategoryPage ? <DesktopFilterButton label="Fish Type" /> : null}
+      <DesktopFilterButton label="Dietary" />
+      <DesktopFilterButton label="Spicy Level" />
+      <DesktopFilterButton label="Sort By" />
+    </div>
+  );
+}
+
+function DesktopCategoryNav({
+  category,
+  categoryExists,
+  isCategoryPage = false,
+  onSelectCategory,
+}: {
+  category: string;
+  categoryExists: (categoryId: string) => boolean;
+  isCategoryPage?: boolean;
+  onSelectCategory: (categoryId: string) => void;
+}) {
+  return (
+    <nav
+      aria-label="Desktop menu categories"
+      className={classNames(
+        "mt-4 grid grid-cols-7 gap-3",
+        isCategoryPage
+          ? "min-[1500px]:mt-4 min-[1500px]:grid-cols-[182px_112px_112px_112px_148px_132px_96px]"
+          : "min-[1500px]:mt-4 min-[1500px]:flex min-[1500px]:w-fit min-[1500px]:gap-2",
+      )}
+    >
+      {desktopCategoryButtons.map(([id, label, icon]) => {
+        const disabled = id === "drinks" || !categoryExists(id);
+        const active =
+          (id === "recommended" &&
+            (category === "all" || category === "recommended")) ||
+          category === id;
+
+        return (
+          <button
+            aria-pressed={active}
+            className={classNames(
+              "grid min-h-[46px] grid-cols-[24px_auto] place-content-center items-center gap-2 rounded-[10px] border px-3 text-[12px] uppercase tracking-[0.04em] transition disabled:cursor-not-allowed disabled:opacity-45 min-[1500px]:min-h-9 min-[1500px]:rounded-[9px]",
+              isCategoryPage
+                ? "min-[1500px]:grid min-[1500px]:grid-cols-[22px_auto] min-[1500px]:px-3"
+                : "min-[1500px]:flex min-[1500px]:grid-cols-none min-[1500px]:gap-1.5 min-[1500px]:px-3",
+              active
+                ? "border-[var(--sb-gold)]/60 bg-[var(--sb-gold)]/22 text-[var(--sb-gold-soft)]"
+                : "border-[var(--sb-border)] bg-white/[0.025] text-white/76 hover:bg-white/[0.05]",
+            )}
+            disabled={disabled}
+            key={id}
+            onClick={() => onSelectCategory(id)}
+            title={disabled ? `${label} coming soon` : undefined}
+            type="button"
+          >
+            <AssetIcon
+              className={
+                isCategoryPage || id === "recommended"
+                  ? ""
+                  : "min-[1500px]:hidden"
+              }
+              size={22}
+              src={icon}
+            />
+            {label}
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
+
+function DesktopCategoryBenefitStrip() {
+  const benefits = [
+    ["floral-emblem-icon.png", "Premium Ingredients", "Sourced Daily"],
+    ["lotus-crown-icon.png", "Expert Craftsmanship", "By Master Chefs"],
+    ["chef-crest-icon.png", "Authentic Experience", "Traditional. Refined."],
+    ["gold-alert-icon.png", "Allergen Info", "Available Upon Request"],
+  ] as const;
+
+  return (
+    <section className="mt-4 grid grid-cols-4 rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] px-8 py-3">
+      {benefits.map(([icon, title, copy]) => (
+        <article
+          className="grid grid-cols-[42px_1fr] items-center gap-3 border-l border-white/10 pl-7 first:border-l-0 first:pl-0"
+          key={title}
+        >
+          <AssetIcon size={34} src={`/assets/icons/${icon}`} />
+          <div>
+            <p className="editorial-title text-[14px] uppercase tracking-[0.08em] text-white/82">
+              {title}
+            </p>
+            <p className="mt-0.5 text-[13px] text-white/56">{copy}</p>
+          </div>
+        </article>
+      ))}
+    </section>
   );
 }
 
@@ -321,12 +446,16 @@ function DesktopMenuHero({
 
 function DesktopFeatureMenuCard({
   badge,
+  compactDesktop = false,
+  displayName,
   eagerImage = false,
   item,
   onAddToCart,
   onViewDetails,
 }: {
   badge?: string;
+  compactDesktop?: boolean;
+  displayName?: string;
   eagerImage?: boolean;
   item: MenuItem;
   onAddToCart: DesktopMenuAddHandler;
@@ -345,7 +474,12 @@ function DesktopFeatureMenuCard({
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <div className="relative h-[108px] min-[1500px]:h-[86px]">
+        <div
+          className={classNames(
+            "relative h-[108px]",
+            compactDesktop ? "min-[1500px]:h-[86px]" : "min-[1500px]:h-24",
+          )}
+        >
           <Image
             alt=""
             className="object-cover"
@@ -356,14 +490,38 @@ function DesktopFeatureMenuCard({
             src={item.image.publicUrl}
           />
         </div>
-        <div className="p-3.5 min-[1500px]:p-3">
-          <h3 className="line-clamp-1 text-[17px] text-white min-[1500px]:text-[15px]">
-            {item.name}
+        <div
+          className={classNames(
+            "p-3.5",
+            compactDesktop
+              ? "min-[1500px]:p-3"
+              : "min-[1500px]:px-3.5 min-[1500px]:py-3",
+          )}
+        >
+          <h3
+            className={classNames(
+              "line-clamp-1 text-[17px] text-white",
+              compactDesktop
+                ? "min-[1500px]:text-[15px]"
+                : "min-[1500px]:text-[16px] min-[1500px]:leading-5",
+            )}
+          >
+            {displayName || item.name}
           </h3>
-          <p className="mt-1 line-clamp-1 text-[13px] text-white/58">
+          <p
+            className={classNames(
+              "mt-1 line-clamp-1 text-[13px] text-white/58",
+              compactDesktop ? "" : "min-[1500px]:leading-5",
+            )}
+          >
             {item.ingredients.slice(0, 3).join(", ")}
           </p>
-          <p className="mt-2 text-[17px] text-[var(--sb-gold-soft)]">
+          <p
+            className={classNames(
+              "mt-2 text-[17px] text-[var(--sb-gold-soft)]",
+              compactDesktop ? "" : "min-[1500px]:leading-5",
+            )}
+          >
             {formatMoney(item.priceCents)}
           </p>
         </div>
