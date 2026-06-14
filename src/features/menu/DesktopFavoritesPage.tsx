@@ -30,18 +30,22 @@ const savedExperiences = [
   {
     action: "Reserve again",
     category: "Omakase",
+    id: "chef-omakase",
     image: "/assets/omakase/specialties/lead-chef-omakase-nigiri-flight.webp",
     meta: "Premium seasonal selection by our master chefs",
     price: "$150.00 / per person",
     title: "Chef's Omakase",
+    valueCents: 15000,
   },
   {
     action: "Reserve again",
     category: "Experience",
+    id: "private-dining",
     image: "/assets/gallery/intimate-upscale-dining-room-setting.webp",
     meta: "Exclusive private dining for special occasions",
     price: "Last booked: May 10, 2024",
     title: "Private Dining Experience",
+    valueCents: 12650,
   },
 ] as const;
 
@@ -81,15 +85,21 @@ export function DesktopFavoritesPage() {
   const { clearFavorites, favoriteItems, hasFavorites, toggleFavorite } =
     useFavorites();
   const [activeFilter, setActiveFilter] = useState<FavoriteFilterId>("all");
+  const [savedExperienceIds, setSavedExperienceIds] = useState<string[]>(
+    savedExperiences.map((experience) => experience.id),
+  );
   const [statusMessage, setStatusMessage] = useState("");
   const displayFavorites = hasFavorites
     ? favoriteItems
     : getFallbackFavorites();
+  const visibleSavedExperiences = savedExperiences.filter((experience) =>
+    savedExperienceIds.includes(experience.id),
+  );
   const getCategoryCount = (category: string) =>
     displayFavorites.filter((item) => item.category === category).length;
   const favoriteFilterCounts: Record<FavoriteFilterId, number> = {
-    all: displayFavorites.length + savedExperiences.length,
-    experiences: savedExperiences.length,
+    all: displayFavorites.length + visibleSavedExperiences.length,
+    experiences: visibleSavedExperiences.length,
     nigiri: getCategoryCount("nigiri"),
     rolls: getCategoryCount("rolls"),
     sashimi: getCategoryCount("sashimi"),
@@ -106,7 +116,24 @@ export function DesktopFavoritesPage() {
     activeFilter === "all" || activeFilter === "experiences";
   const totalValueCents =
     displayFavorites.reduce((total, item) => total + item.priceCents, 0) +
-    27650;
+    visibleSavedExperiences.reduce(
+      (total, experience) => total + experience.valueCents,
+      0,
+    );
+
+  const removeSavedExperience = (experienceId: string) => {
+    const removedExperience = savedExperiences.find(
+      (experience) => experience.id === experienceId,
+    );
+
+    setSavedExperienceIds((currentIds) =>
+      currentIds.filter((id) => id !== experienceId),
+    );
+
+    if (removedExperience) {
+      setStatusMessage(`${removedExperience.title} removed from favorites.`);
+    }
+  };
 
   const addFavoriteToCart = (item: MenuItem) => {
     addItem({
@@ -209,13 +236,20 @@ export function DesktopFavoritesPage() {
 
             {showSavedExperiences ? (
               <div className="mt-3 grid gap-3">
-                {savedExperiences.map((experience, index) => (
-                  <SavedExperienceCard
-                    experience={experience}
-                    key={experience.title}
-                    priority={index === 0}
-                  />
-                ))}
+                {visibleSavedExperiences.length > 0 ? (
+                  visibleSavedExperiences.map((experience, index) => (
+                    <SavedExperienceCard
+                      experience={experience}
+                      key={experience.id}
+                      priority={index === 0}
+                      onRemove={removeSavedExperience}
+                    />
+                  ))
+                ) : (
+                  <p className="rounded-[12px] border border-white/10 bg-white/[0.035] px-4 py-4 text-[14px] text-white/62">
+                    No saved experiences yet.
+                  </p>
+                )}
               </div>
             ) : null}
           </section>
@@ -229,7 +263,9 @@ export function DesktopFavoritesPage() {
               <div className="mt-5 grid grid-cols-3 rounded-[12px] border border-white/10 bg-black/24 py-4 text-center">
                 <SummaryMetric
                   label="Total Favorites"
-                  value={displayFavorites.length + savedExperiences.length + 2}
+                  value={
+                    displayFavorites.length + visibleSavedExperiences.length
+                  }
                 />
                 <SummaryMetric
                   label="Total Value"
@@ -379,8 +415,10 @@ function FavoriteMenuCard({
 function SavedExperienceCard({
   experience,
   priority,
+  onRemove,
 }: {
   experience: (typeof savedExperiences)[number];
+  onRemove: (experienceId: string) => void;
   priority: boolean;
 }) {
   return (
@@ -418,9 +456,8 @@ function SavedExperienceCard({
           {experience.action}
         </Button>
         <button
-          className="h-10 cursor-not-allowed text-[12px] uppercase tracking-[0.08em] text-white/34"
-          disabled
-          title="Saved experience removal is coming soon"
+          className="h-10 text-[12px] uppercase tracking-[0.08em] text-white/60 transition hover:text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+          onClick={() => onRemove(experience.id)}
           type="button"
         >
           Remove

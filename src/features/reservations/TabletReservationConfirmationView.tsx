@@ -23,6 +23,43 @@ export function TabletReservationConfirmationView({
   const experience = reservationExperiences.find(
     (item) => item.id === reservation.experienceId,
   );
+  const handleAddToCalendar = () => {
+    const startsAt = new Date(reservation.startsAt);
+    const endsAt = new Date(
+      startsAt.getTime() + (experience?.durationMinutes || 120) * 60_000,
+    );
+    const calendarContent = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Sushi Bliss//Reservations//EN",
+      "BEGIN:VEVENT",
+      `UID:${reservation.confirmationCode}@sushi-bliss`,
+      `DTSTAMP:${formatCalendarDate(new Date())}`,
+      `DTSTART:${formatCalendarDate(startsAt)}`,
+      `DTEND:${formatCalendarDate(endsAt)}`,
+      `SUMMARY:${escapeCalendarValue(experience?.title || "Sushi Bliss Reservation")}`,
+      `LOCATION:${escapeCalendarValue(
+        [location?.name, location?.address].filter(Boolean).join(" - "),
+      )}`,
+      `DESCRIPTION:${escapeCalendarValue(
+        `Reservation ${reservation.confirmationCode} for ${reservation.partySize} guests.`,
+      )}`,
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ].join("\r\n");
+    const calendarBlob = new Blob([calendarContent], {
+      type: "text/calendar;charset=utf-8",
+    });
+    const calendarUrl = URL.createObjectURL(calendarBlob);
+    const calendarLink = document.createElement("a");
+
+    calendarLink.href = calendarUrl;
+    calendarLink.download = `sushi-bliss-${reservation.confirmationCode}.ics`;
+    document.body.appendChild(calendarLink);
+    calendarLink.click();
+    calendarLink.remove();
+    window.setTimeout(() => URL.revokeObjectURL(calendarUrl), 0);
+  };
 
   return (
     <main className="mx-auto max-w-[1034px]">
@@ -84,8 +121,8 @@ export function TabletReservationConfirmationView({
                 </p>
               </div>
             </div>
-            <Button disabled variant="secondary">
-              Calendar coming soon
+            <Button onClick={handleAddToCalendar} variant="secondary">
+              Download calendar
             </Button>
           </div>
         </div>
@@ -109,6 +146,23 @@ export function TabletReservationConfirmationView({
       </section>
     </main>
   );
+}
+
+/** Formats a Date for portable UTC iCalendar timestamps. */
+function formatCalendarDate(date: Date): string {
+  return date
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}Z$/, "Z");
+}
+
+/** Escapes text fields before writing a browser-generated iCalendar file. */
+function escapeCalendarValue(value: string): string {
+  return value
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
 }
 
 function ConfirmationRow({

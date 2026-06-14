@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -17,15 +18,38 @@ import {
   getOrderSummary,
   getOrderTimeline,
 } from "@/lib/orders";
+import { readStorageValue, writeStorageValue } from "@/lib/storage";
 import type { Order } from "@/types/order";
 
 type OrderView = "active" | "past";
+const FAVORITE_ORDER_STORAGE_KEY = "sushi-bliss:favorite-orders";
 const dashboardProgressLabels = [
   "Placed",
   "Preparing",
   "On the way",
   "Delivered",
 ] as const;
+
+/** Guards locally persisted favorite order ids before rendering tablet filters. */
+function parseFavoriteOrderIds(value: string | null): string[] {
+  if (!value) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(value);
+
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+
+    return parsed.filter(
+      (item): item is string => typeof item === "string" && item.length > 0,
+    );
+  } catch {
+    return [];
+  }
+}
 
 interface TabletOrderListViewProps {
   activeCount: number;
@@ -52,8 +76,35 @@ export function TabletOrderListView({
   reorderMessage,
   view,
 }: TabletOrderListViewProps) {
+  const [favoriteOrderIds, setFavoriteOrderIds] = useState<string[]>(() =>
+    parseFavoriteOrderIds(readStorageValue(FAVORITE_ORDER_STORAGE_KEY)),
+  );
+  const [showFavorites, setShowFavorites] = useState(false);
   const currentOrder = activeOrders[0];
   const visiblePastOrders = pastOrders.slice(0, 3);
+  const allOrders = [...activeOrders, ...pastOrders];
+  const favoriteOrders = allOrders.filter(
+    (order, index) =>
+      favoriteOrderIds.includes(order.id) &&
+      allOrders.findIndex((candidate) => candidate.id === order.id) === index,
+  );
+
+  const toggleFavoriteOrder = (orderId: string) => {
+    setFavoriteOrderIds((currentIds) => {
+      const nextIds = currentIds.includes(orderId)
+        ? currentIds.filter((id) => id !== orderId)
+        : [orderId, ...currentIds];
+
+      writeStorageValue(FAVORITE_ORDER_STORAGE_KEY, JSON.stringify(nextIds));
+
+      return nextIds;
+    });
+  };
+
+  const handleViewChange = (nextView: OrderView) => {
+    setShowFavorites(false);
+    onViewChange(nextView);
+  };
 
   return (
     <main className="mx-auto max-w-[1034px]">
@@ -70,28 +121,28 @@ export function TabletOrderListView({
           role="group"
         >
           <button
-            aria-pressed={view === "active"}
-            className={getTabClassName(view === "active")}
-            onClick={() => onViewChange("active")}
+            aria-pressed={!showFavorites && view === "active"}
+            className={getTabClassName(!showFavorites && view === "active")}
+            onClick={() => handleViewChange("active")}
             type="button"
           >
             Current ({activeCount})
           </button>
           <button
-            aria-pressed={view === "past"}
-            className={getTabClassName(view === "past")}
-            onClick={() => onViewChange("past")}
+            aria-pressed={!showFavorites && view === "past"}
+            className={getTabClassName(!showFavorites && view === "past")}
+            onClick={() => handleViewChange("past")}
             type="button"
           >
             Past ({pastCount})
           </button>
           <button
-            className={getTabClassName(false)}
-            disabled
-            title="Favorite orders coming soon"
+            aria-pressed={showFavorites}
+            className={getTabClassName(showFavorites)}
+            onClick={() => setShowFavorites(true)}
             type="button"
           >
-            Favorites
+            Favorites ({favoriteOrders.length})
           </button>
         </div>
       </section>
@@ -102,12 +153,26 @@ export function TabletOrderListView({
         </div>
       ) : null}
 
-      {view === "active" ? (
+      {showFavorites ? (
+        <PastOrdersPanel
+          emptyDescription="Tap Save on any order to keep it here for fast reorders."
+          emptyLabel="No favorite orders"
+          favoriteOrderIds={favoriteOrderIds}
+          onReorder={onReorder}
+          onSelectOrder={onSelectOrder}
+          onToggleFavorite={toggleFavoriteOrder}
+          orders={favoriteOrders}
+          standalone
+          title="Favorite orders"
+        />
+      ) : view === "active" ? (
         <>
           {currentOrder ? (
             <FeaturedCurrentOrder
+              isFavorite={favoriteOrderIds.includes(currentOrder.id)}
               onSelectOrder={onSelectOrder}
               onTrackOrder={onTrackOrder}
+              onToggleFavorite={toggleFavoriteOrder}
               order={currentOrder}
             />
           ) : (
@@ -115,17 +180,21 @@ export function TabletOrderListView({
           )}
 
           <PastOrdersPanel
-            onViewAllPast={() => onViewChange("past")}
+            onViewAllPast={() => handleViewChange("past")}
+            favoriteOrderIds={favoriteOrderIds}
             onReorder={onReorder}
             onSelectOrder={onSelectOrder}
+            onToggleFavorite={toggleFavoriteOrder}
             orders={visiblePastOrders}
             showViewAll={pastOrders.length > 0}
           />
         </>
       ) : (
         <PastOrdersPanel
+          favoriteOrderIds={favoriteOrderIds}
           onReorder={onReorder}
           onSelectOrder={onSelectOrder}
+          onToggleFavorite={toggleFavoriteOrder}
           orders={pastOrders}
           standalone
         />
@@ -135,12 +204,16 @@ export function TabletOrderListView({
 }
 
 function FeaturedCurrentOrder({
+  isFavorite,
   onSelectOrder,
   onTrackOrder,
+  onToggleFavorite,
   order,
 }: {
+  isFavorite: boolean;
   onSelectOrder: (order: Order) => void;
   onTrackOrder: (order: Order) => void;
+  onToggleFavorite: (orderId: string) => void;
   order: Order;
 }) {
   const timeline = getOrderTimeline(order).slice(0, 4);
@@ -162,9 +235,28 @@ function FeaturedCurrentOrder({
             Order #{order.confirmationCode}
           </p>
         </div>
-        <p className="font-mono text-[14px] text-white/58">
-          {formatDateTime(order.fulfillmentAt)}
-        </p>
+        <div className="flex items-center gap-3">
+          <p className="font-mono text-[14px] text-white/58">
+            {formatDateTime(order.fulfillmentAt)}
+          </p>
+          <button
+            aria-label={
+              isFavorite
+                ? `Remove order ${order.confirmationCode} from favorites`
+                : `Save order ${order.confirmationCode} to favorites`
+            }
+            aria-pressed={isFavorite}
+            className={classNames(
+              "grid h-10 w-10 place-items-center rounded-full border border-white/12 bg-black/28 transition hover:border-[var(--sb-red-bright)]/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+              isFavorite &&
+                "border-[var(--sb-red-bright)]/70 bg-[var(--sb-red)]/18",
+            )}
+            onClick={() => onToggleFavorite(order.id)}
+            type="button"
+          >
+            <AssetIcon size={21} src="/assets/icons/heart-icon.png" />
+          </button>
+        </div>
       </div>
 
       <div className="mt-4 grid gap-5 lg:grid-cols-[376px_minmax(0,1fr)]">
@@ -258,38 +350,50 @@ function FeaturedCurrentOrder({
 }
 
 function PastOrdersPanel({
+  emptyDescription = "Completed checkout orders will appear here with tracking and receipts.",
+  emptyLabel = "No past orders",
+  favoriteOrderIds,
   onViewAllPast,
   onReorder,
   onSelectOrder,
+  onToggleFavorite,
   orders,
   showViewAll = false,
   standalone = false,
+  title = "Past orders",
 }: {
+  emptyDescription?: string;
+  emptyLabel?: string;
+  favoriteOrderIds: string[];
   onViewAllPast?: () => void;
   onReorder: (order: Order) => void;
   onSelectOrder: (order: Order) => void;
+  onToggleFavorite: (orderId: string) => void;
   orders: Order[];
   showViewAll?: boolean;
   standalone?: boolean;
+  title?: string;
 }) {
   return (
     <section className={standalone ? "mt-5" : "mt-6"}>
       <h2 className="text-[22px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-        Past orders
+        {title}
       </h2>
       {orders.length > 0 ? (
         <div className="mt-3 grid gap-3">
           {orders.map((order) => (
             <PastOrderRow
+              isFavorite={favoriteOrderIds.includes(order.id)}
               key={order.id}
               onReorder={onReorder}
               onSelectOrder={onSelectOrder}
+              onToggleFavorite={onToggleFavorite}
               order={order}
             />
           ))}
         </div>
       ) : (
-        <OrdersEmptyState label="No past orders" />
+        <OrdersEmptyState description={emptyDescription} label={emptyLabel} />
       )}
       {showViewAll && onViewAllPast ? (
         <button
@@ -307,12 +411,16 @@ function PastOrdersPanel({
 }
 
 function PastOrderRow({
+  isFavorite,
   onReorder,
   onSelectOrder,
+  onToggleFavorite,
   order,
 }: {
+  isFavorite: boolean;
   onReorder: (order: Order) => void;
   onSelectOrder: (order: Order) => void;
+  onToggleFavorite: (orderId: string) => void;
   order: Order;
 }) {
   const firstItem = order.items[0];
@@ -367,6 +475,19 @@ function PastOrderRow({
         >
           View details
         </button>
+        <button
+          aria-pressed={isFavorite}
+          className={classNames(
+            "h-8 text-[13px] uppercase tracking-[0.08em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+            isFavorite
+              ? "text-[var(--sb-red-bright)]"
+              : "text-white/58 hover:text-[var(--sb-gold-soft)]",
+          )}
+          onClick={() => onToggleFavorite(order.id)}
+          type="button"
+        >
+          {isFavorite ? "Remove favorite" : "Save favorite"}
+        </button>
       </div>
     </article>
   );
@@ -393,12 +514,18 @@ function OrderItemPreview({ item }: { item: Order["items"][number] }) {
   );
 }
 
-function OrdersEmptyState({ label }: { label: string }) {
+function OrdersEmptyState({
+  description = "Completed checkout orders will appear here with tracking and receipts.",
+  label,
+}: {
+  description?: string;
+  label: string;
+}) {
   return (
     <div className="mt-5 rounded-[18px] border border-white/10 bg-white/[0.04] p-10 text-center">
       <h2 className="text-[24px] font-semibold text-white">{label}</h2>
       <p className="mx-auto mt-3 max-w-md text-[15px] leading-6 text-white/56">
-        Completed checkout orders will appear here with tracking and receipts.
+        {description}
       </p>
       <Button className="mt-5" href="/menu" variant="secondary">
         Browse menu
