@@ -127,7 +127,7 @@ export function DesktopLoyaltyDashboard({
       <DesktopMenuHeader activeId="loyalty" cartCount={itemCount} />
       <main className="mx-auto max-w-[1568px] px-5 pb-3 pt-0">
         <div className="overflow-hidden rounded-b-[20px] border-x border-b border-[var(--sb-border)] bg-[#050607] shadow-[0_30px_90px_rgba(0,0,0,0.56)]">
-          <section className="relative min-h-[314px]">
+          <section className="relative min-h-[286px]">
             <Image
               alt=""
               className="object-cover object-[58%_45%]"
@@ -138,24 +138,24 @@ export function DesktopLoyaltyDashboard({
               src={desktopLoyaltyHeroImage}
             />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,4,5,0.98)_0%,rgba(3,4,5,0.82)_31%,rgba(3,4,5,0.18)_66%,rgba(3,4,5,0.86)_100%)]" />
-            <div className="relative z-10 grid min-h-[314px] grid-cols-[minmax(0,1fr)_366px] gap-8 px-16 py-8">
+            <div className="relative z-10 grid min-h-[286px] grid-cols-[minmax(0,1fr)_366px] gap-8 px-16 py-6">
               <div className="flex flex-col justify-center">
                 <p className="text-[17px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
                   Welcome back, Hiroshi.
                 </p>
-                <h1 className="editorial-title mt-3 text-[68px] uppercase leading-[0.92] text-white">
+                <h1 className="editorial-title mt-2 text-[62px] uppercase leading-[0.92] text-white">
                   Loyalty
                   <span className="block text-[var(--sb-red-bright)]">
                     Rewards
                   </span>
                 </h1>
-                <p className="mt-5 max-w-[420px] text-[17px] leading-7 text-white/72">
+                <p className="mt-4 max-w-[420px] text-[16px] leading-7 text-white/72">
                   Savor more than exceptional sushi. Earn points, unlock
                   exclusive rewards, and enjoy elevated dining experiences.
                 </p>
               </div>
-              <DesktopLoyaltyPanel className="self-center p-6">
-                <div className="mb-5 flex items-center gap-4">
+              <DesktopLoyaltyPanel className="self-center p-5">
+                <div className="mb-4 flex items-center gap-4">
                   <AssetIcon
                     size={60}
                     src="/assets/icons/floral-emblem-icon.png"
@@ -171,7 +171,7 @@ export function DesktopLoyaltyDashboard({
                 </div>
                 <DesktopTierProgress account={account} progress={progress} />
                 <button
-                  className="mt-5 h-10 w-full rounded-[8px] border border-[var(--sb-gold)]/44 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                  className="mt-4 h-10 w-full rounded-[8px] border border-[var(--sb-gold)]/44 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                   onClick={() => setSurface("pass")}
                   type="button"
                 >
@@ -181,10 +181,10 @@ export function DesktopLoyaltyDashboard({
             </div>
           </section>
 
-          <div className="grid grid-cols-[318px_minmax(0,1fr)_396px] gap-4 px-9 pb-5">
-            <div className="grid gap-4">
+          <div className="grid grid-cols-[318px_minmax(0,1fr)_396px] gap-4 px-9 pb-4">
+            <div className="grid gap-3">
               <DesktopMemberPassCard account={account} />
-              <DesktopLoyaltyPanel className="relative overflow-hidden p-5">
+              <DesktopLoyaltyPanel className="relative min-h-[146px] overflow-hidden p-4">
                 <Image
                   alt=""
                   className="object-cover opacity-42"
@@ -197,12 +197,12 @@ export function DesktopLoyaltyDashboard({
                   <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                     Refer & earn
                   </h2>
-                  <p className="mt-4 max-w-[210px] text-[13px] leading-5 text-white/68">
+                  <p className="mt-3 max-w-[210px] text-[13px] leading-5 text-white/68">
                     Share Sushi Bliss with friends. You both earn{" "}
                     {referralProgress.rewardPoints} points.
                   </p>
                   <button
-                    className="mt-5 inline-grid h-10 place-items-center rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                    className="mt-4 inline-grid h-9 place-items-center rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                     onClick={() => setSurface("referral")}
                     type="button"
                   >
@@ -212,8 +212,8 @@ export function DesktopLoyaltyDashboard({
               </DesktopLoyaltyPanel>
             </div>
 
-            <div className="grid gap-4">
-              <DesktopLoyaltyPanel className="p-5">
+            <div className="grid gap-3">
+              <DesktopLoyaltyPanel className="p-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                     Redeem your points
@@ -226,7 +226,7 @@ export function DesktopLoyaltyDashboard({
                     View all rewards
                   </button>
                 </div>
-                <div className="mt-4 grid grid-cols-4 gap-4">
+                <div className="mt-3 grid grid-cols-4 gap-3">
                   {rewards.map((reward, index) => (
                     <DesktopRewardTile
                       eagerImage={index < 4}
@@ -239,18 +239,18 @@ export function DesktopLoyaltyDashboard({
                 </div>
               </DesktopLoyaltyPanel>
 
-              <DesktopLoyaltyPanel className="p-5">
+              <DesktopLoyaltyPanel className="p-4">
                 <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   Member perks
                 </h2>
-                <div className="mt-5">
+                <div className="mt-4">
                   <DesktopPerkRow />
                 </div>
               </DesktopLoyaltyPanel>
             </div>
 
-            <div className="grid gap-4">
-              <DesktopLoyaltyPanel className="relative min-h-[176px] overflow-hidden p-5">
+            <div className="grid gap-3">
+              <DesktopLoyaltyPanel className="relative min-h-[154px] overflow-hidden p-4">
                 <Image
                   alt=""
                   className="object-cover object-[70%_45%] opacity-62"
@@ -263,11 +263,11 @@ export function DesktopLoyaltyDashboard({
                   <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                     Chef&apos;s tasting rewards
                   </h2>
-                  <p className="mt-4 text-[13px] leading-5 text-white/72">
+                  <p className="mt-3 text-[13px] leading-5 text-white/72">
                     Exclusive rewards for our most devoted members.
                   </p>
                   <button
-                    className="mt-5 h-10 rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                    className="mt-4 h-9 whitespace-nowrap rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[11px] uppercase tracking-[0.04em] text-[var(--sb-gold-soft)]"
                     onClick={() => setSurface("pass")}
                     type="button"
                   >
@@ -276,7 +276,7 @@ export function DesktopLoyaltyDashboard({
                 </div>
               </DesktopLoyaltyPanel>
 
-              <DesktopLoyaltyPanel className="p-5">
+              <DesktopLoyaltyPanel className="p-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                     Recent rewards activity

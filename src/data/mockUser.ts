@@ -5,8 +5,8 @@ import type { UserProfile } from "@/types/user";
 export const mockUser: UserProfile = {
   id: "guest-user",
   name: "Hiroshi Tanaka",
-  email: "hiroshi@sushibliss.example",
-  phone: "+81 90 0000 8421",
+  email: "hiroshi.tanaka@example.com",
+  phone: "+81 3-1234-5678",
   tier: "Gold",
   addresses: [
     {
@@ -78,11 +78,11 @@ export const mockUser: UserProfile = {
 export const mockLoyaltyAccount: LoyaltyAccount = {
   id: "loyalty-guest-user",
   userId: mockUser.id,
-  points: 1840,
+  points: 3250,
   tier: "gold",
-  nextTierPoints: 3000,
-  lifetimePoints: 1840,
-  memberCode: "SB-GOLD-8421",
+  nextTierPoints: 4000,
+  lifetimePoints: 3250,
+  memberCode: "SB12567890",
 };
 
 export const mockNotifications: AppNotification[] = [

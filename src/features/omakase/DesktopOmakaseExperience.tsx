@@ -43,10 +43,6 @@ export function DesktopOmakaseExperience() {
   const selectedPairing = sakePairingOptions[0];
 
   const openReview = () => {
-    if (selectedPackage.id === "counter-signature") {
-      selectPackage("seasonal-mastery");
-    }
-
     if (!sakePairingId && selectedPairing) {
       setSakePairingId(selectedPairing.id);
     }
@@ -81,7 +77,7 @@ export function DesktopOmakaseExperience() {
       <DesktopMenuHeader activeId="omakase" cartCount={itemCount} />
       <main className="mx-auto max-w-[1672px] px-5 pb-3 pt-3">
         <div className="overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#050607] shadow-[0_30px_90px_rgba(0,0,0,0.56)]">
-          <section className="relative min-h-[346px] overflow-hidden border-b border-[var(--sb-border)]">
+          <section className="relative min-h-[326px] overflow-hidden border-b border-[var(--sb-border)]">
             <Image
               alt=""
               className="object-cover object-[58%_42%]"
@@ -92,15 +88,15 @@ export function DesktopOmakaseExperience() {
               src={desktopOmakaseHeroImage}
             />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,4,4,0.96)_0%,rgba(4,4,4,0.72)_28%,rgba(4,4,4,0.16)_68%,rgba(4,4,4,0.78)_100%)]" />
-            <div className="relative z-10 grid min-h-[346px] grid-cols-[minmax(0,1fr)_244px] gap-10 px-[8.6vw] py-10">
+            <div className="relative z-10 grid min-h-[326px] grid-cols-[minmax(0,1fr)_244px] gap-10 px-[8.6vw] py-8">
               <div className="flex max-w-[560px] flex-col justify-center">
                 <p className="editorial-title text-[28px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   The art of
                 </p>
-                <h1 className="editorial-title mt-1 text-[66px] uppercase leading-[0.9] text-white">
+                <h1 className="editorial-title mt-1 text-[62px] uppercase leading-[0.9] text-white">
                   Omakase
                 </h1>
-                <p className="mt-5 text-[20px] leading-7 text-[var(--sb-gold-soft)]">
+                <p className="mt-4 text-[20px] leading-7 text-[var(--sb-gold-soft)]">
                   An intimate, chef-curated journey where every bite tells a
                   story.
                 </p>
@@ -108,7 +104,7 @@ export function DesktopOmakaseExperience() {
                   Hand-selected ingredients. Masterful technique. A
                   one-of-a-kind experience crafted just for you.
                 </p>
-                <div className="mt-7 flex gap-4">
+                <div className="mt-6 flex gap-4">
                   <button
                     className="red-glow-button flex h-[50px] w-[230px] items-center justify-center gap-4 rounded-[10px] text-[13px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={openReview}
@@ -126,7 +122,7 @@ export function DesktopOmakaseExperience() {
                   </Link>
                 </div>
               </div>
-              <aside className="self-center rounded-[18px] border border-[var(--sb-border)] bg-black/50 p-6 backdrop-blur-xl">
+              <aside className="self-center rounded-[18px] border border-[var(--sb-border)] bg-black/50 p-5 backdrop-blur-xl">
                 <div className="flex items-start gap-4">
                   <AssetIcon
                     size={36}
@@ -143,7 +139,7 @@ export function DesktopOmakaseExperience() {
                     </p>
                   </div>
                 </div>
-                <div className="my-6 h-px bg-white/10" />
+                <div className="my-5 h-px bg-white/10" />
                 <p className="flex items-center gap-3 text-[14px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]">
                   <AssetIcon size={24} src="/assets/icons/clock-icon.png" />
                   Experience length
@@ -160,7 +156,7 @@ export function DesktopOmakaseExperience() {
           </section>
 
           <div className="grid grid-cols-[0.36fr_0.36fr_0.28fr] border-b border-[var(--sb-border)]">
-            <DesktopOmakasePanel className="rounded-none border-y-0 border-l-0 p-6">
+            <DesktopOmakasePanel className="rounded-none border-y-0 border-l-0 p-5">
               <h2 className="flex items-center gap-3 text-[16px] uppercase tracking-[0.08em] text-white">
                 <AssetIcon
                   size={24}
@@ -171,6 +167,7 @@ export function DesktopOmakaseExperience() {
               <div className="mt-4 grid grid-cols-3 gap-3">
                 {omakasePackages.map((omakasePackage) => (
                   <DesktopPackageButton
+                    compact
                     isSelected={selectedPackage.id === omakasePackage.id}
                     key={omakasePackage.id}
                     omakasePackage={omakasePackage}
@@ -183,7 +180,7 @@ export function DesktopOmakaseExperience() {
               </p>
             </DesktopOmakasePanel>
 
-            <DesktopOmakasePanel className="rounded-none border-y-0 p-6">
+            <DesktopOmakasePanel className="rounded-none border-y-0 p-5">
               <h2 className="flex items-center gap-3 text-[16px] uppercase tracking-[0.08em] text-white">
                 <AssetIcon
                   size={24}
@@ -199,7 +196,7 @@ export function DesktopOmakaseExperience() {
               </p>
             </DesktopOmakasePanel>
 
-            <DesktopOmakasePanel className="rounded-none border-y-0 border-r-0 p-6">
+            <DesktopOmakasePanel className="rounded-none border-y-0 border-r-0 p-5">
               <h2 className="flex items-center gap-3 text-[16px] uppercase tracking-[0.08em] text-white">
                 <AssetIcon
                   size={24}
@@ -208,7 +205,7 @@ export function DesktopOmakaseExperience() {
                 Sake pairing
               </h2>
               <div className="mt-4 grid grid-cols-[0.47fr_0.53fr] gap-4">
-                <div className="relative min-h-[188px] overflow-hidden rounded-[10px] border border-[var(--sb-border)]">
+                <div className="relative min-h-[158px] overflow-hidden rounded-[10px] border border-[var(--sb-border)]">
                   <Image
                     alt=""
                     className="object-cover"
@@ -221,11 +218,11 @@ export function DesktopOmakaseExperience() {
                   <p className="text-[13px] uppercase tracking-[0.08em] text-white">
                     Elevate your experience
                   </p>
-                  <p className="mt-3 text-[13px] leading-6 text-white/60">
+                  <p className="mt-2 text-[13px] leading-5 text-white/60">
                     Our sommeliers curate premium sake pairings to complement
                     each course, enhancing every flavor and nuance.
                   </p>
-                  <p className="mt-4 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+                  <p className="mt-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                     {selectedPairing?.label || "Seasonal sake flight"}
                   </p>
                   <p className="text-[12px] text-white/54">
@@ -234,7 +231,7 @@ export function DesktopOmakaseExperience() {
                       : "Pairing available"}
                   </p>
                   <button
-                    className="mt-4 h-9 rounded-[8px] border border-[var(--sb-gold)]/44 px-4 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                    className="mt-3 flex h-9 w-full items-center justify-center rounded-[8px] border border-[var(--sb-gold)]/44 px-2 text-[10px] uppercase tracking-[0.04em] text-[var(--sb-gold-soft)]"
                     onClick={() => {
                       if (selectedPairing) {
                         setSakePairingId(selectedPairing.id);
@@ -250,7 +247,7 @@ export function DesktopOmakaseExperience() {
           </div>
 
           <section className="grid grid-cols-[1fr_0.3fr] border-b border-[var(--sb-border)]">
-            <div className="p-6">
+            <div className="p-5">
               <h2 className="mb-5 flex items-center gap-3 text-[16px] uppercase tracking-[0.08em] text-white">
                 <AssetIcon
                   size={24}
@@ -258,7 +255,7 @@ export function DesktopOmakaseExperience() {
                 />
                 What&apos;s included
               </h2>
-              <div className="grid grid-cols-5 gap-6">
+              <div className="grid grid-cols-5 gap-5">
                 {desktopOmakaseBenefits.map(([title, copy, icon]) => (
                   <DesktopOmakaseBenefit
                     copy={copy}
@@ -269,7 +266,7 @@ export function DesktopOmakaseExperience() {
                 ))}
               </div>
             </div>
-            <div className="grid content-center gap-4 border-l border-white/10 p-6">
+            <div className="grid content-center gap-3 border-l border-white/10 p-5">
               {premiumReservationCards.map((card) => (
                 <Link
                   className="grid min-h-[86px] grid-cols-[78px_1fr] gap-4 rounded-[12px] border border-[var(--sb-border)] bg-white/[0.035] p-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"

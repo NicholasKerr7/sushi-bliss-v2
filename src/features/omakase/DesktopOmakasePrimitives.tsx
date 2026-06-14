@@ -76,7 +76,9 @@ export function DesktopPackageButton({
   isSelected,
   omakasePackage,
   onSelect,
+  compact = false,
 }: {
+  compact?: boolean;
   isSelected: boolean;
   omakasePackage: OmakasePackage;
   onSelect: (packageId: string) => void;
@@ -85,7 +87,8 @@ export function DesktopPackageButton({
     <button
       aria-pressed={isSelected}
       className={classNames(
-        "relative min-h-[220px] overflow-hidden rounded-[12px] border bg-black/38 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+        "relative overflow-hidden rounded-[12px] border bg-black/38 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+        compact ? "min-h-[180px]" : "min-h-[190px]",
         isSelected
           ? "border-[var(--sb-red-bright)] shadow-[0_0_28px_rgba(239,47,37,0.28)]"
           : "border-[var(--sb-gold)]/28 hover:border-[var(--sb-gold)]/54",
@@ -93,7 +96,9 @@ export function DesktopPackageButton({
       onClick={() => onSelect(omakasePackage.id)}
       type="button"
     >
-      <div className="relative h-[98px]">
+      <div
+        className={classNames("relative", compact ? "h-[88px]" : "h-[84px]")}
+      >
         <Image
           alt=""
           className="object-cover"
@@ -104,17 +109,17 @@ export function DesktopPackageButton({
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.74))]" />
       </div>
-      <div className="p-4">
-        <h3 className="editorial-title text-[20px] uppercase text-white">
+      <div className={classNames(compact ? "p-3" : "p-3.5")}>
+        <h3 className="editorial-title text-[18px] uppercase text-white">
           {omakasePackage.title}
         </h3>
         <p className="mt-1 text-[12px] text-white/62">
           {omakasePackage.subtitle}
         </p>
-        <p className="mt-2 line-clamp-2 min-h-10 text-[12px] leading-5 text-white/58">
+        <p className="mt-2 line-clamp-2 min-h-9 text-[12px] leading-[18px] text-white/58">
           {omakasePackage.description}
         </p>
-        <p className="mt-3 font-mono text-[20px] text-[var(--sb-gold-soft)]">
+        <p className="mt-2 font-mono text-[19px] text-[var(--sb-gold-soft)]">
           {formatMoney(omakasePackage.priceCents)}
           <span className="ml-1 font-sans text-[12px] text-white/58">
             per guest
@@ -166,13 +171,13 @@ export function DesktopCourseJourney({
           {index > 0 ? (
             <span
               aria-hidden="true"
-              className="absolute -left-3 top-[72px] z-10 text-[var(--sb-gold-soft)]"
+              className="absolute -left-3 top-[58px] z-10 text-[var(--sb-gold-soft)]"
             >
               <ChevronIcon direction="right" size={18} />
             </span>
           ) : null}
           <div className="overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-black/36">
-            <div className="relative h-[118px]">
+            <div className="relative h-[92px]">
               <Image
                 alt=""
                 className="object-cover"
@@ -182,8 +187,8 @@ export function DesktopCourseJourney({
                 src={course.image.publicUrl}
               />
             </div>
-            <div className="p-3 text-center">
-              <p className="editorial-title text-[16px] text-white">
+            <div className="p-2.5 text-center">
+              <p className="editorial-title text-[15px] text-white">
                 {course.label}
               </p>
               <p className="mt-1 line-clamp-1 text-[11px] text-white/56">

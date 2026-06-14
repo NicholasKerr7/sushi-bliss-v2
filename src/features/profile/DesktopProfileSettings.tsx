@@ -81,26 +81,26 @@ export function DesktopAccountSettings({
   ];
 
   return (
-    <main className="mx-auto max-w-[1672px] px-7 pb-6 pt-7">
-      <div className="rounded-[24px] border border-[var(--sb-border)] bg-[#07090a] p-8 shadow-[0_30px_90px_rgba(0,0,0,0.54)]">
+    <main className="mx-auto max-w-[1672px] px-7 pb-5 pt-4">
+      <div className="rounded-[24px] border border-[var(--sb-border)] bg-[#07090a] p-5 shadow-[0_30px_90px_rgba(0,0,0,0.54)]">
         <p className="text-[15px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           My account
         </p>
-        <h1 className="editorial-title mt-2 text-[36px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+        <h1 className="editorial-title mt-1.5 text-[32px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
           My Account
         </h1>
-        <p className="mt-2 text-[16px] text-white/72">
+        <p className="mt-1.5 text-[15px] text-white/72">
           Welcome back, Hiroshi. Manage your preferences and account settings.
         </p>
 
         {message ? (
-          <p className="mt-5 rounded-[12px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8 px-4 py-3 text-[14px] text-[var(--sb-gold-soft)]">
+          <p className="mt-4 rounded-[12px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8 px-4 py-3 text-[14px] text-[var(--sb-gold-soft)]">
             {message}
           </p>
         ) : null}
 
-        <div className="mt-6 grid grid-cols-[320px_minmax(0,1fr)] gap-5">
-          <aside className="space-y-4">
+        <div className="mt-4 grid grid-cols-[304px_minmax(0,1fr)] gap-4">
+          <aside className="space-y-3">
             <nav
               className="overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035]"
               aria-label="Account settings sections"
@@ -108,7 +108,7 @@ export function DesktopAccountSettings({
               {sidebarItems.map(([id, label, icon]) => (
                 <button
                   className={classNames(
-                    "grid min-h-[50px] w-full grid-cols-[28px_1fr] items-center gap-3 border-b border-white/10 px-7 text-left text-[14px] uppercase tracking-[0.04em] last:border-b-0",
+                    "grid min-h-[44px] w-full grid-cols-[28px_1fr] items-center gap-3 border-b border-white/10 px-6 text-left text-[13px] uppercase tracking-[0.04em] last:border-b-0",
                     id === "personal"
                       ? "border-l-2 border-l-[var(--sb-red-bright)] text-[var(--sb-red-bright)]"
                       : "text-white/72",
@@ -122,7 +122,7 @@ export function DesktopAccountSettings({
                 </button>
               ))}
             </nav>
-            <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-6">
+            <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
               <h2 className="text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                 Need help?
               </h2>
@@ -138,7 +138,7 @@ export function DesktopAccountSettings({
             </article>
           </aside>
 
-          <section className="grid grid-cols-2 gap-5">
+          <section className="grid grid-cols-2 gap-4">
             <PersonalInformationCard profile={profile} onStatus={onStatus} />
             <DietarySettingsCard
               options={dietaryOptions}
@@ -168,7 +168,7 @@ function PersonalInformationCard({
   onStatus: (message: string) => void;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
       <div className="flex items-center justify-between">
         <CardTitle
           icon="/assets/icons/floral-emblem-icon.png"
@@ -182,15 +182,15 @@ function PersonalInformationCard({
           Edit
         </button>
       </div>
-      <div className="mt-5 grid grid-cols-[120px_1fr] gap-5">
+      <div className="mt-4 grid grid-cols-[104px_1fr] gap-5">
         <Image
           alt=""
           className="rounded-full border border-[var(--sb-border)] object-cover"
-          height={108}
+          height={96}
           src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"
-          width={108}
+          width={96}
         />
-        <div className="space-y-3 text-[13px]">
+        <div className="space-y-2.5 text-[13px]">
           <SettingLine label="Full name" value={profile.name} />
           <SettingLine label="Email address" value={profile.email} />
           <SettingLine label="Phone number" value={profile.phone} />
@@ -211,7 +211,7 @@ function DietarySettingsCard({
   onDietaryToggle: (option: string) => void;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
       <div className="flex items-center justify-between">
         <CardTitle
           icon="/assets/icons/vegetarian-sushi-icon.webp"
@@ -224,7 +224,7 @@ function DietarySettingsCard({
           Edit
         </button>
       </div>
-      <div className="mt-5 flex flex-wrap gap-3">
+      <div className="mt-4 flex flex-wrap gap-3">
         {options.map((option) => {
           const active = selected.includes(option);
 
@@ -232,7 +232,7 @@ function DietarySettingsCard({
             <button
               aria-pressed={active}
               className={classNames(
-                "rounded-full border px-4 py-2 text-[13px]",
+                "rounded-full border px-4 py-1.5 text-[13px]",
                 active
                   ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/22 text-white"
                   : "border-[var(--sb-gold)]/28 text-white/72",
@@ -250,7 +250,7 @@ function DietarySettingsCard({
         })}
       </div>
       <button
-        className="mt-6 h-[58px] w-full rounded-[10px] border border-dashed border-[var(--sb-gold)]/26 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-5 h-[50px] w-full rounded-[10px] border border-dashed border-[var(--sb-gold)]/26 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
         onClick={() => onDietaryToggle("Chef Notes")}
         type="button"
       >
@@ -277,7 +277,7 @@ function PrivacySecurityCard({
         "Data & privacy",
       ].map((row) => (
         <button
-          className="flex min-h-[48px] w-full items-center justify-between border-b border-white/10 text-left text-[13px] last:border-b-0"
+          className="flex min-h-[42px] w-full items-center justify-between border-b border-white/10 text-left text-[13px] last:border-b-0"
           key={row}
           onClick={() => onStatus(`${row} action selected.`)}
           type="button"
@@ -321,7 +321,7 @@ function NotificationSettingsCard({
     >
       {rows.map(([key, label, copy]) => (
         <button
-          className="flex min-h-[42px] w-full items-center justify-between border-b border-white/10 text-left last:border-b-0"
+          className="flex min-h-[36px] w-full items-center justify-between border-b border-white/10 text-left last:border-b-0"
           key={key}
           onClick={() => onNotificationToggle(key)}
           type="button"
@@ -349,13 +349,13 @@ function LoyaltyCompactCard({
       title="Loyalty status"
       icon="/assets/icons/floral-emblem-icon.png"
     >
-      <p className="font-mono text-[28px] text-white">
+      <p className="font-mono text-[26px] text-white">
         {account.points.toLocaleString()} PTS
       </p>
       <p className="mt-1 text-[13px] text-white/58">
         750 pts to reach Platinum
       </p>
-      <div className="mt-4 h-2 rounded-full bg-white/10">
+      <div className="mt-3 h-2 rounded-full bg-white/10">
         <span
           className={classNames(
             "block h-full rounded-full bg-[var(--sb-gold)]",
@@ -413,9 +413,9 @@ function SettingsCard({
   title: string;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
       <CardTitle icon={icon} title={title} />
-      <div className="mt-4">{children}</div>
+      <div className="mt-3">{children}</div>
     </article>
   );
 }

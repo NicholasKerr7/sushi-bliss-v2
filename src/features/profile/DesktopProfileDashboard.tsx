@@ -79,9 +79,9 @@ export function DesktopProfileDashboard({
   onStatus: (message: string) => void;
 }) {
   return (
-    <main className="mx-auto max-w-[1672px] px-7 pb-6 pt-3">
+    <main className="mx-auto max-w-[1672px] px-7 pb-5 pt-3">
       <div className="overflow-hidden rounded-[24px] border border-[var(--sb-border)] bg-[#07090a] shadow-[0_30px_90px_rgba(0,0,0,0.54)]">
-        <section className="relative grid min-h-[240px] grid-cols-[220px_minmax(0,1fr)_300px] items-center gap-8 border-b border-white/10 px-8">
+        <section className="relative grid min-h-[210px] grid-cols-[190px_minmax(0,1fr)_286px] items-center gap-7 border-b border-white/10 px-8">
           <Image
             alt=""
             className="object-cover object-[68%_46%] opacity-72"
@@ -95,27 +95,27 @@ export function DesktopProfileDashboard({
             <Image
               alt=""
               className="rounded-full border border-[var(--sb-gold)] object-cover"
-              height={164}
+              height={150}
               priority
               src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"
-              width={164}
+              width={150}
             />
           </div>
           <div className="relative z-10">
             <p className="text-[15px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
               Welcome back
             </p>
-            <h1 className="editorial-title mt-2 text-[42px] uppercase tracking-[0.08em]">
+            <h1 className="editorial-title mt-2 text-[38px] uppercase tracking-[0.08em]">
               {profile.name}
               <span className="ml-4 rounded-full border border-[var(--sb-gold)]/38 px-3 py-1 align-middle text-[12px] text-[var(--sb-gold-soft)]">
                 Bliss member
               </span>
             </h1>
-            <div className="mt-4 grid max-w-[460px] gap-2 text-[15px] text-white/72">
+            <div className="mt-3 grid max-w-[460px] gap-1.5 text-[14px] text-white/72">
               <p>{profile.email}</p>
               <p>{profile.phone}</p>
             </div>
-            <div className="mt-5 grid max-w-[460px] grid-cols-2 gap-8 text-[15px]">
+            <div className="mt-4 grid max-w-[460px] grid-cols-2 gap-8 text-[15px]">
               <p>
                 <span className="block text-white/48">Member Since</span>
                 <span className="mt-1 block text-[20px] text-white">
@@ -166,7 +166,7 @@ export function DesktopProfileDashboard({
           </p>
         ) : null}
 
-        <section className="grid grid-cols-4 gap-3 p-5">
+        <section className="grid grid-cols-4 gap-3 p-4">
           <SavedAddressesCard profile={profile} />
           <PaymentMethodsCard profile={profile} />
           <DiningPreferencesCard onOpenSettings={onOpenSettings} />
@@ -176,7 +176,7 @@ export function DesktopProfileDashboard({
           />
         </section>
 
-        <section className="grid grid-cols-[0.48fr_0.52fr] gap-5 px-5 pb-5">
+        <section className="grid grid-cols-[0.48fr_0.52fr] gap-4 px-4 pb-4">
           <UpcomingReservationCard
             activeOrderCount={activeOrderCount}
             reservation={upcomingReservation}
@@ -184,7 +184,7 @@ export function DesktopProfileDashboard({
           <RecentActivityCard />
         </section>
 
-        <div className="px-5 pb-5">
+        <div className="px-4 pb-4">
           <DesktopBenefitStrip />
         </div>
       </div>
@@ -200,7 +200,7 @@ function LoyaltyStatusCard({
   progress: number;
 }) {
   return (
-    <article className="relative z-10 rounded-[16px] border border-[var(--sb-border)] bg-black/58 p-6">
+    <article className="relative z-10 rounded-[16px] border border-[var(--sb-border)] bg-black/58 p-5">
       <div className="flex items-center gap-4">
         <AssetIcon size={48} src="/assets/icons/floral-emblem-icon.png" />
         <div>
@@ -212,10 +212,10 @@ function LoyaltyStatusCard({
           </p>
         </div>
       </div>
-      <p className="mt-6 text-[13px] uppercase tracking-[0.08em] text-white/54">
+      <p className="mt-5 text-[13px] uppercase tracking-[0.08em] text-white/54">
         Points balance
       </p>
-      <p className="mt-2 font-mono text-[34px] text-white">
+      <p className="mt-2 font-mono text-[32px] text-white">
         {account.points.toLocaleString()}{" "}
         <span className="text-[16px]">PTS</span>
       </p>
@@ -228,7 +228,7 @@ function LoyaltyStatusCard({
         />
       </div>
       <button
-        className="mt-5 h-10 w-full rounded-[10px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-4 h-9 w-full rounded-[10px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
         type="button"
       >
         View benefits
@@ -239,7 +239,7 @@ function LoyaltyStatusCard({
 
 function SavedAddressesCard({ profile }: { profile: UserProfile }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
       <CardTitle
         icon="/assets/icons/map-pin-icon.png"
         title="Saved addresses"
@@ -247,7 +247,7 @@ function SavedAddressesCard({ profile }: { profile: UserProfile }) {
       <div className="mt-3 space-y-2">
         {profile.addresses.slice(0, 2).map((address) => (
           <div
-            className="rounded-[10px] border border-white/10 bg-black/24 p-3"
+            className="rounded-[10px] border border-white/10 bg-black/24 p-2.5"
             key={address.id}
           >
             <p className="flex items-center justify-between text-[13px] text-white">
@@ -267,7 +267,7 @@ function SavedAddressesCard({ profile }: { profile: UserProfile }) {
         ))}
       </div>
       <button
-        className="mt-3 h-9 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
         type="button"
       >
         + Add new address
@@ -278,7 +278,7 @@ function SavedAddressesCard({ profile }: { profile: UserProfile }) {
 
 function PaymentMethodsCard({ profile }: { profile: UserProfile }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
       <CardTitle
         icon="/assets/icons/credit-card-icon.png"
         title="Payment methods"
@@ -286,7 +286,7 @@ function PaymentMethodsCard({ profile }: { profile: UserProfile }) {
       <div className="mt-3 space-y-2">
         {profile.paymentMethods.slice(0, 2).map((method) => (
           <div
-            className="grid grid-cols-[58px_1fr] items-center gap-3 rounded-[10px] border border-white/10 bg-black/24 p-3"
+            className="grid grid-cols-[58px_1fr] items-center gap-3 rounded-[10px] border border-white/10 bg-black/24 p-2.5"
             key={method.id}
           >
             <span className="grid h-11 place-items-center rounded-[8px] border border-white/10 font-mono text-[12px] text-white">
@@ -302,7 +302,7 @@ function PaymentMethodsCard({ profile }: { profile: UserProfile }) {
         ))}
       </div>
       <button
-        className="mt-3 h-9 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
         type="button"
       >
         + Add payment method
@@ -317,7 +317,7 @@ function DiningPreferencesCard({
   onOpenSettings: () => void;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
       <CardTitle
         icon="/assets/icons/crossed-knives-icon.png"
         title="Dining preferences"
@@ -334,7 +334,7 @@ function DiningPreferencesCard({
         ))}
       </div>
       <button
-        className="mt-3 h-9 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
         onClick={onOpenSettings}
         type="button"
       >
@@ -356,7 +356,7 @@ function DietaryPreferencesCard({
     : ["No Preference"];
 
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
       <CardTitle
         icon="/assets/icons/vegetarian-sushi-icon.webp"
         title="Dietary preferences"
@@ -383,7 +383,7 @@ function DietaryPreferencesCard({
         )}
       </div>
       <button
-        className="mt-3 h-9 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
         onClick={onOpenSettings}
         type="button"
       >
@@ -401,7 +401,7 @@ function UpcomingReservationCard({
   reservation?: Reservation;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
       <div className="flex items-center justify-between">
         <CardTitle
           icon="/assets/icons/calendar-icon.png"
@@ -414,8 +414,8 @@ function UpcomingReservationCard({
           View all <ChevronIcon direction="right" size={18} />
         </Link>
       </div>
-      <div className="mt-4 grid grid-cols-[270px_1fr] overflow-hidden rounded-[12px] border border-white/10 bg-black/24">
-        <div className="relative min-h-[150px]">
+      <div className="mt-3 grid grid-cols-[252px_1fr] overflow-hidden rounded-[12px] border border-white/10 bg-black/24">
+        <div className="relative min-h-[128px]">
           <Image
             alt=""
             className="object-cover"
@@ -424,7 +424,7 @@ function UpcomingReservationCard({
             src="/assets/food/luxury-sushi-platter-on-marble-surface.webp"
           />
         </div>
-        <div className="p-5">
+        <div className="p-4">
           <p className="font-mono text-[24px] text-white">
             {reservation ? "7:00 PM" : "No upcoming time"}
           </p>
@@ -434,7 +434,7 @@ function UpcomingReservationCard({
           <p className="mt-2 text-[13px] text-white/56">
             Active orders: {activeOrderCount}
           </p>
-          <Button className="mt-5 h-11 w-[220px] rounded-[10px] text-[12px] uppercase tracking-[0.08em]">
+          <Button className="mt-4 h-10 w-[210px] rounded-[10px] text-[12px] uppercase tracking-[0.08em]">
             View reservation
           </Button>
         </div>
@@ -445,7 +445,7 @@ function UpcomingReservationCard({
 
 function RecentActivityCard() {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
       <div className="flex items-center justify-between">
         <CardTitle
           icon="/assets/icons/clock-icon.png"
@@ -458,10 +458,10 @@ function RecentActivityCard() {
           View all <ChevronIcon direction="right" size={18} />
         </button>
       </div>
-      <div className="mt-4 overflow-hidden rounded-[12px] border border-white/10">
+      <div className="mt-3 overflow-hidden rounded-[12px] border border-white/10">
         {recentActivity.map(([label, date, detail]) => (
           <button
-            className="grid min-h-[42px] w-full grid-cols-[180px_minmax(0,1fr)_220px_20px] items-center gap-4 border-b border-white/10 px-4 text-left text-[13px] last:border-b-0"
+            className="grid min-h-[38px] w-full grid-cols-[180px_minmax(0,1fr)_220px_20px] items-center gap-4 border-b border-white/10 px-4 text-left text-[13px] last:border-b-0"
             key={label}
             type="button"
           >

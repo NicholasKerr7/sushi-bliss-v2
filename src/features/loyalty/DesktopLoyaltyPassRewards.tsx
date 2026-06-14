@@ -22,7 +22,7 @@ import {
   DesktopTierProgress,
 } from "./DesktopLoyaltyPrimitives";
 
-type RewardFilter = "all" | Reward["category"];
+type RewardFilter = "all" | "merchandise" | Reward["category"];
 
 interface DesktopLoyaltyPassRewardsProps {
   account: LoyaltyAccount;
@@ -39,6 +39,7 @@ const rewardFilters: Array<{ id: RewardFilter; label: string }> = [
   { id: "dining", label: "Complimentary items" },
   { id: "experience", label: "Experiences" },
   { id: "upgrade", label: "Upgrades" },
+  { id: "merchandise", label: "Merchandise" },
 ];
 
 export function DesktopLoyaltyPassRewards({
@@ -55,7 +56,9 @@ export function DesktopLoyaltyPassRewards({
   const visibleRewards =
     activeFilter === "all"
       ? rewards
-      : rewards.filter((reward) => reward.category === activeFilter);
+      : activeFilter === "merchandise"
+        ? rewards.filter((reward) => reward.category === "upgrade")
+        : rewards.filter((reward) => reward.category === activeFilter);
 
   return (
     <section
@@ -63,8 +66,8 @@ export function DesktopLoyaltyPassRewards({
       id="loyalty"
     >
       <DesktopMenuHeader activeId="loyalty" cartCount={cartCount} />
-      <main className="mx-auto max-w-[1540px] px-6 pb-4 pt-5">
-        <div className="rounded-[22px] border border-[var(--sb-border)] bg-[#050607]/96 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.56)]">
+      <main className="mx-auto max-w-[1540px] px-6 pb-4 pt-4">
+        <div className="rounded-[22px] border border-[var(--sb-border)] bg-[#050607]/96 p-5 shadow-[0_30px_90px_rgba(0,0,0,0.56)]">
           <button
             className="flex items-center gap-3 text-[13px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]"
             onClick={onBack}
@@ -79,7 +82,7 @@ export function DesktopLoyaltyPassRewards({
             </p>
           ) : null}
 
-          <div className="mt-6 grid grid-cols-[minmax(0,1fr)_430px] gap-9">
+          <div className="mt-5 grid grid-cols-[minmax(0,1fr)_430px] gap-8">
             <div>
               <section className="grid grid-cols-[450px_minmax(0,1fr)] gap-7">
                 <div>
@@ -98,8 +101,8 @@ export function DesktopLoyaltyPassRewards({
                   <h2 className="text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                     Your current tier
                   </h2>
-                  <DesktopLoyaltyPanel className="mt-4 p-6">
-                    <div className="mb-5 flex items-center gap-4">
+                  <DesktopLoyaltyPanel className="mt-4 p-5">
+                    <div className="mb-4 flex items-center gap-4">
                       <AssetIcon
                         size={56}
                         src="/assets/icons/floral-emblem-icon.png"
@@ -119,7 +122,7 @@ export function DesktopLoyaltyPassRewards({
                       progress={progress}
                     />
                     <button
-                      className="mt-5 h-10 w-full rounded-[8px] border border-[var(--sb-gold)]/44 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                      className="mt-4 h-10 w-full rounded-[8px] border border-[var(--sb-gold)]/44 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                       onClick={() =>
                         setNotice(
                           "Tier benefits are shown across the earn, redeem, and rewards panels.",
@@ -133,13 +136,13 @@ export function DesktopLoyaltyPassRewards({
                 </div>
               </section>
 
-              <section className="mt-7">
+              <section className="mt-5">
                 <h2 className="text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   Available rewards
                 </h2>
                 <nav
                   aria-label="Reward filters"
-                  className="mt-4 flex flex-wrap gap-3"
+                  className="mt-3 flex flex-wrap gap-3"
                 >
                   {rewardFilters.map((filter) => {
                     const active = filter.id === activeFilter;
@@ -148,7 +151,7 @@ export function DesktopLoyaltyPassRewards({
                       <button
                         aria-pressed={active}
                         className={classNames(
-                          "h-10 rounded-[8px] border px-8 text-[12px] uppercase tracking-[0.08em]",
+                          "h-10 rounded-[8px] border px-6 text-[12px] uppercase tracking-[0.08em]",
                           active
                             ? "border-[var(--sb-gold)] bg-[var(--sb-gold)]/82 text-black"
                             : "border-white/14 text-white/76",
@@ -162,7 +165,7 @@ export function DesktopLoyaltyPassRewards({
                     );
                   })}
                 </nav>
-                <div className="mt-4 grid grid-cols-4 gap-4">
+                <div className="mt-4 grid grid-cols-4 gap-3">
                   {visibleRewards.map((reward, index) => (
                     <DesktopRewardTile
                       eagerImage={index < 4}
@@ -182,7 +185,7 @@ export function DesktopLoyaltyPassRewards({
                 </button>
               </section>
 
-              <DesktopLoyaltyPanel className="mt-5 grid grid-cols-[1fr_148px] items-center gap-5 p-5">
+              <DesktopLoyaltyPanel className="mt-4 grid grid-cols-[1fr_148px] items-center gap-5 p-4">
                 <div className="flex items-center gap-5">
                   <AssetIcon
                     size={48}
@@ -211,12 +214,12 @@ export function DesktopLoyaltyPassRewards({
               </DesktopLoyaltyPanel>
             </div>
 
-            <aside className="grid content-start gap-4">
-              <DesktopLoyaltyPanel className="p-6">
+            <aside className="grid content-start gap-3">
+              <DesktopLoyaltyPanel className="p-5">
                 <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   Earn. Redeem. Indulge.
                 </h2>
-                <div className="mt-5 grid gap-5">
+                <div className="mt-4 grid gap-4">
                   {[
                     [
                       "Earn points",
@@ -251,11 +254,11 @@ export function DesktopLoyaltyPassRewards({
                 </div>
               </DesktopLoyaltyPanel>
 
-              <DesktopLoyaltyPanel className="p-6">
+              <DesktopLoyaltyPanel className="p-5">
                 <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   How to redeem
                 </h2>
-                <div className="mt-5 grid gap-4">
+                <div className="mt-4 grid gap-3">
                   {[
                     "Browse available rewards and choose your favorite.",
                     "Tap Redeem Reward and confirm your selection.",
@@ -276,7 +279,7 @@ export function DesktopLoyaltyPassRewards({
                 </div>
               </DesktopLoyaltyPanel>
 
-              <DesktopLoyaltyPanel className="p-6">
+              <DesktopLoyaltyPanel className="p-5">
                 <div className="flex items-center justify-between">
                   <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                     Recent activity

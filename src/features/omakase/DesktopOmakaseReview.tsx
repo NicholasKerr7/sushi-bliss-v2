@@ -72,6 +72,76 @@ export function DesktopOmakaseReview({
   );
   const totalCents =
     packageSubtotal + pairingSubtotal + serviceCents + taxCents;
+  const desktopReviewPackages: OmakasePackage[] = [
+    omakasePackages[0]
+      ? {
+          ...omakasePackages[0],
+          description:
+            "Our signature omakase featuring premium seasonal selections.",
+          image: {
+            alt: "Bliss omakase toro nigiri",
+            publicUrl: "/assets/menu/sushi/deluxe-toro-caviar-nigiri.webp",
+          },
+          subtitle: "8 courses",
+          title: "Bliss",
+        }
+      : review.package,
+    omakasePackages[1]
+      ? {
+          ...omakasePackages[1],
+          description:
+            "An elevated experience with rare ingredients and refined techniques.",
+          image: {
+            alt: "Harmony white fish nigiri",
+            publicUrl: "/assets/menu/sushi/whitefish-nigiri.webp",
+          },
+          priceCents: 16000,
+          title: "Harmony",
+        }
+      : review.package,
+    omakasePackages[2]
+      ? {
+          ...omakasePackages[2],
+          description:
+            "A masterful journey of exquisite sushi and intricate flavors.",
+          image: {
+            alt: "Mastery omakase selection",
+            publicUrl:
+              "/assets/omakase/specialties/chef-special-sashimi-selection.webp",
+          },
+          priceCents: 22000,
+          subtitle: "12 courses",
+          title: "Mastery",
+        }
+      : review.package,
+    {
+      ...review.package,
+      description:
+        "The ultimate omakase experience. Exclusive, rare, unforgettable.",
+      id: "legacy-private",
+      image: {
+        alt: "Legacy truffle nigiri",
+        publicUrl: "/assets/menu/sushi/otoro-nigiri.webp",
+      },
+      priceCents: 35000,
+      subtitle: "16+ courses",
+      title: "Legacy",
+    },
+  ];
+  const selectedDesktopPackage =
+    desktopReviewPackages.find((omakasePackage) => {
+      if (selectedPackageId === "private-kintsugi") {
+        return omakasePackage.title === "Mastery";
+      }
+
+      return omakasePackage.id === selectedPackageId;
+    }) || desktopReviewPackages[0];
+
+  const handlePackageSelect = (packageId: string) => {
+    onPackageChange(
+      packageId === "legacy-private" ? "private-kintsugi" : packageId,
+    );
+  };
 
   return (
     <section
@@ -79,9 +149,9 @@ export function DesktopOmakaseReview({
       id="omakase"
     >
       <DesktopMenuHeader activeId="reservations" cartCount={cartCount} />
-      <main className="mx-auto max-w-[1672px] px-[5.8vw] pb-7 pt-8">
-        <div className="grid grid-cols-[minmax(0,1fr)_466px] gap-8">
-          <section className="relative overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#07090a]/92 p-7">
+      <main className="mx-auto max-w-[1672px] px-[5.8vw] pb-5 pt-5">
+        <div className="grid grid-cols-[minmax(0,1fr)_466px] gap-7">
+          <section className="relative overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#07090a]/92 p-6">
             <Image
               alt=""
               className="object-cover object-[58%_28%] opacity-42"
@@ -101,7 +171,7 @@ export function DesktopOmakaseReview({
                 <ChevronIcon direction="left" size={18} />
                 Reservations
               </button>
-              <h1 className="editorial-title mt-5 text-[58px] uppercase leading-[0.92] text-white">
+              <h1 className="editorial-title mt-4 text-[52px] uppercase leading-[0.92] text-white">
                 Omakase{" "}
                 <span className="text-[var(--sb-red-bright)]">Experience</span>
               </h1>
@@ -110,7 +180,7 @@ export function DesktopOmakaseReview({
                 seasonal ingredients.
               </p>
 
-              <section className="mt-7 rounded-[18px] border border-white/10 bg-black/44 p-5">
+              <section className="mt-5 rounded-[18px] border border-white/10 bg-black/44 p-4">
                 <h2 className="text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   Choose your omakase package
                 </h2>
@@ -118,23 +188,26 @@ export function DesktopOmakaseReview({
                   Each experience is crafted by our master chefs, showcasing the
                   art of Edomae sushi.
                 </p>
-                <div className="mt-5 grid grid-cols-3 gap-4">
-                  {omakasePackages.map((omakasePackage) => (
+                <div className="mt-4 grid grid-cols-4 gap-3">
+                  {desktopReviewPackages.map((omakasePackage) => (
                     <DesktopPackageButton
-                      isSelected={selectedPackageId === omakasePackage.id}
+                      compact
+                      isSelected={
+                        selectedDesktopPackage.id === omakasePackage.id
+                      }
                       key={omakasePackage.id}
                       omakasePackage={omakasePackage}
-                      onSelect={onPackageChange}
+                      onSelect={handlePackageSelect}
                     />
                   ))}
                 </div>
               </section>
 
-              <section className="mt-5 rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-5">
+              <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-4">
                 <h2 className="text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   All packages include
                 </h2>
-                <div className="mt-5 grid grid-cols-4 gap-4">
+                <div className="mt-4 grid grid-cols-4 gap-4">
                   {[
                     ["Chef's seasonal selection", "chef-hat-icon.png"],
                     ["Premium ingredients", "floral-emblem-icon.png"],
@@ -154,18 +227,18 @@ export function DesktopOmakaseReview({
             </div>
           </section>
 
-          <aside className="rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b]/92 p-7 shadow-[0_24px_70px_rgba(0,0,0,0.4)]">
+          <aside className="rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b]/92 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.4)]">
             <h2 className="text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
               Review your reservation
             </h2>
-            <div className="mt-5 grid grid-cols-[124px_1fr] gap-5 border-b border-white/10 pb-5">
-              <div className="relative h-[86px] overflow-hidden rounded-[10px] border border-[var(--sb-border)]">
+            <div className="mt-4 grid grid-cols-[124px_1fr] gap-5 border-b border-white/10 pb-4">
+              <div className="relative h-[84px] overflow-hidden rounded-[10px] border border-[var(--sb-border)]">
                 <Image
                   alt=""
                   className="object-cover"
                   fill
                   sizes="124px"
-                  src={review.package.image.publicUrl}
+                  src={selectedDesktopPackage.image.publicUrl}
                 />
               </div>
               <div>
@@ -173,10 +246,10 @@ export function DesktopOmakaseReview({
                   Selected package
                 </span>
                 <p className="editorial-title mt-3 text-[24px] uppercase text-white">
-                  {review.package.title}
+                  {selectedDesktopPackage.title}
                 </p>
                 <p className="text-[13px] uppercase tracking-[0.08em] text-white/58">
-                  {review.package.subtitle}
+                  {selectedDesktopPackage.subtitle}
                 </p>
               </div>
             </div>
@@ -230,14 +303,14 @@ export function DesktopOmakaseReview({
               </div>
             </div>
 
-            <section className="border-b border-white/10 py-5">
+            <section className="border-b border-white/10 py-4">
               <h3 className="text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
                 Add-on experience
               </h3>
               <button
                 aria-pressed={Boolean(sakePairingId)}
                 className={classNames(
-                  "mt-4 grid w-full grid-cols-[96px_1fr_52px] items-center gap-4 rounded-[12px] border p-3 text-left transition",
+                  "mt-3 grid w-full grid-cols-[90px_1fr_48px] items-center gap-4 rounded-[12px] border p-3 text-left transition",
                   sakePairingId
                     ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/10"
                     : "border-white/10 bg-black/28",
@@ -270,16 +343,16 @@ export function DesktopOmakaseReview({
               </button>
             </section>
 
-            <section className="space-y-3 py-5">
+            <section className="space-y-2.5 py-4">
               <TotalRow
-                label={`${review.package.title} (${review.guestCount} Guests)`}
+                label={`${selectedDesktopPackage.title} (${review.guestCount} Guests)`}
                 value={packageSubtotal}
               />
               <TotalRow label="Premium Sake Pairing" value={pairingSubtotal} />
               <TotalRow label="Service Fee" value={serviceCents} />
               <TotalRow label="Tax & Fees" value={taxCents} />
             </section>
-            <div className="flex items-center justify-between border-t border-white/10 pt-5">
+            <div className="flex items-center justify-between border-t border-white/10 pt-4">
               <p className="editorial-title text-[18px] uppercase text-white">
                 Total
               </p>
@@ -287,12 +360,12 @@ export function DesktopOmakaseReview({
                 {formatMoney(totalCents)}
               </p>
             </div>
-            <p className="mt-4 text-[13px] text-[var(--sb-gold-soft)]">
+            <p className="mt-3 text-[13px] text-[var(--sb-gold-soft)]">
               You&apos;ll earn {Math.floor(totalCents / 100)} Bliss Points on
               this reservation.
             </p>
             <Link
-              className="red-glow-button mt-5 flex h-[60px] w-full items-center justify-center gap-5 rounded-[12px] text-[17px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+              className="red-glow-button mt-4 flex h-[58px] w-full items-center justify-center gap-5 rounded-[12px] text-[16px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
               href="/reservations"
             >
               Confirm reservation
