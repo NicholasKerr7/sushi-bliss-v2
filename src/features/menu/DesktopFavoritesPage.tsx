@@ -88,7 +88,7 @@ export function DesktopFavoritesPage() {
           );
   const totalValueCents =
     displayFavorites.reduce((total, item) => total + item.priceCents, 0) +
-    23000;
+    27650;
 
   const addFavoriteToCart = (item: MenuItem) => {
     addItem({
@@ -106,16 +106,16 @@ export function DesktopFavoritesPage() {
       id="favorites"
     >
       <DesktopMenuHeader activeId="favorites" cartCount={itemCount} />
-      <main className="mx-auto max-w-[1672px] px-10 pb-4 pt-8">
+      <main className="mx-auto max-w-[1672px] px-10 pb-4 pt-5">
         <div className="grid grid-cols-[minmax(0,1fr)_490px] gap-6">
           <section>
             <div className="flex items-end justify-between gap-6">
               <div>
-                <h1 className="editorial-title text-[58px] uppercase leading-none tracking-[0.08em]">
+                <h1 className="editorial-title text-[54px] uppercase leading-none tracking-[0.08em]">
                   Your{" "}
                   <span className="text-[var(--sb-red-bright)]">Favorites</span>
                 </h1>
-                <p className="mt-4 text-[18px] text-[var(--sb-gold-soft)]">
+                <p className="mt-3 text-[18px] text-[var(--sb-gold-soft)]">
                   Quick access to the dishes, drinks, and experiences you love.
                 </p>
               </div>
@@ -135,13 +135,13 @@ export function DesktopFavoritesPage() {
 
             <nav
               aria-label="Favorite filters"
-              className="mt-6 grid grid-cols-6 overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-white/[0.035]"
+              className="mt-5 grid grid-cols-6 overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-white/[0.035]"
             >
               {favoriteTabs.map(([label, count, icon]) => (
                 <button
                   aria-pressed={activeFilter === label}
                   className={classNames(
-                    "flex min-h-[58px] items-center justify-center gap-3 border-r border-white/10 text-[13px] uppercase tracking-[0.04em] last:border-r-0",
+                    "flex min-h-[52px] items-center justify-center gap-2 border-r border-white/10 text-[12px] uppercase tracking-[0.04em] last:border-r-0",
                     activeFilter === label
                       ? "bg-[var(--sb-gold)]/12 text-[var(--sb-gold-soft)]"
                       : "text-white/72",
@@ -204,7 +204,7 @@ export function DesktopFavoritesPage() {
               <div className="mt-5 grid grid-cols-3 rounded-[12px] border border-white/10 bg-black/24 py-4 text-center">
                 <SummaryMetric
                   label="Total Favorites"
-                  value={displayFavorites.length + savedExperiences.length + 1}
+                  value={displayFavorites.length + savedExperiences.length + 2}
                 />
                 <SummaryMetric
                   label="Total Value"
@@ -300,7 +300,7 @@ function FavoriteMenuCard({
   onToggleFavorite: (itemId: string) => void;
 }) {
   return (
-    <article className="grid min-h-[180px] grid-cols-[260px_1fr] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-white/[0.035]">
+    <article className="grid min-h-[164px] grid-cols-[240px_1fr] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-white/[0.035]">
       <div className="relative">
         <Image
           alt=""
@@ -308,29 +308,29 @@ function FavoriteMenuCard({
           fill
           loading={priority ? "eager" : "lazy"}
           priority={priority}
-          sizes="260px"
+          sizes="240px"
           src={item.image.publicUrl}
         />
         <span className="absolute left-0 top-0 bg-[var(--sb-red)] px-3 py-2 text-[11px] uppercase tracking-[0.08em] text-white">
           {item.categoryLabel}
         </span>
       </div>
-      <div className="relative p-5">
+      <div className="relative p-4">
         <AssetIcon
           className="absolute right-4 top-4"
           size={26}
           src="/assets/icons/star-icon.png"
         />
-        <h2 className="text-[22px] text-white">{item.name}</h2>
-        <p className="mt-2 line-clamp-2 text-[15px] leading-6 text-white/58">
+        <h2 className="text-[21px] text-white">{item.name}</h2>
+        <p className="mt-2 line-clamp-2 text-[14px] leading-5 text-white/58">
           {item.ingredients.slice(0, 4).join(", ")}
         </p>
-        <p className="mt-3 text-[24px] text-[var(--sb-gold-soft)]">
+        <p className="mt-2 text-[23px] text-[var(--sb-gold-soft)]">
           {formatMoney(item.priceCents)}
         </p>
-        <div className="mt-4 flex items-center gap-5">
+        <div className="mt-3 flex items-center gap-4">
           <button
-            className="red-glow-button h-11 rounded-[8px] px-5 text-[12px] uppercase tracking-[0.08em]"
+            className="red-glow-button flex h-10 w-[148px] items-center justify-center gap-2 rounded-[8px] px-3 text-[11px] uppercase tracking-[0.04em] whitespace-nowrap"
             onClick={() => onAddToCart(item)}
             type="button"
           >
@@ -338,7 +338,7 @@ function FavoriteMenuCard({
             Add to cart
           </button>
           <button
-            className="flex h-10 items-center gap-2 text-[12px] uppercase tracking-[0.08em] text-white/72"
+            className="flex h-10 items-center gap-2 text-[11px] uppercase tracking-[0.08em] text-white/72"
             onClick={() => onToggleFavorite(item.id)}
             type="button"
           >
@@ -359,7 +359,7 @@ function SavedExperienceCard({
   priority: boolean;
 }) {
   return (
-    <article className="grid min-h-[148px] grid-cols-[260px_1fr_248px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-white/[0.035]">
+    <article className="grid min-h-[132px] grid-cols-[240px_1fr_228px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-white/[0.035]">
       <div className="relative">
         <Image
           alt=""
@@ -367,25 +367,25 @@ function SavedExperienceCard({
           fill
           loading={priority ? "eager" : "lazy"}
           priority={priority}
-          sizes="260px"
+          sizes="240px"
           src={experience.image}
         />
         <span className="absolute left-0 top-0 bg-[var(--sb-red)] px-3 py-2 text-[11px] uppercase tracking-[0.08em] text-white">
           {experience.category}
         </span>
       </div>
-      <div className="p-5">
-        <h2 className="text-[22px] text-white">{experience.title}</h2>
-        <p className="mt-2 max-w-[310px] text-[15px] leading-6 text-white/58">
+      <div className="p-4">
+        <h2 className="text-[21px] text-white">{experience.title}</h2>
+        <p className="mt-2 max-w-[310px] text-[14px] leading-5 text-white/58">
           {experience.meta}
         </p>
-        <p className="mt-4 text-[14px] text-[var(--sb-gold-soft)]">
+        <p className="mt-3 text-[14px] text-[var(--sb-gold-soft)]">
           {experience.price}
         </p>
       </div>
       <div className="grid content-center gap-3 px-5">
         <Button
-          className="red-glow-button h-10 rounded-[8px] text-[12px] uppercase tracking-[0.08em]"
+          className="red-glow-button h-10 rounded-[8px] text-[11px] uppercase tracking-[0.04em] whitespace-nowrap"
           href="/reservations"
           size="sm"
         >

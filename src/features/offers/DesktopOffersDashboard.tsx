@@ -30,6 +30,11 @@ const offerActions: Record<
     label: "Join now",
     tag: "Member exclusive",
   },
+  "double-points": {
+    href: "/loyalty",
+    label: "Join now",
+    tag: "Member exclusive",
+  },
   "early-lunch": {
     href: "/menu",
     label: "Order now",
@@ -64,7 +69,8 @@ export function DesktopOffersDashboard() {
   const offerCards = [
     ...sortedOffers.filter((offer) =>
       [
-        "weekday-pickup",
+        "spicy-tuna-roll",
+        "double-points",
         "birthday-treat",
         "omakase-preview",
         "early-lunch",
@@ -111,11 +117,11 @@ export function DesktopOffersDashboard() {
     >
       <div className="mx-auto min-h-dvh max-w-[1550px] border-x border-[var(--sb-border)] bg-[#050607]">
         <DesktopMenuHeader activeId="offers" cartCount={itemCount} />
-        <main className="px-7 pb-6">
+        <main className="px-7 pb-4">
           <OfferHero onOpenDetail={() => setDetailOpen(true)} />
 
           <section className="mt-3 grid grid-cols-[minmax(0,1fr)_476px] gap-4">
-            <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-6">
+            <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
               <h2 className="text-[20px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                 Exclusive offers for you
               </h2>
@@ -131,13 +137,13 @@ export function DesktopOffersDashboard() {
               </div>
             </article>
 
-            <aside className="grid gap-4">
-              <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+            <aside className="grid gap-3">
+              <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
                 <h2 className="flex items-center gap-3 text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   <AssetIcon size={24} src="/assets/icons/gift-icon.png" />
                   Redeem your offer
                 </h2>
-                <div className="mt-5 grid grid-cols-[1fr_96px] gap-3">
+                <div className="mt-4 grid grid-cols-[1fr_96px] gap-3">
                   <label className="sr-only" htmlFor="desktop-promo-code">
                     Enter promo code
                   </label>
@@ -156,7 +162,7 @@ export function DesktopOffersDashboard() {
                     Apply
                   </button>
                 </div>
-                <p className="mt-4 text-[13px] text-white/58">
+                <p className="mt-3 text-[13px] text-white/58">
                   Available offers
                 </p>
                 {featuredOffer ? (
@@ -182,7 +188,7 @@ export function DesktopOffersDashboard() {
                   </p>
                 ) : null}
                 <Link
-                  className="mt-5 flex justify-end gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                  className="mt-4 flex justify-end gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                   href="/menu"
                 >
                   Browse eligible items
@@ -190,12 +196,12 @@ export function DesktopOffersDashboard() {
                 </Link>
               </article>
 
-              <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+              <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
                 <h2 className="flex items-center gap-3 text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                   <AssetIcon size={24} src="/assets/icons/check-icon.png" />
                   Offer terms
                 </h2>
-                <ul className="mt-5 space-y-3 text-[14px] leading-6 text-white/62">
+                <ul className="mt-4 space-y-2.5 text-[14px] leading-6 text-white/62">
                   {terms.map((term) => (
                     <li className="flex gap-3" key={term}>
                       <AssetIcon
@@ -208,7 +214,7 @@ export function DesktopOffersDashboard() {
                   ))}
                 </ul>
                 <Link
-                  className="mt-6 block w-full text-right text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                  className="mt-4 block w-full text-right text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                   href="/support"
                 >
                   View full terms & conditions{" "}
@@ -229,7 +235,7 @@ export function DesktopOffersDashboard() {
 
 function OfferHero({ onOpenDetail }: { onOpenDetail: () => void }) {
   return (
-    <section className="relative min-h-[370px] overflow-hidden border-b border-[var(--sb-border)]">
+    <section className="relative min-h-[330px] overflow-hidden border-b border-[var(--sb-border)]">
       <Image
         alt=""
         className="object-cover object-[70%_48%]"
@@ -240,21 +246,21 @@ function OfferHero({ onOpenDetail }: { onOpenDetail: () => void }) {
         src={heroImage}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98)_0%,rgba(5,6,7,0.82)_28%,rgba(5,6,7,0.20)_64%,rgba(5,6,7,0.88)_100%)]" />
-      <div className="relative z-10 flex min-h-[370px] max-w-[560px] flex-col justify-center px-16 py-10">
+      <div className="relative z-10 flex min-h-[330px] max-w-[660px] flex-col justify-center px-16 py-8">
         <p className="text-[16px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
           Limited time experience
         </p>
-        <h1 className="editorial-title mt-4 text-[54px] uppercase leading-[0.92] tracking-[0.08em]">
+        <h1 className="editorial-title mt-3 text-[50px] uppercase leading-[0.92] tracking-[0.08em]">
           Spring Omakase
           <span className="block text-[var(--sb-red-bright)]">
             Tasting Journey
           </span>
         </h1>
-        <p className="mt-5 max-w-[420px] text-[18px] leading-7 text-[var(--sb-gold-soft)]">
+        <p className="mt-4 max-w-[420px] text-[17px] leading-7 text-[var(--sb-gold-soft)]">
           A seasonal celebration of the finest ingredients, crafted into an
           unforgettable 12-course omakase.
         </p>
-        <div className="mt-7 grid grid-cols-2 gap-8 text-[13px] text-white/68">
+        <div className="mt-5 grid grid-cols-2 gap-8 text-[13px] text-white/68">
           <p className="flex gap-3">
             <AssetIcon size={24} src="/assets/icons/clock-icon.png" />
             <span>
@@ -274,7 +280,7 @@ function OfferHero({ onOpenDetail }: { onOpenDetail: () => void }) {
             </span>
           </p>
         </div>
-        <div className="mt-7 flex items-center gap-7">
+        <div className="mt-5 flex items-center gap-7">
           <Button
             className="red-glow-button h-[54px] w-[262px] rounded-[10px] text-[14px] uppercase tracking-[0.08em]"
             href="/reservations"
@@ -319,7 +325,7 @@ function OfferCard({
 
   return (
     <article className="overflow-hidden rounded-[12px] border border-white/12 bg-black/28">
-      <div className="relative h-[142px]">
+      <div className="relative h-[128px]">
         <Image
           alt=""
           className="object-cover"
@@ -333,18 +339,18 @@ function OfferCard({
           {action.tag}
         </span>
       </div>
-      <div className="p-4">
-        <h3 className="editorial-title min-h-[52px] text-[20px] uppercase leading-6 text-white">
+      <div className="p-3.5">
+        <h3 className="editorial-title min-h-[48px] text-[19px] uppercase leading-6 text-white">
           {offer.title}
         </h3>
-        <p className="mt-2 line-clamp-2 min-h-12 text-[14px] leading-6 text-white/62">
+        <p className="mt-2 line-clamp-2 min-h-10 text-[13px] leading-5 text-white/62">
           {offer.description}
         </p>
         <p className="mt-3 text-[13px] text-white/46">
           Valid through May 31, 2024
         </p>
         <Button
-          className="mt-4 h-[44px] w-full rounded-[8px] text-[13px] uppercase tracking-[0.08em]"
+          className="mt-3 h-[42px] w-full rounded-[8px] text-[12px] uppercase tracking-[0.08em]"
           disabled={expired}
           href={action.href}
           variant={expired ? "secondary" : "primary"}

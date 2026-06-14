@@ -84,11 +84,11 @@ export function DesktopNotificationsCenter() {
       id="notifications"
     >
       <DesktopMenuHeader activeId="notifications" cartCount={itemCount} />
-      <main className="mx-auto max-w-[1672px] px-7 pb-6 pt-6">
-        <section className="rounded-[24px] border border-[var(--sb-border)] bg-[#07090a] p-8 shadow-[0_30px_90px_rgba(0,0,0,0.54)]">
+      <main className="mx-auto max-w-[1672px] px-7 pb-4 pt-4">
+        <section className="rounded-[24px] border border-[var(--sb-border)] bg-[#07090a] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.54)]">
           <div className="grid grid-cols-[minmax(0,1fr)_460px] gap-8">
             <div>
-              <h1 className="editorial-title text-[50px] uppercase tracking-[0.08em]">
+              <h1 className="editorial-title text-[46px] uppercase tracking-[0.08em]">
                 Notifications
                 <span className="text-[var(--sb-red-bright)]"> Center</span>
               </h1>
@@ -97,7 +97,7 @@ export function DesktopNotificationsCenter() {
                 exclusive offers.
               </p>
 
-              <div className="mt-6 grid grid-cols-[repeat(5,minmax(0,1fr))_220px] items-center gap-3">
+              <div className="mt-5 grid grid-cols-[repeat(5,minmax(0,1fr))_220px] items-center gap-3">
                 {desktopFilters.map((filter) => {
                   const active = activeFilter === filter.id;
                   const count =
@@ -111,7 +111,7 @@ export function DesktopNotificationsCenter() {
                     <button
                       aria-pressed={active}
                       className={classNames(
-                        "h-12 rounded-[10px] border text-[13px] uppercase tracking-[0.08em]",
+                        "h-11 rounded-[10px] border text-[13px] uppercase tracking-[0.08em]",
                         active
                           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)] text-white shadow-[0_0_22px_rgba(238,43,36,0.34)]"
                           : "border-[var(--sb-border)] bg-white/[0.035] text-white/76",
@@ -125,7 +125,7 @@ export function DesktopNotificationsCenter() {
                   );
                 })}
                 <button
-                  className="flex h-12 items-center justify-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] disabled:opacity-45"
+                  className="flex h-11 items-center justify-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] disabled:opacity-45"
                   disabled={unreadCount === 0}
                   onClick={markAllRead}
                   type="button"
@@ -135,7 +135,7 @@ export function DesktopNotificationsCenter() {
                 </button>
               </div>
 
-              <div className="mt-5 overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-black/36">
+              <div className="mt-4 overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-black/36">
                 {filteredNotifications.map((notification) => (
                   <DesktopNotificationRow
                     key={notification.id}
@@ -187,18 +187,18 @@ function DesktopNotificationRow({
   }).format(new Date(notification.createdAt));
 
   return (
-    <article className="grid min-h-[82px] grid-cols-[28px_74px_minmax(0,1fr)_170px_190px] items-center gap-5 border-b border-white/10 px-6 last:border-b-0">
+    <article className="grid min-h-[76px] grid-cols-[28px_68px_minmax(0,1fr)_170px_190px] items-center gap-5 border-b border-white/10 px-6 last:border-b-0">
       <span
         className={classNames(
           "h-2.5 w-2.5 rounded-full",
           isUnread ? "bg-[var(--sb-red-bright)]" : "bg-white/24",
         )}
       />
-      <span className="grid h-14 w-14 place-items-center rounded-full border border-[var(--sb-gold)]/30 bg-black/38">
+      <span className="grid h-12 w-12 place-items-center rounded-full border border-[var(--sb-gold)]/30 bg-black/38">
         <AssetIcon size={28} src={categoryIcons[notification.category]} />
       </span>
       <div>
-        <h2 className="text-[20px] text-white">{notification.title}</h2>
+        <h2 className="text-[19px] text-white">{notification.title}</h2>
         <p className="mt-1 line-clamp-1 text-[14px] text-white/62">
           {notification.body}
         </p>
@@ -236,7 +236,7 @@ function NotificationPreferencesPanel({
   onToggle: (index: number) => void;
 }) {
   return (
-    <aside className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-7">
+    <aside className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-6">
       <h2 className="flex items-center gap-4 text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
         <AssetIcon size={30} src="/assets/icons/notification-bell-icon.png" />
         Notification preferences
@@ -244,10 +244,10 @@ function NotificationPreferencesPanel({
       <p className="mt-3 text-[15px] text-white/62">
         Choose what you&apos;d like to hear about.
       </p>
-      <div className="mt-7">
+      <div className="mt-5">
         {preferenceRows.map(([label, copy, icon], index) => (
           <button
-            className="grid min-h-[72px] w-full grid-cols-[42px_1fr_58px] items-center gap-4 border-b border-white/10 text-left last:border-b-0"
+            className="grid min-h-[66px] w-full grid-cols-[42px_1fr_58px] items-center gap-4 border-b border-white/10 text-left last:border-b-0"
             key={label}
             onClick={() => onToggle(index)}
             type="button"
@@ -263,9 +263,9 @@ function NotificationPreferencesPanel({
           </button>
         ))}
       </div>
-      <div className="mt-7 border-t border-white/10 pt-5">
+      <div className="mt-5 border-t border-white/10 pt-4">
         <button
-          className="grid min-h-[60px] w-full grid-cols-[42px_1fr_58px] items-center gap-4 text-left"
+          className="grid min-h-[56px] w-full grid-cols-[42px_1fr_58px] items-center gap-4 text-left"
           onClick={() => onToggle(0)}
           type="button"
         >
@@ -281,7 +281,7 @@ function NotificationPreferencesPanel({
           <SwitchPill checked />
         </button>
         <button
-          className="grid min-h-[60px] w-full grid-cols-[42px_1fr_58px] items-center gap-4 border-t border-white/10 text-left"
+          className="grid min-h-[56px] w-full grid-cols-[42px_1fr_58px] items-center gap-4 border-t border-white/10 text-left"
           onClick={() => onToggle(1)}
           type="button"
         >

@@ -167,26 +167,26 @@ function DesktopContactView({
   onSubmit: () => void;
 }) {
   return (
-    <main className="mx-auto max-w-[1672px] px-7 pb-6 pt-7">
+    <main className="mx-auto max-w-[1672px] px-7 pb-4 pt-4">
       <section className="grid grid-cols-[minmax(0,1fr)_430px] gap-8">
         <div>
           <p className="text-[16px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
             We&apos;d love to hear from you
           </p>
-          <h1 className="editorial-title mt-3 text-[58px] uppercase leading-none tracking-[0.08em]">
+          <h1 className="editorial-title mt-2 text-[54px] uppercase leading-none tracking-[0.08em]">
             Contact
             <span className="block text-[var(--sb-red-bright)]">
               Sushi Bliss
             </span>
           </h1>
-          <p className="mt-3 max-w-[410px] text-[18px] leading-7 text-[var(--sb-gold-soft)]">
+          <p className="mt-2 max-w-[410px] text-[17px] leading-7 text-[var(--sb-gold-soft)]">
             Have a question, special request, or want to book a private dining
             experience? Our team is here to help.
           </p>
         </div>
         <div className="space-y-4">
           <Link
-            className="red-glow-button grid h-[68px] grid-cols-[50px_1fr_24px] items-center rounded-[12px] px-8 text-[18px] uppercase tracking-[0.06em]"
+            className="red-glow-button grid h-[60px] grid-cols-[48px_1fr_24px] items-center rounded-[12px] px-7 text-[17px] uppercase tracking-[0.06em]"
             href="/reservations"
           >
             <AssetIcon size={28} src="/assets/icons/calendar-icon.png" />
@@ -194,7 +194,7 @@ function DesktopContactView({
             <ChevronIcon direction="right" size={18} />
           </Link>
           <Link
-            className="grid h-[68px] grid-cols-[50px_1fr_24px] items-center rounded-[12px] border border-[var(--sb-gold)]/36 bg-black/38 px-8 text-[18px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]"
+            className="grid h-[60px] grid-cols-[48px_1fr_24px] items-center rounded-[12px] border border-[var(--sb-gold)]/36 bg-black/38 px-7 text-[17px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]"
             href="/menu"
           >
             <AssetIcon size={28} src="/assets/icons/takeaway-bag-icon.png" />
@@ -204,18 +204,18 @@ function DesktopContactView({
         </div>
       </section>
 
-      <section className="mt-6 grid grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,1.45fr)] gap-4">
+      <section className="mt-5 grid grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,1.45fr)] gap-4">
         {contactCards.map((card) => (
           <article
-            className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5"
+            className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4"
             key={card.title}
           >
             <CardTitle icon={card.icon} title={card.title} />
-            <p className="mt-4 min-h-[72px] text-[15px] leading-6 text-white/68">
+            <p className="mt-3 min-h-[60px] text-[14px] leading-6 text-white/68">
               {card.body}
             </p>
             <button
-              className="mt-3 h-10 rounded-full border border-[var(--sb-gold)]/32 px-6 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              className="mt-2 h-9 rounded-full border border-[var(--sb-gold)]/32 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
               type="button"
             >
               {card.cta}
@@ -238,11 +238,11 @@ function DesktopContactView({
       </section>
 
       <section className="mt-4 grid grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] gap-4">
-        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
           <h2 className="text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
             Send us a message
           </h2>
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-2 gap-3">
             <ContactInput
               label="Full Name"
               value={draft.name}
@@ -271,7 +271,7 @@ function DesktopContactView({
               ))}
             </select>
             <textarea
-              className="col-span-2 min-h-[72px] resize-none rounded-[8px] border border-white/10 bg-black/28 px-4 py-3 text-[14px] text-white outline-none placeholder:text-white/36"
+              className="col-span-2 min-h-[64px] resize-none rounded-[8px] border border-white/10 bg-black/28 px-4 py-3 text-[14px] text-white outline-none placeholder:text-white/36"
               onChange={(event) =>
                 onDraftChange({ ...draft, message: event.target.value })
               }
@@ -289,7 +289,7 @@ function DesktopContactView({
             </p>
           )}
           <Button
-            className="mt-3 h-[54px] w-full rounded-[10px] text-[14px] uppercase tracking-[0.08em]"
+            className="mt-2 h-[48px] w-full rounded-[10px] text-[14px] uppercase tracking-[0.08em]"
             onClick={onSubmit}
           >
             Send message
@@ -297,7 +297,7 @@ function DesktopContactView({
           </Button>
         </article>
 
-        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
           <div className="flex items-center justify-between">
             <h2 className="text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
               Frequently asked questions
@@ -310,10 +310,10 @@ function DesktopContactView({
               View all FAQs
             </button>
           </div>
-          <div className="mt-4 overflow-hidden rounded-[10px] border border-white/10">
+          <div className="mt-3 overflow-hidden rounded-[10px] border border-white/10">
             {helpArticles.slice(0, 5).map((article) => (
               <button
-                className="flex min-h-[43px] w-full items-center justify-between border-b border-white/10 px-4 text-left last:border-b-0"
+                className="flex min-h-[39px] w-full items-center justify-between border-b border-white/10 px-4 text-left last:border-b-0"
                 key={article.id}
                 onClick={onOpenHelp}
                 type="button"
@@ -330,7 +330,7 @@ function DesktopContactView({
         </article>
       </section>
 
-      <div className="mt-4">
+      <div className="mt-3">
         <DesktopBenefitStrip />
       </div>
     </main>
@@ -347,8 +347,8 @@ function DesktopHelpCenter({
   onOpenContact: () => void;
 }) {
   return (
-    <main className="mx-auto max-w-[1672px] px-7 pb-6 pt-6">
-      <section className="relative min-h-[250px] overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-[#07090a] p-8">
+    <main className="mx-auto max-w-[1672px] px-7 pb-4 pt-4">
+      <section className="relative min-h-[220px] overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-[#07090a] p-6">
         <Image
           alt=""
           className="object-cover object-[80%_44%] opacity-72"
@@ -362,15 +362,15 @@ function DesktopHelpCenter({
           <p className="text-[16px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
             We&apos;re here to help
           </p>
-          <h1 className="editorial-title mt-3 text-[58px] uppercase leading-none tracking-[0.08em]">
+          <h1 className="editorial-title mt-2 text-[52px] uppercase leading-none tracking-[0.08em]">
             How can{" "}
             <span className="text-[var(--sb-red-bright)]">we help?</span>
           </h1>
-          <p className="mt-3 max-w-[620px] text-[18px] leading-7 text-[var(--sb-gold-soft)]">
+          <p className="mt-2 max-w-[620px] text-[17px] leading-7 text-[var(--sb-gold-soft)]">
             Find answers, get support, and discover everything you need for an
             exceptional Sushi Bliss experience.
           </p>
-          <label className="relative mt-6 block w-[640px]">
+          <label className="relative mt-4 block w-[640px]">
             <span className="sr-only">Search help articles</span>
             <AssetIcon
               className="absolute left-5 top-1/2 -translate-y-1/2"
@@ -378,30 +378,30 @@ function DesktopHelpCenter({
               src="/assets/icons/search-icon.png"
             />
             <input
-              className="h-[54px] w-full rounded-[10px] border border-[var(--sb-gold)]/26 bg-black/36 pl-14 pr-4 text-[17px] text-white outline-none placeholder:text-white/42"
+              className="h-[48px] w-full rounded-[10px] border border-[var(--sb-gold)]/26 bg-black/36 pl-14 pr-4 text-[16px] text-white outline-none placeholder:text-white/42"
               placeholder="Search for help articles, topics, or questions..."
             />
           </label>
         </div>
       </section>
 
-      <section className="mt-4 grid grid-cols-6 gap-5">
+      <section className="mt-4 grid grid-cols-6 gap-4">
         {helpCategories.map(([title, copy, icon]) => (
           <button
-            className="min-h-[170px] rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5 text-center"
+            className="min-h-[146px] rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4 text-center"
             key={title}
             onClick={() => onOpenArticle(helpArticles[0] || null)}
             type="button"
           >
-            <AssetIcon className="mx-auto" size={54} src={icon} />
-            <span className="editorial-title mt-4 block text-[18px] uppercase text-white">
+            <AssetIcon className="mx-auto" size={46} src={icon} />
+            <span className="editorial-title mt-3 block text-[17px] uppercase text-white">
               {title}
             </span>
-            <span className="mt-2 block text-[14px] leading-5 text-white/62">
+            <span className="mt-2 block text-[13px] leading-5 text-white/62">
               {copy}
             </span>
             <span
-              className="mt-4 block text-[var(--sb-gold-soft)]"
+              className="mt-3 block text-[var(--sb-gold-soft)]"
               aria-hidden="true"
             >
               <ChevronIcon direction="right" size={18} />
@@ -410,8 +410,8 @@ function DesktopHelpCenter({
         ))}
       </section>
 
-      <section className="mt-5 grid grid-cols-[minmax(0,1fr)_500px] gap-5">
-        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-6">
+      <section className="mt-4 grid grid-cols-[minmax(0,1fr)_500px] gap-4">
+        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
               Popular help topics
@@ -423,10 +423,10 @@ function DesktopHelpCenter({
               View all articles <ChevronIcon direction="right" size={18} />
             </button>
           </div>
-          <div className="mt-4 overflow-hidden rounded-[10px] border border-white/10">
+          <div className="mt-3 overflow-hidden rounded-[10px] border border-white/10">
             {helpArticles.map((article) => (
               <button
-                className="grid min-h-[50px] w-full grid-cols-[220px_1fr_24px] items-center gap-5 border-b border-white/10 px-4 text-left last:border-b-0"
+                className="grid min-h-[45px] w-full grid-cols-[220px_1fr_24px] items-center gap-5 border-b border-white/10 px-4 text-left last:border-b-0"
                 key={article.id}
                 onClick={() => onOpenArticle(article)}
                 type="button"
@@ -453,7 +453,7 @@ function DesktopHelpCenter({
           ) : null}
         </article>
 
-        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-6">
+        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
           <h2 className="text-[20px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
             Need more help?
           </h2>
@@ -462,11 +462,11 @@ function DesktopHelpCenter({
           </p>
           {contactMethods.map((method) => (
             <div
-              className="mt-5 grid grid-cols-[56px_1fr] border-b border-white/10 pb-4 last:border-b-0"
+              className="mt-4 grid grid-cols-[50px_1fr] border-b border-white/10 pb-3 last:border-b-0"
               key={method.id}
             >
               <AssetIcon
-                size={38}
+                size={34}
                 src={
                   method.id === "phone"
                     ? "/assets/icons/phone-icon.png"
@@ -489,7 +489,7 @@ function DesktopHelpCenter({
             </div>
           ))}
           <Button
-            className="mt-6 h-[56px] w-full rounded-[10px] text-[15px] uppercase tracking-[0.08em]"
+            className="mt-4 h-[50px] w-full rounded-[10px] text-[15px] uppercase tracking-[0.08em]"
             onClick={onOpenContact}
           >
             Contact support
@@ -497,7 +497,7 @@ function DesktopHelpCenter({
         </article>
       </section>
 
-      <div className="mt-5">
+      <div className="mt-4">
         <DesktopBenefitStrip />
       </div>
     </main>

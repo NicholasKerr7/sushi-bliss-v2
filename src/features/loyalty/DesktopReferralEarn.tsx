@@ -9,15 +9,9 @@ import {
   DesktopBenefitStrip,
   DesktopMenuHeader,
 } from "@/features/menu/DesktopMenuChrome";
-import { formatDateTime } from "@/lib/dates";
-import { formatMoney } from "@/lib/money";
 import type { LoyaltyAccount, LoyaltyTransaction } from "@/types/loyalty";
 
-import {
-  DesktopLoyaltyPanel,
-  DesktopMemberPassCard,
-  DesktopTierProgress,
-} from "./DesktopLoyaltyPrimitives";
+import { DesktopLoyaltyPanel } from "./DesktopLoyaltyPrimitives";
 
 interface DesktopReferralEarnProps {
   account: LoyaltyAccount;
@@ -42,11 +36,9 @@ const shareOptions = [
 ] as const;
 
 export function DesktopReferralEarn({
-  account,
   cartCount,
   onBack,
   onViewRewards,
-  progress,
   transactions,
 }: DesktopReferralEarnProps) {
   const referralLink = `https://sushibliss.example/r/${referralProgress.code}`;
@@ -74,122 +66,95 @@ export function DesktopReferralEarn({
       <DesktopMenuHeader activeId="loyalty" cartCount={cartCount} />
       <main className="mx-auto max-w-[1568px] px-5 pb-3 pt-0">
         <div className="overflow-hidden rounded-b-[20px] border-x border-b border-[var(--sb-border)] bg-[#050607] shadow-[0_30px_90px_rgba(0,0,0,0.56)]">
-          <section className="relative grid min-h-[272px] grid-cols-[minmax(0,1fr)_396px] gap-8 border-b border-white/10 px-16 py-8">
+          <section className="relative min-h-[210px] overflow-hidden border-b border-white/10 px-16 py-6">
             <Image
               alt=""
-              className="object-cover object-[64%_46%] opacity-54"
+              className="object-cover object-[72%_42%] opacity-62"
               fill
               loading="eager"
               priority
               sizes="1568px"
-              src="/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp"
+              src="/assets/menu/sushi/deluxe-toro-caviar-nigiri.webp"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,4,5,0.98)_0%,rgba(3,4,5,0.88)_44%,rgba(3,4,5,0.48)_100%)]" />
-            <div className="relative z-10 flex flex-col justify-center">
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,4,5,0.98)_0%,rgba(3,4,5,0.78)_42%,rgba(3,4,5,0.18)_78%,rgba(3,4,5,0.82)_100%)]" />
+            <div className="relative z-10 flex min-h-[198px] max-w-[610px] flex-col justify-center">
               <button
-                className="mb-6 w-fit text-[13px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]"
+                className="mb-4 w-fit text-[13px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]"
                 onClick={onBack}
                 type="button"
               >
                 Back to loyalty
               </button>
               <p className="text-[16px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
-                Member referrals
+                Share Sushi Bliss
               </p>
-              <h1 className="editorial-title mt-3 text-[64px] uppercase leading-[0.9] text-white">
-                Refer
-                <span className="block text-[var(--sb-red-bright)]">
-                  & Earn
-                </span>
+              <h1 className="editorial-title mt-2 text-[62px] uppercase leading-[0.92] tracking-[0.12em] text-white">
+                Refer{" "}
+                <span className="text-[var(--sb-red-bright)]">& Earn</span>
               </h1>
-              <p className="mt-5 max-w-[548px] text-[17px] leading-7 text-white/72">
-                Share Sushi Bliss with friends. They receive a first tasting
-                credit, and you earn {referralProgress.rewardPoints} points
-                after their first completed order.
+              <p className="mt-2 max-w-[420px] text-[17px] leading-7 text-[var(--sb-gold-soft)]">
+                Share the joy of unforgettable dining. You&apos;ll earn rewards
+                when your friends dine with us.
               </p>
             </div>
-            <DesktopLoyaltyPanel className="relative z-10 self-center p-6">
-              <DesktopTierProgress
-                account={account}
-                compact
-                progress={progress}
-              />
-              <Button className="mt-5 w-full" onClick={onViewRewards} size="sm">
-                Redeem points
-              </Button>
-            </DesktopLoyaltyPanel>
           </section>
 
-          <div className="grid grid-cols-[360px_minmax(0,1fr)_376px] gap-4 px-9 py-5">
-            <div className="grid gap-4">
-              <DesktopMemberPassCard account={account} large />
-              <DesktopLoyaltyPanel className="p-5">
-                <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-                  Referral rewards
+          <div className="grid grid-cols-[0.36fr_0.34fr_0.3fr] gap-4 px-6 py-4">
+            <div className="grid gap-3">
+              <DesktopLoyaltyPanel className="p-4">
+                <h2 className="flex items-center gap-3 text-[15px] uppercase tracking-[0.08em] text-white">
+                  <AssetIcon size={24} src="/assets/icons/gift-icon.png" />
+                  Your referral code
                 </h2>
-                <div className="mt-4 grid gap-3">
-                  {referralProgress.milestones.map((milestone) => (
-                    <div
-                      className="grid grid-cols-[40px_1fr] items-center gap-3 rounded-[10px] border border-white/10 bg-black/26 p-3"
-                      key={milestone.label}
-                    >
-                      <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/34 font-mono text-[13px] text-[var(--sb-gold-soft)]">
-                        {milestone.count}
-                      </span>
-                      <div>
-                        <p className="text-[13px] text-white/82">
-                          {milestone.label}
-                        </p>
-                        <p className="mt-1 text-[12px] uppercase tracking-[0.08em] text-white/44">
-                          {milestone.completed ? "Completed" : "In progress"}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </DesktopLoyaltyPanel>
-            </div>
-
-            <div className="grid gap-4">
-              <DesktopLoyaltyPanel className="p-6">
-                <div className="flex items-start justify-between gap-6">
-                  <div>
-                    <h2 className="text-[18px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
-                      Your referral code
-                    </h2>
-                    <p className="mt-2 max-w-[460px] text-[14px] leading-6 text-white/58">
-                      Send your personal code to friends planning a special
-                      dinner, birthday, or omakase night.
+                <div className="mt-4 rounded-[12px] border border-dashed border-[var(--sb-gold)]/34 bg-black/34 p-4">
+                  <div className="grid grid-cols-[1fr_92px] items-center gap-4">
+                    <p className="text-center font-mono text-[24px] uppercase tracking-[0.12em] text-white">
+                      {referralProgress.code}
                     </p>
+                    <button
+                      className="h-10 rounded-[8px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                      onClick={copyReferral}
+                      type="button"
+                    >
+                      Copy
+                    </button>
                   </div>
-                  <AssetIcon
-                    size={54}
-                    src="/assets/icons/golden-ticket-icon.png"
-                  />
                 </div>
-                <div className="mt-6 rounded-[16px] border border-[var(--sb-gold)]/34 bg-black/42 p-5">
-                  <div className="flex items-center justify-between gap-5">
-                    <div>
-                      <p className="text-[12px] uppercase tracking-[0.12em] text-white/48">
-                        Code
-                      </p>
-                      <p className="mt-2 font-mono text-[42px] leading-none tracking-[0.08em] text-white">
-                        {referralProgress.code}
-                      </p>
-                    </div>
-                    <Button onClick={copyReferral} size="sm">
-                      Copy link
-                    </Button>
-                  </div>
-                  <p className="mt-4 truncate rounded-[10px] border border-white/10 bg-white/[0.035] px-4 py-3 font-mono text-[13px] text-white/64">
+                <div className="my-4 grid grid-cols-[1fr_40px_1fr] items-center gap-3 text-center text-[13px] text-white/48">
+                  <span className="h-px bg-white/10" />
+                  or
+                  <span className="h-px bg-white/10" />
+                </div>
+                <div className="grid grid-cols-[1fr_112px] gap-3 rounded-[10px] border border-white/10 bg-black/24 p-3">
+                  <p className="truncate text-[14px] text-white/76">
                     {referralLink}
                   </p>
+                  <button
+                    className="h-9 rounded-[8px] border border-[var(--sb-gold)]/38 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                    onClick={copyReferral}
+                    type="button"
+                  >
+                    Copy link
+                  </button>
                 </div>
-                <div className="mt-5 grid grid-cols-4 gap-3">
+              </DesktopLoyaltyPanel>
+
+              <DesktopLoyaltyPanel className="p-4">
+                <h2 className="flex items-center gap-3 text-[15px] uppercase tracking-[0.08em] text-white">
+                  <AssetIcon
+                    size={22}
+                    src="/assets/icons/golden-ticket-icon.png"
+                  />
+                  Share your invite
+                </h2>
+                <p className="mt-2 text-[13px] text-white/58">
+                  Invite your friends via your favorite platforms.
+                </p>
+                <div className="mt-4 grid grid-cols-5 gap-3">
                   {shareOptions.map(([option, action]) =>
                     action === "email" ? (
                       <a
-                        className="grid h-11 place-items-center rounded-[10px] border border-white/12 bg-white/[0.035] text-[12px] uppercase tracking-[0.08em] text-white/66 transition hover:border-[var(--sb-gold)]/42 hover:text-[var(--sb-gold-soft)]"
+                        className="grid h-[66px] place-items-center rounded-[10px] border border-white/12 bg-white/[0.035] text-center text-[11px] uppercase tracking-[0.04em] text-white/66"
                         href={`mailto:?subject=Sushi Bliss invitation&body=${encodeURIComponent(referralLink)}`}
                         key={option}
                       >
@@ -197,7 +162,7 @@ export function DesktopReferralEarn({
                       </a>
                     ) : (
                       <button
-                        className="h-11 rounded-[10px] border border-white/12 bg-white/[0.035] text-[12px] uppercase tracking-[0.08em] text-white/66 transition hover:border-[var(--sb-gold)]/42 hover:text-[var(--sb-gold-soft)] disabled:cursor-not-allowed disabled:opacity-45"
+                        className="h-[66px] rounded-[10px] border border-white/12 bg-white/[0.035] text-[11px] uppercase tracking-[0.04em] text-white/66 disabled:cursor-not-allowed disabled:opacity-45"
                         disabled={action === "disabled"}
                         key={option}
                         onClick={action === "copy" ? copyReferral : undefined}
@@ -213,18 +178,76 @@ export function DesktopReferralEarn({
                     ),
                   )}
                 </div>
+                <div className="mt-4 grid min-h-[112px] grid-cols-[1fr_210px] overflow-hidden rounded-[12px] border border-white/10 bg-black/24">
+                  <p className="p-4 text-[18px] uppercase leading-7 text-white">
+                    An unforgettable experience awaits them and{" "}
+                    <span className="text-[var(--sb-red-bright)]">rewards</span>{" "}
+                    for you.
+                  </p>
+                  <span className="relative">
+                    <Image
+                      alt=""
+                      className="object-cover"
+                      fill
+                      sizes="210px"
+                      src="/assets/gallery/intimate-upscale-dining-room-setting.webp"
+                    />
+                  </span>
+                </div>
+              </DesktopLoyaltyPanel>
+            </div>
+
+            <div className="grid gap-3">
+              <DesktopLoyaltyPanel className="p-4">
+                <h2 className="flex items-center gap-3 text-[15px] uppercase tracking-[0.08em] text-white">
+                  <AssetIcon size={24} src="/assets/icons/gift-icon.png" />
+                  How it works
+                </h2>
+                <div className="mt-4 grid gap-4">
+                  {[
+                    [
+                      "Share your invite link",
+                      "Invite your friends to Sushi Bliss.",
+                    ],
+                    [
+                      "They dine with us",
+                      "Your friend completes their first reservation and dining experience.",
+                    ],
+                    [
+                      "You earn rewards",
+                      `You'll get ${referralProgress.rewardPoints} points for each successful referral.`,
+                    ],
+                  ].map(([title, copy], index) => (
+                    <article
+                      className="grid grid-cols-[44px_1fr] gap-4"
+                      key={title}
+                    >
+                      <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-red-bright)] bg-black/40 font-mono text-[13px] text-[var(--sb-gold-soft)]">
+                        {index + 1}
+                      </span>
+                      <p>
+                        <span className="block text-[16px] text-[var(--sb-gold-soft)]">
+                          {title}
+                        </span>
+                        <span className="mt-1 block text-[13px] leading-5 text-white/58">
+                          {copy}
+                        </span>
+                      </p>
+                    </article>
+                  ))}
+                </div>
               </DesktopLoyaltyPanel>
 
-              <DesktopLoyaltyPanel className="p-5">
+              <DesktopLoyaltyPanel className="p-4">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+                  <h2 className="text-[15px] uppercase tracking-[0.08em] text-white">
                     Your referral activity
                   </h2>
                   <p className="font-mono text-[13px] text-white/54">
                     +{recentPoints.toLocaleString()} pts recent
                   </p>
                 </div>
-                <div className="mt-4 overflow-hidden rounded-[12px] border border-white/10">
+                <div className="mt-3 overflow-hidden rounded-[12px] border border-white/10">
                   <div className="grid grid-cols-[1fr_136px_110px_86px] bg-white/[0.04] px-4 py-3 text-[11px] uppercase tracking-[0.12em] text-white/46">
                     <span>Friend</span>
                     <span>Status</span>
@@ -233,7 +256,7 @@ export function DesktopReferralEarn({
                   </div>
                   {referralActivity.map(([name, status, reward, date]) => (
                     <div
-                      className="grid grid-cols-[1fr_136px_110px_86px] border-t border-white/10 px-4 py-4 text-[13px] text-white/72"
+                      className="grid grid-cols-[1fr_136px_110px_86px] border-t border-white/10 px-4 py-3 text-[13px] text-white/72"
                       key={name}
                     >
                       <span>{name}</span>
@@ -248,79 +271,54 @@ export function DesktopReferralEarn({
               </DesktopLoyaltyPanel>
             </div>
 
-            <div className="grid gap-4">
-              <DesktopLoyaltyPanel className="p-5">
-                <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-                  Rewards preview
+            <div className="grid gap-3">
+              <DesktopLoyaltyPanel className="p-4">
+                <h2 className="text-[15px] uppercase tracking-[0.08em] text-white">
+                  Your rewards preview
                 </h2>
-                <div className="mt-4 grid gap-3">
+                <div className="mt-3 grid gap-2.5">
                   {rewards.slice(0, 3).map((reward) => (
                     <article
-                      className="grid grid-cols-[74px_1fr] gap-3 rounded-[12px] border border-white/10 bg-black/28 p-3"
+                      className="grid grid-cols-[1fr_118px] items-center gap-3 rounded-[10px] border border-white/10 bg-black/28 p-3"
                       key={reward.id}
                     >
-                      <div className="relative h-[74px] overflow-hidden rounded-[10px]">
+                      <div>
+                        <p className="font-mono text-[20px] text-[var(--sb-gold-soft)]">
+                          {reward.pointsCost.toLocaleString()} pts
+                        </p>
+                        <p className="mt-1 text-[13px] text-white/76">
+                          {reward.title}
+                        </p>
+                      </div>
+                      <div className="relative h-[70px] overflow-hidden rounded-[10px]">
                         <Image
                           alt=""
                           className="object-cover"
                           fill
-                          sizes="74px"
+                          sizes="118px"
                           src={reward.imageUrl}
                         />
-                      </div>
-                      <div>
-                        <p className="text-[14px] font-semibold text-white/86">
-                          {reward.title}
-                        </p>
-                        <p className="mt-1 font-mono text-[12px] text-[var(--sb-gold-soft)]">
-                          {reward.pointsCost.toLocaleString()} pts
-                        </p>
-                        <p className="mt-1 line-clamp-2 text-[12px] leading-5 text-white/48">
-                          {reward.description}
-                        </p>
                       </div>
                     </article>
                   ))}
                 </div>
+                <button
+                  className="mt-3 h-10 w-full rounded-[8px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                  onClick={onViewRewards}
+                  type="button"
+                >
+                  View all rewards
+                </button>
               </DesktopLoyaltyPanel>
 
-              <DesktopLoyaltyPanel className="p-5">
-                <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-                  How it works
-                </h2>
-                <div className="mt-4 grid gap-4">
-                  {[
-                    "Share your personal referral code.",
-                    "Your friend receives a first-order tasting credit.",
-                    `You earn ${referralProgress.rewardPoints} points after checkout.`,
-                  ].map((step, index) => (
-                    <div
-                      className="grid grid-cols-[34px_1fr] items-center gap-3"
-                      key={step}
-                    >
-                      <span className="grid h-[34px] w-[34px] place-items-center rounded-full border border-[var(--sb-gold)]/34 font-mono text-[12px] text-[var(--sb-gold-soft)]">
-                        {index + 1}
-                      </span>
-                      <p className="text-[13px] leading-5 text-white/66">
-                        {step}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+              <DesktopLoyaltyPanel className="grid grid-cols-3 gap-3 p-4 text-center">
+                <ReferralMetric label="Total referrals" value="12" />
+                <ReferralMetric label="Successful referrals" value="8" />
+                <ReferralMetric label="Points earned" value="4,000 pts" />
               </DesktopLoyaltyPanel>
-
-              <DesktopLoyaltyPanel className="p-5">
-                <p className="text-[12px] uppercase tracking-[0.1em] text-white/42">
-                  Estimated value
-                </p>
-                <p className="mt-2 font-mono text-[38px] leading-none text-white">
-                  {formatMoney(referralProgress.rewardPoints * 10)}
-                </p>
-                <p className="mt-3 text-[13px] leading-5 text-white/54">
-                  Referral value is awarded only after the first eligible order.
-                  Last updated {formatDateTime(new Date().toISOString())}.
-                </p>
-              </DesktopLoyaltyPanel>
+              <Button className="h-[54px] w-full" onClick={onViewRewards}>
+                Redeem points
+              </Button>
             </div>
           </div>
 
@@ -330,5 +328,16 @@ export function DesktopReferralEarn({
         </div>
       </main>
     </section>
+  );
+}
+
+function ReferralMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <p className="border-l border-white/10 first:border-l-0">
+      <span className="block font-mono text-[22px] text-white">{value}</span>
+      <span className="mt-1 block text-[11px] uppercase tracking-[0.08em] text-white/52">
+        {label}
+      </span>
+    </p>
   );
 }
