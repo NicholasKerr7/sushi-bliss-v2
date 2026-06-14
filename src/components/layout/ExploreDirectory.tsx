@@ -178,9 +178,7 @@ function ExploreTile({
             : "bg-[radial-gradient(circle_at_20%_20%,rgba(215,168,79,0.14),transparent_58%)]",
         )}
       />
-      <span className="relative z-10 grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-black/38">
-        <AssetIcon size={compact ? 23 : 25} src={item.iconUrl} />
-      </span>
+      <ExploreIcon compact={compact} item={item} variant={variant} />
       <span
         className={classNames(
           "relative z-10 block min-w-0 text-white",
@@ -235,7 +233,7 @@ function ExplorePill({
       )}
       href={item.href}
     >
-      <AssetIcon size={28} src={item.iconUrl} />
+      <ExploreIcon item={item} variant="tablet" />
       <span className="min-w-0">
         <span className="block whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.04em] text-white">
           {item.label}
@@ -245,5 +243,55 @@ function ExplorePill({
         </span>
       </span>
     </Link>
+  );
+}
+
+function ExploreIcon({
+  compact = false,
+  item,
+  variant,
+}: {
+  compact?: boolean;
+  item: ReturnType<typeof getCustomerExploreItems>[number];
+  variant: ExploreDirectoryVariant;
+}) {
+  const isDesktop = variant === "desktop";
+  const isRed = item.tone === "red";
+  const chipSize = isDesktop
+    ? "h-12 w-12"
+    : compact
+      ? "h-11 w-11"
+      : "h-10 w-10";
+  const iconSize = isDesktop ? 36 : compact ? 31 : 32;
+
+  return (
+    <span
+      aria-hidden="true"
+      className={classNames(
+        "relative z-10 grid shrink-0 place-items-center overflow-hidden rounded-full border",
+        chipSize,
+        isRed
+          ? "border-[var(--sb-red-bright)]/42 bg-[radial-gradient(circle_at_42%_35%,rgba(239,47,37,0.34),rgba(54,7,7,0.42)_54%,rgba(0,0,0,0.58)_100%)] shadow-[0_0_18px_rgba(239,47,37,0.18)]"
+          : "border-[var(--sb-gold)]/30 bg-[radial-gradient(circle_at_42%_35%,rgba(215,168,79,0.24),rgba(30,22,10,0.44)_54%,rgba(0,0,0,0.58)_100%)] shadow-[0_0_18px_rgba(215,168,79,0.14)]",
+      )}
+    >
+      <span
+        className={classNames(
+          "absolute inset-[3px] rounded-full border",
+          isRed ? "border-[var(--sb-red-bright)]/16" : "border-white/8",
+        )}
+      />
+      <AssetIcon
+        className={classNames(
+          "relative z-10 brightness-125 contrast-125 saturate-150",
+          isRed
+            ? "drop-shadow-[0_0_8px_rgba(239,47,37,0.42)]"
+            : "drop-shadow-[0_0_8px_rgba(215,168,79,0.42)]",
+        )}
+        loading={isDesktop ? "eager" : "lazy"}
+        size={iconSize}
+        src={item.iconUrl}
+      />
+    </span>
   );
 }
