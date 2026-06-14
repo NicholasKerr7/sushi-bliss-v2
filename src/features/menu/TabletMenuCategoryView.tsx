@@ -357,7 +357,7 @@ export function TabletMenuCategoryView({
 
       <div className="mt-4 grid grid-cols-4 rounded-[14px] border border-white/14 bg-white/[0.035] p-4">
         <TabletBenefit icon={icons.flower} title="Premium Ingredients">
-          Sourced Daily
+          Market Fresh
         </TabletBenefit>
         <TabletBenefit icon={icons.crown} title="Expert Craftsmanship">
           By Master Chefs

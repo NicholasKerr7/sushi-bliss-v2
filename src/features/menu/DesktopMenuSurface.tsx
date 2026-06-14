@@ -332,7 +332,7 @@ function DesktopCategoryNav({
 
 function DesktopCategoryBenefitStrip() {
   const benefits = [
-    ["floral-emblem-icon.png", "Premium Ingredients", "Sourced Daily"],
+    ["floral-emblem-icon.png", "Ingredient Sourcing", "Sourced Daily"],
     ["lotus-crown-icon.png", "Expert Craftsmanship", "By Master Chefs"],
     ["chef-crest-icon.png", "Authentic Experience", "Traditional. Refined."],
     ["gold-alert-icon.png", "Allergen Info", "Available Upon Request"],
