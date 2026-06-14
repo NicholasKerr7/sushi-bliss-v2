@@ -1,26 +1,38 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
 import { CheckoutAddressSection } from "@/features/checkout/CheckoutAddressSection";
-import { CheckoutModeSelector } from "@/features/checkout/CheckoutModeSelector";
-import { CheckoutPaymentSection } from "@/features/checkout/CheckoutPaymentSection";
-import { CheckoutPromoSection } from "@/features/checkout/CheckoutPromoSection";
-import { CheckoutReview } from "@/features/checkout/CheckoutReview";
 import { featuredAssets } from "@/features/home/visualHomeData";
-import type { useCart } from "@/hooks/useCart";
-import type { useCheckout } from "@/hooks/useCheckout";
 import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { Order } from "@/types/order";
 
 import { DesktopCartPanel } from "./DesktopCartPanel";
+import {
+  CheckoutStepTitle,
+  DesktopAddressSummary,
+  DesktopConfirmationOrderSummary,
+  DesktopFulfillmentCards,
+  DesktopOfferCode,
+  DesktopPaymentSummary,
+  DesktopReviewInfoCard,
+  DesktopReviewTotals,
+  DesktopTipButtons,
+  ReviewTrustStrip,
+  formatCheckoutDate,
+  formatCheckoutTime,
+  selectNextAddress,
+  selectNextPaymentMethod,
+} from "./DesktopCheckoutParts";
+import type {
+  DesktopCartItems as CartItems,
+  DesktopCheckoutState as CheckoutState,
+} from "./DesktopCheckoutParts";
 import { DesktopBenefitStrip } from "./DesktopMenuChrome";
-import { InfoCard, TipSelector } from "./DesktopMenuPrimitives";
-
-type CheckoutState = ReturnType<typeof useCheckout>;
-type CartItems = ReturnType<typeof useCart>["items"];
+import { InfoCard } from "./DesktopMenuPrimitives";
 
 export function DesktopCheckoutView({
   checkout,
@@ -38,74 +50,170 @@ export function DesktopCheckoutView({
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
   return (
-    <main className="mx-auto max-w-[1534px] px-7 pb-6 pt-8">
-      <h1 className="editorial-title text-[46px] uppercase tracking-[0.06em]">
-        Checkout
-      </h1>
-      <p className="mt-1 text-[16px] text-[var(--sb-gold-soft)]">
-        Almost there. Complete your order.
-      </p>
-      <div className="mt-5 grid grid-cols-[minmax(0,1fr)_412px] gap-5">
-        <section className="space-y-6 rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
-          <CheckoutModeSelector
-            mode={checkout.mode}
-            onModeChange={checkout.setMode}
+    <main className="mx-auto max-w-[1534px] px-7 pb-5 pt-6">
+      <div className="grid grid-cols-[minmax(0,1fr)_412px] items-end gap-5">
+        <div>
+          <h1 className="editorial-title text-[46px] uppercase tracking-[0.06em]">
+            Checkout
+          </h1>
+          <p className="mt-1 text-[16px] text-[var(--sb-gold-soft)]">
+            Almost there. Complete your order.
+          </p>
+        </div>
+        <p className="justify-self-end rounded-full border border-[var(--sb-gold)]/32 px-4 py-2 text-[12px] uppercase tracking-[0.14em] text-white/56">
+          Secure order review
+        </p>
+      </div>
+
+      <div className="mt-4 grid grid-cols-[minmax(0,1fr)_412px] gap-5">
+        <section className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.42)]">
+          <CheckoutStepTitle
+            accessibleName="Fulfillment"
+            number={1}
+            title="Delivery or pickup"
           />
-          <CheckoutAddressSection
-            addressDraft={checkout.addressDraft}
-            addressFormOpen={checkout.addressFormOpen}
-            addresses={checkout.addresses}
-            editingAddressId={checkout.editingAddressId}
-            mode={checkout.mode}
-            onCancelAddressForm={checkout.cancelAddressForm}
-            onSaveAddressDraft={checkout.saveAddressDraft}
-            onSelectAddress={checkout.setSelectedAddressId}
-            onStartEditSelectedAddress={checkout.startEditSelectedAddress}
-            onStartNewAddress={checkout.startNewAddress}
-            onUpdateAddressDraft={checkout.updateAddressDraft}
-            selectedAddressId={checkout.selectedAddressId}
-            validationMessage={checkout.validation.address}
-          />
-          <div className="grid grid-cols-2 gap-4">
-            <Select
-              error={checkout.validation.time}
-              id="desktop-checkout-time"
-              label={
-                checkout.mode === "delivery" ? "Delivery time" : "Pickup time"
+          <DesktopFulfillmentCards checkout={checkout} />
+
+          <div className="mt-4 border-t border-white/10 pt-4">
+            <CheckoutStepTitle
+              action={
+                checkout.mode === "delivery" ? (
+                  <div className="flex gap-2">
+                    <button
+                      className="h-9 rounded-full border border-[var(--sb-gold)]/45 px-4 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                      onClick={checkout.startNewAddress}
+                      type="button"
+                    >
+                      Add
+                    </button>
+                    <button
+                      className="h-9 rounded-full border border-white/14 px-4 text-[12px] uppercase tracking-[0.08em] text-white/62 disabled:cursor-not-allowed disabled:opacity-45"
+                      disabled={checkout.addresses.length < 2}
+                      onClick={() => selectNextAddress(checkout)}
+                      type="button"
+                    >
+                      Change
+                    </button>
+                  </div>
+                ) : null
               }
-              onChange={(event) => checkout.setSelectedTime(event.target.value)}
-              options={checkout.timeSlots.map((slot) => ({
-                label: slot.label,
-                value: slot.value,
-              }))}
-              value={checkout.selectedTime}
+              number={2}
+              title={
+                checkout.mode === "delivery"
+                  ? "Delivery address"
+                  : "Pickup location"
+              }
             />
-            <TipSelector
-              selectedTip={checkout.tipPercent}
-              subtotalCents={checkout.reviewTotals.subtotalCents}
-              onTipChange={checkout.setTipPercent}
-            />
+            <DesktopAddressSummary checkout={checkout} />
+            {checkout.addressFormOpen ? (
+              <div className="mt-3 rounded-[14px] border border-white/12 bg-black/22 p-4">
+                <CheckoutAddressSection
+                  addressDraft={checkout.addressDraft}
+                  addressFormOpen={checkout.addressFormOpen}
+                  addresses={checkout.addresses}
+                  editingAddressId={checkout.editingAddressId}
+                  mode={checkout.mode}
+                  onCancelAddressForm={checkout.cancelAddressForm}
+                  onSaveAddressDraft={checkout.saveAddressDraft}
+                  onSelectAddress={checkout.setSelectedAddressId}
+                  onStartEditSelectedAddress={checkout.startEditSelectedAddress}
+                  onStartNewAddress={checkout.startNewAddress}
+                  onUpdateAddressDraft={checkout.updateAddressDraft}
+                  selectedAddressId={checkout.selectedAddressId}
+                  validationMessage={checkout.validation.address}
+                />
+              </div>
+            ) : checkout.validation.address ? (
+              <p className="mt-2 text-xs text-[var(--sb-red-bright)]">
+                {checkout.validation.address}
+              </p>
+            ) : null}
           </div>
-          <CheckoutPaymentSection
-            onSelectPaymentMethod={checkout.setSelectedPaymentMethodId}
-            paymentMethods={checkout.paymentMethods}
-            selectedPaymentMethodId={checkout.selectedPaymentMethodId}
-            validationMessage={checkout.validation.payment}
-          />
-          <CheckoutPromoSection
-            appliedPromo={checkout.appliedPromo}
-            onApplyPromoCode={checkout.applyPromoCode}
-            onClearPromoCode={checkout.clearPromoCode}
-            onPromoCodeChange={checkout.setPromoCode}
-            promoCode={checkout.promoCode}
-            validationMessage={checkout.validation.promo}
-          />
-          <div className="grid grid-cols-[230px_1fr] gap-4 pt-2">
+
+          <div className="mt-4 grid grid-cols-2 gap-4 border-t border-white/10 pt-4">
+            <section>
+              <CheckoutStepTitle number={3} title="Date & time" />
+              <div className="mt-3 grid grid-cols-2 overflow-hidden rounded-[12px] border border-white/12 bg-black/24">
+                <div className="border-r border-white/10 px-4 py-3">
+                  <p className="text-[12px] uppercase tracking-[0.1em] text-white/48">
+                    Date
+                  </p>
+                  <p className="mt-2 text-[14px] text-white">
+                    {formatCheckoutDate(checkout.selectedTime)}
+                  </p>
+                </div>
+                <div className="px-4 py-3">
+                  <p className="text-[12px] uppercase tracking-[0.1em] text-white/48">
+                    Time
+                  </p>
+                  <Select
+                    error={checkout.validation.time}
+                    id="desktop-checkout-time"
+                    label={
+                      checkout.mode === "delivery"
+                        ? "Delivery time"
+                        : "Pickup time"
+                    }
+                    onChange={(event) =>
+                      checkout.setSelectedTime(event.target.value)
+                    }
+                    options={checkout.timeSlots.map((slot) => ({
+                      label: formatCheckoutTime(slot.value),
+                      value: slot.value,
+                    }))}
+                    selectClassName="min-h-0 rounded-none border-0 bg-transparent px-0 py-0 text-[14px] text-white focus:ring-0"
+                    value={checkout.selectedTime}
+                    wrapperClassName="mt-2 space-y-0 [&_label]:sr-only"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <CheckoutStepTitle number={4} title="Add a tip" />
+              <DesktopTipButtons
+                selectedTip={checkout.tipPercent}
+                subtotalCents={checkout.reviewTotals.subtotalCents}
+                onTipChange={checkout.setTipPercent}
+              />
+              <p className="mt-2 flex items-center justify-center gap-2 text-[12px] text-white/44">
+                <AssetIcon size={14} src="/assets/icons/gift-icon.png" />
+                100% of tips go to our team
+              </p>
+            </section>
+          </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-4 border-t border-white/10 pt-4">
+            <section>
+              <CheckoutStepTitle
+                action={
+                  <button
+                    className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] disabled:cursor-not-allowed disabled:opacity-45"
+                    disabled={checkout.paymentMethods.length < 2}
+                    onClick={() => selectNextPaymentMethod(checkout)}
+                    type="button"
+                  >
+                    Change
+                  </button>
+                }
+                number={5}
+                title="Payment method"
+              />
+              <DesktopPaymentSummary checkout={checkout} />
+            </section>
+            <section>
+              <CheckoutStepTitle number={6} title="Offer code" />
+              <DesktopOfferCode checkout={checkout} />
+            </section>
+          </div>
+
+          <div className="mt-4 grid grid-cols-[230px_1fr] gap-4 border-t border-white/10 pt-4">
             <button
-              className="h-[56px] rounded-[12px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              className="inline-flex h-[56px] items-center justify-center gap-3 rounded-[12px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54"
               onClick={onBackToCart}
               type="button"
             >
+              <ChevronIcon direction="left" size={17} />
               Back to cart
             </button>
             <Button
@@ -149,78 +257,72 @@ export function DesktopReviewView({
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
   return (
-    <main className="mx-auto max-w-[1470px] px-7 pb-6 pt-8">
-      <div className="flex items-start justify-between gap-6">
-        <div>
-          <p className="text-[14px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-            Review your order
-          </p>
-          <h1 className="editorial-title mt-2 text-[44px] uppercase leading-none">
-            Almost there.
-            <span className="block text-[var(--sb-red-bright)]">
-              Let&apos;s make it perfect.
-            </span>
-          </h1>
-        </div>
-        <button
-          className="h-11 w-[180px] rounded-[10px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-          onClick={onBackToCheckout}
-          type="button"
-        >
-          Back to cart
-        </button>
-      </div>
-      <div className="mt-6 grid grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)] gap-5">
-        <section className="space-y-4">
-          <DesktopCartPanel
-            ctaLabel="Edit items"
-            disabled
-            items={items}
-            totals={checkout.reviewTotals}
-            onRemove={onRemoveItem}
-            onUpdateQuantity={onUpdateQuantity}
-          />
-          <div className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
-            <h2 className="editorial-title text-[18px] uppercase text-[var(--sb-gold-soft)]">
-              Bliss rewards
-            </h2>
-            <p className="mt-2 text-[14px] text-white/64">
-              You will earn {Math.floor(checkout.reviewTotals.totalCents / 100)}{" "}
-              Bliss Points with this order.
+    <main className="mx-auto max-w-[1470px] px-7 pb-6 pt-5">
+      <section className="rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.54)]">
+        <div className="flex items-start justify-between gap-6">
+          <div>
+            <p className="text-[14px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+              Review your order
+            </p>
+            <h1 className="editorial-title mt-2 text-[44px] uppercase leading-none">
+              Almost there.
+              <span className="block text-[var(--sb-red-bright)]">
+                Let&apos;s make it perfect.
+              </span>
+            </h1>
+            <p className="mt-3 text-[15px] text-[var(--sb-gold-soft)]">
+              Confirm every detail before placing your order.
             </p>
           </div>
-        </section>
-        <section className="space-y-4">
-          <InfoCard title="Delivery information">
-            {checkout.selectedAddress
-              ? `${checkout.selectedAddress.line1}, ${checkout.selectedAddress.city}, ${checkout.selectedAddress.region}`
-              : "Pickup at Sushi Bliss counter."}
-            <span className="mt-2 block text-[var(--sb-red-bright)]">
-              {checkout.selectedTime
-                ? formatDateTime(checkout.selectedTime)
-                : "Selected time"}
-            </span>
-          </InfoCard>
-          <InfoCard title="Payment method">
-            {checkout.selectedPaymentMethod
-              ? `${checkout.selectedPaymentMethod.brand} **** ${checkout.selectedPaymentMethod.last4}`
-              : "Select a payment method"}
-          </InfoCard>
-          <CheckoutReview
-            fulfillmentAt={checkout.selectedTime}
-            items={items}
-            mode={checkout.mode}
-            totals={checkout.reviewTotals}
-          />
-          <Button
-            className="h-[64px] w-full rounded-[12px] text-[16px] uppercase tracking-[0.08em]"
-            onClick={onPlaceOrder}
+          <button
+            className="inline-flex h-11 w-[180px] items-center justify-center gap-3 rounded-[10px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54"
+            onClick={onBackToCheckout}
+            type="button"
           >
-            Place order
-            <span>{formatMoney(checkout.reviewTotals.totalCents)}</span>
-          </Button>
-        </section>
-      </div>
+            <ChevronIcon direction="left" size={17} />
+            Back to cart
+          </button>
+        </div>
+        <div className="mt-5 grid grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)] gap-5">
+          <section className="space-y-4">
+            <DesktopCartPanel
+              ctaLabel="Edit items"
+              items={items}
+              showCta={false}
+              totals={checkout.reviewTotals}
+              onCheckout={onBackToCheckout}
+              onRemove={onRemoveItem}
+              onUpdateQuantity={onUpdateQuantity}
+            />
+            <ReviewTrustStrip totalCents={checkout.reviewTotals.totalCents} />
+          </section>
+          <section className="space-y-4">
+            <DesktopReviewInfoCard title="Delivery information">
+              {checkout.selectedAddress
+                ? `${checkout.selectedAddress.line1}, ${checkout.selectedAddress.city}, ${checkout.selectedAddress.region}`
+                : "Pickup at Sushi Bliss counter."}
+              <span className="mt-2 block text-[var(--sb-red-bright)]">
+                {checkout.selectedTime
+                  ? formatDateTime(checkout.selectedTime)
+                  : "Selected time"}
+              </span>
+            </DesktopReviewInfoCard>
+            <DesktopReviewInfoCard title="Payment method">
+              {checkout.selectedPaymentMethod
+                ? `${checkout.selectedPaymentMethod.brand} **** ${checkout.selectedPaymentMethod.last4}`
+                : "Select a payment method"}
+            </DesktopReviewInfoCard>
+            <DesktopReviewTotals checkout={checkout} items={items} />
+            <Button
+              className="h-[64px] w-full rounded-[12px] text-[16px] uppercase tracking-[0.08em]"
+              onClick={onPlaceOrder}
+            >
+              Place order
+              <span>{formatMoney(checkout.reviewTotals.totalCents)}</span>
+            </Button>
+          </section>
+        </div>
+      </section>
     </main>
   );
 }
@@ -240,9 +342,9 @@ export function DesktopConfirmationView({
 
   return (
     <main className="mx-auto max-w-[1530px] px-7 pb-6 pt-4">
-      <section className="rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] p-8 shadow-[0_28px_90px_rgba(0,0,0,0.54)]">
-        <div className="grid grid-cols-[0.52fr_0.48fr] gap-6">
-          <div className="relative min-h-[260px] overflow-hidden rounded-[18px]">
+      <section className="rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.54)]">
+        <div className="grid grid-cols-[0.52fr_0.48fr] gap-5">
+          <div className="relative min-h-[220px] overflow-hidden rounded-[18px]">
             <Image
               alt=""
               className="object-cover"
@@ -253,8 +355,8 @@ export function DesktopConfirmationView({
               src={featuredAssets.heroSushi.publicUrl}
             />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.78),rgba(0,0,0,0.12))]" />
-            <div className="relative z-10 p-8">
-              <h1 className="editorial-title text-[48px] uppercase leading-none">
+            <div className="relative z-10 p-6">
+              <h1 className="editorial-title text-[43px] uppercase leading-none">
                 Thank you!
                 <span className="block text-[var(--sb-red-bright)]">
                   Your order is confirmed
@@ -279,15 +381,8 @@ export function DesktopConfirmationView({
             </p>
           </div>
         </div>
-        <div className="mt-5 grid grid-cols-[0.42fr_0.29fr_0.29fr] gap-4">
-          <DesktopCartPanel
-            ctaLabel="Track order"
-            items={order.items}
-            totals={order.totals}
-            onCheckout={() => {
-              window.location.href = "/orders";
-            }}
-          />
+        <div className="mt-4 grid grid-cols-[0.42fr_0.29fr_0.29fr] items-start gap-4">
+          <DesktopConfirmationOrderSummary order={order} />
           <div className="grid gap-4">
             <InfoCard title="Estimated delivery">30 - 40 min</InfoCard>
             <InfoCard title="Delivery to">

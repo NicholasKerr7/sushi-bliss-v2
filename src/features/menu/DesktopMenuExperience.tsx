@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useCart } from "@/hooks/useCart";
 import { useCheckout } from "@/hooks/useCheckout";
@@ -124,6 +124,10 @@ export function DesktopMenuExperience({
     categoryId === "recommended" ||
     categoryId === "chef-specials" ||
     categories.some((categoryItem) => categoryItem.id === categoryId);
+
+  useEffect(() => {
+    window.scrollTo({ left: 0, top: 0 });
+  }, [view]);
 
   const openItem = (item: MenuItem, nextView: DesktopMenuView = "detail") => {
     setSelectedItem(item);

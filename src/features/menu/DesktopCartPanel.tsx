@@ -17,6 +17,7 @@ interface DesktopCartPanelProps {
   onCheckout?: () => void;
   onRemove?: (id: string) => void;
   onUpdateQuantity?: (id: string, quantity: number) => void;
+  showCta?: boolean;
   totals: OrderTotals;
 }
 
@@ -28,6 +29,7 @@ export function DesktopCartPanel({
   onCheckout,
   onRemove,
   onUpdateQuantity,
+  showCta = true,
   totals,
 }: DesktopCartPanelProps) {
   const itemCount = items.length;
@@ -121,17 +123,19 @@ export function DesktopCartPanel({
         </span>
       </div>
 
-      <button
-        className="red-glow-button mt-5 h-[64px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-45 min-[1500px]:mt-4 min-[1500px]:h-[56px]"
-        disabled={disabled || items.length === 0}
-        onClick={onCheckout}
-        type="button"
-      >
-        {ctaLabel}
-        <span className="ml-4" aria-hidden="true">
-          <ChevronIcon direction="right" size={18} />
-        </span>
-      </button>
+      {showCta ? (
+        <button
+          className="red-glow-button mt-5 h-[64px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-45 min-[1500px]:mt-4 min-[1500px]:h-[56px]"
+          disabled={disabled || items.length === 0}
+          onClick={onCheckout}
+          type="button"
+        >
+          {ctaLabel}
+          <span className="ml-4" aria-hidden="true">
+            <ChevronIcon direction="right" size={18} />
+          </span>
+        </button>
+      ) : null}
 
       {items.length > 0 ? (
         <div className="mt-4 hidden rounded-[12px] border border-[var(--sb-border)] bg-black/28 p-4 min-[1500px]:grid min-[1500px]:grid-cols-[1fr_auto] min-[1500px]:items-center min-[1500px]:gap-4">
