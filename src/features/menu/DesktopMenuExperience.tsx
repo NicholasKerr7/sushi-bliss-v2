@@ -28,7 +28,11 @@ import {
 import { DesktopMenuHeader } from "./DesktopMenuChrome";
 import { DesktopMenuSurface } from "./DesktopMenuSurface";
 import type { DesktopMenuView } from "./DesktopMenuTypes";
-import { allTabletMenuItems, menuHeroItem } from "./tabletMenuData";
+import {
+  allTabletMenuItems,
+  desktopOtoroRelatedItems,
+  menuHeroItem,
+} from "./tabletMenuData";
 
 interface DesktopMenuExperienceProps {
   category: string;
@@ -109,6 +113,12 @@ export function DesktopMenuExperience({
     selectedAddOns,
   );
   const totalCents = unitPriceCents * quantity;
+  const detailRelatedItems =
+    selectedItem.id === "otoro-nigiri"
+      ? desktopOtoroRelatedItems
+      : activeCategoryItems
+          .filter((item) => item.id !== selectedItem.id)
+          .slice(0, 4);
 
   const categoryExists = (categoryId: string) =>
     categoryId === "recommended" ||
@@ -238,9 +248,7 @@ export function DesktopMenuExperience({
           isFavorite={isFavorite(selectedItem.id)}
           item={selectedItem}
           quantity={quantity}
-          relatedItems={activeCategoryItems
-            .filter((item) => item.id !== selectedItem.id)
-            .slice(0, 4)}
+          relatedItems={detailRelatedItems}
           totalCents={selectedItem.priceCents * quantity}
           onAddRelatedItem={handleAddDefaultItem}
           onAddToCart={() => handleAddCustomizedItem("menu")}

@@ -55,6 +55,13 @@ export const desktopNigiriItems = getMenuItemsById([
   "ikura-gunkan",
 ]);
 
+export const desktopOtoroRelatedItems = getMenuItemsById([
+  "chutoro-nigiri",
+  "tuna-sashimi",
+  "truffle-wagyu-nigiri",
+  "uni-nigiri",
+]);
+
 export const recentTabletSearches = [
   "Spicy tuna roll",
   "Salmon sashimi",

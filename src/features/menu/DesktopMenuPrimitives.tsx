@@ -1,8 +1,23 @@
 import type { ReactNode } from "react";
 
+import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { CartAddOnDefinition } from "@/types/order";
+
+const addOnIconById: Record<string, string> = {
+  "caviar-5g": "/assets/ingredients/caviar.webp",
+  edamame: "/assets/food/edamame-in-a-rustic-bowl.webp",
+  "edamame-side": "/assets/food/edamame-in-a-rustic-bowl.webp",
+  "gold-flakes": "/assets/icons/star-icon.png",
+  "green-onion": "/assets/icons/vegetarian-sushi-icon.webp",
+  "ikura-salmon-roe": "/assets/ingredients/ikura-salmon-roe.webp",
+  "miso-soup-side": "/assets/icons/miso-soup-icon.png",
+  "pickled-ginger-side": "/assets/icons/lotus-icon.png",
+  "seaweed-salad-side": "/assets/icons/vegetarian-sushi-icon.webp",
+  "truffle-oil": "/assets/editorial/sake-vase-set-black-gold-floral.webp",
+  "yuzu-zest": "/assets/icons/gold-alert-icon.png",
+};
 
 export function DesktopAddOnButton({
   addOn,
@@ -15,16 +30,18 @@ export function DesktopAddOnButton({
   compact?: boolean;
   onToggle: (addOnId: string) => void;
 }) {
+  const icon = addOnIconById[addOn.id] || "/assets/icons/plus-icon.png";
+
   return (
     <label
       className={classNames(
-        "relative grid cursor-pointer place-items-center rounded-[10px] border text-center transition",
+        "relative grid cursor-pointer items-center rounded-[10px] border text-left transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
         compact
-          ? "min-h-[52px] px-2 text-[11px]"
-          : "min-h-[58px] px-3 text-[12px]",
+          ? "min-h-[42px] grid-cols-[26px_1fr] gap-2 px-2 text-[11px]"
+          : "min-h-[48px] grid-cols-[30px_1fr_20px] gap-2.5 px-2.5 text-[11px]",
         checked
-          ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12 text-white"
-          : "border-white/12 bg-white/[0.025] text-white/62",
+          ? "border-[var(--sb-red-bright)] bg-[linear-gradient(180deg,rgba(130,12,9,0.58),rgba(28,4,4,0.82))] text-white shadow-[inset_0_0_18px_rgba(255,35,22,0.16)]"
+          : "border-white/12 bg-white/[0.025] text-white/66 hover:border-[var(--sb-gold)]/38 hover:bg-white/[0.045]",
       )}
     >
       <input
@@ -33,9 +50,32 @@ export function DesktopAddOnButton({
         onChange={() => onToggle(addOn.id)}
         type="checkbox"
       />
-      <span>{addOn.label}</span>
-      <span className="font-mono text-[var(--sb-gold-soft)]">
-        {formatMoney(addOn.priceCents)}
+      <span
+        className={classNames(
+          "grid place-items-center overflow-hidden rounded-[8px] border border-white/10 bg-black/34",
+          compact ? "h-6 w-6" : "h-7 w-7",
+        )}
+      >
+        <AssetIcon size={compact ? 21 : 23} src={icon} />
+      </span>
+      <span className="min-w-0">
+        <span className="block leading-4">{addOn.label}</span>
+        <span className="font-mono text-[var(--sb-gold-soft)]">
+          +{formatMoney(addOn.priceCents)}
+        </span>
+      </span>
+      <span
+        className={classNames(
+          "grid h-5 w-5 place-items-center rounded-full border text-[11px]",
+          compact && "absolute right-1.5 top-1.5",
+          checked
+            ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]"
+            : "border-white/14",
+        )}
+      >
+        {checked ? (
+          <AssetIcon size={11} src="/assets/icons/check-icon.png" />
+        ) : null}
       </span>
     </label>
   );
@@ -84,11 +124,11 @@ export function CustomizeGroup({
   title: string;
 }) {
   return (
-    <section className="border-t border-white/10 pt-4">
-      <h2 className="editorial-title text-[16px] uppercase tracking-[0.08em]">
+    <section className="border-t border-white/10 pt-3">
+      <h2 className="editorial-title text-[15px] uppercase tracking-[0.08em]">
         {title}
       </h2>
-      <div className="mt-3">{children}</div>
+      <div className="mt-2">{children}</div>
     </section>
   );
 }
