@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
@@ -10,49 +10,19 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { icons } from "@/features/home/visualHomeData";
 import { useCart } from "@/hooks/useCart";
-import { useFavorites } from "@/hooks/useFavorites";
+import { useRecentlyViewed } from "@/hooks/useRecentlyViewed";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 
-import {
-  getRecentlyViewedSections,
-  type RecentlyViewedEntry,
-} from "./recentlyViewedContent";
 import { MobileFavoritesHeader } from "./MobileFavoritesPrimitives";
+import type { RecentlyViewedEntry } from "./recentlyViewedContent";
 
 /** Mobile-first recently viewed history with real navigation and clearing actions. */
 export function MobileRecentlyViewedPage() {
-  const initialSections = useMemo(() => getRecentlyViewedSections(), []);
-  const [sections, setSections] = useState(initialSections);
-  const [savedExperienceIds, setSavedExperienceIds] = useState(
-    () =>
-      new Set(
-        initialSections.flatMap((section) =>
-          section.entries
-            .filter((entry) => entry.type === "experience" && entry.isSaved)
-            .map((entry) => entry.id),
-        ),
-      ),
-  );
   const [cartOpen, setCartOpen] = useState(false);
   const { itemCount } = useCart();
-  const { isFavorite, toggleFavorite } = useFavorites();
-  const hasHistory = sections.some((section) => section.entries.length > 0);
-
-  const clearHistory = () => setSections([]);
-  const toggleSavedExperience = (id: string) => {
-    setSavedExperienceIds((currentIds) => {
-      const nextIds = new Set(currentIds);
-
-      if (nextIds.has(id)) {
-        nextIds.delete(id);
-      } else {
-        nextIds.add(id);
-      }
-
-      return nextIds;
-    });
-  };
+  const { clearHistory, hasHistory, isEntrySaved, sections, toggleEntrySaved } =
+    useRecentlyViewed();
 
   return (
     <section
@@ -94,17 +64,10 @@ export function MobileRecentlyViewedPage() {
                   {section.entries.map((entry) => (
                     <RecentlyViewedCard
                       entry={entry}
-                      isSaved={
-                        entry.type === "dish"
-                          ? isFavorite(entry.id)
-                          : savedExperienceIds.has(entry.id)
-                      }
+                      eagerImage={section.label === "Today"}
+                      isSaved={isEntrySaved(entry)}
                       key={`${section.label}-${entry.id}`}
-                      onToggleSaved={
-                        entry.type === "dish"
-                          ? () => toggleFavorite(entry.id)
-                          : () => toggleSavedExperience(entry.id)
-                      }
+                      onToggleSaved={() => toggleEntrySaved(entry)}
                     />
                   ))}
                 </div>
@@ -149,10 +112,12 @@ export function MobileRecentlyViewedPage() {
 }
 
 function RecentlyViewedCard({
+  eagerImage,
   entry,
   isSaved,
   onToggleSaved,
 }: {
+  eagerImage: boolean;
   entry: RecentlyViewedEntry;
   isSaved: boolean;
   onToggleSaved: () => void;
@@ -164,6 +129,8 @@ function RecentlyViewedCard({
           alt={entry.image.alt || entry.title}
           className="object-cover"
           fill
+          loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="(min-width: 768px) 220px, 150px"
           src={entry.image.publicUrl}
         />

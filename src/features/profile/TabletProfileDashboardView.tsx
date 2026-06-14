@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
+import { ExploreDirectory } from "@/components/layout/ExploreDirectory";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { locations } from "@/data/locations";
@@ -333,6 +334,8 @@ export function TabletProfileDashboardView({
             ))}
           </div>
         </section>
+
+        <ExploreDirectory variant="tablet" />
 
         <section className="mt-3 grid grid-cols-2 gap-3 min-[1080px]:mt-4 min-[1080px]:gap-5">
           <article className="min-h-[218px] rounded-[14px] border border-white/10 bg-white/[0.035] p-4 min-[1080px]:min-h-[230px]">

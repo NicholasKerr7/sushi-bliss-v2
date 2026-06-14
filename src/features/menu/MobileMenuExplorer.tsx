@@ -260,6 +260,7 @@ function MobileCategoryView({
           alt=""
           className="object-cover object-[75%_38%]"
           fill
+          loading="eager"
           priority
           sizes="430px"
           src={getTabletPresentationImage(heroItem)}

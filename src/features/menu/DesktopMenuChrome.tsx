@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
+import { DesktopExploreMenu } from "@/components/layout/DesktopExploreMenu";
 import { chefAvatar, icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 import { getBrandContent } from "@/lib/data";
@@ -161,7 +162,7 @@ export function DesktopMenuHeader({
         </Link>
         <nav
           aria-label="Desktop primary"
-          className="flex flex-1 items-center justify-center gap-5 min-[1500px]:gap-7"
+          className="flex flex-1 items-center justify-center gap-4 min-[1500px]:gap-6"
         >
           {navItems.map(([id, label, href]) => {
             const active = id === activeId;
@@ -182,6 +183,7 @@ export function DesktopMenuHeader({
               </Link>
             );
           })}
+          <DesktopExploreMenu activeId={activeId} />
         </nav>
         <div className="flex min-w-[300px] items-center justify-end gap-5">
           <Link

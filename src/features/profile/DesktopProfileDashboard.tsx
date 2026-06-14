@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
+import { ExploreDirectory } from "@/components/layout/ExploreDirectory";
 import { Button } from "@/components/ui/Button";
 import { DesktopBenefitStrip } from "@/features/menu/DesktopMenuChrome";
 import { classNames } from "@/lib/classNames";
@@ -183,6 +184,10 @@ export function DesktopProfileDashboard({
           />
           <RecentActivityCard />
         </section>
+
+        <div className="px-4 pb-4">
+          <ExploreDirectory variant="desktop" />
+        </div>
 
         <div className="px-4 pb-4">
           <DesktopBenefitStrip />
@@ -434,7 +439,10 @@ function UpcomingReservationCard({
           <p className="mt-2 text-[13px] text-white/56">
             Active orders: {activeOrderCount}
           </p>
-          <Button className="mt-4 h-10 w-[210px] rounded-[10px] text-[12px] uppercase tracking-[0.08em]">
+          <Button
+            className="mt-4 h-10 w-[230px] rounded-[10px] whitespace-nowrap text-[12px] uppercase tracking-[0.08em]"
+            href="/reservations"
+          >
             View reservation
           </Button>
         </div>

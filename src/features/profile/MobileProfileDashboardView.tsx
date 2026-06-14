@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
+import { ExploreDirectory } from "@/components/layout/ExploreDirectory";
 import { locations } from "@/data/locations";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
@@ -188,6 +189,8 @@ export function MobileProfileDashboardView({
           upcomingReservationCount={upcomingReservations.length}
           onOpenPreferences={() => onOpenSurface("preferences")}
         />
+
+        <ExploreDirectory variant="mobile" />
 
         <MobileProfilePanel className="mt-4 overflow-hidden">
           <ProfilePreviewHeader

@@ -196,7 +196,7 @@ function DesktopStoryView({
             sourcing, careful rice, and a calm dining room where every course
             lands at the right moment.
           </p>
-          <div className="mt-8 grid grid-cols-[230px_210px] gap-4">
+          <div className="mt-8 grid max-w-[690px] grid-cols-[230px_210px_210px] gap-4">
             <Button
               className="h-[58px] rounded-[12px] text-[13px] uppercase tracking-[0.08em]"
               onClick={() => onSurfaceChange("sourcing")}
@@ -210,6 +210,13 @@ function DesktopStoryView({
             >
               View gallery
             </button>
+            <Button
+              className="h-[58px] rounded-[12px] text-[13px] uppercase tracking-[0.08em]"
+              href="/chefs"
+              variant="secondary"
+            >
+              Meet chefs
+            </Button>
           </div>
         </div>
         <div className="relative min-h-[430px]">

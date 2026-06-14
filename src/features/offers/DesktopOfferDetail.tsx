@@ -55,6 +55,7 @@ export function DesktopOfferDetail({
                 alt=""
                 className="object-cover"
                 fill
+                loading="eager"
                 priority
                 sizes="1030px"
                 src={sakuraOffer.imageUrl}

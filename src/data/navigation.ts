@@ -62,10 +62,28 @@ export const desktopNavigation: NavigationItem[] = [
     iconUrl: "/assets/icons/gift-icon.png",
   },
   {
+    id: "locations",
+    label: "Locations",
+    href: "/locations",
+    iconUrl: "/assets/icons/map-pin-icon.png",
+  },
+  {
     id: "offers",
     label: "Offers",
     href: "/offers",
     iconUrl: "/assets/icons/gift-icon.png",
+  },
+  {
+    id: "favorites",
+    label: "Favorites",
+    href: "/favorites",
+    iconUrl: "/assets/icons/heart-icon.png",
+  },
+  {
+    id: "recently-viewed",
+    label: "Recent",
+    href: "/recently-viewed",
+    iconUrl: "/assets/icons/clock-icon.png",
   },
   {
     id: "support",

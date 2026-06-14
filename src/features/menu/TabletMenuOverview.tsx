@@ -78,6 +78,7 @@ export function TabletMenuOverview({
           alt={activeRecommendation.image.alt || activeRecommendation.name}
           className="object-cover object-[72%_45%]"
           fill
+          loading="eager"
           priority
           sizes="1034px"
           src={

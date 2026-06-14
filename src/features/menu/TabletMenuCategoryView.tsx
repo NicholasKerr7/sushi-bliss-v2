@@ -241,6 +241,7 @@ export function TabletMenuCategoryView({
           alt={heroAlt}
           className={classNames("object-cover", content.heroPosition)}
           fill
+          loading="eager"
           priority
           sizes="1034px"
           src={heroImage}

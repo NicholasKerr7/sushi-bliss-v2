@@ -15,6 +15,7 @@ const customerRoutePaths = [
   "/omakase",
   "/orders",
   "/profile",
+  "/recently-viewed",
   "/reservations",
   "/support",
 ] as const;
