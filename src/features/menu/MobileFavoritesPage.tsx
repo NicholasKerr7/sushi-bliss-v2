@@ -120,9 +120,10 @@ export function MobileFavoritesPage() {
               <button
                 className="rounded-full border border-[var(--sb-border)] bg-black/28 px-4 py-2 text-[11px] uppercase tracking-[0.08em] text-white/58"
                 onClick={clearFavorites}
+                title="Clear saved menu dishes"
                 type="button"
               >
-                Clear
+                Clear saved
               </button>
             </div>
             <div className="mt-3 grid gap-3">

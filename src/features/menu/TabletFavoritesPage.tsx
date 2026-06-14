@@ -5,6 +5,8 @@ import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
+import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
+import { TabletExperienceHeader } from "@/components/layout/TabletExperienceHeader";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CartDrawer } from "@/features/cart/CartDrawer";
@@ -15,7 +17,6 @@ import { getDefaultCustomizations } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
 import { TabletFavoriteMenuCard } from "./TabletFavoriteMenuCard";
-import { TabletFavoritesTopNav } from "./TabletFavoritesTopNav";
 import { TabletSavedExperienceCard } from "./TabletSavedExperienceCard";
 import {
   tabletFavoriteBenefits,
@@ -86,15 +87,16 @@ export function TabletFavoritesPage() {
   return (
     <>
       <section
-        className="min-h-dvh overflow-x-hidden border border-white/10 bg-[#040506] text-white"
+        className="min-h-dvh overflow-x-hidden bg-[#040506] px-[18px] pb-[126px] pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pt-3"
         id="favorites"
       >
-        <TabletFavoritesTopNav
+        <TabletExperienceHeader
           cartCount={itemCount}
+          title="Favorites"
           onOpenCart={() => setCartOpen(true)}
         />
 
-        <main className="mx-auto w-full max-w-[1086px] px-12 pb-8 pt-8">
+        <main className="mx-auto w-full max-w-[1034px] pb-8 pt-6">
           <section className="flex items-start justify-between gap-8">
             <div>
               <h1 className="editorial-title text-[50px] uppercase leading-none tracking-[0.08em] text-white">
@@ -105,13 +107,18 @@ export function TabletFavoritesPage() {
               </p>
             </div>
             <Button
-              className="mt-1 h-[46px] rounded-[8px] border-[var(--sb-gold)]/58 px-6 text-[12px] uppercase tracking-[0.08em]"
+              className="mt-1 h-[46px] rounded-[8px] border-[var(--sb-red-bright)]/42 px-6 text-[12px] uppercase tracking-[0.08em] text-white/76 hover:border-[var(--sb-red-bright)]/70 hover:text-white"
               disabled={!hasFavorites}
               onClick={clearFavorites}
-              variant="secondary"
+              title={
+                hasFavorites
+                  ? "Clear saved menu dishes"
+                  : "No saved menu dishes to clear"
+              }
+              variant="ghost"
             >
-              <AssetIcon size={18} src="/assets/icons/user-settings-icon.png" />
-              Manage favorites
+              <AssetIcon size={18} src="/assets/icons/heart-icon.png" />
+              Clear saved dishes
             </Button>
           </section>
 
@@ -242,6 +249,10 @@ export function TabletFavoritesPage() {
         </main>
       </section>
 
+      <TabletBottomNavigation
+        activeId="profile"
+        ariaLabel="Tablet favorites navigation"
+      />
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
     </>
   );

@@ -52,13 +52,23 @@ const recommendedItems = [
 ].filter((item): item is MenuItem => Boolean(item));
 
 const favoriteTabs = [
-  ["All Favorites", "8", "/assets/icons/star-icon.png"],
-  ["Nigiri", "2", "/assets/icons/nigiri-icon.png"],
-  ["Rolls", "3", "/assets/icons/sushi-roll-icon.png"],
-  ["Omakase", "1", "/assets/icons/dining-setting-icon.png"],
-  ["Drinks", "1", "/assets/icons/miso-soup-icon.png"],
-  ["Saved Experiences", "1", "/assets/icons/calendar-icon.png"],
+  { icon: "/assets/icons/star-icon.png", id: "all", label: "All Favorites" },
+  { icon: "/assets/icons/nigiri-icon.png", id: "nigiri", label: "Nigiri" },
+  { icon: "/assets/icons/sushi-roll-icon.png", id: "rolls", label: "Rolls" },
+  { icon: "/assets/icons/sashimi-icon.png", id: "sashimi", label: "Sashimi" },
+  {
+    icon: "/assets/icons/vegetarian-sushi-icon.webp",
+    id: "vegetarian",
+    label: "Vegetarian",
+  },
+  {
+    icon: "/assets/icons/calendar-icon.png",
+    id: "experiences",
+    label: "Experiences",
+  },
 ] as const;
+
+type FavoriteFilterId = (typeof favoriteTabs)[number]["id"];
 
 function getFallbackFavorites() {
   return fallbackFavoriteIds
@@ -70,22 +80,30 @@ export function DesktopFavoritesPage() {
   const { addItem, itemCount } = useCart();
   const { clearFavorites, favoriteItems, hasFavorites, toggleFavorite } =
     useFavorites();
-  const [activeFilter, setActiveFilter] =
-    useState<(typeof favoriteTabs)[number][0]>("All Favorites");
+  const [activeFilter, setActiveFilter] = useState<FavoriteFilterId>("all");
   const [statusMessage, setStatusMessage] = useState("");
   const displayFavorites = hasFavorites
     ? favoriteItems
     : getFallbackFavorites();
+  const getCategoryCount = (category: string) =>
+    displayFavorites.filter((item) => item.category === category).length;
+  const favoriteFilterCounts: Record<FavoriteFilterId, number> = {
+    all: displayFavorites.length + savedExperiences.length,
+    experiences: savedExperiences.length,
+    nigiri: getCategoryCount("nigiri"),
+    rolls: getCategoryCount("rolls"),
+    sashimi: getCategoryCount("sashimi"),
+    vegetarian: getCategoryCount("vegetarian"),
+  };
   const visibleFavorites =
-    activeFilter === "All Favorites"
+    activeFilter === "all"
       ? displayFavorites
-      : activeFilter === "Saved Experiences"
+      : activeFilter === "experiences"
         ? []
-        : displayFavorites.filter(
-            (item) =>
-              item.categoryLabel === activeFilter ||
-              item.category.toLowerCase() === activeFilter.toLowerCase(),
-          );
+        : displayFavorites.filter((item) => item.category === activeFilter);
+  const showMenuFavorites = activeFilter !== "experiences";
+  const showSavedExperiences =
+    activeFilter === "all" || activeFilter === "experiences";
   const totalValueCents =
     displayFavorites.reduce((total, item) => total + item.priceCents, 0) +
     27650;
@@ -120,16 +138,18 @@ export function DesktopFavoritesPage() {
                 </p>
               </div>
               <Button
-                className="h-[50px] rounded-[10px] border-[var(--sb-gold)]/42 px-6 text-[14px] uppercase tracking-[0.08em]"
+                className="h-[50px] rounded-[10px] border-[var(--sb-red-bright)]/42 px-6 text-[14px] uppercase tracking-[0.08em] text-white/76 hover:border-[var(--sb-red-bright)]/70 hover:text-white"
                 disabled={!hasFavorites}
                 onClick={clearFavorites}
-                variant="secondary"
+                title={
+                  hasFavorites
+                    ? "Clear saved menu dishes"
+                    : "No saved menu dishes to clear"
+                }
+                variant="ghost"
               >
-                <AssetIcon
-                  size={22}
-                  src="/assets/icons/floral-emblem-icon.png"
-                />
-                Manage favorites
+                <AssetIcon size={22} src="/assets/icons/heart-icon.png" />
+                Clear saved dishes
               </Button>
             </div>
 
@@ -137,21 +157,21 @@ export function DesktopFavoritesPage() {
               aria-label="Favorite filters"
               className="mt-5 grid grid-cols-6 overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-white/[0.035]"
             >
-              {favoriteTabs.map(([label, count, icon]) => (
+              {favoriteTabs.map((tab) => (
                 <button
-                  aria-pressed={activeFilter === label}
+                  aria-pressed={activeFilter === tab.id}
                   className={classNames(
                     "flex min-h-[52px] items-center justify-center gap-2 border-r border-white/10 text-[12px] uppercase tracking-[0.04em] last:border-r-0",
-                    activeFilter === label
+                    activeFilter === tab.id
                       ? "bg-[var(--sb-gold)]/12 text-[var(--sb-gold-soft)]"
                       : "text-white/72",
                   )}
-                  key={label}
-                  onClick={() => setActiveFilter(label)}
+                  key={tab.id}
+                  onClick={() => setActiveFilter(tab.id)}
                   type="button"
                 >
-                  <AssetIcon size={22} src={icon} />
-                  {label} ({count})
+                  <AssetIcon size={22} src={tab.icon} />
+                  {tab.label} ({favoriteFilterCounts[tab.id]})
                 </button>
               ))}
             </nav>
@@ -165,34 +185,39 @@ export function DesktopFavoritesPage() {
               </p>
             ) : null}
 
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              {visibleFavorites.slice(0, 4).map((item, index) => (
-                <FavoriteMenuCard
-                  favoriteIsPersisted={hasFavorites}
-                  item={item}
-                  key={item.id}
-                  priority={index < 2}
-                  onAddToCart={addFavoriteToCart}
-                  onToggleFavorite={toggleFavorite}
-                />
-              ))}
-            </div>
-            {visibleFavorites.length === 0 &&
-            activeFilter !== "Saved Experiences" ? (
-              <p className="mt-4 rounded-[12px] border border-white/10 bg-white/[0.035] px-4 py-4 text-[14px] text-white/62">
-                No saved items in this category yet.
-              </p>
+            {showMenuFavorites ? (
+              <>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  {visibleFavorites.slice(0, 4).map((item, index) => (
+                    <FavoriteMenuCard
+                      favoriteIsPersisted={hasFavorites}
+                      item={item}
+                      key={item.id}
+                      priority={index < 2}
+                      onAddToCart={addFavoriteToCart}
+                      onToggleFavorite={toggleFavorite}
+                    />
+                  ))}
+                </div>
+                {visibleFavorites.length === 0 ? (
+                  <p className="mt-4 rounded-[12px] border border-white/10 bg-white/[0.035] px-4 py-4 text-[14px] text-white/62">
+                    No saved dishes in this category yet.
+                  </p>
+                ) : null}
+              </>
             ) : null}
 
-            <div className="mt-3 grid gap-3">
-              {savedExperiences.map((experience, index) => (
-                <SavedExperienceCard
-                  experience={experience}
-                  key={experience.title}
-                  priority={index === 0}
-                />
-              ))}
-            </div>
+            {showSavedExperiences ? (
+              <div className="mt-3 grid gap-3">
+                {savedExperiences.map((experience, index) => (
+                  <SavedExperienceCard
+                    experience={experience}
+                    key={experience.title}
+                    priority={index === 0}
+                  />
+                ))}
+              </div>
+            ) : null}
           </section>
 
           <aside className="space-y-4 pt-1">
