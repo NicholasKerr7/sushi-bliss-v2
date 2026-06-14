@@ -9,102 +9,65 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { chefs } from "@/data/chefs";
 import { brand, icons } from "@/features/home/visualHomeData";
+import { classNames } from "@/lib/classNames";
 import type { Chef } from "@/types/chef";
 
 import { ChefDetailModal } from "./ChefDetailModal";
 
-const chefTabs = [
-  ["Head chefs", "/assets/icons/user-icon.png"],
-  ["Sushi masters", "/assets/icons/sushi-menu-icon.png"],
-  ["Hospitality team", "/assets/icons/group-icon.png"],
+type ChefFilterId = "all" | "counter" | "dessert";
+
+const chefFilters = [
+  {
+    id: "all",
+    icon: "/assets/icons/group-icon.png",
+    label: "Four chefs",
+  },
+  {
+    id: "counter",
+    icon: "/assets/icons/sushi-menu-icon.png",
+    label: "Sushi counter",
+  },
+  {
+    id: "dessert",
+    icon: "/assets/icons/lotus-icon.png",
+    label: "Dessert course",
+  },
 ] as const;
 
-const chefById = new Map(chefs.map((chef) => [chef.id, chef]));
+const tabletChefRoster = chefs.slice(0, 4);
+const chefTableHighlights = [
+  ["18", "course omakase"],
+  ["4", "chef stations"],
+  ["90", "minute counter"],
+] as const;
+const chefCounterFlow = [
+  ["01", "Market selection", "Daily fish, produce, and garnish checks."],
+  ["02", "Knife work", "Sashimi and nigiri cuts paced for the counter."],
+  ["03", "Warm course", "Seared, sauced, and plated at exact timing."],
+  ["04", "Final note", "Matcha, yuzu, and black sesame finish cleanly."],
+] as const;
 
-function tabletChefCard(
-  sourceId: string,
-  overrides: Pick<
-    Chef,
-    "about" | "id" | "name" | "position" | "specialty" | "sushi"
-  >,
-): Chef {
-  const source = chefById.get(sourceId) || chefById.get("hiroshi-tanaka");
-
-  if (!source) {
-    throw new Error("Tablet chef roster requires at least one chef profile.");
-  }
-
-  return {
-    ...source,
-    ...overrides,
-  };
-}
-
-const tabletChefRoster = [
-  tabletChefCard("hiroshi-tanaka", {
-    about:
-      "30+ years of mastery in Edomae sushi. Trained in Tokyo, dedicated to perfection and tradition.",
-    id: "hiroshi-tanaka",
-    name: "Hiroshi Tanaka",
-    position: "Executive Head Chef",
-    specialty: "Edomae Sushi",
-    sushi: "Omakase",
-  }),
-  tabletChefCard("kenji-sato", {
-    about:
-      "Innovative yet authentic, Kenji brings creativity and precision to every plate.",
-    id: "kenji-sato",
-    name: "Kenji Sato",
-    position: "Head Chef",
-    specialty: "Nigiri",
-    sushi: "Seasonal Creations",
-  }),
-  tabletChefCard("ren-mori", {
-    about:
-      "Master of the flame. Daichi combines tradition and fire to elevate every bite.",
-    id: "daichi-nakamura",
-    name: "Daichi Nakamura",
-    position: "Robatayaki Head Chef",
-    specialty: "Robatayaki",
-    sushi: "Grilled Specialties",
-  }),
-  tabletChefCard("hiroshi-tanaka", {
-    about:
-      "Precision, patience, and passion in every cut. Specialist in premium fish and aging.",
-    id: "takashi-yamada",
-    name: "Takashi Yamada",
-    position: "Sushi Master",
-    specialty: "Sashimi",
-    sushi: "Fish Aging",
-  }),
-  tabletChefCard("kenji-sato", {
-    about:
-      "Artistry in balance and harmony. Ryuichi crafts sushi that delights all the senses.",
-    id: "ryuichi-mori",
-    name: "Ryuichi Mori",
-    position: "Sushi Master",
-    specialty: "Hand Roll",
-    sushi: "Custom Creations",
-  }),
-  tabletChefCard("ren-mori", {
-    about:
-      "Young, driven, and detail-oriented. Sota represents the future of sushi craftsmanship.",
-    id: "sota-fujimoto",
-    name: "Sota Fujimoto",
-    position: "Sushi Master",
-    specialty: "Nigiri",
-    sushi: "Modern Sushi",
-  }),
-] satisfies Chef[];
-
-function filterChefsByQuery(roster: Chef[], query: string) {
+function filterChefs(roster: Chef[], query: string, filterId: ChefFilterId) {
   const normalizedQuery = query.trim().toLowerCase();
+  const filterMatches = (chef: Chef) => {
+    if (filterId === "dessert") {
+      return chef.position.toLowerCase().includes("pastry");
+    }
+
+    if (filterId === "counter") {
+      return !chef.position.toLowerCase().includes("pastry");
+    }
+
+    return true;
+  };
+
+  const filteredRoster = roster.filter(filterMatches);
 
   if (!normalizedQuery) {
-    return roster;
+    return filteredRoster;
   }
 
-  return roster.filter((chef) =>
+  return filteredRoster.filter((chef) =>
     [
       chef.name,
       chef.position,
@@ -121,10 +84,11 @@ function filterChefsByQuery(roster: Chef[], query: string) {
 
 export function TabletChefsSection() {
   const [selectedChef, setSelectedChef] = useState<Chef | null>(null);
+  const [activeFilter, setActiveFilter] = useState<ChefFilterId>("all");
   const [query, setQuery] = useState("");
   const displayedChefs = useMemo(
-    () => filterChefsByQuery(tabletChefRoster, query),
-    [query],
+    () => filterChefs(tabletChefRoster, query, activeFilter),
+    [activeFilter, query],
   );
 
   return (
@@ -141,14 +105,14 @@ export function TabletChefsSection() {
       <main className="w-full">
         <section className="relative h-[288px] overflow-hidden border-y border-white/[0.04] bg-black/42">
           <Image
-            alt="Chef preparing nigiri at Sushi Bliss"
-            className="object-cover object-[62%_77%] opacity-86"
+            alt="The four master chefs of Sushi Bliss"
+            className="object-cover object-[57%_27%] opacity-86"
             fill
             priority
             sizes="1086px"
-            src="/assets/chefs/kenji-sato-sous-chef-plating.webp"
+            src="/assets/chefs/sushi-bliss-master-chef-team.webp"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1)_0%,rgba(5,6,7,0.94)_28%,rgba(5,6,7,0.48)_56%,rgba(5,6,7,0.18)_78%,rgba(5,6,7,0.64)),linear-gradient(180deg,rgba(5,6,7,0),rgba(5,6,7,0.72))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1)_0%,rgba(5,6,7,0.92)_31%,rgba(5,6,7,0.36)_60%,rgba(5,6,7,0.1)_78%,rgba(5,6,7,0.52)),linear-gradient(180deg,rgba(5,6,7,0.08),rgba(5,6,7,0.84))]" />
           <div className="relative z-10 mx-auto flex h-full w-full max-w-[950px] translate-y-3 flex-col justify-center">
             <h1 className="editorial-title max-w-[610px] text-[52px] leading-[0.98] tracking-[0.12em] text-white">
               <span className="block whitespace-nowrap">Master Chefs</span>
@@ -170,39 +134,44 @@ export function TabletChefsSection() {
 
         <div className="mx-auto w-full max-w-[950px]">
           <nav
-            aria-label="Tablet chef teams"
+            aria-label="Tablet chef filters"
             className="mt-3 grid h-[60px] grid-cols-3 rounded-[8px] border border-white/12 bg-white/[0.035] p-1"
           >
-            {chefTabs.map(([label, icon], index) => (
-              <button
-                aria-pressed={index === 0}
-                className={
-                  index === 0
-                    ? "red-glow-button grid h-full grid-cols-[32px_auto] place-content-center items-center gap-3 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
-                    : "grid h-full grid-cols-[32px_auto] place-content-center items-center gap-3 border-l border-white/10 text-[12px] uppercase tracking-[0.08em] text-white/62 first:border-l-0"
-                }
-                key={label}
-                type="button"
-              >
-                <AssetIcon size={25} src={icon} />
-                {label}
-              </button>
-            ))}
+            {chefFilters.map((filter) => {
+              const isActive = activeFilter === filter.id;
+
+              return (
+                <button
+                  aria-pressed={isActive}
+                  className={classNames(
+                    "grid h-full grid-cols-[32px_auto] place-content-center items-center gap-3 text-[12px] uppercase tracking-[0.08em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                    isActive
+                      ? "red-glow-button rounded-[7px]"
+                      : "border-l border-white/10 text-white/62 hover:text-white first:border-l-0",
+                  )}
+                  key={filter.id}
+                  onClick={() => setActiveFilter(filter.id)}
+                  type="button"
+                >
+                  <AssetIcon size={25} src={filter.icon} />
+                  {filter.label}
+                </button>
+              );
+            })}
           </nav>
 
-          <section className="mt-3 grid grid-cols-3 gap-3.5">
+          <section className="mt-3 grid grid-cols-2 gap-3.5">
             {displayedChefs.length > 0 ? (
               displayedChefs.map((chef, index) => (
                 <TabletChefCard
                   chef={chef}
-                  compact={index >= 3}
-                  imagePriority={index < 3}
+                  imagePriority={index < 2}
                   key={chef.id}
                   onViewChef={setSelectedChef}
                 />
               ))
             ) : (
-              <div className="col-span-3 rounded-[14px] border border-white/12 bg-white/[0.035] p-8 text-center">
+              <div className="col-span-2 rounded-[14px] border border-white/12 bg-white/[0.035] p-8 text-center">
                 <p className="text-[18px] uppercase text-[var(--sb-gold-soft)]">
                   No chefs match this search
                 </p>
@@ -217,24 +186,8 @@ export function TabletChefsSection() {
             )}
           </section>
 
-          <section className="mt-3 grid grid-cols-[78px_minmax(0,1fr)_308px] items-center gap-4 rounded-[8px] border border-white/10 bg-white/[0.04] px-5 py-2">
-            <AssetIcon size={58} src="/assets/icons/floral-emblem-icon.png" />
-            <div>
-              <h2 className="text-[16px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
-                Our philosophy
-              </h2>
-              <p className="mt-1 text-[14px] leading-5 text-white/56">
-                Respect for tradition. Passion for excellence. Each dish
-                reflects our commitment.
-              </p>
-            </div>
-            <Link
-              className="grid h-[44px] place-items-center rounded-[12px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-              href="/about"
-            >
-              Meet our full team
-            </Link>
-          </section>
+          <TabletChefTablePanel />
+          <TabletChefCounterFlow />
         </div>
       </main>
 
@@ -369,90 +322,45 @@ function TabletHeaderIcon({
 
 function TabletChefCard({
   chef,
-  compact,
   imagePriority,
   onViewChef,
 }: {
   chef: Chef;
-  compact: boolean;
   imagePriority: boolean;
   onViewChef: (chef: Chef) => void;
 }) {
   return (
-    <article className="overflow-hidden rounded-[7px] border border-white/12 bg-white/[0.035]">
-      <div
-        className={
-          compact
-            ? "relative h-[136px] bg-black/30"
-            : "relative h-[178px] bg-black/30"
-        }
-      >
+    <article className="grid min-h-[250px] grid-cols-[190px_minmax(0,1fr)] overflow-hidden rounded-[7px] border border-white/12 bg-white/[0.035]">
+      <div className="relative min-h-full bg-black/30">
         <Image
-          alt=""
+          alt={chef.standingImage.alt || chef.name}
           className="object-cover object-top"
           fill
           loading={imagePriority ? "eager" : "lazy"}
           priority={imagePriority || undefined}
-          sizes="330px"
+          sizes="190px"
           src={chef.standingImage.publicUrl}
         />
         <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border)] bg-black/54">
           <AssetIcon size={24} src="/assets/icons/floral-emblem-icon.png" />
         </span>
       </div>
-      <div className={compact ? "px-4 pb-3 pt-3" : "p-4"}>
-        <h2
-          className={
-            compact
-              ? "font-serif text-[26px] leading-none text-white"
-              : "font-serif text-[27px] leading-none text-white"
-          }
-        >
-          {chef.name}
-        </h2>
-        <p className="mt-1 text-[13px] font-semibold text-[var(--sb-gold-soft)]">
+      <div className="flex min-w-0 flex-col p-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
           {chef.position}
         </p>
-        <p
-          className={
-            compact
-              ? "mt-3 line-clamp-2 min-h-9 text-[13px] leading-[18px] text-white/58"
-              : "mt-3 line-clamp-3 min-h-[54px] text-[13px] leading-[18px] text-white/58"
-          }
-        >
+        <h2 className="mt-1 font-serif text-[28px] leading-none text-white">
+          {chef.name}
+        </h2>
+        <p className="mt-3 line-clamp-3 min-h-[54px] text-[13px] leading-[18px] text-white/58">
           {chef.about}
         </p>
-        <p
-          className={
-            compact
-              ? "mt-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
-              : "mt-3 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
-          }
-        >
-          Specialties
-        </p>
-        <div
-          className={
-            compact
-              ? "mt-1 flex flex-wrap gap-2"
-              : "mt-1.5 flex flex-wrap gap-2"
-          }
-        >
-          {[chef.specialty, chef.sushi].map((specialty) => (
-            <span
-              className="rounded-full border border-[var(--sb-border)] px-3 py-1 text-[10px] text-[var(--sb-gold-soft)]"
-              key={specialty}
-            >
-              {specialty}
-            </span>
-          ))}
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <TabletChefSignal label="Signature" value={chef.specialty} />
+          <TabletChefSignal label="Service" value={chef.sushi} />
         </div>
         <button
-          className={
-            compact
-              ? "red-glow-button mt-2 flex h-8 w-full items-center justify-center gap-14 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
-              : "red-glow-button mt-3 flex h-9 w-full items-center justify-center gap-14 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
-          }
+          className="red-glow-button mt-auto flex h-9 w-full items-center justify-center gap-14 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
           onClick={() => onViewChef(chef)}
           type="button"
         >
@@ -461,5 +369,101 @@ function TabletChefCard({
         </button>
       </div>
     </article>
+  );
+}
+
+function TabletChefSignal({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-[7px] border border-[var(--sb-border)] bg-black/20 px-3 py-2">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/42">
+        {label}
+      </p>
+      <p className="mt-1 line-clamp-1 text-[11px] font-semibold text-[var(--sb-gold-soft)]">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function TabletChefTablePanel() {
+  return (
+    <section className="mt-3 grid grid-cols-[minmax(0,1fr)_340px] overflow-hidden rounded-[8px] border border-white/10 bg-[linear-gradient(135deg,rgba(128,16,14,0.18),rgba(255,255,255,0.035)_42%,rgba(215,168,79,0.1))]">
+      <div className="grid grid-cols-[78px_minmax(0,1fr)] items-center gap-4 px-5 py-3">
+        <AssetIcon size={58} src="/assets/icons/floral-emblem-icon.png" />
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-red-bright)]">
+            Chef&apos;s table
+          </p>
+          <h2 className="mt-1 font-serif text-[22px] leading-none text-white">
+            Complete the night at the counter.
+          </h2>
+          <div className="mt-3 grid grid-cols-3 gap-3">
+            {chefTableHighlights.map(([value, label]) => (
+              <div key={label}>
+                <p className="font-mono text-[18px] font-semibold text-[var(--sb-gold-soft)]">
+                  {value}
+                </p>
+                <p className="text-[10px] uppercase tracking-[0.1em] text-white/48">
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="grid content-center gap-3 border-l border-white/10 px-5">
+        <Link
+          className="red-glow-button flex h-11 items-center justify-center gap-8 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
+          href="/reservations"
+        >
+          <span>Reserve chef&apos;s table</span>
+          <ChevronIcon direction="right" size={16} />
+        </Link>
+        <Link
+          className="flex h-10 items-center justify-center gap-8 rounded-[7px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+          href="/omakase"
+        >
+          <span>View omakase</span>
+          <ChevronIcon direction="right" size={16} />
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+function TabletChefCounterFlow() {
+  return (
+    <section className="mt-3 rounded-[8px] border border-white/10 bg-white/[0.025] px-5 py-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+            Tonight&apos;s counter flow
+          </p>
+          <h2 className="mt-1 font-serif text-[22px] leading-none text-white">
+            Four chefs, one composed service.
+          </h2>
+        </div>
+        <p className="max-w-[300px] text-right text-[12px] leading-5 text-white/50">
+          A complete arc from selection to dessert, designed for a quiet luxury
+          omakase pace.
+        </p>
+      </div>
+      <div className="mt-4 grid grid-cols-4 gap-3">
+        {chefCounterFlow.map(([step, title, copy]) => (
+          <article
+            className="rounded-[7px] border border-[var(--sb-border)] bg-black/18 p-3"
+            key={step}
+          >
+            <p className="font-mono text-[18px] font-semibold text-[var(--sb-red-bright)]">
+              {step}
+            </p>
+            <h3 className="mt-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+              {title}
+            </h3>
+            <p className="mt-2 text-[11px] leading-4 text-white/48">{copy}</p>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
