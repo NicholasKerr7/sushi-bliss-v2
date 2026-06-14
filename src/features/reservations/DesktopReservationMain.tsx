@@ -1,12 +1,10 @@
 import Image from "next/image";
 
-import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { reservationExperiences } from "@/data/reservations";
 import { DesktopBenefitStrip } from "@/features/menu/DesktopMenuChrome";
 import { classNames } from "@/lib/classNames";
-import { formatFullDateTime } from "@/lib/dates";
 import type {
   Reservation,
   ReservationDraft,
@@ -14,11 +12,12 @@ import type {
 } from "@/types/reservation";
 
 import {
+  DesktopReservationCalendar,
   DesktopReservationHero,
-  formatDateOnly,
   formatTimeLabel,
   PanelBlock,
   SummaryLine,
+  formatDateOnly,
 } from "./DesktopReservationPrimitives";
 
 interface DesktopReservationMainProps {
@@ -94,19 +93,10 @@ export function DesktopReservationMain({
             </PanelBlock>
 
             <PanelBlock title="Select date" step="2">
-              <input
-                className="mt-5 h-11 w-full rounded-[10px] border border-white/12 bg-black/24 px-4 text-[14px] text-white outline-none focus:border-[var(--sb-gold)]"
-                min={new Date().toISOString().slice(0, 10)}
-                onChange={(event) => onDraftChange("date", event.target.value)}
-                type="date"
-                value={draft.date}
+              <DesktopReservationCalendar
+                selectedDate={draft.date}
+                onSelectDate={(date) => onDraftChange("date", date)}
               />
-              <p className="mt-4 flex items-center gap-3 rounded-[10px] border border-white/10 bg-black/26 p-3 text-[14px] text-white/72">
-                <AssetIcon size={19} src="/assets/icons/calendar-icon.png" />
-                {selectedDateTime
-                  ? formatFullDateTime(selectedDateTime)
-                  : "Choose date and time"}
-              </p>
               {validation.date ? (
                 <p className="mt-3 text-[13px] text-[var(--sb-red-bright)]">
                   {validation.date}
@@ -142,16 +132,26 @@ export function DesktopReservationMain({
             </PanelBlock>
           </div>
 
-          <div className="mt-5">
-            <h2 className="editorial-title text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-              Choose your experience
-            </h2>
+          <div className="mt-3">
+            <div className="flex items-center justify-between gap-5">
+              <h2 className="editorial-title text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+                Choose your experience
+              </h2>
+              <button
+                className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
+                onClick={onOpenExperience}
+                type="button"
+              >
+                Open experience chooser
+                <ChevronIcon direction="right" size={18} />
+              </button>
+            </div>
             <div className="mt-3 grid grid-cols-4 gap-3">
               {reservationExperiences.map((experience, index) => (
                 <button
                   aria-pressed={draft.experienceId === experience.id}
                   className={classNames(
-                    "relative min-h-[168px] overflow-hidden rounded-[12px] border bg-black/30 text-left",
+                    "relative min-h-[150px] overflow-hidden rounded-[12px] border bg-black/30 text-left",
                     draft.experienceId === experience.id
                       ? "border-[var(--sb-red-bright)] shadow-[0_0_20px_rgba(238,43,36,0.24)]"
                       : "border-white/12",
@@ -170,25 +170,17 @@ export function DesktopReservationMain({
                     src={experience.imageUrl}
                   />
                   <span className="absolute inset-0 bg-gradient-to-t from-black via-black/52 to-transparent" />
-                  <span className="absolute inset-x-0 bottom-0 p-4">
-                    <span className="block text-[15px] uppercase tracking-[0.04em] text-white">
+                  <span className="absolute inset-x-0 bottom-0 p-3">
+                    <span className="block text-[14px] uppercase leading-tight tracking-[0.04em] text-white">
                       {experience.title}
                     </span>
-                    <span className="mt-1 block text-[12px] leading-5 text-white/58">
+                    <span className="mt-1 block text-[12px] leading-4 text-white/58">
                       {experience.description}
                     </span>
                   </span>
                 </button>
               ))}
             </div>
-            <button
-              className="mt-4 text-[13px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
-              onClick={onOpenExperience}
-              type="button"
-            >
-              Open experience chooser{" "}
-              <ChevronIcon direction="right" size={18} />
-            </button>
           </div>
         </section>
 
@@ -203,7 +195,7 @@ export function DesktopReservationMain({
           onResetForm={onResetForm}
         />
       </div>
-      <div className="mt-4">
+      <div className="mt-2">
         <DesktopBenefitStrip />
       </div>
     </main>
@@ -230,11 +222,11 @@ function DesktopReservationSummary({
   onResetForm: () => void;
 }) {
   return (
-    <aside className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-6">
+    <aside className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
       <h2 className="editorial-title text-[20px] uppercase tracking-[0.08em]">
         Your reservation
       </h2>
-      <div className="mt-5 divide-y divide-white/10">
+      <div className="mt-4 divide-y divide-white/10">
         <SummaryLine
           label="Date"
           value={
@@ -250,19 +242,19 @@ function DesktopReservationSummary({
         <SummaryLine label="Occasion" value={draft.occasion} />
       </div>
       <button
-        className="mt-4 w-full rounded-[12px] border border-[var(--sb-gold)]/24 bg-black/22 p-4 text-left text-[14px] leading-6 text-white/64"
+        className="mt-3 w-full rounded-[12px] border border-[var(--sb-gold)]/24 bg-black/22 p-3 text-left text-[14px] leading-6 text-white/64"
         onClick={onOpenExperience}
         type="button"
       >
         Special request or experience change? Open the full experience chooser.
       </button>
       <Button
-        className="mt-5 h-[62px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em]"
+        className="mt-4 h-[58px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em]"
         onClick={onOpenReview}
       >
         Confirm reservation
       </Button>
-      <div className="mt-4 grid grid-cols-2 gap-3">
+      <div className="mt-3 grid grid-cols-2 gap-3">
         <button
           className="h-11 rounded-[10px] border border-white/12 text-[12px] uppercase tracking-[0.08em] text-white/68"
           onClick={onOpenHistory}
@@ -279,7 +271,7 @@ function DesktopReservationSummary({
           Reset edit
         </button>
       </div>
-      <p className="mt-4 text-center text-[12px] text-white/42">
+      <p className="mt-3 text-center text-[12px] text-white/42">
         Secure booking powered by SSL encryption
       </p>
     </aside>

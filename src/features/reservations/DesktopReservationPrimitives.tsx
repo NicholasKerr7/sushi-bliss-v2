@@ -1,6 +1,8 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 
+import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { classNames } from "@/lib/classNames";
 import { formatTime } from "@/lib/dates";
 import type { Reservation } from "@/types/reservation";
@@ -13,7 +15,7 @@ export const desktopReservationHeroImage = featuredAssets.heroSushi.publicUrl;
 
 export function DesktopReservationHero() {
   return (
-    <section className="relative min-h-[180px] overflow-hidden rounded-b-[22px] border-x border-b border-white/10">
+    <section className="relative h-[190px] overflow-hidden rounded-b-[22px] border-x border-b border-white/10">
       <Image
         alt=""
         className="object-cover object-[76%_45%]"
@@ -24,14 +26,14 @@ export function DesktopReservationHero() {
         src={desktopReservationHeroImage}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,5,6,0.95),rgba(4,5,6,0.76)_42%,rgba(4,5,6,0.18)_78%)]" />
-      <div className="relative z-10 px-14 py-8">
+      <div className="relative z-10 px-14 py-6">
         <p className="text-[15px] uppercase tracking-[0.13em] text-[var(--sb-gold-soft)]">
           Reserve your experience.
         </p>
-        <h1 className="editorial-title mt-2 text-[54px] uppercase tracking-[0.12em]">
+        <h1 className="editorial-title mt-2 text-[52px] uppercase leading-none tracking-[0.12em]">
           Reser<span className="text-[var(--sb-red-bright)]">vations</span>
         </h1>
-        <p className="mt-3 max-w-md text-[16px] leading-7 text-white/72">
+        <p className="mt-2 max-w-md text-[16px] leading-7 text-white/72">
           An unforgettable dining experience awaits. We can&apos;t wait to
           welcome you.
         </p>
@@ -59,6 +61,118 @@ export function PanelBlock({
       </h2>
       {children}
     </section>
+  );
+}
+
+const calendarWeekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+interface DesktopReservationCalendarProps {
+  selectedDate: string;
+  onSelectDate: (date: string) => void;
+}
+
+/** Renders a compact future-date calendar for desktop reservation booking. */
+export function DesktopReservationCalendar({
+  selectedDate,
+  onSelectDate,
+}: DesktopReservationCalendarProps) {
+  const today = startOfLocalDay(new Date());
+  const selected = parseDateInput(selectedDate) || today;
+  const monthStart = new Date(selected.getFullYear(), selected.getMonth(), 1);
+  const monthLabel = new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    year: "numeric",
+  }).format(monthStart);
+  const selectedLabel = new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "long",
+    weekday: "long",
+    year: "numeric",
+  }).format(selected);
+  const firstCalendarDay = new Date(monthStart);
+  firstCalendarDay.setDate(monthStart.getDate() - monthStart.getDay());
+  const currentMonth = monthStart.getMonth();
+  const canGoPrevious =
+    monthStart >
+    new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+  const calendarDays = Array.from({ length: 42 }, (_, index) => {
+    const day = new Date(firstCalendarDay);
+    day.setDate(firstCalendarDay.getDate() + index);
+
+    return day;
+  });
+
+  const changeMonth = (direction: -1 | 1) => {
+    const nextMonth = new Date(
+      selected.getFullYear(),
+      selected.getMonth() + direction,
+      1,
+    );
+    const safeDate = nextMonth < today ? today : nextMonth;
+
+    onSelectDate(formatDateInput(safeDate));
+  };
+
+  return (
+    <div className="mt-3 overflow-hidden rounded-[12px] border border-white/12 bg-black/24">
+      <div className="flex h-9 items-center justify-between border-b border-white/10 px-3">
+        <button
+          aria-label="Previous month"
+          className="grid h-7 w-7 place-items-center rounded-[8px] text-[var(--sb-gold-soft)] disabled:cursor-not-allowed disabled:opacity-35"
+          disabled={!canGoPrevious}
+          onClick={() => changeMonth(-1)}
+          type="button"
+        >
+          <ChevronIcon direction="left" size={17} />
+        </button>
+        <p className="text-[14px] text-white">{monthLabel}</p>
+        <button
+          aria-label="Next month"
+          className="grid h-7 w-7 place-items-center rounded-[8px] text-[var(--sb-gold-soft)]"
+          onClick={() => changeMonth(1)}
+          type="button"
+        >
+          <ChevronIcon direction="right" size={17} />
+        </button>
+      </div>
+      <div className="grid grid-cols-7 px-3 pt-2 text-center text-[10px] uppercase tracking-[0.08em] text-white/52">
+        {calendarWeekdays.map((weekday) => (
+          <span key={weekday}>{weekday}</span>
+        ))}
+      </div>
+      <div className="grid grid-cols-7 gap-0.5 px-3 py-2">
+        {calendarDays.map((day) => {
+          const isCurrentMonth = day.getMonth() === currentMonth;
+          const disabled = !isCurrentMonth || day < today;
+          const selectedDay = isSameLocalDay(day, selected);
+
+          return (
+            <button
+              aria-pressed={selectedDay}
+              className={classNames(
+                "grid h-6 place-items-center rounded-full text-[12px] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                selectedDay
+                  ? "bg-[var(--sb-red)] text-white shadow-[0_0_16px_rgba(238,43,36,0.45)]"
+                  : "text-white hover:bg-white/[0.06]",
+                disabled &&
+                  "cursor-not-allowed text-white/24 hover:bg-transparent",
+              )}
+              disabled={disabled}
+              key={day.toISOString()}
+              onClick={() => onSelectDate(formatDateInput(day))}
+              type="button"
+            >
+              {day.getDate()}
+            </button>
+          );
+        })}
+      </div>
+      <p className="flex items-center gap-3 border-t border-white/10 px-4 py-2 text-[13px] text-white/72">
+        <AssetIcon size={16} src="/assets/icons/calendar-icon.png" />
+        {selectedLabel}
+      </p>
+    </div>
   );
 }
 
@@ -187,6 +301,36 @@ export function ReservationDetails({
       ) : null}
     </div>
   );
+}
+
+function parseDateInput(value: string): Date | null {
+  const [year, month, day] = value.split("-").map(Number);
+
+  if (!year || !month || !day) {
+    return null;
+  }
+
+  return new Date(year, month - 1, day);
+}
+
+function formatDateInput(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function isSameLocalDay(first: Date, second: Date): boolean {
+  return (
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate()
+  );
+}
+
+function startOfLocalDay(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
 export function formatDateOnly(value: string | Date) {
