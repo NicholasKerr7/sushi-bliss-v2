@@ -33,7 +33,7 @@ export function DesktopCartPanel({
   const itemCount = items.length;
 
   return (
-    <aside className="rounded-[18px] border border-[var(--sb-border)] bg-[#070909]/92 p-5 shadow-[0_28px_90px_rgba(0,0,0,0.48)]">
+    <aside className="rounded-[18px] border border-[var(--sb-border)] bg-[#070909]/92 p-5 shadow-[0_28px_90px_rgba(0,0,0,0.48)] min-[1500px]:mt-4">
       <div className="flex items-center justify-between gap-4">
         <h2 className="editorial-title text-[21px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
           Your Cart
@@ -44,7 +44,7 @@ export function DesktopCartPanel({
           </span>
           {onClearCart ? (
             <button
-              className="text-[12px] text-[var(--sb-red-bright)] disabled:cursor-not-allowed disabled:opacity-40"
+              className="text-[12px] text-[var(--sb-red-bright)] disabled:cursor-not-allowed disabled:opacity-40 min-[1500px]:hidden"
               disabled={items.length === 0}
               onClick={onClearCart}
               type="button"
@@ -56,7 +56,7 @@ export function DesktopCartPanel({
       </div>
 
       {items.length > 0 ? (
-        <div className="mt-4 grid">
+        <div className="mt-4 grid min-[1500px]:mt-0">
           {items.map((item) => (
             <DesktopCartLine
               item={item}
@@ -83,7 +83,7 @@ export function DesktopCartPanel({
       )}
 
       {items.length > 0 ? (
-        <label className="mt-4 grid h-9 grid-cols-[28px_1fr] items-center rounded-[9px] border border-white/10 bg-black/28 px-3 text-[12px] text-white/50">
+        <label className="mt-4 grid h-9 grid-cols-[28px_1fr] items-center rounded-[9px] border border-white/10 bg-black/28 px-3 text-[12px] text-white/50 min-[1500px]:mt-3">
           <AssetIcon size={18} src="/assets/icons/gift-icon.png" />
           <span className="sr-only">Add a note</span>
           <input
@@ -94,10 +94,10 @@ export function DesktopCartPanel({
         </label>
       ) : null}
 
-      <div className="mt-4 space-y-2 border-t border-white/10 pt-4 text-[14px]">
+      <div className="mt-4 space-y-2 border-t border-white/10 pt-4 text-[14px] min-[1500px]:mt-3 min-[1500px]:pt-3">
         <TotalRow label="Subtotal" value={formatMoney(totals.subtotalCents)} />
         <TotalRow
-          label="Service Fee"
+          label="Delivery Fee"
           value={formatMoney(totals.serviceFeeCents)}
         />
         <TotalRow label="Tax & Fees" value={formatMoney(totals.taxCents)} />
@@ -112,7 +112,7 @@ export function DesktopCartPanel({
         ) : null}
       </div>
 
-      <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
+      <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 min-[1500px]:mt-3 min-[1500px]:pt-3">
         <span className="editorial-title text-[19px] uppercase text-white/86">
           Total
         </span>
@@ -122,7 +122,7 @@ export function DesktopCartPanel({
       </div>
 
       <button
-        className="red-glow-button mt-5 h-[64px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-45"
+        className="red-glow-button mt-5 h-[64px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-45 min-[1500px]:mt-4 min-[1500px]:h-[56px]"
         disabled={disabled || items.length === 0}
         onClick={onCheckout}
         type="button"
@@ -133,7 +133,36 @@ export function DesktopCartPanel({
         </span>
       </button>
 
-      <p className="mt-4 flex items-center justify-center gap-2 text-[12px] text-white/42">
+      {items.length > 0 ? (
+        <div className="mt-4 hidden rounded-[12px] border border-[var(--sb-border)] bg-black/28 p-4 min-[1500px]:grid min-[1500px]:grid-cols-[1fr_auto] min-[1500px]:items-center min-[1500px]:gap-4">
+          <div className="flex items-start gap-3">
+            <AssetIcon size={22} src="/assets/icons/gold-alert-icon.png" />
+            <span>
+              <span className="block text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+                Est. delivery
+              </span>
+              <span className="mt-2 block text-[12px] text-white/52">
+                123 Kai Street, Tokyo
+              </span>
+            </span>
+          </div>
+          <div className="text-right">
+            <p className="text-[13px] uppercase text-[var(--sb-gold-soft)]">
+              30-45 min
+            </p>
+            <button
+              className="mt-2 text-[12px] text-[var(--sb-red-bright)] underline-offset-2 hover:underline disabled:cursor-not-allowed disabled:opacity-45"
+              disabled={disabled}
+              onClick={onCheckout}
+              type="button"
+            >
+              Change
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      <p className="mt-4 flex items-center justify-center gap-2 text-[12px] text-white/42 min-[1500px]:hidden">
         <AssetIcon size={15} src="/assets/icons/chef-crest-icon.png" />
         Secure checkout powered by SSL encryption
       </p>
@@ -153,8 +182,8 @@ function DesktopCartLine({
   const unitPrice = calculateCartLineUnitPrice(item.menuItem, item.addOns);
 
   return (
-    <article className="relative grid min-h-[114px] grid-cols-[64px_minmax(0,1fr)_72px_52px] items-center gap-2 border-b border-white/10 py-3 last:border-b-0">
-      <div className="relative h-[68px] overflow-hidden rounded-[8px] border border-white/10 bg-black/40">
+    <article className="relative grid min-h-[114px] grid-cols-[64px_minmax(0,1fr)_72px_52px] items-center gap-2 border-b border-white/10 py-3 last:border-b-0 min-[1500px]:min-h-[72px] min-[1500px]:py-1">
+      <div className="relative h-[68px] overflow-hidden rounded-[8px] border border-white/10 bg-black/40 min-[1500px]:h-14">
         <Image
           alt=""
           className="object-cover"

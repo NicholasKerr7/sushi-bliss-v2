@@ -83,7 +83,7 @@ export function DesktopMenuSurface({
           onViewDetails={onViewDetails}
         />
 
-        <div className="mt-4 grid grid-cols-[minmax(0,1fr)_150px_150px_150px] gap-3">
+        <div className="mt-4 grid grid-cols-[minmax(0,1fr)_150px_150px_150px] gap-3 min-[1500px]:mt-0 min-[1500px]:w-fit min-[1500px]:grid-cols-[346px_108px_128px_118px] min-[1500px]:gap-2.5">
           <label className="relative block">
             <span className="sr-only">Search menu</span>
             <AssetIcon
@@ -92,7 +92,7 @@ export function DesktopMenuSurface({
               src="/assets/icons/search-icon.png"
             />
             <input
-              className="h-12 w-full rounded-[10px] border border-[var(--sb-border)] bg-black/30 pl-12 pr-4 text-[14px] text-white outline-none placeholder:text-white/42 focus:border-[var(--sb-gold)]"
+              className="h-12 w-full rounded-[10px] border border-[var(--sb-border)] bg-black/30 pl-12 pr-4 text-[14px] text-white outline-none placeholder:text-white/42 focus:border-[var(--sb-gold)] min-[1500px]:h-10 min-[1500px]:rounded-[8px] min-[1500px]:text-[13px]"
               onChange={(event) => onQueryChange(event.target.value)}
               placeholder={
                 category === "nigiri"
@@ -109,7 +109,7 @@ export function DesktopMenuSurface({
 
         <nav
           aria-label="Desktop menu categories"
-          className="mt-4 grid grid-cols-7 gap-3"
+          className="mt-4 grid grid-cols-7 gap-3 min-[1500px]:mt-4 min-[1500px]:flex min-[1500px]:w-fit min-[1500px]:gap-2"
         >
           {desktopCategoryButtons.map(([id, label, icon]) => {
             const disabled = id === "drinks" || !categoryExists(id);
@@ -122,7 +122,7 @@ export function DesktopMenuSurface({
               <button
                 aria-pressed={active}
                 className={classNames(
-                  "grid min-h-[46px] grid-cols-[24px_auto] place-content-center items-center gap-2 rounded-[10px] border px-3 text-[12px] uppercase tracking-[0.04em] transition disabled:cursor-not-allowed disabled:opacity-45",
+                  "grid min-h-[46px] grid-cols-[24px_auto] place-content-center items-center gap-2 rounded-[10px] border px-3 text-[12px] uppercase tracking-[0.04em] transition disabled:cursor-not-allowed disabled:opacity-45 min-[1500px]:flex min-[1500px]:min-h-9 min-[1500px]:grid-cols-none min-[1500px]:gap-1.5 min-[1500px]:rounded-[9px] min-[1500px]:px-3",
                   active
                     ? "border-[var(--sb-gold)]/60 bg-[var(--sb-gold)]/22 text-[var(--sb-gold-soft)]"
                     : "border-[var(--sb-border)] bg-white/[0.025] text-white/76 hover:bg-white/[0.05]",
@@ -133,14 +133,18 @@ export function DesktopMenuSurface({
                 title={disabled ? `${label} coming soon` : undefined}
                 type="button"
               >
-                <AssetIcon size={22} src={icon} />
+                <AssetIcon
+                  className={id === "recommended" ? "" : "min-[1500px]:hidden"}
+                  size={22}
+                  src={icon}
+                />
                 {label}
               </button>
             );
           })}
         </nav>
 
-        <p className="mt-3 text-[13px] text-white/50">
+        <p className="mt-3 text-[13px] text-white/50 min-[1500px]:sr-only">
           Showing{" "}
           <span className="font-mono text-[var(--sb-gold-soft)]">
             {itemCount}
@@ -271,11 +275,11 @@ function DesktopMenuHero({
         src={featuredAssets.heroSushi.publicUrl}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,5,6,0.96),rgba(4,5,6,0.78)_42%,rgba(4,5,6,0.12)_78%,rgba(4,5,6,0.78))]" />
-      <div className="relative z-10 flex min-h-[236px] flex-col justify-center px-9 min-[1500px]:min-h-[174px]">
+      <div className="relative z-10 flex min-h-[236px] flex-col justify-center px-9 min-[1500px]:min-h-[174px] min-[1500px]:px-2">
         <p className="text-[14px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           {isNigiri ? "Our Menu" : "Explore our menu"}
         </p>
-        <h1 className="editorial-title mt-2 text-[44px] leading-[0.96] text-white">
+        <h1 className="editorial-title mt-2 text-[44px] leading-[0.96] text-white min-[1500px]:text-[40px]">
           {isNigiri ? (
             "Nigiri"
           ) : (
@@ -341,7 +345,7 @@ function DesktopFeatureMenuCard({
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <div className="relative h-[108px]">
+        <div className="relative h-[108px] min-[1500px]:h-[86px]">
           <Image
             alt=""
             className="object-cover"
@@ -352,8 +356,10 @@ function DesktopFeatureMenuCard({
             src={item.image.publicUrl}
           />
         </div>
-        <div className="p-3.5">
-          <h3 className="line-clamp-1 text-[17px] text-white">{item.name}</h3>
+        <div className="p-3.5 min-[1500px]:p-3">
+          <h3 className="line-clamp-1 text-[17px] text-white min-[1500px]:text-[15px]">
+            {item.name}
+          </h3>
           <p className="mt-1 line-clamp-1 text-[13px] text-white/58">
             {item.ingredients.slice(0, 3).join(", ")}
           </p>
@@ -438,7 +444,7 @@ function DesktopMenuSection({
   title: string;
 }) {
   return (
-    <section className="mt-4 rounded-[14px] border border-[var(--sb-border)] bg-black/34 p-4">
+    <section className="mt-4 rounded-[14px] border border-[var(--sb-border)] bg-black/34 p-4 min-[1500px]:mt-3 min-[1500px]:p-3">
       <div className="flex items-center justify-between">
         <h2 className="editorial-title flex items-center gap-3 text-[18px] uppercase tracking-[0.09em] text-white">
           <AssetIcon size={22} src="/assets/icons/star-icon.png" />
@@ -458,7 +464,7 @@ function DesktopMenuSection({
 function DesktopFilterButton({ label }: { label: string }) {
   return (
     <button
-      className="grid h-12 grid-cols-[1fr_16px] items-center rounded-[10px] border border-[var(--sb-border)] bg-black/30 px-4 text-left text-[12px] uppercase tracking-[0.06em] text-white/78"
+      className="grid h-12 grid-cols-[1fr_16px] items-center rounded-[10px] border border-[var(--sb-border)] bg-black/30 px-4 text-left text-[12px] uppercase tracking-[0.06em] text-white/78 min-[1500px]:h-10 min-[1500px]:rounded-[8px] min-[1500px]:px-4 min-[1500px]:text-[12px]"
       type="button"
     >
       {label}
