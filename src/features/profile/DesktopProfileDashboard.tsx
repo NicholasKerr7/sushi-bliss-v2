@@ -14,12 +14,41 @@ import type { Reservation } from "@/types/reservation";
 import type { UserProfile } from "@/types/user";
 
 const dashboardTabs = [
-  ["overview", "Overview", "/assets/icons/calendar-icon.png"],
-  ["reservations", "Reservations", "/assets/icons/golden-ticket-icon.png"],
-  ["orders", "Orders", "/assets/icons/takeaway-bag-icon.png"],
-  ["loyalty", "Loyalty", "/assets/icons/floral-emblem-icon.png"],
-  ["preferences", "Preferences", "/assets/icons/user-icon.png"],
-  ["settings", "Settings", "/assets/icons/user-settings-icon.png"],
+  {
+    id: "overview",
+    label: "Overview",
+    icon: "/assets/icons/calendar-icon.png",
+  },
+  {
+    id: "reservations",
+    label: "Reservations",
+    icon: "/assets/icons/golden-ticket-icon.png",
+    href: "/reservations",
+  },
+  {
+    id: "orders",
+    label: "Orders",
+    icon: "/assets/icons/takeaway-bag-icon.png",
+    href: "/orders",
+  },
+  {
+    id: "loyalty",
+    label: "Loyalty",
+    icon: "/assets/icons/floral-emblem-icon.png",
+    href: "/loyalty",
+  },
+  {
+    id: "preferences",
+    label: "Preferences",
+    icon: "/assets/icons/user-icon.png",
+    opensSettings: true,
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    icon: "/assets/icons/user-settings-icon.png",
+    opensSettings: true,
+  },
 ] as const;
 
 const diningPreferences = [
@@ -30,10 +59,30 @@ const diningPreferences = [
 ] as const;
 
 const recentActivity = [
-  ["Reservation Confirmed", "May 20, 2024 - 7:00 PM", "Sushi Bliss Downtown"],
-  ["Order Delivered", "May 18, 2024 - 6:30 PM", "Order #SB240518-001"],
-  ["Points Earned", "May 18, 2024 - +350 PTS", "Dinner at Sushi Bliss"],
-  ["Reward Redeemed", "May 15, 2024 - -1,000 PTS", "Spicy Tuna Roll"],
+  [
+    "Reservation Confirmed",
+    "May 20, 2024 - 7:00 PM",
+    "Sushi Bliss Downtown",
+    "/reservations",
+  ],
+  [
+    "Order Delivered",
+    "May 18, 2024 - 6:30 PM",
+    "Order #SB240518-001",
+    "/orders",
+  ],
+  [
+    "Points Earned",
+    "May 18, 2024 - +350 PTS",
+    "Dinner at Sushi Bliss",
+    "/loyalty",
+  ],
+  [
+    "Reward Redeemed",
+    "May 15, 2024 - -1,000 PTS",
+    "Spicy Tuna Roll",
+    "/loyalty",
+  ],
 ] as const;
 
 function getProgressWidthClass(progress: number) {
@@ -68,7 +117,6 @@ export function DesktopProfileDashboard({
   progress,
   upcomingReservation,
   onOpenSettings,
-  onStatus,
 }: {
   account: LoyaltyAccount;
   activeOrderCount: number;
@@ -77,7 +125,6 @@ export function DesktopProfileDashboard({
   progress: number;
   upcomingReservation?: Reservation;
   onOpenSettings: () => void;
-  onStatus: (message: string) => void;
 }) {
   return (
     <main className="mx-auto max-w-[1672px] px-7 pb-5 pt-3">
@@ -138,27 +185,38 @@ export function DesktopProfileDashboard({
           className="grid grid-cols-6 border-b border-white/10 bg-black/28"
           aria-label="Profile dashboard tabs"
         >
-          {dashboardTabs.map(([id, label, icon]) => (
-            <button
-              aria-pressed={id === "overview"}
-              className={classNames(
-                "flex min-h-[54px] items-center justify-center gap-3 border-l border-white/8 text-[13px] uppercase tracking-[0.08em] first:border-l-0",
-                id === "overview"
-                  ? "text-[var(--sb-red-bright)]"
-                  : "text-white/72 hover:text-white",
-              )}
-              key={id}
-              onClick={
-                id === "settings" || id === "preferences"
-                  ? onOpenSettings
-                  : () => onStatus(`${label} section selected.`)
-              }
-              type="button"
-            >
-              <AssetIcon size={20} src={icon} />
-              {label}
-            </button>
-          ))}
+          {dashboardTabs.map((item) => {
+            const tabClassName = classNames(
+              "flex min-h-[54px] items-center justify-center gap-3 border-l border-white/8 text-[13px] uppercase tracking-[0.08em] transition first:border-l-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--sb-gold)] disabled:cursor-default disabled:opacity-100",
+              item.id === "overview"
+                ? "bg-white/[0.025] text-[var(--sb-red-bright)]"
+                : "text-white/72 hover:text-white",
+            );
+
+            if ("href" in item) {
+              return (
+                <Link className={tabClassName} href={item.href} key={item.id}>
+                  <AssetIcon size={20} src={item.icon} />
+                  {item.label}
+                </Link>
+              );
+            }
+
+            return (
+              <button
+                aria-current={item.id === "overview" ? "page" : undefined}
+                aria-pressed={item.id === "overview"}
+                className={tabClassName}
+                disabled={item.id === "overview"}
+                key={item.id}
+                onClick={"opensSettings" in item ? onOpenSettings : undefined}
+                type="button"
+              >
+                <AssetIcon size={20} src={item.icon} />
+                {item.label}
+              </button>
+            );
+          })}
         </nav>
 
         {message ? (
@@ -168,8 +226,14 @@ export function DesktopProfileDashboard({
         ) : null}
 
         <section className="grid grid-cols-4 gap-3 p-4">
-          <SavedAddressesCard profile={profile} />
-          <PaymentMethodsCard profile={profile} />
+          <SavedAddressesCard
+            profile={profile}
+            onOpenSettings={onOpenSettings}
+          />
+          <PaymentMethodsCard
+            profile={profile}
+            onOpenSettings={onOpenSettings}
+          />
           <DiningPreferencesCard onOpenSettings={onOpenSettings} />
           <DietaryPreferencesCard
             profile={profile}
@@ -232,17 +296,23 @@ function LoyaltyStatusCard({
           )}
         />
       </div>
-      <button
-        className="mt-4 h-9 w-full rounded-[10px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-        type="button"
+      <Link
+        className="mt-4 flex h-9 w-full items-center justify-center rounded-[10px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+        href="/loyalty"
       >
         View benefits
-      </button>
+      </Link>
     </article>
   );
 }
 
-function SavedAddressesCard({ profile }: { profile: UserProfile }) {
+function SavedAddressesCard({
+  profile,
+  onOpenSettings,
+}: {
+  profile: UserProfile;
+  onOpenSettings: () => void;
+}) {
   return (
     <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
       <CardTitle
@@ -273,6 +343,7 @@ function SavedAddressesCard({ profile }: { profile: UserProfile }) {
       </div>
       <button
         className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        onClick={onOpenSettings}
         type="button"
       >
         + Add new address
@@ -281,7 +352,13 @@ function SavedAddressesCard({ profile }: { profile: UserProfile }) {
   );
 }
 
-function PaymentMethodsCard({ profile }: { profile: UserProfile }) {
+function PaymentMethodsCard({
+  profile,
+  onOpenSettings,
+}: {
+  profile: UserProfile;
+  onOpenSettings: () => void;
+}) {
   return (
     <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
       <CardTitle
@@ -308,6 +385,7 @@ function PaymentMethodsCard({ profile }: { profile: UserProfile }) {
       </div>
       <button
         className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        onClick={onOpenSettings}
         type="button"
       >
         + Add payment method
@@ -459,19 +537,19 @@ function RecentActivityCard() {
           icon="/assets/icons/clock-icon.png"
           title="Recent activity"
         />
-        <button
-          className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-          type="button"
+        <Link
+          className="inline-flex items-center text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          href="/orders"
         >
           View all <ChevronIcon direction="right" size={18} />
-        </button>
+        </Link>
       </div>
       <div className="mt-3 overflow-hidden rounded-[12px] border border-white/10">
-        {recentActivity.map(([label, date, detail]) => (
-          <button
-            className="grid min-h-[38px] w-full grid-cols-[180px_minmax(0,1fr)_220px_20px] items-center gap-4 border-b border-white/10 px-4 text-left text-[13px] last:border-b-0"
+        {recentActivity.map(([label, date, detail, href]) => (
+          <Link
+            className="grid min-h-[38px] w-full grid-cols-[180px_minmax(0,1fr)_220px_20px] items-center gap-4 border-b border-white/10 px-4 text-left text-[13px] transition last:border-b-0 hover:bg-white/[0.035] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--sb-gold)]"
+            href={href}
             key={label}
-            type="button"
           >
             <span className="text-white">{label}</span>
             <span className="text-white/56">{date}</span>
@@ -479,7 +557,7 @@ function RecentActivityCard() {
             <span className="text-[var(--sb-gold-soft)]" aria-hidden="true">
               <ChevronIcon direction="right" size={18} />
             </span>
-          </button>
+          </Link>
         ))}
       </div>
     </article>

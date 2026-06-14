@@ -456,7 +456,7 @@ export function TabletProfilePreferencesView({
                   >
                     <TabletPaymentMark paymentMethod={paymentMethod} />
                     <span className="truncate text-[13px] text-white/86 min-[1080px]:text-[15px]">
-                      .... {paymentMethod.last4}
+                      **** {paymentMethod.last4}
                     </span>
                     <span className="hidden truncate text-[11px] text-white/42 min-[1080px]:block">
                       Expires {formatExpiryDate(paymentMethod.expiresAt)}
@@ -492,7 +492,7 @@ export function TabletProfilePreferencesView({
                       }
                       type="button"
                     >
-                      ...
+                      <AssetIcon size={14} src="/assets/icons/x-icon.png" />
                     </button>
                   </div>
                 ))}

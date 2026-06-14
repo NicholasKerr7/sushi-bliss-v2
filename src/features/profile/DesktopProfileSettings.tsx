@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -11,23 +11,67 @@ import type { LoyaltyAccount } from "@/types/loyalty";
 import type { UserPreferences, UserProfile } from "@/types/user";
 
 const sidebarItems = [
-  ["overview", "Account Overview", "/assets/icons/user-icon.png"],
-  ["personal", "Personal Information", "/assets/icons/user-icon.png"],
-  [
-    "dietary",
-    "Dietary Preferences",
-    "/assets/icons/vegetarian-sushi-icon.webp",
-  ],
-  ["privacy", "Privacy & Security", "/assets/icons/chef-crest-icon.png"],
-  [
-    "notifications",
-    "Notifications",
-    "/assets/icons/notification-bell-icon.png",
-  ],
-  ["payments", "Payment Methods", "/assets/icons/credit-card-icon.png"],
-  ["loyalty", "Loyalty & Rewards", "/assets/icons/floral-emblem-icon.png"],
-  ["orders", "Order History", "/assets/icons/clock-icon.png"],
-  ["settings", "Settings", "/assets/icons/user-settings-icon.png"],
+  {
+    id: "overview",
+    label: "Account Overview",
+    icon: "/assets/icons/user-icon.png",
+    action: "back",
+  },
+  {
+    id: "personal",
+    label: "Personal Information",
+    icon: "/assets/icons/user-icon.png",
+    target: "desktop-profile-personal",
+  },
+  {
+    id: "dietary",
+    label: "Dietary Preferences",
+    icon: "/assets/icons/vegetarian-sushi-icon.webp",
+    target: "desktop-profile-dietary",
+  },
+  {
+    id: "privacy",
+    label: "Privacy & Security",
+    icon: "/assets/icons/chef-crest-icon.png",
+    target: "desktop-profile-privacy",
+  },
+  {
+    id: "notifications",
+    label: "Notifications",
+    icon: "/assets/icons/notification-bell-icon.png",
+    target: "desktop-profile-notifications",
+  },
+  {
+    id: "payments",
+    label: "Payment Methods",
+    icon: "/assets/icons/credit-card-icon.png",
+    target: "desktop-profile-payments",
+  },
+  {
+    id: "loyalty",
+    label: "Loyalty & Rewards",
+    icon: "/assets/icons/floral-emblem-icon.png",
+    href: "/loyalty",
+  },
+  {
+    id: "orders",
+    label: "Order History",
+    icon: "/assets/icons/clock-icon.png",
+    href: "/orders",
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    icon: "/assets/icons/user-settings-icon.png",
+    target: "desktop-profile-shortcuts",
+  },
+] as const;
+
+const privacyRows = [
+  ["Password", "Supabase Auth connection required"],
+  ["Two-factor authentication", "Supabase Auth connection required"],
+  ["Login devices", "Supabase Auth connection required"],
+  ["Data & privacy", "Contact support"],
 ] as const;
 
 function getProgressWidthClass(progress: number) {
@@ -105,22 +149,55 @@ export function DesktopAccountSettings({
               className="overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035]"
               aria-label="Account settings sections"
             >
-              {sidebarItems.map(([id, label, icon]) => (
-                <button
-                  className={classNames(
-                    "grid min-h-[44px] w-full grid-cols-[28px_1fr] items-center gap-3 border-b border-white/10 px-6 text-left text-[13px] uppercase tracking-[0.04em] last:border-b-0",
-                    id === "personal"
-                      ? "border-l-2 border-l-[var(--sb-red-bright)] text-[var(--sb-red-bright)]"
-                      : "text-white/72",
-                  )}
-                  key={id}
-                  onClick={() => onStatus(`${label} settings selected.`)}
-                  type="button"
-                >
-                  <AssetIcon size={20} src={icon} />
-                  {label}
-                </button>
-              ))}
+              {sidebarItems.map((item) => {
+                const itemClassName = classNames(
+                  "grid min-h-[44px] w-full grid-cols-[28px_1fr] items-center gap-3 border-b border-white/10 px-6 text-left text-[13px] uppercase tracking-[0.04em] transition last:border-b-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--sb-gold)]",
+                  item.id === "personal"
+                    ? "border-l-2 border-l-[var(--sb-red-bright)] text-[var(--sb-red-bright)]"
+                    : "text-white/72 hover:text-white",
+                );
+                const content = (
+                  <>
+                    <AssetIcon size={20} src={item.icon} />
+                    {item.label}
+                  </>
+                );
+
+                if ("href" in item) {
+                  return (
+                    <Link
+                      className={itemClassName}
+                      href={item.href}
+                      key={item.id}
+                    >
+                      {content}
+                    </Link>
+                  );
+                }
+
+                if ("target" in item) {
+                  return (
+                    <a
+                      className={itemClassName}
+                      href={`#${item.target}`}
+                      key={item.id}
+                    >
+                      {content}
+                    </a>
+                  );
+                }
+
+                return (
+                  <button
+                    className={itemClassName}
+                    key={item.id}
+                    onClick={onBack}
+                    type="button"
+                  >
+                    {content}
+                  </button>
+                );
+              })}
             </nav>
             <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
               <h2 className="text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
@@ -145,14 +222,15 @@ export function DesktopAccountSettings({
               selected={profile.preferences.dietaryTags}
               onDietaryToggle={onDietaryToggle}
             />
-            <PrivacySecurityCard onStatus={onStatus} />
+            <PrivacySecurityCard />
             <NotificationSettingsCard
               preferences={profile.preferences.notifications}
               onNotificationToggle={onNotificationToggle}
             />
+            <PaymentSettingsCard profile={profile} />
             <LoyaltyCompactCard account={account} progress={progress} />
             <MemberSinceCard />
-            <AccountShortcutsCard onBack={onBack} />
+            <AccountShortcutsCard />
           </section>
         </div>
       </div>
@@ -167,8 +245,28 @@ function PersonalInformationCard({
   profile: UserProfile;
   onStatus: (message: string) => void;
 }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [draft, setDraft] = useState({
+    birthDate: "May 15, 1990",
+    email: profile.email,
+    name: profile.name,
+    phone: profile.phone,
+  });
+
+  const updateDraft = (key: keyof typeof draft, value: string) => {
+    setDraft((current) => ({ ...current, [key]: value }));
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+    onStatus("Personal information saved locally.");
+  };
+
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article
+      className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4"
+      id="desktop-profile-personal"
+    >
       <div className="flex items-center justify-between">
         <CardTitle
           icon="/assets/icons/floral-emblem-icon.png"
@@ -176,10 +274,10 @@ function PersonalInformationCard({
         />
         <button
           className="h-8 rounded-[8px] border border-[var(--sb-gold)]/36 px-4 text-[11px] uppercase text-[var(--sb-gold-soft)]"
-          onClick={() => onStatus("Personal information edit mode is ready.")}
+          onClick={() => setIsEditing((current) => !current)}
           type="button"
         >
-          Edit
+          {isEditing ? "Close" : "Edit"}
         </button>
       </div>
       <div className="mt-4 grid grid-cols-[104px_1fr] gap-5">
@@ -190,12 +288,66 @@ function PersonalInformationCard({
           src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"
           width={96}
         />
-        <div className="space-y-2.5 text-[13px]">
-          <SettingLine label="Full name" value={profile.name} />
-          <SettingLine label="Email address" value={profile.email} />
-          <SettingLine label="Phone number" value={profile.phone} />
-          <SettingLine label="Date of birth" value="May 15, 1990" />
-        </div>
+        {isEditing ? (
+          <form
+            className="grid gap-2.5"
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleSave();
+            }}
+          >
+            {(
+              [
+                ["name", "Full name"],
+                ["email", "Email address"],
+                ["phone", "Phone number"],
+                ["birthDate", "Date of birth"],
+              ] as const
+            ).map(([key, label]) => (
+              <label className="grid gap-1" key={key}>
+                <span className="text-[10px] uppercase tracking-[0.08em] text-white/46">
+                  {label}
+                </span>
+                <input
+                  className="h-9 rounded-[8px] border border-white/10 bg-black/24 px-3 text-[13px] text-white outline-none focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/22"
+                  onChange={(event) => updateDraft(key, event.target.value)}
+                  type={key === "email" ? "email" : "text"}
+                  value={draft[key]}
+                />
+              </label>
+            ))}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <button
+                className="h-9 rounded-[8px] border border-white/10 text-[11px] uppercase tracking-[0.08em] text-white/68"
+                onClick={() => {
+                  setDraft({
+                    birthDate: "May 15, 1990",
+                    email: profile.email,
+                    name: profile.name,
+                    phone: profile.phone,
+                  });
+                  setIsEditing(false);
+                }}
+                type="button"
+              >
+                Cancel
+              </button>
+              <button
+                className="h-9 rounded-[8px] border border-[var(--sb-red-bright)]/60 bg-[var(--sb-red)]/22 text-[11px] uppercase tracking-[0.08em] text-white"
+                type="submit"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div className="space-y-2.5 text-[13px]">
+            <SettingLine label="Full name" value={draft.name} />
+            <SettingLine label="Email address" value={draft.email} />
+            <SettingLine label="Phone number" value={draft.phone} />
+            <SettingLine label="Date of birth" value={draft.birthDate} />
+          </div>
+        )}
       </div>
     </article>
   );
@@ -211,18 +363,18 @@ function DietarySettingsCard({
   onDietaryToggle: (option: string) => void;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article
+      className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4"
+      id="desktop-profile-dietary"
+    >
       <div className="flex items-center justify-between">
         <CardTitle
           icon="/assets/icons/vegetarian-sushi-icon.webp"
           title="Dietary preferences"
         />
-        <button
-          className="h-8 rounded-[8px] border border-[var(--sb-gold)]/36 px-4 text-[11px] uppercase text-[var(--sb-gold-soft)]"
-          type="button"
-        >
-          Edit
-        </button>
+        <span className="rounded-full border border-[var(--sb-gold)]/28 px-3 py-1 text-[10px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+          Active
+        </span>
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
         {options.map((option) => {
@@ -260,36 +412,44 @@ function DietarySettingsCard({
   );
 }
 
-function PrivacySecurityCard({
-  onStatus,
-}: {
-  onStatus: (message: string) => void;
-}) {
+function PrivacySecurityCard() {
   return (
     <SettingsCard
       title="Privacy & Security"
       icon="/assets/icons/chef-crest-icon.png"
+      id="desktop-profile-privacy"
     >
-      {[
-        "Password",
-        "Two-factor authentication",
-        "Login devices",
-        "Data & privacy",
-      ].map((row) => (
-        <button
-          className="flex min-h-[42px] w-full items-center justify-between border-b border-white/10 text-left text-[13px] last:border-b-0"
-          key={row}
-          onClick={() => onStatus(`${row} action selected.`)}
-          type="button"
-        >
-          <span className="uppercase tracking-[0.04em] text-white/72">
-            {row}
-          </span>
-          <span className="rounded-[8px] border border-[var(--sb-gold)]/36 px-3 py-1 text-[11px] uppercase text-[var(--sb-gold-soft)]">
-            Manage
-          </span>
-        </button>
-      ))}
+      {privacyRows.map(([row, action]) =>
+        row === "Data & privacy" ? (
+          <Link
+            className="flex min-h-[42px] w-full items-center justify-between border-b border-white/10 text-left text-[13px] transition last:border-b-0 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--sb-gold)]"
+            href="/support"
+            key={row}
+          >
+            <span className="uppercase tracking-[0.04em] text-white/72">
+              {row}
+            </span>
+            <span className="rounded-[8px] border border-[var(--sb-gold)]/36 px-3 py-1 text-[11px] uppercase text-[var(--sb-gold-soft)]">
+              {action}
+            </span>
+          </Link>
+        ) : (
+          <button
+            className="flex min-h-[42px] w-full cursor-not-allowed items-center justify-between border-b border-white/10 text-left text-[13px] opacity-70 last:border-b-0"
+            disabled
+            key={row}
+            title={action}
+            type="button"
+          >
+            <span className="uppercase tracking-[0.04em] text-white/72">
+              {row}
+            </span>
+            <span className="rounded-[8px] border border-white/12 px-3 py-1 text-[11px] uppercase text-white/46">
+              Auth setup
+            </span>
+          </button>
+        ),
+      )}
     </SettingsCard>
   );
 }
@@ -318,6 +478,7 @@ function NotificationSettingsCard({
     <SettingsCard
       title="Notifications"
       icon="/assets/icons/notification-bell-icon.png"
+      id="desktop-profile-notifications"
     >
       {rows.map(([key, label, copy]) => (
         <button
@@ -337,6 +498,41 @@ function NotificationSettingsCard({
   );
 }
 
+function PaymentSettingsCard({ profile }: { profile: UserProfile }) {
+  return (
+    <SettingsCard
+      title="Payment methods"
+      icon="/assets/icons/credit-card-icon.png"
+      id="desktop-profile-payments"
+    >
+      <div className="space-y-2">
+        {profile.paymentMethods.map((method) => (
+          <div
+            className="grid grid-cols-[58px_1fr] items-center gap-3 rounded-[10px] border border-white/10 bg-black/24 p-2.5"
+            key={method.id}
+          >
+            <span className="grid h-11 place-items-center rounded-[8px] border border-white/10 font-mono text-[12px] text-white">
+              {method.brand === "Mastercard" ? "MC" : method.brand}
+            </span>
+            <p className="text-[13px] text-white">
+              {method.brand} **** {method.last4}
+              <span className="mt-1 block text-[12px] text-white/54">
+                Expires {method.expiresAt}
+              </span>
+            </p>
+          </div>
+        ))}
+      </div>
+      <Link
+        className="mt-3 flex h-9 items-center justify-center rounded-[9px] border border-[var(--sb-gold)]/32 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+        href="/checkout"
+      >
+        Use at checkout
+      </Link>
+    </SettingsCard>
+  );
+}
+
 function LoyaltyCompactCard({
   account,
   progress,
@@ -348,6 +544,7 @@ function LoyaltyCompactCard({
     <SettingsCard
       title="Loyalty status"
       icon="/assets/icons/floral-emblem-icon.png"
+      id="desktop-profile-loyalty"
     >
       <p className="font-mono text-[26px] text-white">
         {account.points.toLocaleString()} PTS
@@ -369,7 +566,11 @@ function LoyaltyCompactCard({
 
 function MemberSinceCard() {
   return (
-    <SettingsCard title="Member since" icon="/assets/icons/calendar-icon.png">
+    <SettingsCard
+      title="Member since"
+      icon="/assets/icons/calendar-icon.png"
+      id="desktop-profile-member"
+    >
       <p className="editorial-title text-[30px] uppercase text-white">
         Jan 15, 2024
       </p>
@@ -378,27 +579,47 @@ function MemberSinceCard() {
   );
 }
 
-function AccountShortcutsCard({ onBack }: { onBack: () => void }) {
+function AccountShortcutsCard() {
+  const shortcuts = [
+    { label: "View order history", href: "/orders" },
+    { label: "Manage payment methods", target: "desktop-profile-payments" },
+    { label: "Download receipts", href: "/orders" },
+  ] as const;
+
   return (
     <SettingsCard
       title="Account shortcuts"
       icon="/assets/icons/chef-crest-icon.png"
+      id="desktop-profile-shortcuts"
     >
-      {[
-        "View order history",
-        "Manage payment methods",
-        "Download receipts",
-      ].map((label) => (
-        <button
-          className="flex min-h-[38px] w-full items-center justify-between border-b border-white/10 text-left text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] last:border-b-0"
-          key={label}
-          onClick={onBack}
-          type="button"
-        >
-          {label}
-          <ChevronIcon direction="right" size={18} />
-        </button>
-      ))}
+      {shortcuts.map((shortcut) => {
+        const shortcutClassName =
+          "flex min-h-[38px] w-full items-center justify-between border-b border-white/10 text-left text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] transition last:border-b-0 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--sb-gold)]";
+
+        if ("href" in shortcut) {
+          return (
+            <Link
+              className={shortcutClassName}
+              href={shortcut.href}
+              key={shortcut.label}
+            >
+              {shortcut.label}
+              <ChevronIcon direction="right" size={18} />
+            </Link>
+          );
+        }
+
+        return (
+          <a
+            className={shortcutClassName}
+            href={`#${shortcut.target}`}
+            key={shortcut.label}
+          >
+            {shortcut.label}
+            <ChevronIcon direction="right" size={18} />
+          </a>
+        );
+      })}
     </SettingsCard>
   );
 }
@@ -406,14 +627,19 @@ function AccountShortcutsCard({ onBack }: { onBack: () => void }) {
 function SettingsCard({
   children,
   icon,
+  id,
   title,
 }: {
   children: ReactNode;
   icon: string;
+  id?: string;
   title: string;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article
+      className="scroll-mt-6 rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4"
+      id={id}
+    >
       <CardTitle icon={icon} title={title} />
       <div className="mt-3">{children}</div>
     </article>

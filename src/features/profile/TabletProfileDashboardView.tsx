@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -196,7 +195,6 @@ export function TabletProfileDashboardView({
   onOpenCart,
   onOpenSettings,
 }: TabletProfileDashboardViewProps) {
-  const [statusMessage, setStatusMessage] = useState("");
   const nextTier = getNextTier(account.lifetimePoints);
   const progress = getTierProgress(account);
   const pointsToNextTier = nextTier
@@ -236,13 +234,9 @@ export function TabletProfileDashboardView({
               src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"
             />
             <button
-              aria-label="Update profile photo"
+              aria-label="Open profile settings"
               className="absolute bottom-0 right-0 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)] bg-[#090909] text-[var(--sb-gold-soft)] shadow-[0_0_20px_rgba(215,160,75,0.25)]"
-              onClick={() =>
-                setStatusMessage(
-                  "Profile photo upload is ready for storage wiring.",
-                )
-              }
+              onClick={onOpenSettings}
               type="button"
             >
               <AssetIcon size={22} src="/assets/icons/user-settings-icon.png" />
@@ -276,11 +270,6 @@ export function TabletProfileDashboardView({
                 {activeOrderCount} Active
               </span>
             </div>
-            {statusMessage ? (
-              <p className="mt-2 text-[12px] font-semibold text-[var(--sb-gold-soft)]">
-                {statusMessage}
-              </p>
-            ) : null}
           </div>
 
           <div className="hidden lg:block">
@@ -379,7 +368,7 @@ export function TabletProfileDashboardView({
                     onClick={onOpenSettings}
                     type="button"
                   >
-                    ...
+                    <ChevronIcon direction="right" size={18} />
                   </button>
                 </div>
               ))}
@@ -416,7 +405,7 @@ export function TabletProfileDashboardView({
                   <div className="flex items-center gap-3">
                     <TabletPaymentMark paymentMethod={paymentMethod} />
                     <span className="text-[13px] text-white/82 min-[1080px]:text-[16px]">
-                      .... {paymentMethod.last4}
+                      **** {paymentMethod.last4}
                     </span>
                     {paymentMethod.isDefault ? (
                       <span className="rounded-[6px] border border-[var(--sb-gold)]/40 px-2 py-0.5 text-[10px] text-[var(--sb-gold-soft)]">
@@ -430,7 +419,7 @@ export function TabletProfileDashboardView({
                     onClick={onOpenSettings}
                     type="button"
                   >
-                    ...
+                    <ChevronIcon direction="right" size={18} />
                   </button>
                 </div>
               ))}
