@@ -7,7 +7,11 @@ import { getTierProgress } from "@/lib/loyalty";
 import { togglePreferenceTag } from "@/lib/profile";
 import type { LoyaltyAccount } from "@/types/loyalty";
 import type { Reservation } from "@/types/reservation";
-import type { UserPreferences, UserProfile } from "@/types/user";
+import type {
+  ProfileDetailsDraft,
+  UserPreferences,
+  UserProfile,
+} from "@/types/user";
 
 import { DesktopProfileDashboard } from "./DesktopProfileDashboard";
 import { DesktopAccountSettings } from "./DesktopProfileSettings";
@@ -23,6 +27,7 @@ interface DesktopProfileExperienceProps {
   cartCount: number;
   profile: UserProfile;
   upcomingReservations: Reservation[];
+  onSaveProfileDetails: (draft: ProfileDetailsDraft) => void;
   onUpdatePreferences: (nextPreferences: PreferencesUpdate) => void;
 }
 
@@ -32,6 +37,7 @@ export function DesktopProfileExperience({
   cartCount,
   profile,
   upcomingReservations,
+  onSaveProfileDetails,
   onUpdatePreferences,
 }: DesktopProfileExperienceProps) {
   const [view, setView] = useState<ProfileView>("dashboard");
@@ -60,6 +66,17 @@ export function DesktopProfileExperience({
     setMessage("Notification preference updated.");
   };
 
+  const handlePrivacyToggle = (key: keyof UserPreferences["privacy"]) => {
+    onUpdatePreferences((current) => ({
+      ...current,
+      privacy: {
+        ...current.privacy,
+        [key]: !current.privacy[key],
+      },
+    }));
+    setMessage("Privacy preference updated.");
+  };
+
   return (
     <section
       className="hidden min-h-dvh bg-[#040506] text-white xl:block"
@@ -75,6 +92,8 @@ export function DesktopProfileExperience({
           onBack={() => setView("dashboard")}
           onDietaryToggle={handleDietaryToggle}
           onNotificationToggle={handleNotificationToggle}
+          onPrivacyToggle={handlePrivacyToggle}
+          onSaveProfileDetails={onSaveProfileDetails}
           onStatus={setMessage}
         />
       ) : (

@@ -17,6 +17,10 @@ import {
   isPaymentMethodUsable,
   validateAddressDraft,
 } from "@/lib/profile";
+import {
+  clearPendingOfferCode,
+  readPendingOfferCode,
+} from "@/lib/offerStorage";
 import type {
   CheckoutAddressDraft,
   CheckoutValidationState,
@@ -56,8 +60,14 @@ export function useCheckout(
   const [customTipCents, setCustomTipCentsState] = useState(
     Math.max(Math.round(initialCustomTipCents), 0),
   );
-  const [promoCode, setPromoCodeState] = useState("");
-  const [appliedPromoCode, setAppliedPromoCode] = useState<string | null>(null);
+  const [promoCode, setPromoCodeState] = useState(() => readPendingOfferCode());
+  const [appliedPromoCode, setAppliedPromoCode] = useState<string | null>(
+    () => {
+      const pendingCode = readPendingOfferCode();
+
+      return findCheckoutPromo(pendingCode)?.code || null;
+    },
+  );
   const [addressDraft, setAddressDraft] = useState<CheckoutAddressDraft>(
     getDefaultAddressDraft,
   );
@@ -181,6 +191,7 @@ export function useCheckout(
 
     if (!promoCode.trim()) {
       setAppliedPromoCode(null);
+      clearPendingOfferCode();
       setValidation((current) => ({ ...current, promo: undefined }));
       return true;
     }
@@ -196,6 +207,7 @@ export function useCheckout(
 
     setAppliedPromoCode(promo.code);
     setPromoCodeState(promo.code);
+    clearPendingOfferCode();
     setValidation((current) => ({ ...current, promo: undefined }));
     return true;
   }, [promoCode]);
@@ -203,6 +215,7 @@ export function useCheckout(
   const clearPromoCode = useCallback(() => {
     setAppliedPromoCode(null);
     setPromoCodeState("");
+    clearPendingOfferCode();
     setValidation((current) => ({ ...current, promo: undefined }));
   }, []);
 

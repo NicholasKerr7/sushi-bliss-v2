@@ -100,6 +100,7 @@ export function ProfileDashboard() {
         cartCount={itemCount}
         profile={profile}
         upcomingReservations={upcomingReservations}
+        onSaveProfileDetails={saveProfileDetails}
         onUpdatePreferences={updateProfilePreferences}
       />
       <section

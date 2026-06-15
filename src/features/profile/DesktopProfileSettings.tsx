@@ -7,8 +7,18 @@ import { useState, type ReactNode } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { classNames } from "@/lib/classNames";
+import {
+  getProfileDetailsDraft,
+  hasProfileDetailsValidationErrors,
+  validateProfileDetailsDraft,
+  type ProfileDetailsValidation,
+} from "@/lib/profile";
 import type { LoyaltyAccount } from "@/types/loyalty";
-import type { UserPreferences, UserProfile } from "@/types/user";
+import type {
+  ProfileDetailsDraft,
+  UserPreferences,
+  UserProfile,
+} from "@/types/user";
 
 const sidebarItems = [
   {
@@ -67,11 +77,31 @@ const sidebarItems = [
   },
 ] as const;
 
-const privacyRows = [
-  ["Password", "Supabase Auth connection required"],
-  ["Two-factor authentication", "Supabase Auth connection required"],
-  ["Login devices", "Supabase Auth connection required"],
-  ["Data & privacy", "Contact support"],
+const privacyRows: Array<{
+  key: keyof UserPreferences["privacy"];
+  label: string;
+  description: string;
+}> = [
+  {
+    description: "Receive an alert when a new device signs in.",
+    key: "loginAlerts",
+    label: "Login alerts",
+  },
+  {
+    description: "Mock two-step protection until Supabase Auth is connected.",
+    key: "twoFactorEnabled",
+    label: "Two-factor authentication",
+  },
+  {
+    description: "Use dining history to tailor recommendations.",
+    key: "personalizedRecommendations",
+    label: "Personalized recommendations",
+  },
+  {
+    description: "Let concierge support view dining history when helping you.",
+    key: "shareDiningHistory",
+    label: "Share dining history",
+  },
 ] as const;
 
 function getProgressWidthClass(progress: number) {
@@ -106,6 +136,8 @@ export function DesktopAccountSettings({
   onBack,
   onDietaryToggle,
   onNotificationToggle,
+  onPrivacyToggle,
+  onSaveProfileDetails,
   onStatus,
 }: {
   account: LoyaltyAccount;
@@ -115,6 +147,8 @@ export function DesktopAccountSettings({
   onBack: () => void;
   onDietaryToggle: (option: string) => void;
   onNotificationToggle: (key: keyof UserPreferences["notifications"]) => void;
+  onPrivacyToggle: (key: keyof UserPreferences["privacy"]) => void;
+  onSaveProfileDetails: (draft: ProfileDetailsDraft) => void;
   onStatus: (message: string) => void;
 }) {
   const dietaryOptions = [
@@ -216,13 +250,20 @@ export function DesktopAccountSettings({
           </aside>
 
           <section className="grid grid-cols-2 gap-4">
-            <PersonalInformationCard profile={profile} onStatus={onStatus} />
+            <PersonalInformationCard
+              profile={profile}
+              onSaveProfileDetails={onSaveProfileDetails}
+              onStatus={onStatus}
+            />
             <DietarySettingsCard
               options={dietaryOptions}
               selected={profile.preferences.dietaryTags}
               onDietaryToggle={onDietaryToggle}
             />
-            <PrivacySecurityCard />
+            <PrivacySecurityCard
+              preferences={profile.preferences}
+              onPrivacyToggle={onPrivacyToggle}
+            />
             <NotificationSettingsCard
               preferences={profile.preferences.notifications}
               onNotificationToggle={onNotificationToggle}
@@ -240,24 +281,47 @@ export function DesktopAccountSettings({
 
 function PersonalInformationCard({
   profile,
+  onSaveProfileDetails,
   onStatus,
 }: {
   profile: UserProfile;
+  onSaveProfileDetails: (draft: ProfileDetailsDraft) => void;
   onStatus: (message: string) => void;
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [draft, setDraft] = useState({
-    birthDate: "May 15, 1990",
-    email: profile.email,
-    name: profile.name,
-    phone: profile.phone,
-  });
+  const profileKey = `${profile.name}|${profile.email}|${profile.phone}`;
+  const profileDraft = getProfileDetailsDraft(profile);
+  const [draftState, setDraftState] = useState<{
+    draft: ProfileDetailsDraft;
+    profileKey: string;
+  }>(() => ({
+    draft: profileDraft,
+    profileKey,
+  }));
+  const [validation, setValidation] = useState<ProfileDetailsValidation>({});
+  const draft =
+    draftState.profileKey === profileKey ? draftState.draft : profileDraft;
+  const activeValidation: ProfileDetailsValidation =
+    draftState.profileKey === profileKey ? validation : {};
 
-  const updateDraft = (key: keyof typeof draft, value: string) => {
-    setDraft((current) => ({ ...current, [key]: value }));
+  const updateDraft = (key: keyof ProfileDetailsDraft, value: string) => {
+    setDraftState({
+      draft: { ...draft, [key]: value },
+      profileKey,
+    });
+    setValidation((current) => ({ ...current, [key]: undefined }));
   };
 
   const handleSave = () => {
+    const nextValidation = validateProfileDetailsDraft(draft);
+
+    if (hasProfileDetailsValidationErrors(nextValidation)) {
+      setValidation(nextValidation);
+      onStatus("Review the highlighted profile fields.");
+      return;
+    }
+
+    onSaveProfileDetails(draft);
     setIsEditing(false);
     onStatus("Personal information saved locally.");
   };
@@ -301,7 +365,6 @@ function PersonalInformationCard({
                 ["name", "Full name"],
                 ["email", "Email address"],
                 ["phone", "Phone number"],
-                ["birthDate", "Date of birth"],
               ] as const
             ).map(([key, label]) => (
               <label className="grid gap-1" key={key}>
@@ -314,18 +377,22 @@ function PersonalInformationCard({
                   type={key === "email" ? "email" : "text"}
                   value={draft[key]}
                 />
+                {activeValidation[key] ? (
+                  <span className="text-[11px] text-[var(--sb-red-bright)]">
+                    {activeValidation[key]}
+                  </span>
+                ) : null}
               </label>
             ))}
             <div className="grid grid-cols-2 gap-2 pt-1">
               <button
                 className="h-9 rounded-[8px] border border-white/10 text-[11px] uppercase tracking-[0.08em] text-white/68"
                 onClick={() => {
-                  setDraft({
-                    birthDate: "May 15, 1990",
-                    email: profile.email,
-                    name: profile.name,
-                    phone: profile.phone,
+                  setDraftState({
+                    draft: profileDraft,
+                    profileKey,
                   });
+                  setValidation({});
                   setIsEditing(false);
                 }}
                 type="button"
@@ -345,7 +412,6 @@ function PersonalInformationCard({
             <SettingLine label="Full name" value={draft.name} />
             <SettingLine label="Email address" value={draft.email} />
             <SettingLine label="Phone number" value={draft.phone} />
-            <SettingLine label="Date of birth" value={draft.birthDate} />
           </div>
         )}
       </div>
@@ -412,44 +478,45 @@ function DietarySettingsCard({
   );
 }
 
-function PrivacySecurityCard() {
+function PrivacySecurityCard({
+  preferences,
+  onPrivacyToggle,
+}: {
+  preferences: UserPreferences;
+  onPrivacyToggle: (key: keyof UserPreferences["privacy"]) => void;
+}) {
   return (
     <SettingsCard
       title="Privacy & Security"
       icon="/assets/icons/chef-crest-icon.png"
       id="desktop-profile-privacy"
     >
-      {privacyRows.map(([row, action]) =>
-        row === "Data & privacy" ? (
-          <Link
-            className="flex min-h-[42px] w-full items-center justify-between border-b border-white/10 text-left text-[13px] transition last:border-b-0 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--sb-gold)]"
-            href="/support"
-            key={row}
-          >
-            <span className="uppercase tracking-[0.04em] text-white/72">
-              {row}
+      {privacyRows.map((row) => (
+        <button
+          aria-pressed={preferences.privacy[row.key]}
+          className="flex min-h-[48px] w-full items-center justify-between gap-4 border-b border-white/10 text-left last:border-b-0"
+          key={row.key}
+          onClick={() => onPrivacyToggle(row.key)}
+          type="button"
+        >
+          <span className="min-w-0">
+            <span className="block text-[13px] uppercase tracking-[0.04em] text-white">
+              {row.label}
             </span>
-            <span className="rounded-[8px] border border-[var(--sb-gold)]/36 px-3 py-1 text-[11px] uppercase text-[var(--sb-gold-soft)]">
-              {action}
+            <span className="mt-1 block text-[12px] leading-5 text-white/52">
+              {row.description}
             </span>
-          </Link>
-        ) : (
-          <button
-            className="flex min-h-[42px] w-full cursor-not-allowed items-center justify-between border-b border-white/10 text-left text-[13px] opacity-70 last:border-b-0"
-            disabled
-            key={row}
-            title={action}
-            type="button"
-          >
-            <span className="uppercase tracking-[0.04em] text-white/72">
-              {row}
-            </span>
-            <span className="rounded-[8px] border border-white/12 px-3 py-1 text-[11px] uppercase text-white/46">
-              Auth setup
-            </span>
-          </button>
-        ),
-      )}
+          </span>
+          <SwitchPill checked={preferences.privacy[row.key]} />
+        </button>
+      ))}
+      <Link
+        className="mt-3 flex min-h-[42px] w-full items-center justify-between rounded-[9px] border border-[var(--sb-gold)]/30 px-3 text-left text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+        href="/support"
+      >
+        Data & privacy request
+        <ChevronIcon direction="right" size={18} />
+      </Link>
     </SettingsCard>
   );
 }
@@ -525,9 +592,9 @@ function PaymentSettingsCard({ profile }: { profile: UserProfile }) {
       </div>
       <Link
         className="mt-3 flex h-9 items-center justify-center rounded-[9px] border border-[var(--sb-gold)]/32 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
-        href="/checkout"
+        href="/menu"
       >
-        Use at checkout
+        Use in menu checkout
       </Link>
     </SettingsCard>
   );

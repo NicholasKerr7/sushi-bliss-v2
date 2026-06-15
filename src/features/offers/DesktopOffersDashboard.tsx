@@ -13,6 +13,8 @@ import {
   DesktopMenuHeader,
 } from "@/features/menu/DesktopMenuChrome";
 import { useCart } from "@/hooks/useCart";
+import { findCheckoutPromo } from "@/lib/checkout";
+import { writePendingOfferCode } from "@/lib/offerStorage";
 import { isOfferExpired, sortOffersByAvailability } from "@/lib/offers";
 import type { Offer } from "@/types/offer";
 
@@ -82,23 +84,40 @@ export function DesktopOffersDashboard() {
   );
   const [promoCode, setPromoCode] = useState(featuredOffer?.code || "");
   const [statusMessage, setStatusMessage] = useState("");
+  const [appliedOfferCode, setAppliedOfferCode] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
 
   const applyCode = () => {
     const normalizedCode = promoCode.trim().toUpperCase();
     const matchingOffer = offers.find((offer) => offer.code === normalizedCode);
+    const checkoutPromo = findCheckoutPromo(normalizedCode);
 
     if (!matchingOffer) {
+      setAppliedOfferCode(null);
       setStatusMessage("Enter a valid Sushi Bliss offer code.");
       return;
     }
 
     if (isOfferExpired(matchingOffer, currentTime)) {
+      setAppliedOfferCode(null);
       setStatusMessage(`${matchingOffer.code} has expired.`);
       return;
     }
 
-    setStatusMessage(`${matchingOffer.code} is ready for checkout.`);
+    if (!checkoutPromo) {
+      setAppliedOfferCode(null);
+      setStatusMessage(
+        `${matchingOffer.code} is valid for in-restaurant redemption.`,
+      );
+      return;
+    }
+
+    writePendingOfferCode(checkoutPromo.code);
+    setPromoCode(checkoutPromo.code);
+    setAppliedOfferCode(checkoutPromo.code);
+    setStatusMessage(
+      `${checkoutPromo.code} is saved and will apply in checkout.`,
+    );
   };
 
   if (detailOpen) {
@@ -191,7 +210,9 @@ export function DesktopOffersDashboard() {
                   className="mt-4 flex justify-end gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                   href="/menu"
                 >
-                  Browse eligible items
+                  {appliedOfferCode
+                    ? "Open menu checkout"
+                    : "Browse eligible items"}
                   <ChevronIcon direction="right" size={18} />
                 </Link>
               </article>
