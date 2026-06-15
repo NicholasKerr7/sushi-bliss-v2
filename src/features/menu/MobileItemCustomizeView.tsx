@@ -97,6 +97,7 @@ export function MobileItemCustomizeView({
               alt=""
               className="object-cover"
               fill
+              loading="eager"
               priority
               sizes="138px"
               src={getTabletPresentationImage(item)}

@@ -75,6 +75,7 @@ export function MobileReservationReviewView({
             alt="Reservation summary sushi"
             className="object-cover object-[52%_58%]"
             fill
+            loading="eager"
             priority
             sizes="430px"
             src="/assets/menu/sushi/otoro-nigiri.webp"

@@ -90,6 +90,7 @@ export function DesktopImageStage({
         alt={itemName}
         className="object-cover object-[50%_50%]"
         fill
+        loading="eager"
         priority
         sizes="820px"
         src={activeImage}

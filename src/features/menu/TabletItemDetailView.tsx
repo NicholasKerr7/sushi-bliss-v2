@@ -81,6 +81,7 @@ export function TabletDetailView({
             alt={item.image.alt || item.name}
             className="object-cover object-[58%_48%]"
             fill
+            loading="eager"
             priority
             sizes="1034px"
             src={activeImage}

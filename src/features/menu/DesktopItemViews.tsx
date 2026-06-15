@@ -279,6 +279,7 @@ export function DesktopItemCustomizeView({
             alt={item.image.alt || item.name}
             className="object-cover object-[51%_48%]"
             fill
+            loading="eager"
             priority
             sizes="650px"
             src={activeImage}

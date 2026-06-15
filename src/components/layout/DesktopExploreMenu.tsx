@@ -78,7 +78,11 @@ export function DesktopExploreMenu({ activeId }: DesktopExploreMenuProps) {
                           href={item.href}
                           key={item.id}
                         >
-                          <AssetIcon size={25} src={item.iconUrl} />
+                          <AssetIcon
+                            loading="eager"
+                            size={25}
+                            src={item.iconUrl}
+                          />
                           <span className="min-w-0">
                             <span className="block truncate text-[13px] font-semibold">
                               {item.label}

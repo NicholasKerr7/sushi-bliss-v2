@@ -148,6 +148,7 @@ export function MobileItemDetailView({
             alt={item.image.alt || item.name}
             className="object-cover object-[58%_42%]"
             fill
+            loading="eager"
             priority
             sizes="430px"
             src={heroImage}

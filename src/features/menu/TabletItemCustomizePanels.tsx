@@ -51,6 +51,7 @@ export function ProductStoryCard({
           alt={item.image.alt || item.name}
           className="object-cover object-[54%_50%]"
           fill
+          loading="eager"
           priority
           sizes="500px"
           src={heroImage}

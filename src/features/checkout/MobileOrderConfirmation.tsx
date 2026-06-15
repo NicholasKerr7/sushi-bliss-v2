@@ -177,6 +177,8 @@ export function MobileOrderConfirmation({
               updates as your order progresses.
             </p>
 
+            <MobileConfirmationNextSteps mode={order.mode} />
+
             <Link
               className="red-glow-button mt-8 flex min-h-[66px] w-full items-center justify-center rounded-[14px] text-[17px]"
               href="/orders"
@@ -195,6 +197,63 @@ export function MobileOrderConfirmation({
         </div>
       </div>
     </div>
+  );
+}
+
+function MobileConfirmationNextSteps({ mode }: { mode: Order["mode"] }) {
+  const finalLabel = mode === "delivery" ? "Track" : "Pickup";
+  const steps = [
+    { active: true, icon: icons.star, label: "Confirmed" },
+    { active: false, icon: icons.chef, label: "Kitchen" },
+    {
+      active: false,
+      icon: mode === "delivery" ? icons.location : icons.bag,
+      label: finalLabel,
+    },
+  ] as const;
+
+  return (
+    <section className="mt-7 rounded-[17px] border border-white/10 bg-black/36 px-4 py-5 text-left">
+      <h2 className="text-[13px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+        What happens next
+      </h2>
+      <ol className="relative mt-5 grid grid-cols-3 gap-2">
+        <span
+          aria-hidden="true"
+          className="absolute left-[16.66%] right-[16.66%] top-[23px] h-[6px] overflow-hidden rounded-full border border-white/[0.045] bg-black/54 shadow-[inset_0_0_10px_rgba(0,0,0,0.72)]"
+        >
+          <span className="absolute inset-y-[2px] left-2 right-2 rounded-full bg-white/10" />
+          <span className="absolute inset-y-[1px] left-0 w-[18%] rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(238,43,36,0.64)]" />
+        </span>
+        {steps.map((step, index) => (
+          <li
+            aria-current={index === 0 ? "step" : undefined}
+            className="relative text-center"
+            key={step.label}
+          >
+            <span
+              className={`relative z-10 mx-auto grid h-[52px] w-[52px] place-items-center rounded-full border bg-black/62 ${
+                step.active
+                  ? "border-[var(--sb-red-bright)] shadow-[0_0_24px_rgba(238,43,36,0.36),inset_0_0_16px_rgba(238,43,36,0.18)]"
+                  : "border-white/18 shadow-[inset_0_0_14px_rgba(0,0,0,0.62)]"
+              }`}
+            >
+              <AssetIcon size={23} src={step.icon} />
+              {step.active ? (
+                <span className="absolute -bottom-1 h-1.5 w-8 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(238,43,36,0.78)]" />
+              ) : null}
+            </span>
+            <span
+              className={`mt-3 block text-[11px] uppercase tracking-[0.08em] ${
+                step.active ? "text-[var(--sb-red-bright)]" : "text-white/48"
+              }`}
+            >
+              {step.label}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
 
