@@ -187,46 +187,94 @@ function OrderStatusRail({ status }: { status: Order["status"] }) {
       <p className="text-[13px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
         Order status
       </p>
-      <div className="mt-3 grid grid-cols-3 items-start gap-3">
-        {steps.map(([id, label, icon], index) => {
-          const active = index <= activeIndex;
+      <div className="relative mt-3 px-2 py-1">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute left-[16.666%] right-[16.666%] top-[27px] h-2 rounded-full border border-white/[0.055] bg-[linear-gradient(90deg,rgba(216,168,79,0.10),rgba(255,255,255,0.13),rgba(216,168,79,0.10))] shadow-[inset_0_0_12px_rgba(0,0,0,0.82)]"
+        />
+        <span
+          aria-hidden="true"
+          className={classNames(
+            "pointer-events-none absolute left-[16.666%] top-[27px] h-2 overflow-hidden rounded-full bg-[linear-gradient(90deg,#741610_0%,#ef2f25_48%,#d8a84f_100%)] shadow-[0_0_18px_rgba(239,47,37,0.46),0_0_28px_rgba(216,168,79,0.16)]",
+            getDesktopOrderStatusRailWidth(activeIndex),
+          )}
+        >
+          <span className="absolute inset-y-[3px] left-2 right-2 rounded-full bg-[repeating-linear-gradient(90deg,transparent_0_9px,rgba(255,235,188,0.72)_9px_14px,transparent_14px_24px)] opacity-80" />
+          <span className="absolute right-[-4px] top-1/2 h-[14px] w-[14px] -translate-y-1/2 rounded-full bg-[var(--sb-gold)] shadow-[0_0_14px_rgba(216,168,79,0.82),0_0_20px_rgba(239,47,37,0.52)]" />
+        </span>
 
-          return (
-            <div className="relative text-center" key={id}>
-              {index < steps.length - 1 ? (
+        <ol className="relative z-10 grid grid-cols-3 items-start gap-3">
+          {steps.map(([id, label, icon], index) => {
+            const active = index <= activeIndex;
+            const current = index === activeIndex;
+
+            return (
+              <li
+                aria-current={current ? "step" : undefined}
+                className="relative text-center"
+                key={id}
+              >
                 <span
                   className={classNames(
-                    "absolute left-1/2 top-6 h-px w-full",
-                    active ? "bg-[var(--sb-red-bright)]" : "bg-white/18",
+                    "relative z-10 mx-auto grid h-12 w-12 place-items-center overflow-hidden rounded-full border bg-[#050607]/92 transition duration-300",
+                    active
+                      ? "border-[var(--sb-red-bright)] shadow-[0_0_18px_rgba(238,43,36,0.42),inset_0_0_16px_rgba(239,47,37,0.12)]"
+                      : "border-[var(--sb-gold)]/34 shadow-[inset_0_0_14px_rgba(255,255,255,0.035)]",
+                    current
+                      ? "scale-[1.06] after:absolute after:inset-[5px] after:rounded-full after:border after:border-[var(--sb-gold)]/32 after:content-['']"
+                      : "",
                   )}
-                />
-              ) : null}
-              <span
-                className={classNames(
-                  "relative z-10 mx-auto grid h-12 w-12 place-items-center rounded-full border bg-black",
-                  active
-                    ? "border-[var(--sb-red-bright)] shadow-[0_0_18px_rgba(238,43,36,0.42)]"
-                    : "border-[var(--sb-gold)]/42",
-                )}
-              >
-                <AssetIcon size={24} src={icon} />
-              </span>
-              <span
-                className={classNames(
-                  "mt-2 block text-[14px]",
-                  index === activeIndex
-                    ? "text-[var(--sb-red-bright)]"
-                    : "text-white/58",
-                )}
-              >
-                {label}
-              </span>
-            </div>
-          );
-        })}
+                >
+                  {active ? (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_42%,rgba(239,47,37,0.24),transparent_66%)]"
+                    />
+                  ) : null}
+                  <AssetIcon
+                    className={classNames(
+                      "relative z-10",
+                      active
+                        ? "drop-shadow-[0_0_7px_rgba(239,47,37,0.72)]"
+                        : "opacity-52 grayscale",
+                    )}
+                    size={24}
+                    src={icon}
+                  />
+                  {current ? (
+                    <span
+                      aria-hidden="true"
+                      className="absolute bottom-[4px] h-[2px] w-7 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_10px_rgba(239,47,37,0.9)]"
+                    />
+                  ) : null}
+                </span>
+                <span
+                  className={classNames(
+                    "mt-2 block text-[14px]",
+                    current
+                      ? "text-[var(--sb-gold-soft)]"
+                      : active
+                        ? "text-white"
+                        : "text-white/58",
+                  )}
+                >
+                  {label}
+                </span>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </div>
   );
+}
+
+function getDesktopOrderStatusRailWidth(activeIndex: number) {
+  if (activeIndex <= 0) {
+    return "w-1/3";
+  }
+
+  return "w-2/3";
 }
 
 function OrderItemPreview({
