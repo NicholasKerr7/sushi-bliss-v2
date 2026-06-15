@@ -34,7 +34,7 @@ export function DesktopExploreMenu({ activeId }: DesktopExploreMenuProps) {
         ) : null}
       </summary>
 
-      <div className="absolute left-1/2 top-[76px] z-50 w-[760px] -translate-x-1/2 pt-3">
+      <div className="absolute right-0 top-[76px] z-50 hidden w-[760px] max-w-[calc(100vw-48px)] pt-3 group-open:block">
         <div className="overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[#060708]/98 shadow-[0_28px_90px_rgba(0,0,0,0.66),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-2xl">
           <div className="grid grid-cols-[230px_minmax(0,1fr)]">
             <div className="border-r border-white/10 bg-[radial-gradient(circle_at_20%_10%,rgba(239,47,37,0.18),transparent_46%),linear-gradient(180deg,rgba(215,168,79,0.08),transparent)] p-5">

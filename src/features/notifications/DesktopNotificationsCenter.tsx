@@ -109,8 +109,8 @@ export function DesktopNotificationsCenter() {
     >
       <DesktopMenuHeader activeId="notifications" cartCount={itemCount} />
       <main className="mx-auto max-w-[1672px] px-7 pb-4 pt-4">
-        <section className="rounded-[24px] border border-[var(--sb-border)] bg-[#07090a] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.54)]">
-          <div className="grid grid-cols-[minmax(0,1fr)_460px] gap-8">
+        <section className="rounded-[24px] border border-[var(--sb-border)] bg-[#07090a] p-5 shadow-[0_30px_90px_rgba(0,0,0,0.54)] min-[1500px]:p-6">
+          <div className="grid grid-cols-[minmax(0,1fr)_390px] gap-6 min-[1500px]:grid-cols-[minmax(0,1fr)_460px] min-[1500px]:gap-8">
             <div>
               <h1 className="editorial-title text-[46px] uppercase tracking-[0.08em]">
                 Notifications
@@ -211,26 +211,33 @@ function DesktopNotificationRow({
   }).format(new Date(notification.createdAt));
 
   return (
-    <article className="grid min-h-[76px] grid-cols-[28px_68px_minmax(0,1fr)_170px_190px] items-center gap-5 border-b border-white/10 px-6 last:border-b-0">
+    <article className="grid min-h-[78px] grid-cols-[18px_54px_minmax(0,1fr)_118px_150px] items-center gap-4 border-b border-white/10 px-5 last:border-b-0 min-[1500px]:grid-cols-[28px_68px_minmax(0,1fr)_170px_190px] min-[1500px]:gap-5 min-[1500px]:px-6">
       <span
         className={classNames(
           "h-2.5 w-2.5 rounded-full",
           isUnread ? "bg-[var(--sb-red-bright)]" : "bg-white/24",
         )}
       />
-      <span className="grid h-12 w-12 place-items-center rounded-full border border-[var(--sb-gold)]/30 bg-black/38">
-        <AssetIcon size={28} src={categoryIcons[notification.category]} />
+      <span className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-gold)]/30 bg-black/38 min-[1500px]:h-12 min-[1500px]:w-12">
+        <AssetIcon
+          size={26}
+          src={categoryIcons[notification.category]}
+        />
       </span>
-      <div>
-        <h2 className="text-[19px] text-white">{notification.title}</h2>
+      <div className="min-w-0">
+        <h2 className="line-clamp-1 text-[18px] text-white min-[1500px]:text-[19px]">
+          {notification.title}
+        </h2>
         <p className="mt-1 line-clamp-1 text-[14px] text-white/62">
           {notification.body}
         </p>
       </div>
-      <p className="text-[14px] text-white/58">{timeLabel}</p>
+      <p className="text-[13px] leading-5 text-white/58 min-[1500px]:text-[14px]">
+        {timeLabel}
+      </p>
       <button
         className={classNames(
-          "grid min-h-12 place-items-center rounded-[10px] border text-[12px] uppercase tracking-[0.08em]",
+          "grid min-h-[46px] place-items-center rounded-[10px] border px-2 text-center text-[11px] uppercase tracking-[0.08em] min-[1500px]:min-h-12 min-[1500px]:text-[12px]",
           isUnread
             ? "border-[var(--sb-red-bright)]/48 text-[var(--sb-red-bright)]"
             : "border-white/14 text-white/54",
