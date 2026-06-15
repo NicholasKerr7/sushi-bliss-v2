@@ -26,8 +26,9 @@ export function TabletLocationsHeader({
         <AssetIcon
           alt={brand.name}
           className="rounded-full"
+          loading="eager"
           size={66}
-          src={icons.flower}
+          src={brand.assets.floralEmblem.publicUrl}
         />
         <span className="font-serif text-[22px] font-normal uppercase leading-[0.98] tracking-[0.36em] lg:text-[27px] lg:tracking-[0.43em]">
           Sushi
