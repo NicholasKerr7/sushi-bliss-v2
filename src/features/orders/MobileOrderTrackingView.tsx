@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { icons } from "@/features/home/visualHomeData";
 import { calculateCartLineSubtotal } from "@/lib/cart";
@@ -47,6 +46,15 @@ export function MobileOrderTrackingView({
       ? order.deliveryAddress?.line2 || "Near Tokyo Tower"
       : "Show your confirmation code at arrival.";
   const courierPhone = order.courier?.phone.replaceAll(" ", "");
+  const courierEta = order.courier
+    ? `${order.courier.etaMinutes} min`
+    : getMobileEtaCopy(order);
+  const handoffCopy =
+    order.mode === "delivery"
+      ? order.courier
+        ? `${order.courier.name} is handling your final delivery handoff.`
+        : "Courier assignment is pending while the kitchen finishes packing."
+      : "Your order will be held at the pickup counter.";
 
   return (
     <>
@@ -101,56 +109,65 @@ export function MobileOrderTrackingView({
               src="/assets/maps/map-route.webp"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.26))]" />
+            <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-[var(--sb-red-bright)]/38 bg-black/54 px-4 py-2 text-[11px] uppercase tracking-[0.1em] text-[var(--sb-red-bright)] shadow-[0_0_22px_rgba(239,47,37,0.22)] backdrop-blur-md">
+              <span className="h-2 w-2 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_14px_rgba(239,47,37,0.95)]" />
+              Live route
+            </div>
+            <div className="absolute bottom-4 left-4 right-4 grid grid-cols-[minmax(0,1fr)_74px] items-center gap-3 rounded-[16px] border border-white/10 bg-black/58 p-3 shadow-[0_18px_38px_rgba(0,0,0,0.46)] backdrop-blur-md">
+              <p className="min-w-0">
+                <span className="block text-[11px] uppercase tracking-[0.12em] text-white/48">
+                  Current handoff
+                </span>
+                <span className="mt-1 block line-clamp-2 text-[14px] leading-5 text-white">
+                  {handoffCopy}
+                </span>
+              </p>
+              <span className="grid min-h-[48px] place-items-center rounded-[14px] border border-[var(--sb-gold)]/38 bg-[var(--sb-gold)]/12 px-2 text-center font-mono text-[13px] leading-4 text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(216,168,79,0.16)]">
+                {courierEta}
+              </span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-[50px_1fr_auto] items-center gap-4 border-t border-[var(--sb-border)] px-4 py-5">
-            <AssetIcon size={30} src={icons.location} />
+          <div className="grid grid-cols-[54px_1fr] items-center gap-4 border-t border-[var(--sb-border)] px-4 py-5">
+            <span className="grid h-[54px] w-[54px] place-items-center rounded-[14px] border border-[var(--sb-gold)]/30 bg-[var(--sb-gold)]/8">
+              <AssetIcon size={30} src={icons.location} />
+            </span>
             <p className="min-w-0">
               <span className="editorial-title block text-[16px] uppercase text-[var(--sb-gold-soft)]">
-                {order.mode === "delivery" ? "Delivery Address" : "Pickup"}
+                {order.mode === "delivery" ? "Destination" : "Pickup"}
               </span>
               <span className="mt-2 block text-[18px] leading-6 text-white">
                 {address}
               </span>
-              <span className="mt-1 block text-[14px] text-white/52">
+              <span className="mt-1 block text-[14px] leading-5 text-white/52">
                 {supportingAddress}
               </span>
             </p>
-            <span
-              className="text-[30px] text-[var(--sb-gold-soft)]"
-              aria-hidden
-            >
-              <ChevronIcon direction="right" size={18} />
-            </span>
           </div>
         </MobileOrderPanel>
 
-        <MobileOrderPanel className="mt-4 grid grid-cols-2 divide-x divide-white/10 overflow-hidden">
+        <div className="mt-4 grid grid-cols-2 gap-3">
           {order.courier && courierPhone ? (
-            <Link
-              className="flex min-h-[76px] items-center justify-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            <TrackingActionLink
               href={`tel:${courierPhone}`}
-            >
-              <AssetIcon size={26} src={icons.location} />
-              Call Courier
-            </Link>
+              icon={icons.location}
+              label="Call courier"
+              primary
+            />
           ) : (
-            <Link
-              className="flex min-h-[76px] items-center justify-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            <TrackingActionLink
               href="/support"
-            >
-              <AssetIcon size={26} src={icons.bell} />
-              Contact Sushi Bliss
-            </Link>
+              icon={icons.bell}
+              label="Contact team"
+              primary
+            />
           )}
-          <Link
-            className="flex min-h-[76px] items-center justify-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          <TrackingActionLink
             href="/support"
-          >
-            <AssetIcon size={26} src={icons.bell} />
-            Message Support
-          </Link>
-        </MobileOrderPanel>
+            icon={icons.bell}
+            label="Message support"
+          />
+        </div>
 
         <MobileOrderPanel className="mt-5 p-4">
           <div className="flex items-center justify-between">
@@ -200,18 +217,31 @@ export function MobileOrderTrackingView({
           </div>
         </MobileOrderPanel>
 
-        <MobileOrderPanel className="mt-5 grid grid-cols-[64px_1fr] gap-4 p-4">
-          <MobileIconCircle icon={icons.bag} />
-          <p>
-            <span className="block text-[16px] text-white">
-              {order.courier?.name || "Sushi Bliss team"}
-            </span>
-            <span className="mt-2 block text-[14px] leading-6 text-white/54">
-              {order.courier
-                ? `${order.courier.vehicle} is assigned to your order.`
-                : "We will update this screen when your handoff is assigned."}
-            </span>
-          </p>
+        <MobileOrderPanel className="mt-5 overflow-hidden">
+          <div className="grid grid-cols-[64px_1fr] gap-4 p-4">
+            <MobileIconCircle icon={icons.bag} />
+            <p>
+              <span className="block text-[16px] text-white">
+                {order.courier?.name || "Sushi Bliss team"}
+              </span>
+              <span className="mt-2 block text-[14px] leading-6 text-white/54">
+                {order.courier
+                  ? `${order.courier.vehicle} assigned for a sealed handoff.`
+                  : "We will update this screen when your handoff is assigned."}
+              </span>
+            </p>
+          </div>
+          <div className="grid grid-cols-3 border-t border-white/10">
+            <CourierSignal
+              label="Status"
+              value={order.courier ? "Assigned" : "Pending"}
+            />
+            <CourierSignal label="ETA" value={courierEta} />
+            <CourierSignal
+              label="Mode"
+              value={order.mode === "delivery" ? "Delivery" : "Pickup"}
+            />
+          </div>
         </MobileOrderPanel>
       </div>
 
@@ -220,5 +250,44 @@ export function MobileOrderTrackingView({
         ariaLabel="Mobile orders navigation"
       />
     </>
+  );
+}
+
+function TrackingActionLink({
+  href,
+  icon,
+  label,
+  primary = false,
+}: {
+  href: string;
+  icon?: string;
+  label: string;
+  primary?: boolean;
+}) {
+  return (
+    <Link
+      className={
+        primary
+          ? "red-glow-button flex min-h-[72px] items-center justify-center gap-3 rounded-[15px] text-[13px] uppercase tracking-[0.08em]"
+          : "flex min-h-[72px] items-center justify-center gap-3 rounded-[15px] border border-[var(--sb-gold)]/28 bg-black/34 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_16px_34px_rgba(0,0,0,0.32)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+      }
+      href={href}
+    >
+      <AssetIcon size={24} src={icon} />
+      {label}
+    </Link>
+  );
+}
+
+function CourierSignal({ label, value }: { label: string; value: string }) {
+  return (
+    <p className="border-r border-white/10 px-3 py-3 text-center last:border-r-0">
+      <span className="block text-[10px] uppercase tracking-[0.12em] text-white/42">
+        {label}
+      </span>
+      <span className="mt-1 block text-[13px] text-[var(--sb-gold-soft)]">
+        {value}
+      </span>
+    </p>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import type { Order } from "@/types/order";
@@ -47,6 +47,10 @@ export function MobileOrdersDashboard({
   const [surface, setSurface] = useState<MobileOrdersSurface>("list");
   const fallbackOrder = activeOrders[0] || pastOrders[0] || null;
   const currentOrder = selectedOrder || fallbackOrder;
+
+  useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  }, [currentOrder?.id, surface]);
 
   const handleViewChange = (nextView: OrderView) => {
     onViewChange(nextView);

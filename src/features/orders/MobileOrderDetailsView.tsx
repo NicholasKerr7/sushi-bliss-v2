@@ -178,31 +178,34 @@ export function MobileOrderDetailsView({
           />
         </MobileOrderPanel>
 
-        <div className="mt-4 grid gap-3">
+        <div className="mt-4 grid gap-3 rounded-[18px] border border-[var(--sb-border)] bg-black/26 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_42px_rgba(0,0,0,0.36)]">
           {canTrack ? (
             <button
-              className="red-glow-button flex h-[72px] w-full items-center justify-center gap-4 rounded-[16px] text-[18px]"
+              className="red-glow-button flex min-h-[72px] w-full items-center justify-center gap-4 rounded-[15px] text-[17px] uppercase tracking-[0.08em]"
               onClick={() => onTrackOrder(order)}
               type="button"
             >
               <AssetIcon size={28} src={icons.location} />
               Track Order
+              <ChevronIcon direction="right" size={18} />
             </button>
           ) : (
             <button
-              className="red-glow-button flex h-[72px] w-full items-center justify-center rounded-[16px] text-[18px]"
+              className="red-glow-button flex min-h-[72px] w-full items-center justify-center gap-4 rounded-[15px] text-[17px] uppercase tracking-[0.08em]"
               onClick={() => onReorder(order)}
               type="button"
             >
+              <AssetIcon size={28} src={icons.cart} />
               Reorder
+              <ChevronIcon direction="right" size={18} />
             </button>
           )}
           <Link
-            className="flex h-[62px] items-center justify-center gap-4 rounded-[16px] border border-[var(--sb-border)] bg-black/28 text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            className="flex min-h-[62px] items-center justify-center gap-4 rounded-[15px] border border-[var(--sb-gold)]/28 bg-white/[0.035] text-[13px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
             href="/support"
           >
-            <AssetIcon size={28} src={icons.bell} />
-            Get Help
+            <AssetIcon size={24} src={icons.bell} />
+            Concierge help
           </Link>
         </div>
       </div>
