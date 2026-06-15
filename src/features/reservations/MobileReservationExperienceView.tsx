@@ -41,6 +41,25 @@ interface MobileReservationExperienceViewProps {
   validation: ReservationValidationState;
 }
 
+const mobileReservationLocationOptions = locations.map((location) => ({
+  label: location.name,
+  value: location.id,
+}));
+
+const mobileReservationSeatingOptions = seatingPreferences.map(
+  (preference) => ({
+    label: preference,
+    value: preference,
+  }),
+);
+
+const mobileReservationOccasionOptions = reservationOccasions.map(
+  (occasion) => ({
+    label: occasion,
+    value: occasion,
+  }),
+);
+
 /** Mobile reservation step for experience, location, seating, and requests. */
 export function MobileReservationExperienceView({
   cartCount,
@@ -152,73 +171,29 @@ export function MobileReservationExperienceView({
           Make it Special
         </h2>
         <div className="mt-3 grid gap-3">
-          <label className="grid min-h-[62px] grid-cols-[40px_1fr] items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/38 px-4">
-            <AssetIcon size={26} src={icons.location} />
-            <span>
-              <span className="sr-only">Reservation location</span>
-              <select
-                className="w-full bg-transparent text-[15px] text-white outline-none"
-                onChange={(event) =>
-                  onDraftChange("locationId", event.target.value)
-                }
-                value={draft.locationId}
-              >
-                {locations.map((location) => (
-                  <option
-                    className="bg-black"
-                    key={location.id}
-                    value={location.id}
-                  >
-                    {location.name}
-                  </option>
-                ))}
-              </select>
-            </span>
-          </label>
+          <MobileReservationSelectRow
+            icon={icons.location}
+            label="Reservation location"
+            options={mobileReservationLocationOptions}
+            value={draft.locationId}
+            onChange={(value) => onDraftChange("locationId", value)}
+          />
 
-          <label className="grid min-h-[62px] grid-cols-[40px_1fr] items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/38 px-4">
-            <AssetIcon size={26} src={icons.flower} />
-            <span>
-              <span className="sr-only">Seating preference</span>
-              <select
-                className="w-full bg-transparent text-[15px] text-white outline-none"
-                onChange={(event) =>
-                  onDraftChange("seatingPreference", event.target.value)
-                }
-                value={draft.seatingPreference}
-              >
-                {seatingPreferences.map((preference) => (
-                  <option
-                    className="bg-black"
-                    key={preference}
-                    value={preference}
-                  >
-                    {preference}
-                  </option>
-                ))}
-              </select>
-            </span>
-          </label>
+          <MobileReservationSelectRow
+            icon={icons.flower}
+            label="Seating preference"
+            options={mobileReservationSeatingOptions}
+            value={draft.seatingPreference}
+            onChange={(value) => onDraftChange("seatingPreference", value)}
+          />
 
-          <label className="grid min-h-[62px] grid-cols-[40px_1fr] items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/38 px-4">
-            <AssetIcon size={26} src={icons.star} />
-            <span>
-              <span className="sr-only">Reservation occasion</span>
-              <select
-                className="w-full bg-transparent text-[15px] text-white outline-none"
-                onChange={(event) =>
-                  onDraftChange("occasion", event.target.value)
-                }
-                value={draft.occasion}
-              >
-                {reservationOccasions.map((occasion) => (
-                  <option className="bg-black" key={occasion} value={occasion}>
-                    {occasion}
-                  </option>
-                ))}
-              </select>
-            </span>
-          </label>
+          <MobileReservationSelectRow
+            icon={icons.star}
+            label="Reservation occasion"
+            options={mobileReservationOccasionOptions}
+            value={draft.occasion}
+            onChange={(value) => onDraftChange("occasion", value)}
+          />
 
           <label className="rounded-[14px] border border-[var(--sb-border)] bg-black/38 p-4">
             <span className="flex items-center gap-3 text-[15px] text-white/58">
@@ -274,6 +249,54 @@ export function MobileReservationExperienceView({
         Secure reservation. Card details will be requested later.
       </p>
     </div>
+  );
+}
+
+function MobileReservationSelectRow({
+  icon,
+  label,
+  onChange,
+  options,
+  value,
+}: {
+  icon?: string;
+  label: string;
+  options: ReadonlyArray<{ label: string; value: string }>;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="grid min-h-[66px] grid-cols-[42px_1fr_30px] items-center gap-3 rounded-[15px] border border-[var(--sb-border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018))] px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition focus-within:border-[var(--sb-gold)]/62 focus-within:shadow-[0_0_24px_rgba(215,168,79,0.14),inset_0_1px_0_rgba(255,255,255,0.08)]">
+      <span className="grid h-[40px] w-[40px] place-items-center rounded-full border border-[var(--sb-gold)]/26 bg-black/38">
+        <AssetIcon size={24} src={icon} />
+      </span>
+      <span className="min-w-0">
+        <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]/72">
+          {label}
+        </span>
+        <select
+          aria-label={label}
+          className="mt-0.5 w-full appearance-none bg-transparent text-[15px] font-semibold text-white outline-none"
+          onChange={(event) => onChange(event.target.value)}
+          value={value}
+        >
+          {options.map((option) => (
+            <option
+              className="bg-[#050607] text-white"
+              key={option.value}
+              value={option.value}
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </span>
+      <ChevronIcon
+        className="text-[var(--sb-gold)] drop-shadow-[0_0_10px_rgba(215,168,79,0.35)]"
+        direction="down"
+        size={20}
+      />
+    </label>
   );
 }
 
