@@ -286,46 +286,89 @@ function MemberCard({
   loyaltyPoints: number;
 }) {
   const progressValue = Math.min(loyaltyPoints, 4000);
+  const totalSegments = 16;
+  const activeSegments = Math.round((progressValue / 4000) * totalSegments);
 
   return (
-    <section className="relative mt-5 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-black/62 p-4">
-      <Image
-        alt=""
-        className="pointer-events-none absolute bottom-0 right-0 h-24 w-32 object-cover opacity-95"
-        height={92}
-        src={item.image.publicUrl}
-        width={120}
+    <section className="relative mt-5 overflow-hidden rounded-[20px] border border-[var(--sb-gold)]/24 bg-[linear-gradient(145deg,rgba(255,255,255,0.075),rgba(255,255,255,0.02)_38%,rgba(106,9,8,0.32))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_22px_64px_rgba(0,0,0,0.42)]">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(215,168,79,0.2),transparent_68%)]"
       />
-      <div className="relative z-10 flex gap-4">
-        <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/34">
-          <AssetIcon size={42} src={icons.flower} />
-        </div>
-        <div className="min-w-0 flex-1 pr-16">
-          <div className="flex items-center gap-3">
-            <h2 className="editorial-title text-[16px] text-white">
-              Bliss Member
-            </h2>
-            <span className="rounded-full bg-[var(--sb-gold)] px-2 py-0.5 text-[10px] font-bold uppercase text-black">
-              Gold
-            </span>
+      <div className="relative z-10 grid grid-cols-[minmax(0,1fr)_86px] gap-3">
+        <div className="min-w-0">
+          <div className="flex items-start gap-3">
+            <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/42 shadow-[0_0_24px_rgba(215,168,79,0.12)]">
+              <AssetIcon size={40} src={icons.flower} />
+            </div>
+            <div className="min-w-0 pt-0.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="editorial-title text-[16px] leading-none text-white">
+                  Bliss Member
+                </h2>
+                <span className="rounded-full bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.08em] text-black shadow-[0_0_18px_rgba(215,168,79,0.28)]">
+                  Gold
+                </span>
+              </div>
+              <p className="mt-2 text-[12px] leading-5 text-white/70">
+                <span className="font-semibold text-white">
+                  {loyaltyPoints.toLocaleString()} pts
+                </span>{" "}
+                earned. 750 pts to Platinum.
+              </p>
+            </div>
           </div>
-          <p className="mt-2 text-[13px] text-white/78">
-            {loyaltyPoints.toLocaleString()} pts{" "}
-            <span className="text-[var(--sb-gold)]">{"*"}</span> 750 pts to
-            Platinum
-          </p>
-          <progress
-            className="mt-3 h-2 w-full"
-            max={4000}
-            value={progressValue}
-          >
-            {progressValue}
-          </progress>
+        </div>
+        <div className="relative h-[92px] overflow-hidden rounded-[16px] border border-[var(--sb-gold)]/26 bg-black/42 shadow-[0_14px_36px_rgba(0,0,0,0.34)]">
+          <Image
+            alt=""
+            className="object-cover"
+            fill
+            loading="lazy"
+            sizes="86px"
+            src={item.image.publicUrl}
+          />
+          <span className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.36))]" />
+        </div>
+      </div>
+
+      <div className="relative z-10 mt-4">
+        <div className="mb-2 flex items-center justify-between text-[11px] uppercase tracking-[0.12em] text-white/46">
+          <span>Gold progress</span>
+          <span className="text-[var(--sb-gold-soft)]">
+            {loyaltyPoints.toLocaleString()} / 4,000
+          </span>
+        </div>
+        <div
+          aria-label="Loyalty tier progress"
+          aria-valuemax={4000}
+          aria-valuemin={0}
+          aria-valuenow={progressValue}
+          className="grid h-3 grid-cols-[repeat(16,minmax(0,1fr))] gap-1 rounded-full border border-white/[0.06] bg-black/44 p-1 shadow-[inset_0_0_12px_rgba(0,0,0,0.72)]"
+          role="progressbar"
+        >
+          {Array.from({ length: totalSegments }).map((_, index) => (
+            <span
+              aria-hidden="true"
+              className={
+                index < activeSegments
+                  ? "rounded-full bg-[linear-gradient(90deg,var(--sb-red-bright),var(--sb-gold-soft))] shadow-[0_0_12px_rgba(239,47,37,0.35)]"
+                  : "rounded-full bg-white/10"
+              }
+              key={index}
+            />
+          ))}
+        </div>
+        <div className="mt-3 flex items-center justify-between gap-3">
+          <span className="text-[12px] leading-4 text-white/54">
+            Priority drops, birthday omakase perks, and member-only offers.
+          </span>
           <Link
-            className="mt-3 flex items-center gap-1 text-[13px] text-[var(--sb-gold)]"
+            aria-label="View Benefits"
+            className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-full border border-[var(--sb-gold)]/28 bg-black/30 px-3 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold)] shadow-[0_0_18px_rgba(215,168,79,0.08)]"
             href="/loyalty"
           >
-            View Benefits
+            Benefits
             <ChevronIcon direction="right" size={18} />
           </Link>
         </div>
