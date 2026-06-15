@@ -208,8 +208,13 @@ export function DesktopRewardTile({
           {reward.description}
         </p>
         <button
+          aria-label={
+            canRedeem
+              ? `Redeem ${reward.title}`
+              : `${reward.title} is locked`
+          }
           className={classNames(
-            "mt-4 h-9 w-full rounded-[8px] border text-[10px] uppercase tracking-[0.04em] whitespace-nowrap",
+            "mt-4 inline-flex h-9 w-full items-center justify-center rounded-[8px] border px-2 text-[10px] uppercase tracking-[0.04em]",
             canRedeem
               ? "border-[var(--sb-gold)]/46 text-[var(--sb-gold-soft)]"
               : "border-white/12 text-white/34",
@@ -218,7 +223,7 @@ export function DesktopRewardTile({
           onClick={() => onViewReward(reward)}
           type="button"
         >
-          {canRedeem ? "Redeem reward" : "Locked"}
+          {canRedeem ? "Redeem" : "Locked"}
         </button>
       </div>
     </article>
