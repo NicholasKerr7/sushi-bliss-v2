@@ -52,7 +52,7 @@ export function TabletOmakaseLanding({
             curated journey of the finest seasonal ingredients.
           </p>
           <Button
-            className="red-glow-button mt-5 h-[48px] w-[292px] rounded-[10px] uppercase tracking-[0.08em]"
+            className="red-glow-button mt-5 h-[64px] w-[304px] rounded-[10px] uppercase tracking-[0.08em]"
             onClick={onOpenReview}
           >
             <AssetIcon size={22} src="/assets/icons/calendar-icon.png" />
@@ -85,12 +85,12 @@ export function TabletOmakaseLanding({
         </p>
       </section>
 
-      <section className="mt-3 grid grid-cols-[1fr_314px] gap-3 min-[1080px]:gap-4">
+      <section className="mt-3 grid gap-3 lg:grid-cols-[1fr_314px] min-[1080px]:gap-4">
         <article className="rounded-[14px] border border-white/10 bg-white/[0.035] p-3 min-[1080px]:p-4">
           <h2 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
             Experience highlights
           </h2>
-          <div className="mt-3 grid grid-cols-3 gap-x-4 gap-y-4 border-t border-white/10 pt-3">
+          <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-white/10 pt-3 lg:grid-cols-3">
             {tabletOmakaseHighlights.map((highlight) => (
               <div
                 className="grid grid-cols-[36px_minmax(0,1fr)] gap-3"
@@ -182,7 +182,7 @@ export function TabletOmakaseLanding({
         </article>
       </section>
 
-      <section className="mt-3 grid grid-cols-5 rounded-[14px] border border-white/10 bg-white/[0.035]">
+      <section className="mt-3 grid grid-cols-2 rounded-[14px] border border-white/10 bg-white/[0.035] lg:grid-cols-5">
         {tabletOmakaseBenefits.map(([title, subtitle, icon]) => (
           <div
             className="grid min-h-[58px] grid-cols-[30px_minmax(0,1fr)] items-center gap-2 border-r border-white/10 px-3 last:border-r-0"

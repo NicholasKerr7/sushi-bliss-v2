@@ -65,14 +65,15 @@ export function TabletOffersHeader({
 
       <div className="flex items-center justify-end gap-8">
         <Link
-          className="relative grid min-w-[58px] place-items-center gap-1 text-[10px] uppercase tracking-[0.08em] text-white/58 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+          aria-label="Notifications"
+          className="relative grid min-w-[76px] place-items-center gap-1 text-[10px] uppercase tracking-[0.08em] text-white/58 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
           href="/notifications"
         >
           <AssetIcon loading="eager" size={32} src={icons.bell} />
-          <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
+          <span className="absolute right-1 top-0 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
             3
           </span>
-          Notifications
+          Alerts
         </Link>
         <Link
           aria-label="Rewards"

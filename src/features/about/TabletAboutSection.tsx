@@ -209,7 +209,7 @@ export function TabletAboutSection() {
           <h2 className="editorial-title text-[18px] uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
             The Sushi Bliss Experience
           </h2>
-          <div className="mt-4 grid grid-cols-[364px_minmax(0,1fr)] gap-7">
+          <div className="mt-4 grid gap-5 lg:grid-cols-[364px_minmax(0,1fr)] lg:gap-7">
             <div className="relative h-[214px] overflow-hidden rounded-[5px] border border-[var(--sb-gold)]/34">
               <Image
                 alt="Chef preparing sushi at Sushi Bliss"
@@ -225,10 +225,10 @@ export function TabletAboutSection() {
                 journey. From the first bite to the last, we curate every detail
                 to awaken your senses and leave you inspired.
               </p>
-              <div className="grid grid-cols-4 gap-0">
+              <div className="grid grid-cols-2 gap-y-5 lg:grid-cols-4 lg:gap-y-0">
                 {experienceBenefits.map(([title, copy, icon]) => (
                   <article
-                    className="border-l border-[var(--sb-gold)]/24 px-4 first:border-l-0 first:pl-0"
+                    className="border-l border-[var(--sb-gold)]/24 px-4 odd:border-l-0 odd:pl-0 lg:odd:border-l lg:odd:pl-4 lg:first:border-l-0 lg:first:pl-0"
                     key={title}
                   >
                     <AssetIcon size={34} src={icon} />

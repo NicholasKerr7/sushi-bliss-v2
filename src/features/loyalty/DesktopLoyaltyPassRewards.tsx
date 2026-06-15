@@ -82,9 +82,9 @@ export function DesktopLoyaltyPassRewards({
             </p>
           ) : null}
 
-          <div className="mt-5 grid grid-cols-[minmax(0,1fr)_430px] gap-8">
+          <div className="mt-5 grid grid-cols-[minmax(0,1fr)_390px] gap-6 min-[1500px]:grid-cols-[minmax(0,1fr)_430px] min-[1500px]:gap-8">
             <div>
-              <section className="grid grid-cols-[450px_minmax(0,1fr)] gap-7">
+              <section className="grid grid-cols-[410px_minmax(0,1fr)] gap-5 min-[1500px]:grid-cols-[450px_minmax(0,1fr)] min-[1500px]:gap-7">
                 <div>
                   <h1 className="text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                     Your member pass
@@ -165,7 +165,7 @@ export function DesktopLoyaltyPassRewards({
                     );
                   })}
                 </nav>
-                <div className="mt-4 grid grid-cols-4 gap-3">
+                <div className="mt-4 grid grid-cols-2 gap-3 min-[1600px]:grid-cols-4">
                   {visibleRewards.map((reward, index) => (
                     <DesktopRewardTile
                       eagerImage={index < 4}

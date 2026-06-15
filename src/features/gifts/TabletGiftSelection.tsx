@@ -94,13 +94,13 @@ export function TabletGiftSelection({
         </div>
       </section>
 
-      <section className="mt-3 grid grid-cols-[1fr_296px] gap-3 min-[1080px]:mt-4 min-[1080px]:grid-cols-[1fr_300px] min-[1080px]:gap-5">
+      <section className="mt-3 grid grid-cols-[minmax(0,1fr)_296px] gap-3 min-[1080px]:mt-4 min-[1080px]:grid-cols-[1fr_300px] min-[1080px]:gap-5">
         <div className="grid gap-3 min-[1080px]:gap-4">
           <article className="rounded-[14px] border border-white/10 bg-white/[0.035] p-4">
             <h2 className="text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
               1. Choose gift experience
             </h2>
-            <div className="mt-4 grid grid-cols-[1.45fr_1fr_0.8fr] gap-3">
+            <div className="mt-4 grid gap-3 lg:grid-cols-[1.45fr_1fr_0.8fr]">
               {giftExperiences.map((gift) => {
                 const selected = selectedGift.id === gift.id;
 
@@ -162,7 +162,7 @@ export function TabletGiftSelection({
             <h2 className="text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
               2. Recipient details
             </h2>
-            <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="mt-4 grid gap-3 lg:grid-cols-2 lg:gap-4">
               <TabletGiftField
                 icon="/assets/icons/user-icon.png"
                 label="Recipient Name"
@@ -182,7 +182,7 @@ export function TabletGiftSelection({
             <h2 className="text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
               3. Sender details
             </h2>
-            <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="mt-4 grid gap-3 lg:grid-cols-2 lg:gap-4">
               <TabletGiftField
                 icon="/assets/icons/user-icon.png"
                 label="Your Name"
@@ -202,7 +202,7 @@ export function TabletGiftSelection({
             <h2 className="text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
               4. Select date
             </h2>
-            <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="mt-4 grid gap-3 lg:grid-cols-2 lg:gap-4">
               <label className="grid h-[52px] grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-[10px] border border-[var(--sb-gold)]/18 bg-black/20 px-4">
                 <AssetIcon size={22} src="/assets/icons/calendar-icon.png" />
                 <span>
@@ -258,7 +258,7 @@ export function TabletGiftSelection({
             <label className="mt-4 block rounded-[10px] border border-[var(--sb-gold)]/18 bg-black/20 p-4">
               <span className="sr-only">Personal message</span>
               <textarea
-                className="min-h-[86px] w-full resize-none bg-transparent text-[14px] leading-6 text-white outline-none placeholder:text-white/38"
+                className="min-h-[144px] w-full resize-none bg-transparent text-[14px] leading-6 text-white outline-none placeholder:text-white/38"
                 maxLength={250}
                 onChange={(event) =>
                   onUpdateDraft("message", event.target.value)

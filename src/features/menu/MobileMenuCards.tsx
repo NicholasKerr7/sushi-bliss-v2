@@ -47,7 +47,7 @@ export function MobileMenuGridCard({
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <h3 className="line-clamp-2 text-[15px] leading-[18px] text-white">
+        <h3 className="line-clamp-3 min-h-[54px] text-[15px] leading-[18px] text-white">
           {item.name}
         </h3>
         <p className="mt-1 line-clamp-2 text-[11px] leading-[14px] text-white/64">

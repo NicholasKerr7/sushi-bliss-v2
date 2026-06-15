@@ -61,7 +61,7 @@ export function TabletMenuCard({
           />
         </div>
         <div className="p-3.5">
-          <h3 className="editorial-title line-clamp-1 text-[18px] text-white">
+          <h3 className="editorial-title line-clamp-2 min-h-[54px] text-[18px] leading-[27px] text-white">
             {item.name}
           </h3>
           <p className="mt-1.5 line-clamp-2 min-h-10 text-[14px] leading-5 text-white/72">
@@ -112,7 +112,9 @@ export function TabletCompactMenuRow({
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <h3 className="line-clamp-1 text-[16px] text-white">{item.name}</h3>
+        <h3 className="line-clamp-2 min-h-10 text-[16px] leading-5 text-white">
+          {item.name}
+        </h3>
         <p className="mt-0.5 line-clamp-1 text-[13px] text-white/58">
           {item.description}
         </p>

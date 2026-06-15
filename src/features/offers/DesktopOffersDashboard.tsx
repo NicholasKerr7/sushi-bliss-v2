@@ -303,7 +303,7 @@ function OfferHero({ onOpenDetail }: { onOpenDetail: () => void }) {
         </div>
         <div className="mt-5 flex items-center gap-7">
           <Button
-            className="red-glow-button h-[54px] w-[262px] rounded-[10px] text-[14px] uppercase tracking-[0.08em]"
+            className="red-glow-button h-[60px] w-[274px] rounded-[10px] text-[14px] uppercase tracking-[0.08em]"
             href="/reservations"
           >
             Book experience

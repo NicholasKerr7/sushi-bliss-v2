@@ -231,7 +231,7 @@ export function DesktopOmakaseExperience() {
                       : "Pairing available"}
                   </p>
                   <button
-                    className="mt-3 flex h-9 w-full items-center justify-center rounded-[8px] border border-[var(--sb-gold)]/44 px-2 text-[10px] uppercase tracking-[0.04em] text-[var(--sb-gold-soft)]"
+                    className="mt-3 flex min-h-11 w-full items-center justify-center rounded-[8px] border border-[var(--sb-gold)]/44 px-2 text-[10px] uppercase tracking-[0.04em] text-[var(--sb-gold-soft)]"
                     onClick={() => {
                       if (selectedPairing) {
                         setSakePairingId(selectedPairing.id);

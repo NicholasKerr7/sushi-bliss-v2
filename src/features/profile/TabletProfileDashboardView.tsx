@@ -305,7 +305,7 @@ export function TabletProfileDashboardView({
           <p className="text-[13px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)] min-[1080px]:text-[16px]">
             Quick actions
           </p>
-          <div className="mt-3 grid grid-cols-5 gap-2 min-[1080px]:mt-5 min-[1080px]:gap-5">
+          <div className="mt-3 grid grid-cols-3 gap-2 lg:grid-cols-5 min-[1080px]:mt-5 min-[1080px]:gap-5">
             {quickActions.map((action) => (
               <Link
                 className={classNames(

@@ -222,7 +222,7 @@ function MobileContactMethodCard({
       <MobileSupportIcon icon={icon} />
       <div className="min-w-0">
         <StatusBadge tone={method.tone}>{method.label}</StatusBadge>
-        <p className="mt-3 text-[17px] font-semibold text-white">
+        <p className="mt-3 break-all text-[16px] font-semibold text-white">
           {method.value}
         </p>
         <p className="mt-2 text-[13px] leading-5 text-white/56">

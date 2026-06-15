@@ -44,15 +44,22 @@ export function DesktopReservationHero() {
 
 export function PanelBlock({
   children,
+  className,
   step,
   title,
 }: {
   children: ReactNode;
+  className?: string;
   step: string;
   title: string;
 }) {
   return (
-    <section className="border-l border-white/10 pl-5 first:border-l-0 first:pl-0">
+    <section
+      className={classNames(
+        "border-l border-white/10 pl-5 first:border-l-0 first:pl-0",
+        className,
+      )}
+    >
       <h2 className="editorial-title flex items-center gap-3 text-[17px] uppercase tracking-[0.08em]">
         <span className="grid h-6 w-6 place-items-center rounded-full border border-[var(--sb-gold)]/52 text-[12px] text-[var(--sb-gold-soft)]">
           {step}
@@ -141,7 +148,7 @@ export function DesktopReservationCalendar({
           <span key={weekday}>{weekday}</span>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-0.5 px-3 py-2">
+      <div className="grid grid-cols-7 gap-1 px-3 py-2">
         {calendarDays.map((day) => {
           const isCurrentMonth = day.getMonth() === currentMonth;
           const disabled = !isCurrentMonth || day < today;
@@ -151,7 +158,7 @@ export function DesktopReservationCalendar({
             <button
               aria-pressed={selectedDay}
               className={classNames(
-                "grid h-6 place-items-center rounded-full text-[12px] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                "grid h-10 place-items-center rounded-full text-[12px] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
                 selectedDay
                   ? "bg-[var(--sb-red)] text-white shadow-[0_0_16px_rgba(238,43,36,0.45)]"
                   : "text-white hover:bg-white/[0.06]",

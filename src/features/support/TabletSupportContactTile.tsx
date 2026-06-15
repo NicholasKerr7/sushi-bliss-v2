@@ -40,7 +40,7 @@ export function TabletSupportContactTile({
       <span className="mt-3 block text-[15px] font-semibold uppercase tracking-[0.08em] text-white">
         {label}
       </span>
-      <span className="mt-2 block text-[14px] font-semibold text-[var(--sb-red-bright)]">
+      <span className="mt-2 block break-all text-[13px] font-semibold text-[var(--sb-red-bright)] min-[1080px]:text-[14px]">
         {value}
       </span>
       <span className="mt-2 line-clamp-2 block text-[12px] leading-5 text-white/48">

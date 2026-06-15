@@ -79,7 +79,7 @@ export function TabletCategoryBar({
             aria-label={item.label}
             aria-pressed={isActive}
             className={classNames(
-              "flex min-h-[46px] min-w-0 items-center justify-center gap-2 whitespace-nowrap px-2 text-[12px] uppercase transition disabled:cursor-not-allowed disabled:opacity-45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] lg:text-[13px]",
+              "flex min-h-[46px] min-w-0 items-center justify-center gap-1 whitespace-nowrap px-1.5 text-[12px] uppercase transition disabled:cursor-not-allowed disabled:opacity-45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[1360px]:gap-2 min-[1360px]:px-2 min-[1360px]:text-[13px]",
               isPillVariant
                 ? "rounded-[10px] border lg:px-3"
                 : "rounded-[10px] border lg:rounded-none lg:border-y-0 lg:border-l-0 lg:border-r lg:last:border-r-0",
@@ -97,7 +97,7 @@ export function TabletCategoryBar({
             onClick={() => onSelectCategory(item.id)}
             type="button"
           >
-            <AssetIcon size={20} src={item.icon} />
+            <AssetIcon size={18} src={item.icon} />
             <span>{item.label}</span>
           </button>
         );

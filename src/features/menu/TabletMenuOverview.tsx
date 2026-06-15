@@ -240,7 +240,7 @@ export function TabletMenuOverview({
       </div>
       <TabletSection title="Chef's Specials" icon={icons.crown}>
         {visibleChefSpecialItems.length > 0 ? (
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {visibleChefSpecialItems.slice(0, 4).map((item, index) => (
               <TabletMenuCard
                 badge={
@@ -268,7 +268,7 @@ export function TabletMenuOverview({
       </TabletSection>
       <TabletSection title="All Menu Items">
         {visibleOverviewItems.length > 0 ? (
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
             {visibleOverviewItems.map((item, index) => (
               <TabletCompactMenuRow
                 eagerImage={index < 3}

@@ -18,7 +18,10 @@ export function TabletCheckoutHeader({
 }: TabletCheckoutHeaderProps) {
   return (
     <header className="mt-1 grid h-[82px] grid-cols-[190px_minmax(0,1fr)_190px] items-center gap-3 lg:grid-cols-[260px_minmax(0,1fr)_268px] lg:gap-5">
-      <Link className="flex items-center gap-3 lg:gap-8" href="/home">
+      <Link
+        className="flex w-[186px] items-center gap-3 lg:w-[260px] lg:gap-8"
+        href="/home"
+      >
         <AssetIcon
           alt={brand.name}
           className="rounded-full"

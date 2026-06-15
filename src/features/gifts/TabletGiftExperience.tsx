@@ -109,13 +109,13 @@ export function TabletGiftExperience({
 
   return (
     <>
-      <section className="flex h-dvh min-h-dvh flex-col overflow-hidden bg-[#050607] px-[10px] pb-[10px] pt-[10px] text-white">
+      <section className="min-h-dvh bg-[#050607] px-[10px] pb-[10px] pt-[10px] text-white">
         <TabletExperienceHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}
           title={giftViewTitle[view]}
         />
-        <div className="smooth-scroll-area min-h-0 flex-1 overflow-y-auto pb-[126px]">
+        <div className="pb-[126px]">
           {view === "confirmation" && confirmation ? (
             <TabletGiftConfirmation
               confirmation={confirmation}

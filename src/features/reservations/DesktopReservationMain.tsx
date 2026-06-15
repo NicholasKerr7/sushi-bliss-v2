@@ -59,7 +59,7 @@ export function DesktopReservationMain({
       <DesktopReservationHero />
       <div className="grid grid-cols-[minmax(0,1fr)_470px] gap-4">
         <section className="rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-5">
-          <div className="grid grid-cols-[250px_1fr_360px] gap-5">
+          <div className="grid grid-cols-[250px_minmax(0,1fr)] gap-5 min-[1500px]:grid-cols-[250px_minmax(0,1fr)_360px]">
             <PanelBlock title="Party details" step="1">
               <div className="mt-6 grid h-10 grid-cols-[40px_1fr_40px] overflow-hidden rounded-[10px] border border-white/12">
                 <button
@@ -104,7 +104,11 @@ export function DesktopReservationMain({
               ) : null}
             </PanelBlock>
 
-            <PanelBlock title="Select time" step="3">
+            <PanelBlock
+              className="col-span-2 min-[1500px]:col-span-1"
+              title="Select time"
+              step="3"
+            >
               <div className="mt-5 grid grid-cols-3 gap-2">
                 {timeOptions.slice(0, 12).map((option) => (
                   <button

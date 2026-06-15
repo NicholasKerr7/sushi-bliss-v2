@@ -236,7 +236,7 @@ export function MobileOrderTrackingView({
               label="Status"
               value={order.courier ? "Assigned" : "Pending"}
             />
-            <CourierSignal label="ETA" value={courierEta} />
+            <CourierSignal label="Courier arrival" value={courierEta} />
             <CourierSignal
               label="Mode"
               value={order.mode === "delivery" ? "Delivery" : "Pickup"}

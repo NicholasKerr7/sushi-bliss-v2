@@ -20,8 +20,8 @@ export function TabletExperienceHeader({
   title,
 }: TabletExperienceHeaderProps) {
   return (
-    <header className="mt-1 grid h-[64px] grid-cols-[160px_minmax(0,1fr)_238px] items-center gap-3 rounded-[14px] border border-white/10 bg-white/[0.025] px-3 lg:h-[76px] lg:grid-cols-[190px_minmax(0,1fr)_274px] min-[1080px]:grid-cols-[210px_minmax(0,1fr)_300px]">
-      <Link className="flex items-center gap-3" href="/home">
+    <header className="mt-1 grid h-[64px] grid-cols-[190px_minmax(0,1fr)_216px] items-center gap-3 rounded-[14px] border border-white/10 bg-white/[0.025] px-3 lg:h-[76px] lg:grid-cols-[190px_minmax(0,1fr)_274px] min-[1080px]:grid-cols-[210px_minmax(0,1fr)_300px]">
+      <Link className="flex w-[186px] items-center gap-3" href="/home">
         <AssetIcon
           alt={brand.name}
           className="rounded-full"

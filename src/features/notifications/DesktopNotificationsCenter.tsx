@@ -121,7 +121,7 @@ export function DesktopNotificationsCenter() {
                 exclusive offers.
               </p>
 
-              <div className="mt-5 grid grid-cols-[repeat(5,minmax(0,1fr))_220px] items-center gap-3">
+              <div className="mt-5 flex flex-wrap items-center gap-3">
                 {desktopFilters.map((filter) => {
                   const active = activeFilter === filter.id;
                   const count =
@@ -135,7 +135,7 @@ export function DesktopNotificationsCenter() {
                     <button
                       aria-pressed={active}
                       className={classNames(
-                        "h-11 rounded-[10px] border text-[13px] uppercase tracking-[0.08em]",
+                        "min-h-12 min-w-[128px] rounded-[10px] border px-4 text-[13px] uppercase tracking-[0.08em]",
                         active
                           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)] text-white shadow-[0_0_22px_rgba(238,43,36,0.34)]"
                           : "border-[var(--sb-border)] bg-white/[0.035] text-white/76",
@@ -149,7 +149,7 @@ export function DesktopNotificationsCenter() {
                   );
                 })}
                 <button
-                  className="flex h-11 items-center justify-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] disabled:opacity-45"
+                  className="flex min-h-12 items-center justify-center gap-3 px-2 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] disabled:opacity-45"
                   disabled={unreadCount === 0}
                   onClick={markAllRead}
                   type="button"
@@ -230,7 +230,7 @@ function DesktopNotificationRow({
       <p className="text-[14px] text-white/58">{timeLabel}</p>
       <button
         className={classNames(
-          "grid h-11 place-items-center rounded-[10px] border text-[12px] uppercase tracking-[0.08em]",
+          "grid min-h-12 place-items-center rounded-[10px] border text-[12px] uppercase tracking-[0.08em]",
           isUnread
             ? "border-[var(--sb-red-bright)]/48 text-[var(--sb-red-bright)]"
             : "border-white/14 text-white/54",

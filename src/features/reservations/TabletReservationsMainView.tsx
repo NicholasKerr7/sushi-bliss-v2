@@ -174,7 +174,7 @@ function UpcomingReservationCard({
           <p>{location?.name || reservation.locationId}</p>
           <p>{location?.address}</p>
         </div>
-        <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="mt-6 grid gap-3 min-[1080px]:grid-cols-2">
           <Button
             onClick={() => onModifyReservation(reservation)}
             variant="secondary"

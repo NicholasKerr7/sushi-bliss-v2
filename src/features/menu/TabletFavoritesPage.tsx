@@ -124,7 +124,7 @@ export function TabletFavoritesPage() {
 
           <section
             aria-label="Favorite filters"
-            className="mt-8 grid grid-cols-4 gap-3"
+            className="mt-8 grid grid-cols-2 gap-3 min-[1080px]:grid-cols-4"
           >
             {favoriteFilterTabs.map(([id, label, icon]) => {
               const isActive = activeFilter === id;
@@ -133,7 +133,7 @@ export function TabletFavoritesPage() {
                 <button
                   aria-pressed={isActive}
                   className={classNames(
-                    "flex h-[48px] items-center justify-center gap-3 rounded-[8px] border px-3 text-[14px] uppercase tracking-[0.055em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                    "flex min-h-[56px] items-center justify-center gap-3 rounded-[8px] border px-3 text-[14px] uppercase tracking-[0.055em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
                     isActive
                       ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,#f2c665,#d9a347)] text-black shadow-[0_0_22px_rgb(215_168_79_/_0.24)]"
                       : "border-[var(--sb-border)] bg-black/24 text-white/70 hover:border-[var(--sb-gold)]/50 hover:text-[var(--sb-gold-soft)]",

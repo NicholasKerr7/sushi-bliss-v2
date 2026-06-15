@@ -181,7 +181,7 @@ export function DesktopLoyaltyDashboard({
             </div>
           </section>
 
-          <div className="grid grid-cols-[318px_minmax(0,1fr)_396px] gap-4 px-9 pb-4">
+          <div className="grid grid-cols-[280px_minmax(0,1fr)_350px] gap-4 px-6 pb-4 min-[1500px]:grid-cols-[318px_minmax(0,1fr)_396px] min-[1500px]:px-9">
             <div className="grid gap-3">
               <DesktopMemberPassCard account={account} />
               <DesktopLoyaltyPanel className="relative min-h-[146px] overflow-hidden p-4">
@@ -226,7 +226,7 @@ export function DesktopLoyaltyDashboard({
                     View all rewards
                   </button>
                 </div>
-                <div className="mt-3 grid grid-cols-4 gap-3">
+                <div className="mt-3 grid grid-cols-2 gap-3 min-[1600px]:grid-cols-4">
                   {rewards.map((reward, index) => (
                     <DesktopRewardTile
                       eagerImage={index < 4}

@@ -62,6 +62,8 @@ export function BottomNavigation({
       <ul className="relative z-10 col-span-5 grid h-full grid-cols-5">
         {primaryNavigation.map((item) => {
           const current = item.id === currentId;
+          const displayLabel =
+            item.id === "reservations" ? "Reserve" : item.label;
 
           return (
             <li
@@ -70,9 +72,10 @@ export function BottomNavigation({
             >
               <Link
                 aria-current={current ? "page" : undefined}
+                aria-label={item.label}
                 data-current={current ? "true" : "false"}
                 className={classNames(
-                  "bottom-nav-link relative flex h-full flex-col items-center justify-center gap-1 rounded-[14px] text-[9px] uppercase [text-shadow:0_2px_1px_rgba(0,0,0,.96)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                  "bottom-nav-link relative flex h-full flex-col items-center justify-center gap-1 overflow-hidden rounded-[14px] text-[9px] uppercase [text-shadow:0_2px_1px_rgba(0,0,0,.96)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
                   !current && "hover:bg-white/[0.05] hover:text-white",
                 )}
                 href={item.href}
@@ -80,7 +83,7 @@ export function BottomNavigation({
                 {current ? (
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute top-0 h-[84px] w-[82px] rounded-full bg-[radial-gradient(circle,rgba(255,43,31,.16),rgba(255,43,31,.08)_30%,transparent_67%)] blur-[4px]"
+                    className="pointer-events-none absolute top-0 h-[84px] w-[56px] rounded-full bg-[radial-gradient(circle,rgba(255,43,31,.16),rgba(255,43,31,.08)_30%,transparent_67%)] blur-[4px]"
                   />
                 ) : null}
                 <span
@@ -93,8 +96,8 @@ export function BottomNavigation({
                 >
                   <RouteNavGlyph className="h-[23px] w-[23px]" id={item.id} />
                 </span>
-                <span className="relative z-10 max-w-full truncate font-medium">
-                  {item.label}
+                <span className="relative z-10 max-w-[58px] truncate text-center font-medium leading-none">
+                  {displayLabel}
                 </span>
               </Link>
             </li>

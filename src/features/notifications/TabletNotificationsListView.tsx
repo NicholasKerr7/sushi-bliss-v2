@@ -88,7 +88,7 @@ export function TabletNotificationsListView({
               >
                 <AssetIcon size={22} src={icon} />
                 <span className="truncate text-[11px] font-semibold uppercase tracking-[0.02em]">
-                  {filter.id === "reservation" ? "Reservations" : filter.label}
+                  {filter.label}
                 </span>
                 <span className="grid h-6 w-6 place-items-center rounded-full bg-[var(--sb-red)] text-[11px] font-bold text-white">
                   {count}

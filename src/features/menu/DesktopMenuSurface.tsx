@@ -460,7 +460,7 @@ function DesktopCategoryNav({
   return (
     <nav
       aria-label="Desktop menu categories"
-      className="mt-4 grid grid-cols-[1.16fr_0.74fr_0.74fr_0.84fr_1.18fr_1fr_0.74fr] gap-3"
+      className="mt-4 grid grid-cols-[1.28fr_0.7fr_0.7fr_0.78fr_1.28fr_1.04fr_0.62fr] gap-2 min-[1500px]:grid-cols-[1.16fr_0.74fr_0.74fr_0.84fr_1.18fr_1fr_0.74fr] min-[1500px]:gap-3"
     >
       {desktopCategoryButtons.map(([id, label, icon]) => {
         const disabled =
@@ -471,9 +471,10 @@ function DesktopCategoryNav({
 
         return (
           <button
+            aria-label={label}
             aria-pressed={active}
             className={classNames(
-              "flex min-h-[46px] min-w-0 items-center justify-center gap-2 whitespace-nowrap rounded-[10px] border px-2 text-[12px] uppercase transition disabled:cursor-not-allowed disabled:opacity-45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[1500px]:px-3 min-[1500px]:text-[13px]",
+              "flex min-h-[46px] min-w-0 items-center justify-center gap-1 whitespace-nowrap rounded-[10px] border px-1.5 text-[10px] uppercase transition disabled:cursor-not-allowed disabled:opacity-45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[1500px]:gap-2 min-[1500px]:px-3 min-[1500px]:text-[13px]",
               active
                 ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] text-black shadow-[0_0_24px_rgb(215_168_79_/_0.22)]"
                 : "border-white/14 bg-black/24 text-white/72 hover:border-[var(--sb-gold)]/36 hover:bg-white/[0.055] hover:text-white",
@@ -484,8 +485,12 @@ function DesktopCategoryNav({
             onClick={() => onSelectCategory(id)}
             type="button"
           >
-            <AssetIcon size={20} src={icon} />
-            {label}
+            <AssetIcon size={16} src={icon} />
+            <span
+              className={id === "drinks" ? "hidden min-[1500px]:inline" : ""}
+            >
+              {label}
+            </span>
           </button>
         );
       })}
@@ -718,6 +723,8 @@ function DesktopFeatureMenuCard({
   onAddToCart: DesktopMenuAddHandler;
   onViewDetails: DesktopMenuViewHandler;
 }) {
+  const hasDuplicateStandardCard = item.name === "Otoro Nigiri";
+
   return (
     <article className="relative min-h-[176px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/42">
       {badge ? (
@@ -726,7 +733,11 @@ function DesktopFeatureMenuCard({
         </span>
       ) : null}
       <button
-        aria-label={`View details for ${item.name}`}
+        aria-label={
+          badge && hasDuplicateStandardCard
+            ? `View featured ${item.name} details`
+            : `View details for ${item.name}`
+        }
         className="block w-full text-left"
         onClick={() => onViewDetails(item)}
         type="button"
@@ -757,7 +768,7 @@ function DesktopFeatureMenuCard({
         >
           <h3
             className={classNames(
-              "line-clamp-1 text-[17px] text-white",
+              "line-clamp-2 min-h-[48px] text-[17px] leading-6 text-white",
               compactDesktop
                 ? "min-[1500px]:text-[15px]"
                 : "min-[1500px]:text-[16px] min-[1500px]:leading-5",
@@ -784,7 +795,11 @@ function DesktopFeatureMenuCard({
         </div>
       </button>
       <button
-        aria-label={`Add ${item.name} to cart`}
+        aria-label={
+          badge && hasDuplicateStandardCard
+            ? `Add featured ${item.name} to cart`
+            : `Add ${item.name} to cart`
+        }
         className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-black/52"
         onClick={() => onAddToCart(item)}
         type="button"
@@ -829,7 +844,9 @@ export function DesktopCompactMenuRow({
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <h3 className="line-clamp-1 text-[15px] text-white">{item.name}</h3>
+        <h3 className="line-clamp-2 min-h-[42px] text-[15px] leading-[21px] text-white">
+          {item.name}
+        </h3>
         <p className="mt-0.5 line-clamp-1 text-[12px] text-white/55">
           {item.description}
         </p>

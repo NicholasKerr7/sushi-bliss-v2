@@ -83,7 +83,12 @@ export function TabletBottomNavigation({
           const current =
             item.id === activeId ||
             (activeId === undefined && activeIndex === index);
-          const label = item.id === "profile" ? "Account" : item.label;
+          const label =
+            item.id === "reservations"
+              ? "Reserve"
+              : item.id === "profile"
+                ? "Account"
+                : item.label;
 
           return (
             <li
@@ -94,7 +99,7 @@ export function TabletBottomNavigation({
                 aria-current={current ? "page" : undefined}
                 data-current={current ? "true" : "false"}
                 className={classNames(
-                  "tablet-bottom-nav-link relative flex h-full flex-col items-center justify-center rounded-[14px] uppercase [text-shadow:0_2px_1px_rgba(0,0,0,.96)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                  "tablet-bottom-nav-link relative flex h-full flex-col items-center justify-center overflow-hidden rounded-[14px] uppercase [text-shadow:0_2px_1px_rgba(0,0,0,.96)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
                   compact
                     ? "gap-1 text-[12px] min-[1080px]:text-[13px]"
                     : "gap-[6px] text-[13px] min-[1080px]:text-[15px]",
@@ -131,7 +136,9 @@ export function TabletBottomNavigation({
                     id={item.id}
                   />
                 </span>
-                <span className="relative z-10 font-medium">{label}</span>
+                <span className="relative z-10 max-w-[126px] truncate text-center font-medium leading-tight">
+                  {label}
+                </span>
               </Link>
             </li>
           );

@@ -122,7 +122,7 @@ export function MobileOmakaseLandingView({
         />
       </section>
 
-      <section className="mt-7">
+      <section className="mt-7 overflow-x-clip">
         <div className="flex items-center justify-between gap-4">
           <p className="editorial-title text-[22px] text-[var(--sb-gold-soft)]">
             Experience Preview

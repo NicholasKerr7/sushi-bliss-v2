@@ -182,13 +182,13 @@ export function DesktopFavoritesPage() {
 
             <nav
               aria-label="Favorite filters"
-              className="mt-5 grid grid-cols-6 overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-white/[0.035]"
+              className="mt-5 grid grid-cols-3 overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-white/[0.035] min-[1500px]:grid-cols-6"
             >
               {favoriteTabs.map((tab) => (
                 <button
                   aria-pressed={activeFilter === tab.id}
                   className={classNames(
-                    "flex min-h-[52px] items-center justify-center gap-2 border-r border-white/10 text-[12px] uppercase tracking-[0.04em] last:border-r-0",
+                    "flex min-h-[58px] items-center justify-center gap-2 border-r border-b border-white/10 text-[12px] uppercase tracking-[0.04em] last:border-r-0 min-[1500px]:border-b-0",
                     activeFilter === tab.id
                       ? "bg-[var(--sb-gold)]/12 text-[var(--sb-gold-soft)]"
                       : "text-white/72",
@@ -214,7 +214,7 @@ export function DesktopFavoritesPage() {
 
             {showMenuFavorites ? (
               <>
-                <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="mt-4 grid gap-3 min-[1500px]:grid-cols-2">
                   {visibleFavorites.slice(0, 4).map((item, index) => (
                     <FavoriteMenuCard
                       favoriteIsPersisted={hasFavorites}
@@ -391,7 +391,7 @@ function FavoriteMenuCard({
         </p>
         <div className="mt-3 flex items-center gap-4">
           <button
-            className="red-glow-button flex h-10 w-[148px] items-center justify-center gap-2 rounded-[8px] px-3 text-[11px] uppercase tracking-[0.04em] whitespace-nowrap"
+            className="red-glow-button flex h-11 w-[166px] items-center justify-center gap-2 rounded-[8px] px-3 text-[11px] uppercase tracking-[0.04em] whitespace-nowrap"
             onClick={() => onAddToCart(item)}
             type="button"
           >

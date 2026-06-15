@@ -344,7 +344,7 @@ export function TabletMenuCategoryView({
 
       <section className="mt-4 rounded-[14px] border border-white/14 bg-white/[0.025] p-4">
         {displayedItems.length > 0 ? (
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
             {displayedItems.map((item, index) => (
               <TabletCategoryCard
                 badge={index === 0 ? "Chef's Pick" : undefined}

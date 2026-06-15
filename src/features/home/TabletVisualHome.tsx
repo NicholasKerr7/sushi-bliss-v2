@@ -94,7 +94,7 @@ export function TabletDashboard({
         <TabletFeaturedMenu items={items} onAddToCart={onAddToCart} />
         <TabletReservationCard />
       </div>
-      <div className="mt-6 grid grid-cols-[460px_1fr] gap-[18px]">
+      <div className="mt-6 grid gap-[18px] lg:grid-cols-[460px_1fr]">
         <TabletRecentOrder item={memberItem} />
         <TabletRewardsCard />
       </div>
@@ -119,7 +119,10 @@ function TabletHeader({
 }: TabletHeaderProps) {
   return (
     <header className="mt-1 grid h-[82px] grid-cols-[190px_minmax(0,1fr)_190px] items-center gap-3 lg:grid-cols-[312px_minmax(0,1fr)_260px] lg:gap-5">
-      <Link className="flex items-center gap-3 lg:gap-8" href="/home">
+      <Link
+        className="flex w-[186px] items-center gap-3 lg:w-[260px] lg:gap-8"
+        href="/home"
+      >
         <AssetIcon
           alt={brand.name}
           className="rounded-full"
@@ -267,7 +270,7 @@ function TabletFeaturedMenu({
           <ChevronIcon direction="right" size={18} />
         </Link>
       </div>
-      <div className="mt-6 grid grid-cols-4 gap-2.5">
+      <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-2.5">
         {items.map((item, index) => (
           <TabletMenuCard
             badge={badges[index] || "Special"}
@@ -294,12 +297,12 @@ function TabletMenuCard({
   priority?: boolean;
 }) {
   return (
-    <article className="relative overflow-hidden rounded-[8px] border border-[var(--sb-border)] bg-black/48">
+    <article className="relative overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-black/48 lg:rounded-[8px]">
       <span className="absolute left-0 top-0 z-10 rounded-br-[12px] bg-[var(--sb-red)]/86 px-2.5 py-1 text-[10px] uppercase text-white">
         {badge}
       </span>
       <Link href="/menu">
-        <div className="relative h-[96px]">
+        <div className="relative h-[132px] lg:h-[96px]">
           <Image
             alt=""
             className="object-cover"
@@ -310,11 +313,11 @@ function TabletMenuCard({
             src={item.image.publicUrl}
           />
         </div>
-        <div className="p-3">
-          <h3 className="editorial-title line-clamp-1 text-[16px] text-white">
+        <div className="p-3.5 lg:p-3">
+          <h3 className="editorial-title line-clamp-2 min-h-[54px] text-[18px] leading-[27px] text-white lg:min-h-[48px] lg:text-[16px] lg:leading-6">
             {item.name}
           </h3>
-          <p className="mt-1 line-clamp-2 min-h-10 text-[12px] leading-5 text-white/72">
+          <p className="mt-1 line-clamp-2 min-h-10 text-[13px] leading-5 text-white/72 lg:text-[12px]">
             {item.ingredients.slice(0, 3).join(", ")}
           </p>
           <p className="mt-4 text-[20px] text-[var(--sb-gold)]">

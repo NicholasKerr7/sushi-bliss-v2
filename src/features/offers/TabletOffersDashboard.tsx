@@ -161,7 +161,7 @@ export function TabletOffersDashboard() {
             </button>
           </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-4">
+          <div className="mt-3 grid gap-4 lg:grid-cols-2">
             {visibleOffers.length > 0 ? (
               visibleOffers.map((offer, index) => (
                 <TabletOfferTile
@@ -174,7 +174,7 @@ export function TabletOffersDashboard() {
                 />
               ))
             ) : (
-              <div className="col-span-2">
+              <div className="lg:col-span-2">
                 <EmptyState
                   action={
                     <Button onClick={() => setQuery("")} variant="secondary">

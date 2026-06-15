@@ -212,7 +212,7 @@ function MobileMenuOverview({
       </p>
 
       <button
-        aria-label="Open cart and view Bliss Member progress"
+        aria-label="View Bliss Member progress"
         className="mt-5 grid w-full grid-cols-[58px_minmax(0,1fr)_auto] items-center gap-4 overflow-hidden rounded-[20px] border border-[var(--sb-gold)]/24 bg-[linear-gradient(145deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02)_42%,rgba(96,7,8,0.28))] p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_48px_rgba(0,0,0,0.34)] transition hover:border-[var(--sb-gold)]/42"
         onClick={onOpenCart}
         type="button"

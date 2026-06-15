@@ -8,7 +8,7 @@ const referralNavItems = [
   ["home", "Home", "/home"],
   ["menu", "Menu", "/menu"],
   ["orders", "Orders", "/orders"],
-  ["reservations", "Reservations", "/reservations"],
+  ["reservations", "Reserve", "/reservations"],
   ["rewards", "Rewards", "/loyalty"],
   ["locations", "Locations", "/locations"],
   ["profile", "Profile", "/profile"],
@@ -28,7 +28,7 @@ export function TabletReferralEarnBottomNav() {
           <Link
             aria-current={active ? "page" : undefined}
             className={classNames(
-              "relative flex h-full flex-col items-center justify-center gap-1 border-l border-white/[0.04] text-[12px] uppercase transition first:border-l-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+              "relative flex h-full flex-col items-center justify-center gap-1 overflow-hidden border-l border-white/[0.04] text-[12px] uppercase transition first:border-l-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
               active
                 ? "text-[var(--sb-red-bright)]"
                 : "text-white/52 hover:text-white",
@@ -39,11 +39,13 @@ export function TabletReferralEarnBottomNav() {
             {active ? (
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute bottom-0 left-1/2 h-[84px] w-[148px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_bottom,rgba(255,43,31,.34),transparent_68%)]"
+                className="pointer-events-none absolute bottom-0 left-1/2 h-[84px] w-[92px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_bottom,rgba(255,43,31,.34),transparent_68%)]"
               />
             ) : null}
             <ReferralNavIcon active={active} id={id} />
-            <span className="relative z-10">{label}</span>
+            <span className="relative z-10 max-w-[84px] truncate text-center leading-tight">
+              {label}
+            </span>
           </Link>
         );
       })}

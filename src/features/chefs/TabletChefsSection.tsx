@@ -360,7 +360,7 @@ function TabletChefCard({
           <TabletChefSignal label="Service" value={chef.sushi} />
         </div>
         <button
-          className="red-glow-button mt-auto flex h-9 w-full items-center justify-center gap-14 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
+          className="red-glow-button mt-auto flex h-11 w-full items-center justify-center gap-8 rounded-[7px] text-[12px] uppercase tracking-[0.08em]"
           onClick={() => onViewChef(chef)}
           type="button"
         >

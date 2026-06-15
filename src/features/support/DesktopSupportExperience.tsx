@@ -215,7 +215,7 @@ function DesktopContactView({
               {card.body}
             </p>
             <button
-              className="mt-2 h-9 rounded-full border border-[var(--sb-gold)]/32 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              className="mt-2 min-h-11 rounded-full border border-[var(--sb-gold)]/32 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
               type="button"
             >
               {card.cta}

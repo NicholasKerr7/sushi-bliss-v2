@@ -40,7 +40,7 @@ export function HomeMenuCard({
           />
         </div>
         <div className="p-3 md:p-2">
-          <h3 className="editorial-title line-clamp-2 min-h-[34px] text-[13px] leading-[17px] text-white md:min-h-[28px] md:text-[13px] md:leading-[14px] xl:text-[15px]">
+          <h3 className="editorial-title line-clamp-3 min-h-[51px] text-[13px] leading-[17px] text-white md:line-clamp-2 md:min-h-[34px] md:text-[13px] md:leading-[17px] xl:text-[15px]">
             {item.name}
           </h3>
           <p className="mt-1 line-clamp-2 min-h-9 text-[11px] leading-[17px] text-white/68 md:min-h-7 md:text-[11px] md:leading-[14px]">

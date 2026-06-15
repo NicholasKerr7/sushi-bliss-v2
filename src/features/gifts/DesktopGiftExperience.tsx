@@ -254,7 +254,7 @@ function DesktopGiftSelection({
               <h2 className="mt-1 text-[20px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                 Recipient details
               </h2>
-              <div className="mt-4 grid grid-cols-2 gap-4">
+              <div className="mt-4 grid gap-4 min-[1500px]:grid-cols-2">
                 <Input
                   id="desktop-gift-recipient-name"
                   label="Recipient name"

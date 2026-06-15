@@ -7,8 +7,8 @@ import { classNames } from "@/lib/classNames";
 const accountBottomItems = [
   ["home", "Home", "/home"],
   ["menu", "Menu", "/menu"],
-  ["reservations", "Reservations", "/reservations"],
-  ["order", "Order Online", "/menu"],
+  ["reservations", "Reserve", "/reservations"],
+  ["order", "Order", "/menu"],
   ["loyalty", "Loyalty", "/loyalty"],
   ["account", "Account", "/profile"],
 ] as const;
@@ -27,7 +27,7 @@ export function TabletAccountBottomNavigation() {
           <Link
             aria-current={active ? "page" : undefined}
             className={classNames(
-              "relative flex h-full flex-col items-center justify-center gap-1 border-l border-white/[0.04] text-[11px] uppercase transition first:border-l-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+              "relative flex h-full flex-col items-center justify-center gap-1 overflow-hidden border-l border-white/[0.04] text-[11px] uppercase transition first:border-l-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
               active
                 ? "text-[var(--sb-red-bright)]"
                 : "text-white/58 hover:text-white",
@@ -43,7 +43,7 @@ export function TabletAccountBottomNavigation() {
                 />
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute bottom-[-28px] left-1/2 h-[64px] w-[140px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,43,31,.24),transparent_67%)] blur-md"
+                  className="pointer-events-none absolute bottom-[-28px] left-1/2 h-[64px] w-[92px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,43,31,.24),transparent_67%)] blur-md"
                 />
               </>
             ) : null}
@@ -54,7 +54,9 @@ export function TabletAccountBottomNavigation() {
               )}
               id={id}
             />
-            <span className="relative z-10">{label}</span>
+            <span className="relative z-10 max-w-[92px] truncate text-center leading-tight">
+              {label}
+            </span>
           </Link>
         );
       })}
