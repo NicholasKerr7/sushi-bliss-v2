@@ -88,7 +88,7 @@ function TabletExploreDirectory({ className }: { className?: string }) {
           Concierge <ChevronIcon direction="right" size={18} />
         </Link>
       </div>
-      <div className="smooth-scroll-area mt-3 flex gap-2 overflow-x-auto pb-1 min-[1080px]:gap-3">
+      <div className="mt-3 grid grid-cols-3 gap-2 min-[960px]:grid-cols-4 min-[960px]:gap-3">
         {getCustomerExploreItems().map((item) => (
           <ExplorePill item={item} key={item.id} />
         ))}
@@ -226,7 +226,7 @@ function ExplorePill({
   return (
     <Link
       className={classNames(
-        "grid min-h-[68px] min-w-[178px] grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-[12px] border px-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[1080px]:min-w-[198px]",
+        "grid min-h-[72px] min-w-0 grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-[12px] border px-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
         isRed
           ? "border-[var(--sb-red-bright)]/48 bg-[var(--sb-red)]/16"
           : "border-white/10 bg-black/24 hover:border-[var(--sb-gold)]/36",
@@ -235,7 +235,7 @@ function ExplorePill({
     >
       <ExploreIcon item={item} variant="tablet" />
       <span className="min-w-0">
-        <span className="block whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.04em] text-white">
+        <span className="block truncate text-[12px] font-semibold uppercase tracking-[0.04em] text-white min-[1080px]:text-[13px]">
           {item.label}
         </span>
         <span className="mt-1 block truncate text-[11px] text-white/48">

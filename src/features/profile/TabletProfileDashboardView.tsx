@@ -212,7 +212,7 @@ export function TabletProfileDashboardView({
 
   return (
     <section
-      className="flex h-dvh min-h-dvh flex-col overflow-hidden bg-[#050607] px-[18px] pb-3 pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pb-4 min-[1080px]:pt-3"
+      className="min-h-dvh overflow-x-hidden bg-[#050607] px-[18px] pb-3 pt-2 text-white min-[1080px]:px-[26px] min-[1080px]:pb-4 min-[1080px]:pt-3"
       id="profile"
     >
       <TabletProfileHeader
@@ -222,7 +222,7 @@ export function TabletProfileDashboardView({
         onOpenCart={onOpenCart}
       />
 
-      <main className="mx-auto w-full max-w-[1034px]">
+      <main className="mx-auto w-full max-w-[1034px] pb-[136px] min-[1080px]:pb-[148px]">
         <section className="mt-3 grid min-h-[142px] grid-cols-[142px_minmax(0,1fr)_230px] items-center gap-5 rounded-[14px] border border-white/10 bg-white/[0.035] p-4 lg:min-h-[178px] lg:grid-cols-[170px_minmax(0,1fr)_300px] min-[1080px]:mt-4 min-[1080px]:min-h-[194px] min-[1080px]:grid-cols-[180px_minmax(0,1fr)_320px] min-[1080px]:gap-7 min-[1080px]:p-5">
           <div className="relative mx-auto h-[112px] w-[112px] lg:h-[150px] lg:w-[150px] min-[1080px]:h-[164px] min-[1080px]:w-[164px]">
             <Image
