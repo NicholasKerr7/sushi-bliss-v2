@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
+import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { icons } from "@/features/home/visualHomeData";
 import { getTabletPresentationImage } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
@@ -211,21 +212,33 @@ function MobileMenuOverview({
       </p>
 
       <button
-        className="mt-5 grid w-full grid-cols-[60px_1fr_auto] items-center gap-4 rounded-[18px] border border-[var(--sb-border)] bg-black/54 p-4 text-left"
+        aria-label="Open cart and view Bliss Member progress"
+        className="mt-5 grid w-full grid-cols-[58px_minmax(0,1fr)_auto] items-center gap-4 overflow-hidden rounded-[20px] border border-[var(--sb-gold)]/24 bg-[linear-gradient(145deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02)_42%,rgba(96,7,8,0.28))] p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_48px_rgba(0,0,0,0.34)] transition hover:border-[var(--sb-gold)]/42"
         onClick={onOpenCart}
         type="button"
       >
-        <AssetIcon size={48} src={icons.flower} />
-        <span>
-          <span className="editorial-title block text-[17px] uppercase tracking-[0.08em]">
-            Bliss Member
+        <span className="grid h-[58px] w-[58px] place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/42 shadow-[0_0_24px_rgba(215,168,79,0.12)]">
+          <AssetIcon size={42} src={icons.flower} />
+        </span>
+        <span className="min-w-0">
+          <span className="flex flex-wrap items-center gap-2">
+            <span className="editorial-title block text-[17px] uppercase leading-none tracking-[0.08em]">
+              Bliss Member
+            </span>
+            <span className="rounded-full bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.08em] text-black">
+              Gold
+            </span>
           </span>
-          <span className="mt-1 block text-[13px] text-white/72">
-            3,250 pts - 750 pts to Platinum
+          <span className="mt-2 block text-[12px] leading-5 text-white/68">
+            3,250 pts earned. 750 pts to Platinum.
           </span>
-          <span className="mt-3 block h-2 w-full overflow-hidden rounded-full bg-white/10">
-            <span className="block h-full w-[72%] rounded-full bg-[var(--sb-gold)]" />
-          </span>
+          <SegmentedProgressMeter
+            ariaLabel="Bliss member tier progress"
+            className="mt-3"
+            max={4000}
+            size="compact"
+            value={3250}
+          />
         </span>
         <span className="text-[var(--sb-gold)]" aria-hidden="true">
           <ChevronIcon direction="right" size={18} />

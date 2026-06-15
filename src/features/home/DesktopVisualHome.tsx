@@ -7,6 +7,7 @@ import { useState } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
+import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -417,9 +418,13 @@ function DesktopRewardCard({ className = "" }: { className?: string }) {
       <p className="text-lg uppercase text-[var(--sb-gold)]">Gold Tier</p>
       <p className="text-base text-white">You have 3,250 points</p>
       <p className="text-xs text-white/62">750 pts to reach Platinum</p>
-      <progress className="mt-2 h-2 w-full" max={4000} value={3250}>
-        3250
-      </progress>
+      <SegmentedProgressMeter
+        ariaLabel="Desktop rewards tier progress"
+        className="mt-2"
+        max={4000}
+        size="compact"
+        value={3250}
+      />
       <Link
         className="mt-2 flex h-8 items-center justify-center rounded-[10px] border border-[var(--sb-border)] text-xs uppercase tracking-[0.14em] text-[var(--sb-gold)]"
         href="/loyalty"

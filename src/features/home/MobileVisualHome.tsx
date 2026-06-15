@@ -7,6 +7,7 @@ import type { FormEvent } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
+import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import type { MenuItem } from "@/types/menu";
 
 import { HomeMenuCard } from "./HomeMenuCard";
@@ -286,8 +287,6 @@ function MemberCard({
   loyaltyPoints: number;
 }) {
   const progressValue = Math.min(loyaltyPoints, 4000);
-  const totalSegments = 16;
-  const activeSegments = Math.round((progressValue / 4000) * totalSegments);
 
   return (
     <section className="relative mt-5 overflow-hidden rounded-[20px] border border-[var(--sb-gold)]/24 bg-[linear-gradient(145deg,rgba(255,255,255,0.075),rgba(255,255,255,0.02)_38%,rgba(106,9,8,0.32))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_22px_64px_rgba(0,0,0,0.42)]">
@@ -333,32 +332,13 @@ function MemberCard({
       </div>
 
       <div className="relative z-10 mt-4">
-        <div className="mb-2 flex items-center justify-between text-[11px] uppercase tracking-[0.12em] text-white/46">
-          <span>Gold progress</span>
-          <span className="text-[var(--sb-gold-soft)]">
-            {loyaltyPoints.toLocaleString()} / 4,000
-          </span>
-        </div>
-        <div
-          aria-label="Loyalty tier progress"
-          aria-valuemax={4000}
-          aria-valuemin={0}
-          aria-valuenow={progressValue}
-          className="grid h-3 grid-cols-[repeat(16,minmax(0,1fr))] gap-1 rounded-full border border-white/[0.06] bg-black/44 p-1 shadow-[inset_0_0_12px_rgba(0,0,0,0.72)]"
-          role="progressbar"
-        >
-          {Array.from({ length: totalSegments }).map((_, index) => (
-            <span
-              aria-hidden="true"
-              className={
-                index < activeSegments
-                  ? "rounded-full bg-[linear-gradient(90deg,var(--sb-red-bright),var(--sb-gold-soft))] shadow-[0_0_12px_rgba(239,47,37,0.35)]"
-                  : "rounded-full bg-white/10"
-              }
-              key={index}
-            />
-          ))}
-        </div>
+        <SegmentedProgressMeter
+          ariaLabel="Loyalty tier progress"
+          label="Gold progress"
+          max={4000}
+          value={progressValue}
+          valueLabel={`${loyaltyPoints.toLocaleString()} / 4,000`}
+        />
         <div className="mt-3 flex items-center justify-between gap-3">
           <span className="text-[12px] leading-4 text-white/54">
             Priority drops, birthday omakase perks, and member-only offers.

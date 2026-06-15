@@ -8,6 +8,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
+import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -445,12 +446,14 @@ function TabletRewardsCard() {
         <p className="mt-2 text-[15px] text-white/62">
           750 pts to reach Platinum
         </p>
-        <div className="mt-3 flex items-center gap-3">
-          <progress className="h-2 flex-1" max={4000} value={3250}>
-            3250
-          </progress>
-          <span className="text-sm text-white/62">3,250 / 4,000</span>
-        </div>
+        <SegmentedProgressMeter
+          ariaLabel="Bliss Rewards tier progress"
+          className="mt-3"
+          label="Gold progress"
+          max={4000}
+          value={3250}
+          valueLabel="3,250 / 4,000"
+        />
       </div>
       <Link
         className="grid grid-rows-[1fr_48px] border-l border-[var(--sb-border)] text-center"

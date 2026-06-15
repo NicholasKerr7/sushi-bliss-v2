@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { mockUser } from "@/data/mockUser";
 import { classNames } from "@/lib/classNames";
 import { formatDateTime } from "@/lib/dates";
@@ -79,11 +80,13 @@ export function DesktopTierProgress({
           ? `${remaining.toLocaleString()} pts to reach the next tier`
           : "Top tier benefits unlocked"}
       </p>
-      <progress
-        aria-label="Tier progress"
-        className="mt-3 h-2 w-full"
+      <SegmentedProgressMeter
+        ariaLabel="Tier progress"
+        className="mt-3"
         max={100}
+        size={compact ? "compact" : "default"}
         value={progress}
+        valueLabel={`${account.lifetimePoints.toLocaleString()} / ${nextTarget.toLocaleString()}`}
       />
       <p className="mt-2 text-right font-mono text-[12px] text-white/56">
         {account.lifetimePoints.toLocaleString()} /{" "}

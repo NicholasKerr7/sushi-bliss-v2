@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
+import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { icons } from "@/features/home/visualHomeData";
 import {
   TabletMenuBottomNav,
@@ -200,11 +201,18 @@ export function TabletCartDialog({
 
         <div className="mt-6 grid grid-cols-[minmax(0,1fr)_360px] gap-6">
           <section>
-            <progress
-              aria-label="Free delivery progress"
-              className="mb-5 h-2 w-full"
+            <SegmentedProgressMeter
+              ariaLabel="Free delivery progress"
+              className="mb-5 rounded-[16px] border border-white/10 bg-black/22 p-4"
+              label="Free delivery"
               max={100}
+              tone={remainingForFreeDelivery > 0 ? "redGold" : "gold"}
               value={progressPercent}
+              valueLabel={
+                remainingForFreeDelivery > 0
+                  ? `${Math.round(progressPercent)}% unlocked`
+                  : "Unlocked"
+              }
             />
             {items.length > 0 ? (
               <div className="rounded-[18px] border border-white/10 bg-black/22 p-4">
