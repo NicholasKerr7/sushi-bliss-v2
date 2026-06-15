@@ -33,7 +33,7 @@ export function TabletLocationRow({
           className="object-cover"
           fill
           loading={imagePriority ? "eager" : "lazy"}
-          preload={imagePriority}
+          priority={imagePriority}
           sizes="300px"
           src={location.imageUrl}
         />
@@ -91,7 +91,7 @@ export function TabletLocationRow({
             className="object-cover"
             fill
             loading={imagePriority ? "eager" : "lazy"}
-            preload={imagePriority}
+            priority={imagePriority}
             sizes="260px"
             src={location.mapImageUrl}
           />

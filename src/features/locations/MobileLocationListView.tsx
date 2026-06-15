@@ -177,7 +177,7 @@ function MobileLocationCard({
           className="object-cover"
           fill
           loading={imagePriority ? "eager" : "lazy"}
-          preload={imagePriority}
+          priority={imagePriority}
           sizes="160px"
           src={location.imageUrl}
         />

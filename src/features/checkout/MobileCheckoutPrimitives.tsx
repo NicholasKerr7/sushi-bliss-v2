@@ -75,40 +75,52 @@ export function MobileCheckoutProgress({
 }) {
   return (
     <nav aria-label="Checkout progress" className="mt-9">
-      <ol className="grid grid-cols-4 items-start gap-2">
+      <ol className="relative isolate grid grid-cols-4 items-start gap-2">
         {checkoutSteps.map((label, index) => {
           const current = index === activeIndex;
           const complete = index < activeIndex;
+          const connected = complete || current;
 
           return (
-            <li className="relative text-center" key={label}>
+            <li
+              aria-current={current ? "step" : undefined}
+              className="relative text-center"
+              key={label}
+            >
               {index > 0 ? (
                 <span
                   aria-hidden="true"
                   className={classNames(
-                    "absolute left-[-50%] top-[24px] h-px w-full",
-                    complete || current
-                      ? "bg-[var(--sb-red-bright)]"
-                      : "bg-[var(--sb-border-strong)]",
+                    "absolute left-[-50%] top-[23px] h-[6px] w-full overflow-hidden rounded-full border border-white/[0.045] bg-black/52 shadow-[inset_0_0_10px_rgba(0,0,0,0.72)]",
+                    connected
+                      ? "before:absolute before:inset-y-[1px] before:left-0 before:right-0 before:rounded-full before:bg-[linear-gradient(90deg,var(--sb-red-bright),var(--sb-gold-soft))] before:shadow-[0_0_18px_rgba(238,43,36,0.68)] before:content-[''] after:absolute after:inset-y-[2px] after:left-2 after:right-2 after:rounded-full after:bg-[repeating-linear-gradient(90deg,rgba(255,255,255,0.42)_0_8px,transparent_8px_16px)] after:opacity-45 after:content-['']"
+                      : "before:absolute before:inset-y-[2px] before:left-2 before:right-2 before:rounded-full before:bg-white/10 before:content-['']",
                   )}
                 />
               ) : null}
               <span
                 className={classNames(
-                  "relative z-10 mx-auto grid h-12 w-12 place-items-center rounded-full border text-[18px]",
+                  "relative z-10 mx-auto grid h-12 w-12 place-items-center rounded-full border text-[18px] transition",
                   current
-                    ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/20 text-[var(--sb-red-bright)] shadow-[0_0_22px_var(--sb-red-glow)]"
+                    ? "border-[var(--sb-red-bright)] bg-[radial-gradient(circle_at_50%_35%,rgba(255,111,91,0.32),rgba(238,43,36,0.18)_45%,rgba(0,0,0,0.72)_78%)] text-white shadow-[0_0_28px_var(--sb-red-glow),inset_0_0_18px_rgba(238,43,36,0.28)]"
                     : complete
-                      ? "border-[var(--sb-red-bright)] text-[var(--sb-red-bright)]"
-                      : "border-[var(--sb-border-strong)] text-[var(--sb-gold-soft)]",
+                      ? "border-[var(--sb-gold)]/70 bg-[radial-gradient(circle_at_50%_35%,rgba(215,168,79,0.22),rgba(0,0,0,0.72)_72%)] text-[var(--sb-gold-soft)] shadow-[0_0_18px_rgba(215,168,79,0.22)]"
+                      : "border-white/16 bg-black/44 text-white/44 shadow-[inset_0_0_14px_rgba(0,0,0,0.62)]",
                 )}
               >
                 {index + 1}
+                {current ? (
+                  <span className="absolute -bottom-1 h-1.5 w-8 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(238,43,36,0.78)]" />
+                ) : null}
               </span>
               <span
                 className={classNames(
-                  "mt-3 block text-[12px] leading-4",
-                  current ? "text-[var(--sb-red-bright)]" : "text-white/70",
+                  "mt-3 block text-[12px] uppercase leading-4 tracking-[0.08em]",
+                  current
+                    ? "text-[var(--sb-red-bright)]"
+                    : complete
+                      ? "text-[var(--sb-gold-soft)]"
+                      : "text-white/54",
                 )}
               >
                 {label}

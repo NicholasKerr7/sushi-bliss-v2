@@ -26,7 +26,7 @@ export function LocationCard({
           className="object-cover"
           fill
           loading={imagePriority ? "eager" : "lazy"}
-          preload={imagePriority}
+          priority={imagePriority}
           sizes="(min-width: 1024px) 33vw, 100vw"
           src={location.imageUrl}
         />

@@ -155,32 +155,37 @@ export function MobileReservationStepRail({
 
   return (
     <nav aria-label="Reservation progress" className="mt-7">
-      <ol className="grid grid-cols-3 items-start gap-2">
+      <ol className="relative isolate grid grid-cols-3 items-start gap-2">
         {steps.map((step, index) => {
           const active = activeStep === step.id;
           const complete = activeStep > step.id;
+          const connected = complete || active;
 
           return (
-            <li className="relative text-center" key={step.id}>
+            <li
+              aria-current={active ? "step" : undefined}
+              className="relative text-center"
+              key={step.id}
+            >
               {index > 0 ? (
                 <span
                   aria-hidden="true"
                   className={classNames(
-                    "absolute left-[-50%] top-[24px] h-px w-full",
-                    complete || active
-                      ? "bg-[var(--sb-red-bright)]"
-                      : "bg-white/20",
+                    "absolute left-[-50%] top-[23px] h-[6px] w-full overflow-hidden rounded-full border border-white/[0.045] bg-black/54 shadow-[inset_0_0_10px_rgba(0,0,0,0.72)]",
+                    connected
+                      ? "before:absolute before:inset-y-[1px] before:left-0 before:right-0 before:rounded-full before:bg-[linear-gradient(90deg,var(--sb-red-bright),var(--sb-gold-soft))] before:shadow-[0_0_18px_rgba(238,43,36,0.66)] before:content-[''] after:absolute after:inset-y-[2px] after:left-2 after:right-2 after:rounded-full after:bg-[repeating-linear-gradient(90deg,rgba(255,255,255,0.42)_0_8px,transparent_8px_16px)] after:opacity-40 after:content-['']"
+                      : "before:absolute before:inset-y-[2px] before:left-2 before:right-2 before:rounded-full before:bg-white/10 before:content-['']",
                   )}
                 />
               ) : null}
               <span
                 className={classNames(
-                  "relative z-10 mx-auto grid h-12 w-12 place-items-center rounded-full border text-[18px]",
+                  "relative z-10 mx-auto grid h-12 w-12 place-items-center rounded-full border text-[18px] transition",
                   active
-                    ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 text-white shadow-[0_0_24px_var(--sb-red-glow)]"
+                    ? "border-[var(--sb-red-bright)] bg-[radial-gradient(circle_at_50%_35%,rgba(255,111,91,0.32),rgba(238,43,36,0.18)_45%,rgba(0,0,0,0.72)_78%)] text-white shadow-[0_0_28px_var(--sb-red-glow),inset_0_0_18px_rgba(238,43,36,0.28)]"
                     : complete
-                      ? "border-[var(--sb-gold)] text-[var(--sb-gold-soft)]"
-                      : "border-white/24 text-white/52",
+                      ? "border-[var(--sb-gold)]/70 bg-[radial-gradient(circle_at_50%_35%,rgba(215,168,79,0.22),rgba(0,0,0,0.72)_72%)] text-[var(--sb-gold-soft)] shadow-[0_0_18px_rgba(215,168,79,0.22)]"
+                      : "border-white/16 bg-black/44 text-white/44 shadow-[inset_0_0_14px_rgba(0,0,0,0.62)]",
                 )}
               >
                 {complete ? (
@@ -188,6 +193,9 @@ export function MobileReservationStepRail({
                 ) : (
                   step.id
                 )}
+                {active ? (
+                  <span className="absolute -bottom-1 h-1.5 w-8 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(238,43,36,0.78)]" />
+                ) : null}
               </span>
               <span
                 className={classNames(

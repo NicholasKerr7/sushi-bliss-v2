@@ -6,6 +6,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { icons } from "@/features/home/visualHomeData";
+import { classNames } from "@/lib/classNames";
 import { formatDateTime } from "@/lib/dates";
 import {
   getOrderItemCount,
@@ -27,6 +28,22 @@ interface TabletOrderTrackingViewProps {
 
 const progressIcons = [icons.star, icons.chef, icons.bag, icons.location];
 
+function getTabletTrackingRailWidth(completedCount: number): string {
+  if (completedCount >= 4) {
+    return "w-full";
+  }
+
+  if (completedCount === 3) {
+    return "w-[68%]";
+  }
+
+  if (completedCount === 2) {
+    return "w-[42%]";
+  }
+
+  return "w-[16%]";
+}
+
 export function TabletOrderTrackingView({
   detailsOpen,
   onBackToOrders,
@@ -45,6 +62,10 @@ export function TabletOrderTrackingView({
         ? `${order.courier.etaMinutes} min`
         : "25-30 min"
       : "Ready window";
+  const visibleTimeline = timeline.slice(0, 4);
+  const completedStepCount = visibleTimeline.filter(
+    (step) => step.completed,
+  ).length;
 
   return (
     <main className="mx-auto max-w-[1034px]">
@@ -129,36 +150,64 @@ export function TabletOrderTrackingView({
       </section>
 
       <section className="mt-4 rounded-[18px] border border-white/10 bg-white/[0.04] p-5">
-        <div className="grid grid-cols-4 gap-3">
-          {timeline.slice(0, 4).map((step, index) => (
-            <div
-              className="flex flex-col items-center gap-3 text-center"
-              key={step.id}
-            >
-              <span
-                className={`grid h-[54px] w-[54px] place-items-center rounded-full border ${
-                  step.completed
-                    ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/18 shadow-[0_0_24px_rgba(238,43,36,0.35)]"
-                    : "border-white/20 bg-black/22"
-                }`}
+        <ol className="relative isolate grid grid-cols-4 gap-3">
+          <span
+            aria-hidden="true"
+            className="absolute left-[12.5%] right-[12.5%] top-[27px] h-[7px] overflow-hidden rounded-full border border-white/[0.045] bg-black/54 shadow-[inset_0_0_10px_rgba(0,0,0,0.72)]"
+          >
+            <span className="absolute inset-y-[2px] left-2 right-2 rounded-full bg-white/10" />
+            <span
+              className={classNames(
+                "absolute inset-y-[1px] left-0 rounded-full bg-[linear-gradient(90deg,var(--sb-red-bright),var(--sb-gold-soft))] shadow-[0_0_18px_rgba(238,43,36,0.64)]",
+                getTabletTrackingRailWidth(completedStepCount),
+              )}
+            />
+            <span
+              className={classNames(
+                "absolute inset-y-[2px] left-2 rounded-full bg-[repeating-linear-gradient(90deg,rgba(255,255,255,0.38)_0_8px,transparent_8px_16px)] opacity-40",
+                getTabletTrackingRailWidth(completedStepCount),
+              )}
+            />
+          </span>
+          {visibleTimeline.map((step, index) => {
+            const isCurrent = index === Math.max(completedStepCount - 1, 0);
+
+            return (
+              <li
+                aria-current={isCurrent ? "step" : undefined}
+                className="relative flex flex-col items-center gap-3 text-center"
+                key={step.id}
               >
-                <AssetIcon size={24} src={progressIcons[index]} />
-              </span>
-              <span
-                className={`text-[13px] font-semibold uppercase tracking-[0.08em] ${
-                  step.completed
-                    ? "text-[var(--sb-red-bright)]"
-                    : "text-white/58"
-                }`}
-              >
-                {step.label}
-              </span>
-              <span className="font-mono text-[12px] text-white/44">
-                {step.timestamp || "Pending"}
-              </span>
-            </div>
-          ))}
-        </div>
+                <span
+                  className={classNames(
+                    "relative z-10 grid h-[58px] w-[58px] place-items-center rounded-full border bg-black/60 transition",
+                    step.completed
+                      ? "border-[var(--sb-red-bright)] shadow-[0_0_24px_rgba(238,43,36,0.36),inset_0_0_18px_rgba(238,43,36,0.18)]"
+                      : "border-white/18 shadow-[inset_0_0_16px_rgba(0,0,0,0.62)]",
+                  )}
+                >
+                  <AssetIcon size={24} src={progressIcons[index]} />
+                  {isCurrent ? (
+                    <span className="absolute -bottom-1 h-1.5 w-9 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(238,43,36,0.78)]" />
+                  ) : null}
+                </span>
+                <span
+                  className={classNames(
+                    "text-[13px] font-semibold uppercase tracking-[0.08em]",
+                    step.completed
+                      ? "text-[var(--sb-red-bright)]"
+                      : "text-white/58",
+                  )}
+                >
+                  {step.label}
+                </span>
+                <span className="font-mono text-[12px] text-white/44">
+                  {step.timestamp || "Pending"}
+                </span>
+              </li>
+            );
+          })}
+        </ol>
       </section>
 
       <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
