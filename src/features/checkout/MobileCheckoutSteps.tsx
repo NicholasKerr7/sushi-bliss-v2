@@ -103,14 +103,15 @@ export function FulfillmentStep({
       </section>
 
       <section className="mt-5 grid gap-3">
-        <label className="grid min-h-[74px] grid-cols-[48px_1fr] items-center gap-4 rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] px-4">
+        <label className="grid min-h-[74px] grid-cols-[48px_1fr] items-center gap-4 rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] px-4 transition focus-within:border-[var(--sb-gold)]/58 focus-within:shadow-[0_0_24px_rgba(215,168,79,0.12)]">
           <AssetIcon size={32} src={icons.clock} />
-          <span>
+          <span className="relative block min-w-0">
             <span className="block text-[13px] uppercase tracking-[0.13em] text-[var(--sb-gold-soft)]">
               Scheduled time
             </span>
             <select
-              className="mt-1 w-full appearance-none bg-transparent text-[18px] text-white outline-none"
+              aria-label="Scheduled time"
+              className="mt-1 w-full appearance-none bg-transparent pr-8 text-[18px] font-semibold text-white outline-none"
               onChange={(event) => checkout.setSelectedTime(event.target.value)}
               value={checkout.selectedTime}
             >
@@ -124,6 +125,11 @@ export function FulfillmentStep({
                 </option>
               ))}
             </select>
+            <ChevronIcon
+              className="pointer-events-none absolute bottom-1 right-0 text-[var(--sb-gold)] drop-shadow-[0_0_10px_rgba(215,168,79,0.32)]"
+              direction="down"
+              size={20}
+            />
           </span>
         </label>
 

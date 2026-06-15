@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { locations } from "@/data/locations";
 import { reservationExperiences } from "@/data/reservations";
@@ -139,23 +140,30 @@ export function DesktopReservationModify({
               <span className="text-[13px] uppercase tracking-[0.08em] text-white/50">
                 Location
               </span>
-              <select
-                className="mt-3 h-12 w-full rounded-[10px] border border-white/12 bg-black/24 px-4 text-[14px] text-white outline-none focus:border-[var(--sb-gold)]"
-                onChange={(event) =>
-                  onDraftChange("locationId", event.target.value)
-                }
-                value={draft.locationId}
-              >
-                {locations.map((location) => (
-                  <option
-                    className="bg-[#080a0b]"
-                    key={location.id}
-                    value={location.id}
-                  >
-                    {location.name}
-                  </option>
-                ))}
-              </select>
+              <span className="relative mt-3 block">
+                <select
+                  className="h-12 w-full appearance-none rounded-[10px] border border-white/12 bg-black/24 px-4 pr-11 text-[14px] font-semibold text-white outline-none transition focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/18"
+                  onChange={(event) =>
+                    onDraftChange("locationId", event.target.value)
+                  }
+                  value={draft.locationId}
+                >
+                  {locations.map((location) => (
+                    <option
+                      className="bg-[#080a0b] text-white"
+                      key={location.id}
+                      value={location.id}
+                    >
+                      {location.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronIcon
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--sb-gold)]"
+                  direction="down"
+                  size={18}
+                />
+              </span>
             </label>
           </div>
 

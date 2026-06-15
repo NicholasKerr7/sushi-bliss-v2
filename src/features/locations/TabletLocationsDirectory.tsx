@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -116,21 +117,29 @@ export function TabletLocationsDirectory({
               value={query}
             />
           </form>
-          <label className="sr-only" htmlFor="tablet-location-filter">
-            Filter locations
+          <label className="relative block">
+            <span className="sr-only">Filter locations</span>
+            <select
+              className="h-[50px] w-full appearance-none rounded-[12px] border border-[var(--sb-gold)]/24 bg-white/[0.04] px-4 pr-11 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] outline-none transition focus:border-sb-gold/70 focus:ring-2 focus:ring-sb-gold/25 min-[1080px]:h-[58px] min-[1080px]:rounded-[14px] min-[1080px]:px-5 min-[1080px]:pr-12 min-[1080px]:text-[14px]"
+              onChange={(event) => setNeighborhood(event.target.value)}
+              value={neighborhood}
+            >
+              {neighborhoods.map((item) => (
+                <option
+                  className="bg-[#050607] text-white"
+                  key={item}
+                  value={item}
+                >
+                  {item === allNeighborhoods ? "All locations" : item}
+                </option>
+              ))}
+            </select>
+            <ChevronIcon
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--sb-gold)] min-[1080px]:right-5"
+              direction="down"
+              size={18}
+            />
           </label>
-          <select
-            className="h-[50px] rounded-[12px] border border-[var(--sb-gold)]/24 bg-white/[0.04] px-4 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] outline-none focus:border-sb-gold/70 focus:ring-2 focus:ring-sb-gold/25 min-[1080px]:h-[58px] min-[1080px]:rounded-[14px] min-[1080px]:px-5 min-[1080px]:text-[14px]"
-            id="tablet-location-filter"
-            onChange={(event) => setNeighborhood(event.target.value)}
-            value={neighborhood}
-          >
-            {neighborhoods.map((item) => (
-              <option key={item} value={item}>
-                {item === allNeighborhoods ? "All locations" : item}
-              </option>
-            ))}
-          </select>
           <button
             aria-label="Prioritize nearby locations"
             aria-pressed={nearbyFirst}

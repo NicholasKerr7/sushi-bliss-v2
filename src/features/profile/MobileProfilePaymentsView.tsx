@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { paymentBrandOptions } from "@/data/profile";
 import { icons } from "@/features/home/visualHomeData";
@@ -271,17 +272,30 @@ export function MobileProfilePaymentsView({
                 <span className="text-[11px] uppercase tracking-[0.1em] text-white/46">
                   Brand
                 </span>
-                <select
-                  className="min-h-[48px] rounded-[12px] border border-white/10 bg-black/34 px-3 text-[15px] text-white outline-none"
-                  onChange={(event) => updateDraft("brand", event.target.value)}
-                  value={draft.brand}
-                >
-                  {paymentBrandOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                <span className="relative block">
+                  <select
+                    className="min-h-[48px] w-full appearance-none rounded-[12px] border border-white/10 bg-black/34 px-3 pr-11 text-[15px] font-semibold text-white outline-none transition focus:border-[var(--sb-gold)]/58 focus:ring-2 focus:ring-[var(--sb-gold)]/18"
+                    onChange={(event) =>
+                      updateDraft("brand", event.target.value)
+                    }
+                    value={draft.brand}
+                  >
+                    {paymentBrandOptions.map((option) => (
+                      <option
+                        className="bg-[#050607] text-white"
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronIcon
+                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--sb-gold)]"
+                    direction="down"
+                    size={18}
+                  />
+                </span>
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <MobilePaymentField

@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { supportTopics } from "@/data/support";
 import {
   getDefaultSupportDraft,
@@ -84,23 +85,32 @@ export function TabletSupportContactForm({
           type="email"
           value={draft.email}
         />
-        <div className="col-span-2">
+        <div className="relative col-span-2">
           <label className="sr-only" htmlFor="tablet-support-topic">
             Support topic
           </label>
           <select
             aria-invalid={Boolean(validation.topicId)}
-            className="h-12 w-full rounded-[10px] border border-[var(--sb-border)] bg-black/32 px-4 text-[14px] text-white outline-none transition focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
+            className="h-12 w-full appearance-none rounded-[10px] border border-[var(--sb-border)] bg-black/32 px-4 pr-11 text-[14px] font-semibold text-white outline-none transition focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
             id="tablet-support-topic"
             onChange={(event) => updateDraft("topicId", event.target.value)}
             value={draft.topicId}
           >
             {supportTopics.map((topic) => (
-              <option key={topic.id} value={topic.id}>
+              <option
+                className="bg-[#050607] text-white"
+                key={topic.id}
+                value={topic.id}
+              >
                 {topic.label}
               </option>
             ))}
           </select>
+          <ChevronIcon
+            className="pointer-events-none absolute right-4 top-6 -translate-y-1/2 text-[var(--sb-gold)]"
+            direction="down"
+            size={18}
+          />
           {validation.topicId ? (
             <p className="mt-1 text-[12px] text-[var(--sb-red-bright)]">
               {validation.topicId}

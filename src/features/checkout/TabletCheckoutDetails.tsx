@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/features/home/visualHomeData";
 import { formatDateTime } from "@/lib/dates";
@@ -171,12 +172,13 @@ export function TabletCheckoutDetails({
                   formatDateTime(checkout.selectedTime).split(",")[0] || "Today"
                 }
               />
-              <label className="block rounded-[12px] border border-white/10 bg-black/22 px-4 py-3">
+              <label className="relative block rounded-[12px] border border-white/10 bg-black/22 px-4 py-3 transition focus-within:border-[var(--sb-gold)]/58 focus-within:ring-2 focus-within:ring-[var(--sb-gold)]/18">
                 <span className="block text-[12px] uppercase tracking-[0.12em] text-white/46">
                   Time
                 </span>
                 <select
-                  className="mt-2 w-full appearance-none bg-transparent text-[16px] text-white outline-none"
+                  aria-label="Checkout time"
+                  className="mt-2 w-full appearance-none bg-transparent pr-8 text-[16px] font-semibold text-white outline-none"
                   onChange={(event) =>
                     checkout.setSelectedTime(event.target.value)
                   }
@@ -192,6 +194,11 @@ export function TabletCheckoutDetails({
                     </option>
                   ))}
                 </select>
+                <ChevronIcon
+                  className="pointer-events-none absolute bottom-4 right-4 text-[var(--sb-gold)]"
+                  direction="down"
+                  size={18}
+                />
               </label>
             </div>
             {checkout.validation.time ? (

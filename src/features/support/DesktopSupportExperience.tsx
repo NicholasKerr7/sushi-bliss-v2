@@ -253,23 +253,31 @@ function DesktopContactView({
               value={draft.email}
               onChange={(value) => onDraftChange({ ...draft, email: value })}
             />
-            <select
-              className="col-span-2 h-11 rounded-[8px] border border-white/10 bg-black/28 px-4 text-[14px] text-white outline-none"
-              onChange={(event) =>
-                onDraftChange({ ...draft, topicId: event.target.value })
-              }
-              value={draft.topicId}
-            >
-              {supportTopics.map((topic) => (
-                <option
-                  className="bg-[#080a0b]"
-                  key={topic.id}
-                  value={topic.id}
-                >
-                  {topic.label}
-                </option>
-              ))}
-            </select>
+            <label className="relative col-span-2 block">
+              <span className="sr-only">Support topic</span>
+              <select
+                className="h-11 w-full appearance-none rounded-[8px] border border-white/10 bg-black/28 px-4 pr-11 text-[14px] font-semibold text-white outline-none transition focus:border-[var(--sb-gold)]/58 focus:ring-2 focus:ring-[var(--sb-gold)]/18"
+                onChange={(event) =>
+                  onDraftChange({ ...draft, topicId: event.target.value })
+                }
+                value={draft.topicId}
+              >
+                {supportTopics.map((topic) => (
+                  <option
+                    className="bg-[#080a0b] text-white"
+                    key={topic.id}
+                    value={topic.id}
+                  >
+                    {topic.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronIcon
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--sb-gold)]"
+                direction="down"
+                size={18}
+              />
+            </label>
             <textarea
               className="col-span-2 min-h-[64px] resize-none rounded-[8px] border border-white/10 bg-black/28 px-4 py-3 text-[14px] text-white outline-none placeholder:text-white/36"
               onChange={(event) =>
