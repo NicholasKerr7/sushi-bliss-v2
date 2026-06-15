@@ -62,7 +62,7 @@ export function MobileOrdersListView({
 
   return (
     <>
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileOrdersHeader
           cartCount={cartCount}
           onOpenCart={onOpenCart}

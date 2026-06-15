@@ -100,7 +100,7 @@ export function MobileLoyaltyDashboard({
         className="pointer-events-none absolute inset-x-0 top-0 h-[430px] bg-[url('/assets/ambience/elegant-sushi-bar-ambience-at-night.webp')] bg-cover bg-center opacity-28"
       />
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileLoyaltyHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

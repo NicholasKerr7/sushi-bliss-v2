@@ -57,7 +57,7 @@ export function MobileReservationsMainView({
 
   return (
     <>
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileReservationsHeader
           cartCount={cartCount}
           onOpenCart={onOpenCart}

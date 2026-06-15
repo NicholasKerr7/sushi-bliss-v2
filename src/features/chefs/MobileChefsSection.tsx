@@ -34,7 +34,7 @@ export function MobileChefsSection() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[430px] bg-[url('/assets/chefs/sushi-bliss-master-chef-team.webp')] bg-cover bg-center opacity-20"
       />
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileChefsHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

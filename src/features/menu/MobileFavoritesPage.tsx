@@ -51,7 +51,7 @@ export function MobileFavoritesPage() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[430px] bg-[url('/assets/editorial/elegant-sashimi-platter-on-slate.webp')] bg-cover bg-center opacity-20"
       />
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileFavoritesHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

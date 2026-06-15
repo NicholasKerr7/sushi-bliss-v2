@@ -42,7 +42,7 @@ export function WelcomeScreen() {
       <div className="sb-wave-pattern absolute bottom-[28%] left-0 h-44 w-64 opacity-20" />
       <div className="sb-wave-pattern absolute bottom-20 right-0 h-36 w-56 rotate-180 opacity-18" />
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100svh-3.75rem)] max-w-[430px] flex-col justify-end">
+      <div className="mobile-frame relative z-10 flex min-h-[calc(100svh-3.75rem)] flex-col justify-end">
         <div className="mb-auto mt-4 flex flex-col items-center">
           <AssetIcon
             alt={brand.name}

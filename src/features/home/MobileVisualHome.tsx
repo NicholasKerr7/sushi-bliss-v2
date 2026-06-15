@@ -48,7 +48,7 @@ export function MobileDashboard({
         <div className="sb-wave-pattern absolute left-0 top-[42%] h-36 w-full opacity-18" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileDashboardHeader />
         <MobileSearchBar
           query={query}

@@ -108,7 +108,7 @@ export function MobileProfilePaymentsView({
 
   return (
     <>
-      <div className="relative z-10 mx-auto max-w-[430px] pb-16">
+      <div className="mobile-frame relative z-10 pb-16">
         <MobileProfileHeader
           cartCount={cartCount}
           unreadNotificationCount={unreadNotificationCount}

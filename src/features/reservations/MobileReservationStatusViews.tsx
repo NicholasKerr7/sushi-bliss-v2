@@ -57,7 +57,7 @@ export function MobileReservationDetailView({
   const display = getReservationDisplay(reservation);
 
   return (
-    <div className="relative z-10 mx-auto max-w-[430px]">
+    <div className="mobile-frame relative z-10">
       <MobileReservationsHeader
         cartCount={cartCount}
         onOpenCart={onOpenCart}
@@ -189,7 +189,7 @@ export function MobileReservationConfirmationView({
   const display = getReservationDisplay(reservation);
 
   return (
-    <div className="relative z-10 mx-auto max-w-[430px] text-center">
+    <div className="mobile-frame relative z-10 text-center">
       <MobileReservationsHeader
         cartCount={cartCount}
         onOpenCart={onOpenCart}
@@ -269,7 +269,7 @@ export function MobileReservationCancelView({
   const display = getReservationDisplay(reservation);
 
   return (
-    <div className="relative z-10 mx-auto max-w-[430px]">
+    <div className="mobile-frame relative z-10">
       <MobileReservationsHeader
         cartCount={cartCount}
         onOpenCart={onOpenCart}

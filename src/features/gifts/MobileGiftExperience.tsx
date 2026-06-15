@@ -115,7 +115,7 @@ export function MobileGiftExperience() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[430px] bg-[url('/assets/gallery/elegant-table-setting-with-candlelight-and-berries.webp')] bg-cover bg-center opacity-20"
       />
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileGiftHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

@@ -121,7 +121,7 @@ export function MobileCheckoutDialog({
         <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(180deg,#030303_0%,#090908_42%,#020202_100%)]" />
         <div className="pointer-events-none fixed inset-x-0 top-0 h-36 bg-[linear-gradient(180deg,rgba(202,164,93,0.08),transparent)]" />
 
-        <div className="relative z-10 mx-auto max-w-[430px]">
+        <div className="mobile-frame relative z-10">
           <MobileCheckoutHeader
             itemCount={itemCount}
             onBackToCart={onBackToCart}

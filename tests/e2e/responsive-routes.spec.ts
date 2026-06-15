@@ -22,6 +22,21 @@ const customerRoutePaths = [
 
 const routePaths = ["/", ...customerRoutePaths, "/admin"] as const;
 const minimumScrollableOverflow = 24;
+const wideMobileFrameRoutePaths = [
+  "/chefs",
+  "/home",
+  "/loyalty",
+  "/menu",
+  "/orders",
+  "/profile",
+] as const;
+const wideMobileFrameWidths = [
+  { expectedMin: 428, width: 480 },
+  { expectedMin: 500, width: 560 },
+  { expectedMin: 580, width: 640 },
+  { expectedMin: 630, width: 720 },
+  { expectedMin: 630, width: 767 },
+] as const;
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
   await expect(
@@ -43,6 +58,36 @@ async function expectNoHorizontalOverflow(page: Page, routePath: string) {
     Math.max(overflow.body, overflow.document),
     `${routePath} should not create horizontal overflow`,
   ).toBeLessThanOrEqual(1);
+}
+
+async function getVisibleMobileFrameMetrics(page: Page) {
+  return page.evaluate(() => {
+    const isVisible = (element: Element) => {
+      const style = window.getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+
+      return (
+        style.display !== "none" &&
+        style.visibility !== "hidden" &&
+        rect.width > 1 &&
+        rect.height > 1
+      );
+    };
+    const frame = Array.from(document.querySelectorAll(".mobile-frame")).find(
+      isVisible,
+    );
+
+    if (!frame) {
+      return null;
+    }
+
+    const rect = frame.getBoundingClientRect();
+
+    return {
+      left: Math.round(rect.left),
+      width: Math.round(rect.width),
+    };
+  });
 }
 
 async function expectGlobalScrollPolicy(page: Page, routePath: string) {
@@ -217,5 +262,60 @@ test.describe("responsive route health", () => {
     }
 
     expect(consoleErrors, "routes should not log browser errors").toEqual([]);
+  });
+
+  test("bridges wide-mobile layouts before the tablet breakpoint", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      testInfo.project.name === "chromium-mobile",
+      "Manual viewport resizing on the mobile device project reports scaled layout widths.",
+    );
+
+    for (const routePath of wideMobileFrameRoutePaths) {
+      await test.step(`wide mobile frame ${routePath}`, async () => {
+        for (const { expectedMin, width } of wideMobileFrameWidths) {
+          await page.setViewportSize({ height: 900, width });
+          await expect
+            .poll(() => page.evaluate(() => window.innerWidth), {
+              message: `${routePath} should resize to ${width}px`,
+            })
+            .toBe(width);
+          await page.goto(routePath, { waitUntil: "networkidle" });
+
+          await expect
+            .poll(
+              async () =>
+                (await getVisibleMobileFrameMetrics(page))?.width ?? 0,
+              {
+                message: `${routePath} should expand the mobile frame at ${width}px`,
+              },
+            )
+            .toBeGreaterThanOrEqual(expectedMin);
+
+          const frame = await getVisibleMobileFrameMetrics(page);
+
+          expect(
+            frame?.width,
+            `${routePath} should expand the mobile frame at ${width}px`,
+          ).toBeGreaterThanOrEqual(expectedMin);
+          expect(
+            frame?.width,
+            `${routePath} should keep a readable large-phone measure at ${width}px`,
+          ).toBeLessThanOrEqual(640);
+          await expectNoHorizontalOverflow(page, routePath);
+        }
+
+        await page.setViewportSize({ height: 1024, width: 768 });
+        await page.goto(routePath, { waitUntil: "networkidle" });
+
+        await expect
+          .poll(() => getVisibleMobileFrameMetrics(page), {
+            message: `${routePath} should hand off to the tablet shell at 768px`,
+          })
+          .toBeNull();
+        await expectNoHorizontalOverflow(page, routePath);
+      });
+    }
   });
 });

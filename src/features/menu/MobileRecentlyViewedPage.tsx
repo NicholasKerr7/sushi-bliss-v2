@@ -38,7 +38,7 @@ export function MobileRecentlyViewedPage() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[430px] bg-[url('/assets/editorial/elegant-sashimi-platter-on-slate.webp')] bg-cover bg-center opacity-12"
       />
 
-      <div className="relative z-10 mx-auto max-w-[430px] md:max-w-[900px]">
+      <div className="mobile-frame relative z-10 md:max-w-[900px]">
         <MobileFavoritesHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

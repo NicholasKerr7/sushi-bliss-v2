@@ -78,7 +78,7 @@ export function MobileOrderConfirmation({
         />
         <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.25),#030303_48%,#030303_100%)]" />
 
-        <div className="relative z-10 mx-auto max-w-[430px]">
+        <div className="mobile-frame relative z-10">
           <header className="flex items-center justify-between gap-4">
             <Link
               className="flex min-w-0 items-center gap-3 rounded-[14px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"

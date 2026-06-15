@@ -70,7 +70,7 @@ export function MobileItemCustomizeView({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(120,14,12,0.22),transparent_24%),radial-gradient(circle_at_88%_24%,rgba(202,164,93,0.08),transparent_24%),linear-gradient(180deg,#050505_0%,#080706_42%,#030303_100%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <header className="grid grid-cols-[52px_1fr_52px] items-center">
           <button
             aria-label="Back to item details"

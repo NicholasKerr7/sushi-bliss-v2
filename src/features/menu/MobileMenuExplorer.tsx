@@ -81,7 +81,7 @@ export function MobileMenuExplorer({
         <div className="sb-wave-pattern absolute left-0 top-[230px] h-40 w-full opacity-20" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileMenuHeader
           cartItemCount={cartItemCount}
           cartSubtotalCents={cartSubtotalCents}

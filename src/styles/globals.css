@@ -100,6 +100,38 @@ body::-webkit-scrollbar,
   display: none;
 }
 
+.mobile-frame {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+}
+
+.mobile-bottom-nav-fixed {
+  width: calc(100vw - 28px);
+  max-width: 430px;
+}
+
+.mobile-bottom-nav-inline {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+}
+
+@media (width >= 480px) and (width < 768px) {
+  .mobile-frame {
+    max-width: min(640px, calc(100vw - 50px));
+  }
+
+  .mobile-bottom-nav-fixed {
+    width: min(calc(100vw - 32px), 640px);
+    max-width: min(640px, calc(100vw - 50px));
+  }
+
+  .mobile-bottom-nav-inline {
+    max-width: min(640px, calc(100vw - 50px));
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;

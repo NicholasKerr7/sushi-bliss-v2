@@ -120,7 +120,7 @@ export function MobileOffersDashboard() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[440px] bg-[url('/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp')] bg-cover bg-center opacity-24"
       />
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileOffersHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

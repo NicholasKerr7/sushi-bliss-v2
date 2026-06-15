@@ -46,7 +46,7 @@ export function MobileAboutSection() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[460px] bg-[url('/assets/gallery/elegant-japanese-inspired-dining-room-interior.webp')] bg-cover bg-center opacity-24"
       />
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileAboutHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

@@ -44,7 +44,7 @@ export function MobileOmakaseExperience() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[linear-gradient(180deg,rgba(17,6,5,0.78),transparent)]"
       />
 
-      <div className="relative z-10 mx-auto max-w-[430px]">
+      <div className="mobile-frame relative z-10">
         <MobileOmakaseHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

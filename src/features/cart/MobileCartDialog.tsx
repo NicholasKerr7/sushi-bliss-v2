@@ -96,7 +96,7 @@ export function MobileCartDialog({
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_8%,rgba(202,164,93,0.08),transparent_22%),radial-gradient(circle_at_100%_28%,rgba(172,20,19,0.12),transparent_26%),linear-gradient(180deg,#040404_0%,#080807_42%,#030303_100%)]" />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[430px]">
+        <div className="mobile-frame relative z-10">
           <MobileCartHeader
             itemCount={itemCount}
             onClose={onClose}

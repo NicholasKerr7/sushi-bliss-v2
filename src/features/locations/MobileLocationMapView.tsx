@@ -39,7 +39,7 @@ export function MobileLocationMapView({
   const directionsUrl = getDirectionsUrl(selectedLocation);
 
   return (
-    <div className="relative z-10 mx-auto max-w-[430px] pb-16">
+    <div className="mobile-frame relative z-10 pb-16">
       <MobileLocationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
       <div className="mt-7 grid grid-cols-[52px_1fr_52px] items-center">
         <MobileLocationsBackButton label="Back to locations" onClick={onBack} />
