@@ -38,6 +38,7 @@ export function OmakasePackageCard({
           className="object-cover"
           fill
           loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="(min-width: 1180px) 25vw, (min-width: 760px) 33vw, 100vw"
           src={omakasePackage.image.publicUrl}
         />

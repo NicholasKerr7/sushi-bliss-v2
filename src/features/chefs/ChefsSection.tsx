@@ -93,7 +93,7 @@ function DesktopChefsSection() {
               <DesktopChefCard
                 chef={chef}
                 key={chef.id}
-                priority={index === 0}
+                priority={index < 4}
                 onViewChef={setSelectedChef}
               />
             ))}

@@ -289,6 +289,7 @@ function MobileOfferCard({
             className="object-cover"
             fill
             loading={imagePriority ? "eager" : "lazy"}
+            priority={imagePriority}
             sizes="112px"
             src={offer.imageUrl}
           />

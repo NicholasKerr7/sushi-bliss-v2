@@ -87,9 +87,7 @@ export function getMockReservations(): Reservation[] {
   futureDate.setDate(futureDate.getDate() + 5);
   futureDate.setHours(19, 30, 0, 0);
 
-  const pastDate = new Date();
-  pastDate.setDate(pastDate.getDate() - 10);
-  pastDate.setHours(18, 0, 0, 0);
+  const pastDate = new Date(2026, 5, 3, 18, 0, 0, 0);
 
   const secondPastDate = new Date();
   secondPastDate.setDate(secondPastDate.getDate() - 24);

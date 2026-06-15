@@ -34,6 +34,7 @@ export function MobileFavoriteCard({
           className="object-cover"
           fill
           loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="112px"
           src={item.image.publicUrl}
         />

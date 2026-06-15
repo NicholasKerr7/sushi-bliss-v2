@@ -210,6 +210,8 @@ export function DesktopOmakaseExperience() {
                     alt=""
                     className="object-cover"
                     fill
+                    loading="eager"
+                    priority
                     sizes="220px"
                     src={desktopOmakaseSakeImage}
                   />

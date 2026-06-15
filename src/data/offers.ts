@@ -34,7 +34,7 @@ export const offers: Offer[] = [
       "One use per member profile.",
       "Cannot be exchanged for cash.",
     ],
-    title: "Omakase Experience",
+    title: "Omakase Preview",
   },
   {
     accent: "neutral",

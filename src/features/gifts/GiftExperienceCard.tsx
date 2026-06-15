@@ -28,6 +28,7 @@ export function GiftExperienceCard({
           className="object-cover"
           fill
           loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="(min-width: 1180px) 28vw, (min-width: 760px) 42vw, 100vw"
           src={gift.image.publicUrl}
         />

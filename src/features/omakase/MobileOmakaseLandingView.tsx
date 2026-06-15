@@ -55,7 +55,11 @@ export function MobileOmakaseLandingView({
           className="grid min-h-[72px] grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-[13px] border border-[var(--sb-border)] bg-black/44 px-5 text-[16px] text-white/64 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_38px_rgba(0,0,0,0.36)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
           href="/menu"
         >
-          <AssetIcon size={27} src="/assets/icons/search-icon.png" />
+          <AssetIcon
+            loading="eager"
+            size={27}
+            src="/assets/icons/search-icon.png"
+          />
           <span className="truncate">Search sushi, rolls, or dishes...</span>
         </Link>
         <Link
@@ -63,7 +67,11 @@ export function MobileOmakaseLandingView({
           className="grid min-h-[72px] place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/44 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_38px_rgba(0,0,0,0.36)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
           href="/menu"
         >
-          <AssetIcon size={29} src="/assets/icons/user-settings-icon.png" />
+          <AssetIcon
+            loading="eager"
+            size={29}
+            src="/assets/icons/user-settings-icon.png"
+          />
         </Link>
       </div>
 
@@ -145,6 +153,7 @@ export function MobileOmakaseLandingView({
               image={item.image}
               index={index + 1}
               key={item.id}
+              priority={index < 3}
               subtitle={item.subtitle}
               title={item.title}
             />
@@ -267,7 +276,7 @@ function MobileOmakaseFeature({
   return (
     <div className="grid min-h-[78px] place-items-center px-2 text-center">
       <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/54 bg-black/32">
-        <AssetIcon size={22} src={icon} />
+        <AssetIcon loading="eager" size={22} src={icon} />
       </span>
       <span className="editorial-title mt-2 block text-[12px] leading-[1.14] text-white/82">
         {label}
@@ -280,12 +289,14 @@ function MobileOmakasePreviewCard({
   alt,
   image,
   index,
+  priority = false,
   subtitle,
   title,
 }: {
   alt: string;
   image: string;
   index: number;
+  priority?: boolean;
   subtitle: string;
   title: string;
 }) {
@@ -295,7 +306,8 @@ function MobileOmakasePreviewCard({
         alt={alt}
         className="object-cover"
         fill
-        loading={index <= 2 ? "eager" : "lazy"}
+        loading={priority ? "eager" : "lazy"}
+        priority={priority}
         sizes="188px"
         src={image}
       />

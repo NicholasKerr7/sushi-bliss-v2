@@ -26,6 +26,7 @@ export function ChefCard({
           className="object-cover"
           fill
           loading={eagerImage ? "eager" : "lazy"}
+          priority={eagerImage}
           sizes="(min-width: 1280px) 24vw, (min-width: 768px) 45vw, 100vw"
           src={chef.standingImage.publicUrl}
         />
