@@ -22,9 +22,10 @@ import {
   desktopNigiriItems,
   menuHeroItem,
 } from "./tabletMenuData";
+import { TabletFilterSelect } from "./TabletMenuControls";
 
 const desktopCategoryButtons = [
-  ["recommended", "Recommended", "/assets/icons/star-icon.png"],
+  ["all", "Recommended", "/assets/icons/star-icon.png"],
   ["nigiri", "Nigiri", "/assets/icons/nigiri-icon.png"],
   ["rolls", "Rolls", "/assets/icons/sushi-menu-icon.png"],
   ["sashimi", "Sashimi", "/assets/icons/sashimi-icon.png"],
@@ -214,7 +215,6 @@ export function DesktopMenuSurface({
             <DesktopCategoryNav
               category={category}
               categoryExists={categoryExists}
-              isCategoryPage
               onSelectCategory={onSelectCategory}
             />
             <DesktopFilterControls
@@ -395,21 +395,22 @@ function DesktopFilterControls({
   return (
     <div
       className={classNames(
-        "mt-4 grid grid-cols-[minmax(0,1fr)_150px_150px_150px] gap-3 min-[1500px]:gap-2.5",
+        "mt-4 grid gap-3",
         isCategoryPage
-          ? "min-[1500px]:mt-3 min-[1500px]:grid-cols-[326px_145px_132px_162px_128px]"
-          : "min-[1500px]:mt-0 min-[1500px]:w-fit min-[1500px]:grid-cols-[346px_108px_128px_118px]",
+          ? "grid-cols-[minmax(0,1fr)_150px_150px_150px_150px] min-[1500px]:mt-4 min-[1500px]:grid-cols-[minmax(340px,1fr)_160px_160px_160px_160px]"
+          : "grid-cols-[minmax(0,1fr)_170px_170px_170px] min-[1500px]:mt-4 min-[1500px]:grid-cols-[minmax(360px,1fr)_174px_174px_174px]",
       )}
     >
       <label className="relative block">
         <span className="sr-only">Search menu</span>
         <AssetIcon
-          className="absolute left-4 top-1/2 -translate-y-1/2"
-          size={19}
+          className="absolute left-4 top-1/2 -translate-y-1/2 drop-shadow-[0_0_10px_rgba(215,168,79,0.22)]"
+          size={20}
           src="/assets/icons/search-icon.png"
         />
         <input
-          className="h-12 w-full rounded-[10px] border border-[var(--sb-border)] bg-black/30 pl-12 pr-4 text-[14px] text-white outline-none placeholder:text-white/42 focus:border-[var(--sb-gold)] min-[1500px]:h-10 min-[1500px]:rounded-[8px] min-[1500px]:text-[13px]"
+          aria-label="Search menu items"
+          className="h-[58px] w-full rounded-[13px] border border-white/14 bg-black/28 pl-12 pr-4 text-[14px] font-semibold text-white outline-none transition placeholder:text-white/44 hover:border-[var(--sb-gold)]/34 hover:bg-white/[0.055] focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/25"
           onChange={(event) => onQueryChange(event.target.value)}
           placeholder={
             category === "nigiri" ? "Search nigiri..." : "Search menu items..."
@@ -418,26 +419,26 @@ function DesktopFilterControls({
         />
       </label>
       {isCategoryPage ? (
-        <DesktopFilterSelect
+        <TabletFilterSelect
           label="Fish Type"
           options={desktopFishOptions}
           value={fishFilter}
           onChange={onFishFilterChange}
         />
       ) : null}
-      <DesktopFilterSelect
+      <TabletFilterSelect
         label="Dietary"
         options={desktopDietaryOptions}
         value={dietaryFilter}
         onChange={onDietaryFilterChange}
       />
-      <DesktopFilterSelect
+      <TabletFilterSelect
         label="Spicy Level"
         options={desktopSpiceOptions}
         value={spiceFilter}
         onChange={onSpiceFilterChange}
       />
-      <DesktopFilterSelect
+      <TabletFilterSelect
         label="Sort By"
         options={desktopSortOptions}
         value={sortFilter}
@@ -450,57 +451,40 @@ function DesktopFilterControls({
 function DesktopCategoryNav({
   category,
   categoryExists,
-  isCategoryPage = false,
   onSelectCategory,
 }: {
   category: string;
   categoryExists: (categoryId: string) => boolean;
-  isCategoryPage?: boolean;
   onSelectCategory: (categoryId: string) => void;
 }) {
   return (
     <nav
       aria-label="Desktop menu categories"
-      className={classNames(
-        "mt-4 grid grid-cols-7 gap-3",
-        isCategoryPage
-          ? "min-[1500px]:mt-4 min-[1500px]:grid-cols-[182px_112px_112px_112px_148px_132px_96px]"
-          : "min-[1500px]:mt-4 min-[1500px]:flex min-[1500px]:w-fit min-[1500px]:gap-2",
-      )}
+      className="mt-4 grid grid-cols-[1.16fr_0.74fr_0.74fr_0.84fr_1.18fr_1fr_0.74fr] gap-3"
     >
       {desktopCategoryButtons.map(([id, label, icon]) => {
-        const disabled = !categoryExists(id);
-        const active =
-          (id === "recommended" &&
-            (category === "all" || category === "recommended")) ||
-          category === id;
+        const disabled =
+          id === "chef-specials" || id === "drinks"
+            ? false
+            : !categoryExists(id);
+        const active = category === id;
 
         return (
           <button
             aria-pressed={active}
             className={classNames(
-              "grid min-h-[46px] grid-cols-[24px_auto] place-content-center items-center gap-2 rounded-[10px] border px-3 text-[12px] uppercase tracking-[0.04em] transition disabled:cursor-not-allowed disabled:opacity-45 min-[1500px]:min-h-9 min-[1500px]:rounded-[9px]",
-              isCategoryPage
-                ? "min-[1500px]:grid min-[1500px]:grid-cols-[22px_auto] min-[1500px]:px-3"
-                : "min-[1500px]:flex min-[1500px]:grid-cols-none min-[1500px]:gap-1.5 min-[1500px]:px-3",
+              "flex min-h-[46px] min-w-0 items-center justify-center gap-2 whitespace-nowrap rounded-[10px] border px-2 text-[12px] uppercase transition disabled:cursor-not-allowed disabled:opacity-45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[1500px]:px-3 min-[1500px]:text-[13px]",
               active
-                ? "border-[var(--sb-gold)]/60 bg-[var(--sb-gold)]/22 text-[var(--sb-gold-soft)]"
-                : "border-[var(--sb-border)] bg-white/[0.025] text-white/76 hover:bg-white/[0.05]",
+                ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] text-black shadow-[0_0_24px_rgb(215_168_79_/_0.22)]"
+                : "border-white/14 bg-black/24 text-white/72 hover:border-[var(--sb-gold)]/36 hover:bg-white/[0.055] hover:text-white",
+              disabled ? "hover:border-white/14 hover:bg-black/24" : "",
             )}
             disabled={disabled}
             key={id}
             onClick={() => onSelectCategory(id)}
             type="button"
           >
-            <AssetIcon
-              className={
-                isCategoryPage || id === "recommended"
-                  ? ""
-                  : "min-[1500px]:hidden"
-              }
-              size={22}
-              src={icon}
-            />
+            <AssetIcon size={20} src={icon} />
             {label}
           </button>
         );
@@ -889,49 +873,5 @@ function DesktopMenuSection({
       </div>
       <div className="mt-3">{children}</div>
     </section>
-  );
-}
-
-function DesktopFilterSelect({
-  label,
-  onChange,
-  options,
-  value,
-}: {
-  label: string;
-  options: readonly string[];
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  const isActive = value !== options[0];
-
-  return (
-    <label className="relative block min-w-0">
-      <span className="sr-only">{label}</span>
-      <select
-        className={classNames(
-          "h-12 w-full min-w-0 appearance-none rounded-[10px] border px-4 pr-9 text-left text-[12px] uppercase tracking-[0.06em] outline-none transition focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/25 min-[1500px]:h-10 min-[1500px]:rounded-[8px] min-[1500px]:px-4 min-[1500px]:pr-8",
-          isActive
-            ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] text-[#120b04]"
-            : "border-[var(--sb-border)] bg-black/30 text-white/78 hover:border-[var(--sb-gold)]/36",
-        )}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-      >
-        {options.map((option) => (
-          <option className="bg-[#050607] text-white" key={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-      <ChevronIcon
-        className={classNames(
-          "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2",
-          isActive ? "sb-gold-control-value" : "text-[var(--sb-gold-soft)]",
-        )}
-        direction="down"
-        size={16}
-      />
-    </label>
   );
 }
