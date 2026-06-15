@@ -1,6 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -16,7 +18,6 @@ import type {
   DesktopMenuViewHandler,
 } from "./DesktopMenuTypes";
 import {
-  allTabletMenuItems,
   chefSpecialItems,
   desktopNigiriItems,
   menuHeroItem,
@@ -38,13 +39,82 @@ const desktopNigiriDisplayNames: Record<string, string> = {
   "tuna-nigiri": "Maguro Nigiri",
 };
 
+const desktopFishOptions = [
+  "Fish Type",
+  "Tuna",
+  "Salmon",
+  "Yellowtail",
+  "Shellfish",
+  "Roe",
+] as const;
+const desktopDietaryOptions = [
+  "Dietary",
+  "Lean",
+  "Rich",
+  "Shellfish Free",
+  "Vegetarian",
+] as const;
+const desktopSpiceOptions = ["Spicy Level", "Mild", "Hot"] as const;
+const desktopSortOptions = ["Sort By", "Price Low", "Price High"] as const;
+
+function getDesktopMenuSearchText(item: MenuItem) {
+  return `${item.name} ${item.description} ${item.ingredients.join(" ")} ${item.tags.join(" ")}`.toLowerCase();
+}
+
+function matchesDesktopFishFilter(item: MenuItem, filter: string) {
+  if (filter === desktopFishOptions[0]) return true;
+
+  const searchText = getDesktopMenuSearchText(item);
+  const matchers: Record<string, RegExp> = {
+    Roe: /roe|ikura/,
+    Salmon: /salmon/,
+    Shellfish: /shrimp|scallop|ebi/,
+    Tuna: /tuna|toro/,
+    Yellowtail: /yellowtail|hamachi/,
+  };
+
+  return matchers[filter]?.test(searchText) ?? true;
+}
+
+function matchesDesktopDietaryFilter(item: MenuItem, filter: string) {
+  if (filter === desktopDietaryOptions[0]) return true;
+
+  const searchText = getDesktopMenuSearchText(item);
+
+  if (filter === "Lean") return /lean|hamachi|salmon|ebi/.test(searchText);
+  if (filter === "Rich") return /otoro|toro|uni|roe|wagyu/.test(searchText);
+  if (filter === "Shellfish Free")
+    return !/shrimp|scallop|ebi/.test(searchText);
+  if (filter === "Vegetarian") return item.category === "vegetarian";
+
+  return true;
+}
+
+function matchesDesktopSpiceFilter(item: MenuItem, filter: string) {
+  if (filter === "Hot") return item.tags.includes("hot");
+  if (filter === "Mild") return !item.tags.includes("hot");
+
+  return true;
+}
+
+function sortDesktopMenuItems(items: MenuItem[], sort: string) {
+  if (sort === "Price Low") {
+    return [...items].sort((a, b) => a.priceCents - b.priceCents);
+  }
+
+  if (sort === "Price High") {
+    return [...items].sort((a, b) => b.priceCents - a.priceCents);
+  }
+
+  return items;
+}
+
 export function DesktopMenuSurface({
   activeCategoryItems,
   category,
   categoryExists,
   filteredItems,
   hasActiveFilters,
-  itemCount,
   query,
   selectedCategoryLabel,
   totalItemCount,
@@ -63,7 +133,6 @@ export function DesktopMenuSurface({
   categoryExists: (categoryId: string) => boolean;
   filteredItems: MenuItem[];
   hasActiveFilters: boolean;
-  itemCount: number;
   query: string;
   selectedCategoryLabel: string;
   totalItemCount: number;
@@ -78,10 +147,50 @@ export function DesktopMenuSurface({
   onViewDetails: DesktopMenuViewHandler;
 }) {
   const { items, totals } = useCart();
+  const [fishFilter, setFishFilter] = useState<string>(desktopFishOptions[0]);
+  const [dietaryFilter, setDietaryFilter] = useState<string>(
+    desktopDietaryOptions[0],
+  );
+  const [spiceFilter, setSpiceFilter] = useState<string>(
+    desktopSpiceOptions[0],
+  );
+  const [sortFilter, setSortFilter] = useState<string>(desktopSortOptions[0]);
   const isCategoryPage = category !== "all" && category !== "recommended";
-  const displayItems = isCategoryPage ? filteredItems : allTabletMenuItems;
+  const displayItems = filteredItems;
   const categoryDisplayItems =
-    category === "nigiri" ? desktopNigiriItems : activeCategoryItems;
+    category === "nigiri" && query.trim().length === 0
+      ? desktopNigiriItems
+      : activeCategoryItems;
+  const effectiveFishFilter = isCategoryPage
+    ? fishFilter
+    : desktopFishOptions[0];
+  const hasDesktopFilters =
+    effectiveFishFilter !== desktopFishOptions[0] ||
+    dietaryFilter !== desktopDietaryOptions[0] ||
+    spiceFilter !== desktopSpiceOptions[0] ||
+    sortFilter !== desktopSortOptions[0];
+  const applyDesktopFilters = (sourceItems: MenuItem[]) =>
+    sortDesktopMenuItems(
+      sourceItems.filter(
+        (item) =>
+          matchesDesktopFishFilter(item, effectiveFishFilter) &&
+          matchesDesktopDietaryFilter(item, dietaryFilter) &&
+          matchesDesktopSpiceFilter(item, spiceFilter),
+      ),
+      sortFilter,
+    );
+  const visibleDisplayItems = applyDesktopFilters(displayItems);
+  const visibleCategoryItems = applyDesktopFilters(categoryDisplayItems);
+  const visibleItemCount = isCategoryPage
+    ? visibleCategoryItems.length
+    : visibleDisplayItems.length;
+  const clearAllDesktopFilters = () => {
+    setFishFilter(desktopFishOptions[0]);
+    setDietaryFilter(desktopDietaryOptions[0]);
+    setSpiceFilter(desktopSpiceOptions[0]);
+    setSortFilter(desktopSortOptions[0]);
+    onClearFilters();
+  };
 
   return (
     <main
@@ -110,17 +219,33 @@ export function DesktopMenuSurface({
             />
             <DesktopFilterControls
               category={category}
+              dietaryFilter={dietaryFilter}
+              fishFilter={fishFilter}
               isCategoryPage
               query={query}
+              sortFilter={sortFilter}
+              spiceFilter={spiceFilter}
+              onDietaryFilterChange={setDietaryFilter}
+              onFishFilterChange={setFishFilter}
               onQueryChange={onQueryChange}
+              onSortFilterChange={setSortFilter}
+              onSpiceFilterChange={setSpiceFilter}
             />
           </>
         ) : (
           <>
             <DesktopFilterControls
               category={category}
+              dietaryFilter={dietaryFilter}
+              fishFilter={fishFilter}
               query={query}
+              sortFilter={sortFilter}
+              spiceFilter={spiceFilter}
+              onDietaryFilterChange={setDietaryFilter}
+              onFishFilterChange={setFishFilter}
               onQueryChange={onQueryChange}
+              onSortFilterChange={setSortFilter}
+              onSpiceFilterChange={setSpiceFilter}
             />
             <DesktopCategoryNav
               category={category}
@@ -133,17 +258,17 @@ export function DesktopMenuSurface({
         <p className="mt-3 text-[13px] text-white/50 min-[1500px]:sr-only">
           Showing{" "}
           <span className="font-mono text-[var(--sb-gold-soft)]">
-            {itemCount}
+            {visibleItemCount}
           </span>{" "}
           of{" "}
           <span className="font-mono text-[var(--sb-gold-soft)]">
             {totalItemCount}
           </span>{" "}
           items in <span className="text-white">{selectedCategoryLabel}</span>
-          {hasActiveFilters ? (
+          {hasActiveFilters || hasDesktopFilters ? (
             <button
               className="ml-3 text-[var(--sb-red-bright)]"
-              onClick={onClearFilters}
+              onClick={clearAllDesktopFilters}
               type="button"
             >
               Reset filters
@@ -154,9 +279,9 @@ export function DesktopMenuSurface({
         {isCategoryPage ? (
           <>
             <DesktopMenuSection title={`${selectedCategoryLabel} Menu`}>
-              {categoryDisplayItems.length > 0 ? (
+              {visibleCategoryItems.length > 0 ? (
                 <div className="grid grid-cols-4 gap-4">
-                  {categoryDisplayItems.slice(0, 8).map((item, index) => (
+                  {visibleCategoryItems.slice(0, 8).map((item, index) => (
                     <DesktopFeatureMenuCard
                       badge={index === 0 ? "Chef's Pick" : undefined}
                       displayName={desktopNigiriDisplayNames[item.id]}
@@ -173,7 +298,7 @@ export function DesktopMenuSurface({
               ) : (
                 <DesktopCategoryEmptyState
                   categoryLabel={selectedCategoryLabel}
-                  onClearFilters={onClearFilters}
+                  onClearFilters={clearAllDesktopFilters}
                 />
               )}
             </DesktopMenuSection>
@@ -205,17 +330,24 @@ export function DesktopMenuSurface({
               </div>
             </DesktopMenuSection>
             <DesktopMenuSection title="All Menu Items">
-              <div className="grid grid-cols-3 gap-3">
-                {displayItems.slice(0, 9).map((item, index) => (
-                  <DesktopCompactMenuRow
-                    eagerImage={index < 3}
-                    item={item}
-                    key={item.id}
-                    onAddToCart={onAddToCart}
-                    onViewDetails={onViewDetails}
-                  />
-                ))}
-              </div>
+              {visibleDisplayItems.length > 0 ? (
+                <div className="grid grid-cols-3 gap-3">
+                  {visibleDisplayItems.slice(0, 9).map((item, index) => (
+                    <DesktopCompactMenuRow
+                      eagerImage={index < 3}
+                      item={item}
+                      key={item.id}
+                      onAddToCart={onAddToCart}
+                      onViewDetails={onViewDetails}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <DesktopCategoryEmptyState
+                  categoryLabel={selectedCategoryLabel}
+                  onClearFilters={clearAllDesktopFilters}
+                />
+              )}
             </DesktopMenuSection>
           </>
         )}
@@ -235,14 +367,30 @@ export function DesktopMenuSurface({
 
 function DesktopFilterControls({
   category,
+  dietaryFilter,
+  fishFilter,
   isCategoryPage = false,
   query,
+  sortFilter,
+  spiceFilter,
+  onDietaryFilterChange,
+  onFishFilterChange,
   onQueryChange,
+  onSortFilterChange,
+  onSpiceFilterChange,
 }: {
   category: string;
+  dietaryFilter: string;
+  fishFilter: string;
   isCategoryPage?: boolean;
   query: string;
+  sortFilter: string;
+  spiceFilter: string;
+  onDietaryFilterChange: (value: string) => void;
+  onFishFilterChange: (value: string) => void;
   onQueryChange: (query: string) => void;
+  onSortFilterChange: (value: string) => void;
+  onSpiceFilterChange: (value: string) => void;
 }) {
   return (
     <div
@@ -269,10 +417,32 @@ function DesktopFilterControls({
           value={query}
         />
       </label>
-      {isCategoryPage ? <DesktopFilterButton label="Fish Type" /> : null}
-      <DesktopFilterButton label="Dietary" />
-      <DesktopFilterButton label="Spicy Level" />
-      <DesktopFilterButton label="Sort By" />
+      {isCategoryPage ? (
+        <DesktopFilterSelect
+          label="Fish Type"
+          options={desktopFishOptions}
+          value={fishFilter}
+          onChange={onFishFilterChange}
+        />
+      ) : null}
+      <DesktopFilterSelect
+        label="Dietary"
+        options={desktopDietaryOptions}
+        value={dietaryFilter}
+        onChange={onDietaryFilterChange}
+      />
+      <DesktopFilterSelect
+        label="Spicy Level"
+        options={desktopSpiceOptions}
+        value={spiceFilter}
+        onChange={onSpiceFilterChange}
+      />
+      <DesktopFilterSelect
+        label="Sort By"
+        options={desktopSortOptions}
+        value={sortFilter}
+        onChange={onSortFilterChange}
+      />
     </div>
   );
 }
@@ -722,18 +892,46 @@ function DesktopMenuSection({
   );
 }
 
-function DesktopFilterButton({ label }: { label: string }) {
+function DesktopFilterSelect({
+  label,
+  onChange,
+  options,
+  value,
+}: {
+  label: string;
+  options: readonly string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const isActive = value !== options[0];
+
   return (
-    <button
-      className="grid h-12 grid-cols-[1fr_16px] items-center rounded-[10px] border border-[var(--sb-border)] bg-black/30 px-4 text-left text-[12px] uppercase tracking-[0.06em] text-white/78 min-[1500px]:h-10 min-[1500px]:rounded-[8px] min-[1500px]:px-4 min-[1500px]:text-[12px]"
-      type="button"
-    >
-      {label}
+    <label className="relative block min-w-0">
+      <span className="sr-only">{label}</span>
+      <select
+        className={classNames(
+          "h-12 w-full min-w-0 appearance-none rounded-[10px] border px-4 pr-9 text-left text-[12px] uppercase tracking-[0.06em] outline-none transition focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/25 min-[1500px]:h-10 min-[1500px]:rounded-[8px] min-[1500px]:px-4 min-[1500px]:pr-8",
+          isActive
+            ? "border-[var(--sb-gold)] bg-[linear-gradient(180deg,var(--sb-gold-soft),var(--sb-gold))] text-[#120b04]"
+            : "border-[var(--sb-border)] bg-black/30 text-white/78 hover:border-[var(--sb-gold)]/36",
+        )}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      >
+        {options.map((option) => (
+          <option className="bg-[#050607] text-white" key={option}>
+            {option}
+          </option>
+        ))}
+      </select>
       <ChevronIcon
-        className="text-[var(--sb-gold-soft)]"
+        className={classNames(
+          "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2",
+          isActive ? "sb-gold-control-value" : "text-[var(--sb-gold-soft)]",
+        )}
         direction="down"
         size={16}
       />
-    </button>
+    </label>
   );
 }

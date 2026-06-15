@@ -60,7 +60,7 @@ test.describe("customer experience", () => {
       await expect(
         menuSection.getByRole("heading", { name: "Search & Filter" }),
       ).toBeVisible();
-      await expect(menuSection.getByText("4 results found")).toBeVisible();
+      await expect(menuSection.getByText(/1 results found/i)).toBeVisible();
 
       await menuSection
         .getByRole("button", { name: /Otoro Nigiri Premium fatty/i })

@@ -44,7 +44,6 @@ export function MenuExplorer() {
     clearFilters,
     filteredItems,
     hasActiveFilters,
-    itemCount,
     query,
     selectedCategory,
     setCategory,
@@ -91,7 +90,6 @@ export function MenuExplorer() {
           isFavorite={isFavorite}
           query={query}
           onAddToCart={handleAddToCart}
-          onClearFilters={clearFilters}
           onOpenCart={() => setCartOpen(true)}
           onQueryChange={setQuery}
           onSelectCategory={setCategory}
@@ -123,7 +121,6 @@ export function MenuExplorer() {
           filteredItems={filteredItems}
           hasActiveFilters={hasActiveFilters}
           isFavorite={isFavorite}
-          itemCount={itemCount}
           query={query}
           selectedCategoryLabel={selectedCategory.label}
           totalItemCount={totalItemCount}

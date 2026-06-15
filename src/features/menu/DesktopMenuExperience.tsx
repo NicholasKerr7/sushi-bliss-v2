@@ -41,7 +41,6 @@ interface DesktopMenuExperienceProps {
   filteredItems: MenuItem[];
   hasActiveFilters: boolean;
   isFavorite: (itemId: string) => boolean;
-  itemCount: number;
   query: string;
   selectedCategoryLabel: string;
   totalItemCount: number;
@@ -58,7 +57,6 @@ export function DesktopMenuExperience({
   filteredItems,
   hasActiveFilters,
   isFavorite,
-  itemCount,
   query,
   selectedCategoryLabel,
   totalItemCount,
@@ -286,7 +284,6 @@ export function DesktopMenuExperience({
           categoryExists={categoryExists}
           filteredItems={filteredItems}
           hasActiveFilters={hasActiveFilters}
-          itemCount={itemCount}
           query={query}
           selectedCategoryLabel={selectedCategoryLabel}
           totalItemCount={totalItemCount}

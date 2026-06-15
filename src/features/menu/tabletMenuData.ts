@@ -26,6 +26,11 @@ export const allTabletMenuItems = getMenuItemsById([
   "california-roll",
   "philadelphia-roll",
   "tempura-roll",
+  "avocado-nigiri",
+  "inari-sushi",
+  "kappa-maki",
+  "shiitake-nigiri",
+  "vegetarian-temaki",
 ]);
 
 export const tabletSearchFallbackItems = getMenuItemsById([

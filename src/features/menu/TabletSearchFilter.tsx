@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -14,8 +14,8 @@ import { recentTabletSearches } from "./tabletMenuData";
 import { TabletMenuCard } from "./TabletMenuCards";
 import {
   TabletCategoryTiles,
+  TabletFilterSelect,
   TabletSegmentGroup,
-  TabletSelectButton,
 } from "./TabletMenuControls";
 
 interface TabletSearchFilterProps {
@@ -24,7 +24,6 @@ interface TabletSearchFilterProps {
   isFavorite: (itemId: string) => boolean;
   results: MenuItem[];
   onAddToCart: (item: MenuItem) => void;
-  onClearFilters: () => void;
   onQueryChange: (query: string) => void;
   onSelectCategory: (categoryId: string) => void;
   onToggleFavorite: (itemId: string) => void;
@@ -37,7 +36,6 @@ export function TabletSearchFilter({
   isFavorite,
   results,
   onAddToCart,
-  onClearFilters,
   onQueryChange,
   onSelectCategory,
   onToggleFavorite,
@@ -46,6 +44,26 @@ export function TabletSearchFilter({
   const [dietary, setDietary] = useState("Any");
   const [spice, setSpice] = useState("Any");
   const [price, setPrice] = useState("Any");
+  const [sort, setSort] = useState("Most Relevant");
+  const refinedResults = useMemo(
+    () =>
+      sortSearchResults(
+        results.filter(
+          (item) =>
+            matchesSearchDietary(item, dietary) &&
+            matchesSearchSpice(item, spice) &&
+            matchesSearchPrice(item, price),
+        ),
+        sort,
+      ),
+    [dietary, price, results, sort, spice],
+  );
+  const resetFilters = () => {
+    setDietary("Any");
+    setSpice("Any");
+    setPrice("Any");
+    setSort("Most Relevant");
+  };
 
   return (
     <section className="relative mt-[18px] overflow-hidden rounded-[14px] border border-white/16 px-12 pb-9 pt-9">
@@ -110,7 +128,12 @@ export function TabletSearchFilter({
               value={spice}
               onChange={setSpice}
             />
-            <TabletSelectButton label="Most Relevant" />
+            <TabletFilterSelect
+              label="Sort"
+              options={["Most Relevant", "Price Low", "Price High"]}
+              value={sort}
+              onChange={setSort}
+            />
             <TabletSegmentGroup
               label="Price Range"
               options={["Any", "Under $10", "$10 - $20", "Over $20"]}
@@ -121,7 +144,7 @@ export function TabletSearchFilter({
           <div className="mt-5 flex justify-end">
             <button
               className="text-sm uppercase text-[var(--sb-gold)]"
-              onClick={onClearFilters}
+              onClick={resetFilters}
               type="button"
             >
               Reset Filters
@@ -130,7 +153,7 @@ export function TabletSearchFilter({
         </div>
         <div className="mt-7 flex items-center justify-between">
           <p className="text-sm uppercase text-white/78">
-            {Math.max(results.length, 4)} results found
+            {refinedResults.length} results found
           </p>
           <button
             className="text-sm text-[var(--sb-red-bright)]"
@@ -140,26 +163,37 @@ export function TabletSearchFilter({
             Clear Search
           </button>
         </div>
-        <div className="mt-4 grid grid-cols-4 gap-4">
-          {results.slice(0, 4).map((item, index) => (
-            <TabletMenuCard
-              badge={
-                index === 1
-                  ? "Signature"
-                  : item.tags.includes("chef-special")
-                    ? "Special"
-                    : "Hot"
-              }
-              eagerImage={index < 4}
-              isFavorite={isFavorite(item.id)}
-              item={item}
-              key={item.id}
-              onAddToCart={onAddToCart}
-              onToggleFavorite={onToggleFavorite}
-              onViewDetails={onViewDetails}
-            />
-          ))}
-        </div>
+        {refinedResults.length > 0 ? (
+          <div className="mt-4 grid grid-cols-4 gap-4">
+            {refinedResults.slice(0, 4).map((item, index) => (
+              <TabletMenuCard
+                badge={
+                  index === 1
+                    ? "Signature"
+                    : item.tags.includes("chef-special")
+                      ? "Special"
+                      : "Hot"
+                }
+                eagerImage={index < 4}
+                isFavorite={isFavorite(item.id)}
+                item={item}
+                key={item.id}
+                onAddToCart={onAddToCart}
+                onToggleFavorite={onToggleFavorite}
+                onViewDetails={onViewDetails}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-4 rounded-[12px] border border-[var(--sb-border)] bg-black/34 p-8 text-center">
+            <p className="text-lg uppercase text-[var(--sb-gold)]">
+              No dishes match those filters
+            </p>
+            <p className="mt-2 text-sm text-white/64">
+              Reset the dietary, heat, price, or sort controls.
+            </p>
+          </div>
+        )}
         <Link
           className="mt-6 grid grid-cols-[80px_1fr_auto] items-center rounded-[12px] border border-white/14 bg-white/[0.035] p-4"
           href="/support"
@@ -182,4 +216,66 @@ export function TabletSearchFilter({
       </div>
     </section>
   );
+}
+
+function getSearchFilterText(item: MenuItem) {
+  return `${item.name} ${item.description} ${item.ingredients.join(" ")} ${item.tags.join(" ")}`.toLowerCase();
+}
+
+function matchesSearchDietary(item: MenuItem, dietary: string) {
+  if (dietary === "Any") return true;
+
+  const searchText = getSearchFilterText(item);
+
+  if (dietary === "Gluten Free")
+    return !/tempura|soy|eel sauce/.test(searchText);
+  if (dietary === "Dairy Free") return !/cream cheese|mayo/.test(searchText);
+  if (dietary === "Vegan") {
+    return (
+      item.category === "vegetarian" ||
+      /tofu|avocado|cucumber|shiitake/.test(searchText)
+    );
+  }
+  if (dietary === "Keto") {
+    return (
+      /sashimi|tuna|salmon|hamachi|scallop/.test(searchText) &&
+      !/roll|rice/.test(searchText)
+    );
+  }
+
+  return true;
+}
+
+function matchesSearchSpice(item: MenuItem, spice: string) {
+  if (spice === "Any") return true;
+  if (spice === "Mild") return !item.tags.includes("hot");
+  if (spice === "Medium") return /spicy|mayo/.test(getSearchFilterText(item));
+  if (spice === "Hot") return item.tags.includes("hot");
+  if (spice === "Extra Hot")
+    return (
+      item.tags.includes("hot") && /spicy|fire/.test(getSearchFilterText(item))
+    );
+
+  return true;
+}
+
+function matchesSearchPrice(item: MenuItem, price: string) {
+  if (price === "Under $10") return item.priceCents < 1000;
+  if (price === "$10 - $20")
+    return item.priceCents >= 1000 && item.priceCents <= 2000;
+  if (price === "Over $20") return item.priceCents > 2000;
+
+  return true;
+}
+
+function sortSearchResults(items: MenuItem[], sort: string) {
+  if (sort === "Price Low") {
+    return [...items].sort((a, b) => a.priceCents - b.priceCents);
+  }
+
+  if (sort === "Price High") {
+    return [...items].sort((a, b) => b.priceCents - a.priceCents);
+  }
+
+  return items;
 }

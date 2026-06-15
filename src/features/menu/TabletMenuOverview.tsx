@@ -18,8 +18,8 @@ import {
 import { TabletCompactMenuRow, TabletMenuCard } from "./TabletMenuCards";
 import {
   TabletCategoryBar,
+  TabletFilterSelect,
   TabletSection,
-  TabletSelectButton,
 } from "./TabletMenuControls";
 
 interface TabletMenuOverviewProps {
@@ -30,6 +30,57 @@ interface TabletMenuOverviewProps {
   onSelectCategory: (categoryId: string) => void;
   onToggleFavorite: (itemId: string) => void;
   onViewDetails: (item: MenuItem) => void;
+}
+
+const tabletOverviewDietaryOptions = [
+  "Dietary",
+  "Lean",
+  "Rich",
+  "Shellfish Free",
+  "Vegetarian",
+] as const;
+const tabletOverviewSpiceOptions = ["Spicy Level", "Mild", "Hot"] as const;
+const tabletOverviewSortOptions = [
+  "Sort By",
+  "Price Low",
+  "Price High",
+] as const;
+
+function getTabletOverviewSearchText(item: MenuItem) {
+  return `${item.name} ${item.description} ${item.ingredients.join(" ")} ${item.tags.join(" ")}`.toLowerCase();
+}
+
+function matchesTabletOverviewDietary(item: MenuItem, filter: string) {
+  if (filter === tabletOverviewDietaryOptions[0]) return true;
+
+  const searchText = getTabletOverviewSearchText(item);
+
+  if (filter === "Lean") return /lean|hamachi|salmon|ebi/.test(searchText);
+  if (filter === "Rich") return /otoro|toro|uni|roe|wagyu/.test(searchText);
+  if (filter === "Shellfish Free")
+    return !/shrimp|scallop|ebi/.test(searchText);
+  if (filter === "Vegetarian") return item.category === "vegetarian";
+
+  return true;
+}
+
+function matchesTabletOverviewSpice(item: MenuItem, filter: string) {
+  if (filter === "Hot") return item.tags.includes("hot");
+  if (filter === "Mild") return !item.tags.includes("hot");
+
+  return true;
+}
+
+function sortTabletOverviewItems(items: MenuItem[], sort: string) {
+  if (sort === "Price Low") {
+    return [...items].sort((a, b) => a.priceCents - b.priceCents);
+  }
+
+  if (sort === "Price High") {
+    return [...items].sort((a, b) => b.priceCents - a.priceCents);
+  }
+
+  return items;
 }
 
 export function TabletMenuOverview({
@@ -58,6 +109,15 @@ export function TabletMenuOverview({
     [],
   );
   const [activeRecommendationIndex, setActiveRecommendationIndex] = useState(0);
+  const [dietaryFilter, setDietaryFilter] = useState<string>(
+    tabletOverviewDietaryOptions[0],
+  );
+  const [spiceFilter, setSpiceFilter] = useState<string>(
+    tabletOverviewSpiceOptions[0],
+  );
+  const [sortFilter, setSortFilter] = useState<string>(
+    tabletOverviewSortOptions[0],
+  );
   const activeRecommendation =
     recommendationSlides[activeRecommendationIndex] || menuHeroItem;
   const recommendationNote =
@@ -69,6 +129,22 @@ export function TabletMenuOverview({
       (index + recommendationSlides.length) % recommendationSlides.length;
 
     setActiveRecommendationIndex(nextIndex);
+  };
+  const applyOverviewFilters = (items: MenuItem[]) =>
+    sortTabletOverviewItems(
+      items.filter(
+        (item) =>
+          matchesTabletOverviewDietary(item, dietaryFilter) &&
+          matchesTabletOverviewSpice(item, spiceFilter),
+      ),
+      sortFilter,
+    );
+  const visibleChefSpecialItems = applyOverviewFilters(chefSpecialItems);
+  const visibleOverviewItems = applyOverviewFilters(allTabletMenuItems);
+  const resetOverviewFilters = () => {
+    setDietaryFilter(tabletOverviewDietaryOptions[0]);
+    setSpiceFilter(tabletOverviewSpiceOptions[0]);
+    setSortFilter(tabletOverviewSortOptions[0]);
   };
 
   return (
@@ -142,50 +218,91 @@ export function TabletMenuOverview({
         categories={categories}
         onSelectCategory={onSelectCategory}
       />
-      <div className="mt-3 flex items-center justify-between">
-        <div className="flex gap-3">
-          <TabletSelectButton label="Dietary" />
-          <TabletSelectButton label="Spicy Level" />
-        </div>
-        <TabletSelectButton label="Sort By" />
+      <div className="mt-3 grid grid-cols-3 gap-3">
+        <TabletFilterSelect
+          label="Diet"
+          options={tabletOverviewDietaryOptions}
+          value={dietaryFilter}
+          onChange={setDietaryFilter}
+        />
+        <TabletFilterSelect
+          label="Heat"
+          options={tabletOverviewSpiceOptions}
+          value={spiceFilter}
+          onChange={setSpiceFilter}
+        />
+        <TabletFilterSelect
+          label="Sort"
+          options={tabletOverviewSortOptions}
+          value={sortFilter}
+          onChange={setSortFilter}
+        />
       </div>
       <TabletSection title="Chef's Specials" icon={icons.crown}>
-        <div className="grid grid-cols-4 gap-3">
-          {chefSpecialItems.map((item, index) => (
-            <TabletMenuCard
-              badge={
-                index === 0
-                  ? "Chef's Special"
-                  : index === 1
-                    ? "Hot"
-                    : index === 2
-                      ? "Signature"
-                      : "Premium"
-              }
-              eagerImage={index < 4}
-              isFavorite={isFavorite(item.id)}
-              item={item}
-              key={item.id}
-              onAddToCart={onAddToCart}
-              onToggleFavorite={onToggleFavorite}
-              onViewDetails={onViewDetails}
-            />
-          ))}
-        </div>
+        {visibleChefSpecialItems.length > 0 ? (
+          <div className="grid grid-cols-4 gap-3">
+            {visibleChefSpecialItems.slice(0, 4).map((item, index) => (
+              <TabletMenuCard
+                badge={
+                  index === 0
+                    ? "Chef's Special"
+                    : index === 1
+                      ? "Hot"
+                      : index === 2
+                        ? "Signature"
+                        : "Premium"
+                }
+                eagerImage={index < 4}
+                isFavorite={isFavorite(item.id)}
+                item={item}
+                key={item.id}
+                onAddToCart={onAddToCart}
+                onToggleFavorite={onToggleFavorite}
+                onViewDetails={onViewDetails}
+              />
+            ))}
+          </div>
+        ) : (
+          <TabletOverviewEmptyState onReset={resetOverviewFilters} />
+        )}
       </TabletSection>
       <TabletSection title="All Menu Items">
-        <div className="grid grid-cols-3 gap-3">
-          {allTabletMenuItems.map((item, index) => (
-            <TabletCompactMenuRow
-              eagerImage={index < 3}
-              item={item}
-              key={item.id}
-              onAddToCart={onAddToCart}
-              onViewDetails={onViewDetails}
-            />
-          ))}
-        </div>
+        {visibleOverviewItems.length > 0 ? (
+          <div className="grid grid-cols-3 gap-3">
+            {visibleOverviewItems.map((item, index) => (
+              <TabletCompactMenuRow
+                eagerImage={index < 3}
+                item={item}
+                key={item.id}
+                onAddToCart={onAddToCart}
+                onViewDetails={onViewDetails}
+              />
+            ))}
+          </div>
+        ) : (
+          <TabletOverviewEmptyState onReset={resetOverviewFilters} />
+        )}
       </TabletSection>
     </>
+  );
+}
+
+function TabletOverviewEmptyState({ onReset }: { onReset: () => void }) {
+  return (
+    <div className="rounded-[12px] border border-[var(--sb-border)] bg-black/34 p-6 text-center">
+      <p className="text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">
+        No dishes match these filters
+      </p>
+      <p className="mt-2 text-[13px] text-white/62">
+        Reset the overview filters to return to the full menu.
+      </p>
+      <button
+        className="mt-4 rounded-[9px] border border-[var(--sb-border)] px-5 py-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        onClick={onReset}
+        type="button"
+      >
+        Reset filters
+      </button>
+    </div>
   );
 }

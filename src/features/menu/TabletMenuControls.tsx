@@ -168,18 +168,6 @@ export function TabletSegmentGroup({
   );
 }
 
-export function TabletSelectButton({ label }: { label: string }) {
-  return (
-    <button
-      className="flex h-11 min-w-[132px] items-center justify-between gap-6 rounded-[9px] border border-[var(--sb-border)] bg-black/22 px-5 text-sm uppercase text-white"
-      type="button"
-    >
-      {label}
-      <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
-    </button>
-  );
-}
-
 export function TabletFilterSelect({
   label,
   onChange,
@@ -187,7 +175,7 @@ export function TabletFilterSelect({
   value,
 }: {
   label: string;
-  options: string[];
+  options: readonly string[];
   value: string;
   onChange: (value: string) => void;
 }) {

@@ -16,7 +16,6 @@ interface TabletMenuExplorerProps {
   query: string;
   cartItemCount: number;
   onAddToCart: (item: MenuItem) => void;
-  onClearFilters: () => void;
   onOpenCart: () => void;
   onQueryChange: (query: string) => void;
   onSelectCategory: (categoryId: string) => void;
@@ -33,7 +32,6 @@ export function TabletMenuExplorer({
   query,
   cartItemCount,
   onAddToCart,
-  onClearFilters,
   onOpenCart,
   onQueryChange,
   onSelectCategory,
@@ -61,7 +59,6 @@ export function TabletMenuExplorer({
             isFavorite={isFavorite}
             results={searchResults}
             onAddToCart={onAddToCart}
-            onClearFilters={onClearFilters}
             onQueryChange={onQueryChange}
             onSelectCategory={onSelectCategory}
             onToggleFavorite={onToggleFavorite}
