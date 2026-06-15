@@ -144,47 +144,111 @@ export function MobileIconCircle({
 
 export function MobileOrderProgress({ order }: { order: Order }) {
   const steps = getMobileOrderProgress(order);
+  const completedCount = steps.filter((step) => step.completed).length;
+  const currentStepIndex = Math.max(completedCount - 1, 0);
 
   return (
-    <ol className="grid grid-cols-4 items-start gap-2">
-      {steps.map((step, index) => (
-        <li className="relative text-center" key={step.id}>
-          {index > 0 ? (
-            <span
-              aria-hidden="true"
-              className={classNames(
-                "absolute left-[-50%] top-[29px] h-[2px] w-full",
-                step.completed
-                  ? "bg-[var(--sb-red-bright)] shadow-[0_0_12px_rgba(239,47,37,0.55)]"
-                  : "bg-white/14",
-              )}
-            />
-          ) : null}
-          <span
-            className={classNames(
-              "relative z-10 mx-auto grid h-[58px] w-[58px] place-items-center rounded-full border bg-black/42",
-              step.completed
-                ? "border-[var(--sb-red-bright)] text-[var(--sb-red-bright)] shadow-[0_0_26px_rgba(239,47,37,0.36)]"
-                : "border-white/18 text-white/52",
-            )}
-          >
-            {step.icon ? <AssetIcon size={24} src={step.icon} /> : null}
-          </span>
-          <span
-            className={classNames(
-              "mt-3 block text-[12px] leading-4",
-              step.completed ? "text-white" : "text-white/54",
-            )}
-          >
-            {step.label}
-          </span>
-          <span className="mt-1 block text-[12px] text-white/48">
-            {step.timestamp || "Pending"}
-          </span>
-        </li>
-      ))}
-    </ol>
+    <div className="relative px-1 pt-1">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-[30px] h-[9px] rounded-full border border-white/[0.055] bg-[linear-gradient(90deg,rgba(202,164,93,0.10),rgba(255,255,255,0.14),rgba(202,164,93,0.10))] shadow-[inset_0_0_12px_rgba(0,0,0,0.78)]"
+      />
+      {completedCount > 1 ? (
+        <span
+          aria-hidden="true"
+          className={classNames(
+            "pointer-events-none absolute left-[12.5%] top-[30px] h-[9px] overflow-hidden rounded-full bg-[linear-gradient(90deg,#7f1712_0%,#ef2f25_48%,#d8a84f_100%)] shadow-[0_0_18px_rgba(239,47,37,0.50),0_0_30px_rgba(216,168,79,0.20)]",
+            getMobileOrderProgressRailWidth(completedCount),
+          )}
+        >
+          <span className="absolute inset-y-[3px] left-2 right-2 rounded-full bg-[repeating-linear-gradient(90deg,transparent_0_10px,rgba(255,235,188,0.74)_10px_16px,transparent_16px_28px)] opacity-80" />
+          <span className="absolute right-[-5px] top-1/2 h-[16px] w-[16px] -translate-y-1/2 rounded-full bg-[var(--sb-gold)] shadow-[0_0_16px_rgba(216,168,79,0.82),0_0_22px_rgba(239,47,37,0.52)]" />
+        </span>
+      ) : null}
+
+      <ol className="relative z-10 grid grid-cols-4 items-start gap-2">
+        {steps.map((step, index) => {
+          const current = step.completed && index === currentStepIndex;
+
+          return (
+            <li
+              aria-current={current ? "step" : undefined}
+              className="relative text-center"
+              key={step.id}
+            >
+              <span
+                className={classNames(
+                  "relative z-10 mx-auto grid h-[58px] w-[58px] place-items-center overflow-hidden rounded-full border bg-[#050607]/88 transition duration-300",
+                  step.completed
+                    ? "border-[var(--sb-red-bright)] text-[var(--sb-red-bright)] shadow-[0_0_26px_rgba(239,47,37,0.38),inset_0_0_18px_rgba(239,47,37,0.12)]"
+                    : "border-white/18 text-white/52 shadow-[inset_0_0_16px_rgba(255,255,255,0.035)]",
+                  current
+                    ? "scale-[1.04] after:absolute after:inset-[6px] after:rounded-full after:border after:border-[var(--sb-gold)]/34 after:content-['']"
+                    : "",
+                )}
+              >
+                {step.completed ? (
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_42%,rgba(239,47,37,0.24),transparent_64%)]"
+                  />
+                ) : null}
+                {step.icon ? (
+                  <AssetIcon
+                    className={classNames(
+                      "relative z-10",
+                      step.completed
+                        ? "drop-shadow-[0_0_8px_rgba(239,47,37,0.74)]"
+                        : "opacity-48 grayscale",
+                    )}
+                    size={24}
+                    src={step.icon}
+                  />
+                ) : null}
+                {current ? (
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-[5px] h-[3px] w-8 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_12px_rgba(239,47,37,0.92)]"
+                  />
+                ) : null}
+              </span>
+              <span
+                className={classNames(
+                  "mt-3 block text-[12px] leading-4",
+                  current
+                    ? "text-[var(--sb-gold-soft)]"
+                    : step.completed
+                      ? "text-white"
+                      : "text-white/54",
+                )}
+              >
+                {step.label}
+              </span>
+              <span className="mt-1 block text-[12px] text-white/48">
+                {step.timestamp || "Pending"}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
+}
+
+function getMobileOrderProgressRailWidth(completedCount: number) {
+  if (completedCount >= 4) {
+    return "w-3/4";
+  }
+
+  if (completedCount === 3) {
+    return "w-1/2";
+  }
+
+  if (completedCount === 2) {
+    return "w-1/4";
+  }
+
+  return "w-0";
 }
 
 /** Collapses backend order statuses into the four-step mobile visual timeline. */
