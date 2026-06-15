@@ -65,6 +65,7 @@ export function TabletGiftConfirmation({
           alt=""
           className="object-cover opacity-42"
           fill
+          loading="eager"
           priority
           sizes="1034px"
           src="/assets/gallery/cozy-night-at-sushi-bliss.webp"

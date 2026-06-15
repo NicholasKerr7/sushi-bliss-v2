@@ -108,6 +108,7 @@ export function TabletChefsSection() {
             alt="The four master chefs of Sushi Bliss"
             className="object-cover object-[57%_27%] opacity-86"
             fill
+            loading="eager"
             priority
             sizes="1086px"
             src="/assets/chefs/sushi-bliss-master-chef-team.webp"

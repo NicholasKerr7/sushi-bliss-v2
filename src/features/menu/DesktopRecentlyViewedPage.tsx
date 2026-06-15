@@ -46,6 +46,7 @@ export function DesktopRecentlyViewedPage() {
             alt=""
             className="object-cover object-[65%_48%] opacity-38"
             fill
+            loading="eager"
             priority
             sizes="1672px"
             src="/assets/editorial/elegant-sashimi-platter-on-slate.webp"

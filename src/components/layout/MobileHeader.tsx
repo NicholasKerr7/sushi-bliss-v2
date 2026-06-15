@@ -19,6 +19,7 @@ export function MobileHeader() {
             alt=""
             width={36}
             height={36}
+            loading="eager"
             priority
             className="h-9 w-9"
           />

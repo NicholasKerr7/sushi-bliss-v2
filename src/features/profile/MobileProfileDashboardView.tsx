@@ -92,6 +92,7 @@ export function MobileProfileDashboardView({
               alt=""
               className="absolute inset-0 object-cover object-[70%_50%] opacity-60"
               fill
+              loading="eager"
               priority
               sizes="430px"
               src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
@@ -104,6 +105,7 @@ export function MobileProfileDashboardView({
                     alt=""
                     className="rounded-full border border-[var(--sb-gold)] object-cover"
                     fill
+                    loading="eager"
                     priority
                     sizes="96px"
                     src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"

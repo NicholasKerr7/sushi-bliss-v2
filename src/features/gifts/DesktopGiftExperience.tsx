@@ -419,6 +419,7 @@ function GiftReviewRail({
             alt=""
             className="object-cover"
             fill
+            loading="eager"
             priority
             sizes="372px"
             src={gift.image.publicUrl}

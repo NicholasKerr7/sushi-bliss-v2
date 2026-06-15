@@ -229,6 +229,7 @@ export function TabletProfileDashboardView({
               alt=""
               className="rounded-full border border-[var(--sb-gold)] object-cover"
               fill
+              loading="eager"
               priority
               sizes="164px"
               src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"

@@ -55,7 +55,8 @@ html {
   overflow-y: auto;
   overscroll-behavior-x: none;
   overscroll-behavior-y: auto;
-  scroll-padding-block: clamp(1rem, 4vw, 2.5rem);
+  scroll-padding-block-start: clamp(1rem, 4vw, 2.5rem);
+  scroll-padding-block-end: 0;
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;

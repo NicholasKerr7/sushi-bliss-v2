@@ -165,9 +165,10 @@ export function DesktopOmakaseExperience() {
                 Omakase packages
               </h2>
               <div className="mt-4 grid grid-cols-3 gap-3">
-                {omakasePackages.map((omakasePackage) => (
+                {omakasePackages.map((omakasePackage, index) => (
                   <DesktopPackageButton
                     compact
+                    imagePriority={index === 0}
                     isSelected={selectedPackage.id === omakasePackage.id}
                     key={omakasePackage.id}
                     omakasePackage={omakasePackage}

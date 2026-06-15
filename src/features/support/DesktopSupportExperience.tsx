@@ -361,6 +361,7 @@ function DesktopHelpCenter({
           alt=""
           className="object-cover object-[80%_44%] opacity-72"
           fill
+          loading="eager"
           priority
           sizes="1672px"
           src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"

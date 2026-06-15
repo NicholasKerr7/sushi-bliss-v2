@@ -71,6 +71,7 @@ function DesktopChefsSection() {
               alt="Sushi Bliss master chef team"
               className="object-cover object-[58%_40%]"
               fill
+              loading="eager"
               priority
               sizes="920px"
               src="/assets/chefs/sushi-bliss-master-chef-team.webp"

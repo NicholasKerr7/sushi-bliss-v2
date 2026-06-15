@@ -68,6 +68,7 @@ export function TabletGiftSelection({
           alt=""
           className="object-cover object-[72%_50%] opacity-82"
           fill
+          loading="eager"
           priority
           sizes="1034px"
           src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"

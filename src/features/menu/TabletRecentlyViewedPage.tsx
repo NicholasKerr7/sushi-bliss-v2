@@ -44,6 +44,7 @@ export function TabletRecentlyViewedPage() {
               alt=""
               className="object-cover opacity-26"
               fill
+              loading="eager"
               priority
               sizes="1034px"
               src="/assets/editorial/elegant-sashimi-platter-on-slate.webp"

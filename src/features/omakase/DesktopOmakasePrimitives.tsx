@@ -74,11 +74,13 @@ export function DesktopOmakasePanel({
 
 export function DesktopPackageButton({
   isSelected,
+  imagePriority = false,
   omakasePackage,
   onSelect,
   compact = false,
 }: {
   compact?: boolean;
+  imagePriority?: boolean;
   isSelected: boolean;
   omakasePackage: OmakasePackage;
   onSelect: (packageId: string) => void;
@@ -103,7 +105,8 @@ export function DesktopPackageButton({
           alt=""
           className="object-cover"
           fill
-          loading="eager"
+          loading={imagePriority ? "eager" : "lazy"}
+          priority={imagePriority}
           sizes="230px"
           src={omakasePackage.image.publicUrl}
         />

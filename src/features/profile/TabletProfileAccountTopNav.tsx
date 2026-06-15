@@ -99,6 +99,7 @@ export function TabletProfileAccountTopNav({
               alt=""
               className="h-11 w-11 rounded-full border border-[var(--sb-border)] object-cover"
               height={44}
+              loading="eager"
               priority
               src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"
               width={44}

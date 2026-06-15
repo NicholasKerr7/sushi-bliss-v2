@@ -232,6 +232,7 @@ export function TabletProfilePreferencesView({
           alt=""
           className="object-cover object-[70%_52%] opacity-82"
           fill
+          loading="eager"
           priority
           sizes="1086px"
           src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"

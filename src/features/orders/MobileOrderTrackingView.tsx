@@ -104,6 +104,7 @@ export function MobileOrderTrackingView({
               alt="Live order tracking map"
               className="object-cover"
               fill
+              loading="eager"
               priority
               sizes="430px"
               src="/assets/maps/map-route.webp"

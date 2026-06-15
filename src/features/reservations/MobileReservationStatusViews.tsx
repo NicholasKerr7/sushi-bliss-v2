@@ -80,6 +80,7 @@ export function MobileReservationDetailView({
             alt={display.experience?.title || "Reservation"}
             className="object-cover"
             fill
+            loading="eager"
             priority
             sizes="430px"
             src={

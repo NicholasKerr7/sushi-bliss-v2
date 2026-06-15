@@ -48,6 +48,7 @@ export function TabletReservationCancelView({
               alt={experience?.title || "Reservation"}
               className="object-cover"
               fill
+              loading="eager"
               priority
               sizes="330px"
               src={

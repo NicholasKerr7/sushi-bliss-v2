@@ -51,6 +51,7 @@ export function MobileLocationDetailView({
             alt={`${location.name} map`}
             className="object-cover"
             fill
+            loading="eager"
             priority
             sizes="430px"
             src={location.mapImageUrl}

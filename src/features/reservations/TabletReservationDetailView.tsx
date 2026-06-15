@@ -48,6 +48,7 @@ export function TabletReservationDetailView({
               alt={experience?.title || "Reservation"}
               className="object-cover"
               fill
+              loading="eager"
               priority
               sizes="420px"
               src={

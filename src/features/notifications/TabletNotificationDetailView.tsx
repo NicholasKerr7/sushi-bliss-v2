@@ -66,6 +66,7 @@ export function TabletNotificationDetailView({
             alt=""
             className="translate-x-[9%] scale-[1.18] object-cover object-center"
             fill
+            loading="eager"
             priority
             sizes="(max-width: 1086px) 86vw, 928px"
             src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"

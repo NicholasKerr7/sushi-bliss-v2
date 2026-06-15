@@ -225,6 +225,8 @@ export function MobileReservationDateTimeView({
           alt=""
           className="object-cover object-[54%_58%]"
           fill
+          loading="eager"
+          priority
           sizes="430px"
           src="/assets/menu/sushi/otoro-nigiri.webp"
         />

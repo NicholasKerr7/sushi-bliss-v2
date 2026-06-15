@@ -134,6 +134,7 @@ export function DesktopProfileDashboard({
             alt=""
             className="object-cover object-[68%_46%] opacity-72"
             fill
+            loading="eager"
             priority
             sizes="1600px"
             src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
@@ -144,6 +145,7 @@ export function DesktopProfileDashboard({
               alt=""
               className="rounded-full border border-[var(--sb-gold)] object-cover"
               height={150}
+              loading="eager"
               priority
               src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"
               width={150}
@@ -503,6 +505,8 @@ function UpcomingReservationCard({
             alt=""
             className="object-cover"
             fill
+            loading="eager"
+            priority
             sizes="270px"
             src="/assets/food/luxury-sushi-platter-on-marble-surface.webp"
           />

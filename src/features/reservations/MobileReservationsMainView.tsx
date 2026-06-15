@@ -70,6 +70,7 @@ export function MobileReservationsMainView({
               alt=""
               className="object-cover object-[64%_40%]"
               fill
+              loading="eager"
               priority
               sizes="430px"
               src="/assets/gallery/elegant-table-setting-with-candlelight-and-berries.webp"

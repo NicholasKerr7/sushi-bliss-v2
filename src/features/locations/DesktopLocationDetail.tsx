@@ -62,6 +62,7 @@ export function DesktopLocationDetail({
                     alt=""
                     className="object-cover"
                     fill
+                    loading="eager"
                     priority
                     sizes="980px"
                     src={location.mapImageUrl}

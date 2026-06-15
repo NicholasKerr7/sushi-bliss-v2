@@ -131,6 +131,7 @@ export function TabletOrderTrackingView({
           alt="Live delivery tracking map"
           className="object-cover opacity-82"
           fill
+          loading="eager"
           priority
           sizes="(min-width: 768px) 1034px, 100vw"
           src="/assets/maps/map-route.webp"

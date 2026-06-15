@@ -46,6 +46,7 @@ export function TabletReservationsMainView({
           alt=""
           className="object-cover opacity-58"
           fill
+          loading="eager"
           priority
           sizes="1034px"
           src="/assets/gallery/elegant-table-setting-with-candlelight-and-berries.webp"

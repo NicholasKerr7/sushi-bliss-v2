@@ -536,6 +536,7 @@ function DesktopMenuEditorialRail() {
         alt=""
         className="object-cover object-left-top"
         fill
+        loading="eager"
         priority
         sizes="178px"
         src="/assets/textures/red-moon-sakura-background.webp"

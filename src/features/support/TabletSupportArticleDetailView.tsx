@@ -37,6 +37,7 @@ export function TabletSupportArticleDetailView({
           alt=""
           className="object-cover opacity-76"
           fill
+          loading="eager"
           priority
           sizes="980px"
           src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"

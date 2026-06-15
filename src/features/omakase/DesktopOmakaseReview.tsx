@@ -237,6 +237,8 @@ export function DesktopOmakaseReview({
                   alt=""
                   className="object-cover"
                   fill
+                  loading="eager"
+                  priority
                   sizes="124px"
                   src={selectedDesktopPackage.image.publicUrl}
                 />
