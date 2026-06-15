@@ -130,7 +130,7 @@ function TabletReservationHistoryCard({
   const canManage = view === "upcoming" && reservation.status !== "cancelled";
 
   return (
-    <article className="relative grid grid-cols-[238px_minmax(0,1fr)_196px] gap-5 overflow-hidden rounded-[20px] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.024))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+    <article className="relative grid grid-cols-[210px_minmax(0,1fr)_168px] gap-4 overflow-hidden rounded-[20px] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.024))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] min-[960px]:grid-cols-[238px_minmax(0,1fr)_196px] min-[960px]:gap-5 min-[960px]:p-4">
       <div className="relative min-h-[174px] overflow-hidden rounded-[14px] bg-black/30">
         <Image
           alt={experience?.title || "Reservation"}
@@ -155,7 +155,7 @@ function TabletReservationHistoryCard({
         <h2 className="editorial-title mt-3 text-[30px] leading-none text-white">
           {experience?.title || "Reservation"}
         </h2>
-        <div className="mt-4 grid grid-cols-2 gap-3 text-[13px] text-white/58">
+        <div className="mt-4 grid gap-2 text-[13px] text-white/58 min-[960px]:grid-cols-2 min-[960px]:gap-3">
           <ReservationHistoryFact
             icon={icons.calendar}
             value={formatDateTime(reservation.startsAt)}
@@ -182,7 +182,7 @@ function TabletReservationHistoryCard({
           {reservation.confirmationCode}
         </p>
       </div>
-      <div className="grid content-center gap-3 border-l border-white/10 pl-5">
+      <div className="grid content-center gap-3 border-l border-white/10 pl-4 min-[960px]:pl-5">
         <Button
           className="red-glow-button h-12 whitespace-nowrap rounded-[12px] text-[12px] uppercase tracking-[0.04em]"
           onClick={() => onViewReservation(reservation)}
