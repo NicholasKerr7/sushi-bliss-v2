@@ -180,7 +180,7 @@ function DesktopStoryView({
 }) {
   return (
     <>
-      <section className="grid min-h-[430px] grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] shadow-[0_30px_90px_rgba(0,0,0,0.54)]">
+      <section className="grid min-h-[430px] grid-cols-[minmax(500px,0.92fr)_minmax(0,1.08fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] shadow-[0_30px_90px_rgba(0,0,0,0.54)]">
         <div className="flex flex-col justify-center px-12 py-8">
           <p className="text-[16px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
             Our Story
@@ -196,22 +196,15 @@ function DesktopStoryView({
             sourcing, careful rice, and a calm dining room where every course
             lands at the right moment.
           </p>
-          <div className="mt-8 grid max-w-[690px] grid-cols-[230px_210px_210px] gap-4">
+          <div className="mt-8 grid max-w-[456px] grid-cols-[230px_210px] gap-4">
             <Button
-              className="h-[58px] rounded-[12px] text-[13px] uppercase tracking-[0.08em]"
+              className="h-[58px] rounded-[12px] px-4 text-[13px] uppercase tracking-[0.08em]"
               onClick={() => onSurfaceChange("sourcing")}
             >
               Explore sourcing
             </Button>
-            <button
-              className="h-[58px] rounded-[12px] border border-[var(--sb-gold)]/38 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-              onClick={() => onSurfaceChange("atmosphere")}
-              type="button"
-            >
-              View gallery
-            </button>
             <Button
-              className="h-[58px] rounded-[12px] text-[13px] uppercase tracking-[0.08em]"
+              className="h-[58px] rounded-[12px] px-4 text-[13px] uppercase tracking-[0.08em]"
               href="/chefs"
               variant="secondary"
             >
