@@ -24,9 +24,9 @@ export function TabletMenuHeader({
   onSubmitQuery,
 }: TabletMenuHeaderProps) {
   return (
-    <header className="mt-1 grid h-[82px] grid-cols-[190px_minmax(0,1fr)_190px] items-center gap-3 lg:grid-cols-[260px_minmax(0,1fr)_268px] lg:gap-5">
+    <header className="mt-1 grid h-[82px] grid-cols-[178px_minmax(0,1fr)_164px] items-center gap-2 lg:grid-cols-[260px_minmax(0,1fr)_268px] lg:gap-5">
       <Link
-        className="flex w-[186px] items-center gap-3 lg:w-[260px] lg:gap-8"
+        className="flex w-[176px] items-center gap-2 lg:w-[260px] lg:gap-8"
         href="/home"
       >
         <AssetIcon
@@ -58,7 +58,7 @@ export function TabletMenuHeader({
           className="h-full w-full bg-transparent text-[15px] text-white outline-none placeholder:text-white/58 lg:text-[16px]"
           id="tablet-menu-search"
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Search menu items, ingredients, or dishes..."
+          placeholder="Search menu..."
           value={query}
         />
         {query ? (

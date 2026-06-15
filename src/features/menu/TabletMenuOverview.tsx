@@ -196,21 +196,23 @@ export function TabletMenuOverview({
           <p className="mt-5 text-[22px] text-[var(--sb-gold)]">
             {formatMoney(activeRecommendation.priceCents)}
           </p>
-          <button
-            className="red-glow-button mt-4 flex h-12 w-[205px] items-center justify-center gap-8 rounded-[8px] uppercase tracking-[0.08em] text-white"
-            onClick={() => onAddToCart(activeRecommendation)}
-            type="button"
-          >
-            Add to Order
-            <span aria-hidden="true">+</span>
-          </button>
-          <CarouselIndicator
-            activeIndex={activeRecommendationIndex}
-            ariaLabel="Chef recommendation slides"
-            className="absolute bottom-4 left-1/2 -translate-x-1/2"
-            count={recommendationSlides.length}
-            onSelect={setActiveRecommendationIndex}
-          />
+          <div className="mt-4 flex items-center gap-5">
+            <button
+              className="red-glow-button flex h-12 w-[205px] items-center justify-center gap-8 rounded-[8px] uppercase tracking-[0.08em] text-white"
+              onClick={() => onAddToCart(activeRecommendation)}
+              type="button"
+            >
+              Add to Order
+              <span aria-hidden="true">+</span>
+            </button>
+            <CarouselIndicator
+              activeIndex={activeRecommendationIndex}
+              ariaLabel="Chef recommendation slides"
+              className="shrink-0"
+              count={recommendationSlides.length}
+              onSelect={setActiveRecommendationIndex}
+            />
+          </div>
         </div>
       </section>
       <TabletCategoryBar
