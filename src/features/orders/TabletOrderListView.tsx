@@ -426,21 +426,26 @@ function PastOrderRow({
   const firstItem = order.items[0];
 
   return (
-    <article className="grid min-h-[128px] gap-4 rounded-[14px] border border-white/10 bg-white/[0.035] p-3 lg:grid-cols-[250px_minmax(0,1fr)_150px_230px] lg:items-center lg:gap-5">
-      <div className="relative h-[104px] overflow-hidden rounded-[10px] bg-black/30">
+    <article className="relative grid gap-4 overflow-hidden rounded-[18px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.022)_44%,rgba(89,8,8,0.16))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_48px_rgba(0,0,0,0.28)] md:grid-cols-[260px_minmax(0,1fr)] md:gap-x-5 md:p-4 lg:min-h-[136px] lg:grid-cols-[250px_minmax(0,1fr)_150px_230px] lg:items-center lg:gap-5 lg:p-3">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(215,168,79,0.1),transparent_70%)]"
+      />
+      <div className="relative h-[176px] overflow-hidden rounded-[14px] border border-white/10 bg-black/30 shadow-[0_16px_38px_rgba(0,0,0,0.3)] md:row-span-3 md:h-full md:min-h-[220px] lg:row-span-1 lg:h-[118px] lg:min-h-0 lg:rounded-[10px]">
         {firstItem ? (
           <Image
             alt={firstItem.menuItem.image.alt || firstItem.menuItem.name}
-            className="object-cover"
+            className="object-cover object-center md:object-contain lg:object-cover"
             fill
             loading="eager"
-            sizes="250px"
+            sizes="(min-width: 1024px) 250px, (min-width: 768px) 260px, 100vw"
             src={firstItem.menuItem.image.publicUrl}
           />
         ) : null}
+        <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(0,0,0,0.42))]" />
       </div>
-      <div className="min-w-0">
-        <h3 className="truncate text-[18px] text-white">
+      <div className="relative z-10 min-w-0 md:self-end lg:self-auto">
+        <h3 className="truncate text-[20px] text-white lg:text-[18px]">
           Order #{order.confirmationCode}
         </h3>
         <p className="mt-1 text-[14px] text-white/52">
@@ -451,25 +456,27 @@ function PastOrderRow({
         </p>
         <p className="mt-1 text-[13px] text-[var(--sb-wasabi)]">Delivered</p>
       </div>
-      <div className="border-y border-white/10 py-3 lg:border-x lg:border-y-0 lg:px-5 lg:py-0">
-        <p className="text-[13px] text-white/48">Total</p>
-        <p className="mt-1 font-mono text-[23px] text-[var(--sb-gold-soft)]">
+      <div className="relative z-10 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4 rounded-[14px] border border-white/10 bg-black/24 px-4 py-3 lg:block lg:rounded-none lg:border-x lg:border-y-0 lg:bg-transparent lg:px-5 lg:py-0">
+        <p className="text-[13px] uppercase tracking-[0.12em] text-white/42 lg:normal-case lg:tracking-normal">
+          Total
+        </p>
+        <p className="row-span-2 self-center font-mono text-[26px] leading-none text-[var(--sb-gold-soft)] lg:row-auto lg:mt-1 lg:text-[23px]">
           {formatMoney(order.totals.totalCents)}
         </p>
         <p className="mt-1 text-[13px] text-white/48">
           {getOrderItemCount(order)} Items
         </p>
       </div>
-      <div className="grid gap-2">
+      <div className="relative z-10 grid gap-2 md:grid-cols-2 md:items-center lg:grid-cols-1">
         <Button
-          className="h-[46px] rounded-[10px] uppercase tracking-[0.08em]"
+          className="h-[46px] rounded-[12px] uppercase tracking-[0.08em] md:col-span-2 lg:col-span-1"
           onClick={() => onReorder(order)}
           variant="secondary"
         >
           Reorder
         </Button>
         <button
-          className="h-8 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          className="h-11 rounded-[12px] border border-white/10 bg-white/[0.035] px-4 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/35 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold lg:h-8 lg:border-0 lg:bg-transparent"
           onClick={() => onSelectOrder(order)}
           type="button"
         >
@@ -478,7 +485,7 @@ function PastOrderRow({
         <button
           aria-pressed={isFavorite}
           className={classNames(
-            "h-8 text-[13px] uppercase tracking-[0.08em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+            "h-11 rounded-[12px] border border-white/10 bg-white/[0.025] px-4 text-[13px] uppercase tracking-[0.08em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold lg:h-8 lg:border-0 lg:bg-transparent",
             isFavorite
               ? "text-[var(--sb-red-bright)]"
               : "text-white/58 hover:text-[var(--sb-gold-soft)]",
