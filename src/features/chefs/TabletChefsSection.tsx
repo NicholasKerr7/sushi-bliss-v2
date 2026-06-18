@@ -114,7 +114,7 @@ export function TabletChefsSection() {
             src="/assets/chefs/sushi-bliss-master-chef-team.webp"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1)_0%,rgba(5,6,7,0.92)_31%,rgba(5,6,7,0.36)_60%,rgba(5,6,7,0.1)_78%,rgba(5,6,7,0.52)),linear-gradient(180deg,rgba(5,6,7,0.08),rgba(5,6,7,0.84))]" />
-          <div className="relative z-10 mx-auto flex h-full w-full max-w-[950px] translate-y-3 flex-col justify-center">
+          <div className="relative z-10 mx-auto flex h-full w-full max-w-[950px] translate-y-3 flex-col justify-center px-6 min-[900px]:px-0">
             <h1 className="editorial-title max-w-[610px] text-[52px] leading-[0.98] tracking-[0.12em] text-white">
               <span className="block whitespace-nowrap">Master Chefs</span>
               <span className="block tracking-[0.16em] text-[var(--sb-red-bright)]">
@@ -133,7 +133,7 @@ export function TabletChefsSection() {
           </div>
         </section>
 
-        <div className="mx-auto w-full max-w-[950px]">
+        <div className="mx-auto w-full max-w-[950px] px-4 min-[900px]:px-0">
           <nav
             aria-label="Tablet chef filters"
             className="mt-3 grid h-[60px] grid-cols-3 rounded-[8px] border border-white/12 bg-white/[0.035] p-1"
@@ -220,7 +220,7 @@ function TabletChefsHeader({
   onQueryChange: (query: string) => void;
 }) {
   return (
-    <header className="mx-auto grid h-[98px] w-full max-w-[1034px] grid-cols-[210px_48px_minmax(0,1fr)_214px] items-center gap-4">
+    <header className="mx-auto grid h-[98px] w-full max-w-[1034px] grid-cols-[210px_48px_minmax(0,1fr)_214px] items-center gap-4 px-5 min-[900px]:px-0">
       <Link className="flex items-center gap-5" href="/home">
         <AssetIcon
           alt={brand.name}
@@ -256,7 +256,7 @@ function TabletChefsHeader({
           className="h-full min-w-0 flex-1 bg-transparent text-[16px] text-white outline-none placeholder:text-white/58"
           id="tablet-chefs-search"
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Search menu, chefs, items..."
+          placeholder="Search chefs..."
           value={query}
         />
         {query ? (
