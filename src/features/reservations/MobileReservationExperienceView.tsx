@@ -276,7 +276,7 @@ function MobileReservationSelectRow({
         </span>
         <select
           aria-label={label}
-          className="mt-0.5 w-full appearance-none bg-transparent text-[15px] font-semibold text-white outline-none"
+          className="h-10 w-full appearance-none bg-transparent text-[15px] font-semibold text-white outline-none"
           onChange={(event) => onChange(event.target.value)}
           value={value}
         >

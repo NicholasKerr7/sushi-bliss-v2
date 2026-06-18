@@ -156,7 +156,9 @@ async function expectDocumentScrollsWhenOverflowing(
     const root = document.documentElement;
 
     return {
-      bodyLocked: document.body.classList.contains("overflow-hidden"),
+      bodyLocked:
+        document.documentElement.classList.contains("scroll-locked") ||
+        document.body.classList.contains("scroll-locked"),
       clientHeight: root.clientHeight,
       maxScrollY: root.scrollHeight - root.clientHeight,
       scrollHeight: root.scrollHeight,

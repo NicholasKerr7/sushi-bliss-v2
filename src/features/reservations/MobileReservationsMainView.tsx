@@ -345,14 +345,14 @@ function CompactReservationRow({
         </p>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <button
-            className="h-[36px] rounded-[9px] border border-[var(--sb-border)] text-[11px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)]"
+            className="min-h-11 rounded-[10px] border border-[var(--sb-border)] text-[11px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)]"
             onClick={() => onViewReservation(reservation)}
             type="button"
           >
             View
           </button>
           <button
-            className="h-[36px] rounded-[9px] border border-white/10 bg-white/[0.035] text-[11px] uppercase tracking-[0.07em] text-white/70 disabled:cursor-not-allowed disabled:opacity-45"
+            className="min-h-11 rounded-[10px] border border-white/10 bg-white/[0.035] text-[11px] uppercase tracking-[0.07em] text-white/70 disabled:cursor-not-allowed disabled:opacity-45"
             disabled={!canManage}
             onClick={() =>
               canManage
@@ -367,7 +367,7 @@ function CompactReservationRow({
         </div>
         {canManage ? (
           <button
-            className="mt-2 text-[11px] uppercase tracking-[0.08em] text-white/42"
+            className="mt-2 min-h-10 text-[11px] uppercase tracking-[0.08em] text-white/42"
             onClick={() => onRequestCancel(reservation)}
             type="button"
           >

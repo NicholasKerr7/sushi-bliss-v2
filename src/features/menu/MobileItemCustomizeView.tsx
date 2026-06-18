@@ -91,8 +91,8 @@ export function MobileItemCustomizeView({
           </div>
         </header>
 
-        <section className="mt-5 grid grid-cols-[138px_1fr] gap-4 rounded-[18px] border border-[var(--sb-border)] bg-black/46 p-4">
-          <div className="relative h-[128px] overflow-hidden rounded-[12px] border border-[var(--sb-border)]">
+        <section className="mt-5 grid grid-cols-[128px_minmax(0,1fr)] gap-3 rounded-[18px] border border-[var(--sb-border)] bg-black/46 p-3 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4 min-[390px]:p-4">
+          <div className="relative h-[118px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] min-[390px]:h-[128px]">
             <Image
               alt=""
               className="object-cover"
@@ -116,15 +116,18 @@ export function MobileItemCustomizeView({
             <p className="mt-3 line-clamp-2 text-[13px] leading-5 text-white/64">
               {item.chefNote}
             </p>
-            <div className="mt-4 flex items-center justify-between gap-3">
-              <p className="text-[22px] text-[var(--sb-gold)]">
-                {formatMoney(item.priceCents)}
-              </p>
-              <SmallQuantityStepper
-                onChange={onQuantityChange}
-                value={quantity}
-              />
-            </div>
+            <p className="mt-4 text-[22px] text-[var(--sb-gold)]">
+              {formatMoney(item.priceCents)}
+            </p>
+          </div>
+          <div className="col-span-2 flex items-center justify-between gap-3 border-t border-white/10 pt-3">
+            <span className="text-[12px] uppercase tracking-[0.12em] text-white/48">
+              Quantity
+            </span>
+            <SmallQuantityStepper
+              onChange={onQuantityChange}
+              value={quantity}
+            />
           </div>
         </section>
 
@@ -344,7 +347,7 @@ function SmallQuantityStepper({
   value: number;
 }) {
   return (
-    <div className="grid h-[44px] w-[118px] grid-cols-3 overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/34">
+    <div className="grid h-11 w-[136px] grid-cols-[44px_48px_44px] overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/34">
       <button
         aria-label="Decrease quantity"
         disabled={value <= 1}
