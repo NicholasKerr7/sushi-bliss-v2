@@ -1,6 +1,8 @@
 import { useId } from "react";
 
+import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
+import { ASSET_FALLBACKS } from "@/lib/constants";
 import type { MenuTastingProfile } from "@/types/menu";
 
 interface TastingNotesCardProps {
@@ -17,18 +19,19 @@ const DEFAULT_TASTING_PROFILE: MenuTastingProfile = {
 };
 
 const TASTING_AXES = [
-  { angle: -90, key: "richness" },
-  { angle: -18, key: "umami" },
-  { angle: 54, key: "buttery" },
-  { angle: 126, key: "tenderness" },
-  { angle: 198, key: "sweetness" },
+  { angle: -90, key: "richness", label: "Richness" },
+  { angle: -18, key: "umami", label: "Umami" },
+  { angle: 54, key: "buttery", label: "Buttery" },
+  { angle: 126, key: "tenderness", label: "Tenderness" },
+  { angle: 198, key: "sweetness", label: "Sweetness" },
 ] as const satisfies ReadonlyArray<{
   angle: number;
   key: keyof MenuTastingProfile;
+  label: string;
 }>;
 
-const RADAR_CENTER = { x: 218, y: 96 };
-const RADAR_RADIUS = 53;
+const RADAR_CENTER = { x: 64, y: 64 };
+const RADAR_RADIUS = 42;
 
 function normalizeTastingValue(value: number): number {
   return Math.min(100, Math.max(0, value));
@@ -48,289 +51,215 @@ function getProfileSummary(profile: MenuTastingProfile): string {
   return `Tasting notes radar chart: richness ${profile.richness}, umami ${profile.umami}, buttery ${profile.buttery}, tenderness ${profile.tenderness}, sweetness ${profile.sweetness}`;
 }
 
-/** Responsive tasting-notes radar adapted from the reference card artwork. */
+function getPrimaryNotes(profile: MenuTastingProfile) {
+  return [...TASTING_AXES]
+    .sort((a, b) => profile[b.key] - profile[a.key])
+    .slice(0, 3);
+}
+
+/** Renders the menu item's dynamic flavor profile using app-native typography. */
 export function TastingNotesCard({
   className,
   profile = DEFAULT_TASTING_PROFILE,
 }: TastingNotesCardProps) {
   const idPrefix = useId().replace(/:/g, "");
-  const cardGlowAId = `${idPrefix}-tasting-card-glow-a`;
-  const cardGlowBId = `${idPrefix}-tasting-card-glow-b`;
-  const cardGlowCId = `${idPrefix}-tasting-card-glow-c`;
-  const cardBaseId = `${idPrefix}-tasting-card-base`;
-  const bottomLineId = `${idPrefix}-tasting-bottom-line`;
   const redGlowId = `${idPrefix}-tasting-red-glow`;
-  const labelShadowId = `${idPrefix}-tasting-label-shadow`;
+  const radarFillId = `${idPrefix}-tasting-radar-fill`;
   const radarCoordinates = TASTING_AXES.map((axis) =>
     getRadarCoordinate(profile[axis.key], axis.angle),
   );
   const radarPoints = radarCoordinates
     .map((point) => `${point.x},${point.y}`)
     .join(" ");
+  const primaryNotes = getPrimaryNotes(profile);
 
   return (
     <article
       aria-label={getProfileSummary(profile)}
       className={classNames(
-        "relative aspect-[364/178] w-full overflow-hidden rounded-[14px] border border-white/10 bg-[#07090a] [font-family:Georgia,'Times_New_Roman',serif]",
+        "relative flex h-full min-h-[150px] w-full overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018)_42%,rgba(7,9,10,0.96))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.26)]",
         className,
       )}
     >
-      <svg
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full"
-        fill="none"
-        viewBox="0 0 364 178"
-      >
-        <defs>
-          <radialGradient
-            cx="0"
-            cy="0"
-            gradientTransform="translate(218 85) rotate(90) scale(100 210)"
-            gradientUnits="userSpaceOnUse"
-            id={cardGlowAId}
-            r="1"
-          >
-            <stop stopColor="#141413" stopOpacity=".42" />
-            <stop offset=".72" stopColor="#141413" stopOpacity="0" />
-          </radialGradient>
-          <radialGradient
-            cx="0"
-            cy="0"
-            gradientTransform="translate(25 26) rotate(90) scale(120 160)"
-            gradientUnits="userSpaceOnUse"
-            id={cardGlowBId}
-            r="1"
-          >
-            <stop stopColor="#141918" stopOpacity=".22" />
-            <stop offset=".7" stopColor="#141918" stopOpacity="0" />
-          </radialGradient>
-          <radialGradient
-            cx="0"
-            cy="0"
-            gradientTransform="translate(298 23) rotate(90) scale(70 160)"
-            gradientUnits="userSpaceOnUse"
-            id={cardGlowCId}
-            r="1"
-          >
-            <stop stopColor="#2a130f" stopOpacity=".13" />
-            <stop offset=".7" stopColor="#2a130f" stopOpacity="0" />
-          </radialGradient>
-          <linearGradient
-            gradientUnits="userSpaceOnUse"
-            id={cardBaseId}
-            x1="182"
-            x2="182"
-            y1="0"
-            y2="171"
-          >
-            <stop stopColor="#101314" />
-            <stop offset=".56" stopColor="#0b0e0f" />
-            <stop offset="1" stopColor="#0c0e0f" />
-          </linearGradient>
-          <linearGradient
-            gradientUnits="userSpaceOnUse"
-            id={bottomLineId}
-            x1="0"
-            x2="364"
-            y1="170"
-            y2="170"
-          >
-            <stop stopColor="#fff" stopOpacity=".04" />
-            <stop offset=".5" stopColor="#fff" stopOpacity=".13" />
-            <stop offset="1" stopColor="#fff" stopOpacity=".05" />
-          </linearGradient>
-          <filter
-            colorInterpolationFilters="sRGB"
-            filterUnits="objectBoundingBox"
-            height="220%"
-            id={redGlowId}
-            width="220%"
-            x="-60%"
-            y="-60%"
-          >
-            <feGaussianBlur
-              in="SourceGraphic"
-              result="blur"
-              stdDeviation="1.45"
-            />
-            <feColorMatrix
-              in="blur"
-              result="glow"
-              type="matrix"
-              values="1 0 0 0 .7  0 1 0 0 .04  0 0 1 0 .02  0 0 0 .55 0"
-            />
-            <feMerge>
-              <feMergeNode in="glow" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <filter
-            colorInterpolationFilters="sRGB"
-            height="160%"
-            id={labelShadowId}
-            width="160%"
-            x="-30%"
-            y="-30%"
-          >
-            <feDropShadow
-              dx="0"
-              dy="2"
-              floodColor="#000"
-              floodOpacity=".96"
-              stdDeviation=".7"
-            />
-          </filter>
-        </defs>
+      <span className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(215,168,79,0.18),transparent_68%)]" />
+      <span className="pointer-events-none absolute -bottom-10 left-4 h-20 w-32 rounded-full bg-[radial-gradient(ellipse,rgba(239,47,37,0.16),transparent_68%)] blur-md" />
+      <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(215,168,79,0.36),transparent)]" />
 
-        <rect fill="#07090a" height="178" width="364" />
-        <path d="M0 0h364v171H0z" fill={`url(#${cardBaseId})`} opacity=".98" />
-        <path d="M0 0h364v171H0z" fill={`url(#${cardGlowAId})`} />
-        <path d="M0 0h364v171H0z" fill={`url(#${cardGlowBId})`} />
-        <path d="M0 0h364v171H0z" fill={`url(#${cardGlowCId})`} />
-        <path d="M0 169h364v2H0z" fill={`url(#${bottomLineId})`} opacity=".6" />
-
-        <g
-          stroke="#c88934"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.65"
-          transform="translate(14 10)"
-        >
-          <ellipse cx="14" cy="6.7" rx="3.65" ry="5.35" />
-          <ellipse cx="14" cy="21.3" rx="3.65" ry="5.35" />
-          <ellipse
-            cx="7.7"
-            cy="10.3"
-            rx="3.65"
-            ry="5.35"
-            transform="rotate(-60 7.7 10.3)"
+      <div className="relative z-10 flex min-h-0 w-full flex-col">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-2.5 pr-5">
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/42 shadow-[0_0_22px_rgba(215,168,79,0.16)]">
+              <AssetIcon
+                loading="eager"
+                size={24}
+                src={ASSET_FALLBACKS.brandIcon}
+              />
+            </span>
+            <div className="min-w-0">
+              <h2 className="truncate text-[12px] font-semibold uppercase tracking-[0.14em] text-white">
+                Tasting Notes
+              </h2>
+              <p className="mt-0.5 truncate text-[10px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]/82">
+                Item profile
+              </p>
+            </div>
+          </div>
+          <span
+            aria-hidden="true"
+            className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_14px_rgba(239,47,37,0.82)]"
           />
-          <ellipse
-            cx="20.3"
-            cy="10.3"
-            rx="3.65"
-            ry="5.35"
-            transform="rotate(60 20.3 10.3)"
-          />
-          <ellipse
-            cx="7.7"
-            cy="17.7"
-            rx="3.65"
-            ry="5.35"
-            transform="rotate(60 7.7 17.7)"
-          />
-          <ellipse
-            cx="20.3"
-            cy="17.7"
-            rx="3.65"
-            ry="5.35"
-            transform="rotate(-60 20.3 17.7)"
-          />
-          <circle cx="14" cy="14" opacity=".7" r="2.6" />
-        </g>
+          <span className="sr-only">
+            Dynamic tasting profile based on the selected menu item.
+          </span>
+        </div>
 
-        <text
-          fill="#cac7c5"
-          filter={`url(#${labelShadowId})`}
-          fontFamily="Georgia, 'Times New Roman', serif"
-          fontSize="18"
-          fontWeight="500"
-          letterSpacing=".36"
-          x="48"
-          y="27"
-        >
-          Tasting Notes
-        </text>
+        <div className="mt-2 grid min-h-0 flex-1 grid-cols-[minmax(90px,0.82fr)_minmax(0,1fr)] items-center gap-3">
+          <div className="relative mx-auto aspect-square h-full max-h-[112px] min-h-[86px] w-full max-w-[112px]">
+            <svg
+              aria-hidden="true"
+              className="h-full w-full overflow-visible"
+              fill="none"
+              viewBox="0 0 128 128"
+            >
+              <defs>
+                <radialGradient
+                  cx="0"
+                  cy="0"
+                  gradientTransform="translate(64 64) rotate(90) scale(56)"
+                  gradientUnits="userSpaceOnUse"
+                  id={radarFillId}
+                  r="1"
+                >
+                  <stop stopColor="#ef2f25" stopOpacity=".42" />
+                  <stop offset=".62" stopColor="#8f140f" stopOpacity=".3" />
+                  <stop offset="1" stopColor="#45100d" stopOpacity=".12" />
+                </radialGradient>
+                <filter
+                  colorInterpolationFilters="sRGB"
+                  height="180%"
+                  id={redGlowId}
+                  width="180%"
+                  x="-40%"
+                  y="-40%"
+                >
+                  <feGaussianBlur
+                    in="SourceGraphic"
+                    result="blur"
+                    stdDeviation="1.4"
+                  />
+                  <feColorMatrix
+                    in="blur"
+                    result="glow"
+                    type="matrix"
+                    values="1 0 0 0 .85  0 1 0 0 .05  0 0 1 0 .03  0 0 0 .55 0"
+                  />
+                  <feMerge>
+                    <feMergeNode in="glow" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
 
-        <g
-          fill="none"
-          opacity=".72"
-          stroke="#4a312a"
-          strokeWidth="1.1"
-          transform="translate(218 96)"
-        >
-          <circle opacity=".45" r="13.4" />
-          <circle opacity=".52" r="26.4" />
-          <circle opacity=".54" r="39.5" />
-          <circle opacity=".67" r="53" />
-          <line opacity=".65" x1="0" x2="0" y1="0" y2="-57" />
-          <line opacity=".58" x1="0" x2="53.3" y1="0" y2="-17.3" />
-          <line opacity=".58" x1="0" x2="37" y1="0" y2="50.9" />
-          <line opacity=".58" x1="0" x2="-37" y1="0" y2="50.9" />
-          <line opacity=".58" x1="0" x2="-53.3" y1="0" y2="-17.3" />
-        </g>
+              {[14, 28, 42].map((radius) => (
+                <circle
+                  cx={RADAR_CENTER.x}
+                  cy={RADAR_CENTER.y}
+                  key={radius}
+                  opacity={radius === 42 ? 0.65 : 0.38}
+                  r={radius}
+                  stroke="#d7a84f"
+                  strokeWidth="1"
+                />
+              ))}
 
-        <polygon
-          fill="rgba(117,24,17,.34)"
-          filter={`url(#${redGlowId})`}
-          points={radarPoints}
-          stroke="#b91710"
-          strokeLinejoin="round"
-          strokeWidth="2.05"
-        />
-        <polyline
-          fill="none"
-          opacity=".42"
-          points={`${radarPoints} ${radarCoordinates[0].x},${radarCoordinates[0].y}`}
-          stroke="#ff261b"
-          strokeLinejoin="round"
-          strokeWidth=".7"
-        />
+              {TASTING_AXES.map((axis) => {
+                const point = getRadarCoordinate(100, axis.angle);
 
-        <g
-          fill="none"
-          opacity=".36"
-          stroke="#52352d"
-          strokeWidth=".9"
-          transform="translate(218 96)"
-        >
-          <circle r="13.4" />
-          <circle r="26.4" />
-          <circle r="39.5" />
-          <circle opacity=".7" r="53" />
-          <line x1="0" x2="0" y1="0" y2="-57" />
-          <line x1="0" x2="53.3" y1="0" y2="-17.3" />
-          <line x1="0" x2="37" y1="0" y2="50.9" />
-          <line x1="0" x2="-37" y1="0" y2="50.9" />
-          <line x1="0" x2="-53.3" y1="0" y2="-17.3" />
-        </g>
+                return (
+                  <line
+                    key={axis.key}
+                    opacity=".28"
+                    stroke="#f1d28a"
+                    strokeWidth="1"
+                    x1={RADAR_CENTER.x}
+                    x2={point.x}
+                    y1={RADAR_CENTER.y}
+                    y2={point.y}
+                  />
+                );
+              })}
 
-        <g filter={`url(#${redGlowId})`} fill="#ff2117">
-          {radarCoordinates.map((point, index) => (
-            <circle
-              cx={point.x}
-              cy={point.y}
-              key={TASTING_AXES[index].key}
-              r="3.7"
-            />
-          ))}
-        </g>
+              <polygon
+                fill={`url(#${radarFillId})`}
+                filter={`url(#${redGlowId})`}
+                points={radarPoints}
+                stroke="#ef2f25"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
 
-        <g
-          fill="#aaa5a3"
-          filter={`url(#${labelShadowId})`}
-          fontFamily="Georgia, 'Times New Roman', serif"
-          fontSize="14"
-          fontWeight="600"
-        >
-          <text textAnchor="middle" x="218" y="30">
-            Richness
-          </text>
-          <text textAnchor="middle" x="120" y="84">
-            Sweetness
-          </text>
-          <text x="286" y="84">
-            Umami
-          </text>
-          <text textAnchor="middle" x="134" y="155">
-            Tenderness
-          </text>
-          <text textAnchor="middle" x="292" y="158">
-            Buttery
-          </text>
-        </g>
-      </svg>
+              {radarCoordinates.map((point, index) => (
+                <circle
+                  cx={point.x}
+                  cy={point.y}
+                  fill="#ff3a2f"
+                  key={TASTING_AXES[index].key}
+                  r="3.3"
+                  stroke="#ffb1a8"
+                  strokeWidth=".8"
+                />
+              ))}
+
+              <circle
+                cx={RADAR_CENTER.x}
+                cy={RADAR_CENTER.y}
+                fill="#d7a84f"
+                opacity=".82"
+                r="2"
+              />
+            </svg>
+          </div>
+
+          <div className="grid min-w-0 gap-1.5">
+            {primaryNotes.map((note) => (
+              <div className="min-w-0" key={note.key}>
+                <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.08em]">
+                  <span className="truncate text-white/66">{note.label}</span>
+                  <span className="font-mono text-[var(--sb-gold-soft)]">
+                    {profile[note.key]}
+                  </span>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  className="mt-1 h-1.5 w-full overflow-visible rounded-full"
+                  preserveAspectRatio="none"
+                  viewBox="0 0 100 6"
+                >
+                  <rect
+                    fill="rgba(255,255,255,0.1)"
+                    height="6"
+                    rx="3"
+                    width="100"
+                  />
+                  <rect
+                    fill="#ef2f25"
+                    height="6"
+                    rx="3"
+                    width={normalizeTastingValue(profile[note.key])}
+                  />
+                  <rect
+                    fill="rgba(241,210,138,0.72)"
+                    height="6"
+                    opacity=".7"
+                    rx="3"
+                    width={normalizeTastingValue(profile[note.key]) * 0.42}
+                  />
+                </svg>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </article>
   );
 }
