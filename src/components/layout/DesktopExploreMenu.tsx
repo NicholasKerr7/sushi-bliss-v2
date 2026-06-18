@@ -19,7 +19,7 @@ export function DesktopExploreMenu({ activeId }: DesktopExploreMenuProps) {
     <details className="group relative">
       <summary
         className={classNames(
-          "relative flex h-[76px] cursor-pointer list-none items-center gap-2 text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1500px]:text-[13px] [&::-webkit-details-marker]:hidden",
+          "relative flex h-[76px] min-w-11 cursor-pointer list-none items-center justify-center gap-2 text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1500px]:text-[13px] [&::-webkit-details-marker]:hidden",
           activeInMenu && "text-[var(--sb-red-bright)]",
         )}
       >

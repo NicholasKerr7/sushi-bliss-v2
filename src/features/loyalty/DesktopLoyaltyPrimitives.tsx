@@ -209,12 +209,10 @@ export function DesktopRewardTile({
         </p>
         <button
           aria-label={
-            canRedeem
-              ? `Redeem ${reward.title}`
-              : `${reward.title} is locked`
+            canRedeem ? `Redeem ${reward.title}` : `${reward.title} is locked`
           }
           className={classNames(
-            "mt-4 inline-flex h-9 w-full items-center justify-center rounded-[8px] border px-2 text-[10px] uppercase tracking-[0.04em]",
+            "mt-4 inline-flex h-10 w-full items-center justify-center rounded-[8px] border px-2 text-[10px] uppercase tracking-[0.04em]",
             canRedeem
               ? "border-[var(--sb-gold)]/46 text-[var(--sb-gold-soft)]"
               : "border-white/12 text-white/34",

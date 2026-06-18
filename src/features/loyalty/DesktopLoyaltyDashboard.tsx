@@ -202,7 +202,7 @@ export function DesktopLoyaltyDashboard({
                     {referralProgress.rewardPoints} points.
                   </p>
                   <button
-                    className="mt-4 inline-grid h-9 place-items-center rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                    className="mt-4 inline-grid h-10 place-items-center rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={() => setSurface("referral")}
                     type="button"
                   >
@@ -219,7 +219,7 @@ export function DesktopLoyaltyDashboard({
                     Redeem your points
                   </h2>
                   <button
-                    className="text-[12px] text-[var(--sb-red-bright)]"
+                    className="inline-flex min-h-10 items-center rounded-full px-3 text-[12px] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={() => setSurface("pass")}
                     type="button"
                   >
@@ -267,7 +267,7 @@ export function DesktopLoyaltyDashboard({
                     Exclusive rewards for our most devoted members.
                   </p>
                   <button
-                    className="mt-4 h-9 whitespace-nowrap rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[11px] uppercase tracking-[0.04em] text-[var(--sb-gold-soft)]"
+                    className="mt-4 h-10 whitespace-nowrap rounded-[8px] border border-[var(--sb-gold)]/44 px-5 text-[11px] uppercase tracking-[0.04em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={() => setSurface("pass")}
                     type="button"
                   >
@@ -282,7 +282,7 @@ export function DesktopLoyaltyDashboard({
                     Recent rewards activity
                   </h2>
                   <button
-                    className="text-[12px] text-[var(--sb-red-bright)]"
+                    className="inline-flex min-h-10 items-center rounded-full px-3 text-[12px] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={() => setSurface("pass")}
                     type="button"
                   >

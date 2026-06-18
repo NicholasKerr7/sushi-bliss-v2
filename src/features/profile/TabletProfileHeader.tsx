@@ -44,7 +44,7 @@ export function TabletProfileHeader({
       <div className="flex items-center justify-end gap-2 lg:gap-4">
         <button
           aria-label={`Open cart with ${cartCount} items`}
-          className="relative grid h-10 w-10 place-items-center text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold lg:h-11 lg:w-11"
+          className="relative grid h-10 w-11 place-items-center text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold lg:h-11 lg:w-11"
           onClick={onOpenCart}
           type="button"
         >
@@ -53,7 +53,7 @@ export function TabletProfileHeader({
             {cartCount}
           </span>
         </button>
-        <Link className="flex items-center gap-3" href="/profile">
+        <Link className="flex min-w-11 items-center gap-3" href="/profile">
           <Image
             alt=""
             className="h-10 w-10 rounded-full border border-[var(--sb-border)] object-cover lg:h-[52px] lg:w-[52px]"

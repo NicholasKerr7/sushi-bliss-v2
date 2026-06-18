@@ -801,7 +801,7 @@ function DesktopFeatureMenuCard({
             ? `Add featured ${item.name} to cart`
             : `Add ${item.name} to cart`
         }
-        className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-black/52"
+        className="absolute bottom-3 right-3 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-black/52"
         onClick={() => onAddToCart(item)}
         type="button"
       >
@@ -823,7 +823,7 @@ export function DesktopCompactMenuRow({
   onViewDetails: DesktopMenuViewHandler;
 }) {
   return (
-    <article className="grid grid-cols-[86px_minmax(0,1fr)_38px] items-center gap-3 rounded-[10px] border border-[var(--sb-border)] bg-black/34 p-1.5">
+    <article className="grid grid-cols-[86px_minmax(0,1fr)_42px] items-center gap-3 rounded-[10px] border border-[var(--sb-border)] bg-black/34 p-1.5">
       <button
         aria-label={`View details for ${item.name}`}
         className="relative h-[68px] overflow-hidden rounded-[8px]"
@@ -857,7 +857,7 @@ export function DesktopCompactMenuRow({
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border)]"
+        className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)]"
         onClick={() => onAddToCart(item)}
         type="button"
       >

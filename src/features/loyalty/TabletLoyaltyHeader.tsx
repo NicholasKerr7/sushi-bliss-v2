@@ -41,7 +41,7 @@ export function TabletLoyaltyHeader({
       <div className="flex items-center justify-end gap-3 lg:gap-6">
         <button
           aria-label="Open cart"
-          className="relative grid h-11 w-11 place-items-center"
+          className="relative grid h-11 w-11 min-w-11 place-items-center"
           onClick={onOpenCart}
           type="button"
         >
@@ -50,7 +50,7 @@ export function TabletLoyaltyHeader({
             {cartCount}
           </span>
         </button>
-        <Link className="flex items-center gap-4" href="/profile">
+        <Link className="flex min-w-11 items-center gap-4" href="/profile">
           <Image
             alt=""
             className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"
@@ -73,7 +73,7 @@ export function TabletLoyaltyHeader({
           />
         </Link>
         <Link
-          className="relative grid h-11 w-11 place-items-center"
+          className="relative grid h-11 w-11 min-w-11 place-items-center"
           href="/notifications"
         >
           <AssetIcon size={32} src={icons.bell} />

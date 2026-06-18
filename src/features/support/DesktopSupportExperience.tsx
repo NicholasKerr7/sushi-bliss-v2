@@ -311,7 +311,7 @@ function DesktopContactView({
               Frequently asked questions
             </h2>
             <button
-              className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              className="inline-flex min-h-10 items-center rounded-full px-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
               onClick={onOpenHelp}
               type="button"
             >
@@ -321,7 +321,7 @@ function DesktopContactView({
           <div className="mt-3 overflow-hidden rounded-[10px] border border-white/10">
             {helpArticles.slice(0, 5).map((article) => (
               <button
-                className="flex min-h-[39px] w-full items-center justify-between border-b border-white/10 px-4 text-left last:border-b-0"
+                className="flex min-h-10 w-full items-center justify-between border-b border-white/10 px-4 text-left last:border-b-0"
                 key={article.id}
                 onClick={onOpenHelp}
                 type="button"

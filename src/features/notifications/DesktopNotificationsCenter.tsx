@@ -219,10 +219,7 @@ function DesktopNotificationRow({
         )}
       />
       <span className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-gold)]/30 bg-black/38 min-[1500px]:h-12 min-[1500px]:w-12">
-        <AssetIcon
-          size={26}
-          src={categoryIcons[notification.category]}
-        />
+        <AssetIcon size={26} src={categoryIcons[notification.category]} />
       </span>
       <div className="min-w-0">
         <h2 className="line-clamp-1 text-[18px] text-white min-[1500px]:text-[19px]">
@@ -321,7 +318,7 @@ function NotificationPreferencesPanel({
         </button>
       </div>
       <button
-        className="mx-auto mt-6 flex items-center gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mx-auto mt-6 flex min-h-10 items-center gap-3 rounded-full px-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         type="button"
       >
         <AssetIcon size={18} src="/assets/icons/user-settings-icon.png" />

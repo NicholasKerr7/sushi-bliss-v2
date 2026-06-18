@@ -46,7 +46,7 @@ export function DesktopCartPanel({
           </span>
           {onClearCart ? (
             <button
-              className="text-[12px] text-[var(--sb-red-bright)] disabled:cursor-not-allowed disabled:opacity-40 min-[1500px]:hidden"
+              className="inline-flex min-h-10 items-center rounded-full px-3 text-[12px] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold disabled:cursor-not-allowed disabled:opacity-40 min-[1500px]:hidden"
               disabled={items.length === 0}
               onClick={onClearCart}
               type="button"

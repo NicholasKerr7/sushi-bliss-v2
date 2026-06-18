@@ -170,7 +170,7 @@ export function DesktopMenuHeader({
             return (
               <Link
                 className={classNames(
-                  "relative flex h-[76px] items-center text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1500px]:text-[13px]",
+                  "relative flex h-[76px] min-w-11 items-center justify-center text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1500px]:text-[13px]",
                   active && "text-[var(--sb-red-bright)]",
                 )}
                 href={href}

@@ -476,7 +476,7 @@ function PastOrderRow({
           Reorder
         </Button>
         <button
-          className="h-11 rounded-[12px] border border-white/10 bg-white/[0.035] px-4 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/35 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold lg:h-8 lg:border-0 lg:bg-transparent"
+          className="h-11 rounded-[12px] border border-white/10 bg-white/[0.035] px-4 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/35 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold lg:h-10 lg:border-0 lg:bg-transparent"
           onClick={() => onSelectOrder(order)}
           type="button"
         >
@@ -485,7 +485,7 @@ function PastOrderRow({
         <button
           aria-pressed={isFavorite}
           className={classNames(
-            "h-11 rounded-[12px] border border-white/10 bg-white/[0.025] px-4 text-[13px] uppercase tracking-[0.08em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold lg:h-8 lg:border-0 lg:bg-transparent",
+            "h-11 rounded-[12px] border border-white/10 bg-white/[0.025] px-4 text-[13px] uppercase tracking-[0.08em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold lg:h-10 lg:border-0 lg:bg-transparent",
             isFavorite
               ? "text-[var(--sb-red-bright)]"
               : "text-white/58 hover:text-[var(--sb-gold-soft)]",

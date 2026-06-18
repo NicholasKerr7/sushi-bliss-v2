@@ -61,7 +61,7 @@ export function DesktopReservationMain({
         <section className="rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-5">
           <div className="grid grid-cols-[250px_minmax(0,1fr)] gap-5 min-[1500px]:grid-cols-[250px_minmax(0,1fr)_360px]">
             <PanelBlock title="Party details" step="1">
-              <div className="mt-6 grid h-10 grid-cols-[40px_1fr_40px] overflow-hidden rounded-[10px] border border-white/12">
+              <div className="mt-6 grid h-12 grid-cols-[44px_1fr_44px] overflow-hidden rounded-[10px] border border-white/12">
                 <button
                   aria-label="Decrease party size"
                   className="text-[var(--sb-gold-soft)]"
@@ -142,7 +142,7 @@ export function DesktopReservationMain({
                 Choose your experience
               </h2>
               <button
-                className="inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
+                className="inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-[13px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 onClick={onOpenExperience}
                 type="button"
               >

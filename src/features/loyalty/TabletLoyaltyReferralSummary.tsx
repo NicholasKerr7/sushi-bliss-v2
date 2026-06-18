@@ -45,7 +45,7 @@ export function TabletLoyaltyReferralSummary({
             </p>
           </div>
           <Button
-            className="h-9 min-h-0 rounded-[10px] px-3 text-[11px] uppercase tracking-[0.08em]"
+            className="h-10 rounded-[10px] px-3 text-[11px] uppercase tracking-[0.08em]"
             onClick={onCopyCode}
             size="sm"
             variant="secondary"

@@ -127,10 +127,11 @@ export function DesktopLocationsDirectory({
                       )}
                     </div>
                     <div className="mt-5 flex gap-3">
-                      <Button href="/reservations" size="sm">
+                      <Button className="h-10" href="/reservations" size="sm">
                         Reserve a table
                       </Button>
                       <Button
+                        className="h-10"
                         disabled={!downtown}
                         onClick={() => {
                           if (downtown) {
@@ -196,7 +197,7 @@ export function DesktopLocationsDirectory({
                     notes for private dining.
                   </p>
                   <Link
-                    className="mt-5 inline-flex text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                    className="mt-5 inline-flex min-h-10 items-center rounded-full px-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     href="/reservations"
                   >
                     Plan event
@@ -283,10 +284,11 @@ function LocationFeatureCard({
           ))}
         </div>
         <div className="mt-5 grid grid-cols-2 gap-2">
-          <Button href="/reservations" size="sm">
+          <Button className="h-10" href="/reservations" size="sm">
             Reserve
           </Button>
           <Button
+            className="h-10"
             onClick={() => onViewDetails(location)}
             size="sm"
             variant="secondary"

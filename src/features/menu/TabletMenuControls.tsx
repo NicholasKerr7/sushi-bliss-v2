@@ -305,7 +305,7 @@ export function TabletSection({ children, icon, title }: TabletSectionProps) {
         </h2>
         {icon ? (
           <Link
-            className="text-sm uppercase text-[var(--sb-gold)]"
+            className="inline-flex min-h-10 items-center gap-1 rounded-full px-3 text-sm uppercase text-[var(--sb-gold)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             href="/menu"
           >
             View All <ChevronIcon direction="right" size={18} />

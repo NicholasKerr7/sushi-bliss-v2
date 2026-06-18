@@ -281,7 +281,7 @@ export function DesktopFavoritesPage() {
                   Recommended for you
                 </h2>
                 <Link
-                  className="text-[12px] uppercase tracking-[0.1em] text-[var(--sb-red-bright)]"
+                  className="inline-flex min-h-10 items-center gap-1 rounded-full px-3 text-[12px] uppercase tracking-[0.1em] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                   href="/menu"
                 >
                   View all <ChevronIcon direction="right" size={18} />

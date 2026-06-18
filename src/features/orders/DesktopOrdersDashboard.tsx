@@ -150,7 +150,7 @@ export function DesktopOrdersDashboard({
                 ))}
               </div>
               <button
-                className="mx-auto mt-2 flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
+                className="mx-auto mt-2 flex min-h-10 items-center gap-2 rounded-full px-3 text-[13px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 onClick={() => pastOrders[0] && onSelectOrder(pastOrders[0])}
                 type="button"
               >

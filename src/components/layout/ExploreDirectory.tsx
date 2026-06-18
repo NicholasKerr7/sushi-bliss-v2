@@ -226,7 +226,7 @@ function ExplorePill({
   return (
     <Link
       className={classNames(
-        "grid min-h-[72px] min-w-0 grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-[12px] border px-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+        "grid min-h-[86px] min-w-0 grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-[12px] border px-3 py-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[1080px]:min-h-[78px]",
         isRed
           ? "border-[var(--sb-red-bright)]/48 bg-[var(--sb-red)]/16"
           : "border-white/10 bg-black/24 hover:border-[var(--sb-gold)]/36",
@@ -238,7 +238,7 @@ function ExplorePill({
         <span className="block truncate text-[12px] font-semibold uppercase tracking-[0.04em] text-white min-[1080px]:text-[13px]">
           {item.label}
         </span>
-        <span className="mt-1 block truncate text-[11px] text-white/48">
+        <span className="mt-1 block line-clamp-2 text-[11px] leading-4 text-white/48">
           {item.description}
         </span>
       </span>

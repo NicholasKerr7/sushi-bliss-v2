@@ -46,7 +46,7 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
       >
         {desktopNav.map(([label, href], index) => (
           <Link
-            className={`relative py-8 text-[13px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] ${
+            className={`relative flex min-w-11 items-center justify-center py-8 text-[13px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] ${
               index === 0 ? "text-[var(--sb-red-bright)]" : ""
             }`}
             href={href}
@@ -224,7 +224,7 @@ export function DesktopDashboard({
               </h2>
               <Link
                 aria-label="Explore menu"
-                className="flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-[var(--sb-gold)]"
+                className="flex min-h-10 items-center gap-1 rounded-full px-2 text-xs uppercase tracking-[0.12em] text-[var(--sb-gold)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 href="/menu"
               >
                 View Full Menu
@@ -313,44 +313,44 @@ function DesktopReservationCard({ className = "" }: { className?: string }) {
 
   return (
     <section
-      className={`h-[154px] rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-2.5 ${className}`}
+      className={`min-h-[236px] rounded-[14px] border border-[var(--sb-border)] bg-black/42 p-3 ${className}`}
     >
       <h2 className="flex items-center gap-3 text-lg uppercase tracking-[0.12em] text-white">
         <AssetIcon size={24} src={icons.flower} />
         Make a Reservation
       </h2>
-      <div className="mt-2 grid grid-cols-[82px_1fr_170px] overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-black/42">
-        <div className="grid place-items-center border-r border-[var(--sb-border)] py-1 text-center">
+      <div className="mt-3 grid grid-cols-[78px_minmax(0,1fr)_132px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/42">
+        <div className="grid place-items-center border-r border-[var(--sb-border)] py-2 text-center">
           <span className="text-xs uppercase text-white/72">Sat</span>
           <span className="editorial-title text-3xl text-white">24</span>
           <span className="text-xs uppercase text-white/72">May</span>
         </div>
-        <div className="px-5 py-2">
+        <div className="min-w-0 px-4 py-3">
           <p className="text-xl text-white">7:00 PM</p>
-          <p className="mt-2 text-sm text-white/72">
+          <p className="mt-1 line-clamp-2 text-sm leading-5 text-white/72">
             Sushi Bliss Downtown
             <br />
             {location.street}, {location.city}
           </p>
         </div>
         <Link
-          className="flex items-center justify-center border-l border-[var(--sb-border)] px-4 text-sm text-[var(--sb-gold)]"
+          className="flex min-h-11 items-center justify-center border-l border-[var(--sb-border)] px-3 text-sm text-[var(--sb-gold)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-sb-gold"
           href="/reservations"
         >
           2 Guests
         </Link>
       </div>
       <Link
-        className="red-glow-button mt-2 flex h-9 w-full items-center justify-center rounded-[9px] font-semibold uppercase tracking-[0.14em] text-white"
+        className="red-glow-button mt-3 flex h-11 w-full items-center justify-center rounded-[10px] text-sm font-semibold uppercase tracking-[0.14em] text-white"
         href="/reservations"
       >
         Find a Table
       </Link>
-      <div className="mt-2 flex items-center justify-between text-sm text-white/62">
+      <div className="mt-3 flex items-center justify-between gap-3 text-sm text-white/62">
         <span>4 Guests</span>
         <span>Table A7</span>
         <Link
-          className="rounded-full border border-[var(--sb-border)] px-4 py-1 text-[var(--sb-red-bright)]"
+          className="inline-flex min-h-10 items-center rounded-full border border-[var(--sb-border)] px-4 text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           href="/reservations"
         >
           Modify
@@ -426,7 +426,7 @@ function DesktopRewardCard({ className = "" }: { className?: string }) {
         value={3250}
       />
       <Link
-        className="mt-2 flex h-8 items-center justify-center rounded-[10px] border border-[var(--sb-border)] text-xs uppercase tracking-[0.14em] text-[var(--sb-gold)]"
+        className="mt-2 flex h-10 items-center justify-center rounded-[10px] border border-[var(--sb-border)] text-xs uppercase tracking-[0.14em] text-[var(--sb-gold)]"
         href="/loyalty"
       >
         View Benefits

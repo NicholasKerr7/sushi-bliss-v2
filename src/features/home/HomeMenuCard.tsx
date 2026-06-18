@@ -53,11 +53,11 @@ export function HomeMenuCard({
       </Link>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="absolute bottom-2 right-2 z-20 grid h-10 w-10 place-items-center rounded-full transition active:scale-95 md:h-9 md:w-9"
+        className="absolute bottom-2 right-2 z-20 grid h-10 w-10 place-items-center rounded-full transition active:scale-95"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/50 md:h-7 md:w-7">
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/50 md:h-9 md:w-9">
           <AssetIcon size={22} src={icons.plus} />
         </span>
       </button>

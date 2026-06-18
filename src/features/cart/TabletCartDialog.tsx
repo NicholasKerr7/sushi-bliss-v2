@@ -194,7 +194,11 @@ export function TabletCartDialog({
                 : "Free delivery unlocked for this order."}
             </p>
           </div>
-          <Button onClick={onClearCart} variant="ghost">
+          <Button
+            className="min-h-10 rounded-[10px] px-4 text-[12px] uppercase tracking-[0.08em]"
+            onClick={onClearCart}
+            variant="ghost"
+          >
             Clear cart
           </Button>
         </div>

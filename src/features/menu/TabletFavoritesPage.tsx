@@ -168,7 +168,7 @@ export function TabletFavoritesPage() {
                 Saved menu items
               </h2>
               <Link
-                className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:text-white"
+                className="inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 href="/menu"
               >
                 View all <ChevronIcon direction="right" size={18} />
@@ -203,7 +203,7 @@ export function TabletFavoritesPage() {
                 Saved experiences
               </h2>
               <Link
-                className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:text-white"
+                className="inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 href="/omakase"
               >
                 View all <ChevronIcon direction="right" size={18} />

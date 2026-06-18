@@ -126,7 +126,7 @@ export function DesktopReservationCalendar({
       <div className="flex h-9 items-center justify-between border-b border-white/10 px-3">
         <button
           aria-label="Previous month"
-          className="grid h-7 w-7 place-items-center rounded-[8px] text-[var(--sb-gold-soft)] disabled:cursor-not-allowed disabled:opacity-35"
+          className="grid h-10 w-10 place-items-center rounded-[8px] text-[var(--sb-gold-soft)] disabled:cursor-not-allowed disabled:opacity-35"
           disabled={!canGoPrevious}
           onClick={() => changeMonth(-1)}
           type="button"
@@ -136,7 +136,7 @@ export function DesktopReservationCalendar({
         <p className="text-[14px] text-white">{monthLabel}</p>
         <button
           aria-label="Next month"
-          className="grid h-7 w-7 place-items-center rounded-[8px] text-[var(--sb-gold-soft)]"
+          className="grid h-10 w-10 place-items-center rounded-[8px] text-[var(--sb-gold-soft)]"
           onClick={() => changeMonth(1)}
           type="button"
         >
@@ -148,7 +148,7 @@ export function DesktopReservationCalendar({
           <span key={weekday}>{weekday}</span>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-1 px-3 py-2">
+      <div className="grid grid-cols-7 justify-items-center gap-0 px-1 py-2">
         {calendarDays.map((day) => {
           const isCurrentMonth = day.getMonth() === currentMonth;
           const disabled = !isCurrentMonth || day < today;
@@ -159,6 +159,7 @@ export function DesktopReservationCalendar({
               aria-pressed={selectedDay}
               className={classNames(
                 "grid h-10 place-items-center rounded-full text-[12px] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                "w-10",
                 selectedDay
                   ? "bg-[var(--sb-red)] text-white shadow-[0_0_16px_rgba(238,43,36,0.45)]"
                   : "text-white hover:bg-white/[0.06]",

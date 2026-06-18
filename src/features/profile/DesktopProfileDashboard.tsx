@@ -299,7 +299,7 @@ function LoyaltyStatusCard({
         />
       </div>
       <Link
-        className="mt-4 flex h-9 w-full items-center justify-center rounded-[10px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+        className="mt-4 flex h-10 w-full items-center justify-center rounded-[10px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
         href="/loyalty"
       >
         View benefits
@@ -344,7 +344,7 @@ function SavedAddressesCard({
         ))}
       </div>
       <button
-        className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-2.5 h-10 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         onClick={onOpenSettings}
         type="button"
       >
@@ -386,7 +386,7 @@ function PaymentMethodsCard({
         ))}
       </div>
       <button
-        className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-2.5 h-10 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         onClick={onOpenSettings}
         type="button"
       >
@@ -419,7 +419,7 @@ function DiningPreferencesCard({
         ))}
       </div>
       <button
-        className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-2.5 h-10 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         onClick={onOpenSettings}
         type="button"
       >
@@ -468,7 +468,7 @@ function DietaryPreferencesCard({
         )}
       </div>
       <button
-        className="mt-2.5 h-8 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+        className="mt-2.5 h-10 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         onClick={onOpenSettings}
         type="button"
       >
@@ -493,7 +493,7 @@ function UpcomingReservationCard({
           title="Upcoming reservation"
         />
         <Link
-          className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          className="inline-flex min-h-10 items-center gap-1 rounded-full px-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           href="/reservations"
         >
           View all <ChevronIcon direction="right" size={18} />
@@ -542,7 +542,7 @@ function RecentActivityCard() {
           title="Recent activity"
         />
         <Link
-          className="inline-flex items-center text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          className="inline-flex min-h-10 items-center rounded-full px-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           href="/orders"
         >
           View all <ChevronIcon direction="right" size={18} />
@@ -551,7 +551,7 @@ function RecentActivityCard() {
       <div className="mt-3 overflow-hidden rounded-[12px] border border-white/10">
         {recentActivity.map(([label, date, detail, href]) => (
           <Link
-            className="grid min-h-[38px] w-full grid-cols-[180px_minmax(0,1fr)_220px_20px] items-center gap-4 border-b border-white/10 px-4 text-left text-[13px] transition last:border-b-0 hover:bg-white/[0.035] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--sb-gold)]"
+            className="grid min-h-10 w-full grid-cols-[180px_minmax(0,1fr)_220px_20px] items-center gap-4 border-b border-white/10 px-4 text-left text-[13px] transition last:border-b-0 hover:bg-white/[0.035] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--sb-gold)]"
             href={href}
             key={label}
           >

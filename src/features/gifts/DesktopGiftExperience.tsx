@@ -474,7 +474,7 @@ function GiftReviewRail({
           ))}
         </div>
         <Link
-          className="mt-5 inline-flex text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
+          className="mt-5 inline-flex min-h-10 items-center rounded-full px-3 text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           href="/support"
         >
           View help center

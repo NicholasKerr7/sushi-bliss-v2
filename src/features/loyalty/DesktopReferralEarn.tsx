@@ -152,7 +152,7 @@ export function DesktopReferralEarn({
                     {referralLink}
                   </p>
                   <button
-                    className="h-9 rounded-[8px] border border-[var(--sb-gold)]/38 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                    className="h-10 rounded-[8px] border border-[var(--sb-gold)]/38 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={copyReferral}
                     type="button"
                   >
@@ -345,7 +345,7 @@ export function DesktopReferralEarn({
                   ))}
                 </div>
                 <button
-                  className="mt-3 h-10 w-full rounded-[8px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                  className="mt-3 h-10 w-full rounded-[8px] border border-[var(--sb-gold)]/38 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                   onClick={onViewRewards}
                   type="button"
                 >

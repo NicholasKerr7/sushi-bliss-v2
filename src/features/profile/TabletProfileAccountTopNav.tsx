@@ -61,7 +61,7 @@ export function TabletProfileAccountTopNav({
             return (
               <Link
                 className={classNames(
-                  "relative flex h-[77px] items-center text-[12px] font-semibold uppercase transition hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold",
+                  "relative flex h-[77px] min-w-11 items-center justify-center text-[12px] font-semibold uppercase transition hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold",
                   isActive ? "text-[var(--sb-red-bright)]" : "text-white",
                 )}
                 href={href}
@@ -79,7 +79,7 @@ export function TabletProfileAccountTopNav({
         <div className="flex items-center justify-end gap-4">
           <button
             aria-label={`Open cart with ${cartCount} items`}
-            className="relative grid h-10 w-10 place-items-center text-[var(--sb-gold)] transition hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+            className="relative grid h-10 w-11 place-items-center text-[var(--sb-gold)] transition hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
             onClick={onOpenCart}
             type="button"
           >
@@ -92,7 +92,7 @@ export function TabletProfileAccountTopNav({
           </button>
 
           <Link
-            className="flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+            className="flex min-w-11 items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
             href="/profile"
           >
             <Image

@@ -207,7 +207,7 @@ export function DesktopOffersDashboard() {
                   </p>
                 ) : null}
                 <Link
-                  className="mt-4 flex justify-end gap-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                  className="mt-4 flex min-h-10 items-center justify-end gap-3 rounded-full px-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                   href="/menu"
                 >
                   {appliedOfferCode
@@ -235,7 +235,7 @@ export function DesktopOffersDashboard() {
                   ))}
                 </ul>
                 <Link
-                  className="mt-4 block w-full text-right text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                  className="mt-4 flex min-h-10 w-full items-center justify-end gap-2 rounded-full px-3 text-right text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                   href="/support"
                 >
                   View full terms & conditions{" "}

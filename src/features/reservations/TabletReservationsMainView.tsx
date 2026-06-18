@@ -104,7 +104,7 @@ export function TabletReservationsMainView({
             Reservation history
           </h2>
           <button
-            className="text-[14px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            className="inline-flex min-h-10 items-center rounded-full px-3 text-[14px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             onClick={onOpenHistory}
             type="button"
           >

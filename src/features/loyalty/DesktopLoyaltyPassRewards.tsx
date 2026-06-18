@@ -177,7 +177,7 @@ export function DesktopLoyaltyPassRewards({
                   ))}
                 </div>
                 <button
-                  className="mx-auto mt-4 block h-10 w-[290px] rounded-[8px] border border-[var(--sb-gold)]/44 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                  className="mx-auto mt-4 block h-10 w-[290px] rounded-[8px] border border-[var(--sb-gold)]/44 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                   onClick={() => setActiveFilter("all")}
                   type="button"
                 >
@@ -285,7 +285,7 @@ export function DesktopLoyaltyPassRewards({
                     Recent activity
                   </h2>
                   <button
-                    className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]"
+                    className="inline-flex min-h-10 items-center rounded-full px-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={() =>
                       setNotice("All recent loyalty activity is visible here.")
                     }
@@ -298,7 +298,7 @@ export function DesktopLoyaltyPassRewards({
                   <DesktopActivityList transactions={transactions} />
                 </div>
                 <button
-                  className="mt-3 flex w-full items-center justify-end gap-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]"
+                  className="mt-3 flex min-h-10 w-full items-center justify-end gap-2 rounded-full px-3 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                   onClick={() =>
                     setNotice("All recent loyalty activity is visible here.")
                   }
