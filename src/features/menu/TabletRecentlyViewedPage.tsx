@@ -86,7 +86,7 @@ export function TabletRecentlyViewedPage() {
                       {section.label}
                     </h2>
                     <Link
-                      className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]"
+                      className="inline-flex min-h-10 items-center gap-2 rounded-full px-2 text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                       href="/menu"
                     >
                       Browse menu <ChevronIcon direction="right" size={18} />

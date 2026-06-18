@@ -99,7 +99,7 @@ export function TabletFeaturedOffer({
           {expired ? "Expired" : copyMessage || "Apply offer"}
         </Button>
         <button
-          className="inline-flex items-center justify-center gap-3 text-[13px] uppercase tracking-[0.08em] text-white/62 transition hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+          className="inline-flex min-h-10 items-center justify-center gap-3 rounded-full px-2 text-[13px] uppercase tracking-[0.08em] text-white/62 transition hover:bg-white/5 hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           onClick={() => onViewOffer(offer)}
           type="button"
         >

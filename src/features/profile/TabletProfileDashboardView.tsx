@@ -335,7 +335,7 @@ export function TabletProfileDashboardView({
                 Saved addresses
               </h2>
               <button
-                className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                className="inline-flex min-h-10 items-center gap-1 rounded-full px-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 onClick={onOpenSettings}
                 type="button"
               >
@@ -365,7 +365,7 @@ export function TabletProfileDashboardView({
                   </div>
                   <button
                     aria-label={`Manage ${address.label}`}
-                    className="text-[var(--sb-gold-soft)]"
+                    className="-mr-2 grid h-10 w-11 place-items-center rounded-full text-[var(--sb-gold-soft)] transition hover:bg-white/6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={onOpenSettings}
                     type="button"
                   >
@@ -375,7 +375,7 @@ export function TabletProfileDashboardView({
               ))}
             </div>
             <button
-              className="mt-3 flex h-9 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--sb-gold)]/28 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[1080px]:h-10 min-[1080px]:text-[14px]"
+              className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--sb-gold)]/28 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[1080px]:text-[14px]"
               onClick={onOpenSettings}
               type="button"
             >
@@ -390,7 +390,7 @@ export function TabletProfileDashboardView({
                 Payment methods
               </h2>
               <button
-                className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                className="inline-flex min-h-10 items-center gap-1 rounded-full px-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 onClick={onOpenSettings}
                 type="button"
               >
@@ -416,7 +416,7 @@ export function TabletProfileDashboardView({
                   </div>
                   <button
                     aria-label={`Manage ${paymentMethod.brand} ending ${paymentMethod.last4}`}
-                    className="text-[var(--sb-gold-soft)]"
+                    className="-mr-2 grid h-10 w-11 place-items-center rounded-full text-[var(--sb-gold-soft)] transition hover:bg-white/6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                     onClick={onOpenSettings}
                     type="button"
                   >
@@ -426,7 +426,7 @@ export function TabletProfileDashboardView({
               ))}
             </div>
             <button
-              className="mt-3 flex h-9 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--sb-gold)]/28 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[1080px]:h-10 min-[1080px]:text-[14px]"
+              className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--sb-gold)]/28 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[1080px]:text-[14px]"
               onClick={onOpenSettings}
               type="button"
             >

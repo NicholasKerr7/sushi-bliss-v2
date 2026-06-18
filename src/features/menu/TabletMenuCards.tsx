@@ -38,7 +38,7 @@ export function TabletMenuCard({
       </span>
       <button
         aria-label={`${isFavorite ? "Remove" : "Save"} ${item.name}`}
-        className="absolute right-3 top-3 z-10 text-[var(--sb-gold)]"
+        className="absolute right-1.5 top-1.5 z-10 grid h-10 w-10 place-items-center rounded-full text-[var(--sb-gold)] transition hover:bg-black/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         onClick={() => onToggleFavorite(item.id)}
         type="button"
       >
@@ -74,11 +74,13 @@ export function TabletMenuCard({
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="absolute bottom-3.5 right-3.5 grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55"
+        className="absolute bottom-2.5 right-2.5 grid h-10 w-10 place-items-center rounded-full"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <AssetIcon size={24} src={icons.plus} />
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55">
+          <AssetIcon size={24} src={icons.plus} />
+        </span>
       </button>
     </article>
   );
@@ -91,7 +93,7 @@ export function TabletCompactMenuRow({
   onViewDetails,
 }: TabletCompactMenuRowProps) {
   return (
-    <article className="grid grid-cols-[108px_minmax(0,1fr)_38px] items-center gap-3 rounded-[8px] border border-[var(--sb-border)] bg-black/34 p-1.5">
+    <article className="grid grid-cols-[108px_minmax(0,1fr)_42px] items-center gap-3 rounded-[8px] border border-[var(--sb-border)] bg-black/34 p-1.5">
       <button
         className="relative h-[74px] overflow-hidden rounded-[6px]"
         onClick={() => onViewDetails(item)}
@@ -124,11 +126,13 @@ export function TabletCompactMenuRow({
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border)]"
+        className="grid h-10 w-10 place-items-center rounded-full"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <AssetIcon size={21} src={icons.plus} />
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border)]">
+          <AssetIcon size={21} src={icons.plus} />
+        </span>
       </button>
     </article>
   );

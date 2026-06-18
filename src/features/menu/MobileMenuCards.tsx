@@ -60,11 +60,13 @@ export function MobileMenuGridCard({
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="absolute bottom-2 right-2 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/62"
+        className="absolute bottom-1 right-1 grid h-10 w-10 place-items-center rounded-full"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <AssetIcon size={21} src={icons.plus} />
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/62">
+          <AssetIcon size={21} src={icons.plus} />
+        </span>
       </button>
     </article>
   );
@@ -123,11 +125,13 @@ export function MobileMenuListCard({
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="mr-2 self-center justify-self-end rounded-full border border-[var(--sb-border-strong)] bg-black/58 p-1.5 min-[390px]:mr-3 min-[390px]:p-2"
+        className="mr-1 grid h-10 w-10 place-items-center self-center justify-self-end rounded-full min-[390px]:mr-2"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <AssetIcon size={21} src={icons.plus} />
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/58">
+          <AssetIcon size={21} src={icons.plus} />
+        </span>
       </button>
     </article>
   );
@@ -189,11 +193,13 @@ export function MobileSearchResultRow({
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="mr-2 self-center justify-self-end rounded-full border border-[var(--sb-border-strong)] bg-black/58 p-2"
+        className="mr-1 grid h-10 w-10 place-items-center self-center justify-self-end rounded-full"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <AssetIcon size={24} src={icons.plus} />
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/58">
+          <AssetIcon size={22} src={icons.plus} />
+        </span>
       </button>
     </article>
   );

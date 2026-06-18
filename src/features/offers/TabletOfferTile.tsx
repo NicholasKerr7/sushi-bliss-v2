@@ -69,8 +69,8 @@ export function TabletOfferTile({
           <Button
             className={
               primaryAction
-                ? "red-glow-button h-9 min-h-0 whitespace-nowrap rounded-[8px] px-3 text-[12px] uppercase tracking-[0.08em]"
-                : "h-9 min-h-0 whitespace-nowrap rounded-[8px] px-3 text-[12px] uppercase tracking-[0.08em]"
+                ? "red-glow-button h-10 min-h-10 whitespace-nowrap rounded-[8px] px-3 text-[12px] uppercase tracking-[0.08em]"
+                : "h-10 min-h-10 whitespace-nowrap rounded-[8px] px-3 text-[12px] uppercase tracking-[0.08em]"
             }
             disabled={expired}
             onClick={() => {

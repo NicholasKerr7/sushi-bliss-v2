@@ -152,7 +152,7 @@ export function TabletOffersDashboard() {
               ) : null}
             </div>
             <button
-              className="inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-red-bright)] transition hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+              className="inline-flex min-h-10 items-center gap-2 rounded-full px-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-red-bright)] transition hover:bg-white/5 hover:text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
               onClick={() => setQuery("")}
               type="button"
             >

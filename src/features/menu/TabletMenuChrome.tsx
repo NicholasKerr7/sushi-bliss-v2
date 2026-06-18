@@ -65,7 +65,7 @@ export function TabletMenuHeader({
         {query ? (
           <button
             aria-label="Clear search"
-            className="grid h-7 w-7 place-items-center text-white/82"
+            className="grid h-10 w-10 place-items-center rounded-full text-white/82 transition hover:bg-white/8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             onClick={onClearQuery}
             type="button"
           >
@@ -77,7 +77,7 @@ export function TabletMenuHeader({
         <TabletHeaderIcon badge={2} href="/notifications" icon={icons.bell} />
         <button
           aria-label="Open cart"
-          className="relative grid h-11 w-11 place-items-center"
+          className="relative grid h-11 w-11 min-w-11 place-items-center"
           onClick={onOpenCart}
           type="button"
         >
@@ -112,7 +112,10 @@ function TabletHeaderIcon({
   icon?: string;
 }) {
   return (
-    <Link className="relative grid h-11 w-11 place-items-center" href={href}>
+    <Link
+      className="relative grid h-11 w-11 min-w-11 place-items-center"
+      href={href}
+    >
       <AssetIcon size={32} src={icon} />
       <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
         {badge}

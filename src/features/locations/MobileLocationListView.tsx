@@ -192,7 +192,7 @@ function MobileLocationCard({
           </h2>
           <button
             aria-label={`View ${location.name} details`}
-            className="mt-7 shrink-0 text-[31px] leading-none text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+            className="mt-4 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/28 text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
             onClick={() => onOpenDetail(location)}
             type="button"
           >
@@ -210,7 +210,7 @@ function MobileLocationCard({
         </div>
 
         <button
-          className="mt-3 text-left text-[14px] font-semibold text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+          className="-ml-3 mt-1 inline-flex min-h-10 items-center rounded-full px-3 text-left text-[14px] font-semibold text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
           onClick={() => onOpenDetail(location)}
           type="button"
         >

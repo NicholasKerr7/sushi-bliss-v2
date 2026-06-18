@@ -113,7 +113,7 @@ export function TabletAboutSection() {
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1)_0%,rgba(5,6,7,0.9)_36%,rgba(5,6,7,0.08)_75%,rgba(5,6,7,0.52)),linear-gradient(180deg,rgba(5,6,7,0.03),rgba(5,6,7,0.96))]" />
           <div className="relative z-10 flex h-full flex-col px-0 pt-7">
             <Link
-              className="flex w-fit items-center gap-5 text-[13px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+              className="flex min-h-10 w-fit items-center gap-5 rounded-full pr-3 text-[13px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
               href="/home"
             >
               <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/24">

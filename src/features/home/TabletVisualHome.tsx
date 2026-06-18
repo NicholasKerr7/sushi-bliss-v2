@@ -328,11 +328,13 @@ function TabletMenuCard({
       </Link>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="absolute bottom-3 right-3 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55"
+        className="absolute bottom-2 right-2 grid h-10 w-10 place-items-center rounded-full"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <AssetIcon size={22} src={icons.plus} />
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55">
+          <AssetIcon size={22} src={icons.plus} />
+        </span>
       </button>
     </article>
   );

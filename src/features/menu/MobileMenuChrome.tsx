@@ -104,11 +104,11 @@ export function MobileSearchForm({
         )}
       >
         <AssetIcon size={23} src={icons.search} />
-        <span className="sr-only">Search sushi, rolls, or dishes</span>
+        <span className="sr-only">Search menu</span>
         <input
           className="h-full w-full bg-transparent text-[15px] text-white outline-none placeholder:text-white/58"
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Search sushi, rolls, or dishes..."
+          placeholder="Search menu..."
           value={query}
         />
         {query ? (

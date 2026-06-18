@@ -129,7 +129,7 @@ export function TabletOmakaseLanding({
             intimate, unrushed, and unforgettable dining experience.
           </p>
           <Link
-            className="mt-3 flex h-8 items-center justify-center gap-2 rounded-[9px] border border-[var(--sb-gold)]/30 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            className="mt-3 flex min-h-10 items-center justify-center gap-2 rounded-[9px] border border-[var(--sb-gold)]/30 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
             href="/locations"
           >
             <AssetIcon size={18} src="/assets/icons/calendar-icon.png" />

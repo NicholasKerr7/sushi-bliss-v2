@@ -88,7 +88,7 @@ export function MobileOffersListView({
           <span className="flex min-h-[54px] items-center gap-3 rounded-[14px] border border-white/10 bg-black/34 px-3">
             <AssetIcon size={22} src="/assets/icons/search-icon.png" />
             <input
-              className="min-w-0 flex-1 bg-transparent text-[16px] text-white outline-none placeholder:text-white/38"
+              className="h-10 min-w-0 flex-1 bg-transparent text-[16px] text-white outline-none placeholder:text-white/38"
               id="mobile-offer-search"
               onChange={(event) => onQueryChange(event.target.value)}
               placeholder="Code, reward, or offer"
@@ -96,7 +96,7 @@ export function MobileOffersListView({
             />
             {query ? (
               <button
-                className="rounded-full px-2 py-1 text-[12px] uppercase text-[var(--sb-gold-soft)]"
+                className="min-h-10 rounded-full px-3 text-[12px] uppercase text-[var(--sb-gold-soft)] transition hover:bg-white/8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 onClick={onClearQuery}
                 type="button"
               >
@@ -141,7 +141,7 @@ export function MobileOffersListView({
             </p>
           </div>
           <Link
-            className="rounded-full border border-[var(--sb-border)] px-4 py-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            className="inline-flex min-h-10 items-center rounded-full border border-[var(--sb-border)] px-4 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
             href="/loyalty"
           >
             Rewards
@@ -307,7 +307,7 @@ function MobileOfferCard({
             </StatusBadge>
           </div>
           <button
-            className="mt-3 block text-left text-[17px] font-semibold leading-5 text-white"
+            className="mt-2 flex min-h-10 items-center text-left text-[17px] font-semibold leading-5 text-white"
             onClick={() => onViewOffer(offer)}
             type="button"
           >

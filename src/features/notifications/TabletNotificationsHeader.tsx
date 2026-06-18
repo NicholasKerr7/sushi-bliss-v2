@@ -81,7 +81,7 @@ export function TabletNotificationsHeader({
           </button>
           <button
             aria-label="More notification options"
-            className="grid h-10 w-8 place-items-center text-[28px] leading-none text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+            className="grid h-10 w-10 place-items-center text-[28px] leading-none text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
             type="button"
           >
             <span aria-hidden="true">⋮</span>

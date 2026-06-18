@@ -51,7 +51,7 @@ export function MobileNotificationCard({
             </StatusBadge>
           </div>
           <button
-            className="mt-3 block w-full text-left text-[17px] font-semibold leading-5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+            className="mt-2 flex min-h-10 w-full items-center text-left text-[17px] font-semibold leading-5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
             onClick={() => onViewNotification(notification)}
             type="button"
           >

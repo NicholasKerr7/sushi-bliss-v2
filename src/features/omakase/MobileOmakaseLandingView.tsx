@@ -51,7 +51,7 @@ export function MobileOmakaseLandingView({
     <>
       <div className="mt-7 grid grid-cols-[minmax(0,1fr)_62px] gap-2.5 min-[390px]:grid-cols-[minmax(0,1fr)_72px] min-[390px]:gap-3">
         <Link
-          aria-label="Search sushi, rolls, or dishes"
+          aria-label="Search menu"
           className="grid min-h-[62px] grid-cols-[30px_minmax(0,1fr)] items-center gap-2.5 rounded-[12px] border border-[var(--sb-border)] bg-black/44 px-4 text-[14px] text-white/64 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_38px_rgba(0,0,0,0.36)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[72px] min-[390px]:grid-cols-[34px_minmax(0,1fr)] min-[390px]:gap-3 min-[390px]:rounded-[13px] min-[390px]:px-5 min-[390px]:text-[16px]"
           href="/menu"
         >
@@ -60,7 +60,7 @@ export function MobileOmakaseLandingView({
             size={24}
             src="/assets/icons/search-icon.png"
           />
-          <span className="truncate">Search sushi, rolls, or dishes...</span>
+          <span className="truncate">Search menu...</span>
         </Link>
         <Link
           aria-label="Open menu filters"
@@ -136,7 +136,7 @@ export function MobileOmakaseLandingView({
             Experience Preview
           </p>
           <Link
-            className="flex items-center gap-2 text-[14px] text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+            className="inline-flex min-h-10 items-center gap-2 rounded-full px-2 text-[14px] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
             href="/menu"
           >
             View Full Menu

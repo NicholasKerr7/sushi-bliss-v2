@@ -143,7 +143,7 @@ export function TabletLoyaltyDashboard({
                 </h2>
               </div>
               <Link
-                className="rounded-[12px] border border-[var(--sb-gold)]/40 bg-white/[0.035] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+                className="inline-flex min-h-10 items-center rounded-[12px] border border-[var(--sb-gold)]/40 bg-white/[0.035] px-4 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 href="/offers"
               >
                 View offers

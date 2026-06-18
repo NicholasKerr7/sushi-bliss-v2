@@ -116,11 +116,11 @@ function MobileSearchBar({
     <form className="mt-6 grid grid-cols-[1fr_56px] gap-3" onSubmit={onSubmit}>
       <label className="flex h-14 items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/52 px-4 backdrop-blur-xl">
         <AssetIcon size={23} src={icons.search} />
-        <span className="sr-only">Search sushi, rolls, or dishes</span>
+        <span className="sr-only">Search menu</span>
         <input
           className="h-full w-full bg-transparent text-[15px] text-white outline-none placeholder:text-[var(--sb-muted)]"
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Search sushi, rolls, or dishes..."
+          placeholder="Search menu..."
           value={query}
         />
       </label>
@@ -218,7 +218,7 @@ function FeaturedMenuRail({ items, onAddToCart }: FeaturedMenuRailProps) {
         </h2>
         <Link
           aria-label="Explore menu"
-          className="flex items-center gap-1 text-[15px] font-medium text-[var(--sb-red-bright)]"
+          className="inline-flex min-h-10 items-center gap-1 rounded-full px-2 text-[15px] font-medium text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           href="/menu"
         >
           View All
@@ -345,7 +345,7 @@ function MemberCard({
           </span>
           <Link
             aria-label="View Benefits"
-            className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-full border border-[var(--sb-gold)]/28 bg-black/30 px-3 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold)] shadow-[0_0_18px_rgba(215,168,79,0.08)]"
+            className="flex h-10 shrink-0 items-center justify-center gap-1 rounded-full border border-[var(--sb-gold)]/28 bg-black/30 px-3 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold)] shadow-[0_0_18px_rgba(215,168,79,0.08)]"
             href="/loyalty"
           >
             Benefits

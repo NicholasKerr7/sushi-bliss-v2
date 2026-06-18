@@ -150,7 +150,7 @@ export function MobileLoyaltyDashboard({
                     </p>
                   </div>
                   <Link
-                    className="rounded-full border border-[var(--sb-gold)]/38 bg-black/36 px-4 py-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                    className="inline-flex min-h-10 items-center rounded-full border border-[var(--sb-gold)]/38 bg-black/36 px-4 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
                     href="/offers"
                   >
                     Offers

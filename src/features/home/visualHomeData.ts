@@ -20,7 +20,7 @@ export const dashboardCategories = [
   { id: "nigiri", icon: icons.nigiri, label: "Nigiri" },
   { id: "rolls", icon: icons.menu, label: "Rolls" },
   { id: "sashimi", icon: icons.sashimi, label: "Sashimi" },
-  { id: "chef-specials", icon: icons.crown, label: "Chef Specials" },
+  { id: "chef-specials", icon: icons.crown, label: "Specials" },
 ] as const;
 
 export const desktopNav = [

@@ -76,7 +76,7 @@ export function TabletGiftSelection({
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98)_0%,rgba(5,6,7,0.82)_35%,rgba(5,6,7,0.18)_78%,rgba(5,6,7,0.06)_100%)]" />
         <div className="relative z-10 p-6">
           <Link
-            className="flex items-center gap-4 text-[13px] uppercase tracking-[0.08em] text-white/72"
+            className="inline-flex min-h-10 items-center gap-4 rounded-full pr-3 text-[13px] uppercase tracking-[0.08em] text-white/72 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             href="/home"
           >
             <ChevronIcon direction="left" size={17} />
