@@ -57,10 +57,7 @@ export function MenuExplorer() {
   };
 
   return (
-    <section
-      className="border-b border-sb-line bg-sb-charcoal py-12 md:py-0"
-      id="menu"
-    >
+    <section className="border-b border-sb-line bg-sb-charcoal" id="menu">
       {!responsiveReady ? (
         <div className="min-h-dvh bg-[#050607]" aria-hidden="true" />
       ) : null}
