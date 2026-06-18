@@ -194,7 +194,7 @@ function MobileMenuOverview({
       </button>
 
       <MobileSectionHeader title="Popular Picks" />
-      <div className="mt-3 grid grid-cols-2 gap-3">
+      <div className="mt-3 grid grid-cols-1 gap-3 min-[390px]:grid-cols-2">
         {items.slice(0, 8).map((item, index) => (
           <MobileMenuGridCard
             badge={index === 0 ? "Hot" : index === 1 ? "Popular" : undefined}
