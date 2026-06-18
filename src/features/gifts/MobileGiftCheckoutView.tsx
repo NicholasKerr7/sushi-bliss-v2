@@ -47,8 +47,8 @@ export function MobileGiftCheckoutView({
       </div>
 
       <MobileGiftPanel className="mt-5 overflow-hidden">
-        <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-4 p-3">
-          <div className="relative min-h-[136px] overflow-hidden rounded-[14px] border border-white/10 bg-black/34">
+        <div className="grid grid-cols-[96px_minmax(0,1fr)] gap-3 p-3 min-[390px]:grid-cols-[110px_minmax(0,1fr)] min-[390px]:gap-4">
+          <div className="relative min-h-[128px] overflow-hidden rounded-[14px] border border-white/10 bg-black/34 min-[390px]:min-h-[136px]">
             <Image
               alt={gift.image.alt || gift.title}
               className="object-cover"
@@ -58,9 +58,9 @@ export function MobileGiftCheckoutView({
               src={gift.image.publicUrl}
             />
           </div>
-          <div className="py-1">
+          <div className="min-w-0 py-1">
             <StatusBadge tone="premium">{gift.category}</StatusBadge>
-            <h1 className="editorial-title mt-3 text-[24px] leading-7 text-white">
+            <h1 className="editorial-title mt-3 max-w-full break-words text-[22px] leading-[25px] text-white min-[390px]:text-[24px] min-[390px]:leading-7">
               {gift.title}
             </h1>
             <p className="mt-2 text-[13px] leading-5 text-white/56">

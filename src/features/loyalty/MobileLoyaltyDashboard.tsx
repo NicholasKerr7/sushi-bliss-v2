@@ -188,7 +188,7 @@ export function MobileLoyaltyDashboard({
 
         <nav
           aria-label="Loyalty sections"
-          className="mt-4 grid grid-cols-4 rounded-[16px] border border-[var(--sb-border)] bg-black/46 p-1"
+          className="mt-4 grid grid-cols-2 gap-1 rounded-[16px] border border-[var(--sb-border)] bg-black/46 p-1 min-[390px]:grid-cols-4"
         >
           {mobileTabs.map((tab) => {
             const active = activeTab === tab.id;
@@ -197,10 +197,10 @@ export function MobileLoyaltyDashboard({
               <button
                 aria-pressed={active}
                 className={classNames(
-                  "min-h-[44px] rounded-[12px] text-[11px] uppercase tracking-[0.06em] transition",
+                  "min-h-[42px] min-w-0 rounded-[12px] border px-2 text-[10px] uppercase tracking-[0.04em] transition min-[390px]:min-h-[44px] min-[390px]:px-0.5 min-[390px]:text-[11px] min-[390px]:tracking-[0.06em]",
                   active
-                    ? "bg-[var(--sb-red)]/24 text-[var(--sb-red-bright)] shadow-[0_0_22px_rgba(239,47,37,0.22)]"
-                    : "text-white/58",
+                    ? "border-[var(--sb-red)]/34 bg-[var(--sb-red)]/24 text-[var(--sb-red-bright)] shadow-[0_0_22px_rgba(239,47,37,0.22)]"
+                    : "border-white/[0.06] bg-white/[0.025] text-white/58",
                 )}
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
