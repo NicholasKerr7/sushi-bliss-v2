@@ -61,7 +61,7 @@ export function MobileFavoritesPage() {
           <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
             Saved dishes
           </p>
-          <h1 className="editorial-title mt-3 text-[43px] uppercase leading-[0.96] text-white">
+          <h1 className="editorial-title mt-3 text-[37px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
             Favorite
             <span className="block text-[var(--sb-red-bright)]">Dishes</span>
           </h1>
@@ -90,7 +90,7 @@ export function MobileFavoritesPage() {
               <StatusBadge tone="premium">
                 {favoriteItems.length} saved
               </StatusBadge>
-              <h2 className="editorial-title mt-4 text-[34px] uppercase leading-none text-white">
+              <h2 className="editorial-title mt-4 text-[29px] uppercase leading-none text-white min-[390px]:text-[32px]">
                 Reorder list
               </h2>
               <p className="mt-3 text-[15px] leading-6 text-white/62">

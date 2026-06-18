@@ -31,7 +31,7 @@ export function BottomNavigation({
     <nav
       aria-label={ariaLabel}
       className={classNames(
-        "z-40 grid h-[88px] grid-cols-5 items-center overflow-hidden rounded-[20px] border border-white/10 bg-[#070909] shadow-[inset_0_0_28px_rgba(0,0,0,.88),inset_0_1px_0_rgba(255,255,255,.08),0_12px_35px_rgba(0,0,0,.44)] md:hidden",
+        "z-40 grid h-[82px] grid-cols-5 items-center overflow-hidden rounded-[18px] border border-white/10 bg-[#070909] shadow-[inset_0_0_28px_rgba(0,0,0,.88),inset_0_1px_0_rgba(255,255,255,.08),0_12px_35px_rgba(0,0,0,.44)] min-[390px]:h-[88px] min-[390px]:rounded-[20px] md:hidden",
         fixed
           ? "mobile-bottom-nav-fixed fixed bottom-[calc(10px+var(--sb-safe-bottom))] left-1/2 -translate-x-1/2"
           : "mobile-bottom-nav-inline relative",
@@ -75,7 +75,7 @@ export function BottomNavigation({
                 aria-label={item.label}
                 data-current={current ? "true" : "false"}
                 className={classNames(
-                  "bottom-nav-link relative flex h-full flex-col items-center justify-center gap-1 overflow-hidden rounded-[14px] text-[9px] uppercase [text-shadow:0_2px_1px_rgba(0,0,0,.96)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                  "bottom-nav-link relative flex h-full flex-col items-center justify-center gap-0.5 overflow-hidden rounded-[13px] text-[8px] uppercase [text-shadow:0_2px_1px_rgba(0,0,0,.96)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[390px]:gap-1 min-[390px]:rounded-[14px] min-[390px]:text-[9px]",
                   !current && "hover:bg-white/[0.05] hover:text-white",
                 )}
                 href={item.href}
@@ -88,13 +88,16 @@ export function BottomNavigation({
                 ) : null}
                 <span
                   className={classNames(
-                    "relative z-10 flex h-[30px] w-[30px] items-center justify-center",
+                    "relative z-10 flex h-[28px] w-[28px] items-center justify-center min-[390px]:h-[30px] min-[390px]:w-[30px]",
                     current
                       ? "drop-shadow-[0_0_7px_rgba(255,43,31,.75)]"
                       : "drop-shadow-[0_2px_1px_rgba(0,0,0,.95)]",
                   )}
                 >
-                  <RouteNavGlyph className="h-[23px] w-[23px]" id={item.id} />
+                  <RouteNavGlyph
+                    className="h-[21px] w-[21px] min-[390px]:h-[23px] min-[390px]:w-[23px]"
+                    id={item.id}
+                  />
                 </span>
                 <span className="relative z-10 max-w-[58px] truncate text-center font-medium leading-none">
                   {displayLabel}

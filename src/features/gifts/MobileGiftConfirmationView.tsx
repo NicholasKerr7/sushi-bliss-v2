@@ -25,7 +25,7 @@ export function MobileGiftConfirmationView({
       <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
         Gift confirmed
       </p>
-      <h1 className="editorial-title mt-3 text-[43px] uppercase leading-[0.96] text-white">
+      <h1 className="editorial-title mt-3 text-[37px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
         Pass
         <span className="block text-[var(--sb-red-bright)]">Sent</span>
       </h1>

@@ -59,7 +59,7 @@ export function MobileOffersListView({
         <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           Member offers
         </p>
-        <h1 className="editorial-title mt-3 text-[43px] uppercase leading-[0.96] text-white">
+        <h1 className="editorial-title mt-3 text-[37px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
           Promotions
           <span className="block text-[var(--sb-red-bright)]">& Referrals</span>
         </h1>
@@ -218,18 +218,18 @@ function MobileFeaturedOffer({
           <StatusBadge tone={getOfferTone(offer, currentTime)}>
             {getOfferStatusLabel(offer, currentTime)}
           </StatusBadge>
-          <h2 className="editorial-title mt-4 text-[35px] uppercase leading-none text-white">
+          <h2 className="editorial-title mt-4 text-[30px] uppercase leading-none text-white min-[390px]:text-[32px]">
             {offer.title}
           </h2>
           <p className="mt-3 text-[15px] font-semibold text-[var(--sb-gold-soft)]">
             {offer.subtitle}
           </p>
-          <div className="mt-4 grid grid-cols-[1fr_118px] overflow-hidden rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/46">
+          <div className="mt-4 grid grid-cols-[1fr_96px] overflow-hidden rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/46 min-[390px]:grid-cols-[1fr_118px]">
             <div className="min-w-0 p-3">
               <p className="text-[10px] uppercase tracking-[0.12em] text-white/46">
                 Code
               </p>
-              <p className="mt-1 truncate font-mono text-[23px] text-white">
+              <p className="mt-1 truncate font-mono text-[20px] text-white min-[390px]:text-[23px]">
                 {offer.code}
               </p>
             </div>

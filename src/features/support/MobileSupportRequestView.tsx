@@ -87,7 +87,7 @@ export function MobileSupportRequestView({
         <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           Support request
         </p>
-        <h1 className="editorial-title mt-3 text-[40px] uppercase leading-[0.96] text-white">
+        <h1 className="editorial-title mt-3 text-[35px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
           Send
           <span className="block text-[var(--sb-red-bright)]">A Note</span>
         </h1>

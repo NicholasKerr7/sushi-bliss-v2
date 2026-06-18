@@ -197,10 +197,10 @@ export function MobileReservationConfirmationView({
       />
 
       <main className="pt-14">
-        <div className="mx-auto grid h-[132px] w-[132px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/42 shadow-[0_0_34px_rgb(215_168_79_/_0.24)]">
-          <AssetIcon size={74} src="/assets/icons/check-icon.png" />
+        <div className="mx-auto grid h-[112px] w-[112px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/42 shadow-[0_0_34px_rgb(215_168_79_/_0.24)] min-[390px]:h-[132px] min-[390px]:w-[132px]">
+          <AssetIcon size={62} src="/assets/icons/check-icon.png" />
         </div>
-        <h1 className="editorial-title mt-9 text-[40px] leading-none tracking-[0.06em] text-white">
+        <h1 className="editorial-title mt-8 text-[35px] leading-none tracking-[0.05em] text-white min-[390px]:mt-9 min-[390px]:text-[40px] min-[390px]:tracking-[0.06em]">
           Reservation{" "}
           <span className="block text-[var(--sb-red-bright)]">Confirmed</span>
         </h1>
@@ -240,7 +240,7 @@ export function MobileReservationConfirmationView({
         </MobileReservationPanel>
 
         <button
-          className="red-glow-button mt-7 flex h-[68px] w-full items-center justify-center rounded-[16px] text-[17px]"
+          className="red-glow-button mt-7 flex h-[60px] w-full items-center justify-center rounded-[14px] text-[15px] min-[390px]:h-[68px] min-[390px]:rounded-[16px] min-[390px]:text-[17px]"
           onClick={onViewReservations}
           type="button"
         >
@@ -289,7 +289,7 @@ export function MobileReservationCancelView({
           icon="/assets/icons/gold-alert-icon.png"
           size={48}
         />
-        <h1 className="editorial-title mt-6 text-[34px] leading-none text-white">
+        <h1 className="editorial-title mt-6 text-[30px] leading-none text-white min-[390px]:text-[34px]">
           Cancel Reservation?
         </h1>
         <p className="mt-4 text-[16px] leading-7 text-white/62">

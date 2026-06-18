@@ -54,7 +54,7 @@ export function MobileLocationListView({
       <MobileLocationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
 
       <section className="pt-12">
-        <h1 className="editorial-title text-[43px] leading-[1.06] tracking-[0.06em]">
+        <h1 className="editorial-title text-[37px] leading-[1.06] tracking-[0.05em] min-[390px]:text-[40px] min-[390px]:tracking-[0.06em]">
           Restaurant
           <span className="block text-[var(--sb-red-bright)]">Locations</span>
         </h1>
@@ -64,11 +64,11 @@ export function MobileLocationListView({
       </section>
 
       <form
-        className="mt-7 grid grid-cols-[minmax(0,1fr)_88px] gap-3"
+        className="mt-7 grid grid-cols-[minmax(0,1fr)_78px] gap-2.5 min-[390px]:grid-cols-[minmax(0,1fr)_88px] min-[390px]:gap-3"
         onSubmit={(event) => event.preventDefault()}
       >
-        <label className="flex h-[62px] min-w-0 items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/58 px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl">
-          <AssetIcon size={24} src={icons.search} />
+        <label className="flex h-[56px] min-w-0 items-center gap-2.5 rounded-[13px] border border-[var(--sb-border)] bg-black/58 px-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl min-[390px]:h-[62px] min-[390px]:gap-3 min-[390px]:rounded-[14px] min-[390px]:px-4">
+          <AssetIcon size={21} src={icons.search} />
           <span className="sr-only">
             Search by city, neighborhood, or address
           </span>
@@ -82,7 +82,7 @@ export function MobileLocationListView({
         <button
           aria-expanded={filterOpen}
           className={classNames(
-            "flex h-[62px] items-center justify-center gap-1.5 rounded-[14px] border text-[12px] uppercase tracking-[0.06em] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
+            "flex h-[56px] items-center justify-center gap-1 rounded-[13px] border text-[11px] uppercase tracking-[0.05em] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-[62px] min-[390px]:gap-1.5 min-[390px]:rounded-[14px] min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]",
             filterOpen
               ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/20 text-[var(--sb-red-bright)]"
               : "border-[var(--sb-border)] bg-black/58 text-[var(--sb-gold-soft)]",
@@ -90,7 +90,7 @@ export function MobileLocationListView({
           onClick={onToggleFilter}
           type="button"
         >
-          <AssetIcon size={21} src={icons.settings} />
+          <AssetIcon size={18} src={icons.settings} />
           Filter
         </button>
       </form>
@@ -138,7 +138,7 @@ export function MobileLocationListView({
 
       <div className="mt-4 grid gap-3">
         <button
-          className="red-glow-button flex min-h-[72px] w-full items-center justify-center gap-4 rounded-[14px] text-[17px] uppercase tracking-[0.08em]"
+          className="red-glow-button flex min-h-[62px] w-full items-center justify-center gap-3 rounded-[13px] text-[15px] uppercase tracking-[0.07em] min-[390px]:min-h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[14px] min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
           onClick={onOpenMap}
           type="button"
         >

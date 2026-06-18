@@ -46,7 +46,7 @@ export function MobileChefDetailView({
             <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
               Chef profile
             </p>
-            <h1 className="editorial-title mt-3 text-[42px] uppercase leading-[0.96] text-white">
+            <h1 className="editorial-title mt-3 text-[36px] uppercase leading-[0.96] text-white min-[390px]:text-[42px]">
               {chef.name}
             </h1>
             <p className="mt-4 text-[15px] leading-6 text-white/64">

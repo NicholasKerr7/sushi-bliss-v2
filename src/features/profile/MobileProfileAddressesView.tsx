@@ -125,7 +125,7 @@ export function MobileProfileAddressesView({
         </div>
 
         <section className="mt-8">
-          <h2 className="editorial-title text-[38px] uppercase leading-[1.03] text-white">
+          <h2 className="editorial-title text-[34px] uppercase leading-[1.03] text-white min-[390px]:text-[38px]">
             Saved
             <span className="block text-[var(--sb-red-bright)]">Addresses</span>
           </h2>

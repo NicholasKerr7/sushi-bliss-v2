@@ -27,7 +27,7 @@ export function MobileChefsListView({
         <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           Master chefs
         </p>
-        <h1 className="editorial-title mt-3 text-[43px] uppercase leading-[0.96] text-white">
+        <h1 className="editorial-title mt-3 text-[37px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
           Chef
           <span className="block text-[var(--sb-red-bright)]">Team</span>
         </h1>
@@ -51,7 +51,7 @@ export function MobileChefsListView({
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.82)_100%)]" />
           <div className="relative z-10 flex min-h-[282px] flex-col justify-end">
             <StatusBadge tone="premium">Chef counter</StatusBadge>
-            <h2 className="editorial-title mt-4 text-[34px] uppercase leading-none text-white">
+            <h2 className="editorial-title mt-4 text-[29px] uppercase leading-none text-white min-[390px]:text-[32px]">
               Four masters, one service
             </h2>
             <div className="mt-5 grid grid-cols-2 gap-3">

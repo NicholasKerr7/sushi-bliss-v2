@@ -125,7 +125,7 @@ export function MobileLoyaltyDashboard({
                   <p className="text-[12px] uppercase tracking-[0.15em] text-[var(--sb-gold-soft)]">
                     Bliss rewards
                   </p>
-                  <h1 className="editorial-title mt-3 text-[42px] uppercase leading-[0.96] text-white">
+                  <h1 className="editorial-title mt-3 text-[36px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
                     {tierLabel}
                     <span className="block text-[var(--sb-red-bright)]">
                       Member
@@ -133,9 +133,9 @@ export function MobileLoyaltyDashboard({
                   </h1>
                 </div>
                 <MobileLoyaltyIconCircle
-                  className="h-[70px] w-[70px] border-[var(--sb-gold)]/40 bg-black/58"
+                  className="h-[58px] w-[58px] border-[var(--sb-gold)]/40 bg-black/58 min-[390px]:h-[70px] min-[390px]:w-[70px]"
                   icon="/assets/icons/golden-ticket-icon.png"
-                  size={40}
+                  size={32}
                 />
               </div>
 
@@ -145,7 +145,7 @@ export function MobileLoyaltyDashboard({
                     <p className="text-[12px] uppercase tracking-[0.12em] text-white/58">
                       Points balance
                     </p>
-                    <p className="mt-1 font-mono text-[34px] text-[var(--sb-gold-soft)]">
+                    <p className="mt-1 font-mono text-[30px] text-[var(--sb-gold-soft)] min-[390px]:text-[34px]">
                       {memberPoints.toLocaleString()}
                     </p>
                   </div>

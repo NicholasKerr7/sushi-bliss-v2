@@ -70,7 +70,7 @@ export function MobileOrdersListView({
         />
 
         <section className="pt-12 text-center">
-          <h1 className="editorial-title text-[44px] leading-none tracking-[0.14em]">
+          <h1 className="editorial-title text-[36px] leading-none tracking-[0.11em] min-[390px]:text-[40px] min-[390px]:tracking-[0.13em]">
             My <span className="text-[var(--sb-gold-soft)]">Orders</span>
           </h1>
           <p className="mt-4 text-[17px] leading-6 text-white/66">
@@ -80,7 +80,7 @@ export function MobileOrdersListView({
 
         <div
           aria-label="Order views"
-          className="mx-auto mt-8 grid h-[68px] max-w-[330px] grid-cols-2 overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/46 p-1"
+          className="mx-auto mt-8 grid h-[58px] max-w-[330px] grid-cols-2 overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/46 p-1 min-[390px]:h-[68px]"
           role="group"
         >
           <MobileOrderTab

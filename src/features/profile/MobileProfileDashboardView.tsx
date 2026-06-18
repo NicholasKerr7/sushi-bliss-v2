@@ -100,7 +100,7 @@ export function MobileProfileDashboardView({
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.28)_0%,rgba(0,0,0,0.86)_100%)]" />
             <div className="relative z-10 flex min-h-[210px] flex-col justify-end">
               <div className="flex items-end gap-4">
-                <div className="relative h-[96px] w-[96px] shrink-0">
+                <div className="relative h-[82px] w-[82px] shrink-0 min-[390px]:h-[96px] min-[390px]:w-[96px]">
                   <Image
                     alt=""
                     className="rounded-full border border-[var(--sb-gold)] object-cover"
@@ -162,11 +162,11 @@ export function MobileProfileDashboardView({
         <section className="mt-4 grid grid-cols-4 gap-2">
           {quickActions.map((action) => (
             <Link
-              className="flex min-h-[82px] flex-col items-center justify-center gap-2 rounded-[16px] border border-[var(--sb-border)] bg-black/42 px-2 text-center text-[11px] uppercase tracking-[0.06em] text-white/72"
+              className="flex min-h-[72px] flex-col items-center justify-center gap-1.5 rounded-[14px] border border-[var(--sb-border)] bg-black/42 px-1.5 text-center text-[10px] uppercase tracking-[0.05em] text-white/72 min-[390px]:min-h-[82px] min-[390px]:gap-2 min-[390px]:rounded-[16px] min-[390px]:px-2 min-[390px]:text-[11px] min-[390px]:tracking-[0.06em]"
               href={action.href}
               key={action.label}
             >
-              <AssetIcon size={28} src={action.icon} />
+              <AssetIcon size={24} src={action.icon} />
               {action.label}
             </Link>
           ))}

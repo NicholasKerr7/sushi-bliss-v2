@@ -59,7 +59,7 @@ export function MobileReservationReviewView({
         <p className="editorial-title text-[22px] uppercase text-[var(--sb-gold-soft)]">
           Review
         </p>
-        <h1 className="editorial-title mt-3 text-[42px] leading-none tracking-[0.08em] text-white">
+        <h1 className="editorial-title mt-3 text-[36px] leading-none tracking-[0.07em] text-white min-[390px]:text-[42px] min-[390px]:tracking-[0.08em]">
           Confirmation
         </h1>
         <p className="mt-4 text-[17px] leading-6 text-[var(--sb-gold-soft)]">
@@ -152,7 +152,7 @@ export function MobileReservationReviewView({
       </MobileReservationPanel>
 
       <button
-        className="red-glow-button mt-5 flex h-[72px] w-full items-center justify-center rounded-[16px] text-[17px]"
+        className="red-glow-button mt-5 flex h-[62px] w-full items-center justify-center rounded-[14px] text-[15px] min-[390px]:h-[72px] min-[390px]:rounded-[16px] min-[390px]:text-[17px]"
         onClick={onConfirm}
         type="button"
       >

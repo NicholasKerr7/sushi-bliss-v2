@@ -126,11 +126,11 @@ export function MobileOrderConfirmation({
               </svg>
             </div>
 
-            <h1 className="editorial-title mt-10 text-[39px] leading-none">
+            <h1 className="editorial-title mt-10 text-[34px] leading-none min-[390px]:text-[39px]">
               Order{" "}
               <span className="text-[var(--sb-red-bright)]">Confirmed</span>
             </h1>
-            <p className="mt-6 text-[22px] text-[var(--sb-gold-soft)]">
+            <p className="mt-6 text-[18px] text-[var(--sb-gold-soft)] min-[390px]:text-[22px]">
               Thank you, {order.customer.name.split(" ")[0]}.
             </p>
             <p className="mx-auto mt-4 max-w-[340px] text-[17px] leading-7 text-white/70">

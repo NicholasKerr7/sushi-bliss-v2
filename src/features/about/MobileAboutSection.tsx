@@ -57,7 +57,7 @@ export function MobileAboutSection() {
           <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
             About Sushi Bliss
           </p>
-          <h1 className="editorial-title mt-3 text-[43px] uppercase leading-[0.96] text-white">
+          <h1 className="editorial-title mt-3 text-[37px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
             The
             <span className="block text-[var(--sb-red-bright)]">Story</span>
           </h1>
@@ -81,7 +81,7 @@ export function MobileAboutSection() {
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.10)_0%,rgba(0,0,0,0.88)_100%)]" />
             <div className="relative z-10 flex min-h-[268px] flex-col justify-end">
               <StatusBadge tone="premium">Nightly service</StatusBadge>
-              <h2 className="editorial-title mt-4 text-[34px] uppercase leading-none text-white">
+              <h2 className="editorial-title mt-4 text-[29px] uppercase leading-none text-white min-[390px]:text-[32px]">
                 Modern sushi house
               </h2>
               <p className="mt-3 text-[15px] leading-6 text-white/62">

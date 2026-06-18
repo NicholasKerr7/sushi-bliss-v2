@@ -41,7 +41,7 @@ export function MobileSupportOverviewView({
         <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           Concierge support
         </p>
-        <h1 className="editorial-title mt-3 text-[43px] uppercase leading-[0.96] text-white">
+        <h1 className="editorial-title mt-3 text-[37px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
           Support
           <span className="block text-[var(--sb-red-bright)]">& Help</span>
         </h1>
@@ -61,7 +61,7 @@ export function MobileSupportOverviewView({
           <div className="relative z-10 flex min-h-[166px] flex-col justify-between">
             <div>
               <StatusBadge tone="premium">Same-day help</StatusBadge>
-              <h2 className="editorial-title mt-4 text-[34px] uppercase leading-none text-white">
+              <h2 className="editorial-title mt-4 text-[29px] uppercase leading-none text-white min-[390px]:text-[32px]">
                 Concierge desk
               </h2>
             </div>

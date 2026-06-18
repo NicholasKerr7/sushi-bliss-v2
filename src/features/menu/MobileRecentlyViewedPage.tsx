@@ -45,7 +45,7 @@ export function MobileRecentlyViewedPage() {
         />
 
         <section className="mt-8">
-          <h1 className="editorial-title text-[39px] uppercase leading-none tracking-[0.08em] text-white md:text-[48px]">
+          <h1 className="editorial-title text-[35px] uppercase leading-none tracking-[0.07em] text-white min-[390px]:text-[39px] min-[390px]:tracking-[0.08em] md:text-[48px]">
             Recently <span className="text-[var(--sb-red-bright)]">Viewed</span>
           </h1>
           <p className="mt-4 text-[16px] leading-6 text-[var(--sb-gold-soft)] md:text-[18px]">

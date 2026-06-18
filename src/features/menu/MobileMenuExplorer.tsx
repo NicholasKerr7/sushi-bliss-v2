@@ -296,10 +296,10 @@ function MobileCategoryView({
               {category.label}
             </span>
           </p>
-          <h1 className="editorial-title mt-4 text-[48px] leading-none tracking-[0.12em] text-white">
+          <h1 className="editorial-title mt-4 text-[38px] leading-none tracking-[0.09em] text-white min-[390px]:text-[42px] min-[390px]:tracking-[0.1em]">
             {category.label}
           </h1>
-          <p className="mt-5 max-w-[350px] text-[17px] leading-7 text-[var(--sb-gold)]">
+          <p className="mt-5 max-w-[350px] text-[15px] leading-6 text-[var(--sb-gold)] min-[390px]:text-[17px] min-[390px]:leading-7">
             {isDrinks
               ? "Sake, tea, and zero-proof pairings selected around each course."
               : "Hand-pressed perfection. The purest form of sushi, crafted with balance and precision."}

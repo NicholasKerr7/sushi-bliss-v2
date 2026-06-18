@@ -149,7 +149,9 @@ export function StepHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h1 className="editorial-title mt-5 text-[42px] leading-none">{title}</h1>
+      <h1 className="editorial-title mt-5 text-[36px] leading-none min-[390px]:text-[42px]">
+        {title}
+      </h1>
       {subtitle ? (
         <p className="mt-3 text-[17px] leading-6 text-[var(--sb-gold-soft)]">
           {subtitle}

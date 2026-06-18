@@ -28,7 +28,7 @@ export function MobileLoyaltyPassView({
             <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
               Member pass
             </p>
-            <h2 className="editorial-title mt-3 text-[34px] uppercase leading-none text-white">
+            <h2 className="editorial-title mt-3 text-[29px] uppercase leading-none text-white min-[390px]:text-[34px]">
               {tierLabel}
             </h2>
             <p className="mt-3 font-mono text-[16px] text-[var(--sb-gold-soft)]">

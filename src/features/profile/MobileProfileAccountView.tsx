@@ -83,7 +83,7 @@ export function MobileProfileAccountView({
           <p className="text-[12px] uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
             Member details
           </p>
-          <h2 className="editorial-title mt-3 text-[38px] uppercase leading-[1.03] text-white">
+          <h2 className="editorial-title mt-3 text-[34px] uppercase leading-[1.03] text-white min-[390px]:text-[38px]">
             Personal
             <span className="block text-[var(--sb-red-bright)]">
               Information

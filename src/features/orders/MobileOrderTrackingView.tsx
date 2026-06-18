@@ -71,10 +71,10 @@ export function MobileOrderTrackingView({
             <p className="editorial-title text-[19px] uppercase tracking-[0.04em] text-[var(--sb-gold-soft)]">
               Order {order.confirmationCode}
             </p>
-            <h1 className="mt-5 text-[44px] leading-[0.96] text-white">
+            <h1 className="mt-5 text-[34px] leading-[0.98] text-white min-[390px]:text-[40px] min-[390px]:leading-[0.96]">
               {getMobileOrderHeadline(order)}
             </h1>
-            <p className="mt-4 text-[19px] leading-7 text-[var(--sb-gold-soft)]">
+            <p className="mt-4 text-[16px] leading-6 text-[var(--sb-gold-soft)] min-[390px]:text-[19px] min-[390px]:leading-7">
               {order.mode === "delivery"
                 ? "Your sushi is moving through the final handoff."
                 : "Your sushi is being prepared for pickup."}
@@ -269,8 +269,8 @@ function TrackingActionLink({
     <Link
       className={
         primary
-          ? "red-glow-button flex min-h-[72px] items-center justify-center gap-3 rounded-[15px] text-[13px] uppercase tracking-[0.08em]"
-          : "flex min-h-[72px] items-center justify-center gap-3 rounded-[15px] border border-[var(--sb-gold)]/28 bg-black/34 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_16px_34px_rgba(0,0,0,0.32)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+          ? "red-glow-button flex min-h-[62px] items-center justify-center gap-2.5 rounded-[14px] text-[12px] uppercase tracking-[0.07em] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[15px] min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]"
+          : "flex min-h-[62px] items-center justify-center gap-2.5 rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/34 text-[12px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_16px_34px_rgba(0,0,0,0.32)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[15px] min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]"
       }
       href={href}
     >

@@ -78,10 +78,10 @@ export function MobileReservationsMainView({
             <div className="absolute inset-0 bg-[linear-gradient(90deg,#050505_0%,rgba(5,5,5,0.76)_54%,rgba(5,5,5,0.28)_100%)]" />
           </div>
           <div className="relative pt-8">
-            <h1 className="editorial-title text-[40px] leading-none tracking-[0.08em] text-white">
+            <h1 className="editorial-title text-[35px] leading-none tracking-[0.07em] text-white min-[390px]:text-[40px] min-[390px]:tracking-[0.08em]">
               Reservations
             </h1>
-            <p className="mt-4 max-w-[320px] text-[18px] leading-6 text-[var(--sb-gold-soft)]">
+            <p className="mt-4 max-w-[320px] text-[16px] leading-6 text-[var(--sb-gold-soft)] min-[390px]:text-[18px]">
               Thoughtfully prepared. Unforgettable moments.
             </p>
           </div>
@@ -122,11 +122,11 @@ export function MobileReservationsMainView({
         </section>
 
         <button
-          className="red-glow-button mt-5 flex h-[72px] w-full items-center justify-center gap-4 rounded-[16px] text-[18px]"
+          className="red-glow-button mt-5 flex h-[62px] w-full items-center justify-center gap-3 rounded-[14px] text-[16px] min-[390px]:h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[16px] min-[390px]:text-[18px]"
           onClick={onOpenBooking}
           type="button"
         >
-          <AssetIcon size={28} src={icons.calendar} />
+          <AssetIcon size={24} src={icons.calendar} />
           Reserve a Table
         </button>
 

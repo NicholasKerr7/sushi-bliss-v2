@@ -45,22 +45,22 @@ export function MobileOrdersCommandCenter({
 
   return (
     <MobileOrderPanel className="mt-6 overflow-hidden p-4">
-      <div className="grid grid-cols-[58px_1fr] gap-4">
+      <div className="grid grid-cols-[50px_1fr] gap-3 min-[390px]:grid-cols-[58px_1fr] min-[390px]:gap-4">
         <MobileIconCircle
           className={classNames(
-            "h-[58px] w-[58px]",
+            "h-[50px] w-[50px] min-[390px]:h-[58px] min-[390px]:w-[58px]",
             canTrack
               ? "border-[var(--sb-red-bright)]/62 shadow-[0_0_22px_rgba(239,47,37,0.3)]"
               : "border-[var(--sb-gold)]/42",
           )}
           icon={canTrack ? icons.location : icons.bag}
-          size={29}
+          size={25}
         />
         <div className="min-w-0">
           <p className="text-[11px] uppercase tracking-[0.16em] text-white/48">
             Order Command
           </p>
-          <h2 className="editorial-title mt-2 text-[24px] leading-[1.02] text-white">
+          <h2 className="editorial-title mt-2 text-[21px] leading-[1.04] text-white min-[390px]:text-[24px] min-[390px]:leading-[1.02]">
             {featuredOrder ? "Kitchen handoff is active" : "No active handoff"}
           </h2>
           <p className="mt-2 text-[14px] leading-5 text-white/58">
@@ -96,25 +96,25 @@ export function MobileOrdersCommandCenter({
       <div className="mt-4 grid grid-cols-[1.15fr_0.85fr] gap-3">
         {canTrack && featuredOrder ? (
           <button
-            className="red-glow-button flex min-h-[56px] items-center justify-center gap-3 rounded-[13px] text-[12px] uppercase tracking-[0.08em]"
+            className="red-glow-button flex min-h-[50px] items-center justify-center gap-2.5 rounded-[12px] text-[11px] uppercase tracking-[0.07em] min-[390px]:min-h-[56px] min-[390px]:gap-3 min-[390px]:rounded-[13px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
             onClick={() => onTrackOrder(featuredOrder)}
             type="button"
           >
-            <AssetIcon size={24} src={icons.location} />
+            <AssetIcon size={21} src={icons.location} />
             Track Active
           </button>
         ) : (
           <Link
-            className="red-glow-button flex min-h-[56px] items-center justify-center gap-3 rounded-[13px] text-[12px] uppercase tracking-[0.08em]"
+            className="red-glow-button flex min-h-[50px] items-center justify-center gap-2.5 rounded-[12px] text-[11px] uppercase tracking-[0.07em] min-[390px]:min-h-[56px] min-[390px]:gap-3 min-[390px]:rounded-[13px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
             href="/menu"
           >
-            <AssetIcon size={24} src={icons.menu} />
+            <AssetIcon size={21} src={icons.menu} />
             Start Order
           </Link>
         )}
 
         <button
-          className="min-h-[56px] rounded-[13px] border border-[var(--sb-border)] bg-black/34 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+          className="min-h-[50px] rounded-[12px] border border-[var(--sb-border)] bg-black/34 text-[11px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[56px] min-[390px]:rounded-[13px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
           onClick={() => onViewChange(nextView)}
           type="button"
         >

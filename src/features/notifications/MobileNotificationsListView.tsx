@@ -60,7 +60,7 @@ export function MobileNotificationsListView({
         <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           Notification center
         </p>
-        <h1 className="editorial-title mt-3 text-[43px] uppercase leading-[0.96] text-white">
+        <h1 className="editorial-title mt-3 text-[37px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
           Alerts
           <span className="block text-[var(--sb-red-bright)]">& Updates</span>
         </h1>
@@ -82,7 +82,7 @@ export function MobileNotificationsListView({
                 <p className="text-[12px] uppercase tracking-[0.14em] text-white/54">
                   Unread notices
                 </p>
-                <p className="mt-2 font-mono text-[46px] leading-none text-[var(--sb-gold-soft)]">
+                <p className="mt-2 font-mono text-[40px] leading-none text-[var(--sb-gold-soft)] min-[390px]:text-[46px]">
                   {unreadCount}
                 </p>
               </div>
@@ -101,19 +101,19 @@ export function MobileNotificationsListView({
             </p>
             {priorityNotification ? (
               <button
-                className="mt-4 rounded-[14px] border border-white/12 bg-black/38 p-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+                className="mt-3 rounded-[12px] border border-white/12 bg-black/38 px-2.5 py-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
                 onClick={() => onViewNotification(priorityNotification)}
                 type="button"
               >
-                <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+                <span className="text-[10px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
                   {priorityNotification.readAt
                     ? "Latest notice"
                     : "Next priority"}
                 </span>
-                <span className="mt-1 block text-[16px] font-semibold leading-5 text-white">
+                <span className="mt-0.5 line-clamp-1 block text-[13px] font-semibold leading-4 text-white">
                   {priorityNotification.title}
                 </span>
-                <span className="mt-2 block text-[12px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]">
+                <span className="mt-0.5 block text-[10px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]">
                   {getNotificationActionLabel(priorityNotification)}
                 </span>
               </button>
@@ -233,7 +233,7 @@ function NotificationCategoryButton({
     <button
       aria-pressed={active}
       className={classNames(
-        "grid min-h-[102px] min-w-[112px] place-items-center rounded-[16px] border bg-black/30 px-3 py-3 text-center transition disabled:cursor-not-allowed disabled:opacity-45",
+        "flex min-h-[68px] min-w-[90px] flex-col items-center justify-center rounded-[13px] border bg-black/30 px-2.5 py-1.5 text-center transition disabled:cursor-not-allowed disabled:opacity-45 min-[390px]:min-h-[76px] min-[390px]:min-w-[100px] min-[390px]:rounded-[15px]",
         active
           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/16 text-[var(--sb-red-bright)]"
           : "border-white/12 text-white/62",
@@ -242,11 +242,16 @@ function NotificationCategoryButton({
       onClick={onClick}
       type="button"
     >
-      <MobileNotificationIcon category={category} className="h-11 w-11" />
-      <span className="mt-2 text-[11px] uppercase tracking-[0.08em]">
+      <MobileNotificationIcon
+        category={category}
+        className="h-7 w-7 min-[390px]:h-8 min-[390px]:w-8"
+      />
+      <span className="mt-1 whitespace-nowrap text-[9px] uppercase tracking-[0.08em]">
         {notificationCategoryLabels[category]}
       </span>
-      <span className="mt-1 font-mono text-[20px] leading-none">{count}</span>
+      <span className="mt-0.5 font-mono text-[14px] leading-none min-[390px]:text-[15px]">
+        {count}
+      </span>
     </button>
   );
 }

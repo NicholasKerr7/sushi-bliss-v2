@@ -68,7 +68,7 @@ export function MobileOmakaseReviewView({
             <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
               {selectedPackage.subtitle}
             </p>
-            <h1 className="editorial-title mt-3 text-[38px] uppercase leading-none text-white">
+            <h1 className="editorial-title mt-3 text-[34px] uppercase leading-none text-white min-[390px]:text-[38px]">
               {selectedPackage.title}
             </h1>
             <p className="mt-4 font-mono text-[28px] text-[var(--sb-gold-soft)]">

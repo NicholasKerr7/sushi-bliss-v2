@@ -49,27 +49,27 @@ export function MobileOmakaseLandingView({
 
   return (
     <>
-      <div className="mt-7 grid grid-cols-[minmax(0,1fr)_72px] gap-3">
+      <div className="mt-7 grid grid-cols-[minmax(0,1fr)_62px] gap-2.5 min-[390px]:grid-cols-[minmax(0,1fr)_72px] min-[390px]:gap-3">
         <Link
           aria-label="Search sushi, rolls, or dishes"
-          className="grid min-h-[72px] grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-[13px] border border-[var(--sb-border)] bg-black/44 px-5 text-[16px] text-white/64 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_38px_rgba(0,0,0,0.36)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+          className="grid min-h-[62px] grid-cols-[30px_minmax(0,1fr)] items-center gap-2.5 rounded-[12px] border border-[var(--sb-border)] bg-black/44 px-4 text-[14px] text-white/64 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_38px_rgba(0,0,0,0.36)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[72px] min-[390px]:grid-cols-[34px_minmax(0,1fr)] min-[390px]:gap-3 min-[390px]:rounded-[13px] min-[390px]:px-5 min-[390px]:text-[16px]"
           href="/menu"
         >
           <AssetIcon
             loading="eager"
-            size={27}
+            size={24}
             src="/assets/icons/search-icon.png"
           />
           <span className="truncate">Search sushi, rolls, or dishes...</span>
         </Link>
         <Link
           aria-label="Open menu filters"
-          className="grid min-h-[72px] place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/44 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_38px_rgba(0,0,0,0.36)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+          className="grid min-h-[62px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/44 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_38px_rgba(0,0,0,0.36)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[72px] min-[390px]:rounded-[13px]"
           href="/menu"
         >
           <AssetIcon
             loading="eager"
-            size={29}
+            size={25}
             src="/assets/icons/user-settings-icon.png"
           />
         </Link>
@@ -96,9 +96,9 @@ export function MobileOmakaseLandingView({
           <p className="editorial-title text-[22px] leading-none text-[var(--sb-gold-soft)]">
             The Art Of
           </p>
-          <h1 className="editorial-title mt-3 text-[52px] leading-[0.88] text-white">
+          <h1 className="editorial-title mt-3 text-[36px] leading-[0.92] text-white min-[390px]:text-[40px] min-[390px]:leading-[0.9]">
             Omakase
-            <span className="mt-2 block text-[34px] leading-[0.98] text-[var(--sb-red-bright)]">
+            <span className="mt-2 block text-[24px] leading-[0.98] text-[var(--sb-red-bright)] min-[390px]:text-[28px]">
               The Chef&apos;s Journey
             </span>
           </h1>
@@ -192,12 +192,15 @@ export function MobileOmakaseLandingView({
       </MobileOmakasePanel>
 
       <button
-        className="red-glow-button mt-5 flex min-h-[76px] w-full items-center justify-center gap-8 rounded-[14px] border text-[16px]"
+        className="red-glow-button mt-5 flex min-h-[64px] w-full items-center justify-center gap-5 rounded-[13px] border text-[14px] min-[390px]:min-h-[76px] min-[390px]:gap-8 min-[390px]:rounded-[14px] min-[390px]:text-[16px]"
         onClick={onOpenReview}
         type="button"
       >
         Choose Experience
-        <span aria-hidden="true" className="text-[30px] leading-none">
+        <span
+          aria-hidden="true"
+          className="text-[25px] leading-none min-[390px]:text-[30px]"
+        >
           <ChevronIcon direction="right" size={18} />
         </span>
       </button>
@@ -234,11 +237,11 @@ export function MobileOmakaseLandingView({
         <div className="mt-3 grid gap-3">
           {premiumReservationCards.map((card) => (
             <Link
-              className="grid min-h-[112px] grid-cols-[92px_minmax(0,1fr)] gap-4 rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+              className="grid min-h-[102px] grid-cols-[78px_minmax(0,1fr)] gap-3 rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl min-[390px]:min-h-[112px] min-[390px]:grid-cols-[92px_minmax(0,1fr)] min-[390px]:gap-4 min-[390px]:rounded-[18px]"
               href={card.href}
               key={card.id}
             >
-              <span className="relative min-h-[88px] overflow-hidden rounded-[13px] border border-white/10 bg-black/34">
+              <span className="relative min-h-[78px] overflow-hidden rounded-[12px] border border-white/10 bg-black/34 min-[390px]:min-h-[88px] min-[390px]:rounded-[13px]">
                 <Image
                   alt={card.image.alt || card.title}
                   className="object-cover"
@@ -356,11 +359,11 @@ function MobileOmakasePackageCard({
   return (
     <button
       aria-pressed={isSelected}
-      className="grid min-h-[126px] w-full grid-cols-[92px_minmax(0,1fr)_26px] gap-4 rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] p-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+      className="grid min-h-[112px] w-full grid-cols-[76px_minmax(0,1fr)_22px] gap-3 rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] p-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl min-[390px]:min-h-[126px] min-[390px]:grid-cols-[92px_minmax(0,1fr)_26px] min-[390px]:gap-4 min-[390px]:rounded-[18px]"
       onClick={() => onSelectPackage(omakasePackage.id)}
       type="button"
     >
-      <span className="relative min-h-[102px] overflow-hidden rounded-[14px] border border-white/10 bg-black/34">
+      <span className="relative min-h-[88px] overflow-hidden rounded-[12px] border border-white/10 bg-black/34 min-[390px]:min-h-[102px] min-[390px]:rounded-[14px]">
         <Image
           alt={omakasePackage.image.alt || omakasePackage.title}
           className="object-cover"

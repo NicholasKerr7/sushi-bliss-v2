@@ -154,7 +154,7 @@ function MobileHeroCard() {
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black via-black/45 to-transparent" />
       <div className="sb-wave-pattern absolute bottom-2 left-0 h-32 w-48 opacity-28" />
       <div className="relative z-10 flex min-h-[190px] flex-col justify-start px-1 py-7">
-        <h2 className="editorial-title max-w-[340px] text-[30px] leading-[1.08] text-white">
+        <h2 className="editorial-title max-w-[340px] text-[27px] leading-[1.08] text-white min-[390px]:text-[30px]">
           Japanese Artistry.
           <span className="block text-[var(--sb-red-bright)]">
             Timeless Bliss.
@@ -180,7 +180,7 @@ function CategoryRail({ activeCategory, onCategoryChange }: CategoryRailProps) {
         const active = activeCategory === id;
         return (
           <button
-            className={`flex min-h-[70px] min-w-0 flex-col items-center justify-center gap-1 rounded-[15px] border px-1 uppercase transition ${
+            className={`flex min-h-[62px] min-w-0 flex-col items-center justify-center gap-1 rounded-[13px] border px-1 uppercase transition min-[390px]:min-h-[70px] min-[390px]:rounded-[15px] ${
               active
                 ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/28 text-[var(--sb-red-bright)] shadow-[0_0_28px_var(--sb-red-glow)]"
                 : "border-transparent text-white/78 hover:text-[var(--sb-gold)]"
@@ -191,7 +191,7 @@ function CategoryRail({ activeCategory, onCategoryChange }: CategoryRailProps) {
           >
             <AssetIcon
               className={active ? "brightness-125" : "opacity-82 grayscale"}
-              size={23}
+              size={21}
               src={icon}
             />
             <span className="block max-w-full truncate text-center text-[9px] leading-3">
@@ -246,10 +246,10 @@ function QuickActionGrid() {
   return (
     <div className="mt-5 grid grid-cols-2 gap-3">
       <Link
-        className="red-glow-button flex min-h-[82px] items-center gap-2 rounded-[18px] px-3 text-left uppercase tracking-[0.04em] text-white min-[390px]:gap-3 min-[390px]:px-4"
+        className="red-glow-button flex min-h-[74px] items-center gap-2 rounded-[16px] px-3 text-left uppercase tracking-[0.04em] text-white min-[390px]:min-h-[82px] min-[390px]:gap-3 min-[390px]:rounded-[18px] min-[390px]:px-4"
         href="/reservations"
       >
-        <AssetIcon size={30} src={icons.calendar} />
+        <AssetIcon size={26} src={icons.calendar} />
         <span className="min-w-0">
           <span className="editorial-title block text-[12px] leading-[1.15] min-[390px]:text-[13px]">
             Reserve a Table
@@ -260,10 +260,10 @@ function QuickActionGrid() {
         </span>
       </Link>
       <Link
-        className="flex min-h-[82px] items-center gap-2 rounded-[18px] border border-[var(--sb-border-strong)] bg-black/58 px-3 text-left uppercase tracking-[0.04em] text-[var(--sb-gold)] shadow-[0_0_24px_rgba(202,164,93,0.12)] min-[390px]:gap-3 min-[390px]:px-4"
+        className="flex min-h-[74px] items-center gap-2 rounded-[16px] border border-[var(--sb-border-strong)] bg-black/58 px-3 text-left uppercase tracking-[0.04em] text-[var(--sb-gold)] shadow-[0_0_24px_rgba(202,164,93,0.12)] min-[390px]:min-h-[82px] min-[390px]:gap-3 min-[390px]:rounded-[18px] min-[390px]:px-4"
         href="/menu"
       >
-        <AssetIcon size={30} src={icons.bag} />
+        <AssetIcon size={26} src={icons.bag} />
         <span className="min-w-0">
           <span className="editorial-title block text-[12px] leading-[1.15] min-[390px]:text-[13px]">
             Order Now

@@ -124,8 +124,8 @@ export function MobileSupportIcon({
   return (
     <span
       className={classNames(
-        "grid h-[58px] w-[58px] shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/34",
-        className,
+        "grid shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/34",
+        className || "h-[52px] w-[52px]",
       )}
     >
       <AssetIcon size={size} src={icon} />

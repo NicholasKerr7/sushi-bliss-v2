@@ -181,7 +181,7 @@ export function MobileOrderDetailsView({
         <div className="mt-4 grid gap-3 rounded-[18px] border border-[var(--sb-border)] bg-black/26 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_42px_rgba(0,0,0,0.36)]">
           {canTrack ? (
             <button
-              className="red-glow-button flex min-h-[72px] w-full items-center justify-center gap-4 rounded-[15px] text-[17px] uppercase tracking-[0.08em]"
+              className="red-glow-button flex min-h-[62px] w-full items-center justify-center gap-3 rounded-[14px] text-[15px] uppercase tracking-[0.07em] min-[390px]:min-h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[15px] min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
               onClick={() => onTrackOrder(order)}
               type="button"
             >
@@ -191,7 +191,7 @@ export function MobileOrderDetailsView({
             </button>
           ) : (
             <button
-              className="red-glow-button flex min-h-[72px] w-full items-center justify-center gap-4 rounded-[15px] text-[17px] uppercase tracking-[0.08em]"
+              className="red-glow-button flex min-h-[62px] w-full items-center justify-center gap-3 rounded-[14px] text-[15px] uppercase tracking-[0.07em] min-[390px]:min-h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[15px] min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
               onClick={() => onReorder(order)}
               type="button"
             >

@@ -96,7 +96,7 @@ export function MobileReservationExperienceView({
       <MobileReservationStepRail activeStep={2} />
 
       <section className="mt-7">
-        <h1 className="editorial-title text-[40px] leading-none tracking-[0.08em] text-white">
+        <h1 className="editorial-title text-[35px] leading-none tracking-[0.07em] text-white min-[390px]:text-[40px] min-[390px]:tracking-[0.08em]">
           Choose Your{" "}
           <span className="block text-[var(--sb-red-bright)]">Experience</span>
         </h1>
@@ -113,7 +113,7 @@ export function MobileReservationExperienceView({
             <button
               aria-pressed={selected}
               className={classNames(
-                "grid min-h-[126px] grid-cols-[118px_1fr_36px] items-center gap-4 rounded-[16px] border p-3 text-left transition",
+                "grid min-h-[112px] grid-cols-[94px_1fr_30px] items-center gap-3 rounded-[15px] border p-3 text-left transition min-[390px]:min-h-[126px] min-[390px]:grid-cols-[118px_1fr_36px] min-[390px]:gap-4 min-[390px]:rounded-[16px]",
                 selected
                   ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/10 shadow-[0_0_24px_rgba(239,47,37,0.24)]"
                   : "border-[var(--sb-border)] bg-black/34",
@@ -122,7 +122,7 @@ export function MobileReservationExperienceView({
               onClick={() => onDraftChange("experienceId", experience.id)}
               type="button"
             >
-              <span className="relative h-[92px] overflow-hidden rounded-[12px] bg-black/34">
+              <span className="relative h-[78px] overflow-hidden rounded-[11px] bg-black/34 min-[390px]:h-[92px] min-[390px]:rounded-[12px]">
                 <Image
                   alt={experience.title}
                   className="object-cover"
@@ -238,7 +238,7 @@ export function MobileReservationExperienceView({
       </MobileReservationPanel>
 
       <button
-        className="red-glow-button mt-5 flex h-[72px] w-full items-center justify-center gap-4 rounded-[16px] text-[17px]"
+        className="red-glow-button mt-5 flex h-[62px] w-full items-center justify-center gap-3 rounded-[14px] text-[15px] min-[390px]:h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[16px] min-[390px]:text-[17px]"
         onClick={onContinue}
         type="button"
       >

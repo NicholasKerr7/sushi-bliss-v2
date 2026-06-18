@@ -32,7 +32,7 @@ export function MobileGiftSelectionView({
         <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           Gift experiences
         </p>
-        <h1 className="editorial-title mt-3 text-[43px] uppercase leading-[0.96] text-white">
+        <h1 className="editorial-title mt-3 text-[37px] uppercase leading-[0.96] text-white min-[390px]:text-[40px]">
           Send
           <span className="block text-[var(--sb-red-bright)]">Bliss</span>
         </h1>
@@ -56,7 +56,7 @@ export function MobileGiftSelectionView({
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.86)_100%)]" />
           <div className="relative z-10 flex min-h-[282px] flex-col justify-end">
             <StatusBadge tone="premium">{selectedGift.category}</StatusBadge>
-            <h2 className="editorial-title mt-4 text-[34px] uppercase leading-none text-white">
+            <h2 className="editorial-title mt-4 text-[29px] uppercase leading-none text-white min-[390px]:text-[32px]">
               {selectedGift.title}
             </h2>
             <p className="mt-3 text-[15px] leading-6 text-white/62">
@@ -143,11 +143,11 @@ function MobileGiftPackageCard({
   return (
     <button
       aria-pressed={isSelected}
-      className="grid min-h-[126px] w-full grid-cols-[92px_minmax(0,1fr)_26px] gap-4 rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] p-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+      className="grid min-h-[112px] w-full grid-cols-[76px_minmax(0,1fr)_22px] gap-3 rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] p-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl min-[390px]:min-h-[126px] min-[390px]:grid-cols-[92px_minmax(0,1fr)_26px] min-[390px]:gap-4 min-[390px]:rounded-[18px]"
       onClick={() => onSelectGift(gift.id)}
       type="button"
     >
-      <span className="relative min-h-[102px] overflow-hidden rounded-[14px] border border-white/10 bg-black/34">
+      <span className="relative min-h-[88px] overflow-hidden rounded-[12px] border border-white/10 bg-black/34 min-[390px]:min-h-[102px] min-[390px]:rounded-[14px]">
         <Image
           alt={gift.image.alt || gift.title}
           className="object-cover"
@@ -161,7 +161,7 @@ function MobileGiftPackageCard({
         <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
           {gift.category}
         </span>
-        <span className="mt-2 block text-[18px] font-semibold leading-6 text-white">
+        <span className="mt-2 block text-[16px] font-semibold leading-5 text-white min-[390px]:text-[18px] min-[390px]:leading-6">
           {gift.title}
         </span>
         <span className="mt-1 block text-[13px] leading-5 text-white/52">

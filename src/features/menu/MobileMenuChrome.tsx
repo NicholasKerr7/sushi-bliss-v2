@@ -155,7 +155,7 @@ export function MobileCategoryPills({
           <button
             aria-pressed={active}
             className={classNames(
-              "min-h-[52px] shrink-0 rounded-[16px] border px-5 text-[14px] uppercase transition",
+              "min-h-[46px] shrink-0 rounded-[14px] border px-4 text-[12px] uppercase transition min-[390px]:min-h-[52px] min-[390px]:rounded-[16px] min-[390px]:px-5 min-[390px]:text-[14px]",
               active
                 ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/48 text-white shadow-[0_0_28px_var(--sb-red-glow)]"
                 : "border-white/14 bg-white/[0.035] text-white/78",

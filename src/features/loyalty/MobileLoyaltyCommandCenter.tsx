@@ -39,17 +39,17 @@ export function MobileLoyaltyCommandCenter({
 
   return (
     <MobileLoyaltyPanel className="mt-4 overflow-hidden p-4">
-      <div className="grid grid-cols-[58px_1fr] gap-4">
+      <div className="grid grid-cols-[50px_1fr] gap-3 min-[390px]:grid-cols-[58px_1fr] min-[390px]:gap-4">
         <MobileLoyaltyIconCircle
-          className="h-[58px] w-[58px] border-[var(--sb-gold)]/44"
+          className="h-[50px] w-[50px] border-[var(--sb-gold)]/44 min-[390px]:h-[58px] min-[390px]:w-[58px]"
           icon="/assets/icons/golden-ticket-icon.png"
-          size={30}
+          size={25}
         />
         <div className="min-w-0">
           <p className="text-[11px] uppercase tracking-[0.16em] text-white/48">
             Rewards Command
           </p>
-          <h2 className="editorial-title mt-2 text-[24px] leading-[1.02] text-white">
+          <h2 className="editorial-title mt-2 text-[21px] leading-[1.04] text-white min-[390px]:text-[24px] min-[390px]:leading-[1.02]">
             {redeemableRewards.length > 0
               ? "Ready to redeem"
               : "Earn toward the next reward"}
@@ -79,25 +79,25 @@ export function MobileLoyaltyCommandCenter({
       <div className="mt-4 grid grid-cols-[1.15fr_0.85fr] gap-3">
         {redeemableRewards.length > 0 && nextReward ? (
           <button
-            className="red-glow-button flex min-h-[56px] items-center justify-center gap-3 rounded-[13px] text-[12px] uppercase tracking-[0.08em]"
+            className="red-glow-button flex min-h-[50px] items-center justify-center gap-2.5 rounded-[12px] text-[11px] uppercase tracking-[0.07em] min-[390px]:min-h-[56px] min-[390px]:gap-3 min-[390px]:rounded-[13px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
             onClick={() => onViewReward(nextReward)}
             type="button"
           >
-            <AssetIcon size={24} src="/assets/icons/golden-ticket-icon.png" />
+            <AssetIcon size={21} src="/assets/icons/golden-ticket-icon.png" />
             Redeem Now
           </button>
         ) : (
           <Link
-            className="red-glow-button flex min-h-[56px] items-center justify-center gap-3 rounded-[13px] text-[12px] uppercase tracking-[0.08em]"
+            className="red-glow-button flex min-h-[50px] items-center justify-center gap-2.5 rounded-[12px] text-[11px] uppercase tracking-[0.07em] min-[390px]:min-h-[56px] min-[390px]:gap-3 min-[390px]:rounded-[13px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
             href="/menu"
           >
-            <AssetIcon size={24} src={icons.menu} />
+            <AssetIcon size={21} src={icons.menu} />
             Earn Points
           </Link>
         )}
 
         <Link
-          className="grid min-h-[56px] place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/34 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+          className="grid min-h-[50px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/34 text-[11px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[56px] min-[390px]:rounded-[13px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
           href="/offers"
         >
           Offers

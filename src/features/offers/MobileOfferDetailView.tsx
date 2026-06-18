@@ -60,7 +60,7 @@ export function MobileOfferDetailView({
             <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
               Member code
             </p>
-            <h1 className="editorial-title mt-3 text-[42px] uppercase leading-[0.96] text-white">
+            <h1 className="editorial-title mt-3 text-[36px] uppercase leading-[0.96] text-white min-[390px]:text-[42px]">
               {offer.title}
             </h1>
             <p className="mt-3 text-[16px] font-semibold leading-6 text-[var(--sb-red-bright)]">
@@ -70,12 +70,12 @@ export function MobileOfferDetailView({
         </div>
 
         <div className="p-5">
-          <div className="grid grid-cols-[1fr_112px] overflow-hidden rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/46">
+          <div className="grid grid-cols-[1fr_94px] overflow-hidden rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/46 min-[390px]:grid-cols-[1fr_112px]">
             <div className="min-w-0 p-4">
               <p className="text-[10px] uppercase tracking-[0.12em] text-white/46">
                 Offer code
               </p>
-              <p className="mt-1 truncate font-mono text-[27px] text-white">
+              <p className="mt-1 truncate font-mono text-[22px] text-white min-[390px]:text-[27px]">
                 {offer.code}
               </p>
             </div>

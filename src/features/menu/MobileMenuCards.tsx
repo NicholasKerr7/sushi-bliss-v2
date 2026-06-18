@@ -84,7 +84,7 @@ export function MobileMenuListCard({
   onViewDetails: (item: MenuItem) => void;
 }) {
   return (
-    <article className="relative grid min-h-[132px] grid-cols-[45%_1fr_48px] overflow-hidden rounded-[16px] border border-white/14 bg-white/[0.035]">
+    <article className="relative grid min-h-[116px] grid-cols-[42%_1fr_42px] overflow-hidden rounded-[15px] border border-white/14 bg-white/[0.035] min-[390px]:min-h-[132px] min-[390px]:grid-cols-[45%_1fr_48px] min-[390px]:rounded-[16px]">
       {badge ? (
         <span className="absolute left-3 top-3 z-10 rounded-[8px] bg-[var(--sb-red)] px-2.5 py-1 text-[10px] uppercase text-white">
           {badge}
@@ -92,7 +92,7 @@ export function MobileMenuListCard({
       ) : null}
       <button
         aria-label={`View details for ${item.name}`}
-        className="relative h-[132px]"
+        className="relative h-[116px] min-[390px]:h-[132px]"
         onClick={() => onViewDetails(item)}
         type="button"
       >
@@ -107,27 +107,27 @@ export function MobileMenuListCard({
         />
       </button>
       <button
-        className="min-w-0 px-4 py-4 text-left"
+        className="min-w-0 px-3 py-3 text-left min-[390px]:px-4 min-[390px]:py-4"
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <h3 className="line-clamp-2 text-[21px] leading-6 text-white">
+        <h3 className="line-clamp-2 text-[18px] leading-5 text-white min-[390px]:text-[21px] min-[390px]:leading-6">
           {item.name}
         </h3>
-        <p className="mt-2 line-clamp-1 text-[15px] text-white/66">
+        <p className="mt-2 line-clamp-1 text-[13px] text-white/66 min-[390px]:text-[15px]">
           {item.description}
         </p>
-        <p className="mt-4 text-[22px] text-[var(--sb-gold)]">
+        <p className="mt-3 text-[19px] text-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:text-[22px]">
           {formatMoney(item.priceCents)}
         </p>
       </button>
       <button
         aria-label={`Add ${item.name} to cart`}
-        className="mr-3 self-center justify-self-end rounded-full border border-[var(--sb-border-strong)] bg-black/58 p-2"
+        className="mr-2 self-center justify-self-end rounded-full border border-[var(--sb-border-strong)] bg-black/58 p-1.5 min-[390px]:mr-3 min-[390px]:p-2"
         onClick={() => onAddToCart(item)}
         type="button"
       >
-        <AssetIcon size={25} src={icons.plus} />
+        <AssetIcon size={21} src={icons.plus} />
       </button>
     </article>
   );

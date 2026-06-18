@@ -125,7 +125,7 @@ export function MobileLocationDetailView({
 
       <div className="mt-4 grid grid-cols-2 gap-3">
         <a
-          className="red-glow-button flex min-h-[72px] items-center justify-center gap-3 rounded-[14px] text-[14px] uppercase tracking-[0.08em]"
+          className="red-glow-button flex min-h-[62px] items-center justify-center gap-2.5 rounded-[13px] text-[12px] uppercase tracking-[0.07em] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[14px] min-[390px]:text-[14px] min-[390px]:tracking-[0.08em]"
           href={directionsUrl}
           rel="noreferrer"
           target="_blank"
@@ -134,7 +134,7 @@ export function MobileLocationDetailView({
           Get directions
         </a>
         <a
-          className="flex min-h-[72px] items-center justify-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/42 text-[14px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          className="flex min-h-[62px] items-center justify-center gap-2.5 rounded-[13px] border border-[var(--sb-border)] bg-black/42 text-[12px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[14px] min-[390px]:text-[14px] min-[390px]:tracking-[0.08em]"
           href={`tel:${location.phone.replaceAll(" ", "")}`}
         >
           <AssetIcon size={26} src="/assets/icons/phone-icon.png" />
@@ -143,7 +143,7 @@ export function MobileLocationDetailView({
       </div>
 
       <Link
-        className="red-glow-button mt-4 flex min-h-[72px] w-full items-center justify-center gap-4 rounded-[14px] text-[16px] uppercase tracking-[0.08em]"
+        className="red-glow-button mt-4 flex min-h-[62px] w-full items-center justify-center gap-3 rounded-[13px] text-[14px] uppercase tracking-[0.07em] min-[390px]:min-h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[14px] min-[390px]:text-[16px] min-[390px]:tracking-[0.08em]"
         href={`/reservations?location=${encodeURIComponent(location.id)}`}
       >
         <AssetIcon size={27} src={icons.calendar} />

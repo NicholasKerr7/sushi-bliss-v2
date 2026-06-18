@@ -58,7 +58,7 @@ export function WelcomeScreen() {
 
         <div className="space-y-5">
           <div>
-            <h1 className="editorial-title text-[62px] uppercase leading-[0.86] text-white">
+            <h1 className="editorial-title text-[40px] uppercase leading-[0.9] text-white">
               Sushi
               <span className="block text-[var(--sb-red-bright)]">Bliss</span>
             </h1>
@@ -67,27 +67,35 @@ export function WelcomeScreen() {
               <AssetIcon src={icons.flower} size={28} />
               <span className="h-px flex-1 bg-[var(--sb-gold)]" />
             </div>
-            <p className="mx-auto mt-5 max-w-[340px] text-[22px] leading-[1.38] text-[var(--sb-gold)]">
+            <p className="mx-auto mt-5 max-w-[340px] text-[18px] leading-[1.38] text-[var(--sb-gold)] min-[390px]:text-[20px]">
               Timeless Japanese artistry. Authentic. Refined. Unforgettable.
             </p>
           </div>
 
           <div className="space-y-4">
             <Link
-              className="red-glow-button flex h-[64px] w-full items-center rounded-[18px] border border-[var(--sb-red-bright)] px-8 text-[16px] font-semibold uppercase tracking-[0.16em] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+              className="red-glow-button flex h-[58px] w-full items-center rounded-[16px] border border-[var(--sb-red-bright)] px-6 text-[14px] font-semibold uppercase tracking-[0.14em] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-[64px] min-[390px]:rounded-[18px] min-[390px]:px-8 min-[390px]:text-[16px] min-[390px]:tracking-[0.16em]"
               href="/menu"
             >
-              <AssetIcon className="mr-4" size={28} src={icons.flower} />
+              <AssetIcon
+                className="mr-3 min-[390px]:mr-4"
+                size={24}
+                src={icons.flower}
+              />
               <span className="flex-1">Explore Menu</span>
               <span className="text-[var(--sb-gold)]" aria-hidden="true">
                 <ChevronIcon direction="right" size={18} />
               </span>
             </Link>
             <Link
-              className="flex h-[62px] w-full items-center rounded-[16px] border border-[var(--sb-border-strong)] bg-black/34 px-8 text-[16px] font-semibold uppercase tracking-[0.22em] text-[var(--sb-gold)] backdrop-blur-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+              className="flex h-[56px] w-full items-center rounded-[15px] border border-[var(--sb-border-strong)] bg-black/34 px-6 text-[14px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold)] backdrop-blur-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-[62px] min-[390px]:rounded-[16px] min-[390px]:px-8 min-[390px]:text-[16px] min-[390px]:tracking-[0.22em]"
               href="/profile"
             >
-              <AssetIcon className="mr-4" size={28} src={icons.profile} />
+              <AssetIcon
+                className="mr-3 min-[390px]:mr-4"
+                size={24}
+                src={icons.profile}
+              />
               <span className="flex-1">Sign In</span>
               <ChevronIcon direction="right" size={18} />
             </Link>
