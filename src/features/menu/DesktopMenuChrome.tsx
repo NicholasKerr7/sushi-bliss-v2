@@ -142,10 +142,10 @@ export function DesktopMenuHeader({
                       : baseNavItems;
 
   return (
-    <header className="border-b border-white/[0.08] bg-[#07090a]/96 px-6 min-[1500px]:px-0">
+    <header className="border-b border-white/[0.08] bg-[#07090a]/96 px-5 min-[1400px]:px-6 min-[1500px]:px-0">
       <div className="mx-auto flex h-[76px] w-full max-w-[1328px] items-center">
         <Link
-          className="flex min-w-[270px] items-center gap-4 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+          className="flex min-w-[210px] items-center gap-3 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1360px]:min-w-[250px] min-[1500px]:min-w-[270px] min-[1500px]:gap-4"
           href="/home"
         >
           <AssetIcon
@@ -162,7 +162,7 @@ export function DesktopMenuHeader({
         </Link>
         <nav
           aria-label="Desktop primary"
-          className="flex flex-1 items-center justify-center gap-4 min-[1500px]:gap-6"
+          className="flex flex-1 items-center justify-center gap-3 min-[1360px]:gap-4 min-[1500px]:gap-6"
         >
           {navItems.map(([id, label, href]) => {
             const active = id === activeId;
@@ -170,7 +170,7 @@ export function DesktopMenuHeader({
             return (
               <Link
                 className={classNames(
-                  "relative flex h-[76px] min-w-11 items-center justify-center text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1500px]:text-[13px]",
+                  "relative flex h-[76px] min-w-11 items-center justify-center whitespace-nowrap px-0.5 text-[11px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1360px]:text-[12px] min-[1500px]:text-[13px]",
                   active && "text-[var(--sb-red-bright)]",
                 )}
                 href={href}
@@ -185,7 +185,7 @@ export function DesktopMenuHeader({
           })}
           <DesktopExploreMenu activeId={activeId} />
         </nav>
-        <div className="flex min-w-[300px] items-center justify-end gap-5">
+        <div className="flex min-w-[230px] items-center justify-end gap-3 min-[1360px]:min-w-[270px] min-[1500px]:min-w-[300px] min-[1500px]:gap-5">
           <Link
             aria-label="Open cart"
             className="relative grid h-11 w-11 place-items-center text-[var(--sb-gold)]"

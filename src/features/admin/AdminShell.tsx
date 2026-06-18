@@ -49,13 +49,13 @@ export function AdminShell({ children }: AdminShellProps) {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-8 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(239,47,37,0.8),transparent)] shadow-[0_0_18px_rgba(239,47,37,0.7)]"
             />
-            <ul className="smooth-scroll-area flex gap-1.5 overflow-x-auto min-[1180px]:grid min-[1180px]:grid-cols-4 min-[1180px]:overflow-visible">
+            <ul className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
               {adminNavigation.map((item) => (
-                <li className="shrink-0 min-[1180px]:min-w-0" key={item.id}>
+                <li className="min-w-0" key={item.id}>
                   <a
                     aria-current={item.id === "overview" ? "page" : undefined}
                     className={classNames(
-                      "grid h-11 min-w-[118px] grid-cols-[24px_minmax(0,1fr)] items-center gap-2 rounded-[14px] border px-3 text-[12px] font-semibold uppercase tracking-[0.04em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold sm:min-w-[132px] min-[1180px]:min-w-0",
+                      "relative grid h-11 min-w-0 grid-cols-[24px_minmax(0,1fr)] items-center gap-2 rounded-[14px] border px-3 text-[12px] font-semibold uppercase tracking-[0.04em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
                       item.id === "overview"
                         ? "red-glow-button border-[#ef3326]/70 text-[#e2dcda]"
                         : "border-white/10 bg-white/[0.035] text-sb-muted hover:border-[var(--sb-gold)]/38 hover:bg-white/[0.065] hover:text-sb-rice",

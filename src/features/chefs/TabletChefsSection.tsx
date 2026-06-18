@@ -331,7 +331,7 @@ function TabletChefCard({
   onViewChef: (chef: Chef) => void;
 }) {
   return (
-    <article className="grid min-h-[250px] grid-cols-[190px_minmax(0,1fr)] overflow-hidden rounded-[7px] border border-white/12 bg-white/[0.035]">
+    <article className="grid min-h-[276px] grid-cols-[166px_minmax(0,1fr)] overflow-hidden rounded-[7px] border border-white/12 bg-white/[0.035] min-[820px]:grid-cols-[178px_minmax(0,1fr)] min-[900px]:min-h-[250px] min-[900px]:grid-cols-[190px_minmax(0,1fr)]">
       <div className="relative min-h-full bg-black/30">
         <Image
           alt={chef.standingImage.alt || chef.name}
@@ -339,7 +339,7 @@ function TabletChefCard({
           fill
           loading={imagePriority ? "eager" : "lazy"}
           priority={imagePriority || undefined}
-          sizes="190px"
+          sizes="(max-width: 819px) 166px, (max-width: 899px) 178px, 190px"
           src={chef.standingImage.publicUrl}
         />
         <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border)] bg-black/54">
@@ -356,7 +356,7 @@ function TabletChefCard({
         <p className="mt-3 line-clamp-3 min-h-[54px] text-[13px] leading-[18px] text-white/58">
           {chef.about}
         </p>
-        <div className="mt-4 grid grid-cols-2 gap-2">
+        <div className="mt-4 grid grid-cols-1 gap-2 min-[900px]:grid-cols-2">
           <TabletChefSignal label="Signature" value={chef.specialty} />
           <TabletChefSignal label="Service" value={chef.sushi} />
         </div>
@@ -379,7 +379,7 @@ function TabletChefSignal({ label, value }: { label: string; value: string }) {
       <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/42">
         {label}
       </p>
-      <p className="mt-1 line-clamp-1 text-[11px] font-semibold text-[var(--sb-gold-soft)]">
+      <p className="mt-1 line-clamp-2 text-[11px] font-semibold leading-4 text-[var(--sb-gold-soft)]">
         {value}
       </p>
     </div>
