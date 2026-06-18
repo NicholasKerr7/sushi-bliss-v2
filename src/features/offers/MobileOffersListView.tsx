@@ -280,6 +280,7 @@ function MobileOfferCard({
     <MobileOffersPanel className="overflow-hidden">
       <div className="grid grid-cols-[112px_minmax(0,1fr)] gap-4 p-3">
         <button
+          aria-label={`View offer details for ${offer.title}`}
           className="relative h-[128px] overflow-hidden rounded-[14px] bg-white/8"
           onClick={() => onViewOffer(offer)}
           type="button"

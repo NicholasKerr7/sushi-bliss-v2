@@ -157,6 +157,7 @@ function RecentlyViewedCard({
 
       <div className="col-span-2 grid grid-cols-[52px_minmax(0,1fr)] gap-3 border-t border-white/8 px-4 py-3 md:col-span-1 md:grid-cols-1 md:border-l md:border-t-0 md:py-4">
         <button
+          aria-label={`${isSaved ? "Remove" : "Save"} ${entry.title}`}
           aria-pressed={isSaved}
           className={classNames(
             "grid h-[48px] w-[48px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/42 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",

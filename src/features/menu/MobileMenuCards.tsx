@@ -28,6 +28,7 @@ export function MobileMenuGridCard({
         </span>
       ) : null}
       <button
+        aria-label={`View details for ${item.name}`}
         className="relative min-h-[96px]"
         onClick={() => onViewDetails(item)}
         type="button"
@@ -90,6 +91,7 @@ export function MobileMenuListCard({
         </span>
       ) : null}
       <button
+        aria-label={`View details for ${item.name}`}
         className="relative h-[132px]"
         onClick={() => onViewDetails(item)}
         type="button"
@@ -152,6 +154,7 @@ export function MobileSearchResultRow({
         </span>
       ) : null}
       <button
+        aria-label={`View details for ${item.name}`}
         className="relative h-[118px]"
         onClick={() => onViewDetails(item)}
         type="button"
