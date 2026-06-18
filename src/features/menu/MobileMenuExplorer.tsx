@@ -198,7 +198,7 @@ function MobileMenuOverview({
         {items.slice(0, 8).map((item, index) => (
           <MobileMenuGridCard
             badge={index === 0 ? "Hot" : index === 1 ? "Popular" : undefined}
-            eagerImage={index < 2}
+            eagerImage={index < 4}
             item={item}
             key={item.id}
             onAddToCart={onAddToCart}

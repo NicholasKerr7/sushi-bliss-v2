@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useLoyalty } from "@/hooks/useLoyalty";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
+import { useResponsiveReady } from "@/hooks/useResponsiveReady";
 import type { Reward } from "@/types/loyalty";
 
 import { DesktopLoyaltyDashboard } from "./DesktopLoyaltyDashboard";
@@ -15,6 +16,7 @@ export function LoyaltyDashboard() {
   const { account, redeemReward, redeemedRewards, transactions } = useLoyalty();
   const { unreadCount } = useNotifications();
   const mode = useResponsiveMode();
+  const responsiveReady = useResponsiveReady();
   const [selectedReward, setSelectedReward] = useState<Reward | null>(null);
   const [redemptionMessage, setRedemptionMessage] = useState("");
 
@@ -29,6 +31,10 @@ export function LoyaltyDashboard() {
 
     return result;
   };
+
+  if (!responsiveReady) {
+    return <section className="min-h-dvh bg-[#050607]" aria-hidden="true" />;
+  }
 
   if (mode === "mobile") {
     return (

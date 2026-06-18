@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
 
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useCart } from "@/hooks/useCart";
 import { useMenu } from "@/hooks/useMenu";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
+import { useResponsiveReady } from "@/hooks/useResponsiveReady";
 import { getDefaultCustomizations } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
@@ -15,28 +16,10 @@ import { ItemDetailDrawer } from "./ItemDetailDrawer";
 import { MobileMenuExplorer } from "./MobileMenuExplorer";
 import { TabletMenuExplorer } from "./TabletMenuExplorer";
 
-function subscribeToClientReady(onStoreChange: () => void) {
-  const timeoutId = window.setTimeout(onStoreChange, 0);
-
-  return () => window.clearTimeout(timeoutId);
-}
-
-function getClientReadySnapshot() {
-  return true;
-}
-
-function getServerReadySnapshot() {
-  return false;
-}
-
 export function MenuExplorer() {
   const mode = useResponsiveMode();
   const [cartOpen, setCartOpen] = useState(false);
-  const responsiveReady = useSyncExternalStore(
-    subscribeToClientReady,
-    getClientReadySnapshot,
-    getServerReadySnapshot,
-  );
+  const responsiveReady = useResponsiveReady();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const {
     categories,
