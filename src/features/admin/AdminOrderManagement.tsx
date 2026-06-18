@@ -143,7 +143,7 @@ export function AdminOrderManagement() {
                 >
                   {item.value}
                 </p>
-                <p className="mt-0.5 truncate text-[11px] text-sb-dim">
+                <p className="mt-0.5 hidden truncate text-[11px] text-sb-dim sm:block">
                   {item.detail}
                 </p>
               </div>
