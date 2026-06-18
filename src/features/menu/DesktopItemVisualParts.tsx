@@ -174,12 +174,22 @@ export function DesktopDetailInfoCard({
   title: string;
 }) {
   return (
-    <article className="min-h-[118px] rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
-      <h2 className="editorial-title flex items-center gap-3 text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-        <AssetIcon size={28} src={icon} />
-        {title}
-      </h2>
-      <div className="mt-2 text-[14px] leading-6 text-white/66">{children}</div>
+    <article className="relative flex h-full min-h-[178px] overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.24)]">
+      <span className="pointer-events-none absolute -right-10 -top-12 h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(215,168,79,0.14),transparent_68%)]" />
+      <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(215,168,79,0.32),transparent)]" />
+      <div className="relative z-10 flex min-w-0 flex-col">
+        <div className="flex items-center gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full border border-[var(--sb-gold)]/34 bg-black/42 shadow-[0_0_22px_rgba(215,168,79,0.12)]">
+            <AssetIcon size={28} src={icon} />
+          </span>
+          <h2 className="min-w-0 truncate text-[12px] font-semibold uppercase tracking-[0.14em] text-white">
+            {title}
+          </h2>
+        </div>
+        <div className="mt-4 text-[14px] leading-6 text-white/68">
+          {children}
+        </div>
+      </div>
     </article>
   );
 }

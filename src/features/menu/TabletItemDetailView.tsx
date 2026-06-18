@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -205,24 +205,18 @@ export function TabletDetailView({
           </p>
 
           <div className="mt-4 grid grid-cols-3 gap-3">
-            <article className="min-h-[150px] rounded-[16px] border border-white/10 bg-black/20 p-4">
-              <h2 className="text-[16px] font-semibold uppercase tracking-[0.08em]">
-                Ingredients
-              </h2>
-              <p className="mt-3 text-[15px] leading-6 text-white/66">
+            <TabletDetailInfoCard icon={icons.leaf} title="Ingredients">
+              <p className="text-[15px] leading-6 text-white/66">
                 {item.ingredients.join(", ")}
               </p>
-            </article>
+            </TabletDetailInfoCard>
 
-            <article className="min-h-[150px] rounded-[16px] border border-white/10 bg-black/20 p-4">
-              <h2 className="text-[16px] font-semibold uppercase tracking-[0.08em]">
-                Chef Note
-              </h2>
-              <p className="mt-3 text-[15px] leading-6 text-white/66">
+            <TabletDetailInfoCard icon={icons.chef} title="Chef Note">
+              <p className="text-[15px] leading-6 text-white/66">
                 Prepared with the house balance and finished moments before
                 serving.
               </p>
-            </article>
+            </TabletDetailInfoCard>
 
             <TastingNotesCard
               className="min-h-[150px]"
@@ -231,20 +225,30 @@ export function TabletDetailView({
           </div>
 
           {item.sakePairing ? (
-            <section className="mt-4 grid min-h-[112px] grid-cols-[minmax(0,1fr)_260px] items-center gap-5 rounded-[16px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8 p-4">
-              <div>
-                <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
-                  Perfect Pairing
-                </p>
-                <h2 className="mt-1 text-[22px] font-semibold">
-                  {item.sakePairing.sakeName}
-                </h2>
-                <p className="mt-1 text-[14px] leading-6 text-white/64">
-                  A premium sake with floral notes that complements {item.name}.
-                </p>
+            <section className="relative mt-4 grid min-h-[124px] grid-cols-[minmax(0,1fr)_238px] items-center gap-5 overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(215,168,79,0.13),rgba(255,255,255,0.018)_48%,rgba(7,9,10,0.94))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_50px_rgba(0,0,0,0.26)] min-[980px]:grid-cols-[minmax(0,1fr)_260px]">
+              <span className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(215,168,79,0.22),transparent_68%)]" />
+              <div className="relative z-10 flex min-w-0 items-center gap-4">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/42">
+                  <AssetIcon
+                    size={34}
+                    src="/assets/editorial/sake-vase-set-black-gold-floral.webp"
+                  />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
+                    Perfect Pairing
+                  </p>
+                  <h2 className="mt-1 line-clamp-2 text-[22px] font-semibold leading-7">
+                    {item.sakePairing.sakeName}
+                  </h2>
+                  <p className="mt-1 text-[14px] leading-6 text-white/64">
+                    A premium sake with floral notes that complements{" "}
+                    {item.name}.
+                  </p>
+                </div>
               </div>
               <Button
-                className="h-[50px] rounded-[17px]"
+                className="relative z-10 h-[50px] rounded-[17px]"
                 href="/omakase"
                 variant="secondary"
               >
@@ -272,6 +276,34 @@ export function TabletDetailView({
         </div>
       </section>
     </>
+  );
+}
+
+function TabletDetailInfoCard({
+  children,
+  icon,
+  title,
+}: {
+  children: ReactNode;
+  icon?: string;
+  title: string;
+}) {
+  return (
+    <article className="relative flex h-full min-h-[150px] overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.24)]">
+      <span className="pointer-events-none absolute -right-10 -top-12 h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(215,168,79,0.14),transparent_68%)]" />
+      <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(215,168,79,0.32),transparent)]" />
+      <div className="relative z-10 min-w-0">
+        <div className="flex items-center gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/42">
+            <AssetIcon size={27} src={icon} />
+          </span>
+          <h2 className="min-w-0 truncate text-[12px] font-semibold uppercase tracking-[0.14em] text-white">
+            {title}
+          </h2>
+        </div>
+        <div className="mt-4">{children}</div>
+      </div>
+    </article>
   );
 }
 

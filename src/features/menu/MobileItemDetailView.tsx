@@ -205,7 +205,7 @@ export function MobileItemDetailView({
             <span>{formatMoney(totalCents)}</span>
           </button>
 
-          <div className="mt-5 overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-black/38">
+          <div className="mt-5 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.24)]">
             <DetailPanelButton
               expanded={expandedPanel === "ingredients"}
               icon={icons.leaf}
@@ -299,23 +299,38 @@ function DetailPanelButton({
   onClick: () => void;
 }) {
   return (
-    <div className="border-b border-[var(--sb-border)] last:border-b-0">
+    <div className="relative border-b border-[var(--sb-border)] last:border-b-0">
+      <span
+        aria-hidden="true"
+        className={classNames(
+          "pointer-events-none absolute inset-y-0 left-0 w-1 bg-[var(--sb-red-bright)] opacity-0 shadow-[0_0_18px_rgba(239,47,37,0.72)] transition",
+          expanded && "opacity-100",
+        )}
+      />
       <button
         aria-expanded={expanded}
-        className="grid min-h-[76px] w-full grid-cols-[44px_1fr_auto] items-center gap-3 px-4 text-left"
+        className={classNames(
+          "grid min-h-[78px] w-full grid-cols-[48px_1fr_auto] items-center gap-3 px-4 text-left transition",
+          expanded ? "bg-[var(--sb-gold)]/7" : "hover:bg-white/[0.025]",
+        )}
         onClick={onClick}
         type="button"
       >
-        <AssetIcon size={30} src={icon} />
-        <span className="editorial-title text-[18px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">
+        <span className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/42">
+          <AssetIcon size={28} src={icon} />
+        </span>
+        <span className="min-w-0 text-[13px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
           {label}
         </span>
-        <span className="text-[28px] text-[var(--sb-gold)]" aria-hidden="true">
-          <ChevronIcon direction="right" size={18} />
+        <span
+          className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-black/24 text-[var(--sb-gold)]"
+          aria-hidden="true"
+        >
+          <ChevronIcon direction={expanded ? "up" : "down"} size={17} />
         </span>
       </button>
       {expanded ? (
-        <p className="px-16 pb-5 text-[14px] leading-6 text-white/66">
+        <p className="px-5 pb-5 pl-[76px] text-[14px] leading-6 text-white/66">
           {children}
         </p>
       ) : null}
