@@ -2,6 +2,7 @@ import type { ID, StatusTone } from "@/types/common";
 
 export interface AdminNavigationItem {
   href: string;
+  iconUrl: string;
   id: ID;
   label: string;
 }
