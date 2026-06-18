@@ -179,7 +179,7 @@ export function MobileSectionHeader({ title }: { title: string }) {
         {title}
       </h2>
       <Link
-        className="flex items-center gap-2 text-[15px] text-[var(--sb-red-bright)]"
+        className="inline-flex min-h-10 items-center gap-2 rounded-full px-2 text-[15px] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         href="/menu"
       >
         View All <ChevronIcon direction="right" size={18} />

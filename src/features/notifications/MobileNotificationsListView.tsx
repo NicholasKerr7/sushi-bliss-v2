@@ -182,7 +182,7 @@ export function MobileNotificationsListView({
             </p>
           </div>
           <Link
-            className="rounded-full border border-[var(--sb-border)] px-4 py-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            className="inline-flex min-h-10 items-center rounded-full border border-[var(--sb-border)] px-4 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             href="/support"
           >
             Support
