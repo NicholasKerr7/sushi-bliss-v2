@@ -90,7 +90,7 @@ export function DesktopPackageButton({
       aria-pressed={isSelected}
       className={classNames(
         "relative overflow-hidden rounded-[12px] border bg-black/38 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
-        compact ? "min-h-[180px]" : "min-h-[190px]",
+        compact ? "min-h-[198px]" : "min-h-[190px]",
         isSelected
           ? "border-[var(--sb-red-bright)] shadow-[0_0_28px_rgba(239,47,37,0.28)]"
           : "border-[var(--sb-gold)]/28 hover:border-[var(--sb-gold)]/54",
@@ -113,15 +113,42 @@ export function DesktopPackageButton({
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.74))]" />
       </div>
       <div className={classNames(compact ? "p-3" : "p-3.5")}>
-        <h3 className="editorial-title text-[18px] uppercase text-white">
+        <h3
+          className={classNames(
+            "editorial-title uppercase text-white",
+            compact ? "line-clamp-2 min-h-[44px] text-[18px]" : "text-[18px]",
+          )}
+        >
           {omakasePackage.title}
         </h3>
         <p className="mt-1 text-[12px] text-white/62">
           {omakasePackage.subtitle}
         </p>
-        <p className="mt-2 line-clamp-2 min-h-9 text-[12px] leading-[18px] text-white/58">
-          {omakasePackage.description}
-        </p>
+        {compact ? (
+          <div className="mt-2 grid grid-cols-2 gap-1.5">
+            <span className="rounded-[7px] border border-white/10 bg-white/[0.035] px-2 py-1">
+              <span className="block text-[10px] uppercase tracking-[0.08em] text-white/40">
+                Length
+              </span>
+              <span className="mt-0.5 block text-[11px] text-white/72">
+                {omakasePackage.durationMinutes} min
+              </span>
+            </span>
+            <span className="rounded-[7px] border border-white/10 bg-white/[0.035] px-2 py-1">
+              <span className="block text-[10px] uppercase tracking-[0.08em] text-white/40">
+                Guests
+              </span>
+              <span className="mt-0.5 block text-[11px] text-white/72">
+                {omakasePackage.guestRange.min}-
+                {omakasePackage.guestRange.max}
+              </span>
+            </span>
+          </div>
+        ) : (
+          <p className="mt-2 line-clamp-2 min-h-9 text-[12px] leading-[18px] text-white/58">
+            {omakasePackage.description}
+          </p>
+        )}
         <p className="mt-2 font-mono text-[19px] text-[var(--sb-gold-soft)]">
           {formatMoney(omakasePackage.priceCents)}
           <span className="ml-1 font-sans text-[12px] text-white/58">
@@ -168,13 +195,13 @@ export function DesktopCourseJourney({
   ].slice(0, 5);
 
   return (
-    <div className="grid grid-cols-5 gap-3">
+    <div className="grid grid-cols-3 gap-3 min-[1500px]:grid-cols-5">
       {journey.map((course, index) => (
         <article className="relative" key={course.id}>
           {index > 0 ? (
             <span
               aria-hidden="true"
-              className="absolute -left-3 top-[58px] z-10 text-[var(--sb-gold-soft)]"
+              className="absolute -left-3 top-[58px] z-10 hidden text-[var(--sb-gold-soft)] min-[1500px]:block"
             >
               <ChevronIcon direction="right" size={18} />
             </span>
@@ -194,7 +221,7 @@ export function DesktopCourseJourney({
               <p className="editorial-title text-[15px] text-white">
                 {course.label}
               </p>
-              <p className="mt-1 line-clamp-1 text-[11px] text-white/56">
+              <p className="mt-1 line-clamp-2 min-h-[34px] text-[11px] leading-[17px] text-white/56">
                 {course.title}
               </p>
             </div>

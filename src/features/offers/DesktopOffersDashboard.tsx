@@ -144,7 +144,7 @@ export function DesktopOffersDashboard() {
               <h2 className="text-[20px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                 Exclusive offers for you
               </h2>
-              <div className="mt-4 grid grid-cols-4 gap-3">
+              <div className="mt-4 grid grid-cols-2 gap-3 min-[1400px]:grid-cols-4">
                 {offerCards.map((offer, index) => (
                   <OfferCard
                     currentTime={currentTime}
@@ -364,7 +364,7 @@ function OfferCard({
         <h3 className="editorial-title min-h-[48px] text-[19px] uppercase leading-6 text-white">
           {offer.title}
         </h3>
-        <p className="mt-2 line-clamp-2 min-h-10 text-[13px] leading-5 text-white/62">
+        <p className="mt-2 line-clamp-4 min-h-[80px] text-[13px] leading-5 text-white/62">
           {offer.description}
         </p>
         <p className="mt-3 text-[13px] text-white/46">
