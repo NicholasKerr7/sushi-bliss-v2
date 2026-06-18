@@ -24,6 +24,7 @@ export function getAdminMetrics(): AdminMetric[] {
   return [
     {
       detail: "Mock order revenue",
+      iconUrl: "/assets/icons/golden-ticket-icon.png",
       id: "revenue",
       label: "Revenue",
       tone: "premium",
@@ -31,6 +32,7 @@ export function getAdminMetrics(): AdminMetric[] {
     },
     {
       detail: "Needs kitchen or courier attention",
+      iconUrl: "/assets/icons/takeaway-bag-icon.png",
       id: "active-orders",
       label: "Active orders",
       tone: activeOrders.length > 0 ? "warning" : "success",
@@ -38,6 +40,7 @@ export function getAdminMetrics(): AdminMetric[] {
     },
     {
       detail: "Confirmed or modified bookings",
+      iconUrl: "/assets/icons/calendar-icon.png",
       id: "reservations",
       label: "Reservations",
       tone: "success",
@@ -45,6 +48,7 @@ export function getAdminMetrics(): AdminMetric[] {
     },
     {
       detail: "Dining rooms in the directory",
+      iconUrl: "/assets/icons/map-pin-icon.png",
       id: "locations",
       label: "Locations",
       tone: "neutral",

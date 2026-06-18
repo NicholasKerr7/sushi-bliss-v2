@@ -9,6 +9,7 @@ export interface AdminNavigationItem {
 
 export interface AdminMetric {
   detail: string;
+  iconUrl: string;
   id: ID;
   label: string;
   tone: StatusTone;
