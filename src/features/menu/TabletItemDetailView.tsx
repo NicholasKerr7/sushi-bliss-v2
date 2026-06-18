@@ -18,6 +18,7 @@ import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
 import { TabletQuantityStepper } from "./TabletItemQuantityStepper";
+import { TastingNotesCard } from "./TastingNotesCard";
 
 interface TabletDetailViewProps {
   isFavorite: boolean;
@@ -32,13 +33,6 @@ interface TabletDetailViewProps {
   onQuantityChange: (quantity: number) => void;
   onToggleFavorite: () => void;
 }
-
-const tastingNotes = [
-  { label: "Richness", value: "Full body", point: "left-[61%] top-[16%]" },
-  { label: "Umami", value: "Deep", point: "left-[72%] top-[50%]" },
-  { label: "Texture", value: "Silky", point: "left-[48%] top-[74%]" },
-  { label: "Finish", value: "Clean", point: "left-[28%] top-[53%]" },
-] as const;
 
 export function TabletDetailView({
   isFavorite,
@@ -230,35 +224,7 @@ export function TabletDetailView({
               </p>
             </article>
 
-            <article className="min-h-[150px] rounded-[16px] border border-white/10 bg-black/20 p-4">
-              <h2 className="text-[16px] font-semibold uppercase tracking-[0.08em]">
-                Tasting Notes
-              </h2>
-              <div className="mt-3 grid grid-cols-[108px_1fr] items-center gap-3">
-                <div className="relative h-[108px] rounded-full border border-[var(--sb-gold)]/22 bg-black/24">
-                  <div className="absolute inset-4 rounded-full border border-white/10" />
-                  <div className="absolute inset-8 rounded-full border border-white/10" />
-                  {tastingNotes.map((note) => (
-                    <span
-                      aria-hidden="true"
-                      className={`absolute h-2.5 w-2.5 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_18px_rgb(239_47_37_/_0.7)] ${note.point}`}
-                      key={note.label}
-                    />
-                  ))}
-                </div>
-                <div className="grid gap-1">
-                  {tastingNotes.slice(0, 3).map((note) => (
-                    <p
-                      className="flex justify-between text-[12px]"
-                      key={note.label}
-                    >
-                      <span className="text-white/46">{note.label}</span>
-                      <span className="text-white/78">{note.value}</span>
-                    </p>
-                  ))}
-                </div>
-              </div>
-            </article>
+            <TastingNotesCard className="min-h-[150px]" />
           </div>
 
           {item.sakePairing ? (

@@ -31,11 +31,11 @@ import {
   DesktopRelatedMenuCard,
   RoundActionButton,
   SelectionSummary,
-  TasteProfile,
   buildCustomizeGalleryImages,
   customizeFeaturePills,
   detailFeaturePills,
 } from "./DesktopItemVisualParts";
+import { TastingNotesCard } from "./TastingNotesCard";
 
 export function DesktopItemDetailView({
   isFavorite,
@@ -114,7 +114,7 @@ export function DesktopItemDetailView({
               {formatMoney(item.priceCents)}
             </p>
 
-            <div className="mt-4 grid grid-cols-[140px_minmax(0,1fr)_70px_70px] items-center gap-4">
+            <div className="mt-4 grid grid-cols-[132px_minmax(198px,1fr)_58px_58px] items-center gap-3">
               <DesktopQuantity
                 label={item.name}
                 quantity={quantity}
@@ -122,7 +122,7 @@ export function DesktopItemDetailView({
               />
               <Button
                 aria-label="Add to Cart"
-                className="h-[54px] rounded-[13px] text-[15px] uppercase tracking-[0.08em]"
+                className="h-[54px] min-w-[198px] whitespace-nowrap rounded-[13px] px-3 text-[12px] uppercase tracking-[0.07em] min-[1380px]:text-[14px]"
                 onClick={onAddToCart}
               >
                 Add to cart
@@ -189,12 +189,7 @@ export function DesktopItemDetailView({
           >
             {item.sakePairing?.sakeName || "Ask your chef for today's pairing."}
           </DesktopDetailInfoCard>
-          <DesktopDetailInfoCard
-            icon="/assets/icons/star-icon.png"
-            title="Tasting Notes"
-          >
-            <TasteProfile />
-          </DesktopDetailInfoCard>
+          <TastingNotesCard className="min-h-[178px]" />
         </div>
 
         <section className="border-t border-white/10 px-4 pb-4 pt-3">

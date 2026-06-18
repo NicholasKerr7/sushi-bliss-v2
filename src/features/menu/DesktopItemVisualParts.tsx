@@ -151,7 +151,7 @@ export function RoundActionButton({
       aria-label={label}
       aria-pressed={active}
       className={classNames(
-        "grid h-[54px] place-items-center rounded-full border bg-black/24 transition",
+        "grid h-[54px] w-[54px] place-items-center justify-self-center rounded-full border bg-black/24 transition",
         active
           ? "border-[var(--sb-red-bright)] shadow-[0_0_18px_rgba(255,35,22,0.25)]"
           : "border-[var(--sb-gold)]/34 hover:border-[var(--sb-gold)]/70",
@@ -181,35 +181,6 @@ export function DesktopDetailInfoCard({
       </h2>
       <div className="mt-2 text-[14px] leading-6 text-white/66">{children}</div>
     </article>
-  );
-}
-
-export function TasteProfile() {
-  const notes = [
-    ["Richness", "w-[88%]"],
-    ["Umami", "w-[78%]"],
-    ["Tenderness", "w-[84%]"],
-  ] as const;
-
-  return (
-    <div className="space-y-2">
-      {notes.map(([label, widthClass]) => (
-        <div
-          className="grid grid-cols-[86px_1fr] items-center gap-3"
-          key={label}
-        >
-          <span className="text-[12px] text-white/56">{label}</span>
-          <span className="h-1.5 overflow-hidden rounded-full bg-white/10">
-            <span
-              className={classNames(
-                "block h-full rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_12px_rgba(255,35,22,0.72)]",
-                widthClass,
-              )}
-            />
-          </span>
-        </div>
-      ))}
-    </div>
   );
 }
 

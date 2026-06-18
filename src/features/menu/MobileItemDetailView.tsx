@@ -16,6 +16,8 @@ import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
+import { TastingNotesCard } from "./TastingNotesCard";
+
 interface MobileItemDetailViewProps {
   isFavorite: boolean;
   item: MenuItem;
@@ -183,6 +185,8 @@ export function MobileItemDetailView({
           <p className="mt-3 max-w-[360px] text-[15px] leading-6 text-white/72">
             {item.chefNote}
           </p>
+
+          <TastingNotesCard className="mt-4" />
 
           <div className="mt-4">
             <MobileQuantityStepper
