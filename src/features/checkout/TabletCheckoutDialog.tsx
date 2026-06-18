@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { TabletMenuBottomNav } from "@/features/menu/TabletMenuChrome";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import type { CartLineItem } from "@/types/order";
 
 import { TabletCheckoutBenefitStrip } from "./TabletCheckoutBenefitStrip";
@@ -43,6 +44,8 @@ export function TabletCheckoutDialog({
   const [paymentsExpanded, setPaymentsExpanded] = useState(false);
   const [instructions, setInstructions] = useState("");
 
+  useScrollLock(open);
+
   useEffect(() => {
     if (open) {
       dialogRef.current?.scrollTo({ top: 0 });
@@ -61,12 +64,10 @@ export function TabletCheckoutDialog({
       }
     };
 
-    document.body.classList.add("overflow-hidden");
     document.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (previouslyFocused instanceof HTMLElement) {

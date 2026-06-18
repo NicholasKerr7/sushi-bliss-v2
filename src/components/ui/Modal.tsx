@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { classNames } from "@/lib/classNames";
 
 interface ModalProps {
@@ -32,14 +33,14 @@ export function Modal({
 }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
+  useScrollLock(open);
+
   useEffect(() => {
     if (!open) {
       return;
     }
 
     const activeElement = document.activeElement;
-
-    document.body.classList.add("overflow-hidden");
 
     const focusTarget =
       panelRef.current?.querySelector<HTMLElement>(focusableSelector) ||
@@ -55,7 +56,6 @@ export function Modal({
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (activeElement instanceof HTMLElement) {

@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { pickupLocation } from "@/data/checkout";
 import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
 import { TabletMenuBottomNav } from "@/features/menu/TabletMenuChrome";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { getTabletPresentationImage } from "@/lib/assets";
 import { calculateCartLineSubtotal } from "@/lib/cart";
 import { formatDateTime } from "@/lib/dates";
@@ -31,6 +32,8 @@ export function TabletOrderConfirmation({
   const dialogRef = useRef<HTMLDivElement>(null);
   const [headerQuery, setHeaderQuery] = useState("");
 
+  useScrollLock(Boolean(order));
+
   useEffect(() => {
     if (!order) {
       return;
@@ -43,12 +46,10 @@ export function TabletOrderConfirmation({
       }
     };
 
-    document.body.classList.add("overflow-hidden");
     document.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (previouslyFocused instanceof HTMLElement) {

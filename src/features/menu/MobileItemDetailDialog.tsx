@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { useScrollLock } from "@/hooks/useScrollLock";
 import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition, CartCustomization } from "@/types/order";
 
@@ -54,6 +55,8 @@ export function MobileItemDetailDialog({
   const onCloseRef = useRef(onClose);
   const [view, setView] = useState<MobileItemView>("detail");
 
+  useScrollLock(open);
+
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
@@ -70,12 +73,10 @@ export function MobileItemDetailDialog({
       }
     };
 
-    document.body.classList.add("overflow-hidden");
     document.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (previouslyFocused instanceof HTMLElement) {

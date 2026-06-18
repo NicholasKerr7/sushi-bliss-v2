@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { Order } from "@/types/order";
@@ -23,6 +24,8 @@ export function MobileOrderConfirmation({
 }: MobileOrderConfirmationProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
+  useScrollLock(Boolean(order));
+
   useEffect(() => {
     if (!order) {
       return;
@@ -35,12 +38,10 @@ export function MobileOrderConfirmation({
       }
     };
 
-    document.body.classList.add("overflow-hidden");
     document.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (previouslyFocused instanceof HTMLElement) {

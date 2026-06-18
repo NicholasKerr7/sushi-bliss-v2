@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { useScrollLock } from "@/hooks/useScrollLock";
 import type { CartLineItem } from "@/types/order";
 
 import {
@@ -54,6 +55,8 @@ export function MobileCheckoutDialog({
   const [instructions, setInstructions] = useState("");
   const stepIndex = stepOrder.indexOf(step);
 
+  useScrollLock(open);
+
   useEffect(() => {
     if (open) {
       scrollRef.current?.scrollTo({ top: 0 });
@@ -72,12 +75,10 @@ export function MobileCheckoutDialog({
       }
     };
 
-    document.body.classList.add("overflow-hidden");
     document.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (previouslyFocused instanceof HTMLElement) {

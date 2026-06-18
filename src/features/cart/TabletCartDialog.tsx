@@ -7,6 +7,7 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { icons } from "@/features/home/visualHomeData";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import {
   TabletMenuBottomNav,
   TabletMenuHeader,
@@ -99,6 +100,8 @@ export function TabletCartDialog({
     tipCents,
   );
 
+  useScrollLock(open);
+
   useEffect(() => {
     if (!open) {
       return;
@@ -111,12 +114,10 @@ export function TabletCartDialog({
       }
     };
 
-    document.body.classList.add("overflow-hidden");
     document.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (previouslyFocused instanceof HTMLElement) {

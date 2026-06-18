@@ -7,6 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { brand, icons } from "@/features/home/visualHomeData";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { calculateCartLineSubtotal } from "@/lib/cart";
 import { getTabletPresentationImage } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
@@ -48,6 +49,8 @@ export function MobileCartDialog({
   const [orderNote, setOrderNote] = useState("");
   const isEmpty = items.length === 0;
 
+  useScrollLock(open);
+
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
@@ -64,12 +67,10 @@ export function MobileCartDialog({
       }
     };
 
-    document.body.classList.add("overflow-hidden");
     document.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (previouslyFocused instanceof HTMLElement) {
@@ -285,7 +286,7 @@ function MobileCartLine({
           />
           <button
             aria-label={`Remove ${item.menuItem.name}`}
-            className="grid h-8 w-8 place-items-center rounded-full text-[var(--sb-red-bright)] transition hover:bg-[var(--sb-red)]/14 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-red-bright)]"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-[var(--sb-red-bright)] transition hover:bg-[var(--sb-red)]/14 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-red-bright)]"
             onClick={() => onRemove(item.id)}
             type="button"
           >
@@ -318,22 +319,22 @@ function MobileCartQuantity({
   value: number;
 }) {
   return (
-    <div className="flex h-7 items-center gap-3 text-[17px]">
+    <div className="flex min-h-10 shrink-0 items-center gap-2 text-[17px]">
       <button
         aria-label="Decrease quantity"
-        className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)] disabled:opacity-35"
+        className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)] disabled:opacity-35"
         disabled={value <= 1}
         onClick={() => onChange(Math.max(1, value - 1))}
         type="button"
       >
         -
       </button>
-      <output aria-label="Quantity" className="grid min-w-5 place-items-center">
+      <output aria-label="Quantity" className="grid min-w-6 place-items-center">
         {value}
       </output>
       <button
         aria-label="Increase quantity"
-        className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)]"
+        className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] text-[var(--sb-gold)]"
         onClick={() => onChange(Math.min(99, value + 1))}
         type="button"
       >
@@ -359,7 +360,7 @@ function MobileCartActionPanels({
       <div className="rounded-[14px] border border-[var(--sb-border)] bg-black/36">
         <button
           aria-expanded={noteOpen}
-          className="grid min-h-9 w-full grid-cols-[28px_1fr_auto] items-center gap-3 px-4 text-left"
+          className="grid min-h-11 w-full grid-cols-[28px_1fr_auto] items-center gap-3 px-4 py-1 text-left"
           onClick={onToggleNote}
           type="button"
         >
@@ -393,7 +394,7 @@ function MobileCartActionPanels({
 
       <button
         aria-label="Promo code entry is unavailable in cart"
-        className="grid min-h-9 w-full grid-cols-[28px_1fr_auto] items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/36 px-4 text-left opacity-70"
+        className="grid min-h-11 w-full grid-cols-[28px_1fr_auto] items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/36 px-4 py-1 text-left opacity-70"
         disabled
         title="Promo codes are entered during checkout."
         type="button"
@@ -499,7 +500,7 @@ function MobileSuggestedItem({
           </p>
           <button
             aria-label={`Add ${item.name} to cart`}
-            className="h-8 rounded-full border border-[var(--sb-gold)]/55 px-4 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold)]"
+            className="h-10 rounded-full border border-[var(--sb-gold)]/55 px-4 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold)]"
             onClick={onAddSuggestedItem}
             type="button"
           >

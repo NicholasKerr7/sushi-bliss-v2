@@ -111,7 +111,7 @@ export function FulfillmentStep({
             </span>
             <select
               aria-label="Scheduled time"
-              className="mt-1 w-full appearance-none bg-transparent pr-8 text-[18px] font-semibold text-white outline-none"
+              className="mt-1 h-10 w-full appearance-none bg-transparent pr-8 text-[18px] font-semibold text-white outline-none"
               onChange={(event) => checkout.setSelectedTime(event.target.value)}
               value={checkout.selectedTime}
             >

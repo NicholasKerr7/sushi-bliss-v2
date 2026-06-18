@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { menuItemById } from "@/data/menu";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition, CartCustomization } from "@/types/order";
 
@@ -82,6 +83,8 @@ export function TabletItemDetailDialog({
     [item.id],
   );
 
+  useScrollLock(open);
+
   useEffect(() => {
     if (!open) {
       return;
@@ -94,12 +97,10 @@ export function TabletItemDetailDialog({
       }
     };
 
-    document.body.classList.add("overflow-hidden");
     document.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
-      document.body.classList.remove("overflow-hidden");
       document.removeEventListener("keydown", handleKeyDown);
 
       if (previouslyFocused instanceof HTMLElement) {
