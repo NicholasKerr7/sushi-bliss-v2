@@ -44,17 +44,17 @@ export function MobileMenuGridCard({
         />
       </button>
       <button
-        className="min-w-0 px-3 py-3 text-left"
+        className="min-w-0 px-3 pb-12 pt-3 text-left"
         onClick={() => onViewDetails(item)}
         type="button"
       >
-        <h3 className="line-clamp-3 min-h-[54px] text-[15px] leading-[18px] text-white">
+        <h3 className="line-clamp-3 min-h-[54px] text-[14px] leading-[18px] text-white min-[360px]:text-[15px]">
           {item.name}
         </h3>
         <p className="mt-1 line-clamp-2 text-[11px] leading-[14px] text-white/64">
           {item.description}
         </p>
-        <p className="mt-2 text-[16px] text-[var(--sb-gold)]">
+        <p className="mt-2 pr-8 text-[16px] text-[var(--sb-gold)]">
           {formatMoney(item.priceCents)}
         </p>
       </button>

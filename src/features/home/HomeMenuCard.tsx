@@ -39,14 +39,14 @@ export function HomeMenuCard({
             src={item.image.publicUrl}
           />
         </div>
-        <div className="p-3 md:p-2">
+        <div className="px-3 pb-12 pt-3 md:p-2 md:pr-11 xl:pr-12">
           <h3 className="editorial-title line-clamp-3 min-h-[51px] text-[13px] leading-[17px] text-white md:line-clamp-2 md:min-h-[34px] md:text-[13px] md:leading-[17px] xl:text-[15px]">
             {item.name}
           </h3>
           <p className="mt-1 line-clamp-2 min-h-9 text-[11px] leading-[17px] text-white/68 md:min-h-7 md:text-[11px] md:leading-[14px]">
             {item.ingredients.slice(0, 3).join(", ")}
           </p>
-          <p className="mt-1 text-[17px] text-[var(--sb-gold)] md:text-base">
+          <p className="mt-1 pr-7 text-[17px] text-[var(--sb-gold)] md:pr-0 md:text-base">
             {formatMoney(item.priceCents)}
           </p>
         </div>

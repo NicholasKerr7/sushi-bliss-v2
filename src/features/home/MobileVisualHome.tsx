@@ -225,7 +225,7 @@ function FeaturedMenuRail({ items, onAddToCart }: FeaturedMenuRailProps) {
           <ChevronIcon direction="right" size={18} />
         </Link>
       </div>
-      <div className="mt-3 grid grid-cols-3 gap-3">
+      <div className="mt-3 grid grid-cols-2 gap-3 min-[390px]:grid-cols-3">
         {items.slice(0, 3).map((item, index) => (
           <HomeMenuCard
             badge={
