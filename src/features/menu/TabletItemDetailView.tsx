@@ -224,7 +224,10 @@ export function TabletDetailView({
               </p>
             </article>
 
-            <TastingNotesCard className="min-h-[150px]" />
+            <TastingNotesCard
+              className="min-h-[150px]"
+              profile={item.tastingNotes}
+            />
           </div>
 
           {item.sakePairing ? (

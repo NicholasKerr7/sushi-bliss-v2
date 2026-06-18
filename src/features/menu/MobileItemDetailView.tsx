@@ -186,7 +186,7 @@ export function MobileItemDetailView({
             {item.chefNote}
           </p>
 
-          <TastingNotesCard className="mt-4" />
+          <TastingNotesCard className="mt-4" profile={item.tastingNotes} />
 
           <div className="mt-4">
             <MobileQuantityStepper

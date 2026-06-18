@@ -26,6 +26,7 @@ import type {
 import type {
   MenuCategory,
   MenuItem,
+  MenuTastingProfile,
   MenuTag,
   SakePairing,
 } from "@/types/menu";
@@ -161,6 +162,66 @@ interface LegacyDataFile {
 
 const legacyData = rawData as LegacyDataFile;
 
+const DEFAULT_TASTING_PROFILE: MenuTastingProfile = {
+  buttery: 44,
+  richness: 48,
+  sweetness: 42,
+  tenderness: 55,
+  umami: 58,
+};
+
+const CATEGORY_TASTING_PROFILES: Record<string, MenuTastingProfile> = {
+  gunkan: {
+    buttery: 52,
+    richness: 62,
+    sweetness: 30,
+    tenderness: 55,
+    umami: 82,
+  },
+  nigiri: {
+    buttery: 52,
+    richness: 58,
+    sweetness: 36,
+    tenderness: 68,
+    umami: 66,
+  },
+  oshizushi: {
+    buttery: 35,
+    richness: 44,
+    sweetness: 38,
+    tenderness: 50,
+    umami: 72,
+  },
+  rolls: {
+    buttery: 56,
+    richness: 54,
+    sweetness: 50,
+    tenderness: 52,
+    umami: 58,
+  },
+  sashimi: {
+    buttery: 36,
+    richness: 42,
+    sweetness: 28,
+    tenderness: 70,
+    umami: 60,
+  },
+  temaki: {
+    buttery: 48,
+    richness: 45,
+    sweetness: 48,
+    tenderness: 44,
+    umami: 50,
+  },
+  vegetarian: {
+    buttery: 36,
+    richness: 34,
+    sweetness: 56,
+    tenderness: 48,
+    umami: 48,
+  },
+};
+
 /** Normalizes a legacy image object into the shared image model with fallback data. */
 function normalizeImage(
   image: LegacyImage | undefined,
@@ -235,6 +296,182 @@ function createSearchText(item: Omit<MenuItem, "searchText">): string {
   ]
     .join(" ")
     .toLowerCase();
+}
+
+function clampTastingValue(value: number): number {
+  return Math.min(96, Math.max(18, Math.round(value)));
+}
+
+function applyTastingBoost(
+  profile: MenuTastingProfile,
+  boost: Partial<MenuTastingProfile>,
+): void {
+  Object.entries(boost).forEach(([key, value]) => {
+    profile[key as keyof MenuTastingProfile] += value ?? 0;
+  });
+}
+
+/** Derives a radar profile from normalized menu copy without requiring raw data changes. */
+function createTastingProfile(
+  item: Omit<MenuItem, "searchText" | "tastingNotes">,
+): MenuTastingProfile {
+  const profile = {
+    ...(CATEGORY_TASTING_PROFILES[item.category] || DEFAULT_TASTING_PROFILE),
+  };
+  const copy = [
+    item.name,
+    item.category,
+    item.description,
+    item.chefNote,
+    item.texture,
+    ...item.ingredients,
+    ...item.tags,
+  ]
+    .join(" ")
+    .toLowerCase();
+  const hasAny = (keywords: string[]) =>
+    keywords.some((keyword) => copy.includes(keyword));
+
+  if (hasAny(["premium", "chef-special", "luxurious", "gold"])) {
+    applyTastingBoost(profile, { buttery: 5, richness: 8, umami: 6 });
+  }
+
+  if (hasAny(["fatty", "toro", "otoro", "chutoro", "wagyu", "marbled"])) {
+    applyTastingBoost(profile, {
+      buttery: 26,
+      richness: 30,
+      tenderness: 10,
+      umami: 8,
+    });
+  }
+
+  if (hasAny(["rich", "melt-in-your-mouth"])) {
+    applyTastingBoost(profile, {
+      buttery: 14,
+      richness: 24,
+      tenderness: 8,
+    });
+  }
+
+  if (hasAny(["buttery", "soft", "silky", "custard", "custardy", "creamy"])) {
+    applyTastingBoost(profile, {
+      buttery: 22,
+      richness: 12,
+      tenderness: 12,
+      sweetness: 6,
+    });
+  }
+
+  if (hasAny(["salmon"])) {
+    applyTastingBoost(profile, {
+      buttery: 16,
+      richness: 10,
+      sweetness: 10,
+      tenderness: 6,
+    });
+  }
+
+  if (hasAny(["tuna", "bluefin"])) {
+    applyTastingBoost(profile, { richness: 6, tenderness: 8, umami: 12 });
+  }
+
+  if (hasAny(["uni", "sea urchin", "urchin"])) {
+    applyTastingBoost(profile, {
+      buttery: 20,
+      richness: 18,
+      sweetness: -4,
+      umami: 26,
+    });
+  }
+
+  if (hasAny(["ikura", "roe", "caviar", "briny"])) {
+    applyTastingBoost(profile, {
+      buttery: -2,
+      richness: 8,
+      sweetness: -8,
+      umami: 22,
+    });
+  }
+
+  if (hasAny(["eel", "unagi", "tare", "glazed", "sauce", "saucy"])) {
+    applyTastingBoost(profile, {
+      buttery: 10,
+      richness: 8,
+      sweetness: 18,
+      umami: 20,
+    });
+  }
+
+  if (hasAny(["shrimp", "ebi", "scallop", "shellfish"])) {
+    applyTastingBoost(profile, {
+      buttery: hasAny(["scallop"]) ? 16 : 6,
+      sweetness: 20,
+      tenderness: 8,
+      umami: 8,
+    });
+  }
+
+  if (hasAny(["octopus", "tako", "chewy", "firm"])) {
+    applyTastingBoost(profile, {
+      buttery: -14,
+      richness: -10,
+      sweetness: -4,
+      tenderness: -16,
+      umami: 8,
+    });
+  }
+
+  if (hasAny(["whitefish", "snapper", "lean", "clean", "delicate", "light"])) {
+    applyTastingBoost(profile, {
+      buttery: -12,
+      richness: -10,
+      sweetness: 2,
+      tenderness: 6,
+    });
+  }
+
+  if (hasAny(["avocado", "cream cheese", "omelet", "tamago"])) {
+    applyTastingBoost(profile, {
+      buttery: 18,
+      richness: 10,
+      sweetness: 12,
+      tenderness: 8,
+    });
+  }
+
+  if (hasAny(["cucumber", "vegetable", "vegetables", "greens", "crisp"])) {
+    applyTastingBoost(profile, {
+      buttery: -8,
+      richness: -12,
+      sweetness: 6,
+      tenderness: -6,
+      umami: -6,
+    });
+  }
+
+  if (hasAny(["shiitake", "earthy", "savory", "mackerel", "smoky"])) {
+    applyTastingBoost(profile, { richness: 4, tenderness: 4, umami: 22 });
+  }
+
+  if (hasAny(["beef", "seared", "truffle", "warm"])) {
+    applyTastingBoost(profile, { buttery: 10, richness: 18, umami: 20 });
+  }
+
+  if (hasAny(["sweet", "inari", "tofu"])) {
+    applyTastingBoost(profile, { sweetness: 22, tenderness: 8, umami: 4 });
+  }
+
+  if (hasAny(["hot", "spicy"])) {
+    applyTastingBoost(profile, { richness: 8, sweetness: -2, umami: 8 });
+  }
+
+  return {
+    buttery: clampTastingValue(profile.buttery),
+    richness: clampTastingValue(profile.richness),
+    sweetness: clampTastingValue(profile.sweetness),
+    tenderness: clampTastingValue(profile.tenderness),
+    umami: clampTastingValue(profile.umami),
+  };
 }
 
 /** Validates screenshot references and narrows their device labels. */
@@ -348,7 +585,7 @@ export function getMenuItems(): MenuItem[] {
     const category = normalizeCategory(item.category);
     const tags = normalizeTags(item.tags);
 
-    const normalizedItem: Omit<MenuItem, "searchText"> = {
+    const baseItem: Omit<MenuItem, "searchText" | "tastingNotes"> = {
       category: category.id,
       categoryLabel: category.label,
       chefNote: item.chefNote || "Prepared with Sushi Bliss precision.",
@@ -364,6 +601,10 @@ export function getMenuItems(): MenuItem[] {
       sakePairing: normalizePairing(item.sakePairing),
       tags,
       texture: item.texture || "Balanced",
+    };
+    const normalizedItem: Omit<MenuItem, "searchText"> = {
+      ...baseItem,
+      tastingNotes: createTastingProfile(baseItem),
     };
 
     return {

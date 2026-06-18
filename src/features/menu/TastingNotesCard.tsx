@@ -1,13 +1,58 @@
 import { useId } from "react";
 
 import { classNames } from "@/lib/classNames";
+import type { MenuTastingProfile } from "@/types/menu";
 
 interface TastingNotesCardProps {
   className?: string;
+  profile?: MenuTastingProfile;
+}
+
+const DEFAULT_TASTING_PROFILE: MenuTastingProfile = {
+  buttery: 72,
+  richness: 82,
+  sweetness: 64,
+  tenderness: 78,
+  umami: 86,
+};
+
+const TASTING_AXES = [
+  { angle: -90, key: "richness" },
+  { angle: -18, key: "umami" },
+  { angle: 54, key: "buttery" },
+  { angle: 126, key: "tenderness" },
+  { angle: 198, key: "sweetness" },
+] as const satisfies ReadonlyArray<{
+  angle: number;
+  key: keyof MenuTastingProfile;
+}>;
+
+const RADAR_CENTER = { x: 218, y: 96 };
+const RADAR_RADIUS = 53;
+
+function normalizeTastingValue(value: number): number {
+  return Math.min(100, Math.max(0, value));
+}
+
+function getRadarCoordinate(value: number, angle: number) {
+  const radians = (angle * Math.PI) / 180;
+  const radius = (normalizeTastingValue(value) / 100) * RADAR_RADIUS;
+
+  return {
+    x: Number((RADAR_CENTER.x + Math.cos(radians) * radius).toFixed(1)),
+    y: Number((RADAR_CENTER.y + Math.sin(radians) * radius).toFixed(1)),
+  };
+}
+
+function getProfileSummary(profile: MenuTastingProfile): string {
+  return `Tasting notes radar chart: richness ${profile.richness}, umami ${profile.umami}, buttery ${profile.buttery}, tenderness ${profile.tenderness}, sweetness ${profile.sweetness}`;
 }
 
 /** Responsive tasting-notes radar adapted from the reference card artwork. */
-export function TastingNotesCard({ className }: TastingNotesCardProps) {
+export function TastingNotesCard({
+  className,
+  profile = DEFAULT_TASTING_PROFILE,
+}: TastingNotesCardProps) {
   const idPrefix = useId().replace(/:/g, "");
   const cardGlowAId = `${idPrefix}-tasting-card-glow-a`;
   const cardGlowBId = `${idPrefix}-tasting-card-glow-b`;
@@ -16,10 +61,16 @@ export function TastingNotesCard({ className }: TastingNotesCardProps) {
   const bottomLineId = `${idPrefix}-tasting-bottom-line`;
   const redGlowId = `${idPrefix}-tasting-red-glow`;
   const labelShadowId = `${idPrefix}-tasting-label-shadow`;
+  const radarCoordinates = TASTING_AXES.map((axis) =>
+    getRadarCoordinate(profile[axis.key], axis.angle),
+  );
+  const radarPoints = radarCoordinates
+    .map((point) => `${point.x},${point.y}`)
+    .join(" ");
 
   return (
     <article
-      aria-label="Tasting notes radar chart"
+      aria-label={getProfileSummary(profile)}
       className={classNames(
         "relative aspect-[364/178] w-full overflow-hidden rounded-[14px] border border-white/10 bg-[#07090a] [font-family:Georgia,'Times_New_Roman',serif]",
         className,
@@ -213,7 +264,7 @@ export function TastingNotesCard({ className }: TastingNotesCardProps) {
         <polygon
           fill="rgba(117,24,17,.34)"
           filter={`url(#${redGlowId})`}
-          points="218,43 268,78 248,130 186,130 169,78"
+          points={radarPoints}
           stroke="#b91710"
           strokeLinejoin="round"
           strokeWidth="2.05"
@@ -221,7 +272,7 @@ export function TastingNotesCard({ className }: TastingNotesCardProps) {
         <polyline
           fill="none"
           opacity=".42"
-          points="218,43 268,78 248,130 186,130 169,78 218,43"
+          points={`${radarPoints} ${radarCoordinates[0].x},${radarCoordinates[0].y}`}
           stroke="#ff261b"
           strokeLinejoin="round"
           strokeWidth=".7"
@@ -246,11 +297,14 @@ export function TastingNotesCard({ className }: TastingNotesCardProps) {
         </g>
 
         <g filter={`url(#${redGlowId})`} fill="#ff2117">
-          <circle cx="218" cy="43" r="3.7" />
-          <circle cx="268" cy="78" r="3.7" />
-          <circle cx="248" cy="130" r="3.7" />
-          <circle cx="186" cy="130" r="3.7" />
-          <circle cx="169" cy="78" r="3.7" />
+          {radarCoordinates.map((point, index) => (
+            <circle
+              cx={point.x}
+              cy={point.y}
+              key={TASTING_AXES[index].key}
+              r="3.7"
+            />
+          ))}
         </g>
 
         <g

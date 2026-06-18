@@ -9,6 +9,14 @@ export interface SakePairing {
   image?: ImageReference;
 }
 
+export interface MenuTastingProfile {
+  richness: number;
+  umami: number;
+  buttery: number;
+  tenderness: number;
+  sweetness: number;
+}
+
 export interface MenuItem {
   id: ID;
   name: string;
@@ -23,6 +31,7 @@ export interface MenuItem {
   image: ImageReference;
   ingredientImage?: ImageReference;
   searchText: string;
+  tastingNotes: MenuTastingProfile;
   sakePairing?: SakePairing;
 }
 

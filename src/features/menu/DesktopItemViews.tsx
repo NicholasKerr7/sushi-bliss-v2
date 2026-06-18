@@ -189,7 +189,10 @@ export function DesktopItemDetailView({
           >
             {item.sakePairing?.sakeName || "Ask your chef for today's pairing."}
           </DesktopDetailInfoCard>
-          <TastingNotesCard className="min-h-[178px]" />
+          <TastingNotesCard
+            className="min-h-[178px]"
+            profile={item.tastingNotes}
+          />
         </div>
 
         <section className="border-t border-white/10 px-4 pb-4 pt-3">
