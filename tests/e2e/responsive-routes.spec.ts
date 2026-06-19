@@ -285,7 +285,10 @@ test.describe("responsive route health", () => {
               message: `${routePath} should resize to ${width}px`,
             })
             .toBe(width);
-          await page.goto(routePath, { waitUntil: "networkidle" });
+          await page.goto(routePath, { waitUntil: "domcontentloaded" });
+          await expect(
+            page.locator("main:visible, section:visible").first(),
+          ).toBeVisible();
 
           await expect
             .poll(
@@ -311,7 +314,10 @@ test.describe("responsive route health", () => {
         }
 
         await page.setViewportSize({ height: 1024, width: 768 });
-        await page.goto(routePath, { waitUntil: "networkidle" });
+        await page.goto(routePath, { waitUntil: "domcontentloaded" });
+        await expect(
+          page.locator("main:visible, section:visible").first(),
+        ).toBeVisible();
 
         await expect
           .poll(() => getVisibleMobileFrameMetrics(page), {

@@ -61,7 +61,7 @@ export function TabletNotificationsCenter() {
         onOpenCart={() => setCartOpen(true)}
       />
 
-      <main className="mx-auto w-full max-w-[974px]">
+      <main className="mx-auto w-full max-w-[974px] px-4 min-[900px]:px-0">
         {selectedNotification ? (
           <TabletNotificationDetailView
             notification={selectedNotification}

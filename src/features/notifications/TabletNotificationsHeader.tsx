@@ -19,28 +19,28 @@ export function TabletNotificationsHeader({
 }: TabletNotificationsHeaderProps) {
   return (
     <header className="border-b border-white/[0.08] bg-[#050607]/98">
-      <div className="mx-auto grid h-[104px] max-w-[1086px] grid-cols-[292px_minmax(0,384px)_210px] items-center gap-8 px-9">
+      <div className="mx-auto grid h-[88px] max-w-[1086px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 min-[900px]:h-[104px] min-[900px]:grid-cols-[292px_minmax(0,384px)_210px] min-[900px]:gap-8 min-[900px]:px-9">
         <Link
-          className="flex items-center gap-5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+          className="flex min-w-0 items-center gap-3 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[900px]:gap-5"
           href="/home"
         >
           <AssetIcon
             className="rounded-full"
             loading="eager"
-            size={62}
+            size={56}
             src={brand.assets.floralEmblem.publicUrl}
           />
-          <span>
-            <span className="editorial-title block text-[22px] uppercase leading-none tracking-[0.24em]">
+          <span className="min-w-0">
+            <span className="editorial-title block truncate text-[20px] uppercase leading-none tracking-[0.18em] min-[900px]:text-[22px] min-[900px]:tracking-[0.24em]">
               Sushi Bliss
             </span>
-            <span className="mt-2 block text-[12px] uppercase tracking-[0.45em] text-white/72">
+            <span className="mt-2 block truncate text-[11px] uppercase tracking-[0.32em] text-white/72 min-[900px]:text-[12px] min-[900px]:tracking-[0.45em]">
               Omakase
             </span>
           </span>
         </Link>
 
-        <form className="flex h-[50px] items-center gap-4 rounded-full border border-[var(--sb-border)] bg-black/24 px-5">
+        <form className="hidden h-[50px] items-center gap-4 rounded-full border border-[var(--sb-border)] bg-black/24 px-5 min-[900px]:flex">
           <AssetIcon size={22} src={icons.search} />
           <label className="sr-only" htmlFor="tablet-notifications-search">
             Search notifications
@@ -53,7 +53,7 @@ export function TabletNotificationsHeader({
           />
         </form>
 
-        <div className="flex items-center justify-end gap-6">
+        <div className="flex items-center justify-end gap-3 min-[900px]:gap-6">
           <Link
             aria-label={`Notifications with ${unreadCount} unread`}
             className="relative grid h-11 w-11 place-items-center text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
@@ -81,7 +81,7 @@ export function TabletNotificationsHeader({
           </button>
           <button
             aria-label="More notification options"
-            className="grid h-10 w-10 place-items-center text-[28px] leading-none text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
+            className="hidden h-10 w-10 place-items-center text-[28px] leading-none text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[900px]:grid"
             type="button"
           >
             <span aria-hidden="true">⋮</span>
