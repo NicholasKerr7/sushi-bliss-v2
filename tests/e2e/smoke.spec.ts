@@ -410,6 +410,38 @@ test.describe("customer experience", () => {
       }),
     ).toBeVisible();
   });
+
+  test("opens the correct desktop help category articles", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "Desktop help category cards are hidden on narrower layouts.",
+    );
+
+    await page.goto("/support");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const supportSection = page.locator("#support");
+
+    await supportSection.getByRole("button", { name: "View all FAQs" }).click();
+    await expect(
+      supportSection.getByRole("heading", { name: /How can\s+we help/i }),
+    ).toBeVisible();
+
+    await supportSection
+      .getByRole("button", { name: /Delivery\s+Fees, areas/i })
+      .click();
+
+    await expect(
+      supportSection.getByRole("heading", {
+        name: "Delivery timing and routing",
+      }),
+    ).toBeVisible();
+    await expect(
+      supportSection.getByText("Restaurant-only drinks stay blocked"),
+    ).toBeVisible();
+  });
 });
 
 test.describe("admin experience", () => {

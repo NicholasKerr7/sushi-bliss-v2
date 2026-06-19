@@ -6,27 +6,116 @@ import { contactMethods, helpArticles } from "@/data/support";
 import { DesktopBenefitStrip } from "@/features/menu/DesktopMenuChrome";
 import type { HelpArticle } from "@/types/support";
 
-const articleSteps = [
-  [
-    "Choose your experience",
-    "Select dining room, chef counter, omakase, or private dining before choosing date and party size.",
-  ],
-  [
-    "Confirm availability",
-    "Only future dates and available seating windows can be confirmed from the reservation flow.",
-  ],
-  [
-    "Modify from history",
-    "Upcoming bookings can be edited or cancelled from Reservations with the original code preserved.",
-  ],
-] as const;
-
 function getArticleHeadline(article: HelpArticle) {
   if (article.id === "reservation-changes") {
     return "How do reservations work?";
   }
 
   return article.title;
+}
+
+function getArticleSteps(
+  article: HelpArticle,
+): ReadonlyArray<readonly [string, string]> {
+  if (article.id === "order-tracking") {
+    return [
+      [
+        "Confirm timing",
+        "Use checkout and order confirmation to verify pickup or delivery windows.",
+      ],
+      [
+        "Track progress",
+        "Open Orders for prep, courier, and delivery-stage updates.",
+      ],
+      [
+        "Reorder quickly",
+        "Restore past items and customizations from the order history flow.",
+      ],
+    ] as const;
+  }
+
+  if (article.id === "reservation-changes") {
+    return [
+      [
+        "Choose your experience",
+        "Select dining room, chef counter, omakase, or private dining before choosing date and party size.",
+      ],
+      [
+        "Confirm availability",
+        "Only future dates and available seating windows can be confirmed from the reservation flow.",
+      ],
+      [
+        "Modify from history",
+        "Upcoming bookings can be edited or cancelled from Reservations with the original code preserved.",
+      ],
+    ] as const;
+  }
+
+  if (article.id === "delivery-timing") {
+    return [
+      [
+        "Check availability",
+        "Delivery depends on location coverage, kitchen capacity, and courier timing.",
+      ],
+      [
+        "Review fees",
+        "Checkout shows service fees, taxes, tips, and delivery totals before placing an order.",
+      ],
+      [
+        "Respect restrictions",
+        "Restaurant-only drinks stay blocked from online checkout.",
+      ],
+    ] as const;
+  }
+
+  if (article.id === "omakase-experiences") {
+    return [
+      [
+        "Select package",
+        "Choose chef counter, private dining, course preview, and sake pairing options.",
+      ],
+      [
+        "Share details",
+        "Add dietary notes, occasion context, and preferred pacing before confirmation.",
+      ],
+      [
+        "Confirm with concierge",
+        "Premium experiences receive a final review before service.",
+      ],
+    ] as const;
+  }
+
+  return article.body
+    .slice(0, 3)
+    .map((paragraph, index) => [`Step ${index + 1}`, paragraph]);
+}
+
+function getHelpArticleIcon(category: string) {
+  if (category === "Orders") {
+    return "/assets/icons/takeaway-bag-icon.png";
+  }
+
+  if (category === "Reservations") {
+    return "/assets/icons/calendar-icon.png";
+  }
+
+  if (category === "Loyalty" || category === "Gifts") {
+    return "/assets/icons/floral-emblem-icon.png";
+  }
+
+  if (category === "Account") {
+    return "/assets/icons/user-settings-icon.png";
+  }
+
+  if (category === "Delivery") {
+    return "/assets/icons/delivery-scooter-icon.png";
+  }
+
+  if (category === "Omakase") {
+    return "/assets/icons/sushi-menu-icon.png";
+  }
+
+  return "/assets/icons/headset-icon.png";
 }
 
 export function DesktopHelpArticleDetail({
@@ -65,16 +154,7 @@ export function DesktopHelpArticleDetail({
                 onClick={() => onOpenArticle(item)}
                 type="button"
               >
-                <AssetIcon
-                  size={24}
-                  src={
-                    item.category === "Reservations"
-                      ? "/assets/icons/calendar-icon.png"
-                      : item.category === "Orders"
-                        ? "/assets/icons/takeaway-bag-icon.png"
-                        : "/assets/icons/headset-icon.png"
-                  }
-                />
+                <AssetIcon size={24} src={getHelpArticleIcon(item.category)} />
                 <span>
                   <span className="block text-[14px] text-white">
                     {item.title}
@@ -100,7 +180,7 @@ export function DesktopHelpArticleDetail({
           </p>
 
           <div className="mt-7 grid grid-cols-3 gap-3">
-            {articleSteps.map(([title, copy], index) => (
+            {getArticleSteps(article).map(([title, copy], index) => (
               <section
                 className="rounded-[14px] border border-white/10 bg-black/24 p-5"
                 key={title}

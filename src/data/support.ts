@@ -148,6 +148,42 @@ export const helpArticles: HelpArticle[] = [
     summary: "Earn points, redeem rewards, and track referral progress.",
     title: "Use rewards and referrals",
   },
+  {
+    body: [
+      "Profile details, saved addresses, payment methods, dietary notes, and notification preferences stay editable from Profile.",
+      "Checkout, reservations, support, and loyalty reuse saved profile details so repeated tasks stay quick.",
+      "Security controls are mocked locally for now and are ready for backend auth integration later.",
+    ],
+    category: "Account",
+    id: "account-settings",
+    summary:
+      "Manage profile, preferences, saved addresses, and payment methods.",
+    title: "Manage account settings",
+  },
+  {
+    body: [
+      "Delivery availability depends on the selected location, prep load, and courier capacity.",
+      "Checkout shows delivery fees, service fees, tip, tax, and the selected arrival window before order placement.",
+      "Restaurant-only drinks are blocked from online checkout and should be reserved for in-room service.",
+    ],
+    category: "Delivery",
+    id: "delivery-timing",
+    summary:
+      "Understand delivery windows, fees, courier routing, and restrictions.",
+    title: "Delivery timing and routing",
+  },
+  {
+    body: [
+      "Omakase reservations include package selection, party size, course preview, and optional sake pairing.",
+      "Premium experiences can be booked for chef counter service, private dining, or gifted as a curated experience.",
+      "Concierge reviews timing, dietary notes, and occasion details before service.",
+    ],
+    category: "Omakase",
+    id: "omakase-experiences",
+    summary:
+      "Plan chef counter, private dining, pairings, and premium experiences.",
+    title: "Book omakase experiences",
+  },
 ];
 
 export const defaultSupportState: SupportState = {

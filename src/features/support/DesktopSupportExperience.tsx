@@ -51,36 +51,42 @@ const contactCards = [
 ] as const;
 
 const helpCategories = [
-  [
-    "Orders",
-    "Track orders, changes, cancellations & more",
-    "/assets/icons/takeaway-bag-icon.png",
-  ],
-  [
-    "Reservations",
-    "Manage bookings, changes & policies",
-    "/assets/icons/calendar-icon.png",
-  ],
-  [
-    "Loyalty",
-    "Points, rewards, benefits & tiers",
-    "/assets/icons/floral-emblem-icon.png",
-  ],
-  [
-    "Account",
-    "Profile, preferences, payment & security",
-    "/assets/icons/user-icon.png",
-  ],
-  [
-    "Delivery",
-    "Fees, areas, timing, and routing",
-    "/assets/icons/delivery-scooter-icon.png",
-  ],
-  [
-    "Omakase Experience",
-    "Private dining, chef counter & events",
-    "/assets/icons/sushi-menu-icon.png",
-  ],
+  {
+    articleId: "order-tracking",
+    copy: "Track orders, changes, cancellations & more",
+    icon: "/assets/icons/takeaway-bag-icon.png",
+    title: "Orders",
+  },
+  {
+    articleId: "reservation-changes",
+    copy: "Manage bookings, changes & policies",
+    icon: "/assets/icons/calendar-icon.png",
+    title: "Reservations",
+  },
+  {
+    articleId: "rewards-referrals",
+    copy: "Points, rewards, benefits & tiers",
+    icon: "/assets/icons/floral-emblem-icon.png",
+    title: "Loyalty",
+  },
+  {
+    articleId: "account-settings",
+    copy: "Profile, preferences, payment & security",
+    icon: "/assets/icons/user-icon.png",
+    title: "Account",
+  },
+  {
+    articleId: "delivery-timing",
+    copy: "Fees, areas, timing, and routing",
+    icon: "/assets/icons/delivery-scooter-icon.png",
+    title: "Delivery",
+  },
+  {
+    articleId: "omakase-experiences",
+    copy: "Private dining, chef counter & events",
+    icon: "/assets/icons/sushi-menu-icon.png",
+    title: "Omakase Experience",
+  },
 ] as const;
 
 export function DesktopSupportExperience() {
@@ -427,28 +433,35 @@ function DesktopHelpCenter({
       </section>
 
       <section className="mt-4 grid grid-cols-6 gap-4">
-        {helpCategories.map(([title, copy, icon]) => (
-          <button
-            className="min-h-[146px] rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4 text-center"
-            key={title}
-            onClick={() => onOpenArticle(helpArticles[0] || null)}
-            type="button"
-          >
-            <AssetIcon className="mx-auto" size={46} src={icon} />
-            <span className="editorial-title mt-3 block text-[17px] uppercase text-white">
-              {title}
-            </span>
-            <span className="mt-2 block text-[13px] leading-5 text-white/62">
-              {copy}
-            </span>
-            <span
-              className="mt-3 block text-[var(--sb-gold-soft)]"
-              aria-hidden="true"
+        {helpCategories.map((category) => {
+          const article =
+            helpArticles.find((item) => item.id === category.articleId) ||
+            helpArticles[0] ||
+            null;
+
+          return (
+            <button
+              className="min-h-[146px] rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4 text-center"
+              key={category.title}
+              onClick={() => onOpenArticle(article)}
+              type="button"
             >
-              <ChevronIcon direction="right" size={18} />
-            </span>
-          </button>
-        ))}
+              <AssetIcon className="mx-auto" size={46} src={category.icon} />
+              <span className="editorial-title mt-3 block text-[17px] uppercase text-white">
+                {category.title}
+              </span>
+              <span className="mt-2 block text-[13px] leading-5 text-white/62">
+                {category.copy}
+              </span>
+              <span
+                className="mt-3 block text-[var(--sb-gold-soft)]"
+                aria-hidden="true"
+              >
+                <ChevronIcon direction="right" size={18} />
+              </span>
+            </button>
+          );
+        })}
       </section>
 
       <section className="mt-4 grid grid-cols-[minmax(0,1fr)_500px] gap-4">
