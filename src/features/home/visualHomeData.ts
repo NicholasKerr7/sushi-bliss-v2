@@ -23,6 +23,8 @@ export const dashboardCategories = [
   { id: "chef-specials", icon: icons.crown, label: "Specials" },
 ] as const;
 
+export type DashboardCategoryId = (typeof dashboardCategories)[number]["id"];
+
 export const desktopNav = [
   ["Home", "/home"],
   ["Menu", "/menu"],

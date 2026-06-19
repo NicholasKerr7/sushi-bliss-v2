@@ -14,18 +14,19 @@ import { HomeMenuCard } from "./HomeMenuCard";
 import {
   brand,
   dashboardCategories,
+  type DashboardCategoryId,
   featuredAssets,
   icons,
 } from "./visualHomeData";
 
 interface MobileDashboardProps {
-  activeCategory: string;
+  activeCategory: DashboardCategoryId;
   cartCount: number;
   items: MenuItem[];
   memberItem: MenuItem;
   query: string;
   onAddToCart: (item: MenuItem) => void;
-  onCategoryChange: (category: string) => void;
+  onCategoryChange: (category: DashboardCategoryId) => void;
   onQueryChange: (query: string) => void;
   onSearchSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
@@ -60,7 +61,11 @@ export function MobileDashboard({
           activeCategory={activeCategory}
           onCategoryChange={onCategoryChange}
         />
-        <FeaturedMenuRail items={items} onAddToCart={onAddToCart} />
+        <FeaturedMenuRail
+          activeCategory={activeCategory}
+          items={items}
+          onAddToCart={onAddToCart}
+        />
         <QuickActionGrid />
         <MemberCard
           cartCount={cartCount}
@@ -169,17 +174,23 @@ function MobileHeroCard() {
 }
 
 interface CategoryRailProps {
-  activeCategory: string;
-  onCategoryChange: (category: string) => void;
+  activeCategory: DashboardCategoryId;
+  onCategoryChange: (category: DashboardCategoryId) => void;
 }
 
 function CategoryRail({ activeCategory, onCategoryChange }: CategoryRailProps) {
   return (
-    <div className="mt-4 grid grid-cols-4 rounded-[18px] border border-[var(--sb-border)] bg-black/72 p-1 shadow-[0_18px_42px_rgba(0,0,0,0.42)] backdrop-blur-xl">
+    <div
+      aria-label="Featured menu categories"
+      className="mt-4 grid grid-cols-4 rounded-[18px] border border-[var(--sb-border)] bg-black/72 p-1 shadow-[0_18px_42px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+    >
       {dashboardCategories.map(({ id, icon, label }) => {
         const active = activeCategory === id;
         return (
           <button
+            aria-controls="mobile-featured-menu"
+            aria-label={`Show ${label} featured items`}
+            aria-pressed={active}
             className={`flex min-h-[62px] min-w-0 flex-col items-center justify-center gap-1 rounded-[13px] border px-1 uppercase transition min-[390px]:min-h-[70px] min-[390px]:rounded-[15px] ${
               active
                 ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/28 text-[var(--sb-red-bright)] shadow-[0_0_28px_var(--sb-red-glow)]"
@@ -205,21 +216,31 @@ function CategoryRail({ activeCategory, onCategoryChange }: CategoryRailProps) {
 }
 
 interface FeaturedMenuRailProps {
+  activeCategory: DashboardCategoryId;
   items: MenuItem[];
   onAddToCart: (item: MenuItem) => void;
 }
 
-function FeaturedMenuRail({ items, onAddToCart }: FeaturedMenuRailProps) {
+function FeaturedMenuRail({
+  activeCategory,
+  items,
+  onAddToCart,
+}: FeaturedMenuRailProps) {
+  const categoryLabel =
+    dashboardCategories.find((category) => category.id === activeCategory)
+      ?.label || "Featured";
+  const categoryHref = `/menu?category=${activeCategory}`;
+
   return (
-    <section className="mt-6">
+    <section className="mt-6" id="mobile-featured-menu">
       <div className="flex items-center justify-between">
         <h2 className="editorial-title text-[20px] tracking-[0.12em] text-[var(--sb-gold)]">
-          Featured Menu
+          {categoryLabel} Picks
         </h2>
         <Link
-          aria-label="Explore menu"
+          aria-label={`Explore all ${categoryLabel} items`}
           className="inline-flex min-h-10 items-center gap-1 rounded-full px-2 text-[15px] font-medium text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-          href="/menu"
+          href={categoryHref}
         >
           View All
           <ChevronIcon direction="right" size={18} />
@@ -235,6 +256,7 @@ function FeaturedMenuRail({ items, onAddToCart }: FeaturedMenuRailProps) {
             key={item.id}
             onAddToCart={onAddToCart}
             priority={index < 3}
+            viewHref={categoryHref}
           />
         ))}
       </div>

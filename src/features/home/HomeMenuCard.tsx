@@ -14,6 +14,7 @@ interface HomeMenuCardProps {
   item: MenuItem;
   onAddToCart: (item: MenuItem) => void;
   priority?: boolean;
+  viewHref?: string;
 }
 
 export function HomeMenuCard({
@@ -21,6 +22,7 @@ export function HomeMenuCard({
   item,
   onAddToCart,
   priority = false,
+  viewHref = "/menu",
 }: HomeMenuCardProps) {
   return (
     <article className="relative min-w-0 overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/62">
@@ -29,7 +31,7 @@ export function HomeMenuCard({
       </span>
       <Link
         className="grid min-h-[166px] w-full grid-cols-[42%_1fr] text-left min-[390px]:block min-[390px]:min-h-0"
-        href="/menu"
+        href={viewHref}
       >
         <div className="relative min-h-[166px] min-[390px]:h-[86px] min-[390px]:min-h-0 md:h-[52px]">
           <Image

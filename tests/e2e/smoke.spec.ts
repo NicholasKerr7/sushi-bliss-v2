@@ -254,6 +254,50 @@ test.describe("customer experience", () => {
     ).toHaveCount(0);
   });
 
+  test("updates mobile home featured items from category rail", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("mobile"),
+      "Mobile home category rail is hidden on wider layouts.",
+    );
+
+    await page.goto("/home");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const featuredRail = page.locator("#mobile-featured-menu");
+
+    await expect(
+      featuredRail.getByRole("heading", { name: "Nigiri Picks" }),
+    ).toBeVisible();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Otoro Nigiri" }).first(),
+    ).toBeVisible();
+
+    await page
+      .getByRole("button", { name: "Show Rolls featured items" })
+      .click();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Rolls Picks" }),
+    ).toBeVisible();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Dragon Roll" }).first(),
+    ).toBeVisible();
+    await expect(
+      featuredRail.getByRole("link", { name: /Explore all Rolls items/i }),
+    ).toHaveAttribute("href", "/menu?category=rolls");
+
+    await page
+      .getByRole("button", { name: "Show Sashimi featured items" })
+      .click();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Sashimi Picks" }),
+    ).toBeVisible();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Salmon Sashimi" }).first(),
+    ).toBeVisible();
+  });
+
   test("prefills liquid omakase reservation intent on desktop", async ({
     page,
   }, testInfo) => {
