@@ -166,6 +166,55 @@ test.describe("customer experience", () => {
       });
     }
   });
+
+  test("blocks restaurant-only drinks from desktop checkout", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "Desktop cart panel exercises the shared checkout compliance guard.",
+    );
+
+    await page.goto("/menu");
+    await page.evaluate(() => {
+      window.localStorage.setItem(
+        "sushi-bliss:cart",
+        JSON.stringify([
+          {
+            addOns: [],
+            customizations: [],
+            id: "japanese-dry-lager",
+            menuItemId: "japanese-dry-lager",
+            quantity: 1,
+          },
+        ]),
+      );
+      window.dispatchEvent(new Event("sushi-bliss:cart-changed"));
+    });
+    await page.reload();
+
+    const menuSection = page.locator("#menu");
+
+    await expect(menuSection.getByText("Japanese Dry Lager")).toBeVisible();
+    await menuSection
+      .getByRole("button", { name: /View cart & checkout/i })
+      .click();
+
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Checkout" }),
+    ).toBeVisible();
+    await expect(page.getByText("Restaurant-only drinks")).toBeVisible();
+    await page
+      .getByRole("button", { name: /Continue to review/i })
+      .first()
+      .click();
+    await expect(
+      page.getByText(/reserved for restaurant service/i),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /Almost there/i }),
+    ).toHaveCount(0);
+  });
 });
 
 test.describe("admin experience", () => {

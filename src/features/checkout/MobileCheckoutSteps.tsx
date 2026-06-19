@@ -28,6 +28,7 @@ import {
   SecureInlineCopy,
   StepHeading,
 } from "./MobileCheckoutPrimitives";
+import { AgeVerificationNotice } from "./AgeVerificationNotice";
 import type { MobileCheckoutState } from "./mobileCheckoutTypes";
 
 const fulfillmentOptions: Array<{
@@ -293,11 +294,13 @@ export function AddressStep({
 export function PaymentStep({
   checkout,
   itemCount,
+  items,
   onBack,
   onContinue,
 }: {
   checkout: MobileCheckoutState;
   itemCount: number;
+  items: CartLineItem[];
   onBack: () => void;
   onContinue: () => void;
 }) {
@@ -377,6 +380,13 @@ export function PaymentStep({
         totals={checkout.reviewTotals}
       />
       <PromoAndTipPanel checkout={checkout} />
+      <AgeVerificationNotice
+        className="mt-4"
+        items={items}
+        onVerifiedChange={checkout.setAgeVerified}
+        validationMessage={checkout.validation.ageVerification}
+        verified={checkout.ageVerified}
+      />
 
       <button
         className="red-glow-button mt-5 min-h-[66px] w-full rounded-[14px] text-[17px]"
@@ -488,6 +498,13 @@ export function ReviewStep({
       />
       <MemberBenefitsCard className="mt-4" totals={checkout.reviewTotals} />
       <ReviewPromoTip checkout={checkout} />
+      <AgeVerificationNotice
+        className="mt-4"
+        items={items}
+        onVerifiedChange={checkout.setAgeVerified}
+        validationMessage={checkout.validation.ageVerification}
+        verified={checkout.ageVerified}
+      />
 
       {instructions ? (
         <div className="mt-4 rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] p-4">

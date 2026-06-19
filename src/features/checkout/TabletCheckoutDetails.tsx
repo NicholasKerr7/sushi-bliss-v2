@@ -19,6 +19,7 @@ import {
   TabletCheckoutAddressPanel,
   TabletCheckoutPaymentPanel,
 } from "./TabletCheckoutPanels";
+import { AgeVerificationNotice } from "./AgeVerificationNotice";
 import { TabletCheckoutProgress } from "./TabletCheckoutProgress";
 import { TabletCheckoutSelectLike } from "./TabletCheckoutSelectLike";
 import { TabletCheckoutStepTitle } from "./TabletCheckoutStepTitle";
@@ -319,6 +320,13 @@ export function TabletCheckoutDetails({
               onExpandedChange={onPaymentsExpandedChange}
             />
           </div>
+          <AgeVerificationNotice
+            className="mt-4"
+            items={items}
+            onVerifiedChange={checkout.setAgeVerified}
+            validationMessage={checkout.validation.ageVerification}
+            verified={checkout.ageVerified}
+          />
 
           <Button
             className="red-glow-button mt-4 h-[58px] w-full rounded-[12px] text-[17px] uppercase tracking-[0.08em]"

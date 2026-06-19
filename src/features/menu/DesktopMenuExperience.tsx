@@ -195,7 +195,7 @@ export function DesktopMenuExperience({
   };
 
   const handleOpenReview = () => {
-    if (checkout.validateCheckout()) {
+    if (checkout.validateCheckout(items)) {
       setView("review");
     }
   };

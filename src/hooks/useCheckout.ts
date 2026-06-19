@@ -9,6 +9,10 @@ import {
   findCheckoutPromo,
   getCheckoutTimeSlots,
 } from "@/lib/checkout";
+import {
+  createOrderAgeVerification,
+  getCheckoutComplianceState,
+} from "@/lib/checkoutCompliance";
 import { calculateOrderTotals, calculateTipCents } from "@/lib/money";
 import {
   addressToDraft,
@@ -73,6 +77,7 @@ export function useCheckout(
   );
   const [editingAddressId, setEditingAddressId] = useState<string | null>(null);
   const [addressFormOpen, setAddressFormOpen] = useState(false);
+  const [ageVerified, setAgeVerifiedState] = useState(false);
   const [validation, setValidation] = useState<CheckoutValidationState>({});
 
   const timeSlots = useMemo(() => getCheckoutTimeSlots(mode), [mode]);
@@ -127,6 +132,14 @@ export function useCheckout(
   const setCustomTipCents = useCallback((nextTipCents: number) => {
     setCustomTipCentsState(Math.max(Math.round(nextTipCents), 0));
     setTipPercentState(0);
+  }, []);
+
+  const setAgeVerified = useCallback((nextAgeVerified: boolean) => {
+    setAgeVerifiedState(nextAgeVerified);
+    setValidation((current) => ({
+      ...current,
+      ageVerification: undefined,
+    }));
   }, []);
 
   const updateAddressDraft = useCallback(
@@ -220,35 +233,45 @@ export function useCheckout(
   }, []);
 
   /** Validates the current checkout selections before review or order creation. */
-  const validateCheckout = useCallback(() => {
-    const nextValidation: CheckoutValidationState = {};
+  const validateCheckout = useCallback(
+    (items: CartLineItem[] = []) => {
+      const nextValidation: CheckoutValidationState = {};
+      const compliance = getCheckoutComplianceState(items, ageVerified);
 
-    if (mode === "delivery" && !selectedAddress) {
-      nextValidation.address = "Choose or add a delivery address.";
-    }
+      if (mode === "delivery" && !selectedAddress) {
+        nextValidation.address = "Choose or add a delivery address.";
+      }
 
-    if (!selectedTime) {
-      nextValidation.time = "Choose a pickup or delivery time.";
-    }
+      if (!selectedTime) {
+        nextValidation.time = "Choose a pickup or delivery time.";
+      }
 
-    if (!selectedPaymentMethod) {
-      nextValidation.payment = "Choose a payment method.";
-    } else if (!isPaymentMethodUsable(selectedPaymentMethod)) {
-      nextValidation.payment = "Choose a payment method that has not expired.";
-    }
+      if (!selectedPaymentMethod) {
+        nextValidation.payment = "Choose a payment method.";
+      } else if (!isPaymentMethodUsable(selectedPaymentMethod)) {
+        nextValidation.payment =
+          "Choose a payment method that has not expired.";
+      }
 
-    setValidation(nextValidation);
-    return Object.keys(nextValidation).length === 0;
-  }, [mode, selectedAddress, selectedPaymentMethod, selectedTime]);
+      if (compliance.validationMessage) {
+        nextValidation.ageVerification = compliance.validationMessage;
+      }
+
+      setValidation(nextValidation);
+      return Object.keys(nextValidation).length === 0;
+    },
+    [ageVerified, mode, selectedAddress, selectedPaymentMethod, selectedTime],
+  );
 
   const createCheckoutOrder = useCallback(
     (items: CartLineItem[]): Order | null => {
-      if (!validateCheckout() || !selectedPaymentMethod) {
+      if (!validateCheckout(items) || !selectedPaymentMethod) {
         return null;
       }
 
       return createOrderFromCheckout(items, {
         address: selectedAddress || undefined,
+        ageVerification: createOrderAgeVerification(items, ageVerified),
         customerEmail: profile.email,
         customerName: profile.name,
         customerPhone: profile.phone,
@@ -260,6 +283,7 @@ export function useCheckout(
       });
     },
     [
+      ageVerified,
       appliedPromo,
       mode,
       profile.email,
@@ -277,6 +301,7 @@ export function useCheckout(
     addressDraft,
     addressFormOpen,
     addresses: profile.addresses,
+    ageVerified,
     appliedPromo,
     applyPromoCode,
     cancelAddressForm,
@@ -303,6 +328,7 @@ export function useCheckout(
     setSelectedAddressId,
     setSelectedPaymentMethodId,
     setSelectedTime,
+    setAgeVerified,
     setCustomTipCents,
     setTipPercent,
     startEditSelectedAddress,

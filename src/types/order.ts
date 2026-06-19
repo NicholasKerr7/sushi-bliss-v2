@@ -77,6 +77,13 @@ export interface OrderTotals {
   totalCents: number;
 }
 
+export interface OrderAgeVerification {
+  required: boolean;
+  restrictedItemIds: ID[];
+  verified: boolean;
+  verifiedAt?: string;
+}
+
 export interface Order {
   id: ID;
   status: OrderStatus;
@@ -89,6 +96,7 @@ export interface Order {
   deliveryAddress?: Address;
   fulfillmentAt: string;
   paymentMethod: PaymentMethod;
+  ageVerification?: OrderAgeVerification;
   promoCode?: string;
   courier?: OrderCourier;
 }

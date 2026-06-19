@@ -5,6 +5,7 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
 import { CheckoutAddressSection } from "@/features/checkout/CheckoutAddressSection";
+import { AgeVerificationNotice } from "@/features/checkout/AgeVerificationNotice";
 import { featuredAssets } from "@/features/home/visualHomeData";
 import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
@@ -207,6 +208,14 @@ export function DesktopCheckoutView({
             </section>
           </div>
 
+          <AgeVerificationNotice
+            className="mt-4"
+            items={items}
+            onVerifiedChange={checkout.setAgeVerified}
+            validationMessage={checkout.validation.ageVerification}
+            verified={checkout.ageVerified}
+          />
+
           <div className="mt-4 grid grid-cols-[230px_1fr] gap-4 border-t border-white/10 pt-4">
             <button
               className="inline-flex h-[56px] items-center justify-center gap-3 rounded-[12px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54"
@@ -312,6 +321,12 @@ export function DesktopReviewView({
                 ? `${checkout.selectedPaymentMethod.brand} **** ${checkout.selectedPaymentMethod.last4}`
                 : "Select a payment method"}
             </DesktopReviewInfoCard>
+            <AgeVerificationNotice
+              items={items}
+              onVerifiedChange={checkout.setAgeVerified}
+              validationMessage={checkout.validation.ageVerification}
+              verified={checkout.ageVerified}
+            />
             <DesktopReviewTotals checkout={checkout} items={items} />
             <Button
               className="h-[64px] w-full rounded-[12px] text-[16px] uppercase tracking-[0.08em]"

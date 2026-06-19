@@ -10,6 +10,7 @@ import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { CartLineItem } from "@/types/order";
 
+import { AgeVerificationNotice } from "./AgeVerificationNotice";
 import { TabletCheckoutProgress } from "./TabletCheckoutProgress";
 import { TabletCheckoutSummary } from "./TabletCheckoutSummary";
 import type { TabletCheckoutState } from "./tabletCheckoutTypes";
@@ -157,6 +158,12 @@ export function TabletCheckoutReviewStep({
             onRemoveItem={onRemoveItem}
             onUpdateQuantity={onUpdateQuantity}
             totals={checkout.reviewTotals}
+          />
+          <AgeVerificationNotice
+            items={items}
+            onVerifiedChange={checkout.setAgeVerified}
+            validationMessage={checkout.validation.ageVerification}
+            verified={checkout.ageVerified}
           />
           <div className="rounded-[14px] border border-white/10 bg-white/[0.04] p-3">
             <h2 className="text-[14px] font-semibold uppercase tracking-[0.08em] text-white/72">

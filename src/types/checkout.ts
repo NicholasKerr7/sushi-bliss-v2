@@ -1,5 +1,5 @@
 import type { FulfillmentMode, ID } from "@/types/common";
-import type { OrderTotals } from "@/types/order";
+import type { OrderAgeVerification, OrderTotals } from "@/types/order";
 import type { Address, AddressDraft, PaymentMethod } from "@/types/user";
 
 export type CheckoutAddressDraft = AddressDraft;
@@ -19,6 +19,7 @@ export interface CheckoutTimeSlot {
 
 export interface CheckoutValidationState {
   address?: string;
+  ageVerification?: string;
   payment?: string;
   promo?: string;
   time?: string;
@@ -26,6 +27,7 @@ export interface CheckoutValidationState {
 
 export interface CheckoutOrderInput {
   address?: Address;
+  ageVerification?: OrderAgeVerification;
   customerEmail: string;
   customerName: string;
   customerPhone: string;

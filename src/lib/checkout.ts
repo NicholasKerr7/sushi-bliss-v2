@@ -85,6 +85,7 @@ export function createOrderFromCheckout(
       name: input.customerName,
       phone: input.customerPhone,
     },
+    ageVerification: input.ageVerification,
     deliveryAddress: input.mode === "delivery" ? input.address : undefined,
     fulfillmentAt: input.fulfillmentAt,
     id: `order-${createdAt.getTime()}`,

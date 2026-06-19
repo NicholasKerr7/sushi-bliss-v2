@@ -1,4 +1,5 @@
 import { createOrderFromCheckout } from "@/lib/checkout";
+import { getCheckoutComplianceState } from "@/lib/checkoutCompliance";
 import {
   serviceFailure,
   serviceSuccess,
@@ -30,6 +31,18 @@ export async function createCheckoutOrder(
     return serviceFailure(
       "checkout_total_invalid",
       "Order total must be greater than zero.",
+    );
+  }
+
+  const compliance = getCheckoutComplianceState(
+    items,
+    Boolean(input.ageVerification?.verified),
+  );
+
+  if (!compliance.valid) {
+    return serviceFailure(
+      "checkout_compliance_required",
+      compliance.validationMessage || "Checkout compliance is required.",
     );
   }
 

@@ -101,7 +101,7 @@ export function MobileCheckoutDialog({
   const handleContinueToReview = () => {
     const promoValid = checkout.applyPromoCode();
 
-    if (promoValid && checkout.validateCheckout()) {
+    if (promoValid && checkout.validateCheckout(items)) {
       setStepAndScroll("review");
     }
   };
@@ -152,6 +152,7 @@ export function MobileCheckoutDialog({
             <PaymentStep
               checkout={checkout}
               itemCount={itemCount}
+              items={items}
               onBack={() => setStepAndScroll("address")}
               onContinue={handleContinueToReview}
             />

@@ -13,6 +13,7 @@ import { useOrders } from "@/hooks/useOrders";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import type { Order } from "@/types/order";
 
+import { AgeVerificationNotice } from "./AgeVerificationNotice";
 import { CheckoutAddressSection } from "./CheckoutAddressSection";
 import { CheckoutModeSelector } from "./CheckoutModeSelector";
 import { CheckoutPaymentSection } from "./CheckoutPaymentSection";
@@ -215,6 +216,13 @@ export function CheckoutDrawer({
               onPromoCodeChange={checkout.setPromoCode}
               promoCode={checkout.promoCode}
               validationMessage={checkout.validation.promo}
+            />
+
+            <AgeVerificationNotice
+              items={items}
+              onVerifiedChange={checkout.setAgeVerified}
+              validationMessage={checkout.validation.ageVerification}
+              verified={checkout.ageVerified}
             />
 
             <CheckoutReview

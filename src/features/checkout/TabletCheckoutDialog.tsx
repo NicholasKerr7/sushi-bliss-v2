@@ -90,7 +90,7 @@ export function TabletCheckoutDialog({
   const handleContinueToReview = () => {
     const promoValid = checkout.applyPromoCode();
 
-    if (promoValid && checkout.validateCheckout()) {
+    if (promoValid && checkout.validateCheckout(items)) {
       setStepAndScroll("review");
     }
   };
