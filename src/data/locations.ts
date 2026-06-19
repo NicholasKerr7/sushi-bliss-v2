@@ -38,7 +38,7 @@ export const locations: RestaurantLocation[] = [
     features: ["Garden room", "Celebrations", "Group dining"],
     hours: "Wed - Sun, 12:00 PM - 10:00 PM",
     id: "kintsugi-courtyard",
-    imageUrl: "/assets/ui/cards/kintsugi-bowl-with-golden-accents.webp",
+    imageUrl: "/assets/gallery/tranquil-courtyard-at-night.webp",
     mapImageUrl: "/assets/maps/map-location.webp",
     name: "Sushi Bliss Downtown",
     neighborhood: "Chuo City",

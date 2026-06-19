@@ -125,7 +125,7 @@ export function MobileLocationListView({
         {locations.length > 0 ? (
           locations.map((location, index) => (
             <MobileLocationCard
-              imagePriority={index < 2}
+              imagePriority={index < 3}
               key={location.id}
               location={location}
               onOpenDetail={onOpenDetail}
@@ -170,29 +170,29 @@ function MobileLocationCard({
   const meta = getMobileLocationMeta(location);
 
   return (
-    <article className="grid min-h-[148px] grid-cols-[38%_1fr] overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_48px_rgba(0,0,0,0.34)] backdrop-blur-xl">
-      <div className="relative min-h-[148px] bg-black/30">
+    <article className="grid min-h-[144px] grid-cols-[35%_1fr] overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_48px_rgba(0,0,0,0.34)] backdrop-blur-xl min-[390px]:min-h-[148px] min-[390px]:grid-cols-[38%_1fr]">
+      <div className="relative min-h-[144px] bg-black/30 min-[390px]:min-h-[148px]">
         <Image
-          alt={location.name}
+          alt={`${location.name} map preview`}
           className="object-cover"
           fill
           loading={imagePriority ? "eager" : "lazy"}
           priority={imagePriority}
           sizes="160px"
-          src={location.imageUrl}
+          src={location.mapImageUrl}
         />
         <span className="absolute left-2 top-2 rounded-full border border-[var(--sb-red-bright)]/50 bg-black/68 px-2.5 py-1 text-[10px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]">
           {meta.tag}
         </span>
       </div>
-      <div className="min-w-0 p-4">
+      <div className="min-w-0 p-3.5 min-[390px]:p-4">
         <div className="flex min-w-0 items-start justify-between gap-2 min-[390px]:gap-3">
-          <h2 className="editorial-title min-w-0 max-w-full break-words text-[19px] leading-[1.05] text-white min-[390px]:text-[22px]">
+          <h2 className="editorial-title min-w-0 max-w-full break-normal text-balance text-[17px] leading-[1.04] tracking-[0.01em] text-white min-[390px]:text-[22px]">
             {location.name}
           </h2>
           <button
             aria-label={`View ${location.name} details`}
-            className="mt-4 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/28 text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+            className="mt-2 grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/28 text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:h-10 min-[390px]:w-10"
             onClick={() => onOpenDetail(location)}
             type="button"
           >

@@ -47,11 +47,14 @@ export function TabletLocationsHeader({
           type="button"
         >
           <AssetIcon size={32} src={icons.cart} />
-          <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
+          <span className="absolute right-0 top-0 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
             {cartCount}
           </span>
         </button>
-        <Link className="flex min-w-11 items-center gap-4" href="/profile">
+        <Link
+          className="flex min-w-[74px] items-center gap-2 lg:min-w-11 lg:gap-4"
+          href="/profile"
+        >
           <Image
             alt=""
             className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"

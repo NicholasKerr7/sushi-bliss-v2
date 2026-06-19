@@ -22,13 +22,13 @@ export function LocationCard({
     <Card className="flex h-full flex-col overflow-hidden">
       <div className="relative aspect-[4/3] bg-sb-panel-soft">
         <Image
-          alt={location.name}
+          alt={`${location.name} map preview`}
           className="object-cover"
           fill
           loading={imagePriority ? "eager" : "lazy"}
           priority={imagePriority}
           sizes="(min-width: 1024px) 33vw, 100vw"
-          src={location.imageUrl}
+          src={location.mapImageUrl}
         />
       </div>
       <div className="flex flex-1 flex-col gap-4 p-4">

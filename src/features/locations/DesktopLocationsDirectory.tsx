@@ -253,13 +253,13 @@ function LocationFeatureCard({
     <article className="overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[#07090a]/88">
       <div className="relative h-[178px]">
         <Image
-          alt=""
+          alt={`${location.name} map preview`}
           className="object-cover"
           fill
           loading={imagePriority ? "eager" : "lazy"}
           priority={imagePriority}
           sizes="340px"
-          src={location.imageUrl}
+          src={location.mapImageUrl}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.74))]" />
         <p className="absolute bottom-4 left-4 text-[12px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">

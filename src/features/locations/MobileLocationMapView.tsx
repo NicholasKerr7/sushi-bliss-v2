@@ -65,7 +65,7 @@ export function MobileLocationMapView({
             loading="eager"
             priority
             sizes="430px"
-            src="/assets/maps/map-route.webp"
+            src={selectedLocation.mapImageUrl}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.1)_56%,rgba(0,0,0,0.82)_100%)]" />
           <div className="absolute left-5 top-5 rounded-[14px] border border-[var(--sb-border)] bg-black/66 px-4 py-3 backdrop-blur-xl">

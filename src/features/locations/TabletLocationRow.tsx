@@ -29,13 +29,13 @@ export function TabletLocationRow({
     <article className="grid grid-cols-[156px_minmax(0,1fr)_154px] gap-3 rounded-[16px] border border-[var(--sb-red)]/26 bg-white/[0.04] p-3 min-[1080px]:grid-cols-[260px_minmax(0,1fr)_220px] min-[1080px]:gap-5 min-[1080px]:rounded-[18px] min-[1080px]:p-4">
       <div className="relative min-h-[146px] overflow-hidden rounded-[10px] bg-black/30 min-[1080px]:min-h-[190px] min-[1080px]:rounded-[12px]">
         <Image
-          alt={location.name}
+          alt={`${location.name} map preview`}
           className="object-cover"
           fill
           loading={imagePriority ? "eager" : "lazy"}
           priority={imagePriority}
           sizes="300px"
-          src={location.imageUrl}
+          src={location.mapImageUrl}
         />
       </div>
 
