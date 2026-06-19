@@ -10,7 +10,8 @@ interface AdminMetricCardProps {
 }
 
 const toneRingClasses: Record<StatusTone, string> = {
-  danger: "border-sb-red/40 bg-sb-red/10 shadow-[0_0_18px_rgba(183,42,42,0.24)]",
+  danger:
+    "border-sb-red/40 bg-sb-red/10 shadow-[0_0_18px_rgba(183,42,42,0.24)]",
   neutral: "border-white/12 bg-white/[0.035]",
   premium:
     "border-sb-gold/36 bg-sb-gold/10 shadow-[0_0_18px_rgba(215,168,79,0.18)]",

@@ -62,11 +62,7 @@ export function AdminShell({ children }: AdminShellProps) {
                     )}
                     href={item.href}
                   >
-                    <AssetIcon
-                      loading="eager"
-                      size={22}
-                      src={item.iconUrl}
-                    />
+                    <AssetIcon loading="eager" size={22} src={item.iconUrl} />
                     <span className="truncate">{item.label}</span>
                     {item.id === "overview" ? (
                       <span

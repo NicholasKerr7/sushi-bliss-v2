@@ -139,8 +139,7 @@ export function DesktopPackageButton({
                 Guests
               </span>
               <span className="mt-0.5 block text-[11px] text-white/72">
-                {omakasePackage.guestRange.min}-
-                {omakasePackage.guestRange.max}
+                {omakasePackage.guestRange.min}-{omakasePackage.guestRange.max}
               </span>
             </span>
           </div>

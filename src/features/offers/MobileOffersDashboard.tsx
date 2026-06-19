@@ -43,8 +43,7 @@ export function MobileOffersDashboard() {
     () =>
       sortedOffers.find(
         (offer) =>
-          offer.id === "omakase-preview" &&
-          !isOfferExpired(offer, currentTime),
+          offer.id === "omakase-preview" && !isOfferExpired(offer, currentTime),
       ) ||
       sortedOffers.find(
         (offer) =>

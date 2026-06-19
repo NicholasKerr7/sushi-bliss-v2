@@ -13,8 +13,8 @@ export interface CheckoutComplianceState {
 function isAgeRestrictedLineItem(item: CartLineItem): boolean {
   return Boolean(
     item.menuItem.ageRestricted ||
-      (item.menuItem.abv && item.menuItem.abv > 0) ||
-      item.menuItem.tags.includes("alcohol"),
+    (item.menuItem.abv && item.menuItem.abv > 0) ||
+    item.menuItem.tags.includes("alcohol"),
   );
 }
 
@@ -44,9 +44,7 @@ export function getCheckoutComplianceState(
   let validationMessage: string | undefined;
 
   if (unavailableItems.length > 0) {
-    validationMessage = `${formatItemNames(
-      unavailableItems,
-    )} ${
+    validationMessage = `${formatItemNames(unavailableItems)} ${
       unavailableItems.length === 1 ? "is" : "are"
     } reserved for restaurant service. Remove ${
       unavailableItems.length === 1 ? "it" : "them"

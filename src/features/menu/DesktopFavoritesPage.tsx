@@ -410,10 +410,7 @@ function FavoriteMenuCard({
               onClick={() => onAddToCart(item)}
               type="button"
             >
-              <AssetIcon
-                size={18}
-                src="/assets/icons/shopping-cart-icon.png"
-              />
+              <AssetIcon size={18} src="/assets/icons/shopping-cart-icon.png" />
               Add to cart
             </button>
           )}

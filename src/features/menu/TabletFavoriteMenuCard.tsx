@@ -113,10 +113,7 @@ export function TabletFavoriteMenuCard({
               size="sm"
             >
               Add to cart
-              <AssetIcon
-                size={14}
-                src="/assets/icons/shopping-cart-icon.png"
-              />
+              <AssetIcon size={14} src="/assets/icons/shopping-cart-icon.png" />
             </Button>
           ) : (
             <Button
