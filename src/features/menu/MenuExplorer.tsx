@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { CartDrawer } from "@/features/cart/CartDrawer";
@@ -17,6 +18,29 @@ import { MobileMenuExplorer } from "./MobileMenuExplorer";
 import { TabletMenuExplorer } from "./TabletMenuExplorer";
 
 export function MenuExplorer() {
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get("category") || undefined;
+  const initialQuery =
+    searchParams.get("q") || searchParams.get("query") || undefined;
+
+  return (
+    <MenuExplorerContent
+      initialCategory={initialCategory}
+      initialQuery={initialQuery}
+      key={`${initialCategory || "all"}:${initialQuery || ""}`}
+    />
+  );
+}
+
+interface MenuExplorerContentProps {
+  initialCategory?: string;
+  initialQuery?: string;
+}
+
+function MenuExplorerContent({
+  initialCategory,
+  initialQuery,
+}: MenuExplorerContentProps) {
   const mode = useResponsiveMode();
   const [cartOpen, setCartOpen] = useState(false);
   const responsiveReady = useResponsiveReady();
@@ -32,7 +56,7 @@ export function MenuExplorer() {
     setCategory,
     setQuery,
     totalItemCount,
-  } = useMenu();
+  } = useMenu({ initialCategory, initialQuery });
   const { isFavorite, toggleFavorite } = useFavorites();
   const {
     addItem,

@@ -635,9 +635,9 @@ function DesktopMenuHero({
           "object-cover",
           isDrinks ? "object-[58%_48%]" : "object-[72%_42%]",
         )}
+        fetchPriority="high"
         fill
         loading="eager"
-        priority
         sizes="1200px"
         src={
           isDrinks

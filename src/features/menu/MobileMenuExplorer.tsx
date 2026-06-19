@@ -284,9 +284,9 @@ function MobileCategoryView({
             "object-cover",
             isDrinksCategory ? "object-[58%_48%]" : "object-[75%_38%]",
           )}
+          fetchPriority="high"
           fill
           loading="eager"
-          priority
           sizes="430px"
           src={heroImage}
         />

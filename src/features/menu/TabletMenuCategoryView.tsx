@@ -280,9 +280,9 @@ export function TabletMenuCategoryView({
         <Image
           alt={heroAlt}
           className={classNames("object-cover", content.heroPosition)}
+          fetchPriority="high"
           fill
           loading="eager"
-          priority
           sizes="1034px"
           src={heroImage}
         />
@@ -387,6 +387,9 @@ export function TabletMenuCategoryView({
             {displayedItems.map((item, index) => (
               <TabletCategoryCard
                 badge={index === 0 ? "Chef's Pick" : undefined}
+                eagerImage={
+                  index < 6 || getTabletPresentationImage(item) === heroImage
+                }
                 item={item}
                 key={item.id}
                 onAddToCart={onAddToCart}
@@ -502,11 +505,13 @@ function TabletDrinksEmptyState() {
 
 function TabletCategoryCard({
   badge,
+  eagerImage = false,
   item,
   onAddToCart,
   onViewDetails,
 }: {
   badge?: string;
+  eagerImage?: boolean;
   item: MenuItem;
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
@@ -530,7 +535,9 @@ function TabletCategoryCard({
           <Image
             alt=""
             className="object-cover"
+            fetchPriority={eagerImage ? "high" : "auto"}
             fill
+            loading={eagerImage ? "eager" : "lazy"}
             sizes="320px"
             src={getTabletPresentationImage(item)}
           />

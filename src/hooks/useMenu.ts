@@ -5,6 +5,11 @@ import { useMemo, useState } from "react";
 import { menuCategories, menuItems } from "@/data/menu";
 import type { MenuCategory } from "@/types/menu";
 
+interface UseMenuOptions {
+  initialCategory?: string;
+  initialQuery?: string;
+}
+
 const allCategory: MenuCategory = {
   id: "all",
   itemCount: menuItems.length,
@@ -24,10 +29,33 @@ const drinksCategory: MenuCategory = {
   label: "Drinks",
 };
 
+function getInitialCategory(category?: string) {
+  if (!category) {
+    return allCategory.id;
+  }
+
+  const categoryExists =
+    category === allCategory.id ||
+    category === chefSpecialCategory.id ||
+    category === drinksCategory.id ||
+    menuCategories.some((item) => item.id === category);
+
+  return categoryExists ? category : allCategory.id;
+}
+
+function getInitialQuery(query?: string) {
+  return query?.trim().slice(0, 80) || "";
+}
+
 /** Filters normalized menu data by category and full search text. */
-export function useMenu() {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<string>("all");
+export function useMenu({
+  initialCategory,
+  initialQuery,
+}: UseMenuOptions = {}) {
+  const [query, setQuery] = useState(() => getInitialQuery(initialQuery));
+  const [category, setCategory] = useState<string>(() =>
+    getInitialCategory(initialCategory),
+  );
 
   const categories = useMemo(() => {
     const sourceCategories = [

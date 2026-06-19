@@ -167,6 +167,24 @@ test.describe("customer experience", () => {
     }
   });
 
+  test("opens the drinks category from the menu query string", async ({
+    page,
+  }) => {
+    await page.goto("/menu?category=drinks");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const menuSection = page.locator("#menu");
+
+    await expect(
+      menuSection.getByRole("heading", { exact: true, name: "Drinks" }),
+    ).toBeVisible();
+    await expect(
+      menuSection
+        .getByText(/Liquid Omakase|Beverage Pairings|Drink Type/i)
+        .first(),
+    ).toBeVisible();
+  });
+
   test("blocks restaurant-only drinks from desktop checkout", async ({
     page,
   }, testInfo) => {

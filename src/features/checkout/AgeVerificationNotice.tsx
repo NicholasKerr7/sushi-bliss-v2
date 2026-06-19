@@ -1,8 +1,12 @@
 "use client";
 
+import Link from "next/link";
+
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
 import { getCheckoutComplianceState } from "@/lib/checkoutCompliance";
+import { drinksMenuHref } from "@/lib/menuLinks";
+import { liquidOmakaseReservationHref } from "@/lib/menuAvailability";
 import type { CartLineItem } from "@/types/order";
 
 interface AgeVerificationNoticeProps {
@@ -90,7 +94,22 @@ export function AgeVerificationNotice({
             {formatItemNames(gatedItems)}
           </p>
 
-          {blocked ? null : (
+          {blocked ? (
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <Link
+                className="red-glow-button grid min-h-11 place-items-center rounded-[11px] px-3 text-center text-[11px] uppercase tracking-[0.08em]"
+                href={liquidOmakaseReservationHref}
+              >
+                Reserve Pairing
+              </Link>
+              <Link
+                className="grid min-h-11 place-items-center rounded-[11px] border border-[var(--sb-gold)]/30 bg-black/24 px-3 text-center text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                href={drinksMenuHref}
+              >
+                View Drinks
+              </Link>
+            </div>
+          ) : (
             <label className="mt-3 flex cursor-pointer items-start gap-3 rounded-[12px] border border-white/10 bg-black/28 p-3 text-[13px] leading-5 text-white/72 transition focus-within:border-[var(--sb-gold)]/60">
               <input
                 checked={verified}
