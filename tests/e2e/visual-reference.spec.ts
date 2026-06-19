@@ -95,7 +95,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
         }),
       ).toBeVisible();
       await expect(
-        homeSection.getByRole("heading", { name: "Featured Menu" }),
+        homeSection.getByRole("heading", { name: "Nigiri Picks" }),
       ).toBeVisible();
     },
   },
@@ -1194,7 +1194,10 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       ).toBeVisible();
       await expect(offersSection.getByText("Current offers")).toBeVisible();
       await expect(
-        offersSection.getByRole("button", { name: "View details" }),
+        offersSection.getByRole("button", {
+          exact: true,
+          name: "View details",
+        }),
       ).toBeVisible();
     },
   },
@@ -3060,13 +3063,12 @@ async function expectVisibleImagesLoaded(page: Page) {
 
 async function openMobileSearchFilter(page: Page) {
   const menuSection = page.locator("#menu");
+  const searchInput = menuSection.getByRole("textbox", {
+    name: "Search menu",
+  });
 
-  await expect(
-    menuSection.getByPlaceholder("Search sushi, rolls, or dishes..."),
-  ).toBeVisible();
-  await menuSection
-    .getByPlaceholder("Search sushi, rolls, or dishes...")
-    .fill("tuna");
+  await expect(searchInput).toBeVisible();
+  await searchInput.fill("tuna");
   await expect(
     menuSection.getByRole("heading", { name: "Search & Filter" }),
   ).toBeVisible();
@@ -3560,11 +3562,13 @@ async function openMobileGiftConfirmation(page: Page) {
 
 async function openMobileOfferDetail(page: Page) {
   const offersSection = page.locator("#offers");
+  const featuredOfferDetailsButton = offersSection.getByRole("button", {
+    exact: true,
+    name: "View details",
+  });
 
-  await expect(
-    offersSection.getByRole("button", { name: "View details" }),
-  ).toBeVisible();
-  await offersSection.getByRole("button", { name: "View details" }).click();
+  await expect(featuredOfferDetailsButton).toBeVisible();
+  await featuredOfferDetailsButton.click();
   await expect(
     offersSection.getByRole("heading", { name: "Omakase Preview" }),
   ).toBeVisible();
@@ -3901,11 +3905,13 @@ async function openTabletNotificationDetail(page: Page) {
 
 async function openTabletOfferDetail(page: Page) {
   const offersSection = page.locator("#offers");
+  const featuredOfferDetailsButton = offersSection.getByRole("button", {
+    exact: true,
+    name: "View details",
+  });
 
-  await expect(
-    offersSection.getByRole("button", { name: "View details" }),
-  ).toBeVisible();
-  await offersSection.getByRole("button", { name: "View details" }).click();
+  await expect(featuredOfferDetailsButton).toBeVisible();
+  await featuredOfferDetailsButton.click();
   await expect(page.getByText("Offer detail")).toBeVisible();
 }
 

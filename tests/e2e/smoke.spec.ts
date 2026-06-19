@@ -114,6 +114,72 @@ test.describe("customer experience", () => {
     ).toBeVisible();
   });
 
+  test("auto-advances the tablet hero carousel", async ({ page }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("tablet"),
+      "Tablet-only carousel cadence check.",
+    );
+
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/home");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const tabletHeroControls = page.getByRole("navigation", {
+      name: "Tablet hero slides",
+    });
+
+    await expect(tabletHeroControls).toBeVisible();
+    await expect(
+      tabletHeroControls.getByRole("button", { name: "Show slide 1 of 4" }),
+    ).toHaveAttribute("aria-current", "true");
+    await expect
+      .poll(
+        () =>
+          tabletHeroControls
+            .getByRole("button", { name: "Show slide 2 of 4" })
+            .getAttribute("aria-current"),
+        {
+          message: "Tablet hero should advance to the next slide.",
+          timeout: 9_000,
+        },
+      )
+      .toBe("true");
+  });
+
+  test("auto-advances the desktop hero carousel", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "Desktop-only carousel cadence check.",
+    );
+
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/home");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const desktopHeroControls = page.getByRole("navigation", {
+      name: "Desktop hero slides",
+    });
+
+    await expect(desktopHeroControls).toBeVisible();
+    await expect(
+      desktopHeroControls.getByRole("button", { name: "Show slide 1 of 4" }),
+    ).toHaveAttribute("aria-current", "true");
+    await expect
+      .poll(
+        () =>
+          desktopHeroControls
+            .getByRole("button", { name: "Show slide 2 of 4" })
+            .getAttribute("aria-current"),
+        {
+          message: "Desktop hero should advance to the next slide.",
+          timeout: 9_000,
+        },
+      )
+      .toBe("true");
+  });
+
   test("uses the shared tablet category layout for menu tabs", async ({
     page,
   }, testInfo) => {

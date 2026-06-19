@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { featuredAssets, icons } from "@/features/home/visualHomeData";
+import { useAutoCarousel } from "@/hooks/useAutoCarousel";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
@@ -109,6 +110,11 @@ export function TabletMenuOverview({
     [],
   );
   const [activeRecommendationIndex, setActiveRecommendationIndex] = useState(0);
+  const advanceRecommendation = useCallback(() => {
+    setActiveRecommendationIndex(
+      (currentIndex) => (currentIndex + 1) % recommendationSlides.length,
+    );
+  }, [recommendationSlides.length]);
   const [dietaryFilter, setDietaryFilter] = useState<string>(
     tabletOverviewDietaryOptions[0],
   );
@@ -130,6 +136,13 @@ export function TabletMenuOverview({
 
     setActiveRecommendationIndex(nextIndex);
   };
+
+  useAutoCarousel({
+    count: recommendationSlides.length,
+    onAdvance: advanceRecommendation,
+    resetKey: activeRecommendationIndex,
+  });
+
   const applyOverviewFilters = (items: MenuItem[]) =>
     sortTabletOverviewItems(
       items.filter(

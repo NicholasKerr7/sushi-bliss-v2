@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useCallback, useState, type FormEvent } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
+import { useAutoCarousel } from "@/hooks/useAutoCarousel";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -192,7 +193,18 @@ function TabletIconLink({
 
 function TabletHero() {
   const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const advanceHero = useCallback(() => {
+    setActiveHeroIndex(
+      (currentIndex) => (currentIndex + 1) % tabletHeroSlides.length,
+    );
+  }, []);
   const activeHero = tabletHeroSlides[activeHeroIndex] || tabletHeroSlides[0];
+
+  useAutoCarousel({
+    count: tabletHeroSlides.length,
+    onAdvance: advanceHero,
+    resetKey: activeHeroIndex,
+  });
 
   return (
     <section className="relative mt-[18px] min-h-[460px] overflow-hidden rounded-[14px] border border-white/16">

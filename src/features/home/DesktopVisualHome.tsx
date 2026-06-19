@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
+import { useAutoCarousel } from "@/hooks/useAutoCarousel";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -154,7 +155,18 @@ export function DesktopDashboard({
   onAddToCart,
 }: DesktopDashboardProps) {
   const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const advanceHero = useCallback(() => {
+    setActiveHeroIndex(
+      (currentIndex) => (currentIndex + 1) % desktopHeroSlides.length,
+    );
+  }, []);
   const activeHero = desktopHeroSlides[activeHeroIndex] || desktopHeroSlides[0];
+
+  useAutoCarousel({
+    count: desktopHeroSlides.length,
+    onAdvance: advanceHero,
+    resetKey: activeHeroIndex,
+  });
 
   return (
     <div className="hidden px-[3.2vw] pb-2 pt-0 xl:block xl:min-h-[calc(100svh-88px)]">
