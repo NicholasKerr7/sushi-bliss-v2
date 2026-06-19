@@ -136,21 +136,21 @@ export function MobileLocationListView({
         )}
       </div>
 
-      <div className="mt-4 grid gap-3">
+      <div className="mt-[calc(124px+var(--sb-safe-bottom))] grid gap-3 min-[390px]:mt-[calc(136px+var(--sb-safe-bottom))]">
         <button
-          className="red-glow-button flex min-h-[62px] w-full items-center justify-center gap-3 rounded-[13px] text-[15px] uppercase tracking-[0.07em] min-[390px]:min-h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[14px] min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
+          className="red-glow-button flex min-h-[56px] w-full items-center justify-center gap-2.5 rounded-[13px] text-[13px] uppercase tracking-[0.06em] min-[390px]:min-h-[64px] min-[390px]:gap-3 min-[390px]:rounded-[14px] min-[390px]:text-[15px] min-[390px]:tracking-[0.07em]"
           onClick={onOpenMap}
           type="button"
         >
-          <AssetIcon size={30} src="/assets/icons/map-pin-icon.png" />
+          <AssetIcon size={25} src="/assets/icons/map-pin-icon.png" />
           View On Map
         </button>
         <button
-          className="flex min-h-[58px] w-full items-center justify-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/42 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          className="flex min-h-[52px] w-full items-center justify-center gap-2.5 rounded-[13px] border border-[var(--sb-border)] bg-black/42 text-[11px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:min-h-[58px] min-[390px]:text-[13px] min-[390px]:tracking-[0.07em]"
           onClick={onShowNearest}
           type="button"
         >
-          <AssetIcon size={23} src={icons.location} />
+          <AssetIcon size={21} src={icons.location} />
           Show nearest location
         </button>
       </div>
@@ -184,6 +184,9 @@ function MobileLocationCard({
         <span className="absolute left-2 top-2 rounded-full border border-[var(--sb-red-bright)]/50 bg-black/68 px-2.5 py-1 text-[10px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]">
           {meta.tag}
         </span>
+        <span className="absolute bottom-2 left-2 rounded-full border border-[var(--sb-red-bright)]/42 bg-black/72 px-2.5 py-1 text-[12px] font-semibold leading-none text-[var(--sb-red-bright)] shadow-[0_0_18px_rgba(239,47,37,0.26)]">
+          {meta.distance}
+        </span>
       </div>
       <div className="min-w-0 p-3 min-[390px]:p-4">
         <div className="flex min-w-0 items-start justify-between gap-2 min-[390px]:gap-3">
@@ -208,14 +211,6 @@ function MobileLocationCard({
             tone="gold"
           />
         </div>
-
-        <button
-          className="-ml-3 inline-flex min-h-8 items-center rounded-full px-3 text-left text-[14px] font-semibold text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:mt-1 min-[390px]:min-h-10"
-          onClick={() => onOpenDetail(location)}
-          type="button"
-        >
-          {meta.distance}
-        </button>
       </div>
     </article>
   );
