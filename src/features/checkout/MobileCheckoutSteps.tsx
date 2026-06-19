@@ -56,12 +56,14 @@ const tipPercentOptions = [10, 15, 20] as const;
 export function FulfillmentStep({
   checkout,
   itemCount,
+  items,
   onContinue,
   onSummaryOpenChange,
   summaryOpen,
 }: {
   checkout: MobileCheckoutState;
   itemCount: number;
+  items: CartLineItem[];
   onContinue: () => void;
   onSummaryOpenChange: (open: boolean) => void;
   summaryOpen: boolean;
@@ -71,6 +73,14 @@ export function FulfillmentStep({
       <StepHeading
         subtitle="How would you like to receive your order?"
         title="Checkout"
+      />
+
+      <AgeVerificationNotice
+        className="mt-5"
+        items={items}
+        onVerifiedChange={checkout.setAgeVerified}
+        validationMessage={checkout.validation.ageVerification}
+        verified={checkout.ageVerified}
       />
 
       <section className="mt-6 grid gap-4" aria-label="Fulfillment method">

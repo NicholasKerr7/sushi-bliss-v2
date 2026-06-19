@@ -134,6 +134,7 @@ export function MobileCheckoutDialog({
             <FulfillmentStep
               checkout={checkout}
               itemCount={itemCount}
+              items={items}
               onContinue={() => setStepAndScroll("address")}
               onSummaryOpenChange={setSummaryOpen}
               summaryOpen={summaryOpen}
