@@ -57,17 +57,20 @@ export function MobileLocationMapView({
       </div>
 
       <section className="mt-6 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-black/42 shadow-[0_22px_60px_rgba(0,0,0,0.45)]">
-        <div className="relative aspect-[0.92] min-h-[390px]">
+        <div className="relative min-h-[360px] bg-[#050607] min-[390px]:min-h-[390px]">
           <Image
-            alt={`${selectedLocation.name} map`}
-            className="object-cover"
+            alt="Sushi Bliss route map"
+            className="object-contain"
             fill
             loading="eager"
             priority
             sizes="430px"
-            src={selectedLocation.mapImageUrl}
+            src="/assets/maps/map-route.webp"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.1)_56%,rgba(0,0,0,0.82)_100%)]" />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.32)_48%,rgba(0,0,0,0.82)_100%)]"
+          />
           <div className="absolute left-5 top-5 rounded-[14px] border border-[var(--sb-border)] bg-black/66 px-4 py-3 backdrop-blur-xl">
             <p className="text-[12px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
               {selectedLocation.neighborhood}
@@ -92,13 +95,15 @@ export function MobileLocationMapView({
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3">
               <a
-                className="red-glow-button flex min-h-[52px] items-center justify-center gap-2 rounded-[12px] text-[12px] uppercase tracking-[0.08em]"
+                aria-label="Open directions"
+                className="red-glow-button flex min-h-[52px] items-center justify-center gap-1.5 rounded-[12px] text-[10px] uppercase tracking-[0.04em] min-[390px]:gap-2 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
                 href={directionsUrl}
                 rel="noreferrer"
                 target="_blank"
               >
-                <AssetIcon size={20} src={icons.location} />
-                Directions
+                <AssetIcon size={18} src={icons.location} />
+                <span className="min-[390px]:hidden">Route</span>
+                <span className="hidden min-[390px]:inline">Directions</span>
               </a>
               <button
                 className="min-h-[52px] rounded-[12px] border border-[var(--sb-border)] bg-black/36 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"

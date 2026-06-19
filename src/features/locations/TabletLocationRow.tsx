@@ -95,9 +95,6 @@ export function TabletLocationRow({
             sizes="260px"
             src={location.mapImageUrl}
           />
-          <span className="absolute left-1/2 top-1/2 grid h-8 w-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[var(--sb-red)] shadow-[0_0_24px_rgba(238,43,36,0.55)]">
-            <AssetIcon size={18} src={icons.location} />
-          </span>
         </div>
         {featured ? (
           <Button

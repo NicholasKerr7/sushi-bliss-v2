@@ -57,9 +57,6 @@ export function MobileLocationDetailView({
             src={location.mapImageUrl}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.2))]" />
-          <span className="absolute left-1/2 top-1/2 grid h-[76px] w-[76px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[var(--sb-red-bright)] bg-black/72 shadow-[0_0_34px_rgba(239,47,37,0.65)]">
-            <AssetIcon size={42} src={brand.assets.floralEmblem.publicUrl} />
-          </span>
           <button
             aria-label="Open map"
             className="absolute bottom-4 right-4 grid h-[58px] w-[58px] place-items-center rounded-[15px] border border-[var(--sb-border)] bg-black/62 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
