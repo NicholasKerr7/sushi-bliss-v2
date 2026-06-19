@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useFavorites } from "@/hooks/useFavorites";
-import { getDefaultCustomizations } from "@/lib/cart";
+import { getDefaultCustomizationsForItem } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
 import { MobileFavoriteCard } from "./MobileFavoriteCard";
@@ -29,7 +29,7 @@ export function MobileFavoritesPage() {
   const addFavoriteToCart = (item: MenuItem) => {
     addItem({
       addOns: [],
-      customizations: getDefaultCustomizations(),
+      customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });

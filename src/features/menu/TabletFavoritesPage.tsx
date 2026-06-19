@@ -13,7 +13,7 @@ import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useFavorites } from "@/hooks/useFavorites";
 import { classNames } from "@/lib/classNames";
-import { getDefaultCustomizations } from "@/lib/cart";
+import { getDefaultCustomizationsForItem } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
 import { TabletFavoriteMenuCard } from "./TabletFavoriteMenuCard";
@@ -74,7 +74,7 @@ export function TabletFavoritesPage() {
   const addFavoriteToCart = (item: MenuItem, quantity: number) => {
     addItem({
       addOns: [],
-      customizations: getDefaultCustomizations(),
+      customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity,
     });

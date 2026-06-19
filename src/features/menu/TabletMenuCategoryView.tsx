@@ -54,11 +54,19 @@ const categoryContent: Record<
   },
   drinks: {
     description:
-      "Sake, tea, and zero-proof pairings selected around the season's sushi menu.",
-    filterLabel: "Pairing",
-    filterOptions: ["Any Pairing", "Sake", "Tea", "Wine", "Zero Proof"],
-    heroImage: "/assets/editorial/luxurious-japanese-sake-still-life.webp",
-    heroPosition: "object-[64%_48%]",
+      "Liquid omakase: sake, cocktails, tea, and zero-proof pairings selected around the season's sushi menu.",
+    filterLabel: "Drink Type",
+    filterOptions: [
+      "Any Drink",
+      "Sake",
+      "Flights",
+      "Cocktails",
+      "Zero Proof",
+      "Tea",
+      "Beer & Wine",
+    ],
+    heroImage: "/assets/drinks/akai-tsuki-red-moon-cocktail.webp",
+    heroPosition: "object-[58%_50%]",
     placeholder: "Sake, tea, yuzu...",
     title: "Drinks",
   },
@@ -144,11 +152,22 @@ function matchesCategorySearch(item: MenuItem, query: string) {
 }
 
 function matchesPrimaryFilter(item: MenuItem, filter: string) {
-  const searchText = `${item.name} ${item.description} ${item.ingredients.join(
-    " ",
-  )}`.toLowerCase();
+  const searchText = item.searchText;
 
   if (filter.startsWith("Any ")) return true;
+
+  if (item.itemType === "drink") {
+    const drinkMatchers: Record<string, RegExp> = {
+      "Beer & Wine": /beer|lager|wine|sparkling/,
+      Cocktails: /cocktail|old fashioned|highball|spritz|akai|kintsugi/,
+      Flights: /flight/,
+      Sake: /sake|junmai|ginjo|daiginjo|yamahai/,
+      Tea: /tea|sencha|hojicha|gyokuro|matcha/,
+      "Zero Proof": /zero-proof|zero proof|nonalcoholic|tonic|cloud|ember/,
+    };
+
+    return drinkMatchers[filter]?.test(searchText) ?? true;
+  }
 
   const matchers: Record<string, RegExp> = {
     Avocado: /avocado/,
@@ -176,6 +195,8 @@ function matchesPrimaryFilter(item: MenuItem, filter: string) {
 }
 
 function matchesDietary(item: MenuItem, dietary: string) {
+  if (item.itemType === "drink") return true;
+
   const searchText = `${item.name} ${item.description} ${item.ingredients.join(
     " ",
   )}`.toLowerCase();
@@ -188,6 +209,8 @@ function matchesDietary(item: MenuItem, dietary: string) {
 }
 
 function matchesSpice(item: MenuItem, spice: string) {
+  if (item.itemType === "drink") return true;
+
   if (spice === "Hot") return item.tags.includes("hot");
   if (spice === "Mild") return !item.tags.includes("hot");
 
@@ -223,6 +246,7 @@ export function TabletMenuCategoryView({
   const [dietary, setDietary] = useState("Any Diet");
   const [spice, setSpice] = useState("Any Heat");
   const [sort, setSort] = useState("Featured");
+  const isDrinksCategory = category === "drinks";
   const isEmptyDrinksCategory = category === "drinks" && items.length === 0;
 
   const displayedItems = useMemo(
@@ -280,7 +304,14 @@ export function TabletMenuCategoryView({
       />
 
       <div className="mt-5 rounded-[18px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.018))] p-3 shadow-[0_18px_70px_rgba(0,0,0,0.34)]">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-[minmax(252px,1.28fr)_repeat(4,minmax(0,1fr))] min-[1080px]:gap-4">
+        <div
+          className={classNames(
+            "grid grid-cols-2 gap-3 min-[1080px]:gap-4",
+            isDrinksCategory
+              ? "lg:grid-cols-[minmax(280px,1fr)_210px_170px]"
+              : "lg:grid-cols-[minmax(252px,1.28fr)_repeat(4,minmax(0,1fr))]",
+          )}
+        >
           <form
             className={classNames(
               "relative col-span-2 flex h-[58px] min-w-0 items-center gap-3 rounded-[13px] border px-4 transition focus-within:border-[var(--sb-gold)] focus-within:ring-2 focus-within:ring-[var(--sb-gold)]/25 lg:col-span-1",
@@ -321,18 +352,22 @@ export function TabletMenuCategoryView({
             value={primaryFilter}
             onChange={setPrimaryFilter}
           />
-          <TabletFilterSelect
-            label="Diet"
-            options={dietaryOptions}
-            value={dietary}
-            onChange={setDietary}
-          />
-          <TabletFilterSelect
-            label="Heat"
-            options={spiceOptions}
-            value={spice}
-            onChange={setSpice}
-          />
+          {isDrinksCategory ? null : (
+            <>
+              <TabletFilterSelect
+                label="Diet"
+                options={dietaryOptions}
+                value={dietary}
+                onChange={setDietary}
+              />
+              <TabletFilterSelect
+                label="Heat"
+                options={spiceOptions}
+                value={spice}
+                onChange={setSpice}
+              />
+            </>
+          )}
           <TabletFilterSelect
             label="Sort"
             options={sortOptions}
@@ -363,26 +398,46 @@ export function TabletMenuCategoryView({
               No {content.title.toLowerCase()} matches these refinements
             </p>
             <p className="mt-2 text-sm text-white/64">
-              Adjust the search, {content.filterLabel.toLowerCase()}, diet, or
-              heat level.
+              {isDrinksCategory
+                ? `Adjust the search, ${content.filterLabel.toLowerCase()}, or sort order.`
+                : `Adjust the search, ${content.filterLabel.toLowerCase()}, diet, or heat level.`}
             </p>
           </div>
         )}
       </section>
 
       <div className="mt-4 grid grid-cols-4 rounded-[14px] border border-white/14 bg-white/[0.035] p-4">
-        <TabletBenefit icon={icons.flower} title="Premium Ingredients">
-          Market Fresh
-        </TabletBenefit>
-        <TabletBenefit icon={icons.crown} title="Expert Craftsmanship">
-          By Master Chefs
-        </TabletBenefit>
-        <TabletBenefit icon={icons.chef} title="Authentic Experience">
-          Traditional. Refined.
-        </TabletBenefit>
-        <TabletBenefit icon={icons.bag} title="Allergen Info">
-          Available Upon Request
-        </TabletBenefit>
+        {isDrinksCategory ? (
+          <>
+            <TabletBenefit icon={icons.flower} title="Pairing Logic">
+              Matched By Course
+            </TabletBenefit>
+            <TabletBenefit icon={icons.crown} title="Sake Cellar">
+              Ginjo To Daiginjo
+            </TabletBenefit>
+            <TabletBenefit icon={icons.chef} title="Zero Proof">
+              Built With Balance
+            </TabletBenefit>
+            <TabletBenefit icon={icons.clock} title="Tea Service">
+              Hot Or Chilled
+            </TabletBenefit>
+          </>
+        ) : (
+          <>
+            <TabletBenefit icon={icons.flower} title="Premium Ingredients">
+              Market Fresh
+            </TabletBenefit>
+            <TabletBenefit icon={icons.crown} title="Expert Craftsmanship">
+              By Master Chefs
+            </TabletBenefit>
+            <TabletBenefit icon={icons.chef} title="Authentic Experience">
+              Traditional. Refined.
+            </TabletBenefit>
+            <TabletBenefit icon={icons.bag} title="Allergen Info">
+              Available Upon Request
+            </TabletBenefit>
+          </>
+        )}
       </div>
     </>
   );
@@ -452,6 +507,8 @@ function TabletCategoryCard({
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
 }) {
+  const isDrinkItem = item.itemType === "drink";
+
   return (
     <article className="relative overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-black/42">
       {badge ? (
@@ -475,7 +532,21 @@ function TabletCategoryCard({
         </div>
         <div className="p-3 min-[1080px]:p-4">
           <h2 className="text-[19px] text-white">{item.name}</h2>
-          <p className="mt-2 text-sm text-white/68">{item.description}</p>
+          <p className="mt-2 line-clamp-2 text-sm leading-5 text-white/68">
+            {item.description}
+          </p>
+          {isDrinkItem ? (
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="rounded-full border border-[var(--sb-gold)]/30 bg-[var(--sb-gold)]/10 px-2.5 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+                {item.serving}
+              </span>
+              {item.abv ? (
+                <span className="rounded-full border border-white/12 bg-white/[0.035] px-2.5 py-1 text-[11px] uppercase tracking-[0.08em] text-white/62">
+                  {item.abv}% ABV
+                </span>
+              ) : null}
+            </div>
+          ) : null}
           <p className="mt-4 text-[22px] text-[var(--sb-gold)]">
             {formatMoney(item.priceCents)}
           </p>

@@ -207,7 +207,7 @@ export function AdminOrderManagement() {
               <Button
                 aria-label={
                   nextStatus
-                    ? `Mark ${order.confirmationCode} ${titleCase(nextStatus)}`
+                    ? `Mark ${titleCase(nextStatus).toLowerCase()}`
                     : `${order.confirmationCode} is closed`
                 }
                 className="h-11 rounded-[12px] text-[12px] uppercase tracking-[0.08em]"

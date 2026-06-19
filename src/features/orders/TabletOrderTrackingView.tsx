@@ -134,7 +134,7 @@ export function TabletOrderTrackingView({
           loading="eager"
           priority
           sizes="(min-width: 768px) 1034px, 100vw"
-          src="/assets/maps/map-route.webp"
+          src="/assets/maps/tokyo-delivery-route-tracker.webp"
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_44%,rgba(238,43,36,0.22),transparent_24%),linear-gradient(180deg,rgba(0,0,0,0.16),rgba(0,0,0,0.38))]" />
         <div className="absolute left-5 top-5 rounded-[12px] border border-[var(--sb-gold)]/30 bg-black/72 px-4 py-2 text-[13px] text-[var(--sb-gold-soft)]">

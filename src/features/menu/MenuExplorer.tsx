@@ -8,7 +8,7 @@ import { useCart } from "@/hooks/useCart";
 import { useMenu } from "@/hooks/useMenu";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { useResponsiveReady } from "@/hooks/useResponsiveReady";
-import { getDefaultCustomizations } from "@/lib/cart";
+import { getDefaultCustomizationsForItem } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
 import { DesktopMenuExperience } from "./DesktopMenuExperience";
@@ -49,7 +49,7 @@ export function MenuExplorer() {
   const handleAddToCart = (item: MenuItem) => {
     addItem({
       addOns: [],
-      customizations: getDefaultCustomizations(),
+      customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });

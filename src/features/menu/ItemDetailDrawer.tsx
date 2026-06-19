@@ -15,7 +15,7 @@ import {
   createCustomizationSelection,
   getAvailableAddOns,
   getAvailableSidePairings,
-  getDefaultCustomizations,
+  getDefaultCustomizationsForItem,
 } from "@/lib/cart";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
@@ -45,13 +45,14 @@ export function ItemDetailDrawer({
   const mode = useResponsiveMode();
   const { addItem, itemCount: cartItemCount } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const isDrinkItem = item.itemType === "drink";
   const availableAddOns = useMemo(() => getAvailableAddOns(item), [item]);
   const availableSidePairings = useMemo(() => getAvailableSidePairings(), []);
   const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState("");
   const [selectedAddOnIds, setSelectedAddOnIds] = useState<string[]>([]);
-  const [customizations, setCustomizations] = useState(
-    getDefaultCustomizations,
+  const [customizations, setCustomizations] = useState(() =>
+    getDefaultCustomizationsForItem(item),
   );
   const selectableAddOns = useMemo(
     () => [...availableAddOns, ...availableSidePairings],
@@ -90,7 +91,7 @@ export function ItemDetailDrawer({
   const handleAddToCart = () => {
     addItem({
       addOns: selectedAddOns,
-      customizations,
+      customizations: isDrinkItem ? [] : customizations,
       menuItem: item,
       notes,
       quantity,
@@ -101,7 +102,7 @@ export function ItemDetailDrawer({
   const handleAddRelatedItem = (relatedItem: MenuItem) => {
     addItem({
       addOns: [],
-      customizations: getDefaultCustomizations(),
+      customizations: getDefaultCustomizationsForItem(relatedItem),
       menuItem: relatedItem,
       quantity: 1,
     });
@@ -230,28 +231,34 @@ export function ItemDetailDrawer({
           </div>
         </section>
 
-        {item.sakePairing ? (
+        {item.sakePairing || isDrinkItem ? (
           <section className="rounded-card border border-sb-gold/30 bg-sb-gold/10 p-4">
             <h3 className="text-sm font-semibold text-sb-gold-soft">
-              Sake pairing
+              {isDrinkItem ? "Pairing note" : "Sake pairing"}
             </h3>
             <p className="mt-2 text-sm leading-6 text-sb-muted">
-              {item.sakePairing.sakeName} is recommended with {item.name}.
+              {item.sakePairing
+                ? `${item.sakePairing.sakeName} is recommended with ${item.name}.`
+                : "Pair with clean nigiri, warm rice, and courses that match the drink's body."}
             </p>
           </section>
         ) : null}
 
-        <ItemCustomizationControls
-          customizations={customizations}
-          itemId={item.id}
-          onCustomizationChange={handleCustomizationChange}
-        />
+        {isDrinkItem ? null : (
+          <ItemCustomizationControls
+            customizations={customizations}
+            itemId={item.id}
+            onCustomizationChange={handleCustomizationChange}
+          />
+        )}
 
-        <ItemAddOnSelector
-          addOns={availableAddOns}
-          onAddOnToggle={handleAddOnToggle}
-          selectedAddOnIds={selectedAddOnIds}
-        />
+        {isDrinkItem ? null : (
+          <ItemAddOnSelector
+            addOns={availableAddOns}
+            onAddOnToggle={handleAddOnToggle}
+            selectedAddOnIds={selectedAddOnIds}
+          />
+        )}
 
         <section>
           <label

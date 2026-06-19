@@ -108,7 +108,7 @@ export function MobileSearchForm({
         <input
           className="h-full w-full bg-transparent text-[15px] text-white outline-none placeholder:text-white/58"
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Search menu..."
+          placeholder="Search sushi, rolls, or dishes..."
           value={query}
         />
         {query ? (

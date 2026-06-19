@@ -16,6 +16,10 @@ import type {
 
 /** Returns paid add-ons that make sense for the selected menu item. */
 export function getAvailableAddOns(menuItem: MenuItem): CartAddOnDefinition[] {
+  if (menuItem.itemType === "drink") {
+    return [];
+  }
+
   const isPremiumItem =
     menuItem.tags.includes("premium") ||
     menuItem.tags.includes("chef-special") ||
@@ -41,6 +45,13 @@ export function getDefaultCustomizations(): CartCustomization[] {
       optionLabel: option.label,
     };
   });
+}
+
+/** Avoids assigning sushi preparation preferences to beverage line items. */
+export function getDefaultCustomizationsForItem(
+  menuItem: MenuItem,
+): CartCustomization[] {
+  return menuItem.itemType === "drink" ? [] : getDefaultCustomizations();
 }
 
 /** Converts a selected group option into the compact cart customization value. */

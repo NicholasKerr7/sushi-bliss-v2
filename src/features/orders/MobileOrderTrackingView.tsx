@@ -107,7 +107,7 @@ export function MobileOrderTrackingView({
               loading="eager"
               priority
               sizes="430px"
-              src="/assets/maps/map-route.webp"
+              src="/assets/maps/tokyo-delivery-route-tracker.webp"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.26))]" />
             <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-[var(--sb-red-bright)]/38 bg-black/54 px-4 py-2 text-[11px] uppercase tracking-[0.1em] text-[var(--sb-red-bright)] shadow-[0_0_22px_rgba(239,47,37,0.22)] backdrop-blur-md">

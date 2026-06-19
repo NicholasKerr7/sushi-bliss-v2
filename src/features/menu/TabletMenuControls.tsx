@@ -34,7 +34,11 @@ const tabletCategoryTabs = [
   { id: "sashimi", icon: icons.sashimi, label: "Sashimi" },
   { id: "chef-specials", icon: icons.crown, label: "Chef Specials" },
   { id: "vegetarian", icon: icons.leaf, label: "Vegetarian" },
-  { id: "drinks", icon: icons.miso, label: "Drinks" },
+  {
+    id: "drinks",
+    icon: "/assets/icons/floral-emblem-icon.png",
+    label: "Drinks",
+  },
 ] as const;
 
 function isAvailableTabletCategory(

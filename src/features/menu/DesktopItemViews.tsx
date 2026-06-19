@@ -37,6 +37,12 @@ import {
 } from "./DesktopItemVisualParts";
 import { TastingNotesCard } from "./TastingNotesCard";
 
+const drinkDetailFeaturePills = [
+  ["sake-vase-set-black-gold-floral.webp", "Curated"],
+  ["clock-icon.png", "Paced"],
+  ["floral-emblem-icon.png", "Pairable"],
+] as const;
+
 export function DesktopItemDetailView({
   isFavorite,
   item,
@@ -69,6 +75,11 @@ export function DesktopItemDetailView({
     : 0;
   const activeImage =
     galleryImages[activeGalleryIndex] || getTabletPresentationImage(item);
+  const isDrinkItem = item.itemType === "drink";
+  const tastingProfile = item.beverageTastingNotes || item.tastingNotes;
+  const detailPills = isDrinkItem
+    ? drinkDetailFeaturePills
+    : detailFeaturePills;
 
   const stepGallery = (direction: number) => {
     if (galleryImages.length < 2) {
@@ -102,7 +113,7 @@ export function DesktopItemDetailView({
 
           <div className="flex flex-col justify-center px-9 py-6">
             <span className="w-max rounded-[8px] border border-[var(--sb-gold)]/34 bg-[var(--sb-gold)]/8 px-3 py-1 text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
-              Chef&apos;s Special
+              {isDrinkItem ? "Liquid Omakase" : "Chef's Special"}
             </span>
             <h1 className="editorial-title mt-3 text-[48px] leading-none text-white">
               {item.name}
@@ -144,20 +155,37 @@ export function DesktopItemDetailView({
             </div>
 
             <div className="mt-3 grid grid-cols-[190px_1fr] gap-3">
-              <button
-                className="h-12 rounded-[12px] border border-[var(--sb-border)] bg-white/[0.025] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/60"
-                onClick={onCustomize}
-                type="button"
-              >
-                Customize
-              </button>
+              {isDrinkItem ? (
+                <Button
+                  className="h-12 rounded-[12px] text-[13px] uppercase tracking-[0.08em]"
+                  href="/reservations"
+                  variant="secondary"
+                >
+                  Pairing table
+                </Button>
+              ) : (
+                <button
+                  className="h-12 rounded-[12px] border border-[var(--sb-border)] bg-white/[0.025] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/60"
+                  onClick={onCustomize}
+                  type="button"
+                >
+                  Customize
+                </button>
+              )}
               <div className="flex items-center gap-7 border-l border-white/10 pl-6">
-                {detailFeaturePills.map(([icon, label]) => (
+                {detailPills.map(([icon, label]) => (
                   <span
                     className="inline-flex items-center gap-2 text-[13px] text-white/66"
                     key={label}
                   >
-                    <AssetIcon size={23} src={`/assets/icons/${icon}`} />
+                    <AssetIcon
+                      size={23}
+                      src={
+                        icon.endsWith(".webp")
+                          ? `/assets/editorial/${icon}`
+                          : `/assets/icons/${icon}`
+                      }
+                    />
                     {label}
                   </span>
                 ))}
@@ -172,26 +200,36 @@ export function DesktopItemDetailView({
 
         <div className="grid grid-cols-4 gap-4 p-4">
           <DesktopDetailInfoCard
-            icon="/assets/icons/nigiri-icon.png"
-            title="Ingredients"
+            icon={
+              isDrinkItem
+                ? "/assets/editorial/sake-vase-set-black-gold-floral.webp"
+                : "/assets/icons/nigiri-icon.png"
+            }
+            title={isDrinkItem ? "Build" : "Ingredients"}
           >
             {item.ingredients.join(", ")}
           </DesktopDetailInfoCard>
           <DesktopDetailInfoCard
             icon="/assets/icons/chef-hat-icon.png"
-            title="Chef's Note"
+            title={isDrinkItem ? "Sommelier Note" : "Chef's Note"}
           >
-            Hand-selected daily and prepared moments before serving.
+            {isDrinkItem
+              ? item.chefNote
+              : "Hand-selected daily and prepared moments before serving."}
           </DesktopDetailInfoCard>
           <DesktopDetailInfoCard
             icon="/assets/editorial/sake-vase-set-black-gold-floral.webp"
             title="Perfect Pairing"
           >
-            {item.sakePairing?.sakeName || "Ask your chef for today's pairing."}
+            {isDrinkItem
+              ? "Match by body and finish with sushi, sashimi, or omakase pacing."
+              : item.sakePairing?.sakeName ||
+                "Ask your chef for today's pairing."}
           </DesktopDetailInfoCard>
           <TastingNotesCard
             className="min-h-[178px]"
-            profile={item.tastingNotes}
+            profile={tastingProfile}
+            variant={isDrinkItem ? "drink" : "food"}
           />
         </div>
 

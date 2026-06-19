@@ -56,6 +56,8 @@ export function TabletDetailView({
     galleryState.itemId === item.id ? galleryState.imageIndex : 0;
   const activeImage =
     galleryImages[imageIndex] || getTabletPresentationImage(item);
+  const isDrinkItem = item.itemType === "drink";
+  const tastingProfile = item.beverageTastingNotes || item.tastingNotes;
   const selectImage = (nextImageIndex: number) => {
     setGalleryState({ imageIndex: nextImageIndex, itemId: item.id });
   };
@@ -141,7 +143,7 @@ export function TabletDetailView({
           <div className="grid grid-cols-[minmax(0,1fr)_468px] gap-8 border-b border-white/10 pb-4">
             <div>
               <span className="inline-flex rounded-[8px] border border-[var(--sb-gold)]/34 bg-[var(--sb-gold)]/8 px-3 py-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
-                Chef&apos;s Special
+                {isDrinkItem ? "Liquid Omakase" : "Chef's Special"}
               </span>
               <h1
                 className="editorial-title mt-2 text-[50px] leading-[0.95] text-white"
@@ -175,13 +177,23 @@ export function TabletDetailView({
                 </Button>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-4">
-                <Button
-                  className="h-[50px] rounded-[17px] text-[15px]"
-                  onClick={onCustomize}
-                  variant="secondary"
-                >
-                  Customize
-                </Button>
+                {isDrinkItem ? (
+                  <Button
+                    className="h-[50px] rounded-[17px] text-[15px]"
+                    href="/reservations"
+                    variant="secondary"
+                  >
+                    Pairing table
+                  </Button>
+                ) : (
+                  <Button
+                    className="h-[50px] rounded-[17px] text-[15px]"
+                    onClick={onCustomize}
+                    variant="secondary"
+                  >
+                    Customize
+                  </Button>
+                )}
                 <button
                   aria-pressed={isFavorite}
                   className={classNames(
@@ -205,22 +217,34 @@ export function TabletDetailView({
           </p>
 
           <div className="mt-4 grid grid-cols-3 gap-3">
-            <TabletDetailInfoCard icon={icons.leaf} title="Ingredients">
+            <TabletDetailInfoCard
+              icon={
+                isDrinkItem
+                  ? "/assets/editorial/sake-vase-set-black-gold-floral.webp"
+                  : icons.leaf
+              }
+              title={isDrinkItem ? "Build" : "Ingredients"}
+            >
               <p className="text-[15px] leading-6 text-white/66">
                 {item.ingredients.join(", ")}
               </p>
             </TabletDetailInfoCard>
 
-            <TabletDetailInfoCard icon={icons.chef} title="Chef Note">
+            <TabletDetailInfoCard
+              icon={icons.chef}
+              title={isDrinkItem ? "Sommelier Note" : "Chef Note"}
+            >
               <p className="text-[15px] leading-6 text-white/66">
-                Prepared with the house balance and finished moments before
-                serving.
+                {isDrinkItem
+                  ? item.chefNote
+                  : "Prepared with the house balance and finished moments before serving."}
               </p>
             </TabletDetailInfoCard>
 
             <TastingNotesCard
               className="min-h-[150px]"
-              profile={item.tastingNotes}
+              profile={tastingProfile}
+              variant={isDrinkItem ? "drink" : "food"}
             />
           </div>
 

@@ -3,11 +3,12 @@ import { useId } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
 import { ASSET_FALLBACKS } from "@/lib/constants";
-import type { MenuTastingProfile } from "@/types/menu";
+import type { DrinkTastingProfile, MenuTastingProfile } from "@/types/menu";
 
 interface TastingNotesCardProps {
   className?: string;
-  profile?: MenuTastingProfile;
+  profile?: DrinkTastingProfile | MenuTastingProfile;
+  variant?: "drink" | "food";
 }
 
 const DEFAULT_TASTING_PROFILE: MenuTastingProfile = {
@@ -18,17 +19,35 @@ const DEFAULT_TASTING_PROFILE: MenuTastingProfile = {
   umami: 86,
 };
 
-const TASTING_AXES = [
+const DEFAULT_DRINK_TASTING_PROFILE: DrinkTastingProfile = {
+  aromatic: 76,
+  body: 68,
+  bright: 78,
+  dry: 72,
+  finish: 84,
+};
+
+type TastingAxis = {
+  angle: number;
+  key: string;
+  label: string;
+};
+
+const FOOD_TASTING_AXES = [
   { angle: -90, key: "richness", label: "Richness" },
   { angle: -18, key: "umami", label: "Umami" },
   { angle: 54, key: "buttery", label: "Buttery" },
   { angle: 126, key: "tenderness", label: "Tenderness" },
   { angle: 198, key: "sweetness", label: "Sweetness" },
-] as const satisfies ReadonlyArray<{
-  angle: number;
-  key: keyof MenuTastingProfile;
-  label: string;
-}>;
+] as const satisfies ReadonlyArray<TastingAxis>;
+
+const DRINK_TASTING_AXES = [
+  { angle: -90, key: "dry", label: "Dry" },
+  { angle: -18, key: "bright", label: "Bright" },
+  { angle: 54, key: "aromatic", label: "Aromatic" },
+  { angle: 126, key: "body", label: "Body" },
+  { angle: 198, key: "finish", label: "Finish" },
+] as const satisfies ReadonlyArray<TastingAxis>;
 
 const RADAR_CENTER = { x: 64, y: 64 };
 const RADAR_RADIUS = 42;
@@ -47,35 +66,71 @@ function getRadarCoordinate(value: number, angle: number) {
   };
 }
 
-function getProfileSummary(profile: MenuTastingProfile): string {
-  return `Tasting notes radar chart: richness ${profile.richness}, umami ${profile.umami}, buttery ${profile.buttery}, tenderness ${profile.tenderness}, sweetness ${profile.sweetness}`;
+function getTastingValue(
+  profile: DrinkTastingProfile | MenuTastingProfile,
+  key: string,
+): number {
+  return (
+    (profile as unknown as Record<string, number | undefined>)[key] ??
+    DEFAULT_TASTING_PROFILE[key as keyof MenuTastingProfile] ??
+    DEFAULT_DRINK_TASTING_PROFILE[key as keyof DrinkTastingProfile] ??
+    0
+  );
 }
 
-function getPrimaryNotes(profile: MenuTastingProfile) {
-  return [...TASTING_AXES]
-    .sort((a, b) => profile[b.key] - profile[a.key])
+function getProfileSummary(
+  axes: ReadonlyArray<TastingAxis>,
+  profile: DrinkTastingProfile | MenuTastingProfile,
+  variant: "drink" | "food",
+): string {
+  const axisSummary = axes
+    .map(
+      (axis) =>
+        `${axis.label.toLowerCase()} ${getTastingValue(profile, axis.key)}`,
+    )
+    .join(", ");
+
+  return `${variant === "drink" ? "Drink" : "Food"} tasting notes radar chart: ${axisSummary}`;
+}
+
+function getPrimaryNotes(
+  axes: ReadonlyArray<TastingAxis>,
+  profile: DrinkTastingProfile | MenuTastingProfile,
+) {
+  return [...axes]
+    .sort(
+      (a, b) =>
+        getTastingValue(profile, b.key) - getTastingValue(profile, a.key),
+    )
     .slice(0, 3);
 }
 
 /** Renders the menu item's dynamic flavor profile using app-native typography. */
 export function TastingNotesCard({
   className,
-  profile = DEFAULT_TASTING_PROFILE,
+  profile,
+  variant = "food",
 }: TastingNotesCardProps) {
+  const activeProfile =
+    profile ||
+    (variant === "drink"
+      ? DEFAULT_DRINK_TASTING_PROFILE
+      : DEFAULT_TASTING_PROFILE);
+  const axes = variant === "drink" ? DRINK_TASTING_AXES : FOOD_TASTING_AXES;
   const idPrefix = useId().replace(/:/g, "");
   const redGlowId = `${idPrefix}-tasting-red-glow`;
   const radarFillId = `${idPrefix}-tasting-radar-fill`;
-  const radarCoordinates = TASTING_AXES.map((axis) =>
-    getRadarCoordinate(profile[axis.key], axis.angle),
+  const radarCoordinates = axes.map((axis) =>
+    getRadarCoordinate(getTastingValue(activeProfile, axis.key), axis.angle),
   );
   const radarPoints = radarCoordinates
     .map((point) => `${point.x},${point.y}`)
     .join(" ");
-  const primaryNotes = getPrimaryNotes(profile);
+  const primaryNotes = getPrimaryNotes(axes, activeProfile);
 
   return (
     <article
-      aria-label={getProfileSummary(profile)}
+      aria-label={getProfileSummary(axes, activeProfile, variant)}
       className={classNames(
         "relative flex h-full min-h-[150px] w-full overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018)_42%,rgba(7,9,10,0.96))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.26)]",
         className,
@@ -92,7 +147,11 @@ export function TastingNotesCard({
               <AssetIcon
                 loading="eager"
                 size={24}
-                src={ASSET_FALLBACKS.brandIcon}
+                src={
+                  variant === "drink"
+                    ? "/assets/editorial/sake-vase-set-black-gold-floral.webp"
+                    : ASSET_FALLBACKS.brandIcon
+                }
               />
             </span>
             <div className="min-w-0">
@@ -100,7 +159,7 @@ export function TastingNotesCard({
                 Tasting Notes
               </h2>
               <p className="mt-0.5 truncate text-[10px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]/82">
-                Item profile
+                {variant === "drink" ? "Drink profile" : "Item profile"}
               </p>
             </div>
           </div>
@@ -172,7 +231,7 @@ export function TastingNotesCard({
                 />
               ))}
 
-              {TASTING_AXES.map((axis) => {
+              {axes.map((axis) => {
                 const point = getRadarCoordinate(100, axis.angle);
 
                 return (
@@ -203,7 +262,7 @@ export function TastingNotesCard({
                   cx={point.x}
                   cy={point.y}
                   fill="#ff3a2f"
-                  key={TASTING_AXES[index].key}
+                  key={axes[index].key}
                   r="3.3"
                   stroke="#ffb1a8"
                   strokeWidth=".8"
@@ -226,7 +285,7 @@ export function TastingNotesCard({
                 <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.08em]">
                   <span className="truncate text-white/66">{note.label}</span>
                   <span className="font-mono text-[var(--sb-gold-soft)]">
-                    {profile[note.key]}
+                    {getTastingValue(activeProfile, note.key)}
                   </span>
                 </div>
                 <svg
@@ -245,14 +304,20 @@ export function TastingNotesCard({
                     fill="#ef2f25"
                     height="6"
                     rx="3"
-                    width={normalizeTastingValue(profile[note.key])}
+                    width={normalizeTastingValue(
+                      getTastingValue(activeProfile, note.key),
+                    )}
                   />
                   <rect
                     fill="rgba(241,210,138,0.72)"
                     height="6"
                     opacity=".7"
                     rx="3"
-                    width={normalizeTastingValue(profile[note.key]) * 0.42}
+                    width={
+                      normalizeTastingValue(
+                        getTastingValue(activeProfile, note.key),
+                      ) * 0.42
+                    }
                   />
                 </svg>
               </div>

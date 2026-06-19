@@ -53,6 +53,8 @@ export function MobileItemDetailView({
     galleryState.itemId === item.id ? galleryState.imageIndex : 0;
   const heroImage =
     galleryImages[imageIndex] || getTabletPresentationImage(item);
+  const isDrinkItem = item.itemType === "drink";
+  const tastingProfile = item.beverageTastingNotes || item.tastingNotes;
   const selectImage = (nextImageIndex: number) => {
     setGalleryState({ imageIndex: nextImageIndex, itemId: item.id });
   };
@@ -186,7 +188,11 @@ export function MobileItemDetailView({
             {item.chefNote}
           </p>
 
-          <TastingNotesCard className="mt-4" profile={item.tastingNotes} />
+          <TastingNotesCard
+            className="mt-4"
+            profile={tastingProfile}
+            variant={isDrinkItem ? "drink" : "food"}
+          />
 
           <div className="mt-4">
             <MobileQuantityStepper
@@ -208,8 +214,12 @@ export function MobileItemDetailView({
           <div className="mt-5 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.24)]">
             <DetailPanelButton
               expanded={expandedPanel === "ingredients"}
-              icon={icons.leaf}
-              label="Ingredients"
+              icon={
+                isDrinkItem
+                  ? "/assets/editorial/sake-vase-set-black-gold-floral.webp"
+                  : icons.leaf
+              }
+              label={isDrinkItem ? "Build" : "Ingredients"}
               onClick={() => togglePanel("ingredients")}
             >
               {item.ingredients.join(", ")}
@@ -217,30 +227,38 @@ export function MobileItemDetailView({
             <DetailPanelButton
               expanded={expandedPanel === "chef-note"}
               icon={icons.chef}
-              label="Chef's Note"
+              label={isDrinkItem ? "Sommelier Note" : "Chef's Note"}
               onClick={() => togglePanel("chef-note")}
             >
               {item.chefNote}
             </DetailPanelButton>
             <DetailPanelButton
               expanded={expandedPanel === "pairing"}
-              icon={icons.miso}
-              label="Pairing Suggestion"
+              icon={
+                isDrinkItem
+                  ? "/assets/editorial/sake-vase-set-black-gold-floral.webp"
+                  : icons.miso
+              }
+              label={isDrinkItem ? "Best With" : "Pairing Suggestion"}
               onClick={() => togglePanel("pairing")}
             >
-              {item.sakePairing
-                ? `${item.sakePairing.sakeName} is recommended with ${item.name}.`
-                : "Ask our team for a sake pairing selected around today's fish."}
+              {isDrinkItem
+                ? "Pair with sushi that matches the drink's body, brightness, and finish."
+                : item.sakePairing
+                  ? `${item.sakePairing.sakeName} is recommended with ${item.name}.`
+                  : "Ask our team for a sake pairing selected around today's fish."}
             </DetailPanelButton>
           </div>
 
-          <button
-            className="mt-4 min-h-[54px] w-full rounded-[14px] border border-[var(--sb-border)] bg-black/40 text-[14px] uppercase tracking-[0.1em] text-[var(--sb-gold)]"
-            onClick={onCustomize}
-            type="button"
-          >
-            Customize item
-          </button>
+          {isDrinkItem ? null : (
+            <button
+              className="mt-4 min-h-[54px] w-full rounded-[14px] border border-[var(--sb-border)] bg-black/40 text-[14px] uppercase tracking-[0.1em] text-[var(--sb-gold)]"
+              onClick={onCustomize}
+              type="button"
+            >
+              Customize item
+            </button>
+          )}
         </section>
       </main>
 

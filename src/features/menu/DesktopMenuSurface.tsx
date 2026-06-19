@@ -31,7 +31,7 @@ const desktopCategoryButtons = [
   ["sashimi", "Sashimi", "/assets/icons/sashimi-icon.png"],
   ["chef-specials", "Chef Specials", "/assets/icons/lotus-crown-icon.png"],
   ["vegetarian", "Vegetarian", "/assets/icons/vegetarian-sushi-icon.webp"],
-  ["drinks", "Drinks", "/assets/icons/miso-soup-icon.png"],
+  ["drinks", "Drinks", "/assets/icons/floral-emblem-icon.png"],
 ] as const;
 
 const desktopNigiriDisplayNames: Record<string, string> = {
@@ -48,6 +48,15 @@ const desktopFishOptions = [
   "Shellfish",
   "Roe",
 ] as const;
+const desktopDrinkOptions = [
+  "Drink Type",
+  "Sake",
+  "Flights",
+  "Cocktails",
+  "Zero Proof",
+  "Tea",
+  "Beer & Wine",
+] as const;
 const desktopDietaryOptions = [
   "Dietary",
   "Lean",
@@ -63,6 +72,24 @@ function getDesktopMenuSearchText(item: MenuItem) {
 }
 
 function matchesDesktopFishFilter(item: MenuItem, filter: string) {
+  if (item.itemType === "drink") {
+    if (filter === desktopFishOptions[0] || filter === desktopDrinkOptions[0]) {
+      return true;
+    }
+
+    const searchText = getDesktopMenuSearchText(item);
+    const drinkMatchers: Record<string, RegExp> = {
+      "Beer & Wine": /beer|lager|wine|sparkling/,
+      Cocktails: /cocktail|old fashioned|highball|spritz|akai|kintsugi/,
+      Flights: /flight/,
+      Sake: /sake|junmai|ginjo|daiginjo|yamahai/,
+      Tea: /tea|sencha|hojicha|gyokuro|matcha/,
+      "Zero Proof": /zero-proof|zero proof|nonalcoholic|tonic|cloud|ember/,
+    };
+
+    return drinkMatchers[filter]?.test(searchText) ?? true;
+  }
+
   if (filter === desktopFishOptions[0]) return true;
 
   const searchText = getDesktopMenuSearchText(item);
@@ -79,6 +106,7 @@ function matchesDesktopFishFilter(item: MenuItem, filter: string) {
 
 function matchesDesktopDietaryFilter(item: MenuItem, filter: string) {
   if (filter === desktopDietaryOptions[0]) return true;
+  if (item.itemType === "drink") return true;
 
   const searchText = getDesktopMenuSearchText(item);
 
@@ -92,6 +120,7 @@ function matchesDesktopDietaryFilter(item: MenuItem, filter: string) {
 }
 
 function matchesDesktopSpiceFilter(item: MenuItem, filter: string) {
+  if (item.itemType === "drink") return true;
   if (filter === "Hot") return item.tags.includes("hot");
   if (filter === "Mild") return !item.tags.includes("hot");
 
@@ -157,18 +186,27 @@ export function DesktopMenuSurface({
   );
   const [sortFilter, setSortFilter] = useState<string>(desktopSortOptions[0]);
   const isCategoryPage = category !== "all" && category !== "recommended";
+  const isDrinkCategory = category === "drinks";
   const displayItems = filteredItems;
   const categoryDisplayItems =
     category === "nigiri" && query.trim().length === 0
       ? desktopNigiriItems
       : activeCategoryItems;
-  const effectiveFishFilter = isCategoryPage
-    ? fishFilter
-    : desktopFishOptions[0];
+  const effectiveFishFilter =
+    isCategoryPage && isDrinkCategory
+      ? desktopDrinkOptions.includes(
+          fishFilter as (typeof desktopDrinkOptions)[number],
+        )
+        ? fishFilter
+        : desktopDrinkOptions[0]
+      : isCategoryPage
+        ? fishFilter
+        : desktopFishOptions[0];
   const hasDesktopFilters =
-    effectiveFishFilter !== desktopFishOptions[0] ||
-    dietaryFilter !== desktopDietaryOptions[0] ||
-    spiceFilter !== desktopSpiceOptions[0] ||
+    effectiveFishFilter !==
+      (isDrinkCategory ? desktopDrinkOptions[0] : desktopFishOptions[0]) ||
+    (!isDrinkCategory && dietaryFilter !== desktopDietaryOptions[0]) ||
+    (!isDrinkCategory && spiceFilter !== desktopSpiceOptions[0]) ||
     sortFilter !== desktopSortOptions[0];
   const applyDesktopFilters = (sourceItems: MenuItem[]) =>
     sortDesktopMenuItems(
@@ -293,7 +331,7 @@ export function DesktopMenuSurface({
                     />
                   ))}
                 </div>
-              ) : category === "drinks" ? (
+              ) : category === "drinks" && activeCategoryItems.length === 0 ? (
                 <DesktopDrinksEmptyState />
               ) : (
                 <DesktopCategoryEmptyState
@@ -302,7 +340,7 @@ export function DesktopMenuSurface({
                 />
               )}
             </DesktopMenuSection>
-            <DesktopCategoryBenefitStrip />
+            <DesktopCategoryBenefitStrip category={category} />
           </>
         ) : (
           <>
@@ -392,13 +430,30 @@ function DesktopFilterControls({
   onSortFilterChange: (value: string) => void;
   onSpiceFilterChange: (value: string) => void;
 }) {
+  const isDrinkCategory = category === "drinks";
+  const primaryFilterOptions = isDrinkCategory
+    ? desktopDrinkOptions
+    : desktopFishOptions;
+  const primaryFilterValue = (
+    primaryFilterOptions as readonly string[]
+  ).includes(fishFilter)
+    ? fishFilter
+    : primaryFilterOptions[0];
+  const placeholder = isDrinkCategory
+    ? "Search drinks, sake, tea..."
+    : category === "nigiri"
+      ? "Search nigiri..."
+      : "Search menu items...";
+
   return (
     <div
       className={classNames(
         "mt-4 grid gap-3",
-        isCategoryPage
-          ? "grid-cols-[minmax(0,1fr)_150px_150px_150px_150px] min-[1500px]:mt-4 min-[1500px]:grid-cols-[minmax(340px,1fr)_160px_160px_160px_160px]"
-          : "grid-cols-[minmax(0,1fr)_170px_170px_170px] min-[1500px]:mt-4 min-[1500px]:grid-cols-[minmax(360px,1fr)_174px_174px_174px]",
+        isCategoryPage && isDrinkCategory
+          ? "grid-cols-[minmax(0,1fr)_170px_170px] min-[1500px]:mt-4 min-[1500px]:grid-cols-[minmax(360px,1fr)_190px_170px]"
+          : isCategoryPage
+            ? "grid-cols-[minmax(0,1fr)_150px_150px_150px_150px] min-[1500px]:mt-4 min-[1500px]:grid-cols-[minmax(340px,1fr)_160px_160px_160px_160px]"
+            : "grid-cols-[minmax(0,1fr)_170px_170px_170px] min-[1500px]:mt-4 min-[1500px]:grid-cols-[minmax(360px,1fr)_174px_174px_174px]",
       )}
     >
       <label className="relative block">
@@ -412,32 +467,34 @@ function DesktopFilterControls({
           aria-label="Search menu items"
           className="h-[58px] w-full rounded-[13px] border border-white/14 bg-black/28 pl-12 pr-4 text-[14px] font-semibold text-white outline-none transition placeholder:text-white/44 hover:border-[var(--sb-gold)]/34 hover:bg-white/[0.055] focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/25"
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder={
-            category === "nigiri" ? "Search nigiri..." : "Search menu items..."
-          }
+          placeholder={placeholder}
           value={query}
         />
       </label>
       {isCategoryPage ? (
         <TabletFilterSelect
-          label="Fish Type"
-          options={desktopFishOptions}
-          value={fishFilter}
+          label={isDrinkCategory ? "Drink Type" : "Fish Type"}
+          options={primaryFilterOptions}
+          value={primaryFilterValue}
           onChange={onFishFilterChange}
         />
       ) : null}
-      <TabletFilterSelect
-        label="Dietary"
-        options={desktopDietaryOptions}
-        value={dietaryFilter}
-        onChange={onDietaryFilterChange}
-      />
-      <TabletFilterSelect
-        label="Spicy Level"
-        options={desktopSpiceOptions}
-        value={spiceFilter}
-        onChange={onSpiceFilterChange}
-      />
+      {isDrinkCategory ? null : (
+        <>
+          <TabletFilterSelect
+            label="Dietary"
+            options={desktopDietaryOptions}
+            value={dietaryFilter}
+            onChange={onDietaryFilterChange}
+          />
+          <TabletFilterSelect
+            label="Spicy Level"
+            options={desktopSpiceOptions}
+            value={spiceFilter}
+            onChange={onSpiceFilterChange}
+          />
+        </>
+      )}
       <TabletFilterSelect
         label="Sort By"
         options={desktopSortOptions}
@@ -486,11 +543,7 @@ function DesktopCategoryNav({
             type="button"
           >
             <AssetIcon size={16} src={icon} />
-            <span
-              className={id === "drinks" ? "hidden min-[1500px]:inline" : ""}
-            >
-              {label}
-            </span>
+            <span>{label}</span>
           </button>
         );
       })}
@@ -498,13 +551,25 @@ function DesktopCategoryNav({
   );
 }
 
-function DesktopCategoryBenefitStrip() {
-  const benefits = [
-    ["floral-emblem-icon.png", "Ingredient Sourcing", "Sourced Daily"],
-    ["lotus-crown-icon.png", "Expert Craftsmanship", "By Master Chefs"],
-    ["chef-crest-icon.png", "Authentic Experience", "Traditional. Refined."],
-    ["gold-alert-icon.png", "Allergen Info", "Available Upon Request"],
-  ] as const;
+function DesktopCategoryBenefitStrip({ category }: { category: string }) {
+  const benefits =
+    category === "drinks"
+      ? ([
+          ["floral-emblem-icon.png", "Pairing Logic", "Matched By Course"],
+          ["lotus-crown-icon.png", "Sake Cellar", "Ginjo To Daiginjo"],
+          ["chef-crest-icon.png", "Zero Proof", "Built With Balance"],
+          ["clock-icon.png", "Tea Service", "Hot Or Chilled"],
+        ] as const)
+      : ([
+          ["floral-emblem-icon.png", "Ingredient Sourcing", "Sourced Daily"],
+          ["lotus-crown-icon.png", "Expert Craftsmanship", "By Master Chefs"],
+          [
+            "chef-crest-icon.png",
+            "Authentic Experience",
+            "Traditional. Refined.",
+          ],
+          ["gold-alert-icon.png", "Allergen Info", "Available Upon Request"],
+        ] as const);
 
   return (
     <section className="mt-4 grid grid-cols-4 rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] px-8 py-3">
@@ -572,7 +637,7 @@ function DesktopMenuHero({
         sizes="1200px"
         src={
           isDrinks
-            ? "/assets/editorial/luxurious-japanese-sake-still-life.webp"
+            ? "/assets/drinks/akai-tsuki-red-moon-cocktail.webp"
             : featuredAssets.heroSushi.publicUrl
         }
       />
@@ -783,7 +848,9 @@ function DesktopFeatureMenuCard({
               compactDesktop ? "" : "min-[1500px]:leading-5",
             )}
           >
-            {item.ingredients.slice(0, 3).join(", ")}
+            {item.itemType === "drink"
+              ? item.serving || item.texture
+              : item.ingredients.slice(0, 3).join(", ")}
           </p>
           <p
             className={classNames(
@@ -849,7 +916,9 @@ export function DesktopCompactMenuRow({
           {item.name}
         </h3>
         <p className="mt-0.5 line-clamp-1 text-[12px] text-white/55">
-          {item.description}
+          {item.itemType === "drink"
+            ? item.serving || item.texture
+            : item.description}
         </p>
         <p className="text-[15px] text-[var(--sb-gold-soft)]">
           {formatMoney(item.priceCents)}

@@ -9,7 +9,7 @@ import { menuItemById } from "@/data/menu";
 import { CheckoutDrawer } from "@/features/checkout/CheckoutDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
-import { getDefaultCustomizations } from "@/lib/cart";
+import { getDefaultCustomizationsForItem } from "@/lib/cart";
 
 import { CartLineItemRow } from "./CartLineItemRow";
 import { CartSummary } from "./CartSummary";
@@ -51,7 +51,7 @@ export function CartDrawer({ onOpenChange, open }: CartDrawerProps) {
 
     addItem({
       addOns: [],
-      customizations: getDefaultCustomizations(),
+      customizations: getDefaultCustomizationsForItem(suggestedMobileItem),
       menuItem: suggestedMobileItem,
       quantity: 1,
     });

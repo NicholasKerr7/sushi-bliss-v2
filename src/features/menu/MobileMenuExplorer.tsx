@@ -265,12 +265,13 @@ function MobileCategoryView({
   onSelectCategory: (categoryId: string) => void;
   onViewDetails: (item: MenuItem) => void;
 }) {
-  const isDrinks = category.id === "drinks" && items.length === 0;
+  const isDrinksCategory = category.id === "drinks";
+  const isEmptyDrinks = isDrinksCategory && items.length === 0;
   const displayItems =
-    category.id === "nigiri" ? tabletNigiriItems : isDrinks ? [] : items;
+    category.id === "nigiri" ? tabletNigiriItems : isEmptyDrinks ? [] : items;
   const heroItem = displayItems[0] || menuHeroItem;
-  const heroImage = isDrinks
-    ? "/assets/editorial/luxurious-japanese-sake-still-life.webp"
+  const heroImage = isDrinksCategory
+    ? "/assets/drinks/akai-tsuki-red-moon-cocktail.webp"
     : getTabletPresentationImage(heroItem);
 
   return (
@@ -280,7 +281,7 @@ function MobileCategoryView({
           alt=""
           className={classNames(
             "object-cover",
-            isDrinks ? "object-[58%_45%]" : "object-[75%_38%]",
+            isDrinksCategory ? "object-[58%_48%]" : "object-[75%_38%]",
           )}
           fill
           loading="eager"
@@ -300,8 +301,8 @@ function MobileCategoryView({
             {category.label}
           </h1>
           <p className="mt-5 max-w-[350px] text-[15px] leading-6 text-[var(--sb-gold)] min-[390px]:text-[17px] min-[390px]:leading-7">
-            {isDrinks
-              ? "Sake, tea, and zero-proof pairings selected around each course."
+            {isDrinksCategory
+              ? "Liquid omakase: sake, cocktails, tea, and zero-proof pairings selected around each course."
               : "Hand-pressed perfection. The purest form of sushi, crafted with balance and precision."}
           </p>
         </div>
@@ -315,7 +316,7 @@ function MobileCategoryView({
 
       <div className="mt-5 h-px bg-[var(--sb-border)]" />
 
-      {isDrinks ? (
+      {isEmptyDrinks ? (
         <MobileDrinksEmptyState />
       ) : (
         <>
@@ -324,9 +325,13 @@ function MobileCategoryView({
               <MobileMenuListCard
                 badge={
                   index === 0
-                    ? "Hot"
+                    ? isDrinksCategory
+                      ? "Featured"
+                      : "Hot"
                     : index === 1
-                      ? "Popular"
+                      ? isDrinksCategory
+                        ? "Pairing"
+                        : "Popular"
                       : item.tags.includes("chef-special")
                         ? "Chef's Special"
                         : undefined
@@ -351,7 +356,9 @@ function MobileCategoryView({
                 {category.label} Experience
               </span>
               <span className="mt-1 block text-[14px] leading-5 text-white/68">
-                Savor each piece fresh, balanced, and unforgettable.
+                {isDrinksCategory
+                  ? "Build a pairing flight around sushi, tea, cocktails, or a zero-proof course."
+                  : "Savor each piece fresh, balanced, and unforgettable."}
               </span>
             </span>
             <span className="text-[var(--sb-gold)]" aria-hidden="true">
@@ -389,7 +396,10 @@ function MobileDrinksEmptyState() {
             className="grid grid-cols-[34px_1fr] items-center rounded-[13px] border border-white/12 bg-black/30 px-3 py-3"
             key={pairing}
           >
-            <AssetIcon size={25} src={icons.miso} />
+            <AssetIcon
+              size={25}
+              src="/assets/editorial/sake-vase-set-black-gold-floral.webp"
+            />
             <span className="text-[13px] uppercase tracking-[0.08em] text-white/76">
               {pairing}
             </span>

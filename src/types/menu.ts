@@ -17,6 +17,22 @@ export interface MenuTastingProfile {
   sweetness: number;
 }
 
+export type DrinkCategory =
+  | "beer-wine"
+  | "cocktail"
+  | "flight"
+  | "sake"
+  | "tea"
+  | "zero-proof";
+
+export interface DrinkTastingProfile {
+  dry: number;
+  bright: number;
+  aromatic: number;
+  body: number;
+  finish: number;
+}
+
 export interface MenuItem {
   id: ID;
   name: string;
@@ -32,6 +48,13 @@ export interface MenuItem {
   ingredientImage?: ImageReference;
   searchText: string;
   tastingNotes: MenuTastingProfile;
+  abv?: number;
+  ageRestricted?: boolean;
+  beverageTastingNotes?: DrinkTastingProfile;
+  drinkCategory?: DrinkCategory;
+  itemType?: "drink" | "food";
+  pairingItemIds?: ID[];
+  serving?: string;
   sakePairing?: SakePairing;
 }
 

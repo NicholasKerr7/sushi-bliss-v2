@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 
 import { useCart } from "@/hooks/useCart";
-import { getDefaultCustomizations } from "@/lib/cart";
+import { getDefaultCustomizationsForItem } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
 import { DesktopDashboard, DesktopDashboardHeader } from "./DesktopVisualHome";
@@ -33,7 +33,7 @@ export function VisualHomeDashboard() {
   const handleAddToCart = (item: MenuItem) => {
     addItem({
       addOns: [],
-      customizations: getDefaultCustomizations(),
+      customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });

@@ -71,7 +71,7 @@ export function AdminMenuManagement() {
             </div>
             <div className="border-l border-white/10 px-4 py-3">
               <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-sb-dim">
-                Paused
+                On hold
               </p>
               <p className="mt-1 font-mono text-lg font-semibold text-sb-rice">
                 {pausedItemIds.length}

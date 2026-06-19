@@ -15,7 +15,7 @@ import {
 import { useCart } from "@/hooks/useCart";
 import { useFavorites } from "@/hooks/useFavorites";
 import { classNames } from "@/lib/classNames";
-import { getDefaultCustomizations } from "@/lib/cart";
+import { getDefaultCustomizationsForItem } from "@/lib/cart";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -138,7 +138,7 @@ export function DesktopFavoritesPage() {
   const addFavoriteToCart = (item: MenuItem) => {
     addItem({
       addOns: [],
-      customizations: getDefaultCustomizations(),
+      customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });

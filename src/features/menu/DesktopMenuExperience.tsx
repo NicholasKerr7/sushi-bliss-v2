@@ -12,6 +12,7 @@ import {
   getAvailableAddOns,
   getAvailableSidePairings,
   getDefaultCustomizations,
+  getDefaultCustomizationsForItem,
 } from "@/lib/cart";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 import type { CartCustomization, Order } from "@/types/order";
@@ -131,7 +132,7 @@ export function DesktopMenuExperience({
     setSelectedItem(item);
     setQuantity(1);
     setSelectedAddOnIds([]);
-    setCustomizations(getDefaultCustomizations());
+    setCustomizations(getDefaultCustomizationsForItem(item));
     setNotes("");
     setView(nextView);
   };
@@ -139,7 +140,7 @@ export function DesktopMenuExperience({
   const handleAddDefaultItem = (item: MenuItem, nextView?: DesktopMenuView) => {
     addItem({
       addOns: [],
-      customizations: getDefaultCustomizations(),
+      customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });
@@ -151,7 +152,9 @@ export function DesktopMenuExperience({
   const handleAddCustomizedItem = (nextView: DesktopMenuView = "menu") => {
     addItem({
       addOns: selectedAddOns,
-      customizations,
+      customizations: getDefaultCustomizationsForItem(selectedItem).length
+        ? customizations
+        : [],
       menuItem: selectedItem,
       notes,
       quantity,
