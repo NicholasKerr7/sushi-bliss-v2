@@ -86,8 +86,8 @@ export function MobileProfileDashboardView({
           onOpenCart={onOpenCart}
         />
 
-        <section className="mt-8 overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-black/48 shadow-[0_24px_70px_rgba(0,0,0,0.42)]">
-          <div className="relative min-h-[250px] p-5">
+        <section className="mt-5 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-black/48 shadow-[0_24px_70px_rgba(0,0,0,0.42)] min-[390px]:mt-8 min-[390px]:rounded-[20px]">
+          <div className="relative min-h-[208px] p-4 min-[390px]:min-h-[250px] min-[390px]:p-5">
             <Image
               alt=""
               className="absolute inset-0 object-cover object-[70%_50%] opacity-60"
@@ -98,9 +98,9 @@ export function MobileProfileDashboardView({
               src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.28)_0%,rgba(0,0,0,0.86)_100%)]" />
-            <div className="relative z-10 flex min-h-[210px] flex-col justify-end">
-              <div className="flex items-end gap-3 min-[360px]:gap-4">
-                <div className="relative h-[74px] w-[74px] shrink-0 min-[360px]:h-[82px] min-[360px]:w-[82px] min-[390px]:h-[96px] min-[390px]:w-[96px]">
+            <div className="relative z-10 flex min-h-[176px] flex-col justify-end min-[390px]:min-h-[210px]">
+              <div className="flex items-end gap-3 min-[390px]:gap-4">
+                <div className="relative h-[68px] w-[68px] shrink-0 min-[360px]:h-[74px] min-[360px]:w-[74px] min-[390px]:h-[96px] min-[390px]:w-[96px]">
                   <Image
                     alt=""
                     className="rounded-full border border-[var(--sb-gold)] object-cover"
@@ -115,10 +115,10 @@ export function MobileProfileDashboardView({
                   <p className="max-w-[152px] text-[10px] uppercase leading-[14px] tracking-[0.065em] text-[var(--sb-gold-soft)] min-[360px]:max-w-none min-[360px]:text-[11px] min-[360px]:leading-none min-[360px]:tracking-[0.1em]">
                     Bliss member - {profile.tier} tier
                   </p>
-                  <h1 className="editorial-title mt-2 text-[30px] uppercase leading-none tracking-[0.05em] text-white min-[360px]:text-[31px]">
+                  <h1 className="editorial-title mt-2 text-[26px] uppercase leading-none tracking-[0.04em] text-white min-[360px]:text-[28px] min-[390px]:text-[31px] min-[390px]:tracking-[0.05em]">
                     {profile.name}
                   </h1>
-                  <p className="mt-2 text-[14px] text-white/64">
+                  <p className="mt-2 text-[13px] leading-[18px] text-white/64 min-[390px]:text-[14px]">
                     Member since January 15, 2024
                   </p>
                 </div>
@@ -127,24 +127,24 @@ export function MobileProfileDashboardView({
           </div>
         </section>
 
-        <MobileProfilePanel className="mt-4 p-4">
-          <div className="flex items-center justify-between gap-4">
+        <MobileProfilePanel className="mt-3 p-3.5 min-[390px]:mt-4 min-[390px]:p-4">
+          <div className="flex items-center justify-between gap-3 min-[390px]:gap-4">
             <div>
-              <p className="text-[12px] uppercase tracking-[0.13em] text-white/54">
+              <p className="text-[11px] uppercase tracking-[0.11em] text-white/54 min-[390px]:text-[12px] min-[390px]:tracking-[0.13em]">
                 Points balance
               </p>
-              <p className="mt-2 font-mono text-[32px] text-[var(--sb-gold-soft)]">
+              <p className="mt-1.5 font-mono text-[28px] leading-none text-[var(--sb-gold-soft)] min-[390px]:mt-2 min-[390px]:text-[32px]">
                 {account.points.toLocaleString()}
               </p>
             </div>
             <Link
-              className="inline-flex min-h-10 items-center rounded-full border border-[var(--sb-border)] px-4 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              className="inline-flex min-h-9 items-center rounded-full border border-[var(--sb-border)] px-3 text-[11px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] min-[390px]:min-h-10 min-[390px]:px-4 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
               href="/loyalty"
             >
               Benefits
             </Link>
           </div>
-          <div className="mt-4 h-2 rounded-full bg-white/12">
+          <div className="mt-3 h-1.5 rounded-full bg-white/12 min-[390px]:mt-4 min-[390px]:h-2">
             <div
               className={classNames(
                 "h-full rounded-full bg-[var(--sb-gold-soft)]",
@@ -152,27 +152,27 @@ export function MobileProfileDashboardView({
               )}
             />
           </div>
-          <p className="mt-3 text-[13px] text-white/52">
+          <p className="mt-2 text-[12px] text-white/52 min-[390px]:mt-3 min-[390px]:text-[13px]">
             {nextTier
               ? `${Math.max(nextTier.minimumPoints - account.lifetimePoints, 0).toLocaleString()} points to ${nextTier.label}`
               : "Top tier unlocked"}
           </p>
         </MobileProfilePanel>
 
-        <section className="mt-4 grid grid-cols-4 gap-2">
+        <section className="mt-3 grid grid-cols-4 gap-2 min-[390px]:mt-4">
           {quickActions.map((action) => (
             <Link
-              className="flex min-h-[72px] flex-col items-center justify-center gap-1.5 rounded-[14px] border border-[var(--sb-border)] bg-black/42 px-1.5 text-center text-[10px] uppercase tracking-[0.05em] text-white/72 min-[390px]:min-h-[82px] min-[390px]:gap-2 min-[390px]:rounded-[16px] min-[390px]:px-2 min-[390px]:text-[11px] min-[390px]:tracking-[0.06em]"
+              className="flex min-h-[60px] flex-col items-center justify-center gap-1 rounded-[13px] border border-[var(--sb-border)] bg-black/42 px-1.5 text-center text-[9px] uppercase tracking-[0.04em] text-white/72 min-[390px]:min-h-[82px] min-[390px]:gap-2 min-[390px]:rounded-[16px] min-[390px]:px-2 min-[390px]:text-[11px] min-[390px]:tracking-[0.06em]"
               href={action.href}
               key={action.label}
             >
-              <AssetIcon size={24} src={action.icon} />
+              <AssetIcon size={21} src={action.icon} />
               {action.label}
             </Link>
           ))}
         </section>
 
-        <section className="mt-4 grid grid-cols-3 gap-2">
+        <section className="mt-3 grid grid-cols-3 gap-2 min-[390px]:mt-4">
           <MobileProfileMetric label="Orders" value={activeOrderCount} />
           <MobileProfileMetric
             label="Bookings"
@@ -302,11 +302,11 @@ function MobileProfileMetric({
   value: number;
 }) {
   return (
-    <div className="rounded-[15px] border border-[var(--sb-border)] bg-black/42 p-3 text-center">
-      <p className="font-mono text-[23px] text-[var(--sb-gold-soft)]">
+    <div className="rounded-[13px] border border-[var(--sb-border)] bg-black/42 p-2.5 text-center min-[390px]:rounded-[15px] min-[390px]:p-3">
+      <p className="font-mono text-[20px] leading-none text-[var(--sb-gold-soft)] min-[390px]:text-[23px]">
         {value}
       </p>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.08em] text-white/46">
+      <p className="mt-1 text-[10px] uppercase tracking-[0.06em] text-white/46 min-[390px]:text-[11px] min-[390px]:tracking-[0.08em]">
         {label}
       </p>
     </div>

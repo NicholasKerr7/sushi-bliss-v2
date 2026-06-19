@@ -49,7 +49,7 @@ export function MobileProfileCommandCenter({
         </Link>
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-3">
+      <div className="mt-3 grid grid-cols-2 gap-2.5 min-[390px]:gap-3">
         <CommandLink
           accent={unreadNotificationCount > 0 ? "red" : "gold"}
           href="/notifications"
@@ -77,7 +77,7 @@ export function MobileProfileCommandCenter({
         />
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-3">
+      <div className="mt-3 grid grid-cols-2 gap-2.5 min-[390px]:gap-3">
         <CommandButton
           icon={icons.settings}
           label="Settings"
@@ -160,17 +160,17 @@ function CommandTileContent({
   return (
     <>
       <span className="flex items-center justify-between gap-3">
-        <span className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-border)] bg-black/42">
-          <AssetIcon size={24} src={icon} />
+        <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] bg-black/42 min-[390px]:h-11 min-[390px]:w-11">
+          <AssetIcon size={22} src={icon} />
         </span>
         <span aria-hidden="true" className="text-[24px] text-white/34">
           <ChevronIcon direction="right" size={18} />
         </span>
       </span>
-      <span className="mt-5 block truncate text-[12px] uppercase tracking-[0.07em] text-white/48 min-[390px]:text-[13px] min-[390px]:tracking-[0.1em]">
+      <span className="mt-4 block truncate text-[11px] uppercase tracking-[0.06em] text-white/48 min-[390px]:mt-5 min-[390px]:text-[13px] min-[390px]:tracking-[0.1em]">
         {label}
       </span>
-      <span className="mt-1 line-clamp-2 block break-words text-[16px] font-semibold leading-5 text-white min-[390px]:text-[18px] min-[390px]:leading-6">
+      <span className="mt-1 line-clamp-2 block break-words text-[15px] font-semibold leading-5 text-white min-[390px]:text-[18px] min-[390px]:leading-6">
         {value}
       </span>
     </>
@@ -179,7 +179,7 @@ function CommandTileContent({
 
 function getCommandTileClassName(accent: "gold" | "red") {
   return classNames(
-    "relative min-h-[128px] overflow-hidden rounded-[17px] border bg-black/42 p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_18px_48px_rgba(0,0,0,0.34)] backdrop-blur-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
+    "relative min-h-[112px] overflow-hidden rounded-[15px] border bg-black/42 p-3.5 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_18px_48px_rgba(0,0,0,0.34)] backdrop-blur-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[128px] min-[390px]:rounded-[17px] min-[390px]:p-4",
     accent === "red"
       ? "border-[var(--sb-red-bright)]/48 shadow-[0_0_28px_rgba(239,47,37,0.18),inset_0_1px_0_rgba(255,255,255,0.08)]"
       : "border-[var(--sb-border)]",

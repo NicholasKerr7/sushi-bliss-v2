@@ -69,18 +69,18 @@ export function MobileOrdersListView({
           unreadNotificationCount={unreadNotificationCount}
         />
 
-        <section className="pt-12 text-center">
-          <h1 className="editorial-title text-[36px] leading-none tracking-[0.11em] min-[390px]:text-[40px] min-[390px]:tracking-[0.13em]">
+        <section className="pt-8 text-center min-[390px]:pt-12">
+          <h1 className="editorial-title text-[33px] leading-none tracking-[0.09em] min-[390px]:text-[40px] min-[390px]:tracking-[0.13em]">
             My <span className="text-[var(--sb-gold-soft)]">Orders</span>
           </h1>
-          <p className="mt-4 text-[17px] leading-6 text-white/66">
+          <p className="mx-auto mt-3 max-w-[260px] text-[15px] leading-5 text-white/66 min-[390px]:mt-4 min-[390px]:max-w-none min-[390px]:text-[17px] min-[390px]:leading-6">
             Track your orders and view order history.
           </p>
         </section>
 
         <div
           aria-label="Order views"
-          className="mx-auto mt-8 grid h-[58px] max-w-[330px] grid-cols-2 overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/46 p-1 min-[390px]:h-[68px]"
+          className="mx-auto mt-5 grid h-[52px] max-w-[330px] grid-cols-2 overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/46 p-1 min-[390px]:mt-8 min-[390px]:h-[68px]"
           role="group"
         >
           <MobileOrderTab
@@ -111,8 +111,8 @@ export function MobileOrdersListView({
         />
 
         {view === "active" ? (
-          <section className="mt-8">
-            <h2 className="editorial-title text-[25px] text-[var(--sb-gold-soft)]">
+          <section className="mt-6 min-[390px]:mt-8">
+            <h2 className="editorial-title text-[23px] text-[var(--sb-gold-soft)] min-[390px]:text-[25px]">
               Active Order
             </h2>
             {featuredOrder ? (
@@ -141,8 +141,8 @@ export function MobileOrdersListView({
             ) : null}
           </section>
         ) : (
-          <section className="mt-8">
-            <h2 className="editorial-title text-[25px] text-[var(--sb-gold-soft)]">
+          <section className="mt-6 min-[390px]:mt-8">
+            <h2 className="editorial-title text-[23px] text-[var(--sb-gold-soft)] min-[390px]:text-[25px]">
               Past Orders
             </h2>
             {visibleOrders.length > 0 ? (
@@ -187,7 +187,7 @@ function MobileOrderTab({
     <button
       aria-pressed={active}
       className={classNames(
-        "rounded-full text-[18px] uppercase tracking-[0.04em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
+        "rounded-full text-[15px] uppercase tracking-[0.04em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:text-[18px]",
         active
           ? "border border-[var(--sb-red-bright)] bg-[radial-gradient(circle_at_50%_50%,rgba(239,47,37,0.26),rgba(239,47,37,0.05)_70%)] text-[var(--sb-red-bright)] shadow-[0_0_26px_rgba(239,47,37,0.35)]"
           : "text-white/68 hover:text-white",

@@ -64,8 +64,8 @@ export function MobileReservationsMainView({
           unreadNotificationCount={unreadNotificationCount}
         />
 
-        <section className="relative mt-10 overflow-hidden rounded-[22px] border border-transparent pb-5">
-          <div className="absolute inset-x-0 top-0 h-[190px] opacity-70">
+        <section className="relative mt-7 overflow-hidden rounded-[20px] border border-transparent pb-4 min-[390px]:mt-10 min-[390px]:rounded-[22px] min-[390px]:pb-5">
+          <div className="absolute inset-x-0 top-0 h-[160px] opacity-70 min-[390px]:h-[190px]">
             <Image
               alt=""
               className="object-cover object-[64%_40%]"
@@ -77,11 +77,11 @@ export function MobileReservationsMainView({
             />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,#050505_0%,rgba(5,5,5,0.76)_54%,rgba(5,5,5,0.28)_100%)]" />
           </div>
-          <div className="relative pt-8">
-            <h1 className="editorial-title text-[35px] leading-none tracking-[0.07em] text-white min-[390px]:text-[40px] min-[390px]:tracking-[0.08em]">
+          <div className="relative pt-7 min-[390px]:pt-8">
+            <h1 className="editorial-title text-[31px] leading-none tracking-[0.05em] text-white min-[390px]:text-[40px] min-[390px]:tracking-[0.08em]">
               Reservations
             </h1>
-            <p className="mt-4 max-w-[320px] text-[16px] leading-6 text-[var(--sb-gold-soft)] min-[390px]:text-[18px]">
+            <p className="mt-3 max-w-[270px] text-[15px] leading-5 text-[var(--sb-gold-soft)] min-[390px]:mt-4 min-[390px]:max-w-[320px] min-[390px]:text-[18px] min-[390px]:leading-6">
               Thoughtfully prepared. Unforgettable moments.
             </p>
           </div>
@@ -98,7 +98,7 @@ export function MobileReservationsMainView({
         />
 
         <section className="mt-4">
-          <h2 className="editorial-title text-[23px] uppercase text-[var(--sb-gold-soft)]">
+          <h2 className="editorial-title text-[21px] uppercase text-[var(--sb-gold-soft)] min-[390px]:text-[23px]">
             Upcoming Reservation
           </h2>
           {featuredReservation ? (
@@ -122,7 +122,7 @@ export function MobileReservationsMainView({
         </section>
 
         <button
-          className="red-glow-button mt-5 flex h-[62px] w-full items-center justify-center gap-3 rounded-[14px] text-[16px] min-[390px]:h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[16px] min-[390px]:text-[18px]"
+          className="red-glow-button mt-4 flex h-[56px] w-full items-center justify-center gap-2.5 rounded-[13px] text-[14px] min-[390px]:mt-5 min-[390px]:h-[72px] min-[390px]:gap-4 min-[390px]:rounded-[16px] min-[390px]:text-[18px]"
           onClick={onOpenBooking}
           type="button"
         >
@@ -132,7 +132,7 @@ export function MobileReservationsMainView({
 
         <div
           aria-label="Reservation views"
-          className="mt-8 grid h-[62px] grid-cols-2 border-b border-white/12"
+          className="mt-6 grid h-[56px] grid-cols-2 border-b border-white/12 min-[390px]:mt-8 min-[390px]:h-[62px]"
           role="group"
         >
           <ReservationTab
