@@ -37,6 +37,7 @@ const wideMobileFrameWidths = [
   { expectedMin: 630, width: 720 },
   { expectedMin: 630, width: 767 },
 ] as const;
+const narrowMobileWidths = [320, 375, 430] as const;
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
   await expect(
@@ -201,21 +202,49 @@ async function expectDocumentScrollsWhenOverflowing(
     })
     .toBeGreaterThan(0);
 
-  await page.evaluate(() =>
-    window.scrollTo({
-      left: 0,
-      top: document.documentElement.scrollHeight,
-    }),
-  );
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    await waitForStableDocumentHeight(page);
+    await page.evaluate(() => {
+      const root = document.scrollingElement || document.documentElement;
+
+      window.scrollTo({
+        behavior: "instant",
+        left: 0,
+        top: root.scrollHeight,
+      });
+    });
+    await page.waitForTimeout(100);
+
+    const remainingDistance = await page.evaluate(() => {
+      const root = document.scrollingElement || document.documentElement;
+
+      return root.scrollHeight - root.clientHeight - window.scrollY;
+    });
+
+    if (remainingDistance <= 4) {
+      return;
+    }
+  }
 
   await expect
     .poll(
-      () =>
-        page.evaluate(() => {
-          const root = document.documentElement;
+      async () => {
+        await page.evaluate(() => {
+          const root = document.scrollingElement || document.documentElement;
+
+          window.scrollTo({
+            behavior: "instant",
+            left: 0,
+            top: root.scrollHeight,
+          });
+        });
+
+        return page.evaluate(() => {
+          const root = document.scrollingElement || document.documentElement;
 
           return root.scrollHeight - root.clientHeight - window.scrollY;
-        }),
+        });
+      },
       {
         message: `${routePath} should allow scrolling near the bottom of long pages`,
       },
@@ -325,6 +354,63 @@ test.describe("responsive route health", () => {
           })
           .toBeNull();
         await expectNoHorizontalOverflow(page, routePath);
+      });
+    }
+  });
+
+  test("keeps narrow mobile routes contained and scrollable", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      testInfo.project.name === "chromium-mobile",
+      "Manual viewport resizing on the mobile device project reports scaled layout widths.",
+    );
+
+    for (const width of narrowMobileWidths) {
+      await test.step(`narrow mobile ${width}px`, async () => {
+        await page.setViewportSize({ height: 760, width });
+
+        for (const routePath of customerRoutePaths) {
+          await test.step(`check ${routePath}`, async () => {
+            await expect
+              .poll(() => page.evaluate(() => window.innerWidth), {
+                message: `${routePath} should resize to ${width}px`,
+              })
+              .toBe(width);
+
+            const response = await page.goto(routePath, {
+              waitUntil: "domcontentloaded",
+            });
+
+            expect(response?.status(), `${routePath} should load`).toBeLessThan(
+              400,
+            );
+            await expectNoFrameworkErrorOverlay(page);
+            await expect(
+              page.locator("main:visible, section:visible").first(),
+            ).toBeVisible();
+            await expectNoHorizontalOverflow(page, routePath);
+            await expectGlobalScrollPolicy(page, routePath);
+            await expectDocumentScrollsWhenOverflowing(page, routePath);
+
+            const frame = await getVisibleMobileFrameMetrics(page);
+
+            if (frame) {
+              expect(
+                frame.left,
+                `${routePath} mobile frame should stay inside the ${width}px viewport`,
+              ).toBeGreaterThanOrEqual(0);
+              expect(
+                frame.width,
+                `${routePath} mobile frame should fit the ${width}px viewport`,
+              ).toBeLessThanOrEqual(width);
+              expect(
+                frame.width,
+                `${routePath} mobile frame should remain usable at ${width}px`,
+              ).toBeGreaterThanOrEqual(Math.min(280, width));
+            }
+          });
+        }
       });
     }
   });
