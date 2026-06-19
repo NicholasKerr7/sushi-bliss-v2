@@ -126,12 +126,19 @@ export function MobileOrdersCommandCenter({
 }
 
 function CommandMetric({ label, value }: { label: string; value: string }) {
+  const compactValue = value.length > 4;
+
   return (
     <p className="min-w-0 px-2 py-3 text-center">
-      <span className="block truncate font-mono text-[17px] text-[var(--sb-gold-soft)]">
+      <span
+        className={classNames(
+          "block truncate font-mono text-[var(--sb-gold-soft)]",
+          compactValue ? "text-[15px]" : "text-[17px]",
+        )}
+      >
         {value}
       </span>
-      <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/44">
+      <span className="mt-1 block truncate text-[9px] uppercase tracking-[0.06em] text-white/44 min-[390px]:text-[10px] min-[390px]:tracking-[0.1em]">
         {label}
       </span>
     </p>

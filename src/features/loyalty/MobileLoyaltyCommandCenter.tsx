@@ -113,7 +113,7 @@ function CommandMetric({ label, value }: { label: string; value: string }) {
       <span className="block truncate font-mono text-[17px] text-[var(--sb-gold-soft)]">
         {value}
       </span>
-      <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/44">
+      <span className="mt-1 block truncate text-[9px] uppercase tracking-[0.04em] text-white/44 min-[390px]:text-[10px] min-[390px]:tracking-[0.1em]">
         {label}
       </span>
     </p>

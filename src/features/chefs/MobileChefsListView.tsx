@@ -112,7 +112,7 @@ function MobileChefCard({
       </button>
       <div className="min-w-0 py-1">
         <StatusBadge tone="premium">{chef.position}</StatusBadge>
-        <h2 className="editorial-title mt-3 text-[23px] leading-6 text-white">
+        <h2 className="editorial-title mt-3 break-words text-[20px] leading-[22px] text-white min-[390px]:text-[23px] min-[390px]:leading-6">
           {chef.name}
         </h2>
         <p className="mt-2 line-clamp-2 text-[13px] leading-5 text-white/56">

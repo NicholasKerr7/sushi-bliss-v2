@@ -216,7 +216,7 @@ function MobileActiveOrderCard({
         <div className="flex min-w-0 items-center gap-4">
           <MobileIconCircle icon={icons.bag} size={29} />
           <div className="min-w-0">
-            <h3 className="text-[14px] uppercase tracking-[0.12em] text-white/76">
+            <h3 className="text-[13px] uppercase tracking-[0.06em] text-white/76 min-[390px]:text-[14px] min-[390px]:tracking-[0.12em]">
               Order
             </h3>
             <p className="mt-1 break-words text-[16px] uppercase leading-5 text-white">
@@ -320,17 +320,21 @@ function OrderMetric({
   value: string;
 }) {
   return (
-    <div className="grid grid-cols-[52px_1fr] items-center gap-3">
-      <MobileIconCircle className="h-[52px] w-[52px]" icon={icon} size={25} />
-      <p className="min-w-0">
-        <span className="block text-[10px] uppercase tracking-[0.12em] text-white/48">
+    <div className="grid min-w-0 grid-cols-1 justify-items-center gap-2 text-center min-[390px]:grid-cols-[48px_1fr] min-[390px]:items-center min-[390px]:justify-items-start min-[390px]:gap-3 min-[390px]:text-left">
+      <MobileIconCircle
+        className="h-[44px] w-[44px] min-[390px]:h-[48px] min-[390px]:w-[48px]"
+        icon={icon}
+        size={23}
+      />
+      <p className="min-w-0 max-w-full">
+        <span className="block truncate text-[9px] uppercase tracking-[0.08em] text-white/48 min-[390px]:text-[10px] min-[390px]:tracking-[0.12em]">
           {label}
         </span>
-        <span className="mt-1 block whitespace-nowrap text-[21px] text-[var(--sb-gold-soft)]">
+        <span className="mt-1 block truncate text-[18px] leading-none text-[var(--sb-gold-soft)] min-[390px]:text-[20px]">
           {value}
         </span>
         {supporting ? (
-          <span className="mt-1 block text-[11px] leading-4 text-white/46">
+          <span className="mt-1 line-clamp-2 block text-[10px] leading-4 text-white/46 min-[390px]:text-[11px]">
             {supporting}
           </span>
         ) : null}

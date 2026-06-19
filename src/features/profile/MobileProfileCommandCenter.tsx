@@ -167,10 +167,10 @@ function CommandTileContent({
           <ChevronIcon direction="right" size={18} />
         </span>
       </span>
-      <span className="mt-5 block text-[13px] uppercase tracking-[0.1em] text-white/48">
+      <span className="mt-5 block truncate text-[12px] uppercase tracking-[0.07em] text-white/48 min-[390px]:text-[13px] min-[390px]:tracking-[0.1em]">
         {label}
       </span>
-      <span className="mt-1 block text-[18px] font-semibold leading-6 text-white">
+      <span className="mt-1 line-clamp-2 block break-words text-[16px] font-semibold leading-5 text-white min-[390px]:text-[18px] min-[390px]:leading-6">
         {value}
       </span>
     </>

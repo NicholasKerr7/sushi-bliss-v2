@@ -141,7 +141,7 @@ export function MobileProfileSwitch({
       aria-checked={checked}
       aria-label={label}
       className={classNames(
-        "relative h-10 w-16 rounded-full border border-white/12 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
+        "relative h-8 w-[52px] shrink-0 rounded-full border border-white/12 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
         checked ? "bg-[var(--sb-red)]" : "bg-white/16",
       )}
       onClick={() => onCheckedChange(!checked)}
@@ -150,8 +150,8 @@ export function MobileProfileSwitch({
     >
       <span
         className={classNames(
-          "absolute top-[5px] grid h-7 w-7 rounded-full bg-white transition",
-          checked ? "left-[31px]" : "left-[5px]",
+          "absolute top-[3px] grid h-6 w-6 rounded-full bg-white transition",
+          checked ? "left-[25px]" : "left-[3px]",
         )}
       />
     </button>

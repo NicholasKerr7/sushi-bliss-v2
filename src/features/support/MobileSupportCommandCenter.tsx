@@ -62,7 +62,7 @@ export function MobileSupportCommandCenter({
       <div className="mt-3 grid grid-cols-2 gap-2">
         {supportTopics.map((topic) => (
           <button
-            className="grid min-h-[98px] min-w-0 grid-cols-[34px_minmax(0,1fr)] items-start gap-2.5 rounded-[14px] border border-white/12 bg-black/30 p-3 text-left text-white/66 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[104px] min-[390px]:grid-cols-[38px_minmax(0,1fr)] min-[390px]:gap-3 min-[390px]:rounded-[15px]"
+            className="grid min-h-[116px] min-w-0 grid-cols-1 items-start gap-2 rounded-[14px] border border-white/12 bg-black/30 p-3 text-left text-white/66 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[104px] min-[390px]:grid-cols-[38px_minmax(0,1fr)] min-[390px]:gap-3 min-[390px]:rounded-[15px]"
             key={topic.id}
             onClick={() => onOpenRequest(topic.id)}
             type="button"
@@ -73,7 +73,7 @@ export function MobileSupportCommandCenter({
               size={20}
             />
             <span className="min-w-0">
-              <span className="block text-[11px] font-semibold uppercase leading-4 tracking-[0.06em] text-white min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]">
+              <span className="block max-w-full break-words text-[10px] font-semibold uppercase leading-4 tracking-[0.04em] text-white min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]">
                 {topic.label}
               </span>
               <span className="mt-1 line-clamp-2 block text-[10px] leading-4 text-white/50 min-[390px]:text-[11px]">
@@ -98,13 +98,15 @@ function SupportMetric({
     <div className="rounded-[15px] border border-[var(--sb-border)] bg-black/38 p-3 text-center">
       <p
         className={classNames(
-          "font-mono text-[20px] leading-none text-[var(--sb-gold-soft)]",
-          typeof value === "string" && value.length > 3 ? "text-[15px]" : "",
+          "min-w-0 truncate font-mono leading-none text-[var(--sb-gold-soft)]",
+          typeof value === "string" && value.length > 3
+            ? "text-[13px] min-[390px]:text-[15px]"
+            : "text-[19px] min-[390px]:text-[20px]",
         )}
       >
         {value}
       </p>
-      <p className="mt-2 text-[10px] uppercase tracking-[0.08em] text-white/42">
+      <p className="mt-2 truncate text-[9px] uppercase tracking-[0.06em] text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
         {label}
       </p>
     </div>

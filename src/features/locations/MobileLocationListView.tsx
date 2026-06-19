@@ -186,8 +186,8 @@ function MobileLocationCard({
         </span>
       </div>
       <div className="min-w-0 p-4">
-        <div className="flex min-w-0 items-start justify-between gap-3">
-          <h2 className="editorial-title min-w-0 text-[22px] leading-[1.04] text-white">
+        <div className="flex min-w-0 items-start justify-between gap-2 min-[390px]:gap-3">
+          <h2 className="editorial-title min-w-0 max-w-full break-words text-[19px] leading-[1.05] text-white min-[390px]:text-[22px]">
             {location.name}
           </h2>
           <button

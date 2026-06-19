@@ -54,26 +54,31 @@ export function MobileProfileSubflowSummary({
           </div>
         </div>
         <div className="relative z-10 mt-4 grid grid-cols-3 gap-2">
-          {metrics.map((metric) => (
-            <div
-              className="rounded-[14px] border border-white/10 bg-black/34 p-3 text-center"
-              key={metric.label}
-            >
-              <p
-                className={classNames(
-                  "font-mono text-[20px] leading-none text-[var(--sb-gold-soft)]",
-                  typeof metric.value === "string" && metric.value.length > 5
-                    ? "text-[15px]"
-                    : "",
-                )}
+          {metrics.map((metric) => {
+            const compactValue =
+              typeof metric.value === "string" && metric.value.length > 4;
+
+            return (
+              <div
+                className="min-w-0 rounded-[14px] border border-white/10 bg-black/34 px-2 py-3 text-center"
+                key={metric.label}
               >
-                {metric.value}
-              </p>
-              <p className="mt-2 text-[10px] uppercase tracking-[0.08em] text-white/42">
-                {metric.label}
-              </p>
-            </div>
-          ))}
+                <p
+                  className={classNames(
+                    "min-w-0 truncate font-mono leading-none text-[var(--sb-gold-soft)]",
+                    compactValue
+                      ? "text-[13px] min-[390px]:text-[15px]"
+                      : "text-[19px] min-[390px]:text-[20px]",
+                  )}
+                >
+                  {metric.value}
+                </p>
+                <p className="mt-2 truncate text-[9px] uppercase tracking-[0.06em] text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
+                  {metric.label}
+                </p>
+              </div>
+            );
+          })}
         </div>
         {action ? <div className="relative z-10 mt-4">{action}</div> : null}
       </div>

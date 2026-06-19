@@ -345,10 +345,12 @@ function PreferenceSwitchRow({
   onCheckedChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-4 last:border-b-0">
+    <div className="grid grid-cols-[minmax(0,1fr)_52px] items-center gap-3 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:px-4 min-[390px]:py-4">
       <span className="min-w-0">
-        <span className="block text-[15px] text-white">{label}</span>
-        <span className="mt-1 block text-[13px] leading-5 text-white/50">
+        <span className="block text-[14px] leading-5 text-white min-[390px]:text-[15px]">
+          {label}
+        </span>
+        <span className="mt-1 block text-[12px] leading-4 text-white/50 min-[390px]:text-[13px] min-[390px]:leading-5">
           {description}
         </span>
       </span>

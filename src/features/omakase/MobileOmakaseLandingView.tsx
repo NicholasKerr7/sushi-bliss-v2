@@ -162,8 +162,8 @@ export function MobileOmakaseLandingView({
       </section>
 
       <MobileOmakasePanel className="mt-6 overflow-hidden p-4">
-        <div className="grid min-h-[142px] grid-cols-[1fr_152px] items-center gap-3">
-          <div className="space-y-4">
+        <div className="grid min-h-[132px] grid-cols-[minmax(0,1fr)_108px] items-center gap-2 min-[390px]:min-h-[142px] min-[390px]:grid-cols-[1fr_152px] min-[390px]:gap-3">
+          <div className="space-y-3 min-[390px]:space-y-4">
             <MobileOmakaseHighlight
               icon="/assets/icons/floral-emblem-icon.png"
               label="Personalized chef interaction"
@@ -177,7 +177,7 @@ export function MobileOmakaseLandingView({
               label="Traditional Edomae techniques"
             />
           </div>
-          <div className="relative min-h-[132px] overflow-hidden rounded-[13px]">
+          <div className="relative min-h-[124px] overflow-hidden rounded-[13px] min-[390px]:min-h-[132px]">
             <Image
               alt={selectedPackage.image.alt || selectedPackage.title}
               className="object-cover"
@@ -340,9 +340,9 @@ function MobileOmakaseHighlight({
   label: string;
 }) {
   return (
-    <p className="grid grid-cols-[30px_minmax(0,1fr)] items-center gap-3 text-[14px] leading-5 text-white/76">
-      <AssetIcon size={22} src={icon} />
-      <span>{label}</span>
+    <p className="grid grid-cols-[24px_minmax(0,1fr)] items-center gap-2 text-[12px] leading-4 text-white/76 min-[390px]:grid-cols-[30px_minmax(0,1fr)] min-[390px]:gap-3 min-[390px]:text-[14px] min-[390px]:leading-5">
+      <AssetIcon size={20} src={icon} />
+      <span className="min-w-0 break-words">{label}</span>
     </p>
   );
 }

@@ -115,7 +115,7 @@ export function MobileOffersListView({
             <button
               aria-pressed={filter === item.id}
               className={classNames(
-                "min-h-[44px] rounded-[12px] border text-[12px] uppercase tracking-[0.08em]",
+                "min-h-[42px] min-w-0 rounded-[12px] border px-1 text-[10px] uppercase tracking-normal min-[390px]:min-h-[44px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]",
                 filter === item.id
                   ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/22 text-[var(--sb-red-bright)]"
                   : "border-white/12 bg-black/24 text-white/56",
@@ -321,14 +321,15 @@ function MobileOfferCard({
           </p>
           <div className="mt-3 grid grid-cols-2 gap-2">
             <button
-              className="min-h-[40px] rounded-[11px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]"
+              aria-label={`View details for ${offer.title}`}
+              className="min-h-[40px] min-w-0 rounded-[11px] border border-[var(--sb-border)] px-1 text-[10px] uppercase tracking-normal text-[var(--sb-gold-soft)] min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]"
               onClick={() => onViewOffer(offer)}
               type="button"
             >
-              Details
+              View
             </button>
             <button
-              className="min-h-[40px] rounded-[11px] border border-[var(--sb-red-bright)]/45 text-[12px] uppercase tracking-[0.06em] text-[var(--sb-red-bright)] disabled:border-white/12 disabled:text-white/34"
+              className="min-h-[40px] min-w-0 rounded-[11px] border border-[var(--sb-red-bright)]/45 px-1 text-[10px] uppercase tracking-normal text-[var(--sb-red-bright)] disabled:border-white/12 disabled:text-white/34 min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]"
               disabled={expired}
               onClick={() => onApplyOffer(offer)}
               type="button"
