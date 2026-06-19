@@ -371,7 +371,7 @@ test.describe("customer experience", () => {
     await expect(page.getByText(/Seasonal Sake Flight/i)).toBeVisible();
   });
 
-  test("wires desktop support CTAs and FAQ previews", async ({
+  test("wires desktop support CTAs, socials, and FAQ previews", async ({
     page,
   }, testInfo) => {
     test.skip(
@@ -390,8 +390,14 @@ test.describe("customer experience", () => {
       "tel:+81312345678",
     );
     await expect(
-      page.getByRole("link", { name: /View updates/i }),
-    ).toHaveAttribute("href", "/notifications");
+      page.getByRole("link", { name: /Instagram/i }),
+    ).toHaveAttribute("href", "https://www.instagram.com/sushibliss");
+    await expect(
+      page.getByRole("link", { name: /Tripadvisor/i }),
+    ).toHaveAttribute(
+      "href",
+      "https://www.tripadvisor.com/Search?q=Sushi%20Bliss%20Tokyo",
+    );
 
     await page
       .getByRole("button", { name: /Track or reorder an order/i })

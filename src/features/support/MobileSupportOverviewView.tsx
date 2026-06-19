@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { contactMethods, helpArticles } from "@/data/support";
+import { contactMethods, helpArticles, socialLinks } from "@/data/support";
 import { formatDateTime } from "@/lib/dates";
 import { getSupportTopicLabel } from "@/lib/support";
 import type {
@@ -116,6 +116,34 @@ export function MobileSupportOverviewView({
               method={method}
               onOpenRequest={onOpenRequest}
             />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-5">
+        <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+          Follow us
+        </p>
+        <div className="mt-3 grid grid-cols-2 gap-3">
+          {socialLinks.map((link) => (
+            <a
+              aria-label={link.label}
+              className="grid min-h-[74px] grid-cols-[38px_minmax(0,1fr)] items-center gap-3 rounded-[16px] border border-[var(--sb-border)] bg-black/30 px-3 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_48px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+              href={link.href}
+              key={link.id}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <MobileSupportIcon icon={link.icon} />
+              <span className="min-w-0">
+                <span className="block truncate text-[13px] font-semibold uppercase tracking-[0.08em] text-white">
+                  {link.platform}
+                </span>
+                <span className="mt-1 block text-[11px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]">
+                  Open platform
+                </span>
+              </span>
+            </a>
           ))}
         </div>
       </section>

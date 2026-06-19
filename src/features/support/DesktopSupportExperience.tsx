@@ -7,7 +7,12 @@ import { useState } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
-import { contactMethods, helpArticles, supportTopics } from "@/data/support";
+import {
+  contactMethods,
+  helpArticles,
+  socialLinks,
+  supportTopics,
+} from "@/data/support";
 import {
   DesktopBenefitStrip,
   DesktopMenuHeader,
@@ -42,13 +47,6 @@ const contactCards = [
     href: "/locations",
     icon: "/assets/icons/clock-icon.png",
     title: "Hours",
-  },
-  {
-    body: "Instagram, Facebook, X, and Tripadvisor.",
-    cta: "View updates",
-    href: "/notifications",
-    icon: "/assets/icons/floral-emblem-icon.png",
-    title: "Follow us",
   },
 ] as const;
 
@@ -235,6 +233,30 @@ function DesktopContactView({
             </Link>
           </article>
         ))}
+        <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+          <CardTitle
+            icon="/assets/icons/floral-emblem-icon.png"
+            title="Follow us"
+          />
+          <p className="mt-3 min-h-[60px] text-[14px] leading-6 text-white/68">
+            Seasonal offers, chef notes, and behind-the-scenes service updates.
+          </p>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {socialLinks.map((link) => (
+              <a
+                aria-label={link.label}
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--sb-gold)]/32 bg-black/24 px-3 text-[11px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+                href={link.href}
+                key={link.id}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <AssetIcon size={18} src={link.icon} />
+                {link.platform}
+              </a>
+            ))}
+          </div>
+        </article>
         <div className="relative overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/48">
           <Image
             alt="Map to Sushi Bliss Tokyo"

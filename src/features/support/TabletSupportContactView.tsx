@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { contactMethods } from "@/data/support";
+import { contactMethods, socialLinks } from "@/data/support";
 import { formatDateTime } from "@/lib/dates";
 import {
   getSupportTopicLabel,
@@ -138,20 +138,18 @@ export function TabletSupportContactView({
               Stay connected for seasonal offers, chef notes, and behind the
               scenes.
             </p>
-            <div className="mt-5 flex gap-3">
-              {[
-                ["Instagram", "/assets/icons/instagram-icon.png"],
-                ["Facebook", "/assets/icons/facebook-icon.png"],
-                ["Share", "/assets/icons/share-icon.png"],
-              ].map(([label, icon]) => (
-                <Link
-                  aria-label={label}
+            <div className="mt-5 flex flex-wrap gap-3">
+              {socialLinks.map((link) => (
+                <a
+                  aria-label={link.label}
                   className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-border)] bg-black/24 transition hover:bg-white/[0.05] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-                  href="/about"
-                  key={label}
+                  href={link.href}
+                  key={link.id}
+                  rel="noreferrer"
+                  target="_blank"
                 >
-                  <AssetIcon size={23} src={icon} />
-                </Link>
+                  <AssetIcon size={23} src={link.icon} />
+                </a>
               ))}
             </div>
           </div>

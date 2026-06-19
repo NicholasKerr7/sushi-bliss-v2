@@ -43,3 +43,11 @@ export interface ContactMethod {
   tone: StatusTone;
   value: string;
 }
+
+export interface SocialLink {
+  href: string;
+  icon: string;
+  id: ID;
+  label: string;
+  platform: string;
+}
