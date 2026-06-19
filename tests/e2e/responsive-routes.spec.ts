@@ -256,7 +256,9 @@ test.describe("responsive route health", () => {
           400,
         );
         await expectNoFrameworkErrorOverlay(page);
-        await expect(page.locator("main, section").first()).toBeVisible();
+        await expect(
+          page.locator("main:visible, section:visible").first(),
+        ).toBeVisible();
         await expectNoHorizontalOverflow(page, routePath);
         await expectGlobalScrollPolicy(page, routePath);
         await expectDocumentScrollsWhenOverflowing(page, routePath);

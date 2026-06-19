@@ -183,6 +183,26 @@ test.describe("customer experience", () => {
         .getByText(/Liquid Omakase|Beverage Pairings|Drink Type/i)
         .first(),
     ).toBeVisible();
+
+    const drinksCategoryButton = menuSection
+      .getByRole("button", { exact: true, name: "Drinks" })
+      .first();
+
+    await expect(drinksCategoryButton).toHaveAttribute("aria-pressed", "true");
+    await expect
+      .poll(
+        () =>
+          drinksCategoryButton.evaluate((element) => {
+            const rect = element.getBoundingClientRect();
+
+            return rect.left >= 0 && rect.right <= window.innerWidth;
+          }),
+        {
+          message:
+            "Drinks category should be visible when opened from the route",
+        },
+      )
+      .toBe(true);
   });
 
   test("blocks restaurant-only drinks from desktop checkout", async ({

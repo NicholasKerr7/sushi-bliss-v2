@@ -191,7 +191,9 @@ function DesktopCartLine({
         <Image
           alt=""
           className="object-cover"
+          fetchPriority="high"
           fill
+          loading="eager"
           sizes="64px"
           src={item.menuItem.image.publicUrl}
         />

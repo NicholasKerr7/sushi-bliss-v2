@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { FormEvent } from "react";
+import { useEffect, useRef } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -143,10 +144,30 @@ export function MobileCategoryPills({
   categories: MenuCategory[];
   onSelectCategory: (categoryId: string) => void;
 }) {
+  const activeButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const activeButton = activeButtonRef.current;
+
+    if (!activeButton) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    activeButton.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [activeCategory]);
+
   return (
     <nav
       aria-label="Mobile menu categories"
-      className="mt-5 flex gap-3 overflow-x-auto pb-2"
+      className="smooth-scroll-area mt-5 flex gap-3 overflow-x-auto scroll-px-5 pb-2"
     >
       {categories.map((item) => {
         const active = item.id === activeCategory;
@@ -155,13 +176,14 @@ export function MobileCategoryPills({
           <button
             aria-pressed={active}
             className={classNames(
-              "min-h-[46px] shrink-0 rounded-[14px] border px-4 text-[12px] uppercase transition min-[390px]:min-h-[52px] min-[390px]:rounded-[16px] min-[390px]:px-5 min-[390px]:text-[14px]",
+              "scroll-mx-5 min-h-[46px] shrink-0 rounded-[14px] border px-4 text-[12px] uppercase transition min-[390px]:min-h-[52px] min-[390px]:rounded-[16px] min-[390px]:px-5 min-[390px]:text-[14px]",
               active
                 ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/48 text-white shadow-[0_0_28px_var(--sb-red-glow)]"
                 : "border-white/14 bg-white/[0.035] text-white/78",
             )}
             key={item.id}
             onClick={() => onSelectCategory(item.id)}
+            ref={active ? activeButtonRef : null}
             type="button"
           >
             {item.label}

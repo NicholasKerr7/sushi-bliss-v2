@@ -6,6 +6,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/features/home/visualHomeData";
+import { classNames } from "@/lib/classNames";
 import { formatDateTime } from "@/lib/dates";
 import {
   calculateTipCents,
@@ -108,6 +109,14 @@ export function TabletCheckoutDetails({
 
       <TabletCheckoutProgress activeStep={1} />
 
+      <AgeVerificationNotice
+        className="mt-4"
+        items={items}
+        onVerifiedChange={checkout.setAgeVerified}
+        validationMessage={checkout.validation.ageVerification}
+        verified={checkout.ageVerified}
+      />
+
       <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_390px]">
         <section className="rounded-[18px] border border-white/10 bg-white/[0.04] p-4">
           <TabletCheckoutStepTitle number={1} title="Delivery or pickup" />
@@ -115,21 +124,22 @@ export function TabletCheckoutDetails({
             {fulfillmentOptions.map((option) => (
               <button
                 aria-pressed={checkout.mode === option.value}
-                className={`flex min-h-[70px] items-center gap-4 rounded-[12px] border px-5 text-left transition ${
+                className={classNames(
+                  "grid min-h-[72px] grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-[12px] border px-4 text-left transition min-[900px]:grid-cols-[38px_minmax(0,1fr)] min-[900px]:gap-4 min-[900px]:px-5",
                   checkout.mode === option.value
                     ? "red-glow-button border-[var(--sb-red-bright)]"
-                    : "border-white/12 bg-black/20"
-                }`}
+                    : "border-white/12 bg-black/20",
+                )}
                 key={option.value}
                 onClick={() => checkout.setMode(option.value)}
                 type="button"
               >
-                <AssetIcon size={30} src={option.icon} />
-                <span>
-                  <span className="block text-[18px] font-semibold uppercase">
+                <AssetIcon size={28} src={option.icon} />
+                <span className="min-w-0">
+                  <span className="block truncate text-[16px] font-semibold uppercase tracking-[0.02em] min-[900px]:text-[18px]">
                     {option.label}
                   </span>
-                  <span className="mt-1 block text-[13px] text-white/62">
+                  <span className="mt-1 line-clamp-1 block text-[12px] leading-4 text-white/62 normal-case tracking-normal min-[900px]:text-[13px]">
                     {option.description}
                   </span>
                 </span>
@@ -320,14 +330,6 @@ export function TabletCheckoutDetails({
               onExpandedChange={onPaymentsExpandedChange}
             />
           </div>
-          <AgeVerificationNotice
-            className="mt-4"
-            items={items}
-            onVerifiedChange={checkout.setAgeVerified}
-            validationMessage={checkout.validation.ageVerification}
-            verified={checkout.ageVerified}
-          />
-
           <Button
             className="red-glow-button mt-4 h-[58px] w-full rounded-[12px] text-[17px] uppercase tracking-[0.08em]"
             disabled={items.length === 0}
