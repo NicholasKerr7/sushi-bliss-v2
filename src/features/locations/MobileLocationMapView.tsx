@@ -14,6 +14,9 @@ import {
   MobileLocationsHeader,
 } from "./MobileLocationsPrimitives";
 
+const mobileLocationOverviewMap =
+  "/assets/maps/tokyo-city-map-with-sushi-markers.webp";
+
 interface MobileLocationMapViewProps {
   cartCount: number;
   locations: RestaurantLocation[];
@@ -59,26 +62,18 @@ export function MobileLocationMapView({
       <section className="mt-6 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-black/42 shadow-[0_22px_60px_rgba(0,0,0,0.45)]">
         <div className="relative min-h-[360px] bg-[#050607] min-[390px]:min-h-[390px]">
           <Image
-            alt="Sushi Bliss route map"
-            className="object-contain"
+            alt="Tokyo map with Sushi Bliss location markers"
+            className="object-contain object-top"
             fill
             loading="eager"
             priority
             sizes="430px"
-            src="/assets/maps/map-route.webp"
+            src={mobileLocationOverviewMap}
           />
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.32)_48%,rgba(0,0,0,0.82)_100%)]"
           />
-          <div className="absolute left-5 top-5 rounded-[14px] border border-[var(--sb-border)] bg-black/66 px-4 py-3 backdrop-blur-xl">
-            <p className="text-[12px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
-              {selectedLocation.neighborhood}
-            </p>
-            <p className="mt-1 text-[18px] text-white">
-              {selectedLocation.name}
-            </p>
-          </div>
           <div className="absolute bottom-5 left-5 right-5 rounded-[16px] border border-white/12 bg-black/72 p-4 backdrop-blur-xl">
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">

@@ -29,6 +29,11 @@ const featuredOrder = [
   "tokyo-rooftop",
 ] as const;
 
+const desktopLocationsHeroImage =
+  "/assets/gallery/intimate-upscale-dining-room-setting.webp";
+const locationOverviewMap =
+  "/assets/maps/tokyo-city-map-with-sushi-markers.webp";
+
 export function DesktopLocationsDirectory({
   cartCount,
   locations,
@@ -52,14 +57,14 @@ export function DesktopLocationsDirectory({
           <section className="relative min-h-[254px] border-b border-white/10 px-16 py-8">
             <Image
               alt=""
-              className="object-cover object-center opacity-60"
+              className="object-cover object-center opacity-72"
               fill
               loading="eager"
               priority
               sizes="1568px"
-              src="/assets/maps/map-location.webp"
+              src={desktopLocationsHeroImage}
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,4,5,0.98)_0%,rgba(3,4,5,0.78)_40%,rgba(3,4,5,0.34)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,4,5,0.98)_0%,rgba(3,4,5,0.84)_43%,rgba(3,4,5,0.42)_100%)]" />
             <div className="relative z-10 flex min-h-[190px] max-w-[760px] flex-col justify-center">
               <p className="text-[16px] uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
                 Tokyo dining rooms
@@ -159,7 +164,7 @@ export function DesktopLocationsDirectory({
                     loading="eager"
                     priority
                     sizes="442px"
-                    src="/assets/maps/map-location.webp"
+                    src={locationOverviewMap}
                   />
                 </div>
                 <div className="p-5">
