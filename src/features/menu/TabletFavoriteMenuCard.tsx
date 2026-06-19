@@ -5,6 +5,10 @@ import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
+import {
+  getMenuItemOrderAction,
+  isMenuItemOnlineOrderable,
+} from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -24,6 +28,8 @@ export function TabletFavoriteMenuCard({
   showQuantityControls,
 }: TabletFavoriteMenuCardProps) {
   const [quantity, setQuantity] = useState(1);
+  const isOnlineOrderable = isMenuItemOnlineOrderable(item);
+  const orderAction = getMenuItemOrderAction(item);
   const description =
     item.ingredients.length > 0
       ? item.ingredients.slice(0, 4).join(", ")
@@ -68,8 +74,13 @@ export function TabletFavoriteMenuCard({
         <p className="mt-4 font-mono text-[20px] text-[var(--sb-gold-soft)]">
           {formatMoney(item.priceCents)}
         </p>
+        {item.itemType === "drink" ? (
+          <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/42">
+            {orderAction.badge}
+          </span>
+        ) : null}
         <div className="mt-4 flex items-center gap-2">
-          {showQuantityControls ? (
+          {showQuantityControls && isOnlineOrderable ? (
             <div
               aria-label={`${item.name} quantity`}
               className="flex h-9 shrink-0 items-center gap-1 text-[13px] text-white"
@@ -94,15 +105,30 @@ export function TabletFavoriteMenuCard({
               </button>
             </div>
           ) : null}
-          <Button
-            aria-label={`Add ${quantity} ${item.name} to cart`}
-            className="red-glow-button h-[43px] min-h-0 min-w-[128px] flex-1 gap-1 whitespace-nowrap rounded-[7px] px-1.5 text-[10px] uppercase tracking-[0.01em]"
-            onClick={() => onAddToCart(item, quantity)}
-            size="sm"
-          >
-            Add to cart
-            <AssetIcon size={14} src="/assets/icons/shopping-cart-icon.png" />
-          </Button>
+          {isOnlineOrderable ? (
+            <Button
+              aria-label={`Add ${quantity} ${item.name} to cart`}
+              className="red-glow-button h-[43px] min-h-0 min-w-[128px] flex-1 gap-1 whitespace-nowrap rounded-[7px] px-1.5 text-[10px] uppercase tracking-[0.01em]"
+              onClick={() => onAddToCart(item, quantity)}
+              size="sm"
+            >
+              Add to cart
+              <AssetIcon
+                size={14}
+                src="/assets/icons/shopping-cart-icon.png"
+              />
+            </Button>
+          ) : (
+            <Button
+              aria-label={`${orderAction.label} for ${item.name}`}
+              className="red-glow-button h-[43px] min-h-0 min-w-[128px] flex-1 gap-1 whitespace-nowrap rounded-[7px] px-1.5 text-[10px] uppercase tracking-[0.01em]"
+              href={orderAction.href || "/reservations"}
+              size="sm"
+            >
+              {orderAction.shortLabel}
+              <AssetIcon size={14} src={orderAction.icon} />
+            </Button>
+          )}
         </div>
       </div>
     </article>

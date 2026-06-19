@@ -72,16 +72,19 @@ export function TabletFavoritesPage() {
   };
 
   const addFavoriteToCart = (item: MenuItem, quantity: number) => {
-    addItem({
+    const wasAdded = addItem({
       addOns: [],
       customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity,
     });
-    setStatusMessage(
-      `${quantity} ${item.name}${quantity > 1 ? "s" : ""} added to cart.`,
-    );
-    setCartOpen(true);
+
+    if (wasAdded) {
+      setStatusMessage(
+        `${quantity} ${item.name}${quantity > 1 ? "s" : ""} added to cart.`,
+      );
+      setCartOpen(true);
+    }
   };
 
   return (

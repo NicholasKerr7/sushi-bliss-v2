@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { icons } from "@/features/home/visualHomeData";
+import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -23,6 +24,8 @@ export function MobileFavoriteCard({
   onAddToCart,
   onRemove,
 }: MobileFavoriteCardProps) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="grid min-h-[144px] grid-cols-[112px_minmax(0,1fr)] gap-4 rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl">
       <Link
@@ -48,13 +51,22 @@ export function MobileFavoriteCard({
           {item.description}
         </p>
         <div className="mt-4 grid grid-cols-[1fr_42px] gap-2">
-          <button
-            className="red-glow-button min-h-[42px] rounded-[12px] border text-[11px]"
-            onClick={() => onAddToCart(item)}
-            type="button"
-          >
-            Add {formatMoney(item.priceCents)}
-          </button>
+          {orderAction.kind === "reservation" ? (
+            <Link
+              className="red-glow-button grid min-h-[42px] place-items-center rounded-[12px] border text-[11px]"
+              href={orderAction.href || "/reservations"}
+            >
+              {orderAction.shortLabel}
+            </Link>
+          ) : (
+            <button
+              className="red-glow-button min-h-[42px] rounded-[12px] border text-[11px]"
+              onClick={() => onAddToCart(item)}
+              type="button"
+            >
+              Add {formatMoney(item.priceCents)}
+            </button>
+          )}
           <button
             aria-label={`Remove ${item.name} from favorites`}
             className="grid min-h-[42px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/28"

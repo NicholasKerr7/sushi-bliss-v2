@@ -14,6 +14,10 @@ import {
   getTabletPresentationImage,
 } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
+import {
+  getMenuItemOrderAction,
+  isMenuItemOnlineOrderable,
+} from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -57,6 +61,8 @@ export function TabletDetailView({
   const activeImage =
     galleryImages[imageIndex] || getTabletPresentationImage(item);
   const isDrinkItem = item.itemType === "drink";
+  const isOnlineOrderable = isMenuItemOnlineOrderable(item);
+  const orderAction = getMenuItemOrderAction(item);
   const tastingProfile = item.beverageTastingNotes || item.tastingNotes;
   const selectImage = (nextImageIndex: number) => {
     setGalleryState({ imageIndex: nextImageIndex, itemId: item.id });
@@ -160,22 +166,46 @@ export function TabletDetailView({
             </div>
 
             <aside className="pt-8">
-              <div className="grid grid-cols-[170px_1fr] gap-4">
-                <TabletQuantityStepper
-                  className="w-[148px] grid-cols-[42px_1fr_42px] rounded-[12px] border-[var(--sb-gold)]/28 bg-black/24 p-1 [&_button]:h-9 [&_button]:w-9 [&_button]:rounded-[10px] [&_span:first-child]:hidden"
-                  onChange={onQuantityChange}
-                  value={quantity}
-                />
-                <Button
-                  aria-label="Add to Cart"
-                  className="h-[64px] rounded-[17px] text-[16px] uppercase tracking-[0.08em]"
-                  onClick={onAddToCart}
-                >
-                  Add to Cart
-                  <span aria-hidden="true">•</span>
-                  <span aria-hidden="true">{formatMoney(totalCents)}</span>
-                </Button>
-              </div>
+              {isOnlineOrderable ? (
+                <div className="grid grid-cols-[170px_1fr] gap-4">
+                  <TabletQuantityStepper
+                    className="w-[148px] grid-cols-[42px_1fr_42px] rounded-[12px] border-[var(--sb-gold)]/28 bg-black/24 p-1 [&_button]:h-9 [&_button]:w-9 [&_button]:rounded-[10px] [&_span:first-child]:hidden"
+                    onChange={onQuantityChange}
+                    value={quantity}
+                  />
+                  <Button
+                    aria-label={orderAction.label}
+                    className="h-[64px] rounded-[17px] text-[16px] uppercase tracking-[0.08em]"
+                    onClick={onAddToCart}
+                  >
+                    {orderAction.label}
+                    <span aria-hidden="true">•</span>
+                    <span aria-hidden="true">{formatMoney(totalCents)}</span>
+                  </Button>
+                </div>
+              ) : (
+                <div className="rounded-[18px] border border-[var(--sb-gold)]/28 bg-[linear-gradient(145deg,rgba(215,168,79,0.13),rgba(255,255,255,0.025)_48%,rgba(7,9,10,0.94))] p-4">
+                  <div className="flex gap-3">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/42">
+                      <AssetIcon size={26} src={orderAction.icon} />
+                    </span>
+                    <div>
+                      <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
+                        {orderAction.badge}
+                      </p>
+                      <p className="mt-2 text-[13px] leading-5 text-white/64">
+                        {orderAction.note}
+                      </p>
+                    </div>
+                  </div>
+                  <Button
+                    className="mt-4 h-[56px] w-full rounded-[17px] text-[15px] uppercase tracking-[0.08em]"
+                    href={orderAction.href || "/reservations"}
+                  >
+                    {orderAction.label}
+                  </Button>
+                </div>
+              )}
               <div className="mt-4 grid grid-cols-2 gap-4">
                 {isDrinkItem ? (
                   <Button
@@ -183,7 +213,7 @@ export function TabletDetailView({
                     href="/reservations"
                     variant="secondary"
                   >
-                    Pairing table
+                    {isOnlineOrderable ? "Pairing table" : "View tables"}
                   </Button>
                 ) : (
                   <Button
@@ -236,7 +266,7 @@ export function TabletDetailView({
             >
               <p className="text-[15px] leading-6 text-white/66">
                 {isDrinkItem
-                  ? item.chefNote
+                  ? orderAction.note
                   : "Prepared with the house balance and finished moments before serving."}
               </p>
             </TabletDetailInfoCard>
@@ -338,6 +368,8 @@ function RelatedMenuCard({
   item: MenuItem;
   onAddRelatedItem: (item: MenuItem) => void;
 }) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="grid h-[106px] grid-cols-[130px_1fr] overflow-hidden rounded-[14px] border border-white/10 bg-white/[0.035]">
       <div className="relative h-[106px]">
@@ -362,14 +394,24 @@ function RelatedMenuCard({
             {formatMoney(item.priceCents)}
           </span>
         </div>
-        <button
-          aria-label={`Add ${item.name}`}
-          className="self-end rounded-full border border-[var(--sb-gold)]/50 bg-black/20 p-2.5 text-[22px] leading-none text-[var(--sb-gold-soft)]"
-          onClick={() => onAddRelatedItem(item)}
-          type="button"
-        >
-          +
-        </button>
+        {orderAction.kind === "reservation" ? (
+          <Link
+            aria-label={`${orderAction.label} for ${item.name}`}
+            className="self-end rounded-full border border-[var(--sb-gold)]/50 bg-[var(--sb-gold)]/12 p-2.5 text-[22px] leading-none text-[var(--sb-gold-soft)]"
+            href={orderAction.href || "/reservations"}
+          >
+            <AssetIcon size={18} src={orderAction.icon} />
+          </Link>
+        ) : (
+          <button
+            aria-label={`Add ${item.name}`}
+            className="self-end rounded-full border border-[var(--sb-gold)]/50 bg-black/20 p-2.5 text-[22px] leading-none text-[var(--sb-gold-soft)]"
+            onClick={() => onAddRelatedItem(item)}
+            type="button"
+          >
+            +
+          </button>
+        )}
       </div>
     </article>
   );

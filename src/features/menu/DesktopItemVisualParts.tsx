@@ -1,10 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { getMenuItemGalleryImages } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
+import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition, CartCustomization } from "@/types/order";
@@ -201,6 +203,8 @@ export function DesktopRelatedMenuCard({
   item: MenuItem;
   onAddToCart: DesktopMenuAddHandler;
 }) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="grid min-h-[96px] grid-cols-[118px_minmax(0,1fr)_42px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-white/[0.035]">
       <div className="relative min-h-full">
@@ -221,14 +225,24 @@ export function DesktopRelatedMenuCard({
           {formatMoney(item.priceCents)}
         </p>
       </div>
-      <button
-        aria-label={`Add ${item.name} to cart`}
-        className="self-end justify-self-end mb-3 mr-3 grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-black/52"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <AssetIcon size={20} src="/assets/icons/plus-icon.png" />
-      </button>
+      {orderAction.kind === "reservation" ? (
+        <Link
+          aria-label={`${orderAction.label} for ${item.name}`}
+          className="mb-3 mr-3 grid h-9 w-9 place-items-center self-end justify-self-end rounded-full border border-[var(--sb-gold)]/52 bg-[var(--sb-gold)]/12"
+          href={orderAction.href || "/reservations"}
+        >
+          <AssetIcon size={18} src={orderAction.icon} />
+        </Link>
+      ) : (
+        <button
+          aria-label={`Add ${item.name} to cart`}
+          className="mb-3 mr-3 grid h-9 w-9 place-items-center self-end justify-self-end rounded-full border border-[var(--sb-gold)]/52 bg-black/52"
+          onClick={() => onAddToCart(item)}
+          type="button"
+        >
+          <AssetIcon size={20} src="/assets/icons/plus-icon.png" />
+        </button>
+      )}
     </article>
   );
 }

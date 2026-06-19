@@ -47,13 +47,16 @@ export function MenuExplorer() {
   };
 
   const handleAddToCart = (item: MenuItem) => {
-    addItem({
+    const wasAdded = addItem({
       addOns: [],
       customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });
-    setCartOpen(true);
+
+    if (wasAdded) {
+      setCartOpen(true);
+    }
   };
 
   return (

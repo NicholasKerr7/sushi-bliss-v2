@@ -9,6 +9,7 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { featuredAssets } from "@/features/home/visualHomeData";
 import { useCart } from "@/hooks/useCart";
 import { classNames } from "@/lib/classNames";
+import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -556,9 +557,9 @@ function DesktopCategoryBenefitStrip({ category }: { category: string }) {
     category === "drinks"
       ? ([
           ["floral-emblem-icon.png", "Pairing Logic", "Matched By Course"],
-          ["lotus-crown-icon.png", "Sake Cellar", "Ginjo To Daiginjo"],
-          ["chef-crest-icon.png", "Zero Proof", "Built With Balance"],
-          ["clock-icon.png", "Tea Service", "Hot Or Chilled"],
+          ["lotus-crown-icon.png", "Sake Cellar", "Reserve In-House"],
+          ["chef-crest-icon.png", "Zero Proof", "Online Ready"],
+          ["clock-icon.png", "Tea Service", "Order Or Reserve"],
         ] as const)
       : ([
           ["floral-emblem-icon.png", "Ingredient Sourcing", "Sourced Daily"],
@@ -666,7 +667,7 @@ function DesktopMenuHero({
         </h1>
         <p className="mt-3 max-w-[500px] text-[15px] leading-6 text-[var(--sb-gold-soft)]">
           {isDrinks
-            ? "Seasonal sake, tea, and zero-proof pairings selected around each course."
+            ? "Order zero-proof and tea online, or reserve rare sake, cocktails, and Liquid Omakase pairings for the dining room."
             : isNigiri
               ? "Experience the pure art of nigiri. Hand-pressed perfection, featuring the finest fish and seasonal ingredients."
               : "Sourced daily. Crafted by masters. Served with passion."}
@@ -790,6 +791,7 @@ function DesktopFeatureMenuCard({
   onViewDetails: DesktopMenuViewHandler;
 }) {
   const hasDuplicateStandardCard = item.name === "Otoro Nigiri";
+  const orderAction = getMenuItemOrderAction(item);
 
   return (
     <article className="relative min-h-[176px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/42">
@@ -860,20 +862,35 @@ function DesktopFeatureMenuCard({
           >
             {formatMoney(item.priceCents)}
           </p>
+          {item.itemType === "drink" ? (
+            <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/42">
+              {orderAction.badge}
+            </span>
+          ) : null}
         </div>
       </button>
-      <button
-        aria-label={
-          badge && hasDuplicateStandardCard
-            ? `Add featured ${item.name} to cart`
-            : `Add ${item.name} to cart`
-        }
-        className="absolute bottom-3 right-3 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-black/52"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <AssetIcon size={20} src="/assets/icons/plus-icon.png" />
-      </button>
+      {orderAction.kind === "reservation" ? (
+        <Link
+          aria-label={`${orderAction.label} for ${item.name}`}
+          className="absolute bottom-3 right-3 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-[var(--sb-gold)]/12"
+          href={orderAction.href || "/reservations"}
+        >
+          <AssetIcon size={20} src={orderAction.icon} />
+        </Link>
+      ) : (
+        <button
+          aria-label={
+            badge && hasDuplicateStandardCard
+              ? `Add featured ${item.name} to cart`
+              : `Add ${item.name} to cart`
+          }
+          className="absolute bottom-3 right-3 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-black/52"
+          onClick={() => onAddToCart(item)}
+          type="button"
+        >
+          <AssetIcon size={20} src="/assets/icons/plus-icon.png" />
+        </button>
+      )}
     </article>
   );
 }
@@ -889,6 +906,8 @@ export function DesktopCompactMenuRow({
   onAddToCart: DesktopMenuAddHandler;
   onViewDetails: DesktopMenuViewHandler;
 }) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="grid grid-cols-[86px_minmax(0,1fr)_42px] items-center gap-3 rounded-[10px] border border-[var(--sb-border)] bg-black/34 p-1.5">
       <button
@@ -923,15 +942,30 @@ export function DesktopCompactMenuRow({
         <p className="text-[15px] text-[var(--sb-gold-soft)]">
           {formatMoney(item.priceCents)}
         </p>
+        {item.itemType === "drink" ? (
+          <span className="text-[10px] uppercase tracking-[0.1em] text-white/42">
+            {orderAction.badge}
+          </span>
+        ) : null}
       </button>
-      <button
-        aria-label={`Add ${item.name} to cart`}
-        className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)]"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <AssetIcon size={20} src="/assets/icons/plus-icon.png" />
-      </button>
+      {orderAction.kind === "reservation" ? (
+        <Link
+          aria-label={`${orderAction.label} for ${item.name}`}
+          className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/12"
+          href={orderAction.href || "/reservations"}
+        >
+          <AssetIcon size={19} src={orderAction.icon} />
+        </Link>
+      ) : (
+        <button
+          aria-label={`Add ${item.name} to cart`}
+          className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)]"
+          onClick={() => onAddToCart(item)}
+          type="button"
+        >
+          <AssetIcon size={20} src="/assets/icons/plus-icon.png" />
+        </button>
+      )}
     </article>
   );
 }

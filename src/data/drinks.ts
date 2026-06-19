@@ -2,6 +2,7 @@ import { toImageReference } from "@/lib/assets";
 import type {
   DrinkCategory,
   DrinkTastingProfile,
+  MenuOrderMode,
   MenuItem,
   MenuTastingProfile,
 } from "@/types/menu";
@@ -19,6 +20,7 @@ interface DrinkDefinition {
   chefNote: string;
   texture: string;
   image: string;
+  orderMode: MenuOrderMode;
   tags: string[];
   tasting: DrinkTastingProfile;
   pairingItemIds?: string[];
@@ -82,12 +84,14 @@ function createDrinkItem(definition: DrinkDefinition): MenuItem {
     ingredients: definition.ingredients,
     itemType: "drink",
     name: definition.name,
+    orderMode: definition.orderMode,
     pairingItemIds: definition.pairingItemIds,
     priceCents: definition.priceCents,
     serving: definition.serving,
     tags: [
       "drink",
       definition.drinkCategory,
+      definition.orderMode === "online" ? "order-online" : "dine-in-only",
       ...definition.tags,
       ...(definition.ageRestricted ? ["alcohol"] : ["zero-proof"]),
     ],
@@ -111,6 +115,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "seasonal-sake-flight.webp",
     ingredients: ["Junmai", "Ginjo", "Daiginjo"],
     name: "Seasonal Sake Flight",
+    orderMode: "reservation",
     pairingItemIds: ["otoro-nigiri", "hamachi-nigiri", "salmon-sashimi"],
     priceCents: 3000,
     serving: "Three 2 oz pours",
@@ -129,6 +134,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "rare-daiginjo-flight.webp",
     ingredients: ["Rare daiginjo", "Junmai daiginjo", "Limited ginjo"],
     name: "Rare Daiginjo Flight",
+    orderMode: "reservation",
     pairingItemIds: ["uni-nigiri", "otoro-nigiri", "wagyu-aburi-nigiri"],
     priceCents: 6200,
     serving: "Three 2 oz pours",
@@ -148,6 +154,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "kubota-senju-ginjo.webp",
     ingredients: ["Ginjo sake", "Polished rice", "Spring water"],
     name: "Kubota Senju Ginjo",
+    orderMode: "reservation",
     pairingItemIds: ["salmon-nigiri", "ebi-nigiri"],
     priceCents: 1200,
     serving: "Glass from $12 / carafe $44",
@@ -167,6 +174,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "dassai-45-junmai-daiginjo.webp",
     ingredients: ["Junmai daiginjo", "Yamada Nishiki rice"],
     name: "Dassai 45 Junmai Daiginjo",
+    orderMode: "reservation",
     pairingItemIds: ["hamachi-nigiri", "salmon-sashimi"],
     priceCents: 1400,
     serving: "Glass from $14 / carafe $52",
@@ -186,6 +194,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "dewazakura-oka-ginjo.webp",
     ingredients: ["Ginjo sake", "Polished rice", "Koji"],
     name: "Dewazakura Oka Ginjo",
+    orderMode: "reservation",
     pairingItemIds: ["hamachi-nigiri", "vegetarian-temaki"],
     priceCents: 1300,
     serving: "Glass from $13 / carafe $48",
@@ -204,6 +213,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "hakkaisan-junmai-daiginjo.webp",
     ingredients: ["Junmai daiginjo", "Niigata rice", "Mountain water"],
     name: "Hakkaisan Junmai Daiginjo",
+    orderMode: "reservation",
     pairingItemIds: ["tuna-nigiri", "otoro-nigiri"],
     priceCents: 1600,
     serving: "Glass from $16 / carafe $60",
@@ -222,6 +232,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "tengumai-yamahai-junmai.webp",
     ingredients: ["Yamahai junmai", "Koji", "Polished rice"],
     name: "Tengumai Yamahai Junmai",
+    orderMode: "reservation",
     pairingItemIds: ["unagi-nigiri", "dragon-roll"],
     priceCents: 1400,
     serving: "Glass from $14 / carafe $52",
@@ -241,6 +252,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "yuki-no-bosha-junmai-ginjo.webp",
     ingredients: ["Junmai ginjo", "Akita rice", "Koji"],
     name: "Yuki No Bosha Junmai Ginjo",
+    orderMode: "reservation",
     pairingItemIds: ["scallop-nigiri", "salmon-nigiri"],
     priceCents: 1500,
     serving: "Glass from $15 / carafe $56",
@@ -260,6 +272,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "akai-tsuki-red-moon-cocktail.webp",
     ingredients: ["Yuzu sake", "Shochu", "Blood orange", "Smoked salt"],
     name: "Akai Tsuki - Red Moon",
+    orderMode: "reservation",
     pairingItemIds: ["spicy-tuna-roll", "dragon-roll"],
     priceCents: 1800,
     serving: "Coupe",
@@ -279,6 +292,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "kintsugi-old-fashioned.webp",
     ingredients: ["Japanese whisky", "Kokuto sugar", "Sesame bitters"],
     name: "Kintsugi Old Fashioned",
+    orderMode: "reservation",
     pairingItemIds: ["wagyu-aburi-nigiri", "unagi-nigiri"],
     priceCents: 2000,
     serving: "Rocks",
@@ -298,6 +312,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "shiso-garden-highball.webp",
     ingredients: ["Gin", "Shiso", "Cucumber", "Soda"],
     name: "Shiso Garden Highball",
+    orderMode: "reservation",
     pairingItemIds: ["vegetarian-temaki", "hamachi-nigiri"],
     priceCents: 1700,
     serving: "Highball",
@@ -316,6 +331,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "yuzu-sake-spritz.webp",
     ingredients: ["Sparkling sake", "Yuzu", "Citrus peel"],
     name: "Yuzu Sake Spritz",
+    orderMode: "reservation",
     pairingItemIds: ["california-roll", "salmon-nigiri"],
     priceCents: 1700,
     serving: "Wine glass",
@@ -333,6 +349,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "moonlit-yuzu-zero-proof.webp",
     ingredients: ["Yuzu", "Ginger", "Jasmine tea", "Sparkling water"],
     name: "Moonlit Yuzu",
+    orderMode: "online",
     pairingItemIds: ["salmon-sashimi", "vegetarian-temaki"],
     priceCents: 1100,
     serving: "Tall glass",
@@ -349,6 +366,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "shiso-cucumber-tonic-zero-proof.webp",
     ingredients: ["Cucumber", "Shiso", "Tonic", "Salted citrus"],
     name: "Shiso Cucumber Tonic",
+    orderMode: "online",
     pairingItemIds: ["hamachi-nigiri", "cucumber-maki"],
     priceCents: 1100,
     serving: "Highball",
@@ -366,6 +384,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "hojicha-ember-zero-proof.webp",
     ingredients: ["Hojicha", "Black sugar", "Oat foam"],
     name: "Hojicha Ember",
+    orderMode: "online",
     pairingItemIds: ["unagi-nigiri", "dragon-roll"],
     priceCents: 1000,
     serving: "Rocks",
@@ -382,6 +401,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "matcha-pear-cloud-zero-proof.webp",
     ingredients: ["Matcha", "Pear", "Oat milk", "Soft foam"],
     name: "Matcha Pear Cloud",
+    orderMode: "online",
     pairingItemIds: ["tamago-nigiri", "vegetarian-temaki"],
     priceCents: 1200,
     serving: "Stemless glass",
@@ -398,6 +418,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "gyokuro-table-service.webp",
     ingredients: ["Gyokuro", "Soft water"],
     name: "Gyokuro Table Service",
+    orderMode: "dine-in",
     pairingItemIds: ["otoro-nigiri", "uni-nigiri"],
     priceCents: 1200,
     serving: "Personal pot",
@@ -415,6 +436,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "cold-brew-yuzu-sencha.webp",
     ingredients: ["Sencha", "Yuzu peel", "Cold spring water"],
     name: "Cold-Brew Yuzu Sencha",
+    orderMode: "online",
     pairingItemIds: ["salmon-nigiri", "hamachi-nigiri"],
     priceCents: 800,
     serving: "Chilled glass",
@@ -432,6 +454,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "roasted-hojicha.webp",
     ingredients: ["Roasted hojicha", "Soft water"],
     name: "Roasted Hojicha",
+    orderMode: "online",
     pairingItemIds: ["unagi-nigiri", "dragon-roll"],
     priceCents: 700,
     serving: "Personal pot",
@@ -450,6 +473,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "japanese-dry-lager.webp",
     ingredients: ["Malted barley", "Rice", "Hops"],
     name: "Japanese Dry Lager",
+    orderMode: "reservation",
     pairingItemIds: ["spicy-tuna-roll", "california-roll"],
     priceCents: 900,
     serving: "Bottle",
@@ -469,6 +493,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     image: "japanese-sparkling-wine.webp",
     ingredients: ["Sparkling wine", "Orchard fruit notes"],
     name: "Japanese Sparkling Wine",
+    orderMode: "reservation",
     pairingItemIds: ["salmon-sashimi", "scallop-nigiri"],
     priceCents: 1600,
     serving: "Glass",
@@ -480,4 +505,27 @@ const drinkDefinitions: DrinkDefinition[] = [
   },
 ];
 
-export const drinkMenuItems = drinkDefinitions.map(createDrinkItem);
+const drinkDisplayOrder = [
+  "moonlit-yuzu",
+  "cold-brew-yuzu-sencha",
+  "shiso-cucumber-tonic",
+  "hojicha-ember",
+  "matcha-pear-cloud",
+  "roasted-hojicha",
+  "gyokuro-table-service",
+  "seasonal-sake-flight",
+  "akai-tsuki-red-moon",
+  "rare-daiginjo-flight",
+] as const;
+
+const drinkDisplayRank = new Map<string, number>(
+  drinkDisplayOrder.map((itemId, index) => [itemId, index]),
+);
+
+export const drinkMenuItems = drinkDefinitions
+  .map(createDrinkItem)
+  .sort(
+    (firstItem, secondItem) =>
+      (drinkDisplayRank.get(firstItem.id) ?? drinkDefinitions.length) -
+      (drinkDisplayRank.get(secondItem.id) ?? drinkDefinitions.length),
+  );

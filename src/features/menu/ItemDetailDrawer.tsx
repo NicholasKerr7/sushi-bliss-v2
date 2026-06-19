@@ -17,6 +17,10 @@ import {
   getAvailableSidePairings,
   getDefaultCustomizationsForItem,
 } from "@/lib/cart";
+import {
+  getMenuItemOrderAction,
+  isMenuItemOnlineOrderable,
+} from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -46,6 +50,8 @@ export function ItemDetailDrawer({
   const { addItem, itemCount: cartItemCount } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
   const isDrinkItem = item.itemType === "drink";
+  const orderAction = getMenuItemOrderAction(item);
+  const isOnlineOrderable = isMenuItemOnlineOrderable(item);
   const availableAddOns = useMemo(() => getAvailableAddOns(item), [item]);
   const availableSidePairings = useMemo(() => getAvailableSidePairings(), []);
   const [quantity, setQuantity] = useState(1);
@@ -89,14 +95,17 @@ export function ItemDetailDrawer({
   };
 
   const handleAddToCart = () => {
-    addItem({
+    const wasAdded = addItem({
       addOns: selectedAddOns,
       customizations: isDrinkItem ? [] : customizations,
       menuItem: item,
       notes,
       quantity,
     });
-    onAdded();
+
+    if (wasAdded) {
+      onAdded();
+    }
   };
 
   const handleAddRelatedItem = (relatedItem: MenuItem) => {
@@ -174,13 +183,21 @@ export function ItemDetailDrawer({
         <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
           <div>
             <p className="text-xs font-semibold uppercase text-sb-dim">
-              Current item total
+              {isOnlineOrderable ? "Current item total" : orderAction.badge}
             </p>
             <p className="font-mono text-xl font-semibold text-sb-gold-soft">
-              {formatMoney(totalCents)}
+              {isOnlineOrderable ? formatMoney(totalCents) : item.serving}
             </p>
           </div>
-          <Button onClick={handleAddToCart}>Add {quantity} to cart</Button>
+          {isOnlineOrderable ? (
+            <Button onClick={handleAddToCart}>
+              {orderAction.label} - {formatMoney(totalCents)}
+            </Button>
+          ) : (
+            <Button href={orderAction.href || "/reservations"}>
+              {orderAction.label}
+            </Button>
+          )}
         </div>
       }
     >
@@ -209,12 +226,14 @@ export function ItemDetailDrawer({
               {item.chefNote}
             </p>
           </div>
-          <QuantityControl
-            max={12}
-            min={1}
-            onChange={setQuantity}
-            value={quantity}
-          />
+          {isOnlineOrderable ? (
+            <QuantityControl
+              max={12}
+              min={1}
+              onChange={setQuantity}
+              value={quantity}
+            />
+          ) : null}
         </div>
 
         <section>
@@ -239,7 +258,7 @@ export function ItemDetailDrawer({
             <p className="mt-2 text-sm leading-6 text-sb-muted">
               {item.sakePairing
                 ? `${item.sakePairing.sakeName} is recommended with ${item.name}.`
-                : "Pair with clean nigiri, warm rice, and courses that match the drink's body."}
+                : orderAction.note}
             </p>
           </section>
         ) : null}

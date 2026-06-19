@@ -16,6 +16,7 @@ import { useCart } from "@/hooks/useCart";
 import { useFavorites } from "@/hooks/useFavorites";
 import { classNames } from "@/lib/classNames";
 import { getDefaultCustomizationsForItem } from "@/lib/cart";
+import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -136,13 +137,16 @@ export function DesktopFavoritesPage() {
   };
 
   const addFavoriteToCart = (item: MenuItem) => {
-    addItem({
+    const wasAdded = addItem({
       addOns: [],
       customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });
-    setStatusMessage(`${item.name} added to cart.`);
+
+    if (wasAdded) {
+      setStatusMessage(`${item.name} added to cart.`);
+    }
   };
 
   return (
@@ -360,6 +364,8 @@ function FavoriteMenuCard({
   onAddToCart: (item: MenuItem) => void;
   onToggleFavorite: (itemId: string) => void;
 }) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="grid min-h-[164px] grid-cols-[240px_1fr] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-white/[0.035]">
       <div className="relative">
@@ -390,14 +396,27 @@ function FavoriteMenuCard({
           {formatMoney(item.priceCents)}
         </p>
         <div className="mt-3 flex items-center gap-4">
-          <button
-            className="red-glow-button flex h-11 w-[166px] items-center justify-center gap-2 rounded-[8px] px-3 text-[11px] uppercase tracking-[0.04em] whitespace-nowrap"
-            onClick={() => onAddToCart(item)}
-            type="button"
-          >
-            <AssetIcon size={18} src="/assets/icons/shopping-cart-icon.png" />
-            Add to cart
-          </button>
+          {orderAction.kind === "reservation" ? (
+            <Link
+              className="red-glow-button flex h-11 w-[166px] items-center justify-center gap-2 rounded-[8px] px-3 text-[11px] uppercase tracking-[0.04em] whitespace-nowrap"
+              href={orderAction.href || "/reservations"}
+            >
+              <AssetIcon size={18} src={orderAction.icon} />
+              {orderAction.shortLabel}
+            </Link>
+          ) : (
+            <button
+              className="red-glow-button flex h-11 w-[166px] items-center justify-center gap-2 rounded-[8px] px-3 text-[11px] uppercase tracking-[0.04em] whitespace-nowrap"
+              onClick={() => onAddToCart(item)}
+              type="button"
+            >
+              <AssetIcon
+                size={18}
+                src="/assets/icons/shopping-cart-icon.png"
+              />
+              Add to cart
+            </button>
+          )}
           <button
             className="flex h-10 items-center gap-2 text-[11px] uppercase tracking-[0.08em] text-white/72"
             onClick={() => onToggleFavorite(item.id)}

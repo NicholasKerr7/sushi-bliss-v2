@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { icons } from "@/features/home/visualHomeData";
+import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -31,6 +33,8 @@ export function TabletMenuCard({
   onToggleFavorite,
   onViewDetails,
 }: TabletMenuCardProps) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="relative overflow-hidden rounded-[9px] border border-[var(--sb-border)] bg-black/48">
       <span className="absolute left-0 top-0 z-10 rounded-br-[12px] bg-[var(--sb-red)]/86 px-2.5 py-1 text-[10px] uppercase text-white">
@@ -70,18 +74,18 @@ export function TabletMenuCard({
           <p className="mt-3 text-[22px] text-[var(--sb-gold)]">
             {formatMoney(item.priceCents)}
           </p>
+          {item.itemType === "drink" ? (
+            <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/42">
+              {orderAction.badge}
+            </span>
+          ) : null}
         </div>
       </button>
-      <button
-        aria-label={`Add ${item.name} to cart`}
-        className="absolute bottom-2.5 right-2.5 grid h-10 w-10 place-items-center rounded-full"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55">
-          <AssetIcon size={24} src={icons.plus} />
-        </span>
-      </button>
+      <TabletQuickOrderAction
+        className="absolute bottom-2.5 right-2.5"
+        item={item}
+        onAddToCart={onAddToCart}
+      />
     </article>
   );
 }
@@ -92,6 +96,8 @@ export function TabletCompactMenuRow({
   onAddToCart,
   onViewDetails,
 }: TabletCompactMenuRowProps) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="grid grid-cols-[108px_minmax(0,1fr)_42px] items-center gap-3 rounded-[8px] border border-[var(--sb-border)] bg-black/34 p-1.5">
       <button
@@ -123,17 +129,59 @@ export function TabletCompactMenuRow({
         <p className="text-[16px] text-[var(--sb-gold)]">
           {formatMoney(item.priceCents)}
         </p>
+        {item.itemType === "drink" ? (
+          <span className="text-[10px] uppercase tracking-[0.1em] text-white/42">
+            {orderAction.badge}
+          </span>
+        ) : null}
       </button>
-      <button
-        aria-label={`Add ${item.name} to cart`}
-        className="grid h-10 w-10 place-items-center rounded-full"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border)]">
-          <AssetIcon size={21} src={icons.plus} />
-        </span>
-      </button>
+      <TabletQuickOrderAction item={item} onAddToCart={onAddToCart} />
     </article>
+  );
+}
+
+function TabletQuickOrderAction({
+  className,
+  item,
+  onAddToCart,
+}: {
+  className?: string;
+  item: MenuItem;
+  onAddToCart: (item: MenuItem) => void;
+}) {
+  const orderAction = getMenuItemOrderAction(item);
+  const actionClassName = [
+    "grid h-10 w-10 place-items-center rounded-full",
+    className || "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const icon = orderAction.kind === "cart" ? icons.plus : orderAction.icon;
+
+  if (orderAction.kind === "reservation") {
+    return (
+      <Link
+        aria-label={`${orderAction.label} for ${item.name}`}
+        className={actionClassName}
+        href={orderAction.href || "/reservations"}
+      >
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/12">
+          <AssetIcon size={20} src={icon} />
+        </span>
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      aria-label={`Add ${item.name} to cart`}
+      className={actionClassName}
+      onClick={() => onAddToCart(item)}
+      type="button"
+    >
+      <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55">
+        <AssetIcon size={21} src={icon} />
+      </span>
+    </button>
   );
 }

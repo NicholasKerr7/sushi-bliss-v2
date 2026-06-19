@@ -12,6 +12,10 @@ import {
   getTabletPresentationImage,
 } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
+import {
+  getMenuItemOrderAction,
+  isMenuItemOnlineOrderable,
+} from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition, CartCustomization } from "@/types/order";
@@ -76,6 +80,8 @@ export function DesktopItemDetailView({
   const activeImage =
     galleryImages[activeGalleryIndex] || getTabletPresentationImage(item);
   const isDrinkItem = item.itemType === "drink";
+  const isOnlineOrderable = isMenuItemOnlineOrderable(item);
+  const orderAction = getMenuItemOrderAction(item);
   const tastingProfile = item.beverageTastingNotes || item.tastingNotes;
   const detailPills = isDrinkItem
     ? drinkDetailFeaturePills
@@ -125,20 +131,40 @@ export function DesktopItemDetailView({
               {formatMoney(item.priceCents)}
             </p>
 
-            <div className="mt-4 grid grid-cols-[132px_minmax(198px,1fr)_58px_58px] items-center gap-3">
-              <DesktopQuantity
-                label={item.name}
-                quantity={quantity}
-                onQuantityChange={onQuantityChange}
-              />
-              <Button
-                aria-label="Add to Cart"
-                className="h-[54px] min-w-[198px] whitespace-nowrap rounded-[13px] px-3 text-[12px] uppercase tracking-[0.07em] min-[1380px]:text-[14px]"
-                onClick={onAddToCart}
-              >
-                Add to cart
-                <span aria-hidden="true">{formatMoney(totalCents)}</span>
-              </Button>
+            <div
+              className={classNames(
+                "mt-4 grid items-center gap-3",
+                isOnlineOrderable
+                  ? "grid-cols-[132px_minmax(198px,1fr)_58px_58px]"
+                  : "grid-cols-[minmax(250px,1fr)_58px_58px]",
+              )}
+            >
+              {isOnlineOrderable ? (
+                <>
+                  <DesktopQuantity
+                    label={item.name}
+                    quantity={quantity}
+                    onQuantityChange={onQuantityChange}
+                  />
+                  <Button
+                    aria-label={orderAction.label}
+                    className="h-[54px] min-w-[198px] whitespace-nowrap rounded-[13px] px-3 text-[12px] uppercase tracking-[0.07em] min-[1380px]:text-[14px]"
+                    onClick={onAddToCart}
+                  >
+                    {orderAction.label}
+                    <span aria-hidden="true">{formatMoney(totalCents)}</span>
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  aria-label={orderAction.label}
+                  className="h-[54px] min-w-[250px] whitespace-nowrap rounded-[13px] px-4 text-[13px] uppercase tracking-[0.08em]"
+                  href={orderAction.href || "/reservations"}
+                >
+                  <AssetIcon size={18} src={orderAction.icon} />
+                  {orderAction.label}
+                </Button>
+              )}
               <RoundActionButton
                 active={isFavorite}
                 icon="/assets/icons/heart-icon.png"
@@ -161,7 +187,7 @@ export function DesktopItemDetailView({
                   href="/reservations"
                   variant="secondary"
                 >
-                  Pairing table
+                  {isOnlineOrderable ? "Pairing table" : "View tables"}
                 </Button>
               ) : (
                 <button
@@ -214,7 +240,7 @@ export function DesktopItemDetailView({
             title={isDrinkItem ? "Sommelier Note" : "Chef's Note"}
           >
             {isDrinkItem
-              ? item.chefNote
+              ? orderAction.note
               : "Hand-selected daily and prepared moments before serving."}
           </DesktopDetailInfoCard>
           <DesktopDetailInfoCard

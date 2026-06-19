@@ -138,19 +138,20 @@ export function DesktopMenuExperience({
   };
 
   const handleAddDefaultItem = (item: MenuItem, nextView?: DesktopMenuView) => {
-    addItem({
+    const wasAdded = addItem({
       addOns: [],
       customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });
-    if (nextView) {
+
+    if (wasAdded && nextView) {
       setView(nextView);
     }
   };
 
   const handleAddCustomizedItem = (nextView: DesktopMenuView = "menu") => {
-    addItem({
+    const wasAdded = addItem({
       addOns: selectedAddOns,
       customizations: getDefaultCustomizationsForItem(selectedItem).length
         ? customizations
@@ -159,7 +160,10 @@ export function DesktopMenuExperience({
       notes,
       quantity,
     });
-    setView(nextView);
+
+    if (wasAdded) {
+      setView(nextView);
+    }
   };
 
   const handleCustomizationChange = (groupId: string, optionId: string) => {

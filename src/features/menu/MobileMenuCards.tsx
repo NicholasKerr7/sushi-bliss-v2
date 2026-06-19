@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { icons } from "@/features/home/visualHomeData";
+import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -20,6 +22,8 @@ export function MobileMenuGridCard({
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
 }) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="relative grid min-h-[96px] grid-cols-[44%_1fr] overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-black/48">
       {badge ? (
@@ -57,17 +61,13 @@ export function MobileMenuGridCard({
         <p className="mt-2 pr-8 text-[16px] text-[var(--sb-gold)]">
           {formatMoney(item.priceCents)}
         </p>
+        {item.itemType === "drink" ? (
+          <span className="mt-1 block text-[10px] uppercase tracking-[0.08em] text-white/42">
+            {orderAction.badge}
+          </span>
+        ) : null}
       </button>
-      <button
-        aria-label={`Add ${item.name} to cart`}
-        className="absolute bottom-1 right-1 grid h-10 w-10 place-items-center rounded-full"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/62">
-          <AssetIcon size={21} src={icons.plus} />
-        </span>
-      </button>
+      <MobileQuickOrderAction item={item} onAddToCart={onAddToCart} />
     </article>
   );
 }
@@ -85,6 +85,8 @@ export function MobileMenuListCard({
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
 }) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="relative grid min-h-[116px] grid-cols-[42%_1fr_42px] overflow-hidden rounded-[15px] border border-white/14 bg-white/[0.035] min-[390px]:min-h-[132px] min-[390px]:grid-cols-[45%_1fr_48px] min-[390px]:rounded-[16px]">
       {badge ? (
@@ -122,17 +124,17 @@ export function MobileMenuListCard({
         <p className="mt-3 text-[19px] text-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:text-[22px]">
           {formatMoney(item.priceCents)}
         </p>
+        {item.itemType === "drink" ? (
+          <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/42">
+            {orderAction.badge}
+          </span>
+        ) : null}
       </button>
-      <button
-        aria-label={`Add ${item.name} to cart`}
-        className="mr-1 grid h-10 w-10 place-items-center self-center justify-self-end rounded-full min-[390px]:mr-2"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/58">
-          <AssetIcon size={21} src={icons.plus} />
-        </span>
-      </button>
+      <MobileQuickOrderAction
+        className="mr-1 self-center justify-self-end min-[390px]:mr-2"
+        item={item}
+        onAddToCart={onAddToCart}
+      />
     </article>
   );
 }
@@ -150,6 +152,8 @@ export function MobileSearchResultRow({
   onAddToCart: (item: MenuItem) => void;
   onViewDetails: (item: MenuItem) => void;
 }) {
+  const orderAction = getMenuItemOrderAction(item);
+
   return (
     <article className="relative grid min-h-[118px] grid-cols-[38%_1fr_46px] overflow-hidden rounded-[16px] border border-white/14 bg-white/[0.035]">
       {badge ? (
@@ -190,18 +194,64 @@ export function MobileSearchResultRow({
         <p className="mt-2 text-[19px] text-[var(--sb-gold)]">
           {formatMoney(item.priceCents)}
         </p>
+        {item.itemType === "drink" ? (
+          <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/42">
+            {orderAction.badge}
+          </span>
+        ) : null}
       </button>
-      <button
-        aria-label={`Add ${item.name} to cart`}
-        className="mr-1 grid h-10 w-10 place-items-center self-center justify-self-end rounded-full"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/58">
-          <AssetIcon size={22} src={icons.plus} />
-        </span>
-      </button>
+      <MobileQuickOrderAction
+        className="mr-1 self-center justify-self-end"
+        item={item}
+        onAddToCart={onAddToCart}
+      />
     </article>
+  );
+}
+
+function MobileQuickOrderAction({
+  className,
+  item,
+  onAddToCart,
+}: {
+  className?: string;
+  item: MenuItem;
+  onAddToCart: (item: MenuItem) => void;
+}) {
+  const orderAction = getMenuItemOrderAction(item);
+  const actionClassName = [
+    "grid h-10 w-10 place-items-center rounded-full",
+    className || "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const icon = orderAction.kind === "cart" ? icons.plus : orderAction.icon;
+
+  if (orderAction.kind === "reservation") {
+    return (
+      <Link
+        aria-label={`${orderAction.label} for ${item.name}`}
+        className={actionClassName}
+        href={orderAction.href || "/reservations"}
+      >
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/12">
+          <AssetIcon size={19} src={icon} />
+        </span>
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      aria-label={`Add ${item.name} to cart`}
+      className={actionClassName}
+      onClick={() => onAddToCart(item)}
+      type="button"
+    >
+      <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/58">
+        <AssetIcon size={21} src={icon} />
+      </span>
+    </button>
   );
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -13,6 +14,10 @@ import {
   getTabletPresentationImage,
 } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
+import {
+  getMenuItemOrderAction,
+  isMenuItemOnlineOrderable,
+} from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -54,6 +59,8 @@ export function MobileItemDetailView({
   const heroImage =
     galleryImages[imageIndex] || getTabletPresentationImage(item);
   const isDrinkItem = item.itemType === "drink";
+  const isOnlineOrderable = isMenuItemOnlineOrderable(item);
+  const orderAction = getMenuItemOrderAction(item);
   const tastingProfile = item.beverageTastingNotes || item.tastingNotes;
   const selectImage = (nextImageIndex: number) => {
     setGalleryState({ imageIndex: nextImageIndex, itemId: item.id });
@@ -194,22 +201,52 @@ export function MobileItemDetailView({
             variant={isDrinkItem ? "drink" : "food"}
           />
 
-          <div className="mt-4">
-            <MobileQuantityStepper
-              onChange={onQuantityChange}
-              value={quantity}
-            />
-          </div>
+          {isOnlineOrderable ? (
+            <>
+              <div className="mt-4">
+                <MobileQuantityStepper
+                  onChange={onQuantityChange}
+                  value={quantity}
+                />
+              </div>
 
-          <button
-            aria-label={`Add ${quantity} to cart`}
-            className="red-glow-button mt-4 grid min-h-[66px] w-full grid-cols-[1fr_auto] items-center rounded-[14px] px-8 text-[17px] uppercase tracking-[0.08em]"
-            onClick={onAddToCart}
-            type="button"
-          >
-            <span className="text-center">Add to Cart</span>
-            <span>{formatMoney(totalCents)}</span>
-          </button>
+              <button
+                aria-label={
+                  isDrinkItem
+                    ? `${orderAction.label} ${quantity}`
+                    : `Add ${quantity} to cart`
+                }
+                className="red-glow-button mt-4 grid min-h-[66px] w-full grid-cols-[1fr_auto] items-center rounded-[14px] px-8 text-[17px] uppercase tracking-[0.08em]"
+                onClick={onAddToCart}
+                type="button"
+              >
+                <span className="text-center">{orderAction.label}</span>
+                <span>{formatMoney(totalCents)}</span>
+              </button>
+            </>
+          ) : (
+            <section className="mt-4 rounded-[18px] border border-[var(--sb-gold)]/30 bg-[linear-gradient(145deg,rgba(215,168,79,0.14),rgba(255,255,255,0.025)_44%,rgba(8,8,8,0.94))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+              <div className="flex items-start gap-3">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/42">
+                  <AssetIcon size={25} src={orderAction.icon} />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
+                    {orderAction.badge}
+                  </p>
+                  <p className="mt-2 text-[13px] leading-5 text-white/68">
+                    {orderAction.note}
+                  </p>
+                </div>
+              </div>
+              <Link
+                className="red-glow-button mt-4 grid min-h-[60px] w-full place-items-center rounded-[14px] px-6 text-[15px] uppercase tracking-[0.08em]"
+                href={orderAction.href || "/reservations"}
+              >
+                {orderAction.label}
+              </Link>
+            </section>
+          )}
 
           <div className="mt-5 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.24)]">
             <DetailPanelButton
@@ -243,7 +280,7 @@ export function MobileItemDetailView({
               onClick={() => togglePanel("pairing")}
             >
               {isDrinkItem
-                ? "Pair with sushi that matches the drink's body, brightness, and finish."
+                ? orderAction.note
                 : item.sakePairing
                   ? `${item.sakePairing.sakeName} is recommended with ${item.name}.`
                   : "Ask our team for a sake pairing selected around today's fish."}

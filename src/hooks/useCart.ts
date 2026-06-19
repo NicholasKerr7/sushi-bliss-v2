@@ -16,6 +16,7 @@ import {
   subscribeToCart,
   writeStoredCartItems,
 } from "@/lib/cartStorage";
+import { isMenuItemOnlineOrderable } from "@/lib/menuAvailability";
 import { calculateOrderTotals } from "@/lib/money";
 import type { CartItemDraft } from "@/types/order";
 
@@ -43,6 +44,10 @@ export function useCart() {
   );
 
   const addItem = useCallback((draft: CartItemDraft) => {
+    if (!isMenuItemOnlineOrderable(draft.menuItem)) {
+      return false;
+    }
+
     const storedLineItem = createStoredCartLineItem({
       ...draft,
       quantity: Math.min(Math.max(Math.floor(draft.quantity), 1), 12),
@@ -52,7 +57,7 @@ export function useCart() {
 
     if (!existing) {
       writeStoredCartItems([...currentItems, storedLineItem]);
-      return;
+      return true;
     }
 
     writeStoredCartItems(
@@ -68,6 +73,8 @@ export function useCart() {
           : item,
       ),
     );
+
+    return true;
   }, []);
 
   const updateQuantity = useCallback((id: string, quantity: number) => {

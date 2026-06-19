@@ -27,14 +27,17 @@ export function MobileFavoritesPage() {
   const [cartMessage, setCartMessage] = useState("");
 
   const addFavoriteToCart = (item: MenuItem) => {
-    addItem({
+    const wasAdded = addItem({
       addOns: [],
       customizations: getDefaultCustomizationsForItem(item),
       menuItem: item,
       quantity: 1,
     });
-    setCartMessage(`${item.name} added to cart.`);
-    setCartOpen(true);
+
+    if (wasAdded) {
+      setCartMessage(`${item.name} added to cart.`);
+      setCartOpen(true);
+    }
   };
 
   return (

@@ -12,6 +12,7 @@ import {
   TABLET_OTORO_HERO_IMAGE,
 } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
+import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
@@ -54,7 +55,7 @@ const categoryContent: Record<
   },
   drinks: {
     description:
-      "Liquid omakase: sake, cocktails, tea, and zero-proof pairings selected around the season's sushi menu.",
+      "Order zero-proof and tea online, or reserve rare sake, cocktails, and Liquid Omakase pairings for the dining room.",
     filterLabel: "Drink Type",
     filterOptions: [
       "Any Drink",
@@ -413,13 +414,13 @@ export function TabletMenuCategoryView({
               Matched By Course
             </TabletBenefit>
             <TabletBenefit icon={icons.crown} title="Sake Cellar">
-              Ginjo To Daiginjo
+              Reserve In-House
             </TabletBenefit>
             <TabletBenefit icon={icons.chef} title="Zero Proof">
-              Built With Balance
+              Online Ready
             </TabletBenefit>
             <TabletBenefit icon={icons.clock} title="Tea Service">
-              Hot Or Chilled
+              Order Or Reserve
             </TabletBenefit>
           </>
         ) : (
@@ -508,6 +509,7 @@ function TabletCategoryCard({
   onViewDetails: (item: MenuItem) => void;
 }) {
   const isDrinkItem = item.itemType === "drink";
+  const orderAction = getMenuItemOrderAction(item);
 
   return (
     <article className="relative overflow-hidden rounded-[10px] border border-[var(--sb-border)] bg-black/42">
@@ -550,16 +552,31 @@ function TabletCategoryCard({
           <p className="mt-4 text-[22px] text-[var(--sb-gold)]">
             {formatMoney(item.priceCents)}
           </p>
+          {isDrinkItem ? (
+            <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/42">
+              {orderAction.badge}
+            </span>
+          ) : null}
         </div>
       </button>
-      <button
-        aria-label={`Add ${item.name} to cart`}
-        className="absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55 text-[var(--sb-gold)]"
-        onClick={() => onAddToCart(item)}
-        type="button"
-      >
-        <AssetIcon size={24} src={icons.plus} />
-      </button>
+      {orderAction.kind === "reservation" ? (
+        <Link
+          aria-label={`${orderAction.label} for ${item.name}`}
+          className="absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/12 text-[var(--sb-gold)]"
+          href={orderAction.href || "/reservations"}
+        >
+          <AssetIcon size={22} src={orderAction.icon} />
+        </Link>
+      ) : (
+        <button
+          aria-label={`Add ${item.name} to cart`}
+          className="absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/55 text-[var(--sb-gold)]"
+          onClick={() => onAddToCart(item)}
+          type="button"
+        >
+          <AssetIcon size={24} src={icons.plus} />
+        </button>
+      )}
     </article>
   );
 }

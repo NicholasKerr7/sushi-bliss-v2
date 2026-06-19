@@ -302,7 +302,7 @@ function MobileCategoryView({
           </h1>
           <p className="mt-5 max-w-[350px] text-[15px] leading-6 text-[var(--sb-gold)] min-[390px]:text-[17px] min-[390px]:leading-7">
             {isDrinksCategory
-              ? "Liquid omakase: sake, cocktails, tea, and zero-proof pairings selected around each course."
+              ? "Order zero-proof and tea online, or reserve rare sake, cocktails, and Liquid Omakase pairings for the dining room."
               : "Hand-pressed perfection. The purest form of sushi, crafted with balance and precision."}
           </p>
         </div>
@@ -357,7 +357,7 @@ function MobileCategoryView({
               </span>
               <span className="mt-1 block text-[14px] leading-5 text-white/68">
                 {isDrinksCategory
-                  ? "Build a pairing flight around sushi, tea, cocktails, or a zero-proof course."
+                  ? "Choose delivery-safe drinks now, or reserve a guided pairing around sushi, sake, and cocktails."
                   : "Savor each piece fresh, balanced, and unforgettable."}
               </span>
             </span>

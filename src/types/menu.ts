@@ -25,6 +25,8 @@ export type DrinkCategory =
   | "tea"
   | "zero-proof";
 
+export type MenuOrderMode = "dine-in" | "online" | "reservation";
+
 export interface DrinkTastingProfile {
   dry: number;
   bright: number;
@@ -53,6 +55,7 @@ export interface MenuItem {
   beverageTastingNotes?: DrinkTastingProfile;
   drinkCategory?: DrinkCategory;
   itemType?: "drink" | "food";
+  orderMode?: MenuOrderMode;
   pairingItemIds?: ID[];
   serving?: string;
   sakePairing?: SakePairing;
