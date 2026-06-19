@@ -39,6 +39,7 @@ import {
   customizeFeaturePills,
   detailFeaturePills,
 } from "./DesktopItemVisualParts";
+import { ReservationHandoffCard } from "./ReservationHandoffCard";
 import { TastingNotesCard } from "./TastingNotesCard";
 
 const drinkDetailFeaturePills = [
@@ -106,7 +107,12 @@ export function DesktopItemDetailView({
           onBackToMenu={onBackToMenu}
         />
 
-        <div className="grid h-[388px] grid-cols-[0.54fr_0.46fr] border-t border-white/10">
+        <div
+          className={classNames(
+            "grid grid-cols-[0.54fr_0.46fr] border-t border-white/10",
+            isOnlineOrderable ? "h-[388px]" : "min-h-[520px]",
+          )}
+        >
           <DesktopImageStage
             activeImage={activeImage}
             activeImageIndex={activeGalleryIndex}
@@ -131,60 +137,68 @@ export function DesktopItemDetailView({
               {formatMoney(item.priceCents)}
             </p>
 
-            <div
-              className={classNames(
-                "mt-4 grid items-center gap-3",
-                isOnlineOrderable
-                  ? "grid-cols-[132px_minmax(198px,1fr)_58px_58px]"
-                  : "grid-cols-[minmax(250px,1fr)_58px_58px]",
-              )}
-            >
-              {isOnlineOrderable ? (
-                <>
-                  <DesktopQuantity
-                    label={item.name}
-                    quantity={quantity}
-                    onQuantityChange={onQuantityChange}
-                  />
-                  <Button
-                    aria-label={orderAction.label}
-                    className="h-[54px] min-w-[198px] whitespace-nowrap rounded-[13px] px-3 text-[12px] uppercase tracking-[0.07em] min-[1380px]:text-[14px]"
-                    onClick={onAddToCart}
-                  >
-                    {orderAction.label}
-                    <span aria-hidden="true">{formatMoney(totalCents)}</span>
-                  </Button>
-                </>
-              ) : (
+            {isOnlineOrderable ? (
+              <div className="mt-4 grid grid-cols-[132px_minmax(198px,1fr)_58px_58px] items-center gap-3">
+                <DesktopQuantity
+                  label={item.name}
+                  quantity={quantity}
+                  onQuantityChange={onQuantityChange}
+                />
                 <Button
                   aria-label={orderAction.label}
-                  className="h-[54px] min-w-[250px] whitespace-nowrap rounded-[13px] px-4 text-[13px] uppercase tracking-[0.08em]"
-                  href={orderAction.href || "/reservations"}
+                  className="h-[54px] min-w-[198px] whitespace-nowrap rounded-[13px] px-3 text-[12px] uppercase tracking-[0.07em] min-[1380px]:text-[14px]"
+                  onClick={onAddToCart}
                 >
-                  <AssetIcon size={18} src={orderAction.icon} />
                   {orderAction.label}
+                  <span aria-hidden="true">{formatMoney(totalCents)}</span>
                 </Button>
-              )}
-              <RoundActionButton
-                active={isFavorite}
-                icon="/assets/icons/heart-icon.png"
-                label={isFavorite ? "Saved favorite" : "Favorite"}
-                onClick={onToggleFavorite}
-              />
-              <RoundActionButton
-                icon="/assets/icons/share-icon.png"
-                label="Share"
-                onClick={() => {
-                  void navigator.clipboard?.writeText(window.location.href);
-                }}
-              />
-            </div>
+                <RoundActionButton
+                  active={isFavorite}
+                  icon="/assets/icons/heart-icon.png"
+                  label={isFavorite ? "Saved favorite" : "Favorite"}
+                  onClick={onToggleFavorite}
+                />
+                <RoundActionButton
+                  icon="/assets/icons/share-icon.png"
+                  label="Share"
+                  onClick={() => {
+                    void navigator.clipboard?.writeText(window.location.href);
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="mt-4 grid grid-cols-[minmax(0,1fr)_58px_58px] items-start gap-3">
+                <ReservationHandoffCard
+                  action={orderAction}
+                  compact
+                  item={item}
+                  variant="desktop"
+                />
+                <RoundActionButton
+                  active={isFavorite}
+                  icon="/assets/icons/heart-icon.png"
+                  label={isFavorite ? "Saved favorite" : "Favorite"}
+                  onClick={onToggleFavorite}
+                />
+                <RoundActionButton
+                  icon="/assets/icons/share-icon.png"
+                  label="Share"
+                  onClick={() => {
+                    void navigator.clipboard?.writeText(window.location.href);
+                  }}
+                />
+              </div>
+            )}
 
             <div className="mt-3 grid grid-cols-[190px_1fr] gap-3">
               {isDrinkItem ? (
                 <Button
                   className="h-12 rounded-[12px] text-[13px] uppercase tracking-[0.08em]"
-                  href="/reservations"
+                  href={
+                    isOnlineOrderable
+                      ? "/reservations"
+                      : orderAction.href || "/reservations"
+                  }
                   variant="secondary"
                 >
                   {isOnlineOrderable ? "Pairing table" : "View tables"}

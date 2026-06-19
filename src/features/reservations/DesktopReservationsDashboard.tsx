@@ -34,6 +34,7 @@ interface DesktopReservationsDashboardProps {
   cartCount: number;
   draft: ReservationDraft;
   editingReservation: Reservation | null;
+  initialBookingOpen?: boolean;
   onCancelReservation: (reservationId: string) => void;
   onDraftChange: <TField extends keyof ReservationDraft>(
     field: TField,
@@ -53,6 +54,7 @@ export function DesktopReservationsDashboard({
   cartCount,
   draft,
   editingReservation,
+  initialBookingOpen = false,
   onCancelReservation,
   onDraftChange,
   onModifyReservation,
@@ -64,7 +66,9 @@ export function DesktopReservationsDashboard({
   upcomingReservations,
   validation,
 }: DesktopReservationsDashboardProps) {
-  const [surface, setSurface] = useState<DesktopReservationSurface>("main");
+  const [surface, setSurface] = useState<DesktopReservationSurface>(
+    initialBookingOpen ? "experience" : "main",
+  );
   const [cancelTarget, setCancelTarget] = useState<Reservation | null>(null);
   const selectedExperience =
     reservationExperiences.find((item) => item.id === draft.experienceId) ||

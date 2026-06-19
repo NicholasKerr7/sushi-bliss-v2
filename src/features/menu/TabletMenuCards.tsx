@@ -150,8 +150,11 @@ function TabletQuickOrderAction({
   onAddToCart: (item: MenuItem) => void;
 }) {
   const orderAction = getMenuItemOrderAction(item);
+  const elevatedReservation = Boolean(className?.includes("absolute"));
   const actionClassName = [
-    "grid h-10 w-10 place-items-center rounded-full",
+    elevatedReservation
+      ? "grid h-10 w-[92px] place-items-center rounded-full"
+      : "grid h-10 w-10 place-items-center rounded-full",
     className || "",
   ]
     .filter(Boolean)
@@ -165,8 +168,15 @@ function TabletQuickOrderAction({
         className={actionClassName}
         href={orderAction.href || "/reservations"}
       >
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/12">
+        <span
+          className={
+            elevatedReservation
+              ? "flex h-9 min-w-[88px] items-center justify-center gap-2 rounded-full border border-[var(--sb-gold)]/48 bg-[linear-gradient(180deg,rgba(215,168,79,0.18),rgba(7,8,8,0.86))] px-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] shadow-[0_0_20px_rgba(215,168,79,0.16)]"
+              : "grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-gold)]/48 bg-[linear-gradient(180deg,rgba(215,168,79,0.18),rgba(7,8,8,0.86))] shadow-[0_0_20px_rgba(215,168,79,0.16)]"
+          }
+        >
           <AssetIcon size={20} src={icon} />
+          {elevatedReservation ? <span>{orderAction.shortLabel}</span> : null}
         </span>
       </Link>
     );

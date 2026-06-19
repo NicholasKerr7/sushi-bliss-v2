@@ -12,7 +12,10 @@ import {
   TABLET_OTORO_HERO_IMAGE,
 } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
-import { getMenuItemOrderAction } from "@/lib/menuAvailability";
+import {
+  getMenuItemOrderAction,
+  liquidOmakaseReservationHref,
+} from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
@@ -468,7 +471,7 @@ function TabletDrinksEmptyState() {
         <div className="mt-6 flex gap-3">
           <Link
             className="red-glow-button grid h-12 w-[196px] place-items-center rounded-[10px] text-[12px] uppercase tracking-[0.08em]"
-            href="/reservations"
+            href={liquidOmakaseReservationHref}
           >
             Reserve Pairing
           </Link>
@@ -562,10 +565,11 @@ function TabletCategoryCard({
       {orderAction.kind === "reservation" ? (
         <Link
           aria-label={`${orderAction.label} for ${item.name}`}
-          className="absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/12 text-[var(--sb-gold)]"
+          className="absolute bottom-4 right-4 flex h-10 min-w-[96px] items-center justify-center gap-2 rounded-full border border-[var(--sb-gold)]/48 bg-[linear-gradient(180deg,rgba(215,168,79,0.18),rgba(7,8,8,0.86))] px-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] shadow-[0_0_20px_rgba(215,168,79,0.16)]"
           href={orderAction.href || "/reservations"}
         >
-          <AssetIcon size={22} src={orderAction.icon} />
+          <AssetIcon size={19} src={orderAction.icon} />
+          <span>{orderAction.shortLabel}</span>
         </Link>
       ) : (
         <button

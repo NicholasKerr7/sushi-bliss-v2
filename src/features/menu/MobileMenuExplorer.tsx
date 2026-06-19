@@ -10,6 +10,7 @@ import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { icons } from "@/features/home/visualHomeData";
 import { getTabletPresentationImage } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
+import { liquidOmakaseReservationHref } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
@@ -409,7 +410,7 @@ function MobileDrinksEmptyState() {
       <div className="mt-5 grid grid-cols-2 gap-3">
         <Link
           className="red-glow-button grid h-12 place-items-center rounded-[12px] text-[11px] uppercase tracking-[0.08em]"
-          href="/reservations"
+          href={liquidOmakaseReservationHref}
         >
           Reserve
         </Link>

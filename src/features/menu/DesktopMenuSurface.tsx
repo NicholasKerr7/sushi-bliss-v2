@@ -9,7 +9,10 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { featuredAssets } from "@/features/home/visualHomeData";
 import { useCart } from "@/hooks/useCart";
 import { classNames } from "@/lib/classNames";
-import { getMenuItemOrderAction } from "@/lib/menuAvailability";
+import {
+  getMenuItemOrderAction,
+  liquidOmakaseReservationHref,
+} from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -718,7 +721,7 @@ function DesktopDrinksEmptyState() {
         <div className="mt-6 flex gap-3">
           <Link
             className="red-glow-button grid h-11 w-[178px] place-items-center rounded-[9px] text-[11px] uppercase tracking-[0.08em]"
-            href="/reservations"
+            href={liquidOmakaseReservationHref}
           >
             Reserve Pairing
           </Link>
@@ -872,10 +875,11 @@ function DesktopFeatureMenuCard({
       {orderAction.kind === "reservation" ? (
         <Link
           aria-label={`${orderAction.label} for ${item.name}`}
-          className="absolute bottom-3 right-3 grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-[var(--sb-gold)]/12"
+          className="absolute bottom-3 right-3 flex h-10 min-w-[98px] items-center justify-center gap-2 rounded-full border border-[var(--sb-gold)]/48 bg-[linear-gradient(180deg,rgba(215,168,79,0.18),rgba(7,8,8,0.86))] px-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] shadow-[0_0_20px_rgba(215,168,79,0.16)]"
           href={orderAction.href || "/reservations"}
         >
-          <AssetIcon size={20} src={orderAction.icon} />
+          <AssetIcon size={18} src={orderAction.icon} />
+          <span>{orderAction.shortLabel}</span>
         </Link>
       ) : (
         <button
@@ -951,7 +955,7 @@ export function DesktopCompactMenuRow({
       {orderAction.kind === "reservation" ? (
         <Link
           aria-label={`${orderAction.label} for ${item.name}`}
-          className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/12"
+          className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/48 bg-[linear-gradient(180deg,rgba(215,168,79,0.18),rgba(7,8,8,0.86))] shadow-[0_0_20px_rgba(215,168,79,0.16)]"
           href={orderAction.href || "/reservations"}
         >
           <AssetIcon size={19} src={orderAction.icon} />

@@ -215,6 +215,37 @@ test.describe("customer experience", () => {
       page.getByRole("heading", { name: /Almost there/i }),
     ).toHaveCount(0);
   });
+
+  test("prefills liquid omakase reservation intent on desktop", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "Desktop reservation handoff validates the expanded reservation surface.",
+    );
+
+    await page.goto(
+      "/reservations?intent=liquid-omakase&experience=chef-omakase&item=seasonal-sake-flight",
+    );
+    await expectNoFrameworkErrorOverlay(page);
+
+    await expect(
+      page.getByRole("heading", { name: /Choose your experience/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /Chef's Counter Omakase/i }),
+    ).toHaveAttribute("aria-pressed", "true");
+
+    await page
+      .getByRole("button", { name: /Continue to confirmation/i })
+      .click();
+
+    await expect(
+      page.getByRole("heading", { name: /Review your reservation/i }),
+    ).toBeVisible();
+    await expect(page.getByText("Liquid Omakase")).toBeVisible();
+    await expect(page.getByText(/Seasonal Sake Flight/i)).toBeVisible();
+  });
 });
 
 test.describe("admin experience", () => {

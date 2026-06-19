@@ -37,6 +37,7 @@ interface TabletReservationsDashboardProps {
   confirmedReservation: Reservation | null;
   draft: ReservationDraft;
   editingReservation: Reservation | null;
+  initialBookingOpen?: boolean;
   onCancelReservation: (reservationId: string) => void;
   onCartOpenChange: (open: boolean) => void;
   onConfirmedReservationChange: (reservation: Reservation | null) => void;
@@ -63,6 +64,7 @@ export function TabletReservationsDashboard({
   confirmedReservation,
   draft,
   editingReservation,
+  initialBookingOpen = false,
   onCancelReservation,
   onCartOpenChange,
   onConfirmedReservationChange,
@@ -78,7 +80,9 @@ export function TabletReservationsDashboard({
   validation,
   view,
 }: TabletReservationsDashboardProps) {
-  const [surface, setSurface] = useState<TabletReservationSurface>("main");
+  const [surface, setSurface] = useState<TabletReservationSurface>(
+    initialBookingOpen ? "booking" : "main",
+  );
   const [selectedReservation, setSelectedReservation] =
     useState<Reservation | null>(null);
   const [cancelContext, setCancelContext] = useState<{

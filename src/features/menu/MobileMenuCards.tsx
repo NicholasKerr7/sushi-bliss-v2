@@ -234,7 +234,7 @@ function MobileQuickOrderAction({
         className={actionClassName}
         href={orderAction.href || "/reservations"}
       >
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/12">
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-gold)]/52 bg-[linear-gradient(180deg,rgba(215,168,79,0.2),rgba(8,8,8,0.88))] shadow-[0_0_18px_rgba(215,168,79,0.18)]">
           <AssetIcon size={19} src={icon} />
         </span>
       </Link>

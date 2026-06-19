@@ -36,6 +36,7 @@ interface MobileReservationsDashboardProps {
   currentTime: number;
   draft: ReservationDraft;
   editingReservation: Reservation | null;
+  initialBookingOpen?: boolean;
   onCancelReservation: (reservationId: string) => void;
   onCartOpenChange: (open: boolean) => void;
   onConfirmedReservationChange: (reservation: Reservation | null) => void;
@@ -64,6 +65,7 @@ export function MobileReservationsDashboard({
   currentTime,
   draft,
   editingReservation,
+  initialBookingOpen = false,
   onCancelReservation,
   onCartOpenChange,
   onConfirmedReservationChange,
@@ -80,7 +82,9 @@ export function MobileReservationsDashboard({
   validation,
   view,
 }: MobileReservationsDashboardProps) {
-  const [surface, setSurface] = useState<MobileReservationSurface>("main");
+  const [surface, setSurface] = useState<MobileReservationSurface>(
+    initialBookingOpen ? "date-time" : "main",
+  );
   const [selectedReservation, setSelectedReservation] =
     useState<Reservation | null>(null);
 

@@ -55,6 +55,7 @@ export const seatingPreferences = [
 ];
 
 export const reservationOccasions = [
+  "Liquid Omakase",
   "Date night",
   "Birthday",
   "Anniversary",

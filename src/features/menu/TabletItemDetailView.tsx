@@ -21,6 +21,7 @@ import {
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
+import { ReservationHandoffCard } from "./ReservationHandoffCard";
 import { TabletQuantityStepper } from "./TabletItemQuantityStepper";
 import { TastingNotesCard } from "./TastingNotesCard";
 
@@ -184,33 +185,21 @@ export function TabletDetailView({
                   </Button>
                 </div>
               ) : (
-                <div className="rounded-[18px] border border-[var(--sb-gold)]/28 bg-[linear-gradient(145deg,rgba(215,168,79,0.13),rgba(255,255,255,0.025)_48%,rgba(7,9,10,0.94))] p-4">
-                  <div className="flex gap-3">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/42">
-                      <AssetIcon size={26} src={orderAction.icon} />
-                    </span>
-                    <div>
-                      <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
-                        {orderAction.badge}
-                      </p>
-                      <p className="mt-2 text-[13px] leading-5 text-white/64">
-                        {orderAction.note}
-                      </p>
-                    </div>
-                  </div>
-                  <Button
-                    className="mt-4 h-[56px] w-full rounded-[17px] text-[15px] uppercase tracking-[0.08em]"
-                    href={orderAction.href || "/reservations"}
-                  >
-                    {orderAction.label}
-                  </Button>
-                </div>
+                <ReservationHandoffCard
+                  action={orderAction}
+                  item={item}
+                  variant="tablet"
+                />
               )}
               <div className="mt-4 grid grid-cols-2 gap-4">
                 {isDrinkItem ? (
                   <Button
                     className="h-[50px] rounded-[17px] text-[15px]"
-                    href="/reservations"
+                    href={
+                      isOnlineOrderable
+                        ? "/reservations"
+                        : orderAction.href || "/reservations"
+                    }
                     variant="secondary"
                   >
                     {isOnlineOrderable ? "Pairing table" : "View tables"}

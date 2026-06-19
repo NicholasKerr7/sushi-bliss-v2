@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -7,16 +8,17 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import {
-  getDefaultReservationDraft,
-  getMockReservations,
-} from "@/data/reservations";
+import { getMockReservations } from "@/data/reservations";
 import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useProfile } from "@/hooks/useProfile";
 import { useReservations } from "@/hooks/useReservations";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
 import { classNames } from "@/lib/classNames";
+import {
+  createReservationDraftFromIntent,
+  hasReservationIntent,
+} from "@/lib/reservationIntent";
 import {
   createReservationFromDraft,
   hasReservationValidationErrors,
@@ -41,6 +43,8 @@ type ReservationView = "upcoming" | "past";
 
 export function ReservationsDashboard() {
   const { profile } = useProfile();
+  const searchParams = useSearchParams();
+  const reservationIntentActive = hasReservationIntent(searchParams);
   const mode = useResponsiveMode();
   const { itemCount } = useCart();
   const { unreadCount } = useNotifications();
@@ -54,7 +58,7 @@ export function ReservationsDashboard() {
   } = useReservations(mockReservations, currentTime);
   const [view, setView] = useState<ReservationView>("upcoming");
   const [draft, setDraft] = useState<ReservationDraft>(() =>
-    getDefaultReservationDraft(profile),
+    createReservationDraftFromIntent(profile, searchParams),
   );
   const [validation, setValidation] = useState<ReservationValidationState>({});
   const [editingReservation, setEditingReservation] =
@@ -82,7 +86,7 @@ export function ReservationsDashboard() {
   };
 
   const resetForm = () => {
-    setDraft(getDefaultReservationDraft(profile));
+    setDraft(createReservationDraftFromIntent(profile, searchParams));
     setEditingReservation(null);
     setValidation({});
   };
@@ -135,6 +139,7 @@ export function ReservationsDashboard() {
         currentTime={currentTime}
         draft={draft}
         editingReservation={editingReservation}
+        initialBookingOpen={reservationIntentActive}
         onCancelReservation={cancelReservation}
         onCartOpenChange={setCartOpen}
         onConfirmedReservationChange={setConfirmedReservation}
@@ -162,6 +167,7 @@ export function ReservationsDashboard() {
         confirmedReservation={confirmedReservation}
         draft={draft}
         editingReservation={editingReservation}
+        initialBookingOpen={reservationIntentActive}
         onCancelReservation={cancelReservation}
         onCartOpenChange={setCartOpen}
         onConfirmedReservationChange={setConfirmedReservation}
@@ -187,6 +193,7 @@ export function ReservationsDashboard() {
           cartCount={itemCount}
           draft={draft}
           editingReservation={editingReservation}
+          initialBookingOpen={reservationIntentActive}
           onCancelReservation={cancelReservation}
           onDraftChange={updateDraft}
           onModifyReservation={handleModify}
