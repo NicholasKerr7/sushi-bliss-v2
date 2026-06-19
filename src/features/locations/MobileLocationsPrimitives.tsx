@@ -103,7 +103,7 @@ export function MobileLocationsBackButton({
   return (
     <button
       aria-label={label}
-      className="grid h-[52px] w-[52px] place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/46 text-[30px] leading-none text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(0,0,0,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+      className="grid h-12 w-12 place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/46 text-[30px] leading-none text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(0,0,0,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-[52px] min-[390px]:w-[52px]"
       onClick={onClick}
       type="button"
     >
@@ -124,11 +124,11 @@ export function MobileLocationFact({
   return (
     <p
       className={classNames(
-        "grid grid-cols-[20px_1fr] gap-2 text-[13px] leading-5",
+        "grid grid-cols-[18px_1fr] gap-1.5 text-[12px] leading-[18px] min-[390px]:grid-cols-[20px_1fr] min-[390px]:gap-2 min-[390px]:text-[13px] min-[390px]:leading-5",
         tone === "gold" ? "text-[var(--sb-gold-soft)]" : "text-white/62",
       )}
     >
-      <AssetIcon className="mt-0.5" size={18} src={icon} />
+      <AssetIcon className="mt-0.5" size={16} src={icon} />
       <span>{text}</span>
     </p>
   );
@@ -146,16 +146,18 @@ export function MobileDetailRow({
   value: string;
 }) {
   return (
-    <div className="grid grid-cols-[56px_1fr] gap-4 py-4">
-      <span className="grid h-[52px] w-[52px] place-items-center rounded-[14px] border border-[var(--sb-border)] bg-black/34">
-        <AssetIcon size={26} src={icon} />
+    <div className="grid grid-cols-[48px_1fr] gap-3 py-3.5 min-[390px]:grid-cols-[56px_1fr] min-[390px]:gap-4 min-[390px]:py-4">
+      <span className="grid h-11 w-11 place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/34 min-[390px]:h-[52px] min-[390px]:w-[52px] min-[390px]:rounded-[14px]">
+        <AssetIcon size={24} src={icon} />
       </span>
       <span className="min-w-0">
-        <span className="block text-[14px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
+        <span className="block text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[390px]:text-[14px] min-[390px]:tracking-[0.1em]">
           {label}
         </span>
-        <span className="mt-1 block text-[15px] text-white/76">{value}</span>
-        <span className="mt-1 block text-[14px] leading-5 text-white/52">
+        <span className="mt-1 block text-[14px] text-white/76 min-[390px]:text-[15px]">
+          {value}
+        </span>
+        <span className="mt-1 block text-[13px] leading-[18px] text-white/52 min-[390px]:text-[14px] min-[390px]:leading-5">
           {supporting}
         </span>
       </span>

@@ -53,27 +53,27 @@ export function MobileLocationListView({
     <div className="mobile-frame relative z-10 pb-16">
       <MobileLocationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
 
-      <section className="pt-12">
-        <h1 className="editorial-title text-[37px] leading-[1.06] tracking-[0.05em] min-[390px]:text-[40px] min-[390px]:tracking-[0.06em]">
+      <section className="pt-8 min-[390px]:pt-10">
+        <h1 className="editorial-title text-[34px] leading-[1.03] tracking-[0.04em] min-[390px]:text-[40px] min-[390px]:tracking-[0.06em]">
           Restaurant
           <span className="block text-[var(--sb-red-bright)]">Locations</span>
         </h1>
-        <p className="mt-4 text-[17px] leading-6 text-[var(--sb-gold-soft)]">
+        <p className="mt-3 max-w-[270px] text-[16px] leading-6 text-[var(--sb-gold-soft)] min-[390px]:text-[17px]">
           Find a Sushi Bliss restaurant near you.
         </p>
       </section>
 
       <form
-        className="mt-7 grid grid-cols-[minmax(0,1fr)_78px] gap-2.5 min-[390px]:grid-cols-[minmax(0,1fr)_88px] min-[390px]:gap-3"
+        className="mt-5 grid grid-cols-[minmax(0,1fr)_78px] gap-2.5 min-[390px]:mt-7 min-[390px]:grid-cols-[minmax(0,1fr)_88px] min-[390px]:gap-3"
         onSubmit={(event) => event.preventDefault()}
       >
-        <label className="flex h-[56px] min-w-0 items-center gap-2.5 rounded-[13px] border border-[var(--sb-border)] bg-black/58 px-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl min-[390px]:h-[62px] min-[390px]:gap-3 min-[390px]:rounded-[14px] min-[390px]:px-4">
+        <label className="flex h-[52px] min-w-0 items-center gap-2.5 rounded-[13px] border border-[var(--sb-border)] bg-black/58 px-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl min-[390px]:h-[62px] min-[390px]:gap-3 min-[390px]:rounded-[14px] min-[390px]:px-4">
           <AssetIcon size={21} src={icons.search} />
           <span className="sr-only">
             Search by city, neighborhood, or address
           </span>
           <input
-            className="h-full min-w-0 flex-1 bg-transparent text-[14px] text-white outline-none placeholder:text-white/48"
+            className="h-full min-w-0 flex-1 bg-transparent text-[13px] text-white outline-none placeholder:text-white/48 min-[390px]:text-[14px]"
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder="Search locations..."
             value={query}
@@ -82,7 +82,7 @@ export function MobileLocationListView({
         <button
           aria-expanded={filterOpen}
           className={classNames(
-            "flex h-[56px] items-center justify-center gap-1 rounded-[13px] border text-[11px] uppercase tracking-[0.05em] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-[62px] min-[390px]:gap-1.5 min-[390px]:rounded-[14px] min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]",
+            "flex h-[52px] items-center justify-center gap-1 rounded-[13px] border text-[11px] uppercase tracking-[0.05em] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-[62px] min-[390px]:gap-1.5 min-[390px]:rounded-[14px] min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]",
             filterOpen
               ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/20 text-[var(--sb-red-bright)]"
               : "border-[var(--sb-border)] bg-black/58 text-[var(--sb-gold-soft)]",
@@ -170,8 +170,8 @@ function MobileLocationCard({
   const meta = getMobileLocationMeta(location);
 
   return (
-    <article className="grid min-h-[144px] grid-cols-[35%_1fr] overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_48px_rgba(0,0,0,0.34)] backdrop-blur-xl min-[390px]:min-h-[148px] min-[390px]:grid-cols-[38%_1fr]">
-      <div className="relative min-h-[144px] bg-black/30 min-[390px]:min-h-[148px]">
+    <article className="grid min-h-[132px] grid-cols-[34%_1fr] overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_48px_rgba(0,0,0,0.34)] backdrop-blur-xl min-[390px]:min-h-[148px] min-[390px]:grid-cols-[38%_1fr]">
+      <div className="relative min-h-[132px] bg-black/30 min-[390px]:min-h-[148px]">
         <Image
           alt={`${location.name} map preview`}
           className="object-cover"
@@ -185,14 +185,14 @@ function MobileLocationCard({
           {meta.tag}
         </span>
       </div>
-      <div className="min-w-0 p-3.5 min-[390px]:p-4">
+      <div className="min-w-0 p-3 min-[390px]:p-4">
         <div className="flex min-w-0 items-start justify-between gap-2 min-[390px]:gap-3">
-          <h2 className="editorial-title min-w-0 max-w-full break-normal text-balance text-[17px] leading-[1.04] tracking-[0.01em] text-white min-[390px]:text-[22px]">
+          <h2 className="editorial-title min-w-0 max-w-full break-normal text-balance text-[16px] leading-[1.03] tracking-[0.01em] text-white min-[390px]:text-[22px]">
             {location.name}
           </h2>
           <button
             aria-label={`View ${location.name} details`}
-            className="mt-2 grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/28 text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:h-10 min-[390px]:w-10"
+            className="mt-1 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/28 text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:h-10 min-[390px]:w-10"
             onClick={() => onOpenDetail(location)}
             type="button"
           >
@@ -200,7 +200,7 @@ function MobileLocationCard({
           </button>
         </div>
 
-        <div className="mt-3 grid gap-2">
+        <div className="mt-2 grid gap-1.5 min-[390px]:mt-3 min-[390px]:gap-2">
           <MobileLocationFact icon={icons.location} text={location.address} />
           <MobileLocationFact
             icon={icons.clock}
@@ -210,7 +210,7 @@ function MobileLocationCard({
         </div>
 
         <button
-          className="-ml-3 mt-1 inline-flex min-h-10 items-center rounded-full px-3 text-left text-[14px] font-semibold text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+          className="-ml-3 inline-flex min-h-8 items-center rounded-full px-3 text-left text-[14px] font-semibold text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:mt-1 min-[390px]:min-h-10"
           onClick={() => onOpenDetail(location)}
           type="button"
         >

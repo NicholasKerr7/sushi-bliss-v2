@@ -44,14 +44,14 @@ export function MobileLocationMapView({
   return (
     <div className="mobile-frame relative z-10 pb-16">
       <MobileLocationsHeader cartCount={cartCount} onOpenCart={onOpenCart} />
-      <div className="mt-7 grid grid-cols-[52px_1fr_52px] items-center">
+      <div className="mt-5 grid grid-cols-[48px_1fr_48px] items-center min-[390px]:mt-7 min-[390px]:grid-cols-[52px_1fr_52px]">
         <MobileLocationsBackButton label="Back to locations" onClick={onBack} />
-        <h1 className="editorial-title text-center text-[26px] uppercase tracking-[0.12em] text-white">
+        <h1 className="editorial-title text-center text-[24px] uppercase tracking-[0.1em] text-white min-[390px]:text-[26px] min-[390px]:tracking-[0.12em]">
           Map View
         </h1>
         <button
           aria-label="Show nearest location"
-          className="grid h-[52px] w-[52px] place-items-center rounded-[14px] border border-[var(--sb-border)] bg-black/52"
+          className="grid h-12 w-12 place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/52 min-[390px]:h-[52px] min-[390px]:w-[52px] min-[390px]:rounded-[14px]"
           onClick={onShowNearest}
           type="button"
         >
@@ -60,7 +60,7 @@ export function MobileLocationMapView({
       </div>
 
       <section className="mt-6 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-black/42 shadow-[0_22px_60px_rgba(0,0,0,0.45)]">
-        <div className="relative min-h-[360px] bg-[#050607] min-[390px]:min-h-[390px]">
+        <div className="relative min-h-[326px] bg-[#050607] min-[390px]:min-h-[390px]">
           <Image
             alt="Tokyo map with Sushi Bliss location markers"
             className="object-contain object-top"
@@ -74,13 +74,13 @@ export function MobileLocationMapView({
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.32)_48%,rgba(0,0,0,0.82)_100%)]"
           />
-          <div className="absolute bottom-5 left-5 right-5 rounded-[16px] border border-white/12 bg-black/72 p-4 backdrop-blur-xl">
-            <div className="flex items-start justify-between gap-4">
+          <div className="absolute bottom-4 left-4 right-4 rounded-[16px] border border-white/12 bg-black/72 p-4 backdrop-blur-xl min-[390px]:bottom-5 min-[390px]:left-5 min-[390px]:right-5">
+            <div className="flex items-start justify-between gap-3 min-[390px]:gap-4">
               <div className="min-w-0">
-                <p className="editorial-title text-[23px] leading-[1.05] text-white">
+                <p className="editorial-title text-[21px] leading-[1.03] text-white min-[390px]:text-[23px] min-[390px]:leading-[1.05]">
                   {selectedLocation.name}
                 </p>
-                <p className="mt-2 text-[14px] leading-5 text-white/58">
+                <p className="mt-2 text-[13px] leading-[18px] text-white/58 min-[390px]:text-[14px] min-[390px]:leading-5">
                   {selectedLocation.address}
                 </p>
               </div>
@@ -88,10 +88,10 @@ export function MobileLocationMapView({
                 {getMobileLocationMeta(selectedLocation).distance}
               </span>
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-3">
+            <div className="mt-4 grid grid-cols-2 gap-2.5 min-[390px]:gap-3">
               <a
                 aria-label="Open directions"
-                className="red-glow-button flex min-h-[52px] items-center justify-center gap-1.5 rounded-[12px] text-[10px] uppercase tracking-[0.04em] min-[390px]:gap-2 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
+                className="red-glow-button flex min-h-[50px] items-center justify-center gap-1.5 rounded-[12px] text-[10px] uppercase tracking-[0.04em] min-[390px]:min-h-[52px] min-[390px]:gap-2 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
                 href={directionsUrl}
                 rel="noreferrer"
                 target="_blank"
@@ -101,7 +101,7 @@ export function MobileLocationMapView({
                 <span className="hidden min-[390px]:inline">Directions</span>
               </a>
               <button
-                className="min-h-[52px] rounded-[12px] border border-[var(--sb-border)] bg-black/36 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                className="min-h-[50px] rounded-[12px] border border-[var(--sb-border)] bg-black/36 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[390px]:min-h-[52px]"
                 onClick={() => onOpenDetail(selectedLocation)}
                 type="button"
               >
