@@ -405,7 +405,7 @@ test.describe("customer experience", () => {
     await expect(
       page
         .getByRole("link", { name: /Tripadvisor/i })
-        .locator('img[src="/assets/icons/tripadvisor-icon.svg"]'),
+        .locator('img[src="/assets/icons/owl-icon.png"]'),
     ).toBeVisible();
     await expect
       .poll(() =>

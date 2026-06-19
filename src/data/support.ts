@@ -85,7 +85,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     href: "https://www.tripadvisor.com",
-    icon: "/assets/icons/tripadvisor-icon.svg",
+    icon: "/assets/icons/owl-icon.png",
     id: "tripadvisor",
     label: "Find Sushi Bliss on Tripadvisor",
     platform: "Tripadvisor",
