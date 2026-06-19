@@ -99,8 +99,8 @@ export function MobileProfileDashboardView({
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.28)_0%,rgba(0,0,0,0.86)_100%)]" />
             <div className="relative z-10 flex min-h-[210px] flex-col justify-end">
-              <div className="flex items-end gap-4">
-                <div className="relative h-[82px] w-[82px] shrink-0 min-[390px]:h-[96px] min-[390px]:w-[96px]">
+              <div className="flex items-end gap-3 min-[360px]:gap-4">
+                <div className="relative h-[74px] w-[74px] shrink-0 min-[360px]:h-[82px] min-[360px]:w-[82px] min-[390px]:h-[96px] min-[390px]:w-[96px]">
                   <Image
                     alt=""
                     className="rounded-full border border-[var(--sb-gold)] object-cover"
@@ -112,10 +112,10 @@ export function MobileProfileDashboardView({
                   />
                 </div>
                 <div className="min-w-0">
-                  <p className="whitespace-nowrap text-[11px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
+                  <p className="max-w-[152px] text-[10px] uppercase leading-[14px] tracking-[0.065em] text-[var(--sb-gold-soft)] min-[360px]:max-w-none min-[360px]:text-[11px] min-[360px]:leading-none min-[360px]:tracking-[0.1em]">
                     Bliss member - {profile.tier} tier
                   </p>
-                  <h1 className="editorial-title mt-2 text-[31px] uppercase leading-none tracking-[0.05em] text-white">
+                  <h1 className="editorial-title mt-2 text-[30px] uppercase leading-none tracking-[0.05em] text-white min-[360px]:text-[31px]">
                     {profile.name}
                   </h1>
                   <p className="mt-2 text-[14px] text-white/64">

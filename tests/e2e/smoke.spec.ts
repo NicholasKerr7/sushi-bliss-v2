@@ -35,7 +35,7 @@ test.describe("customer experience", () => {
       ).toBeVisible();
 
       await menuSection
-        .getByPlaceholder("Search sushi, rolls, or dishes...")
+        .getByRole("textbox", { name: "Search menu" })
         .fill("Otoro Nigiri");
       await expect(
         menuSection.getByRole("heading", { name: "Search & Filter" }),

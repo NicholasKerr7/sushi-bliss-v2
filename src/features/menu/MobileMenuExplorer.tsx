@@ -292,13 +292,13 @@ function MobileCategoryView({
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.58)_54%,rgba(0,0,0,0.08)_100%),linear-gradient(180deg,rgba(0,0,0,0.18)_0%,#050505_96%)]" />
         <div className="relative z-10 flex min-h-[232px] flex-col justify-end pb-7">
-          <p className="text-[20px] text-[var(--sb-gold)]">
+          <p className="text-[18px] text-[var(--sb-gold)] min-[390px]:text-[20px]">
             Menu <ChevronIcon direction="right" size={18} />{" "}
             <span className="text-[var(--sb-red-bright)]">
               {category.label}
             </span>
           </p>
-          <h1 className="editorial-title mt-4 text-[38px] leading-none tracking-[0.09em] text-white min-[390px]:text-[42px] min-[390px]:tracking-[0.1em]">
+          <h1 className="editorial-title mt-4 break-words text-[34px] leading-[0.95] tracking-[0.07em] text-white min-[360px]:text-[38px] min-[390px]:text-[42px] min-[390px]:leading-none min-[390px]:tracking-[0.1em]">
             {category.label}
           </h1>
           <p className="mt-5 max-w-[350px] text-[15px] leading-6 text-[var(--sb-gold)] min-[390px]:text-[17px] min-[390px]:leading-7">
