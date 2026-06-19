@@ -142,11 +142,12 @@ export function TabletSupportContactView({
               {socialLinks.map((link) => (
                 <a
                   aria-label={link.label}
-                  className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-border)] bg-black/24 transition hover:bg-white/[0.05] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+                  className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-gold)]/24 bg-black/24 transition hover:border-[var(--sb-gold)]/52 hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                   href={link.href}
                   key={link.id}
                   rel="noopener noreferrer"
                   target="_blank"
+                  title={link.platform}
                 >
                   <AssetIcon size={23} src={link.icon} />
                 </a>

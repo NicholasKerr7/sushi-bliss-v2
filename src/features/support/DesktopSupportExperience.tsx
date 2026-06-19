@@ -247,18 +247,18 @@ function DesktopContactView({
           <p className="mt-3 min-h-[60px] text-[14px] leading-6 text-white/68">
             Seasonal offers, chef notes, and behind-the-scenes service updates.
           </p>
-          <div className="mt-2 grid grid-cols-2 gap-2">
+          <div className="mt-3 grid grid-cols-4 gap-2">
             {socialLinks.map((link) => (
               <a
                 aria-label={link.label}
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--sb-gold)]/32 bg-black/24 px-3 text-[11px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+                className="grid h-11 min-w-0 place-items-center rounded-full border border-[var(--sb-gold)]/28 bg-black/24 text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/58 hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 href={link.href}
                 key={link.id}
                 rel="noopener noreferrer"
                 target="_blank"
+                title={link.platform}
               >
-                <AssetIcon size={18} src={link.icon} />
-                {link.platform}
+                <AssetIcon size={20} src={link.icon} />
               </a>
             ))}
           </div>

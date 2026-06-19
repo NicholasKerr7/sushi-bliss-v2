@@ -63,29 +63,29 @@ export const contactMethods: ContactMethod[] = [
 
 export const socialLinks: SocialLink[] = [
   {
-    href: "https://www.instagram.com/sushibliss",
+    href: "https://www.instagram.com",
     icon: "/assets/icons/instagram-icon.png",
     id: "instagram",
     label: "Follow Sushi Bliss on Instagram",
     platform: "Instagram",
   },
   {
-    href: "https://www.facebook.com/sushibliss",
+    href: "https://www.facebook.com",
     icon: "/assets/icons/facebook-icon.png",
     id: "facebook",
     label: "Follow Sushi Bliss on Facebook",
     platform: "Facebook",
   },
   {
-    href: "https://x.com/sushibliss",
+    href: "https://x.com",
     icon: "/assets/icons/x-icon.png",
     id: "x",
     label: "Follow Sushi Bliss on X",
     platform: "X",
   },
   {
-    href: "https://www.tripadvisor.com/Search?q=Sushi%20Bliss%20Tokyo",
-    icon: "/assets/icons/share-icon.png",
+    href: "https://www.tripadvisor.com",
+    icon: "/assets/icons/tripadvisor-icon.svg",
     id: "tripadvisor",
     label: "Find Sushi Bliss on Tripadvisor",
     platform: "Tripadvisor",

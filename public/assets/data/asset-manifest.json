@@ -1710,6 +1710,20 @@
     "mode": "RGBA"
   },
   {
+    "id": "tripadvisor-icon",
+    "fileName": "tripadvisor-icon.svg",
+    "filePath": "public/assets/icons/tripadvisor-icon.svg",
+    "publicUrl": "/assets/icons/tripadvisor-icon.svg",
+    "folder": "icons",
+    "extension": ".svg",
+    "mimeType": "image/svg+xml",
+    "sizeBytes": 737,
+    "sha256": "5528e37abd77d82e2ccd88396574f627876e4ff734528a3e4a2b42ffd7a16ac4",
+    "width": 64,
+    "height": 64,
+    "format": "SVG"
+  },
+  {
     "id": "user-icon",
     "fileName": "user-icon.png",
     "filePath": "public/assets/icons/user-icon.png",

@@ -391,13 +391,38 @@ test.describe("customer experience", () => {
     );
     await expect(
       page.getByRole("link", { name: /Instagram/i }),
-    ).toHaveAttribute("href", "https://www.instagram.com/sushibliss");
+    ).toHaveAttribute("href", "https://www.instagram.com");
+    await expect(page.getByRole("link", { name: /Facebook/i })).toHaveAttribute(
+      "href",
+      "https://www.facebook.com",
+    );
+    await expect(
+      page.getByRole("link", { name: "Follow Sushi Bliss on X" }),
+    ).toHaveAttribute("href", "https://x.com");
     await expect(
       page.getByRole("link", { name: /Tripadvisor/i }),
-    ).toHaveAttribute(
-      "href",
-      "https://www.tripadvisor.com/Search?q=Sushi%20Bliss%20Tokyo",
-    );
+    ).toHaveAttribute("href", "https://www.tripadvisor.com");
+    await expect(
+      page
+        .getByRole("link", { name: /Tripadvisor/i })
+        .locator('img[src="/assets/icons/tripadvisor-icon.svg"]'),
+    ).toBeVisible();
+    await expect
+      .poll(() =>
+        page
+          .locator(
+            [
+              'a[href="https://www.instagram.com"]',
+              'a[href="https://www.facebook.com"]',
+              'a[href="https://x.com"]',
+              'a[href="https://www.tripadvisor.com"]',
+            ].join(", "),
+          )
+          .evaluateAll((links) =>
+            links.map((link) => link.textContent?.trim() || ""),
+          ),
+      )
+      .toEqual(["", "", "", ""]);
 
     await page
       .getByRole("button", { name: /Track or reorder an order/i })
