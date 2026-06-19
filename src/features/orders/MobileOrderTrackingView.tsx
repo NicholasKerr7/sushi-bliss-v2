@@ -103,8 +103,8 @@ export function MobileOrderTrackingView({
           </MobileOrderPanel>
         </section>
 
-        <MobileOrderPanel className="mt-8 overflow-hidden">
-          <div className="relative aspect-[1.68] min-h-[246px] overflow-hidden">
+        <MobileOrderPanel className="mt-8 min-w-0 overflow-hidden">
+          <div className="relative h-[224px] w-full min-w-0 overflow-hidden min-[390px]:h-[246px] min-[480px]:h-[310px]">
             <Image
               alt="Live order tracking map"
               className="object-cover"
@@ -115,20 +115,20 @@ export function MobileOrderTrackingView({
               src="/assets/maps/tokyo-delivery-route-tracker.webp"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.26))]" />
-            <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-[var(--sb-red-bright)]/38 bg-black/54 px-4 py-2 text-[11px] uppercase tracking-[0.1em] text-[var(--sb-red-bright)] shadow-[0_0_22px_rgba(239,47,37,0.22)] backdrop-blur-md">
+            <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-[var(--sb-red-bright)]/38 bg-black/54 px-3 py-2 text-[10px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)] shadow-[0_0_22px_rgba(239,47,37,0.22)] backdrop-blur-md min-[390px]:left-4 min-[390px]:top-4 min-[390px]:px-4 min-[390px]:text-[11px] min-[390px]:tracking-[0.1em]">
               <span className="h-2 w-2 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_14px_rgba(239,47,37,0.95)]" />
               Live route
             </div>
-            <div className="absolute bottom-4 left-4 right-4 grid grid-cols-[minmax(0,1fr)_74px] items-center gap-3 rounded-[16px] border border-white/10 bg-black/58 p-3 shadow-[0_18px_38px_rgba(0,0,0,0.46)] backdrop-blur-md">
+            <div className="absolute bottom-3 left-3 right-3 grid min-w-0 grid-cols-[minmax(0,1fr)_64px] items-center gap-2 rounded-[14px] border border-white/10 bg-black/58 p-2.5 shadow-[0_18px_38px_rgba(0,0,0,0.46)] backdrop-blur-md min-[390px]:bottom-4 min-[390px]:left-4 min-[390px]:right-4 min-[390px]:grid-cols-[minmax(0,1fr)_74px] min-[390px]:gap-3 min-[390px]:rounded-[16px] min-[390px]:p-3">
               <p className="min-w-0">
-                <span className="block text-[11px] uppercase tracking-[0.12em] text-white/48">
+                <span className="block text-[10px] uppercase tracking-[0.1em] text-white/48 min-[390px]:text-[11px] min-[390px]:tracking-[0.12em]">
                   Current handoff
                 </span>
-                <span className="mt-1 block line-clamp-2 text-[14px] leading-5 text-white">
+                <span className="mt-1 block line-clamp-2 text-[12px] leading-4 text-white min-[390px]:text-[14px] min-[390px]:leading-5">
                   {handoffCopy}
                 </span>
               </p>
-              <span className="grid min-h-[48px] place-items-center rounded-[14px] border border-[var(--sb-gold)]/38 bg-[var(--sb-gold)]/12 px-2 text-center font-mono text-[13px] leading-4 text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(216,168,79,0.16)]">
+              <span className="grid min-h-[44px] place-items-center rounded-[12px] border border-[var(--sb-gold)]/38 bg-[var(--sb-gold)]/12 px-2 text-center font-mono text-[12px] leading-4 text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(216,168,79,0.16)] min-[390px]:min-h-[48px] min-[390px]:rounded-[14px] min-[390px]:text-[13px]">
                 {courierEta}
               </span>
             </div>
