@@ -328,6 +328,40 @@ test.describe("customer experience", () => {
     await expect(page.getByText("Liquid Omakase")).toBeVisible();
     await expect(page.getByText(/Seasonal Sake Flight/i)).toBeVisible();
   });
+
+  test("wires desktop support CTAs and FAQ previews", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "Desktop support CTA grid is hidden on narrower layouts.",
+    );
+
+    await page.goto("/support");
+    await expectNoFrameworkErrorOverlay(page);
+
+    await expect(
+      page.getByRole("link", { name: /View on map/i }),
+    ).toHaveAttribute("href", "/locations");
+    await expect(page.getByRole("link", { name: /Call now/i })).toHaveAttribute(
+      "href",
+      "tel:+81312345678",
+    );
+    await expect(
+      page.getByRole("link", { name: /View updates/i }),
+    ).toHaveAttribute("href", "/notifications");
+
+    await page
+      .getByRole("button", { name: /Track or reorder an order/i })
+      .click();
+
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: "Track or reorder an order",
+      }),
+    ).toBeVisible();
+  });
 });
 
 test.describe("admin experience", () => {

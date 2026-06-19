@@ -25,24 +25,28 @@ const contactCards = [
   {
     body: "123 Kai Street, Tokyo, 100-0001, Japan",
     cta: "View on map",
+    href: "/locations",
     icon: "/assets/icons/map-pin-icon.png",
     title: "Location",
   },
   {
     body: "+81 3-1234-5678. Call us anytime.",
     cta: "Call now",
+    href: "tel:+81312345678",
     icon: "/assets/icons/phone-icon.png",
     title: "Contact info",
   },
   {
     body: "Mon - Sun 11:30 AM - 11:00 PM. Last order 10:30 PM.",
     cta: "Open now",
+    href: "/locations",
     icon: "/assets/icons/clock-icon.png",
     title: "Hours",
   },
   {
     body: "Instagram, Facebook, X, and Tripadvisor.",
-    cta: "Follow us",
+    cta: "View updates",
+    href: "/notifications",
     icon: "/assets/icons/floral-emblem-icon.png",
     title: "Follow us",
   },
@@ -144,6 +148,10 @@ export function DesktopSupportExperience() {
           status={status}
           onDraftChange={setDraft}
           onOpenHelp={() => setView("help")}
+          onOpenArticle={(article) => {
+            setSelectedArticle(article);
+            setView("help");
+          }}
           onSubmit={handleSubmit}
         />
       )}
@@ -156,6 +164,7 @@ function DesktopContactView({
   messagesCount,
   status,
   onDraftChange,
+  onOpenArticle,
   onOpenHelp,
   onSubmit,
 }: {
@@ -163,6 +172,7 @@ function DesktopContactView({
   messagesCount: number;
   status: string;
   onDraftChange: (draft: SupportMessageDraft) => void;
+  onOpenArticle: (article: HelpArticle) => void;
   onOpenHelp: () => void;
   onSubmit: () => void;
 }) {
@@ -214,15 +224,15 @@ function DesktopContactView({
             <p className="mt-3 min-h-[60px] text-[14px] leading-6 text-white/68">
               {card.body}
             </p>
-            <button
-              className="mt-2 min-h-11 rounded-full border border-[var(--sb-gold)]/32 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-              type="button"
+            <Link
+              className="mt-2 inline-flex min-h-11 items-center rounded-full border border-[var(--sb-gold)]/32 px-5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+              href={card.href}
             >
               {card.cta}
               <span className="ml-4" aria-hidden="true">
                 <ChevronIcon direction="right" size={18} />
               </span>
-            </button>
+            </Link>
           </article>
         ))}
         <div className="relative overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/48">
@@ -323,7 +333,7 @@ function DesktopContactView({
               <button
                 className="flex min-h-10 w-full items-center justify-between border-b border-white/10 px-4 text-left last:border-b-0"
                 key={article.id}
-                onClick={onOpenHelp}
+                onClick={() => onOpenArticle(article)}
                 type="button"
               >
                 <span className="text-[14px] text-white/78">
@@ -425,12 +435,9 @@ function DesktopHelpCenter({
             <h2 className="text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
               Popular help topics
             </h2>
-            <button
-              className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-              type="button"
-            >
-              View all articles <ChevronIcon direction="right" size={18} />
-            </button>
+            <span className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+              {helpArticles.length} articles
+            </span>
           </div>
           <div className="mt-3 overflow-hidden rounded-[10px] border border-white/10">
             {helpArticles.map((article) => (
