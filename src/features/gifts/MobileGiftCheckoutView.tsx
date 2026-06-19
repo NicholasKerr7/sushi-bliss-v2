@@ -6,6 +6,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
+import { GIFT_DELIVERY_TIME_OPTIONS } from "@/lib/gifts";
 import { formatMoney } from "@/lib/money";
 import type { GiftCheckoutDraft, GiftExperience } from "@/types/gift";
 import type { PaymentMethod } from "@/types/user";
@@ -156,6 +157,34 @@ export function MobileGiftCheckoutView({
               type="date"
               value={draft.deliveryDate}
             />
+          </label>
+          <label
+            className={classNames(
+              "block",
+              draft.deliveryTiming !== "scheduled" && "opacity-45",
+            )}
+          >
+            <span className="text-[12px] uppercase tracking-[0.1em] text-white/46">
+              Send time
+            </span>
+            <select
+              className="mt-2 h-12 w-full rounded-[12px] border border-white/10 bg-black/28 px-4 text-[15px] text-white outline-none focus:border-[var(--sb-gold)] disabled:cursor-not-allowed"
+              disabled={draft.deliveryTiming !== "scheduled"}
+              onChange={(event) =>
+                onUpdateDraft("deliveryTime", event.target.value)
+              }
+              value={draft.deliveryTime}
+            >
+              {GIFT_DELIVERY_TIME_OPTIONS.map((option) => (
+                <option
+                  className="bg-[#050607] text-white"
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
       </MobileGiftPanel>

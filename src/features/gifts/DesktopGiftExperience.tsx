@@ -8,13 +8,17 @@ import type { ReactNode } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
 import {
   DesktopBenefitStrip,
   DesktopMenuHeader,
 } from "@/features/menu/DesktopMenuChrome";
 import { useCart } from "@/hooks/useCart";
 import { formatDateTime } from "@/lib/dates";
-import { getDefaultGiftCheckoutDraft } from "@/lib/gifts";
+import {
+  GIFT_DELIVERY_TIME_OPTIONS,
+  getDefaultGiftCheckoutDraft,
+} from "@/lib/gifts";
 import { formatMoney } from "@/lib/money";
 import type {
   GiftCheckoutDraft,
@@ -53,6 +57,13 @@ function getDefaultDeliveryDate() {
   date.setDate(date.getDate() + 10);
 
   return date.toISOString().slice(0, 10);
+}
+
+function getDeliveryTimeLabel(value: string) {
+  return (
+    GIFT_DELIVERY_TIME_OPTIONS.find((option) => option.value === value)
+      ?.label || "10:00 AM"
+  );
 }
 
 export function DesktopGiftExperience({
@@ -323,6 +334,7 @@ function DesktopGiftSelection({
                 ))}
               </div>
               <Input
+                disabled={draft.deliveryTiming !== "scheduled"}
                 id="desktop-gift-delivery-date"
                 inputClassName="mt-1"
                 label="Delivery date"
@@ -332,6 +344,20 @@ function DesktopGiftSelection({
                 wrapperClassName="mt-3"
                 onChange={(event) =>
                   onUpdateDraft("deliveryDate", event.target.value)
+                }
+              />
+              <Select
+                disabled={draft.deliveryTiming !== "scheduled"}
+                id="desktop-gift-delivery-time"
+                label="Send time"
+                options={GIFT_DELIVERY_TIME_OPTIONS.map((option) => ({
+                  label: option.label,
+                  value: option.value,
+                }))}
+                value={draft.deliveryTime}
+                wrapperClassName="mt-3"
+                onChange={(event) =>
+                  onUpdateDraft("deliveryTime", event.target.value)
                 }
               />
             </div>
@@ -537,7 +563,9 @@ function DesktopGiftCheckout({
               label="Delivery"
               value={
                 draft.deliveryTiming === "scheduled"
-                  ? `Scheduled ${draft.deliveryDate}`
+                  ? `Scheduled ${draft.deliveryDate} at ${getDeliveryTimeLabel(
+                      draft.deliveryTime,
+                    )}`
                   : "Send instantly"
               }
             />

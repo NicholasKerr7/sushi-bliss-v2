@@ -254,6 +254,48 @@ test.describe("customer experience", () => {
     ).toHaveCount(0);
   });
 
+  test("uses working tablet gift delivery controls", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("tablet"),
+      "Tablet-only gift checkout control check.",
+    );
+
+    await page.setViewportSize({ height: 1448, width: 1086 });
+    await page.goto("/gifts");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const giftsSection = page.locator("#gifts");
+
+    await giftsSection
+      .getByRole("button", { name: /Continue to review/i })
+      .click();
+    await expect(
+      giftsSection.getByRole("heading", {
+        name: /Give the gift of Exceptional/i,
+      }),
+    ).toBeVisible();
+
+    await giftsSection.getByLabel("Send time").selectOption("15:00");
+    await expect(
+      giftsSection.locator("p").filter({ hasText: /^Scheduled email$/ }),
+    ).toBeVisible();
+    await expect(
+      giftsSection.locator("p").filter({ hasText: /at 3:00 PM/ }),
+    ).toBeVisible();
+
+    await giftsSection
+      .getByRole("button", { name: "View sample email" })
+      .click();
+    await expect(
+      giftsSection.getByText("Your Sushi Bliss gift is ready"),
+    ).toBeVisible();
+    await expect(
+      giftsSection.getByRole("button", { name: "Hide sample email" }),
+    ).toBeVisible();
+  });
+
   test("updates mobile home featured items from category rail", async ({
     page,
   }, testInfo) => {

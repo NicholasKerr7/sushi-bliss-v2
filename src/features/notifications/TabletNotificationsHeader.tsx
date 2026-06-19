@@ -79,13 +79,13 @@ export function TabletNotificationsHeader({
               </span>
             ) : null}
           </button>
-          <button
-            aria-label="More notification options"
+          <Link
+            aria-label="Notification preferences"
             className="hidden h-10 w-10 place-items-center text-[28px] leading-none text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[900px]:grid"
-            type="button"
+            href="/profile"
           >
-            <span aria-hidden="true">⋮</span>
-          </button>
+            <AssetIcon size={28} src="/assets/icons/user-settings-icon.png" />
+          </Link>
         </div>
       </div>
     </header>

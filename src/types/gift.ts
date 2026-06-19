@@ -21,6 +21,7 @@ export type GiftDeliveryTiming = "send-now" | "scheduled";
 
 export interface GiftCheckoutDraft {
   deliveryDate: string;
+  deliveryTime: string;
   deliveryTiming: GiftDeliveryTiming;
   giftId: ID;
   message: string;

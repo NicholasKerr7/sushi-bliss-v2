@@ -7,6 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { classNames } from "@/lib/classNames";
+import { GIFT_DELIVERY_TIME_OPTIONS } from "@/lib/gifts";
 import { formatMoney } from "@/lib/money";
 import type { GiftCheckoutDraft, GiftExperience } from "@/types/gift";
 
@@ -212,43 +213,46 @@ export function TabletGiftSelection({
                   </span>
                   <input
                     className="mt-1 w-full bg-transparent text-[14px] text-white outline-none"
-                    onChange={(event) =>
-                      onUpdateDraft("deliveryDate", event.target.value)
-                    }
+                    onChange={(event) => {
+                      onUpdateDraft("deliveryTiming", "scheduled");
+                      onUpdateDraft("deliveryDate", event.target.value);
+                    }}
                     type="date"
                     value={draft.deliveryDate}
                   />
                 </span>
               </label>
-              <button
-                className="grid h-[52px] grid-cols-[34px_minmax(0,1fr)_18px] items-center gap-3 rounded-[10px] border border-[var(--sb-gold)]/18 bg-black/20 px-4 text-left"
-                onClick={() =>
-                  onUpdateDraft(
-                    "deliveryTiming",
-                    draft.deliveryTiming === "send-now"
-                      ? "scheduled"
-                      : "send-now",
-                  )
-                }
-                type="button"
-              >
+              <label className="grid h-[52px] grid-cols-[34px_minmax(0,1fr)_18px] items-center gap-3 rounded-[10px] border border-[var(--sb-gold)]/18 bg-black/20 px-4 text-left">
                 <AssetIcon size={22} src="/assets/icons/clock-icon.png" />
                 <span>
                   <span className="block text-[10px] uppercase tracking-[0.08em] text-white/44">
-                    Time preference
+                    Send time
                   </span>
-                  <span className="mt-1 block text-[14px] text-white">
-                    {draft.deliveryTiming === "scheduled"
-                      ? "Scheduled email"
-                      : "Dinner (6:00 PM - 9:00 PM)"}
-                  </span>
+                  <select
+                    className="mt-1 w-full appearance-none bg-transparent text-[14px] text-white outline-none"
+                    onChange={(event) => {
+                      onUpdateDraft("deliveryTiming", "scheduled");
+                      onUpdateDraft("deliveryTime", event.target.value);
+                    }}
+                    value={draft.deliveryTime}
+                  >
+                    {GIFT_DELIVERY_TIME_OPTIONS.map((option) => (
+                      <option
+                        className="bg-[#050607] text-white"
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
                 </span>
                 <ChevronIcon
-                  className="text-[var(--sb-gold-soft)]"
+                  className="pointer-events-none text-[var(--sb-gold-soft)]"
                   direction="down"
                   size={18}
                 />
-              </button>
+              </label>
             </div>
           </article>
 

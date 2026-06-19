@@ -109,7 +109,10 @@ export function TabletGiftExperience({
 
   return (
     <>
-      <section className="min-h-dvh bg-[#050607] px-[10px] pb-[10px] pt-[10px] text-white">
+      <section
+        className="min-h-dvh bg-[#050607] px-[10px] pb-[10px] pt-[10px] text-white"
+        id="gifts"
+      >
         <TabletExperienceHeader
           cartCount={itemCount}
           onOpenCart={() => setCartOpen(true)}

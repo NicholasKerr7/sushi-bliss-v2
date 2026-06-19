@@ -1,11 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { classNames } from "@/lib/classNames";
+import { GIFT_DELIVERY_TIME_OPTIONS } from "@/lib/gifts";
 import { formatMoney } from "@/lib/money";
 import type { GiftCheckoutDraft, GiftExperience } from "@/types/gift";
 import type { PaymentMethod } from "@/types/user";
@@ -57,10 +59,14 @@ export function TabletGiftCheckout({
   onCompletePayment,
   onUpdateDraft,
 }: TabletGiftCheckoutProps) {
+  const [sampleEmailOpen, setSampleEmailOpen] = useState(false);
   const totals = getTabletGiftTotals(gift);
   const selectedPayment =
     paymentMethods.find((method) => method.id === draft.paymentMethodId) ||
     paymentMethods[0];
+  const selectedTime = GIFT_DELIVERY_TIME_OPTIONS.find(
+    (option) => option.value === draft.deliveryTime,
+  ) ?? { label: "10:00 AM", value: "10:00" };
 
   return (
     <main className="mx-auto w-full max-w-[1034px] pb-[136px]">
@@ -226,20 +232,40 @@ export function TabletGiftCheckout({
                 label="Send date"
                 type="date"
                 value={draft.deliveryDate}
-                onChange={(value) => onUpdateDraft("deliveryDate", value)}
+                onChange={(value) => {
+                  onUpdateDraft("deliveryTiming", "scheduled");
+                  onUpdateDraft("deliveryDate", value);
+                }}
               />
-              <button
-                className="grid h-[42px] grid-cols-[28px_minmax(0,1fr)_18px] items-center gap-3 self-end rounded-[9px] border border-white/10 bg-black/24 px-3 text-left text-white"
-                type="button"
-              >
-                <AssetIcon size={22} src="/assets/icons/clock-icon.png" />
-                10:00 AM
-                <ChevronIcon
-                  className="text-[var(--sb-gold-soft)]"
-                  direction="down"
-                  size={18}
-                />
-              </button>
+              <label className="block self-end">
+                <span className="sr-only">Send time</span>
+                <span className="grid h-[42px] grid-cols-[28px_minmax(0,1fr)_18px] items-center gap-3 rounded-[9px] border border-white/10 bg-black/24 px-3 text-left text-white">
+                  <AssetIcon size={22} src="/assets/icons/clock-icon.png" />
+                  <select
+                    className="min-w-0 appearance-none bg-transparent text-[13px] text-white outline-none"
+                    onChange={(event) => {
+                      onUpdateDraft("deliveryTiming", "scheduled");
+                      onUpdateDraft("deliveryTime", event.target.value);
+                    }}
+                    value={draft.deliveryTime}
+                  >
+                    {GIFT_DELIVERY_TIME_OPTIONS.map((option) => (
+                      <option
+                        className="bg-[#050607] text-white"
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronIcon
+                    className="pointer-events-none text-[var(--sb-gold-soft)]"
+                    direction="down"
+                    size={18}
+                  />
+                </span>
+              </label>
             </div>
           </article>
 
@@ -274,19 +300,19 @@ export function TabletGiftCheckout({
 
             <article className="rounded-[14px] border border-white/10 bg-white/[0.035] p-3">
               <h2 className="text-[15px] uppercase tracking-[0.08em] text-white">
-                5. Promo code
+                5. Delivery pass
               </h2>
-              <div className="mt-3 grid grid-cols-[minmax(0,1fr)_78px] gap-3">
-                <input
-                  className="h-[40px] rounded-[9px] border border-white/10 bg-black/24 px-3 text-[13px] text-white outline-none"
-                  placeholder="Enter promo code"
-                />
-                <button
-                  className="rounded-[9px] border border-[var(--sb-gold)]/30 text-[var(--sb-gold-soft)]"
-                  type="button"
-                >
-                  Apply
-                </button>
+              <div className="mt-3 rounded-[10px] border border-[var(--sb-gold)]/22 bg-black/24 p-3">
+                <p className="text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+                  {draft.deliveryTiming === "scheduled"
+                    ? "Scheduled email"
+                    : "Instant email"}
+                </p>
+                <p className="mt-2 text-[13px] leading-5 text-white/66">
+                  {draft.deliveryTiming === "scheduled"
+                    ? `${draft.deliveryDate} at ${selectedTime.label}`
+                    : "Sent after payment confirmation."}
+                </p>
               </div>
               {validationMessage ? (
                 <p className="mt-2 rounded-[9px] border border-[var(--sb-red)]/30 bg-[var(--sb-red)]/10 p-2 text-[12px] font-semibold text-[var(--sb-red-bright)]">
@@ -372,11 +398,28 @@ export function TabletGiftCheckout({
               Chef&apos;s Omakase Experience for {totals.quantity} Guests
             </p>
             <button
+              aria-expanded={sampleEmailOpen}
               className="mt-3 h-9 w-full rounded-[9px] border border-[var(--sb-gold)]/30 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              onClick={() => setSampleEmailOpen((open) => !open)}
               type="button"
             >
-              View sample email
+              {sampleEmailOpen ? "Hide sample email" : "View sample email"}
             </button>
+            {sampleEmailOpen ? (
+              <div className="mt-3 rounded-[10px] border border-white/10 bg-black/34 p-3 text-left">
+                <p className="text-[11px] uppercase tracking-[0.08em] text-white/42">
+                  To: {draft.recipientEmail}
+                </p>
+                <p className="mt-2 text-[13px] font-semibold text-white">
+                  Your Sushi Bliss gift is ready
+                </p>
+                <p className="mt-2 text-[12px] leading-5 text-white/58">
+                  {draft.recipientName}, {draft.senderName} sent you a{" "}
+                  {gift.title}. Your concierge pass includes flexible scheduling
+                  and reservation support.
+                </p>
+              </div>
+            ) : null}
           </div>
         </aside>
       </section>

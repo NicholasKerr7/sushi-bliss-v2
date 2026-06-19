@@ -9,7 +9,10 @@ import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Select } from "@/components/ui/Select";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { getDefaultGiftCheckoutDraft } from "@/lib/gifts";
+import {
+  GIFT_DELIVERY_TIME_OPTIONS,
+  getDefaultGiftCheckoutDraft,
+} from "@/lib/gifts";
 import { formatMoney } from "@/lib/money";
 import type {
   GiftCheckoutDraft,
@@ -166,7 +169,7 @@ export function GiftCheckoutModal({
             />
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-3">
             <div className="space-y-2">
               <p className="text-sm font-semibold text-sb-rice">
                 Delivery timing
@@ -202,6 +205,19 @@ export function GiftCheckoutModal({
               }
               type="date"
               value={draft.deliveryDate}
+            />
+            <Select
+              disabled={draft.deliveryTiming !== "scheduled"}
+              id="gift-delivery-time"
+              label="Send time"
+              onChange={(event) =>
+                updateDraft("deliveryTime", event.target.value)
+              }
+              options={GIFT_DELIVERY_TIME_OPTIONS.map((option) => ({
+                label: option.label,
+                value: option.value,
+              }))}
+              value={draft.deliveryTime}
             />
           </div>
 

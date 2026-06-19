@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -317,13 +318,13 @@ function NotificationPreferencesPanel({
           <SwitchPill checked />
         </button>
       </div>
-      <button
+      <Link
         className="mx-auto mt-6 flex min-h-10 items-center gap-3 rounded-full px-3 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-        type="button"
+        href="/profile"
       >
         <AssetIcon size={18} src="/assets/icons/user-settings-icon.png" />
         Manage preferences
-      </button>
+      </Link>
     </aside>
   );
 }
