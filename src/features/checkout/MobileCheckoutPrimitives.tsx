@@ -61,7 +61,7 @@ export function MobileCheckoutHeader({
           onClick={onClose}
           type="button"
         >
-          <AssetIcon loading="eager" size={25} src={icons.bell} />
+          <AssetIcon loading="eager" size={20} src={icons.x} />
         </button>
       </div>
     </header>

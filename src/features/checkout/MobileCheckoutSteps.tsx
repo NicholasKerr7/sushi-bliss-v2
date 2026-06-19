@@ -88,7 +88,7 @@ export function FulfillmentStep({
           <button
             aria-pressed={checkout.mode === option.value}
             className={classNames(
-              "grid min-h-[118px] grid-cols-[90px_1fr_38px] items-center gap-4 rounded-[17px] border px-4 text-left transition",
+              "grid min-h-[110px] grid-cols-[62px_minmax(0,1fr)_30px] items-center gap-3 rounded-[17px] border px-3 text-left transition min-[390px]:min-h-[118px] min-[390px]:grid-cols-[90px_minmax(0,1fr)_38px] min-[390px]:gap-4 min-[390px]:px-4",
               checkout.mode === option.value
                 ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/10 shadow-[0_0_26px_rgb(239_47_37_/_0.22)]"
                 : "border-[var(--sb-border-strong)] bg-white/[0.025]",
@@ -97,14 +97,18 @@ export function FulfillmentStep({
             onClick={() => checkout.setMode(option.value)}
             type="button"
           >
-            <span className="grid h-[78px] w-[78px] place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/22">
-              <AssetIcon size={42} src={option.icon} />
+            <span className="grid h-[58px] w-[58px] place-items-center rounded-full border border-[var(--sb-border-strong)] bg-black/22 min-[390px]:h-[78px] min-[390px]:w-[78px]">
+              <AssetIcon
+                className="h-8 w-8 min-[390px]:h-[42px] min-[390px]:w-[42px]"
+                size={32}
+                src={option.icon}
+              />
             </span>
-            <span>
-              <span className="editorial-title block text-[27px] leading-none">
+            <span className="min-w-0">
+              <span className="editorial-title block text-[23px] leading-none min-[390px]:text-[27px]">
                 {option.label}
               </span>
-              <span className="mt-3 block text-[17px] leading-7 text-white/62">
+              <span className="mt-2 block text-[15px] leading-6 text-white/62 min-[390px]:mt-3 min-[390px]:text-[17px] min-[390px]:leading-7">
                 {option.description}
               </span>
             </span>

@@ -71,7 +71,7 @@ export function MobileItemCustomizeView({
       </div>
 
       <div className="mobile-frame relative z-10">
-        <header className="grid grid-cols-[52px_1fr_52px] items-center">
+        <header className="grid grid-cols-[48px_1fr_48px] items-center min-[390px]:grid-cols-[52px_1fr_52px]">
           <button
             aria-label="Back to item details"
             className="grid h-[48px] w-[48px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/36 text-[24px] text-[var(--sb-gold)]"
@@ -80,7 +80,7 @@ export function MobileItemCustomizeView({
           >
             <ChevronIcon direction="left" size={18} />
           </button>
-          <h1 className="editorial-title text-center text-[19px] uppercase tracking-[0.14em] text-[var(--sb-gold)]">
+          <h1 className="editorial-title text-center text-[17px] uppercase tracking-[0.1em] text-[var(--sb-gold)] min-[390px]:text-[19px] min-[390px]:tracking-[0.14em]">
             Customize Your Item
           </h1>
           <div className="relative justify-self-end">

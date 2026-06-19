@@ -21,13 +21,15 @@ export function PopularItems() {
         />
 
         <ResponsiveGrid className="mt-6 md:grid-cols-3 lg:grid-cols-6">
-          {popularMenuItems.map((item) => (
+          {popularMenuItems.map((item, index) => (
             <Card key={item.id} className="overflow-hidden">
               <div className="relative aspect-square bg-sb-panel-soft">
                 <Image
                   alt={item.image.alt || item.name}
                   className="object-cover"
                   fill
+                  loading={index < 6 ? "eager" : "lazy"}
+                  priority={index < 3}
                   sizes="(min-width: 1180px) 16vw, (min-width: 760px) 33vw, 50vw"
                   src={item.image.publicUrl}
                 />

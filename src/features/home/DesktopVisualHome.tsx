@@ -459,6 +459,8 @@ function DesktopChefSpecial({
             alt=""
             className="object-cover"
             fill
+            loading="eager"
+            priority
             sizes="260px"
             src={item.image.publicUrl}
           />

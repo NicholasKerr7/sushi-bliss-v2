@@ -210,7 +210,7 @@ function MobileCartHeader({
           </button>
         ) : null}
         <div className="relative grid h-[54px] w-[54px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/34">
-          <AssetIcon loading="eager" size={28} src={icons.bell} />
+          <AssetIcon loading="eager" size={28} src={icons.cart} />
           {itemCount > 0 ? (
             <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold">
               {itemCount}
