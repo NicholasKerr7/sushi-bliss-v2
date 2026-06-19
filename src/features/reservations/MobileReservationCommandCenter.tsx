@@ -116,7 +116,7 @@ export function MobileReservationCommandCenter({
 function CommandMetric({ label, value }: { label: string; value: string }) {
   return (
     <p className="min-w-0 px-2 py-3 text-center">
-      <span className="block truncate font-mono text-[17px] text-[var(--sb-gold-soft)]">
+      <span className="block truncate font-mono text-[15px] text-[var(--sb-gold-soft)] min-[390px]:text-[17px]">
         {value}
       </span>
       <span className="mt-1 block text-[10px] uppercase tracking-[0.1em] text-white/44">

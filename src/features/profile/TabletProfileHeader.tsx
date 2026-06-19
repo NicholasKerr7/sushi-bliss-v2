@@ -49,7 +49,7 @@ export function TabletProfileHeader({
           type="button"
         >
           <AssetIcon size={30} src={icons.cart} />
-          <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold text-white">
+          <span className="absolute right-0 top-0 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold text-white">
             {cartCount}
           </span>
         </button>

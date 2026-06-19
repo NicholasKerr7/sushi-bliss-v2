@@ -42,10 +42,10 @@ export function AdminDashboard() {
           <div className="grid grid-cols-3 overflow-hidden rounded-[14px] border border-white/10 bg-black/24">
             {adminModeCells.map(([label, value]) => (
               <div
-                className="border-l border-white/10 px-4 py-3 first:border-l-0"
+                className="min-w-0 border-l border-white/10 px-2.5 py-3 first:border-l-0 min-[390px]:px-4"
                 key={label}
               >
-                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-sb-dim">
+                <p className="truncate text-[10px] font-semibold uppercase tracking-[0.06em] text-sb-dim min-[390px]:text-[11px] min-[390px]:tracking-[0.12em]">
                   {label}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-sb-gold-soft">

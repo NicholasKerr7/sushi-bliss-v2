@@ -314,7 +314,7 @@ function TabletHeaderIcon({
       href={href}
     >
       <AssetIcon size={32} src={icon} />
-      <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
+      <span className="absolute right-0 top-0 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
         {badge}
       </span>
     </Link>

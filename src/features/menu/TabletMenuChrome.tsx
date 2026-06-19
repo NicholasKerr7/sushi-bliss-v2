@@ -24,9 +24,9 @@ export function TabletMenuHeader({
   onSubmitQuery,
 }: TabletMenuHeaderProps) {
   return (
-    <header className="mt-1 grid h-[82px] grid-cols-[178px_minmax(0,1fr)_164px] items-center gap-2 lg:grid-cols-[260px_minmax(0,1fr)_268px] lg:gap-5">
+    <header className="mt-1 grid h-[82px] grid-cols-[184px_minmax(0,1fr)_176px] items-center gap-2 lg:grid-cols-[260px_minmax(0,1fr)_268px] lg:gap-5">
       <Link
-        className="flex w-[176px] items-center gap-2 lg:w-[260px] lg:gap-8"
+        className="flex w-[182px] items-center gap-2 lg:w-[260px] lg:gap-8"
         href="/home"
       >
         <AssetIcon
@@ -82,11 +82,14 @@ export function TabletMenuHeader({
           type="button"
         >
           <AssetIcon size={32} src={icons.cart} />
-          <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
+          <span className="absolute right-0 top-0 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
             {cartCount}
           </span>
         </button>
-        <Link className="flex items-center gap-5" href="/profile">
+        <Link
+          className="flex min-w-[58px] items-center gap-2 lg:gap-5"
+          href="/profile"
+        >
           <Image
             alt=""
             className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"
@@ -117,7 +120,7 @@ function TabletHeaderIcon({
       href={href}
     >
       <AssetIcon size={32} src={icon} />
-      <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
+      <span className="absolute right-0 top-0 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
         {badge}
       </span>
     </Link>

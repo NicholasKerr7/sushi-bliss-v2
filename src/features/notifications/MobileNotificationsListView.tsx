@@ -149,14 +149,14 @@ export function MobileNotificationsListView({
 
       <div
         aria-label="Notification filters"
-        className="mt-4 grid grid-cols-3 gap-2 min-[390px]:grid-cols-4"
+        className="mt-4 grid grid-cols-3 gap-2 min-[480px]:grid-cols-4"
         role="toolbar"
       >
         {notificationFilters.map((filter) => (
           <button
             aria-pressed={activeFilter === filter.id}
             className={classNames(
-              "min-h-[42px] min-w-0 rounded-full border px-2 text-[11px] uppercase tracking-[0.06em] min-[390px]:px-3 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]",
+              "min-h-[42px] min-w-0 rounded-full border px-2 text-[10px] uppercase tracking-[0.04em] min-[480px]:px-3 min-[480px]:text-[12px] min-[480px]:tracking-[0.08em]",
               activeFilter === filter.id
                 ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/22 text-[var(--sb-red-bright)]"
                 : "border-white/12 bg-black/24 text-white/56",
@@ -165,7 +165,7 @@ export function MobileNotificationsListView({
             onClick={() => onFilterChange(filter.id)}
             type="button"
           >
-            {filter.label}
+            <span className="block truncate">{filter.label}</span>
           </button>
         ))}
       </div>

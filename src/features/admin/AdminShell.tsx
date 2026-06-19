@@ -55,14 +55,14 @@ export function AdminShell({ children }: AdminShellProps) {
                   <a
                     aria-current={item.id === "overview" ? "page" : undefined}
                     className={classNames(
-                      "relative grid h-11 min-w-0 grid-cols-[24px_minmax(0,1fr)] items-center gap-2 rounded-[14px] border px-3 text-[12px] font-semibold uppercase tracking-[0.04em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                      "relative grid h-11 min-w-0 grid-cols-[20px_minmax(0,1fr)] items-center gap-1 rounded-[14px] border px-2 text-[10px] font-semibold uppercase tracking-[0.02em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[390px]:grid-cols-[22px_minmax(0,1fr)] min-[390px]:gap-1.5 min-[390px]:px-2.5 min-[390px]:text-[11px]",
                       item.id === "overview"
                         ? "red-glow-button border-[#ef3326]/70 text-[#e2dcda]"
                         : "border-white/10 bg-white/[0.035] text-sb-muted hover:border-[var(--sb-gold)]/38 hover:bg-white/[0.065] hover:text-sb-rice",
                     )}
                     href={item.href}
                   >
-                    <AssetIcon loading="eager" size={22} src={item.iconUrl} />
+                    <AssetIcon loading="eager" size={20} src={item.iconUrl} />
                     <span className="truncate">{item.label}</span>
                     {item.id === "overview" ? (
                       <span
