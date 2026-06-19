@@ -145,7 +145,7 @@ export function TabletSupportContactView({
                   className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-border)] bg-black/24 transition hover:bg-white/[0.05] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                   href={link.href}
                   key={link.id}
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   target="_blank"
                 >
                   <AssetIcon size={23} src={link.icon} />

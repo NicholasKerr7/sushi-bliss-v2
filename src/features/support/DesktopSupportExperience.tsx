@@ -254,7 +254,7 @@ function DesktopContactView({
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--sb-gold)]/32 bg-black/24 px-3 text-[11px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 href={link.href}
                 key={link.id}
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 target="_blank"
               >
                 <AssetIcon size={18} src={link.icon} />

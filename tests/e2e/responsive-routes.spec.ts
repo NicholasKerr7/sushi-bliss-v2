@@ -414,4 +414,36 @@ test.describe("responsive route health", () => {
       });
     }
   });
+
+  test("keeps external new-tab links isolated", async ({ page }) => {
+    for (const routePath of routePaths) {
+      await test.step(`external links ${routePath}`, async () => {
+        await page.goto(routePath, { waitUntil: "domcontentloaded" });
+        await expectNoFrameworkErrorOverlay(page);
+
+        const unsafeLinks = await page
+          .locator('a[target="_blank"]')
+          .evaluateAll((links) =>
+            links
+              .map((link) => ({
+                href: link.getAttribute("href"),
+                rel: link.getAttribute("rel") || "",
+                text: link.textContent?.trim().replace(/\s+/g, " ") || "",
+              }))
+              .filter(({ rel }) => {
+                const tokens = rel.split(/\s+/);
+
+                return (
+                  !tokens.includes("noopener") || !tokens.includes("noreferrer")
+                );
+              }),
+          );
+
+        expect(
+          unsafeLinks,
+          `${routePath} should protect target=_blank links`,
+        ).toEqual([]);
+      });
+    }
+  });
 });

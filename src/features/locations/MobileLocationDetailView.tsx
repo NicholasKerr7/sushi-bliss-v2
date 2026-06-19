@@ -124,7 +124,7 @@ export function MobileLocationDetailView({
         <a
           className="red-glow-button flex min-h-[58px] items-center justify-center gap-2 rounded-[13px] text-[11px] uppercase tracking-[0.05em] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[14px] min-[390px]:text-[14px] min-[390px]:tracking-[0.08em]"
           href={directionsUrl}
-          rel="noreferrer"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <AssetIcon size={26} src={icons.location} />

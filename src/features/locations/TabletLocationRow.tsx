@@ -55,7 +55,7 @@ export function TabletLocationRow({
           <a
             className="mt-1 inline-flex min-h-10 items-center gap-2 rounded-full pr-3 text-[12px] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[1080px]:mt-2 min-[1080px]:text-[14px]"
             href={directionsUrl}
-            rel="noreferrer"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <AssetIcon size={18} src={icons.location} />

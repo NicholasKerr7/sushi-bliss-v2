@@ -93,7 +93,7 @@ export function MobileLocationMapView({
                 aria-label="Open directions"
                 className="red-glow-button flex min-h-[50px] items-center justify-center gap-1.5 rounded-[12px] text-[10px] uppercase tracking-[0.04em] min-[390px]:min-h-[52px] min-[390px]:gap-2 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
                 href={directionsUrl}
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 target="_blank"
               >
                 <AssetIcon size={18} src={icons.location} />

@@ -80,7 +80,7 @@ export function TabletReferralShareButton({
         aria-label={`Share referral by ${label}`}
         className={commonClassName}
         href={`https://wa.me/?text=${encodedLink}`}
-        rel="noreferrer"
+        rel="noopener noreferrer"
         target="_blank"
       >
         <ShareGlyph icon={icon} />
@@ -94,7 +94,7 @@ export function TabletReferralShareButton({
         aria-label={`Share referral by ${label}`}
         className={commonClassName}
         href={`https://www.facebook.com/sharer/sharer.php?u=${encodedLink}`}
-        rel="noreferrer"
+        rel="noopener noreferrer"
         target="_blank"
       >
         <ShareGlyph icon={icon} />
