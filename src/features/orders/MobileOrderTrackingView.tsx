@@ -52,7 +52,7 @@ export function MobileOrderTrackingView({
   const handoffCopy =
     order.mode === "delivery"
       ? order.courier
-        ? `${order.courier.name} is handling your final delivery handoff.`
+        ? `${order.courier.name} is handling final handoff.`
         : "Courier assignment is pending while the kitchen finishes packing."
       : "Your order will be held at the pickup counter.";
 
@@ -68,9 +68,14 @@ export function MobileOrderTrackingView({
         <section className="mt-9 grid grid-cols-[58px_1fr] gap-4">
           <MobileBackButton label="Back to order details" onClick={onBack} />
           <div className="min-w-0">
-            <p className="editorial-title text-[19px] uppercase tracking-[0.04em] text-[var(--sb-gold-soft)]">
-              Order {order.confirmationCode}
-            </p>
+            <div className="inline-grid max-w-full rounded-[12px] border border-[var(--sb-border)] bg-black/30 px-3 py-2">
+              <span className="text-[10px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+                Order tracking
+              </span>
+              <span className="mt-1 truncate font-mono text-[13px] uppercase tracking-[0.04em] text-white/72">
+                {order.confirmationCode}
+              </span>
+            </div>
             <h1 className="mt-5 text-[34px] leading-[0.98] text-white min-[390px]:text-[40px] min-[390px]:leading-[0.96]">
               {getMobileOrderHeadline(order)}
             </h1>

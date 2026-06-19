@@ -638,6 +638,7 @@ function DesktopMenuHero({
         fetchPriority="high"
         fill
         loading="eager"
+        priority
         sizes="1200px"
         src={
           isDrinks

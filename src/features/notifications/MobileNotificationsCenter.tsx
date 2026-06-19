@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CartDrawer } from "@/features/cart/CartDrawer";
@@ -35,6 +35,10 @@ export function MobileNotificationsCenter() {
     () => filterNotifications(sortedNotifications, activeFilter),
     [activeFilter, sortedNotifications],
   );
+
+  useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  }, [selectedNotification?.id]);
 
   const handleViewNotification = (notification: AppNotification) => {
     markRead(notification.id);

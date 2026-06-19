@@ -45,7 +45,7 @@ export function MobileOfferDetailView({
       </div>
 
       <MobileOffersPanel className="mt-5 overflow-hidden">
-        <div className="relative min-h-[318px]">
+        <div className="relative min-h-[254px] min-[390px]:min-h-[318px]">
           <Image
             alt={offer.title}
             className="object-cover"
@@ -56,20 +56,20 @@ export function MobileOfferDetailView({
             src={offer.imageUrl}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.10)_0%,rgba(0,0,0,0.88)_78%,rgba(0,0,0,0.96)_100%)]" />
-          <div className="relative z-10 flex min-h-[318px] flex-col justify-end p-5">
+          <div className="relative z-10 flex min-h-[254px] flex-col justify-end p-4 min-[390px]:min-h-[318px] min-[390px]:p-5">
             <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
               Member code
             </p>
-            <h1 className="editorial-title mt-3 text-[36px] uppercase leading-[0.96] text-white min-[390px]:text-[42px]">
+            <h1 className="editorial-title mt-3 text-[32px] uppercase leading-[0.96] text-white min-[390px]:text-[42px]">
               {offer.title}
             </h1>
-            <p className="mt-3 text-[16px] font-semibold leading-6 text-[var(--sb-red-bright)]">
+            <p className="mt-2 text-[15px] font-semibold leading-6 text-[var(--sb-red-bright)] min-[390px]:mt-3 min-[390px]:text-[16px]">
               {offer.subtitle}
             </p>
           </div>
         </div>
 
-        <div className="p-5">
+        <div className="p-4 min-[390px]:p-5">
           <div className="grid grid-cols-[1fr_94px] overflow-hidden rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/46 min-[390px]:grid-cols-[1fr_112px]">
             <div className="min-w-0 p-4">
               <p className="text-[10px] uppercase tracking-[0.12em] text-white/46">

@@ -98,7 +98,7 @@ export function MobileOrderDetailsView({
               Ordered Items
             </h3>
             <div className="mt-3 divide-y divide-white/10">
-              {order.items.map((item) => (
+              {order.items.map((item, index) => (
                 <div
                   className="grid grid-cols-[104px_1fr_auto] gap-4 py-4 first:pt-0"
                   key={item.id}
@@ -108,6 +108,8 @@ export function MobileOrderDetailsView({
                       alt={item.menuItem.image.alt || item.menuItem.name}
                       className="object-cover"
                       fill
+                      loading="eager"
+                      priority={index === 0}
                       sizes="104px"
                       src={item.menuItem.image.publicUrl}
                     />

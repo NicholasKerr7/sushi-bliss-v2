@@ -240,13 +240,15 @@ function MobileActiveOrderCard({
             : "grid-cols-3",
         )}
       >
-        {visibleItems.map((item) => (
+        {visibleItems.map((item, index) => (
           <div className="min-w-0 text-center" key={item.id}>
             <div className="relative aspect-square overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/36">
               <Image
                 alt={item.menuItem.image.alt || item.menuItem.name}
                 className="object-cover"
                 fill
+                loading="eager"
+                priority={index === 0}
                 sizes="90px"
                 src={item.menuItem.image.publicUrl}
               />

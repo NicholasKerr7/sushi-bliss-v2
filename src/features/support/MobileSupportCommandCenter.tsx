@@ -59,24 +59,24 @@ export function MobileSupportCommandCenter({
         </button>
       ) : null}
 
-      <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+      <div className="mt-3 grid grid-cols-2 gap-2">
         {supportTopics.map((topic) => (
           <button
-            className="grid min-h-[84px] min-w-[196px] grid-cols-[38px_minmax(0,1fr)] items-center gap-3 rounded-[14px] border border-white/12 bg-black/30 p-3 text-left text-white/66 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-w-[216px] min-[390px]:rounded-[15px]"
+            className="grid min-h-[98px] min-w-0 grid-cols-[34px_minmax(0,1fr)] items-start gap-2.5 rounded-[14px] border border-white/12 bg-black/30 p-3 text-left text-white/66 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[104px] min-[390px]:grid-cols-[38px_minmax(0,1fr)] min-[390px]:gap-3 min-[390px]:rounded-[15px]"
             key={topic.id}
             onClick={() => onOpenRequest(topic.id)}
             type="button"
           >
             <MobileSupportIcon
-              className="h-9 w-9"
+              className="h-8 w-8 min-[390px]:h-9 min-[390px]:w-9"
               icon={getTopicIcon(topic.id)}
-              size={22}
+              size={20}
             />
             <span className="min-w-0">
-              <span className="block text-[12px] font-semibold uppercase tracking-[0.08em] text-white min-[390px]:text-[13px]">
+              <span className="block text-[11px] font-semibold uppercase leading-4 tracking-[0.06em] text-white min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]">
                 {topic.label}
               </span>
-              <span className="mt-1 line-clamp-1 block text-[11px] leading-4 text-white/50">
+              <span className="mt-1 line-clamp-2 block text-[10px] leading-4 text-white/50 min-[390px]:text-[11px]">
                 {topic.description}
               </span>
             </span>

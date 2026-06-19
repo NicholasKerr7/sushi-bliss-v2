@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { offers as allOffers } from "@/data/offers";
@@ -76,6 +76,10 @@ export function MobileOffersDashboard() {
       return true;
     });
   }, [currentTime, featuredOffer?.id, filter, query, sortedOffers]);
+
+  useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  }, [selectedOffer?.id]);
 
   const handleApplyOffer = async (offer: Offer) => {
     if (isOfferExpired(offer, currentTime)) {

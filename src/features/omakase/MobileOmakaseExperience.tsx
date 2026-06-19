@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CartDrawer } from "@/features/cart/CartDrawer";
@@ -29,6 +29,10 @@ export function MobileOmakaseExperience() {
     setSakePairingId,
     updateGuestCount,
   } = useOmakase();
+
+  useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  }, [reviewVisible]);
 
   return (
     <section

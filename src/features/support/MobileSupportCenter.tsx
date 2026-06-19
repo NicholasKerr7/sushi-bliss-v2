@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CartDrawer } from "@/features/cart/CartDrawer";
@@ -29,6 +29,10 @@ export function MobileSupportCenter() {
     null,
   );
   const [view, setView] = useState<MobileSupportView>("overview");
+
+  useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  }, [selectedArticle?.id, view]);
 
   const openRequest = (topicId?: string) => {
     setSelectedArticle(null);

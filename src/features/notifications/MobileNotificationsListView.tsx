@@ -134,7 +134,7 @@ export function MobileNotificationsListView({
             {getNoticeCountLabel(allNotifications.length)}
           </p>
         </div>
-        <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+        <div className="mt-3 grid grid-cols-3 gap-2">
           {categoryCounts.map(({ category, count }) => (
             <NotificationCategoryButton
               active={activeFilter === category}
@@ -149,14 +149,14 @@ export function MobileNotificationsListView({
 
       <div
         aria-label="Notification filters"
-        className="mt-4 flex gap-2 overflow-x-auto pb-1"
+        className="mt-4 grid grid-cols-3 gap-2 min-[390px]:grid-cols-4"
         role="toolbar"
       >
         {notificationFilters.map((filter) => (
           <button
             aria-pressed={activeFilter === filter.id}
             className={classNames(
-              "min-h-[42px] shrink-0 rounded-full border px-4 text-[12px] uppercase tracking-[0.08em]",
+              "min-h-[42px] min-w-0 rounded-full border px-2 text-[11px] uppercase tracking-[0.06em] min-[390px]:px-3 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]",
               activeFilter === filter.id
                 ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/22 text-[var(--sb-red-bright)]"
                 : "border-white/12 bg-black/24 text-white/56",
@@ -233,7 +233,7 @@ function NotificationCategoryButton({
     <button
       aria-pressed={active}
       className={classNames(
-        "flex min-h-[68px] min-w-[90px] flex-col items-center justify-center rounded-[13px] border bg-black/30 px-2.5 py-1.5 text-center transition disabled:cursor-not-allowed disabled:opacity-45 min-[390px]:min-h-[76px] min-[390px]:min-w-[100px] min-[390px]:rounded-[15px]",
+        "flex min-h-[70px] min-w-0 flex-col items-center justify-center rounded-[13px] border bg-black/30 px-2 py-1.5 text-center transition disabled:cursor-not-allowed disabled:opacity-45 min-[390px]:min-h-[76px] min-[390px]:rounded-[15px]",
         active
           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/16 text-[var(--sb-red-bright)]"
           : "border-white/12 text-white/62",
@@ -246,7 +246,7 @@ function NotificationCategoryButton({
         category={category}
         className="h-7 w-7 min-[390px]:h-8 min-[390px]:w-8"
       />
-      <span className="mt-1 whitespace-nowrap text-[9px] uppercase tracking-[0.08em]">
+      <span className="mt-1 whitespace-nowrap text-[8px] uppercase tracking-[0.06em] min-[390px]:text-[9px] min-[390px]:tracking-[0.08em]">
         {notificationCategoryLabels[category]}
       </span>
       <span className="mt-0.5 font-mono text-[14px] leading-none min-[390px]:text-[15px]">

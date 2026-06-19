@@ -294,7 +294,7 @@ function OrderItemPreview({
         </p>
       ) : null}
       <div className="flex min-w-0 items-center gap-3">
-        {order.items.slice(0, 3).map((item) => (
+        {order.items.slice(0, 3).map((item, index) => (
           <div
             className={classNames(
               "relative shrink-0 overflow-hidden rounded-[10px] border border-white/10 bg-black/30",
@@ -306,6 +306,8 @@ function OrderItemPreview({
               alt=""
               className="object-cover"
               fill
+              loading="eager"
+              priority={index === 0}
               sizes={compact ? "82px" : "94px"}
               src={item.menuItem.image.publicUrl}
             />

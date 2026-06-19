@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CartDrawer } from "@/features/cart/CartDrawer";
@@ -50,6 +50,10 @@ export function MobileGiftExperience() {
   );
   const selectedGift =
     giftExperiences.find((gift) => gift.id === selectedGiftId) || defaultGift;
+
+  useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  }, [view]);
 
   if (!selectedGift) {
     return null;
