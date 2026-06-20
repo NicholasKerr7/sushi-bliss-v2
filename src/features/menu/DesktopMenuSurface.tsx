@@ -6,8 +6,11 @@ import { useState, type ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { featuredAssets } from "@/features/home/visualHomeData";
 import { useCart } from "@/hooks/useCart";
+import {
+  getTabletPresentationImage,
+  TABLET_OTORO_HERO_IMAGE,
+} from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import {
   getMenuItemOrderAction,
@@ -70,6 +73,65 @@ const desktopDietaryOptions = [
 ] as const;
 const desktopSpiceOptions = ["Spicy Level", "Mild", "Hot"] as const;
 const desktopSortOptions = ["Sort By", "Price Low", "Price High"] as const;
+
+const desktopHeroContent = {
+  all: {
+    accent: "Japanese Cuisine",
+    description: "Sourced daily. Crafted by masters. Served with passion.",
+    eyebrow: "Explore our menu",
+    image: getTabletPresentationImage(menuHeroItem),
+    imagePosition: "object-[72%_42%]",
+    title: "Exceptional",
+  },
+  "chef-specials": {
+    description:
+      "Rare cuts, premium finishes, and chef-driven signatures prepared with ceremony.",
+    eyebrow: "Chef signatures",
+    image: "/assets/editorial/luxury-seafood-and-wagyu-selection.webp",
+    imagePosition: "object-[68%_46%]",
+    title: "Chef Specials",
+  },
+  drinks: {
+    description:
+      "Order zero-proof and tea online, or reserve rare sake, cocktails, and Liquid Omakase pairings for the dining room.",
+    eyebrow: "Beverage Pairings",
+    image: "/assets/drinks/akai-tsuki-red-moon-cocktail.webp",
+    imagePosition: "object-[58%_48%]",
+    title: "Drinks",
+  },
+  nigiri: {
+    description:
+      "Experience the pure art of nigiri. Hand-pressed perfection, featuring the finest fish and seasonal ingredients.",
+    eyebrow: "Our Menu",
+    image: TABLET_OTORO_HERO_IMAGE,
+    imagePosition: "object-[70%_46%]",
+    title: "Nigiri",
+  },
+  rolls: {
+    description:
+      "Layered maki, precise cuts, and signature rolls built for texture, balance, and richness.",
+    eyebrow: "Signature rolls",
+    image: "/assets/food/sushi-rolls-with-warm-cinematic-glow.webp",
+    imagePosition: "object-[66%_52%]",
+    title: "Rolls",
+  },
+  sashimi: {
+    description:
+      "Clean slices of premium fish served with restraint, clarity, and seasonal garnish.",
+    eyebrow: "Pure cuts",
+    image: "/assets/editorial/elegant-sashimi-platter-on-slate.webp",
+    imagePosition: "object-[72%_48%]",
+    title: "Sashimi",
+  },
+  vegetarian: {
+    description:
+      "Plant-forward sushi with bright vegetables, seasoned rice, and elegant umami.",
+    eyebrow: "Plant-forward",
+    image: "/assets/menu/sushi/vegetarian-temaki.webp",
+    imagePosition: "object-[70%_50%]",
+    title: "Vegetarian",
+  },
+} as const;
 
 function getDesktopMenuSearchText(item: MenuItem) {
   return `${item.name} ${item.description} ${item.ingredients.join(" ")} ${item.tags.join(" ")}`.toLowerCase();
@@ -624,59 +686,40 @@ function DesktopMenuHero({
   onAddToCart: DesktopMenuAddHandler;
   onViewDetails: DesktopMenuViewHandler;
 }) {
-  const isNigiri = category === "nigiri";
-  const isDrinks = category === "drinks";
+  const hero =
+    desktopHeroContent[category as keyof typeof desktopHeroContent] ||
+    desktopHeroContent.all;
+  const showFeaturedActions = category === "all";
 
   return (
     <section className="relative min-h-[236px] overflow-hidden rounded-[16px] border border-white/10 min-[1500px]:min-h-[174px]">
       <Image
-        alt=""
-        className={classNames(
-          "object-cover",
-          isDrinks ? "object-[58%_48%]" : "object-[72%_42%]",
-        )}
+        alt={`${hero.title} menu presentation`}
+        className={classNames("object-cover", hero.imagePosition)}
         fetchPriority="high"
         fill
         loading="eager"
         priority
         sizes="1200px"
-        src={
-          isDrinks
-            ? "/assets/drinks/akai-tsuki-red-moon-cocktail.webp"
-            : featuredAssets.heroSushi.publicUrl
-        }
+        src={hero.image}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,5,6,0.96),rgba(4,5,6,0.78)_42%,rgba(4,5,6,0.12)_78%,rgba(4,5,6,0.78))]" />
       <div className="relative z-10 flex min-h-[236px] flex-col justify-center px-9 min-[1500px]:min-h-[174px] min-[1500px]:px-2">
         <p className="text-[14px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-          {isDrinks
-            ? "Beverage Pairings"
-            : isNigiri
-              ? "Our Menu"
-              : "Explore our menu"}
+          {hero.eyebrow}
         </p>
         <h1 className="editorial-title mt-2 text-[44px] leading-[0.96] text-white min-[1500px]:text-[40px]">
-          {isDrinks ? (
-            "Drinks"
-          ) : isNigiri ? (
-            "Nigiri"
-          ) : (
-            <>
-              Exceptional
-              <span className="block text-[var(--sb-red-bright)]">
-                Japanese Cuisine
-              </span>
-            </>
-          )}
+          {hero.title}
+          {"accent" in hero ? (
+            <span className="block text-[var(--sb-red-bright)]">
+              {hero.accent}
+            </span>
+          ) : null}
         </h1>
         <p className="mt-3 max-w-[500px] text-[15px] leading-6 text-[var(--sb-gold-soft)]">
-          {isDrinks
-            ? "Order zero-proof and tea online, or reserve rare sake, cocktails, and Liquid Omakase pairings for the dining room."
-            : isNigiri
-              ? "Experience the pure art of nigiri. Hand-pressed perfection, featuring the finest fish and seasonal ingredients."
-              : "Sourced daily. Crafted by masters. Served with passion."}
+          {hero.description}
         </p>
-        {!isNigiri && !isDrinks ? (
+        {showFeaturedActions ? (
           <div className="mt-4 flex gap-3 min-[1500px]:hidden">
             <button
               className="red-glow-button h-11 w-[180px] rounded-[10px] text-[12px] uppercase tracking-[0.08em]"
