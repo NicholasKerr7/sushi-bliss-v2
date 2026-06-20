@@ -12,6 +12,8 @@ import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition, CartCustomization } from "@/types/order";
 
+import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnVisuals";
+
 interface MobileItemCustomizeViewProps {
   availableAddOns: CartAddOnDefinition[];
   customizations: CartCustomization[];
@@ -28,15 +30,6 @@ interface MobileItemCustomizeViewProps {
   onNotesChange: (notes: string) => void;
   onQuantityChange: (quantity: number) => void;
 }
-
-const addOnIcons: Record<string, string> = {
-  "caviar-5g": "/assets/icons/lotus-crown-icon.png",
-  "gold-flakes": "/assets/icons/star-icon.png",
-  "green-onion": "/assets/icons/vegetarian-sushi-icon.webp",
-  "ikura-salmon-roe": "/assets/icons/nigiri-icon.png",
-  "truffle-oil": "/assets/icons/miso-soup-icon.png",
-  "yuzu-zest": "/assets/icons/star-icon.png",
-};
 
 export function MobileItemCustomizeView({
   availableAddOns,
@@ -291,11 +284,14 @@ function MobileAddOnRow({
   checked: boolean;
   onToggle: (addOnId: string) => void;
 }) {
+  const imageSrc = getAddOnImageSrc(addOn.id);
+  const displayLabel = getCompactAddOnLabel(addOn.id, addOn.label);
+
   return (
     <button
       aria-pressed={checked}
       className={classNames(
-        "grid min-h-[78px] w-full grid-cols-[56px_1fr_42px] items-center gap-3 rounded-[14px] border px-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
+        "grid min-h-[78px] w-full grid-cols-[58px_minmax(0,1fr)_42px] items-center gap-3 rounded-[14px] border px-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
         checked
           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12"
           : "border-white/10 bg-white/[0.025]",
@@ -303,17 +299,18 @@ function MobileAddOnRow({
       onClick={() => onToggle(addOn.id)}
       type="button"
     >
-      <span className="grid h-[48px] w-[48px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/34">
+      <span className="grid h-[54px] w-[54px] place-items-center overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
         <AssetIcon
-          size={30}
-          src={addOnIcons[addOn.id] || "/assets/icons/star-icon.png"}
+          className="h-full w-full object-cover"
+          size={54}
+          src={imageSrc}
         />
       </span>
-      <span>
+      <span className="min-w-0">
         <span className="editorial-title block text-[16px] uppercase tracking-[0.04em]">
-          {addOn.label}
+          {displayLabel}
         </span>
-        <span className="mt-1 block text-[13px] text-white/58">
+        <span className="mt-1 block line-clamp-2 text-[13px] leading-5 text-white/58">
           {addOn.description}
         </span>
       </span>

@@ -5,25 +5,7 @@ import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { CartAddOnDefinition } from "@/types/order";
 
-const addOnIconById: Record<string, string> = {
-  "caviar-5g": "/assets/ingredients/caviar.webp",
-  edamame: "/assets/food/edamame-in-a-rustic-bowl.webp",
-  "edamame-side": "/assets/food/edamame-in-a-rustic-bowl.webp",
-  "gold-flakes": "/assets/ingredients/gold-flakes.webp",
-  "green-onion": "/assets/ingredients/green-onions.webp",
-  "ikura-salmon-roe": "/assets/ingredients/ikura-salmon-roe.webp",
-  "miso-soup-side": "/assets/food/steaming-miso-soup-in-a-dark-bowl.webp",
-  "pickled-ginger-side": "/assets/ingredients/pickled-ginger.webp",
-  "seaweed-salad-side": "/assets/ingredients/seaweed-salad.webp",
-  "truffle-oil": "/assets/ingredients/truffle-oil.webp",
-  "yuzu-zest": "/assets/ingredients/yuzu-zest.webp",
-};
-
-const addOnDisplayLabelById: Record<string, string> = {
-  "caviar-5g": "Caviar 5g",
-  "green-onion": "Scallion",
-  "ikura-salmon-roe": "Ikura roe",
-};
+import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnVisuals";
 
 export function DesktopAddOnButton({
   addOn,
@@ -36,8 +18,8 @@ export function DesktopAddOnButton({
   compact?: boolean;
   onToggle: (addOnId: string) => void;
 }) {
-  const icon = addOnIconById[addOn.id] || "/assets/icons/plus-icon.png";
-  const displayLabel = addOnDisplayLabelById[addOn.id] || addOn.label;
+  const icon = getAddOnImageSrc(addOn.id);
+  const displayLabel = getCompactAddOnLabel(addOn.id, addOn.label);
 
   return (
     <label

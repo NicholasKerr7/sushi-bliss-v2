@@ -11,25 +11,14 @@ import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition } from "@/types/order";
 
+import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnVisuals";
+
 const itemHighlights = [
   { icon: icons.crown, label: "Premium Grade", value: "Bluefin Tuna" },
   { icon: icons.chef, label: "Handcrafted", value: "To Order" },
   { icon: icons.flower, label: "Fresh Wasabi", value: "Authentic" },
   { icon: icons.clock, label: "Served Chilled", value: "Optimal Temp" },
 ] as const;
-
-const addOnIconById: Record<string, string | undefined> = {
-  "caviar-5g": icons.crown,
-  "edamame-side": icons.leaf,
-  "gold-flakes": icons.flower,
-  "green-onion": icons.leaf,
-  "ikura-salmon-roe": icons.nigiri,
-  "miso-soup-side": icons.miso,
-  "pickled-ginger-side": icons.star,
-  "seaweed-salad-side": icons.leaf,
-  "truffle-oil": icons.miso,
-  "yuzu-zest": icons.star,
-};
 
 interface ProductStoryCardProps {
   galleryImages: string[];
@@ -186,6 +175,9 @@ export function AddOnCard({
   itemId,
   onToggle,
 }: AddOnCardProps) {
+  const imageSrc = getAddOnImageSrc(addOn.id);
+  const displayLabel = getCompactAddOnLabel(addOn.id, addOn.label);
+
   return (
     <label
       className="cursor-pointer"
@@ -202,22 +194,31 @@ export function AddOnCard({
         className={classNames(
           "grid items-center rounded-[12px] border border-white/10 bg-black/20 transition peer-checked:border-[var(--sb-red-bright)] peer-checked:bg-[var(--sb-red)]/10",
           compact
-            ? "min-h-[44px] grid-cols-[28px_1fr_24px] gap-2 px-2.5 py-1"
-            : "min-h-[58px] grid-cols-[34px_1fr_28px] gap-3 px-3 py-2",
+            ? "min-h-[48px] grid-cols-[36px_minmax(0,1fr)_22px] gap-2 px-2 py-1.5"
+            : "min-h-[62px] grid-cols-[46px_minmax(0,1fr)_28px] gap-3 px-3 py-2",
         )}
       >
-        <AssetIcon
-          size={compact ? 22 : 26}
-          src={addOnIconById[addOn.id] || icons.star}
-        />
-        <span>
+        <span
+          className={classNames(
+            "grid place-items-center overflow-hidden rounded-[9px] border border-white/10 bg-black/34",
+            compact ? "h-9 w-9" : "h-11 w-11",
+          )}
+        >
+          <AssetIcon
+            className="h-full w-full object-cover"
+            size={compact ? 36 : 44}
+            src={imageSrc}
+          />
+        </span>
+        <span className="min-w-0">
           <span
             className={classNames(
-              "block font-semibold leading-tight text-white/82",
+              "block truncate font-semibold leading-tight text-white/82",
               compact ? "text-[12px]" : "text-[13px]",
             )}
+            title={addOn.label}
           >
-            {addOn.label}
+            {displayLabel}
           </span>
           <span
             className={classNames(
