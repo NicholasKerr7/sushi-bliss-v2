@@ -359,7 +359,7 @@ export function DesktopMenuSurface({
           </>
         )}
 
-        <p className="mt-3 text-[13px] text-white/50 min-[1500px]:sr-only">
+        <p className="mt-2 text-[12px] text-white/50 min-[1500px]:sr-only">
           Showing{" "}
           <span className="font-mono text-[var(--sb-gold-soft)]">
             {visibleItemCount}
@@ -384,7 +384,7 @@ export function DesktopMenuSurface({
           <>
             <DesktopMenuSection title={`${selectedCategoryLabel} Menu`}>
               {visibleCategoryItems.length > 0 ? (
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-4 gap-3 min-[1500px]:gap-4">
                   {visibleCategoryItems.slice(0, 8).map((item, index) => (
                     <DesktopFeatureMenuCard
                       badge={index === 0 ? "Chef's Pick" : undefined}
@@ -411,7 +411,7 @@ export function DesktopMenuSurface({
         ) : (
           <>
             <DesktopMenuSection action="View full menu" title="Chef's Specials">
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-3 min-[1500px]:gap-4">
                 {chefSpecialItems.map((item, index) => (
                   <DesktopFeatureMenuCard
                     badge={
@@ -514,7 +514,7 @@ function DesktopFilterControls({
   return (
     <div
       className={classNames(
-        "mt-4 grid gap-3",
+        "mt-3 grid gap-3",
         isCategoryPage && isDrinkCategory
           ? "grid-cols-[minmax(0,1fr)_170px_170px] min-[1500px]:mt-4 min-[1500px]:grid-cols-[minmax(360px,1fr)_190px_170px]"
           : isCategoryPage
@@ -531,7 +531,7 @@ function DesktopFilterControls({
         />
         <input
           aria-label="Search menu items"
-          className="h-[58px] w-full rounded-[13px] border border-white/14 bg-black/28 pl-12 pr-4 text-[14px] font-semibold text-white outline-none transition placeholder:text-white/44 hover:border-[var(--sb-gold)]/34 hover:bg-white/[0.055] focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/25"
+          className="h-[54px] w-full rounded-[13px] border border-white/14 bg-black/28 pl-12 pr-4 text-[14px] font-semibold text-white outline-none transition placeholder:text-white/44 hover:border-[var(--sb-gold)]/34 hover:bg-white/[0.055] focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/25 min-[1500px]:h-[58px]"
           onChange={(event) => onQueryChange(event.target.value)}
           placeholder={placeholder}
           value={query}
@@ -583,7 +583,7 @@ function DesktopCategoryNav({
   return (
     <nav
       aria-label="Desktop menu categories"
-      className="mt-4 grid grid-cols-[1.28fr_0.7fr_0.7fr_0.78fr_1.28fr_1.04fr_0.62fr] gap-2 min-[1500px]:grid-cols-[1.16fr_0.74fr_0.74fr_0.84fr_1.18fr_1fr_0.74fr] min-[1500px]:gap-3"
+      className="mt-3 grid grid-cols-[1.28fr_0.7fr_0.7fr_0.78fr_1.28fr_1.04fr_0.62fr] gap-2 min-[1500px]:mt-4 min-[1500px]:grid-cols-[1.16fr_0.74fr_0.74fr_0.84fr_1.18fr_1fr_0.74fr] min-[1500px]:gap-3"
     >
       {desktopCategoryButtons.map(([id, label, icon]) => {
         const disabled =
@@ -692,7 +692,7 @@ function DesktopMenuHero({
   const showFeaturedActions = category === "all";
 
   return (
-    <section className="relative min-h-[236px] overflow-hidden rounded-[16px] border border-white/10 min-[1500px]:min-h-[174px]">
+    <section className="relative min-h-[216px] overflow-hidden rounded-[16px] border border-white/10 min-[1500px]:min-h-[174px]">
       <Image
         alt={`${hero.title} menu presentation`}
         className={classNames("object-cover", hero.imagePosition)}
@@ -704,11 +704,11 @@ function DesktopMenuHero({
         src={hero.image}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,5,6,0.96),rgba(4,5,6,0.78)_42%,rgba(4,5,6,0.12)_78%,rgba(4,5,6,0.78))]" />
-      <div className="relative z-10 flex min-h-[236px] flex-col justify-center px-9 min-[1500px]:min-h-[174px] min-[1500px]:px-2">
+      <div className="relative z-10 flex min-h-[216px] flex-col justify-center px-8 min-[1500px]:min-h-[174px] min-[1500px]:px-2">
         <p className="text-[14px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
           {hero.eyebrow}
         </p>
-        <h1 className="editorial-title mt-2 text-[44px] leading-[0.96] text-white min-[1500px]:text-[40px]">
+        <h1 className="editorial-title mt-2 text-[42px] leading-[0.96] text-white min-[1500px]:text-[40px]">
           {hero.title}
           {"accent" in hero ? (
             <span className="block text-[var(--sb-red-bright)]">
@@ -716,7 +716,7 @@ function DesktopMenuHero({
             </span>
           ) : null}
         </h1>
-        <p className="mt-3 max-w-[500px] text-[15px] leading-6 text-[var(--sb-gold-soft)]">
+        <p className="mt-2 max-w-[500px] text-[15px] leading-6 text-[var(--sb-gold-soft)]">
           {hero.description}
         </p>
         {showFeaturedActions ? (
@@ -841,7 +841,7 @@ function DesktopFeatureMenuCard({
   const orderAction = getMenuItemOrderAction(item);
 
   return (
-    <article className="relative min-h-[176px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/42">
+    <article className="relative min-h-[210px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/42 min-[1500px]:min-h-[204px]">
       {badge ? (
         <span className="absolute left-0 top-0 z-10 rounded-br-[12px] bg-[var(--sb-red)]/86 px-2.5 py-1 text-[10px] uppercase text-white">
           {badge}
@@ -859,8 +859,8 @@ function DesktopFeatureMenuCard({
       >
         <div
           className={classNames(
-            "relative h-[108px]",
-            compactDesktop ? "min-[1500px]:h-[86px]" : "min-[1500px]:h-24",
+            "relative h-[96px]",
+            compactDesktop ? "min-[1500px]:h-[82px]" : "min-[1500px]:h-[90px]",
           )}
         >
           <Image
@@ -875,25 +875,25 @@ function DesktopFeatureMenuCard({
         </div>
         <div
           className={classNames(
-            "p-3.5",
+            "px-3.5 py-3 pr-12",
             compactDesktop
-              ? "min-[1500px]:p-3"
-              : "min-[1500px]:px-3.5 min-[1500px]:py-3",
+              ? "min-[1500px]:px-3 min-[1500px]:py-2.5 min-[1500px]:pr-12"
+              : "min-[1500px]:px-3.5 min-[1500px]:py-2.5 min-[1500px]:pr-12",
           )}
         >
           <h3
             className={classNames(
-              "line-clamp-2 min-h-[48px] text-[17px] leading-6 text-white",
+              "line-clamp-2 min-h-[42px] text-[16px] leading-[21px] text-white",
               compactDesktop
                 ? "min-[1500px]:text-[15px]"
-                : "min-[1500px]:text-[16px] min-[1500px]:leading-5",
+                : "min-[1500px]:text-[15px] min-[1500px]:leading-5",
             )}
           >
             {displayName || item.name}
           </h3>
           <p
             className={classNames(
-              "mt-1 line-clamp-1 text-[13px] text-white/58",
+              "mt-1 line-clamp-1 text-[12px] text-white/58",
               compactDesktop ? "" : "min-[1500px]:leading-5",
             )}
           >
@@ -903,7 +903,7 @@ function DesktopFeatureMenuCard({
           </p>
           <p
             className={classNames(
-              "mt-2 text-[17px] text-[var(--sb-gold-soft)]",
+              "mt-2 text-[16px] text-[var(--sb-gold-soft)]",
               compactDesktop ? "" : "min-[1500px]:leading-5",
             )}
           >
