@@ -437,6 +437,33 @@ test.describe("customer experience", () => {
     ).toBeVisible();
   });
 
+  test("fills wide-mobile profile shortcut grids", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("mobile"),
+      "Wide-mobile profile grid check is only relevant to the mobile layout.",
+    );
+
+    await page.setViewportSize({ height: 932, width: 425 });
+    await page.goto("/profile");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const commandCenter = page.locator(
+      'section[aria-labelledby="mobile-profile-command-center-title"]',
+    );
+    const exploreDirectory = page.locator(
+      'section[aria-labelledby="mobile-explore-directory-title"]',
+    );
+
+    await expect(
+      commandCenter.getByRole("link", { name: "Support: Concierge" }),
+    ).toBeVisible();
+    await expect(
+      exploreDirectory.getByRole("link", { name: /Profile Manage saved/i }),
+    ).toBeVisible();
+  });
+
   test("prefills liquid omakase reservation intent on desktop", async ({
     page,
   }, testInfo) => {

@@ -84,6 +84,14 @@ export const customerExploreSections: ExploreNavigationSection[] = [
         label: "Loyalty",
       },
       {
+        description:
+          "Manage saved account, address, payment, and preference details.",
+        href: "/profile",
+        iconUrl: "/assets/icons/user-settings-icon.png",
+        id: "profile",
+        label: "Profile",
+      },
+      {
         description: "Return to saved dishes and private experiences.",
         href: "/favorites",
         iconUrl: "/assets/icons/heart-icon.png",

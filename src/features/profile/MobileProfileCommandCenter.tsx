@@ -96,6 +96,12 @@ export function MobileProfileCommandCenter({
           label="Offers"
           value="Member drops"
         />
+        <CommandLink
+          href="/support"
+          icon="/assets/icons/headset-icon.png"
+          label="Support"
+          value="Concierge"
+        />
       </div>
     </section>
   );
