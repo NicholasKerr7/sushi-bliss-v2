@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -11,6 +12,7 @@ import { icons } from "./visualHomeData";
 
 interface HomeMenuCardProps {
   badge: string;
+  className?: string;
   item: MenuItem;
   onAddToCart: (item: MenuItem) => void;
   priority?: boolean;
@@ -19,13 +21,19 @@ interface HomeMenuCardProps {
 
 export function HomeMenuCard({
   badge,
+  className,
   item,
   onAddToCart,
   priority = false,
   viewHref = "/menu",
 }: HomeMenuCardProps) {
   return (
-    <article className="relative min-w-0 overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/62">
+    <article
+      className={classNames(
+        "relative min-w-0 overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/62",
+        className,
+      )}
+    >
       <span className="absolute left-0 top-0 z-10 rounded-br-[12px] bg-[var(--sb-red)]/86 px-2 py-1 text-[10px] uppercase text-white">
         {badge}
       </span>

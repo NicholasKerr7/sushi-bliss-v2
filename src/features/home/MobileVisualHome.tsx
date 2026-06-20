@@ -230,6 +230,7 @@ function FeaturedMenuRail({
     dashboardCategories.find((category) => category.id === activeCategory)
       ?.label || "Featured";
   const categoryHref = `/menu?category=${activeCategory}`;
+  const cardBadges = ["Hot", "Popular", "Chef's Specials", "Signature"];
 
   return (
     <section className="mt-6" id="mobile-featured-menu">
@@ -247,11 +248,10 @@ function FeaturedMenuRail({
         </Link>
       </div>
       <div className="mt-3 grid grid-cols-1 gap-3 min-[390px]:grid-cols-2">
-        {items.slice(0, 3).map((item, index) => (
+        {items.slice(0, 4).map((item, index) => (
           <HomeMenuCard
-            badge={
-              index === 0 ? "Hot" : index === 1 ? "Popular" : "Chef's Specials"
-            }
+            badge={cardBadges[index] || "Signature"}
+            className={index === 3 ? "max-[389px]:hidden" : undefined}
             item={item}
             key={item.id}
             onAddToCart={onAddToCart}

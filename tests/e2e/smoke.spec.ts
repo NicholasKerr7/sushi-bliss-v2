@@ -406,6 +406,37 @@ test.describe("customer experience", () => {
     ).toBeVisible();
   });
 
+  test("fills the wide-mobile home featured grid", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("mobile"),
+      "Wide-mobile featured grid is only relevant to the mobile layout.",
+    );
+
+    await page.setViewportSize({ height: 932, width: 425 });
+    await page.goto("/home");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const featuredRail = page.locator("#mobile-featured-menu");
+
+    await expect(
+      featuredRail.getByRole("heading", { name: "Nigiri Picks" }),
+    ).toBeVisible();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Otoro Nigiri" }).first(),
+    ).toBeVisible();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Salmon Nigiri" }).first(),
+    ).toBeVisible();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Hamachi Nigiri" }).first(),
+    ).toBeVisible();
+    await expect(
+      featuredRail.getByRole("heading", { name: "Scallop Nigiri" }).first(),
+    ).toBeVisible();
+  });
+
   test("prefills liquid omakase reservation intent on desktop", async ({
     page,
   }, testInfo) => {
