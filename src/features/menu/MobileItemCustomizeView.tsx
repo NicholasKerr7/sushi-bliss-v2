@@ -137,7 +137,7 @@ export function MobileItemCustomizeView({
             </div>
           </div>
           <div className="mt-4 grid gap-3">
-            {availableAddOns.slice(0, 4).map((addOn) => (
+            {availableAddOns.map((addOn) => (
               <MobileAddOnRow
                 addOn={addOn}
                 checked={selectedAddOnIds.includes(addOn.id)}
@@ -300,10 +300,14 @@ function MobileAddOnRow({
       type="button"
     >
       <span className="grid h-[54px] w-[54px] place-items-center overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
-        <AssetIcon
+        <Image
+          alt=""
           className="h-full w-full object-cover"
-          size={54}
+          height={54}
+          loading="eager"
+          sizes="54px"
           src={imageSrc}
+          width={54}
         />
       </span>
       <span className="min-w-0">

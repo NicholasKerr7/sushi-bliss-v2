@@ -349,7 +349,7 @@ export function DesktopItemCustomizeView({
         Back to menu
       </button>
 
-      <section className="grid h-[690px] grid-cols-[0.4fr_0.37fr_0.23fr] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)]">
+      <section className="grid min-h-[720px] grid-cols-[minmax(0,0.36fr)_minmax(390px,0.39fr)_minmax(286px,0.25fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)] min-[1500px]:grid-cols-[minmax(0,0.38fr)_minmax(430px,0.38fr)_minmax(320px,0.24fr)]">
         <div className="relative min-h-0 overflow-hidden">
           <Image
             alt={item.image.alt || item.name}
@@ -391,8 +391,8 @@ export function DesktopItemCustomizeView({
           </div>
         </div>
 
-        <div className="min-h-0 space-y-1.5 border-l border-white/10 p-4">
-          <section className="grid grid-cols-[1fr_126px_92px] items-center gap-4 border-b border-white/10 pb-2">
+        <div className="min-h-0 space-y-3 border-l border-white/10 p-3.5 min-[1500px]:p-4">
+          <section className="grid grid-cols-[minmax(0,1fr)_126px_96px] items-center gap-4 border-b border-white/10 pb-3">
             <h2 className="editorial-title text-[17px] uppercase tracking-[0.08em]">
               Quantity
             </h2>
@@ -412,7 +412,7 @@ export function DesktopItemCustomizeView({
           </section>
 
           <CustomizeGroup title="Add-ons">
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-2.5">
               {availableAddOns.map((addOn) => (
                 <DesktopAddOnButton
                   addOn={addOn}
@@ -425,7 +425,7 @@ export function DesktopItemCustomizeView({
           </CustomizeGroup>
 
           <CustomizeGroup title="Preparation">
-            <div className="grid gap-2">
+            <div className="grid gap-2.5">
               {cartCustomizationGroups.map((group) => {
                 const selected = customizations.find(
                   (customization) => customization.groupId === group.id,
@@ -433,7 +433,7 @@ export function DesktopItemCustomizeView({
 
                 return (
                   <fieldset
-                    className="grid grid-cols-[66px_1fr] items-center gap-3"
+                    className="grid grid-cols-[74px_minmax(0,1fr)] items-center gap-3"
                     key={group.id}
                   >
                     <legend className="sr-only">{group.label}</legend>
@@ -451,7 +451,7 @@ export function DesktopItemCustomizeView({
                       {group.options.map((option) => (
                         <label
                           className={classNames(
-                            "grid min-h-[34px] min-w-0 cursor-pointer place-items-center rounded-[9px] border px-2 text-center text-[12px] transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
+                            "grid min-h-[38px] min-w-0 cursor-pointer place-items-center rounded-[9px] border px-2 text-center text-[12px] transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
                             selected?.optionId === option.id
                               ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12 text-white"
                               : "border-white/12 bg-white/[0.025] text-white/58",
@@ -480,7 +480,7 @@ export function DesktopItemCustomizeView({
           </CustomizeGroup>
 
           <CustomizeGroup title="Side options">
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2.5">
               {availableSidePairings.slice(0, 4).map((addOn) => (
                 <DesktopAddOnButton
                   addOn={addOn}
@@ -495,7 +495,7 @@ export function DesktopItemCustomizeView({
 
           <CustomizeGroup title="Special instructions">
             <textarea
-              className="min-h-[42px] w-full resize-none rounded-[10px] border border-white/12 bg-black/24 px-4 py-2.5 text-[13px] text-white outline-none placeholder:text-white/35 focus:border-[var(--sb-gold)]"
+              className="min-h-[64px] w-full resize-none rounded-[12px] border border-white/12 bg-black/24 px-4 py-3 text-[13px] text-white outline-none placeholder:text-white/35 focus:border-[var(--sb-gold)]"
               maxLength={180}
               onChange={(event) => onNotesChange(event.target.value)}
               placeholder="Any special requests or notes for our chef..."
@@ -504,12 +504,12 @@ export function DesktopItemCustomizeView({
           </CustomizeGroup>
         </div>
 
-        <aside className="min-h-0 border-l border-white/10 p-5">
+        <aside className="min-h-0 border-l border-white/10 p-4 min-[1500px]:p-5">
           <h2 className="editorial-title text-[20px] uppercase tracking-[0.08em]">
             Your selection
           </h2>
-          <div className="mt-5 grid grid-cols-[88px_1fr_auto] gap-4 border-b border-white/10 pb-5">
-            <div className="relative h-[74px] overflow-hidden rounded-[9px]">
+          <div className="mt-5 grid grid-cols-[76px_minmax(0,1fr)] gap-4 border-b border-white/10 pb-5">
+            <div className="relative h-[68px] overflow-hidden rounded-[10px]">
               <Image
                 alt=""
                 className="object-cover"
@@ -518,16 +518,18 @@ export function DesktopItemCustomizeView({
                 src={item.image.publicUrl}
               />
             </div>
-            <div>
+            <div className="min-w-0">
               <p className="font-semibold text-white">{item.name}</p>
-              <p className="mt-1 text-[13px] text-white/54">
+              <p className="mt-1 line-clamp-2 text-[13px] leading-5 text-white/54">
                 {item.description}
               </p>
-              <p className="mt-2 font-mono text-[var(--sb-gold-soft)]">
-                {formatMoney(item.priceCents)}
-              </p>
+              <div className="mt-2 flex items-center justify-between gap-3">
+                <p className="font-mono text-[var(--sb-gold-soft)]">
+                  {formatMoney(item.priceCents)}
+                </p>
+                <p className="font-mono text-sm text-white/72">x {quantity}</p>
+              </div>
             </div>
-            <p className="font-mono text-sm text-white/72">x {quantity}</p>
           </div>
 
           <SelectionSummary

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
@@ -18,16 +19,17 @@ export function DesktopAddOnButton({
   compact?: boolean;
   onToggle: (addOnId: string) => void;
 }) {
-  const icon = getAddOnImageSrc(addOn.id);
+  const imageSrc = getAddOnImageSrc(addOn.id);
   const displayLabel = getCompactAddOnLabel(addOn.id, addOn.label);
+  const imageSize = compact ? 50 : 58;
 
   return (
     <label
       className={classNames(
-        "relative grid cursor-pointer items-center rounded-[10px] border text-left transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
+        "relative grid cursor-pointer items-center overflow-hidden rounded-[12px] border text-left transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
         compact
-          ? "min-h-[48px] grid-cols-[36px_minmax(0,1fr)_18px] gap-2 px-2 text-[11px]"
-          : "min-h-[54px] grid-cols-[38px_minmax(0,1fr)_20px] gap-2 px-2.5 text-[11px]",
+          ? "min-h-[64px] grid-cols-[50px_minmax(0,1fr)_22px] gap-2.5 px-2.5 py-2 text-[11px]"
+          : "min-h-[76px] grid-cols-[58px_minmax(0,1fr)_24px] gap-3 px-3 py-2.5 text-[12px]",
         checked
           ? "border-[var(--sb-red-bright)] bg-[linear-gradient(180deg,rgba(130,12,9,0.58),rgba(28,4,4,0.82))] text-white shadow-[inset_0_0_18px_rgba(255,35,22,0.16)]"
           : "border-white/12 bg-white/[0.025] text-white/66 hover:border-[var(--sb-gold)]/38 hover:bg-white/[0.045]",
@@ -41,21 +43,37 @@ export function DesktopAddOnButton({
       />
       <span
         className={classNames(
-          "grid place-items-center overflow-hidden rounded-[8px] border border-white/10 bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]",
-          compact ? "h-8 w-8" : "h-9 w-9",
+          "relative grid place-items-center overflow-hidden rounded-[10px] border border-white/10 bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]",
+          compact ? "h-12 w-12" : "h-14 w-14",
         )}
       >
-        <AssetIcon
+        <Image
+          alt=""
           className="h-full w-full object-cover"
-          size={compact ? 32 : 36}
-          src={icon}
+          height={imageSize}
+          loading="eager"
+          sizes={compact ? "50px" : "58px"}
+          src={imageSrc}
+          width={imageSize}
         />
+        <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.24))]" />
       </span>
       <span className="min-w-0">
-        <span className="block truncate leading-4" title={addOn.label}>
+        <span
+          className={classNames(
+            "block truncate font-semibold leading-4 text-white/88",
+            compact ? "text-[12px]" : "text-[13px]",
+          )}
+          title={addOn.label}
+        >
           {displayLabel}
         </span>
-        <span className="block font-mono text-[10px] leading-4 text-[var(--sb-gold-soft)]">
+        {compact ? null : (
+          <span className="mt-0.5 block truncate text-[11px] leading-4 text-white/45">
+            {addOn.description}
+          </span>
+        )}
+        <span className="mt-1 block font-mono text-[11px] leading-4 text-[var(--sb-gold-soft)]">
           +{formatMoney(addOn.priceCents)}
         </span>
       </span>

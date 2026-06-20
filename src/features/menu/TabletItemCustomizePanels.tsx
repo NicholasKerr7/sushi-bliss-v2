@@ -177,6 +177,7 @@ export function AddOnCard({
 }: AddOnCardProps) {
   const imageSrc = getAddOnImageSrc(addOn.id);
   const displayLabel = getCompactAddOnLabel(addOn.id, addOn.label);
+  const imageSize = compact ? 36 : 46;
 
   return (
     <label
@@ -200,15 +201,20 @@ export function AddOnCard({
       >
         <span
           className={classNames(
-            "grid place-items-center overflow-hidden rounded-[9px] border border-white/10 bg-black/34",
+            "relative grid place-items-center overflow-hidden rounded-[9px] border border-white/10 bg-black/34",
             compact ? "h-9 w-9" : "h-11 w-11",
           )}
         >
-          <AssetIcon
+          <Image
+            alt=""
             className="h-full w-full object-cover"
-            size={compact ? 36 : 44}
+            height={imageSize}
+            loading="eager"
+            sizes={compact ? "36px" : "46px"}
             src={imageSrc}
+            width={imageSize}
           />
+          <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.22))]" />
         </span>
         <span className="min-w-0">
           <span
