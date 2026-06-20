@@ -349,7 +349,7 @@ export function DesktopItemCustomizeView({
         Back to menu
       </button>
 
-      <section className="grid h-[690px] grid-cols-[0.42fr_0.34fr_0.24fr] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)]">
+      <section className="grid h-[690px] grid-cols-[0.4fr_0.37fr_0.23fr] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)]">
         <div className="relative min-h-0 overflow-hidden">
           <Image
             alt={item.image.alt || item.name}
@@ -391,7 +391,7 @@ export function DesktopItemCustomizeView({
           </div>
         </div>
 
-        <div className="min-h-0 space-y-2 border-l border-white/10 p-5">
+        <div className="min-h-0 space-y-1.5 border-l border-white/10 p-4">
           <section className="grid grid-cols-[1fr_126px_92px] items-center gap-4 border-b border-white/10 pb-2">
             <h2 className="editorial-title text-[17px] uppercase tracking-[0.08em]">
               Quantity
@@ -445,13 +445,13 @@ export function DesktopItemCustomizeView({
                     </span>
                     <div
                       aria-label={group.label}
-                      className="grid grid-cols-3 gap-2"
+                      className="grid min-w-0 grid-cols-3 gap-2"
                       role="radiogroup"
                     >
                       {group.options.map((option) => (
                         <label
                           className={classNames(
-                            "grid min-h-[36px] cursor-pointer place-items-center rounded-[9px] border px-2 text-center text-[12px] transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
+                            "grid min-h-[34px] min-w-0 cursor-pointer place-items-center rounded-[9px] border px-2 text-center text-[12px] transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
                             selected?.optionId === option.id
                               ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12 text-white"
                               : "border-white/12 bg-white/[0.025] text-white/58",
@@ -467,7 +467,9 @@ export function DesktopItemCustomizeView({
                             }
                             type="radio"
                           />
-                          {option.label}
+                          <span className="max-w-full truncate">
+                            {option.label}
+                          </span>
                         </label>
                       ))}
                     </div>
@@ -478,7 +480,7 @@ export function DesktopItemCustomizeView({
           </CustomizeGroup>
 
           <CustomizeGroup title="Side options">
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               {availableSidePairings.slice(0, 4).map((addOn) => (
                 <DesktopAddOnButton
                   addOn={addOn}

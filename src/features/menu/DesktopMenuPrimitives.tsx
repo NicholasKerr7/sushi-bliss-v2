@@ -9,14 +9,20 @@ const addOnIconById: Record<string, string> = {
   "caviar-5g": "/assets/ingredients/caviar.webp",
   edamame: "/assets/food/edamame-in-a-rustic-bowl.webp",
   "edamame-side": "/assets/food/edamame-in-a-rustic-bowl.webp",
-  "gold-flakes": "/assets/icons/star-icon.png",
-  "green-onion": "/assets/icons/vegetarian-sushi-icon.webp",
+  "gold-flakes": "/assets/ingredients/gold-flakes.webp",
+  "green-onion": "/assets/ingredients/green-onions.webp",
   "ikura-salmon-roe": "/assets/ingredients/ikura-salmon-roe.webp",
-  "miso-soup-side": "/assets/icons/miso-soup-icon.png",
-  "pickled-ginger-side": "/assets/icons/lotus-icon.png",
-  "seaweed-salad-side": "/assets/icons/vegetarian-sushi-icon.webp",
-  "truffle-oil": "/assets/editorial/sake-vase-set-black-gold-floral.webp",
-  "yuzu-zest": "/assets/icons/gold-alert-icon.png",
+  "miso-soup-side": "/assets/food/steaming-miso-soup-in-a-dark-bowl.webp",
+  "pickled-ginger-side": "/assets/ingredients/pickled-ginger.webp",
+  "seaweed-salad-side": "/assets/ingredients/seaweed-salad.webp",
+  "truffle-oil": "/assets/ingredients/truffle-oil.webp",
+  "yuzu-zest": "/assets/ingredients/yuzu-zest.webp",
+};
+
+const addOnDisplayLabelById: Record<string, string> = {
+  "caviar-5g": "Caviar 5g",
+  "green-onion": "Scallion",
+  "ikura-salmon-roe": "Ikura roe",
 };
 
 export function DesktopAddOnButton({
@@ -31,14 +37,15 @@ export function DesktopAddOnButton({
   onToggle: (addOnId: string) => void;
 }) {
   const icon = addOnIconById[addOn.id] || "/assets/icons/plus-icon.png";
+  const displayLabel = addOnDisplayLabelById[addOn.id] || addOn.label;
 
   return (
     <label
       className={classNames(
         "relative grid cursor-pointer items-center rounded-[10px] border text-left transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
         compact
-          ? "min-h-[42px] grid-cols-[26px_1fr] gap-2 px-2 text-[11px]"
-          : "min-h-[48px] grid-cols-[30px_1fr_20px] gap-2.5 px-2.5 text-[11px]",
+          ? "min-h-[48px] grid-cols-[36px_minmax(0,1fr)_18px] gap-2 px-2 text-[11px]"
+          : "min-h-[54px] grid-cols-[38px_minmax(0,1fr)_20px] gap-2 px-2.5 text-[11px]",
         checked
           ? "border-[var(--sb-red-bright)] bg-[linear-gradient(180deg,rgba(130,12,9,0.58),rgba(28,4,4,0.82))] text-white shadow-[inset_0_0_18px_rgba(255,35,22,0.16)]"
           : "border-white/12 bg-white/[0.025] text-white/66 hover:border-[var(--sb-gold)]/38 hover:bg-white/[0.045]",
@@ -52,22 +59,27 @@ export function DesktopAddOnButton({
       />
       <span
         className={classNames(
-          "grid place-items-center overflow-hidden rounded-[8px] border border-white/10 bg-black/34",
-          compact ? "h-6 w-6" : "h-7 w-7",
+          "grid place-items-center overflow-hidden rounded-[8px] border border-white/10 bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]",
+          compact ? "h-8 w-8" : "h-9 w-9",
         )}
       >
-        <AssetIcon size={compact ? 21 : 23} src={icon} />
+        <AssetIcon
+          className="h-full w-full object-cover"
+          size={compact ? 32 : 36}
+          src={icon}
+        />
       </span>
       <span className="min-w-0">
-        <span className="block leading-4">{addOn.label}</span>
-        <span className="font-mono text-[var(--sb-gold-soft)]">
+        <span className="block truncate leading-4" title={addOn.label}>
+          {displayLabel}
+        </span>
+        <span className="block font-mono text-[10px] leading-4 text-[var(--sb-gold-soft)]">
           +{formatMoney(addOn.priceCents)}
         </span>
       </span>
       <span
         className={classNames(
-          "grid h-5 w-5 place-items-center rounded-full border text-[11px]",
-          compact && "absolute right-1.5 top-1.5",
+          "grid h-[18px] w-[18px] place-items-center self-center justify-self-end rounded-full border text-[11px]",
           checked
             ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]"
             : "border-white/14",
@@ -124,11 +136,11 @@ export function CustomizeGroup({
   title: string;
 }) {
   return (
-    <section className="border-t border-white/10 pt-3">
-      <h2 className="editorial-title text-[15px] uppercase tracking-[0.08em]">
+    <section className="border-t border-white/10 pt-2.5">
+      <h2 className="editorial-title text-[14px] uppercase tracking-[0.08em]">
         {title}
       </h2>
-      <div className="mt-2">{children}</div>
+      <div className="mt-1.5">{children}</div>
     </section>
   );
 }
