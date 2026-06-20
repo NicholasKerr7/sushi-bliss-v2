@@ -594,7 +594,7 @@ test.describe("customer experience", () => {
 });
 
 test.describe("admin experience", () => {
-  test("renders the admin dashboard and updates local controls", async ({
+  test("renders the admin dashboard and supports section navigation", async ({
     page,
   }) => {
     await page.goto("/admin");
@@ -602,32 +602,28 @@ test.describe("admin experience", () => {
     await expectNoFrameworkErrorOverlay(page);
     await expect(page).toHaveTitle(/Sushi Bliss Admin/);
     await expect(
-      page.getByRole("heading", { level: 1, name: "Sushi Bliss admin" }),
+      page.getByRole("heading", { level: 1, name: "Admin Dashboard" }),
+    ).toBeVisible();
+    await expect(page.getByText("Welcome back, Hiroshi Tanaka")).toBeVisible();
+
+    const menuSection = page.locator("#menu-admin");
+    await expect(
+      menuSection.getByRole("heading", { name: "Menu Management" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Menu management" }),
+      menuSection.getByRole("link", { name: /Nigiri/i }).first(),
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Pause Ikura Gunkan" }).click();
-    await expect(page.locator("#menu-admin").getByText("Paused")).toBeVisible();
+    await menuSection
+      .getByRole("link", { name: /Manage/i })
+      .first()
+      .click();
     await expect(
-      page.getByRole("button", { name: "Resume Ikura Gunkan" }),
+      menuSection.getByRole("heading", { name: "Menu Management" }),
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Mark ready" }).click();
     await expect(
-      page.getByText("SB-260604-LIVE moved to ready."),
+      page.getByRole("link", { name: /Sushi Bliss/i }).first(),
     ).toBeVisible();
-    await expect(
-      page.getByRole("button", { name: "Mark completed" }),
-    ).toBeVisible();
-
-    await page.getByRole("button", { name: "Close Sushi Bliss Ginza" }).click();
-    await expect(
-      page.getByRole("button", { name: "Open Sushi Bliss Ginza" }),
-    ).toBeVisible();
-
-    await page.getByRole("button", { name: "Mark contacted" }).click();
-    await expect(page.getByText("Contacted")).toBeVisible();
   });
 });

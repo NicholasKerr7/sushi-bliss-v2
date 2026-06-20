@@ -2,82 +2,234 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { adminNavigation } from "@/data/admin";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
+import { adminNavigation, adminSystemNavigation } from "@/data/admin";
 import { classNames } from "@/lib/classNames";
 
 interface AdminShellProps {
   children: ReactNode;
 }
 
+function AdminBrand({ compact = false }: { compact?: boolean }) {
+  return (
+    <Link
+      className={classNames(
+        "group flex min-w-0 items-center gap-3 rounded-[18px] text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold",
+        compact ? "justify-center" : "",
+      )}
+      href="/"
+    >
+      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)] bg-black/52 shadow-[0_0_26px_rgba(215,168,79,0.18)]">
+        <AssetIcon
+          alt="Sushi Bliss"
+          loading="eager"
+          size={32}
+          src="/assets/brand/sushi-bliss-floral-emblem-icon.png"
+        />
+      </span>
+      {compact ? null : (
+        <span className="min-w-0">
+          <span className="editorial-title block truncate text-[16px] leading-none tracking-[0.28em] text-white">
+            Sushi
+          </span>
+          <span className="editorial-title mt-1 block truncate text-[16px] leading-none tracking-[0.28em] text-[var(--sb-red-bright)]">
+            Bliss
+          </span>
+          <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--sb-gold-soft)]">
+            Admin
+          </span>
+        </span>
+      )}
+    </Link>
+  );
+}
+
+function AdminNavLink({
+  compact = false,
+  item,
+}: {
+  compact?: boolean;
+  item: (typeof adminNavigation)[number];
+}) {
+  const isActive = item.id === "overview";
+
+  return (
+    <a
+      aria-current={isActive ? "page" : undefined}
+      className={classNames(
+        "group relative flex min-h-12 min-w-0 items-center rounded-[12px] border text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+        compact ? "justify-center px-2" : "gap-3 px-3 md:px-4 xl:px-3 2xl:px-4",
+        isActive
+          ? "border-[var(--sb-red-bright)]/42 bg-[linear-gradient(90deg,rgba(239,47,37,0.28),rgba(239,47,37,0.08),transparent)] text-white shadow-[inset_4px_0_0_var(--sb-red-bright),0_0_34px_rgba(239,47,37,0.18)]"
+          : "border-transparent text-white/72 hover:border-[var(--sb-gold)]/24 hover:bg-white/[0.045] hover:text-[var(--sb-gold-soft)]",
+      )}
+      href={item.href}
+    >
+      <span
+        className={classNames(
+          "grid h-9 w-9 shrink-0 place-items-center rounded-[10px]",
+          isActive
+            ? "text-[var(--sb-red-bright)]"
+            : "text-[var(--sb-gold-soft)]",
+        )}
+      >
+        <AssetIcon
+          className={isActive ? "brightness-125" : "opacity-88"}
+          loading="eager"
+          size={22}
+          src={item.iconUrl}
+        />
+      </span>
+      {compact ? null : (
+        <>
+          <span className="min-w-0 flex-1 truncate">{item.label}</span>
+          {item.badge ? (
+            <span className="grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red-bright)] px-1.5 text-[11px] font-bold leading-none text-white">
+              {item.badge}
+            </span>
+          ) : null}
+        </>
+      )}
+    </a>
+  );
+}
+
 export function AdminShell({ children }: AdminShellProps) {
   return (
-    <div className="min-h-dvh bg-[#050607] text-sb-rice">
-      <header className="sticky top-0 z-30 border-b border-[var(--sb-border)] bg-[#050607]/96 shadow-[0_18px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl">
-        <div className="mx-auto grid max-w-7xl gap-3 px-4 py-3 sm:px-6 lg:grid-cols-[minmax(230px,0.62fr)_minmax(0,1.38fr)] lg:items-center lg:px-8">
-          <div className="flex min-w-0 items-center justify-between gap-4">
-            <Link
-              className="flex min-w-0 items-center gap-3 rounded-[14px] text-white transition hover:text-sb-gold-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
-              href="/"
-            >
-              <AssetIcon
-                alt="Sushi Bliss"
-                className="rounded-full drop-shadow-[0_0_16px_rgba(215,168,79,0.28)]"
-                loading="eager"
-                size={48}
-                src="/assets/icons/floral-emblem-icon.png"
-              />
-              <span className="min-w-0">
-                <span className="block text-[15px] font-semibold leading-tight text-sb-rice">
-                  Sushi Bliss
-                </span>
-                <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.16em] text-sb-gold-soft/78">
-                  Admin foundation
-                </span>
-              </span>
-            </Link>
-            <div className="hidden shrink-0 items-center gap-2 rounded-full border border-[var(--sb-gold)]/24 bg-black/34 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-sb-gold-soft sm:flex lg:hidden xl:flex">
-              <span className="h-2 w-2 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_12px_rgba(239,47,37,0.75)]" />
-              Mock data
-            </div>
-          </div>
-
-          <nav
-            aria-label="Admin navigation"
-            className="relative overflow-hidden rounded-[20px] border border-white/10 bg-black/34 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+    <div className="min-h-dvh bg-[#040607] text-sb-rice">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#040607]/96 shadow-[0_18px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl md:hidden">
+        <div className="grid h-[74px] grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3 px-4">
+          <a
+            aria-label="Jump to admin navigation"
+            className="grid h-11 w-11 place-items-center rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/32 text-[var(--sb-gold-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+            href="#admin-mobile-nav"
           >
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-8 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(239,47,37,0.8),transparent)] shadow-[0_0_18px_rgba(239,47,37,0.7)]"
+            <span className="grid gap-1">
+              <span className="h-0.5 w-5 rounded-full bg-current" />
+              <span className="h-0.5 w-5 rounded-full bg-current" />
+              <span className="h-0.5 w-5 rounded-full bg-current" />
+            </span>
+          </a>
+          <Link
+            className="flex min-w-0 items-center justify-center gap-3 rounded-[14px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+            href="/"
+          >
+            <AssetIcon
+              alt="Sushi Bliss"
+              className="rounded-full"
+              loading="eager"
+              size={38}
+              src="/assets/brand/sushi-bliss-floral-emblem-icon.png"
             />
-            <ul className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
-              {adminNavigation.map((item) => (
-                <li className="min-w-0" key={item.id}>
-                  <a
-                    aria-current={item.id === "overview" ? "page" : undefined}
-                    className={classNames(
-                      "relative grid h-11 min-w-0 grid-cols-[20px_minmax(0,1fr)] items-center gap-1 rounded-[14px] border px-2 text-[10px] font-semibold uppercase tracking-[0.02em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[390px]:grid-cols-[22px_minmax(0,1fr)] min-[390px]:gap-1.5 min-[390px]:px-2.5 min-[390px]:text-[11px]",
-                      item.id === "overview"
-                        ? "red-glow-button border-[#ef3326]/70 text-[#e2dcda]"
-                        : "border-white/10 bg-white/[0.035] text-sb-muted hover:border-[var(--sb-gold)]/38 hover:bg-white/[0.065] hover:text-sb-rice",
-                    )}
-                    href={item.href}
-                  >
-                    <AssetIcon loading="eager" size={20} src={item.iconUrl} />
-                    <span className="truncate">{item.label}</span>
-                    {item.id === "overview" ? (
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-x-5 bottom-1 h-px rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_12px_rgba(239,47,37,0.95)]"
-                      />
-                    ) : null}
-                  </a>
+            <span className="editorial-title truncate text-[17px] uppercase tracking-[0.24em]">
+              Sushi <span className="text-[var(--sb-red-bright)]">Bliss</span>
+            </span>
+          </Link>
+          <Link
+            aria-label="Open notifications"
+            className="relative grid h-11 w-11 place-items-center rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+            href="/notifications"
+          >
+            <AssetIcon
+              loading="eager"
+              size={23}
+              src="/assets/icons/notification-bell-icon.png"
+            />
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red-bright)] px-1 text-[11px] font-bold text-white">
+              3
+            </span>
+          </Link>
+        </div>
+        <nav
+          aria-label="Admin quick navigation"
+          className="smooth-scroll-area flex gap-2 overflow-x-auto px-4 pb-3"
+          id="admin-mobile-nav"
+        >
+          {adminNavigation.slice(0, 5).map((item) => (
+            <a
+              className={classNames(
+                "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-3 text-[12px] text-white/76 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+                item.id === "overview"
+                  ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/22 text-white"
+                  : "border-white/10 bg-black/34",
+              )}
+              href={item.href}
+              key={item.id}
+            >
+              <AssetIcon loading="eager" size={18} src={item.iconUrl} />
+              <span className="whitespace-nowrap">{item.label}</span>
+            </a>
+          ))}
+        </nav>
+      </header>
+
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-[270px] flex-col border-r border-[var(--sb-border)] bg-[linear-gradient(180deg,#050708_0%,#070909_46%,#030404_100%)] px-6 py-7 shadow-[26px_0_80px_rgba(0,0,0,0.46)] md:flex xl:w-[252px] 2xl:w-[286px] 2xl:px-7">
+        <div className="pb-8">
+          <AdminBrand />
+        </div>
+
+        <nav aria-label="Admin sidebar navigation" className="min-h-0 flex-1">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
+            Main
+          </p>
+          <ul className="grid gap-2">
+            {adminNavigation.map((item) => (
+              <li key={item.id}>
+                <AdminNavLink item={item} />
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-9 hidden 2xl:block">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
+              System
+            </p>
+            <ul className="grid gap-2">
+              {adminSystemNavigation.map((item) => (
+                <li key={item.id}>
+                  <AdminNavLink item={item} />
                 </li>
               ))}
             </ul>
-          </nav>
+          </div>
+        </nav>
+
+        <div className="mt-8 grid gap-4">
+          <div className="hidden rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-4 2xl:block">
+            <div className="flex items-start gap-3">
+              <AssetIcon
+                loading="lazy"
+                size={26}
+                src="/assets/icons/headset-icon.png"
+              />
+              <div>
+                <p className="text-sm text-white">Need Help?</p>
+                <p className="mt-1 text-[12px] leading-5 text-white/58">
+                  Contact support for assistance.
+                </p>
+              </div>
+            </div>
+            <Link
+              className="red-glow-button mt-4 grid h-10 place-items-center rounded-[10px] border text-[11px] uppercase tracking-[0.06em]"
+              href="/support"
+            >
+              Contact Support
+            </Link>
+          </div>
+
+          <Link
+            className="flex min-h-12 items-center gap-3 border-t border-white/10 pt-5 text-sm text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+            href="/"
+          >
+            <ChevronIcon direction="left" size={20} />
+            <span>Back to website</span>
+          </Link>
         </div>
-      </header>
-      <main>{children}</main>
+      </aside>
+
+      <main className="min-h-dvh md:pl-[270px] xl:pl-[252px] 2xl:pl-[286px]">
+        {children}
+      </main>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import type { ID, StatusTone } from "@/types/common";
 
 export interface AdminNavigationItem {
+  badge?: string;
+  group?: "main" | "system";
   href: string;
   iconUrl: string;
   id: ID;
