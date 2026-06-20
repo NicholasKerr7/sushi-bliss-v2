@@ -65,11 +65,11 @@ export function TabletMenuHeader({
         {query ? (
           <button
             aria-label="Clear search"
-            className="grid h-10 place-items-center rounded-full px-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-white/72 transition hover:bg-white/8 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+            className="grid h-10 w-10 place-items-center rounded-full text-white/72 transition hover:bg-white/8 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             onClick={onClearQuery}
             type="button"
           >
-            Clear
+            <ChevronIcon direction="x" size={18} />
           </button>
         ) : null}
       </form>

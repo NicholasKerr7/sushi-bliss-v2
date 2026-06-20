@@ -1,6 +1,6 @@
 import { classNames } from "@/lib/classNames";
 
-type ChevronDirection = "down" | "left" | "right" | "up";
+type ChevronDirection = "down" | "left" | "right" | "up" | "x";
 
 interface ChevronIconProps {
   className?: string;
@@ -14,6 +14,7 @@ const chevronPaths: Record<ChevronDirection, string> = {
   left: "m15 5-7 7 7 7",
   right: "m9 5 7 7-7 7",
   up: "m5 15 7-7 7 7",
+  x: "m6 6 12 12M18 6 6 18",
 };
 
 /** Renders consistent directional chevrons without relying on text glyphs. */

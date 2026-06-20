@@ -9,7 +9,6 @@ export const sushiIconAssetIds = {
   clock: "clock-icon",
   crown: "lotus-crown-icon",
   flower: "floral-emblem-icon",
-  heart: "heart-icon",
   home: "home-icon",
   leaf: "vegetarian-sushi-icon",
   location: "map-pin-icon",

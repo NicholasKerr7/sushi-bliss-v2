@@ -62,7 +62,7 @@ export function MobileCheckoutHeader({
           onClick={onClose}
           type="button"
         >
-          <ChevronIcon direction="down" size={20} />
+          <ChevronIcon direction="x" size={20} />
         </button>
       </div>
     </header>

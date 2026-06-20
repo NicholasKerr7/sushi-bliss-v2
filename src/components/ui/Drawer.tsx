@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { classNames } from "@/lib/classNames";
@@ -116,11 +117,12 @@ export function Drawer({
           </div>
           <Button
             aria-label="Close drawer"
+            className="h-10 w-10 rounded-full px-0 py-0"
             onClick={() => onOpenChange(false)}
             size="sm"
             variant="ghost"
           >
-            Close
+            <ChevronIcon direction="x" size={18} />
           </Button>
         </div>
         <div className="p-5">{children}</div>

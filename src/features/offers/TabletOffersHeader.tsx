@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 
 interface TabletOffersHeaderProps {
@@ -54,11 +55,11 @@ export function TabletOffersHeader({
         {query ? (
           <button
             aria-label="Clear offer search"
-            className="grid h-7 place-items-center rounded-full px-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-white/72"
+            className="grid h-8 w-8 place-items-center rounded-full text-white/72 transition hover:bg-white/8 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             onClick={onClearQuery}
             type="button"
           >
-            Clear
+            <ChevronIcon direction="x" size={16} />
           </button>
         ) : null}
       </form>

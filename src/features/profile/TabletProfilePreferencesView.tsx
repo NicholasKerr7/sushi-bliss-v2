@@ -480,7 +480,7 @@ export function TabletProfilePreferencesView({
                     )}
                     <button
                       aria-label={`Remove ${paymentMethod.brand} ending ${paymentMethod.last4}`}
-                      className="text-[var(--sb-gold-soft)]"
+                      className="grid h-8 w-8 place-items-center rounded-full text-[var(--sb-gold-soft)] transition hover:bg-white/8 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold disabled:hover:bg-transparent disabled:hover:text-[var(--sb-gold-soft)]"
                       disabled={paymentMethod.isDefault}
                       onClick={() => {
                         onDeletePaymentMethod(paymentMethod.id);
@@ -493,9 +493,7 @@ export function TabletProfilePreferencesView({
                       }
                       type="button"
                     >
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.06em]">
-                        Remove
-                      </span>
+                      <ChevronIcon direction="x" size={16} />
                     </button>
                   </div>
                 ))}

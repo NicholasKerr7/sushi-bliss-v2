@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { classNames } from "@/lib/classNames";
 import { formatDateTime } from "@/lib/dates";
@@ -96,11 +97,12 @@ export function MobileOffersListView({
             />
             {query ? (
               <button
-                className="min-h-10 rounded-full px-3 text-[12px] uppercase text-[var(--sb-gold-soft)] transition hover:bg-white/8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+                aria-label="Clear offer search"
+                className="grid h-9 w-9 place-items-center rounded-full text-[var(--sb-gold-soft)] transition hover:bg-white/8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 onClick={onClearQuery}
                 type="button"
               >
-                Clear
+                <ChevronIcon direction="x" size={16} />
               </button>
             ) : null}
           </span>

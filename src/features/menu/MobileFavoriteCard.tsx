@@ -3,9 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { icons } from "@/features/home/visualHomeData";
 import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
@@ -69,11 +68,11 @@ export function MobileFavoriteCard({
           )}
           <button
             aria-label={`Remove ${item.name} from favorites`}
-            className="grid min-h-[42px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/28"
+            className="grid min-h-[42px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/28 text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-red-bright)] hover:text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             onClick={() => onRemove(item.id)}
             type="button"
           >
-            <AssetIcon size={20} src={icons.heart} />
+            <ChevronIcon direction="x" size={18} />
           </button>
         </div>
       </div>

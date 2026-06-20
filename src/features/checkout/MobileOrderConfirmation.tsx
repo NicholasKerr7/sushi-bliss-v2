@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { formatDateTime } from "@/lib/dates";
@@ -105,7 +106,7 @@ export function MobileOrderConfirmation({
               onClick={onClose}
               type="button"
             >
-              <AssetIcon loading="eager" size={25} src={icons.bell} />
+              <ChevronIcon direction="x" size={20} />
             </button>
           </header>
 

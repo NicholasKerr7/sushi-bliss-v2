@@ -115,11 +115,11 @@ export function MobileSearchForm({
         {query ? (
           <button
             aria-label="Clear search"
-            className="grid h-7 place-items-center rounded-full bg-white/16 px-2 text-[9px] font-semibold uppercase tracking-[0.06em] text-white/72"
+            className="grid h-8 w-8 place-items-center rounded-full bg-white/16 text-white/72 transition hover:bg-white/24 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             onClick={() => onQueryChange("")}
             type="button"
           >
-            Clear
+            <ChevronIcon direction="x" size={16} />
           </button>
         ) : null}
       </label>

@@ -342,11 +342,11 @@ export function TabletMenuCategoryView({
             {searchQuery ? (
               <button
                 aria-label={`Clear ${content.title} search`}
-                className="rounded-full border border-white/12 bg-black/34 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/42 hover:bg-white/[0.06]"
+                className="grid h-9 w-9 place-items-center rounded-full border border-white/12 bg-black/34 text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/42 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
                 onClick={clearSearch}
                 type="button"
               >
-                Clear
+                <ChevronIcon direction="x" size={16} />
               </button>
             ) : null}
           </form>
