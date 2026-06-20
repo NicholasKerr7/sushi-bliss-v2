@@ -594,7 +594,7 @@ test.describe("customer experience", () => {
 });
 
 test.describe("admin experience", () => {
-  test("renders the admin dashboard and supports section navigation", async ({
+  test("renders the admin dashboard and supports workspace controls", async ({
     page,
   }) => {
     await page.goto("/admin");
@@ -606,21 +606,37 @@ test.describe("admin experience", () => {
     ).toBeVisible();
     await expect(page.getByText("Welcome back, Hiroshi Tanaka")).toBeVisible();
 
-    const menuSection = page.locator("#menu-admin");
+    const workspace = page.locator(
+      'section[aria-labelledby="admin-operations-workspace-title"]',
+    );
+
     await expect(
-      menuSection.getByRole("heading", { name: "Menu Management" }),
-    ).toBeVisible();
-    await expect(
-      menuSection.getByRole("link", { name: /Nigiri/i }).first(),
+      workspace.getByRole("heading", { name: "Order Management" }),
     ).toBeVisible();
 
-    await menuSection
-      .getByRole("link", { name: /Manage/i })
-      .first()
+    await workspace
+      .getByRole("button", { name: "Open Offers Management" })
       .click();
     await expect(
-      menuSection.getByRole("heading", { name: "Menu Management" }),
+      workspace.getByRole("heading", { name: "Offers Management" }),
     ).toBeVisible();
+
+    await workspace
+      .getByRole("searchbox", { name: "Search admin workspace rows" })
+      .fill("Loyalty");
+    await expect(
+      workspace.getByRole("button", { name: /Loyalty Reward/i }),
+    ).toBeVisible();
+
+    await workspace.getByRole("button", { name: /Loyalty Reward/i }).click();
+    await workspace.getByRole("button", { name: "Mark reviewed" }).click();
+    await expect(
+      workspace.getByRole("button", { name: "Marked reviewed" }),
+    ).toBeVisible();
+
+    await workspace.getByRole("button", { name: "Clear" }).click();
+    await workspace.getByRole("button", { name: "Open Users & Roles" }).click();
+    await expect(workspace.getByText("Finance Review")).toBeVisible();
 
     await expect(
       page.getByRole("link", { name: /Sushi Bliss/i }).first(),

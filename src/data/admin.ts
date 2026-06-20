@@ -64,21 +64,21 @@ export const adminNavigation: AdminNavigationItem[] = [
 export const adminSystemNavigation: AdminNavigationItem[] = [
   {
     group: "system",
-    href: "#customers-admin",
+    href: "#users-admin",
     iconUrl: "/assets/icons/user-icon.png",
     id: "users",
     label: "Users & Roles",
   },
   {
     group: "system",
-    href: "#overview",
+    href: "#settings-admin",
     iconUrl: "/assets/icons/user-settings-icon.png",
     id: "settings",
     label: "Settings",
   },
   {
     group: "system",
-    href: "#analytics-admin",
+    href: "#activity-admin",
     iconUrl: "/assets/icons/gold-alert-icon.png",
     id: "activity",
     label: "Activity Logs",

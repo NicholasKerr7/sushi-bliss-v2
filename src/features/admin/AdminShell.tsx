@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -45,13 +47,15 @@ function AdminBrand({ compact = false }: { compact?: boolean }) {
 }
 
 function AdminNavLink({
+  activeId,
   compact = false,
   item,
 }: {
+  activeId: string;
   compact?: boolean;
   item: (typeof adminNavigation)[number];
 }) {
-  const isActive = item.id === "overview";
+  const isActive = item.id === activeId;
 
   return (
     <a
@@ -95,6 +99,42 @@ function AdminNavLink({
 }
 
 export function AdminShell({ children }: AdminShellProps) {
+  const [activeId, setActiveId] = useState("overview");
+
+  useEffect(() => {
+    const syncActiveId = () => {
+      const hash = window.location.hash;
+      const allItems = [...adminNavigation, ...adminSystemNavigation];
+      const match = allItems.find((item) => item.href === hash);
+
+      if (match) {
+        setActiveId(match.id);
+        return;
+      }
+
+      if (hash === "#top-menu-admin") {
+        setActiveId("menu");
+        return;
+      }
+
+      if (hash === "#customer-chart-admin") {
+        setActiveId("customers");
+        return;
+      }
+
+      setActiveId("overview");
+    };
+
+    syncActiveId();
+    window.addEventListener("hashchange", syncActiveId);
+    window.addEventListener("popstate", syncActiveId);
+
+    return () => {
+      window.removeEventListener("hashchange", syncActiveId);
+      window.removeEventListener("popstate", syncActiveId);
+    };
+  }, []);
+
   return (
     <div className="min-h-dvh bg-[#040607] text-sb-rice">
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#040607]/96 shadow-[0_18px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl md:hidden">
@@ -149,7 +189,7 @@ export function AdminShell({ children }: AdminShellProps) {
             <a
               className={classNames(
                 "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-3 text-[12px] text-white/76 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
-                item.id === "overview"
+                item.id === activeId
                   ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/22 text-white"
                   : "border-white/10 bg-black/34",
               )}
@@ -175,7 +215,7 @@ export function AdminShell({ children }: AdminShellProps) {
           <ul className="grid gap-2">
             {adminNavigation.map((item) => (
               <li key={item.id}>
-                <AdminNavLink item={item} />
+                <AdminNavLink activeId={activeId} item={item} />
               </li>
             ))}
           </ul>
@@ -187,7 +227,7 @@ export function AdminShell({ children }: AdminShellProps) {
             <ul className="grid gap-2">
               {adminSystemNavigation.map((item) => (
                 <li key={item.id}>
-                  <AdminNavLink item={item} />
+                  <AdminNavLink activeId={activeId} item={item} />
                 </li>
               ))}
             </ul>

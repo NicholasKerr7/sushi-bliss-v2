@@ -30,6 +30,7 @@ import {
   AdminTopBar,
   TabletMetricCard,
 } from "./AdminMetricWidgets";
+import { AdminOperationsWorkspace } from "./AdminOperationsWorkspace";
 
 export function AdminDashboard() {
   const recentOrderRows = adminRecentOrders.map(
@@ -131,6 +132,8 @@ export function AdminDashboard() {
             <TabletMetricCard key={metric.id} metric={metric} />
           ))}
         </section>
+
+        <AdminOperationsWorkspace />
 
         <section
           aria-label="Admin management shortcuts"
