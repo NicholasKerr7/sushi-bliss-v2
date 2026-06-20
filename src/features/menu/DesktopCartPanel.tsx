@@ -44,10 +44,9 @@ export function DesktopCartPanel({
           <span className="rounded-full border border-[var(--sb-gold)]/36 px-3 py-1 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
             {itemCount} {itemCount === 1 ? "item" : "items"}
           </span>
-          {onClearCart ? (
+          {onClearCart && items.length > 0 ? (
             <button
               className="inline-flex min-h-10 items-center rounded-full px-3 text-[12px] text-[var(--sb-red-bright)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold disabled:cursor-not-allowed disabled:opacity-40 min-[1500px]:hidden"
-              disabled={items.length === 0}
               onClick={onClearCart}
               type="button"
             >
@@ -130,7 +129,7 @@ export function DesktopCartPanel({
           onClick={onCheckout}
           type="button"
         >
-          {ctaLabel}
+          {items.length === 0 ? "Select items to checkout" : ctaLabel}
           <span className="ml-4" aria-hidden="true">
             <ChevronIcon direction="right" size={18} />
           </span>
@@ -243,11 +242,11 @@ function DesktopCartLine({
       {onRemove ? (
         <button
           aria-label={`Remove ${item.menuItem.name}`}
-          className="absolute right-0 top-4 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/18 text-white/58"
+          className="absolute right-0 top-4 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/18 text-white/58 transition hover:border-[var(--sb-red-bright)]/60 hover:text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           onClick={() => onRemove(item.id)}
           type="button"
         >
-          x
+          <ChevronIcon direction="x" size={15} />
         </button>
       ) : null}
     </article>
