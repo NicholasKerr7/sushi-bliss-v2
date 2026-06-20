@@ -151,7 +151,7 @@ export function AdminReservationManagement() {
                     size={26}
                     src={
                       cancelled
-                        ? "/assets/icons/x-icon.png"
+                        ? "/assets/icons/gold-alert-icon.png"
                         : "/assets/icons/dining-setting-icon.png"
                     }
                   />

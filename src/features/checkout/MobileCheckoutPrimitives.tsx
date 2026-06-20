@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { calculateCartLineSubtotal } from "@/lib/cart";
 import { classNames } from "@/lib/classNames";
@@ -61,7 +62,7 @@ export function MobileCheckoutHeader({
           onClick={onClose}
           type="button"
         >
-          <AssetIcon loading="eager" size={20} src={icons.x} />
+          <ChevronIcon direction="down" size={20} />
         </button>
       </div>
     </header>

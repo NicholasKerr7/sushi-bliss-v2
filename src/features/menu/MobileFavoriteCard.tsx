@@ -73,7 +73,7 @@ export function MobileFavoriteCard({
             onClick={() => onRemove(item.id)}
             type="button"
           >
-            <AssetIcon size={20} src={icons.x} />
+            <AssetIcon size={20} src={icons.heart} />
           </button>
         </div>
       </div>

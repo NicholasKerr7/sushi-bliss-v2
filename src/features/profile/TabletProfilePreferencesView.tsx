@@ -493,7 +493,9 @@ export function TabletProfilePreferencesView({
                       }
                       type="button"
                     >
-                      <AssetIcon size={14} src="/assets/icons/x-icon.png" />
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.06em]">
+                        Remove
+                      </span>
                     </button>
                   </div>
                 ))}
@@ -602,7 +604,10 @@ export function TabletProfilePreferencesView({
                   }
                   type="button"
                 >
-                  <AssetIcon size={16} src={icons.x} />
+                  <AssetIcon
+                    size={16}
+                    src="/assets/icons/user-settings-icon.png"
+                  />
                   <span className="text-[12px]">Log Out</span>
                 </button>
               </div>

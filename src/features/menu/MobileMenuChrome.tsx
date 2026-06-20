@@ -115,11 +115,11 @@ export function MobileSearchForm({
         {query ? (
           <button
             aria-label="Clear search"
-            className="grid h-7 w-7 place-items-center rounded-full bg-white/16"
+            className="grid h-7 place-items-center rounded-full bg-white/16 px-2 text-[9px] font-semibold uppercase tracking-[0.06em] text-white/72"
             onClick={() => onQueryChange("")}
             type="button"
           >
-            <AssetIcon size={15} src={icons.x} />
+            Clear
           </button>
         ) : null}
       </label>

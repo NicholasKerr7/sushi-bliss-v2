@@ -54,11 +54,11 @@ export function TabletOffersHeader({
         {query ? (
           <button
             aria-label="Clear offer search"
-            className="grid h-7 w-7 place-items-center text-white/82"
+            className="grid h-7 place-items-center rounded-full px-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-white/72"
             onClick={onClearQuery}
             type="button"
           >
-            <AssetIcon size={18} src={icons.x} />
+            Clear
           </button>
         ) : null}
       </form>

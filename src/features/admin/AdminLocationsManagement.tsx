@@ -22,7 +22,7 @@ export function AdminLocationsManagement() {
     },
     {
       detail: "Temporarily closed",
-      icon: "/assets/icons/x-icon.png",
+      icon: "/assets/icons/gold-alert-icon.png",
       label: "Closed",
       value: closedLocationIds.length,
     },

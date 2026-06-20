@@ -125,7 +125,7 @@ export function TabletReservationCancelView({
           {policyItems.map((item) => (
             <div className="flex items-start gap-4" key={item.title}>
               <span className="mt-1 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-red)] text-[var(--sb-red-bright)]">
-                <AssetIcon size={14} src={icons.x} />
+                <AssetIcon size={16} src="/assets/icons/gold-alert-icon.png" />
               </span>
               <span>
                 <span className="block text-[18px] text-white">
