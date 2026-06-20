@@ -51,13 +51,13 @@ export function DesktopCheckoutView({
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
   return (
-    <main className="mx-auto max-w-[1534px] px-7 pb-5 pt-6">
+    <main className="mx-auto max-w-[1534px] px-7 pb-4 pt-5">
       <div className="grid grid-cols-[minmax(0,1fr)_412px] items-end gap-5">
         <div>
-          <h1 className="editorial-title text-[46px] uppercase tracking-[0.06em]">
+          <h1 className="editorial-title text-[42px] uppercase tracking-[0.06em]">
             Checkout
           </h1>
-          <p className="mt-1 text-[16px] text-[var(--sb-gold-soft)]">
+          <p className="mt-1 text-[15px] text-[var(--sb-gold-soft)]">
             Almost there. Complete your order.
           </p>
         </div>
@@ -66,8 +66,8 @@ export function DesktopCheckoutView({
         </p>
       </div>
 
-      <div className="mt-4 grid grid-cols-[minmax(0,1fr)_412px] gap-5">
-        <section className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.42)]">
+      <div className="mt-3 grid grid-cols-[minmax(0,1fr)_412px] gap-5">
+        <section className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5 shadow-[0_24px_80px_rgba(0,0,0,0.42)]">
           <CheckoutStepTitle
             accessibleName="Fulfillment"
             number={1}
@@ -75,7 +75,7 @@ export function DesktopCheckoutView({
           />
           <DesktopFulfillmentCards checkout={checkout} />
 
-          <div className="mt-4 border-t border-white/10 pt-4">
+          <div className="mt-3 border-t border-white/10 pt-3">
             <CheckoutStepTitle
               action={
                 checkout.mode === "delivery" ? (
@@ -107,7 +107,7 @@ export function DesktopCheckoutView({
             />
             <DesktopAddressSummary checkout={checkout} />
             {checkout.addressFormOpen ? (
-              <div className="mt-3 rounded-[14px] border border-white/12 bg-black/22 p-4">
+              <div className="mt-2.5 rounded-[14px] border border-white/12 bg-black/22 p-3.5">
                 <CheckoutAddressSection
                   addressDraft={checkout.addressDraft}
                   addressFormOpen={checkout.addressFormOpen}
@@ -131,19 +131,19 @@ export function DesktopCheckoutView({
             ) : null}
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-4 border-t border-white/10 pt-4">
+          <div className="mt-3 grid grid-cols-2 gap-3 border-t border-white/10 pt-3">
             <section>
               <CheckoutStepTitle number={3} title="Date & time" />
-              <div className="mt-3 grid grid-cols-2 overflow-hidden rounded-[12px] border border-white/12 bg-black/24">
-                <div className="border-r border-white/10 px-4 py-3">
+              <div className="mt-2.5 grid grid-cols-2 overflow-hidden rounded-[12px] border border-white/12 bg-black/24">
+                <div className="border-r border-white/10 px-3.5 py-2.5">
                   <p className="text-[12px] uppercase tracking-[0.1em] text-white/48">
                     Date
                   </p>
-                  <p className="mt-2 text-[14px] text-white">
+                  <p className="mt-1.5 text-[13px] text-white">
                     {formatCheckoutDate(checkout.selectedTime)}
                   </p>
                 </div>
-                <div className="px-4 py-3">
+                <div className="px-3.5 py-2.5">
                   <p className="text-[12px] uppercase tracking-[0.1em] text-white/48">
                     Time
                   </p>
@@ -162,9 +162,9 @@ export function DesktopCheckoutView({
                       label: formatCheckoutTime(slot.value),
                       value: slot.value,
                     }))}
-                    selectClassName="min-h-0 rounded-none border-0 bg-transparent px-0 py-0 text-[14px] text-white focus:ring-0"
+                    selectClassName="min-h-0 rounded-none border-0 bg-transparent px-0 py-0 text-[13px] text-white focus:ring-0"
                     value={checkout.selectedTime}
-                    wrapperClassName="mt-2 space-y-0 [&_label]:sr-only"
+                    wrapperClassName="mt-1.5 space-y-0 [&_label]:sr-only"
                   />
                 </div>
               </div>
@@ -177,14 +177,14 @@ export function DesktopCheckoutView({
                 subtotalCents={checkout.reviewTotals.subtotalCents}
                 onTipChange={checkout.setTipPercent}
               />
-              <p className="mt-2 flex items-center justify-center gap-2 text-[12px] text-white/44">
+              <p className="mt-1.5 flex items-center justify-center gap-2 text-[12px] text-white/44">
                 <AssetIcon size={14} src="/assets/icons/gift-icon.png" />
                 100% of tips go to our team
               </p>
             </section>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-4 border-t border-white/10 pt-4">
+          <div className="mt-3 grid grid-cols-2 gap-3 border-t border-white/10 pt-3">
             <section>
               <CheckoutStepTitle
                 action={
@@ -209,16 +209,16 @@ export function DesktopCheckoutView({
           </div>
 
           <AgeVerificationNotice
-            className="mt-4"
+            className="mt-3"
             items={items}
             onVerifiedChange={checkout.setAgeVerified}
             validationMessage={checkout.validation.ageVerification}
             verified={checkout.ageVerified}
           />
 
-          <div className="mt-4 grid grid-cols-[230px_1fr] gap-4 border-t border-white/10 pt-4">
+          <div className="mt-3 grid grid-cols-[218px_1fr] gap-3 border-t border-white/10 pt-3">
             <button
-              className="inline-flex h-[56px] items-center justify-center gap-3 rounded-[12px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54"
+              className="inline-flex h-[52px] items-center justify-center gap-3 rounded-[12px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54"
               onClick={onBackToCart}
               type="button"
             >
@@ -226,7 +226,7 @@ export function DesktopCheckoutView({
               Back to cart
             </button>
             <Button
-              className="h-[56px] rounded-[12px] text-[15px] uppercase tracking-[0.08em]"
+              className="h-[52px] rounded-[12px] text-[14px] uppercase tracking-[0.08em]"
               onClick={onOpenReview}
             >
               Continue to review
@@ -243,7 +243,7 @@ export function DesktopCheckoutView({
           onUpdateQuantity={onUpdateQuantity}
         />
       </div>
-      <div className="mt-5">
+      <div className="mt-4">
         <DesktopBenefitStrip />
       </div>
     </main>
@@ -266,34 +266,34 @@ export function DesktopReviewView({
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
   return (
-    <main className="mx-auto max-w-[1470px] px-7 pb-6 pt-5">
-      <section className="rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.54)]">
-        <div className="flex items-start justify-between gap-6">
+    <main className="mx-auto max-w-[1470px] px-7 pb-5 pt-4">
+      <section className="rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.54)]">
+        <div className="flex items-start justify-between gap-5">
           <div>
-            <p className="text-[14px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+            <p className="text-[13px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
               Review your order
             </p>
-            <h1 className="editorial-title mt-2 text-[44px] uppercase leading-none">
+            <h1 className="editorial-title mt-1.5 text-[40px] uppercase leading-none">
               Almost there.
               <span className="block text-[var(--sb-red-bright)]">
                 Let&apos;s make it perfect.
               </span>
             </h1>
-            <p className="mt-3 text-[15px] text-[var(--sb-gold-soft)]">
+            <p className="mt-2 text-[14px] text-[var(--sb-gold-soft)]">
               Confirm every detail before placing your order.
             </p>
           </div>
           <button
-            className="inline-flex h-11 w-[180px] items-center justify-center gap-3 rounded-[10px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54"
+            className="inline-flex h-10 w-[190px] items-center justify-center gap-3 rounded-[10px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54"
             onClick={onBackToCheckout}
             type="button"
           >
             <ChevronIcon direction="left" size={17} />
-            Back to cart
+            Back to checkout
           </button>
         </div>
-        <div className="mt-5 grid grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)] gap-5">
-          <section className="space-y-4">
+        <div className="mt-4 grid grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)] gap-4">
+          <section className="space-y-3">
             <DesktopCartPanel
               ctaLabel="Edit items"
               items={items}
@@ -305,7 +305,7 @@ export function DesktopReviewView({
             />
             <ReviewTrustStrip totalCents={checkout.reviewTotals.totalCents} />
           </section>
-          <section className="space-y-4">
+          <section className="space-y-3">
             <DesktopReviewInfoCard title="Delivery information">
               {checkout.selectedAddress
                 ? `${checkout.selectedAddress.line1}, ${checkout.selectedAddress.city}, ${checkout.selectedAddress.region}`
@@ -329,7 +329,7 @@ export function DesktopReviewView({
             />
             <DesktopReviewTotals checkout={checkout} items={items} />
             <Button
-              className="h-[64px] w-full rounded-[12px] text-[16px] uppercase tracking-[0.08em]"
+              className="h-[58px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em]"
               onClick={onPlaceOrder}
             >
               Place order

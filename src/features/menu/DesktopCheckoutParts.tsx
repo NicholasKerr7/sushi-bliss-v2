@@ -29,12 +29,12 @@ export function CheckoutStepTitle({
   title: string;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-3">
       <h2
         aria-label={accessibleName}
-        className="editorial-title flex items-center gap-3 text-[17px] uppercase tracking-[0.08em] text-white/88"
+        className="editorial-title flex min-w-0 items-center gap-2.5 text-[16px] uppercase leading-none tracking-[0.08em] text-white/88"
       >
-        <span className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-gold)]/54 text-[13px] text-[var(--sb-gold-soft)]">
+        <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/54 text-[12px] text-[var(--sb-gold-soft)]">
           {number}
         </span>
         {title}
@@ -65,7 +65,7 @@ export function DesktopFulfillmentCards({
   ] as const;
 
   return (
-    <div className="mt-3 grid grid-cols-2 gap-4">
+    <div className="mt-2.5 grid grid-cols-2 gap-3">
       {options.map((option) => {
         const selected = checkout.mode === option.value;
 
@@ -73,7 +73,7 @@ export function DesktopFulfillmentCards({
           <button
             aria-pressed={selected}
             className={classNames(
-              "grid min-h-[62px] grid-cols-[44px_1fr] items-center gap-4 rounded-[12px] border px-4 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+              "grid min-h-[58px] grid-cols-[38px_1fr] items-center gap-3 rounded-[12px] border px-3.5 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
               selected
                 ? "border-[var(--sb-red-bright)] bg-[linear-gradient(180deg,rgba(154,16,13,0.78),rgba(84,9,8,0.92))] shadow-[0_0_24px_rgba(255,35,22,0.22)]"
                 : "border-white/12 bg-black/24 hover:border-[var(--sb-gold)]/45",
@@ -82,9 +82,9 @@ export function DesktopFulfillmentCards({
             onClick={() => checkout.setMode(option.value)}
             type="button"
           >
-            <AssetIcon size={34} src={option.icon} />
+            <AssetIcon size={30} src={option.icon} />
             <span>
-              <span className="block text-[15px] font-semibold uppercase tracking-[0.06em] text-white">
+              <span className="block text-[14px] font-semibold uppercase tracking-[0.06em] text-white">
                 {option.label}
               </span>
               <span className="mt-1 block text-[12px] text-white/58">
@@ -108,13 +108,13 @@ export function DesktopAddressSummary({
 
   if (!isDelivery) {
     return (
-      <div className="mt-3 grid min-h-[76px] grid-cols-[42px_1fr] items-center gap-4 rounded-[12px] border border-white/12 bg-black/24 px-4">
-        <AssetIcon size={32} src="/assets/icons/map-pin-icon.png" />
+      <div className="mt-2.5 grid min-h-[68px] grid-cols-[36px_1fr] items-center gap-3 rounded-[12px] border border-white/12 bg-black/24 px-3.5">
+        <AssetIcon size={28} src="/assets/icons/map-pin-icon.png" />
         <p>
-          <span className="block text-[15px] font-semibold text-white">
+          <span className="block text-[14px] font-semibold text-white">
             {pickupLocation.label}
           </span>
-          <span className="mt-1 block text-[13px] leading-5 text-white/56">
+          <span className="mt-1 block text-[12px] leading-4 text-white/56">
             {pickupLocation.line1}, {pickupLocation.city},{" "}
             {pickupLocation.region} {pickupLocation.postalCode}
           </span>
@@ -124,23 +124,23 @@ export function DesktopAddressSummary({
   }
 
   return (
-    <div className="mt-3 grid min-h-[76px] grid-cols-[42px_1fr] items-center gap-4 rounded-[12px] border border-white/12 bg-black/24 px-4">
-      <AssetIcon size={32} src="/assets/icons/map-pin-icon.png" />
+    <div className="mt-2.5 grid min-h-[68px] grid-cols-[36px_1fr] items-center gap-3 rounded-[12px] border border-white/12 bg-black/24 px-3.5">
+      <AssetIcon size={28} src="/assets/icons/map-pin-icon.png" />
       {address ? (
         <p>
-          <span className="block text-[15px] font-semibold text-white">
+          <span className="block text-[14px] font-semibold text-white">
             {address.line1}
           </span>
-          <span className="mt-1 block text-[13px] leading-5 text-white/56">
+          <span className="mt-1 block text-[12px] leading-4 text-white/56">
             {address.line2 ? `${address.line2}, ` : ""}
             {address.city}, {address.region} {address.postalCode}
           </span>
-          <span className="mt-1 block text-[13px] text-white/46">
+          <span className="mt-1 block text-[12px] text-white/46">
             {checkout.customerPhone}
           </span>
         </p>
       ) : (
-        <p className="text-[14px] text-white/58">
+        <p className="text-[13px] text-white/58">
           Choose or add a delivery address.
         </p>
       )}
@@ -156,19 +156,19 @@ export function DesktopPaymentSummary({
   const payment = checkout.selectedPaymentMethod;
 
   return (
-    <div className="mt-3 grid min-h-[72px] grid-cols-[42px_1fr] items-center gap-4 rounded-[12px] border border-white/12 bg-black/24 px-4">
-      <AssetIcon size={32} src="/assets/icons/credit-card-icon.png" />
+    <div className="mt-2.5 grid min-h-[68px] grid-cols-[36px_1fr] items-center gap-3 rounded-[12px] border border-white/12 bg-black/24 px-3.5">
+      <AssetIcon size={28} src="/assets/icons/credit-card-icon.png" />
       {payment ? (
         <p>
-          <span className="block text-[15px] font-semibold text-white">
+          <span className="block text-[14px] font-semibold text-white">
             {payment.brand} **** {payment.last4}
           </span>
-          <span className="mt-1 block text-[13px] text-white/50">
+          <span className="mt-1 block text-[12px] text-white/50">
             Expires {payment.expiresAt}
           </span>
         </p>
       ) : (
-        <p className="text-[14px] text-white/58">
+        <p className="text-[13px] text-white/58">
           Select a payment method before review.
         </p>
       )}
@@ -191,7 +191,7 @@ export function DesktopTipButtons({
   onTipChange: (tip: number) => void;
 }) {
   return (
-    <div className="mt-3 grid grid-cols-4 overflow-hidden rounded-[12px] border border-white/12 bg-black/24">
+    <div className="mt-2.5 grid grid-cols-4 overflow-hidden rounded-[12px] border border-white/12 bg-black/24">
       {[10, 15, 20, 0].map((tip) => {
         const selected = selectedTip === tip;
 
@@ -199,7 +199,7 @@ export function DesktopTipButtons({
           <button
             aria-pressed={selected}
             className={classNames(
-              "min-h-[50px] border-l border-white/10 px-3 text-[14px] transition first:border-l-0",
+              "min-h-[46px] border-l border-white/10 px-2 text-[13px] transition first:border-l-0",
               selected
                 ? "bg-[var(--sb-red)]/32 text-white"
                 : "text-white/62 hover:bg-white/[0.035]",
@@ -210,7 +210,7 @@ export function DesktopTipButtons({
           >
             {tip === 0 ? "No tip" : `${tip}%`}
             {tip > 0 ? (
-              <span className="block font-mono text-[12px] text-white/66">
+              <span className="block font-mono text-[11px] text-white/66">
                 {formatMoney(Math.round(subtotalCents * (tip / 100)))}
               </span>
             ) : null}
@@ -227,20 +227,20 @@ export function DesktopOfferCode({
   checkout: DesktopCheckoutState;
 }) {
   return (
-    <div className="mt-3 rounded-[12px] border border-white/12 bg-black/22 p-3">
-      <div className="grid grid-cols-[1fr_92px] items-center gap-3">
+    <div className="mt-2.5 rounded-[12px] border border-white/12 bg-black/22 p-2.5">
+      <div className="grid grid-cols-[1fr_86px] items-center gap-2.5">
         <label className="sr-only" htmlFor="desktop-checkout-promo">
           Promo code
         </label>
         <input
-          className="h-11 rounded-[10px] border border-white/12 bg-black/30 px-4 text-[14px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
+          className="h-10 rounded-[10px] border border-white/12 bg-black/30 px-3.5 text-[13px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
           id="desktop-checkout-promo"
           onChange={(event) => checkout.setPromoCode(event.target.value)}
           placeholder="BLISS10"
           value={checkout.promoCode}
         />
         <Button
-          className="h-11 rounded-[10px]"
+          className="h-10 rounded-[10px] text-[12px]"
           onClick={checkout.applyPromoCode}
           variant="secondary"
         >
@@ -342,13 +342,13 @@ export function ReviewTrustStrip({ totalCents }: { totalCents: number }) {
   ] as const;
 
   return (
-    <div className="grid grid-cols-[1fr_1fr_1fr_140px] items-center rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <div className="grid grid-cols-[1fr_1fr_1fr_128px] items-center rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-3">
       {items.map(([icon, label, value]) => (
         <div
-          className="flex items-center gap-3 border-r border-white/10 px-3 last:border-r-0"
+          className="flex items-center gap-2.5 border-r border-white/10 px-2.5 last:border-r-0"
           key={label}
         >
-          <AssetIcon size={28} src={`/assets/icons/${icon}`} />
+          <AssetIcon size={24} src={`/assets/icons/${icon}`} />
           <p>
             <span className="block text-[12px] uppercase tracking-[0.08em] text-white/74">
               {label}
@@ -359,11 +359,11 @@ export function ReviewTrustStrip({ totalCents }: { totalCents: number }) {
           </p>
         </div>
       ))}
-      <div className="pl-5 text-right">
+      <div className="pl-4 text-right">
         <span className="block text-[12px] uppercase tracking-[0.08em] text-white/58">
           Total
         </span>
-        <span className="mt-1 block font-mono text-[24px] text-[var(--sb-gold-soft)]">
+        <span className="mt-1 block font-mono text-[22px] text-[var(--sb-gold-soft)]">
           {formatMoney(totalCents)}
         </span>
       </div>
@@ -379,11 +379,11 @@ export function DesktopReviewInfoCard({
   title: string;
 }) {
   return (
-    <article className="min-h-[102px] rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
-      <h2 className="editorial-title text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+    <article className="min-h-[88px] rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
+      <h2 className="editorial-title text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
         {title}
       </h2>
-      <p className="mt-3 text-[14px] leading-6 text-white/64">{children}</p>
+      <p className="mt-2 text-[13px] leading-5 text-white/64">{children}</p>
     </article>
   );
 }
@@ -399,16 +399,16 @@ export function DesktopReviewTotals({
   const points = Math.floor(checkout.reviewTotals.totalCents / 100);
 
   return (
-    <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-5">
+    <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="editorial-title text-[18px] uppercase text-[var(--sb-gold-soft)]">
+        <h2 className="editorial-title text-[17px] uppercase text-[var(--sb-gold-soft)]">
           Order summary
         </h2>
         <span className="rounded-full border border-[var(--sb-gold)]/34 px-3 py-1 text-[12px] uppercase tracking-[0.08em] text-white/58">
           {itemCount} items
         </span>
       </div>
-      <div className="mt-4 space-y-2 border-b border-white/10 pb-4 text-[14px]">
+      <div className="mt-3 space-y-1.5 border-b border-white/10 pb-3 text-[13px]">
         <SummaryLine
           label="Subtotal"
           value={formatMoney(checkout.reviewTotals.subtotalCents)}
@@ -432,17 +432,17 @@ export function DesktopReviewTotals({
           value={formatMoney(checkout.reviewTotals.tipCents)}
         />
       </div>
-      <div className="mt-4 flex items-end justify-between gap-5">
+      <div className="mt-3 flex items-end justify-between gap-5">
         <div>
           <p className="text-[12px] uppercase tracking-[0.1em] text-white/48">
             {checkout.mode === "delivery" ? "Delivery" : "Pickup"} window
           </p>
-          <p className="mt-2 text-[14px] text-white">
+          <p className="mt-1.5 text-[13px] text-white">
             {checkout.selectedTime
               ? formatDateTime(checkout.selectedTime)
               : "Selected time"}
           </p>
-          <p className="mt-3 flex items-center gap-2 text-[13px] text-[var(--sb-gold-soft)]">
+          <p className="mt-2.5 flex items-center gap-2 text-[12px] text-[var(--sb-gold-soft)]">
             <AssetIcon size={18} src="/assets/icons/floral-emblem-icon.png" />+
             {points} Bliss Points pending
           </p>
@@ -451,7 +451,7 @@ export function DesktopReviewTotals({
           <span className="block text-[12px] uppercase tracking-[0.1em] text-white/48">
             Total
           </span>
-          <span className="mt-1 block font-mono text-[32px] text-[var(--sb-gold-soft)]">
+          <span className="mt-1 block font-mono text-[29px] text-[var(--sb-gold-soft)]">
             {formatMoney(checkout.reviewTotals.totalCents)}
           </span>
         </p>
