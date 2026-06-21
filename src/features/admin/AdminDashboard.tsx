@@ -5,26 +5,12 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import {
   adminKpis,
-  adminLocationRows,
   adminManagementSections,
-  adminMenuRows,
-  adminOfferRows,
-  adminRecentOrders,
-  adminReservationQueue,
   adminTabletMetrics,
 } from "@/data/admin";
 
-import {
-  AdminPanel,
-  AnalyticsSummary,
-  CompactTable,
-  CustomerOverviewPanel,
-  CustomerSummaryPanel,
-  ManagementCard,
-  ManagementTable,
-  RevenueOverview,
-  TopMenuPanel,
-} from "./AdminManagementWidgets";
+import { ManagementCard } from "./AdminManagementWidgets";
+import { AdminInsightBoard } from "./AdminInsightBoard";
 import {
   AdminKpiCard,
   AdminTopBar,
@@ -33,15 +19,6 @@ import {
 import { AdminOperationsWorkspace } from "./AdminOperationsWorkspace";
 
 export function AdminDashboard() {
-  const recentOrderRows = adminRecentOrders.map(
-    ([orderId, customer, , amount, status, time]) =>
-      [orderId, customer, amount, status, time] as const,
-  );
-  const offerRows = adminOfferRows.map(
-    ([offer, , discount, status, validUntil]) =>
-      [offer, discount, status, validUntil] as const,
-  );
-
   return (
     <>
       <AdminTopBar />
@@ -144,65 +121,7 @@ export function AdminDashboard() {
           ))}
         </section>
 
-        <section
-          aria-label="Admin operations tables"
-          className="mt-6 hidden gap-4 2xl:grid 2xl:grid-cols-[1.18fr_1fr_1fr]"
-        >
-          <AdminPanel action="View All" id="orders-admin" title="Recent Orders">
-            <CompactTable
-              headers={["Order", "Customer", "Amount", "Status", "Time"]}
-              rows={recentOrderRows}
-            />
-          </AdminPanel>
-          <AdminPanel
-            action="View All"
-            id="reservations-admin"
-            title="Reservation Queue"
-          >
-            <CompactTable
-              headers={["Time", "Customer", "Party Size", "Table", "Status"]}
-              rows={adminReservationQueue}
-            />
-          </AdminPanel>
-          <TopMenuPanel />
-        </section>
-
-        <section
-          aria-label="Admin management tables"
-          className="mt-4 hidden gap-4 2xl:grid 2xl:grid-cols-3"
-        >
-          <ManagementTable
-            actionLabel="Add New Item"
-            headers={["Item", "Category", "Price", "Status"]}
-            id="menu-admin"
-            rows={adminMenuRows}
-            title="Menu Management"
-          />
-          <ManagementTable
-            actionLabel="Create New Offer"
-            headers={["Offer", "Discount", "Status", "Valid"]}
-            id="offers-admin"
-            rows={offerRows}
-            title="Offers Management"
-          />
-          <ManagementTable
-            actionLabel="Add New Location"
-            headers={["Location", "Manager", "Status", "Orders Today"]}
-            id="locations-admin"
-            rows={adminLocationRows}
-            title="Locations Management"
-          />
-        </section>
-
-        <section className="mt-4 hidden gap-4 2xl:grid 2xl:grid-cols-[1.35fr_1fr_1fr]">
-          <RevenueOverview />
-          <CustomerOverviewPanel />
-          <CustomerSummaryPanel />
-        </section>
-
-        <div className="mt-4 2xl:hidden">
-          <AnalyticsSummary />
-        </div>
+        <AdminInsightBoard />
       </div>
     </>
   );

@@ -8,6 +8,7 @@ import { adminTopMenuItems } from "@/data/admin";
 import { classNames } from "@/lib/classNames";
 
 import { AdminRecordEditor } from "./AdminRecordEditor";
+import { AdminWorkspaceHandoff } from "./AdminWorkspaceHandoff";
 import { AdminWorkspaceQueue } from "./AdminWorkspaceQueue";
 import { AdminWorkspaceRows } from "./AdminWorkspaceRows";
 import {
@@ -414,6 +415,14 @@ export function AdminOperationsWorkspace() {
             reviewedCount={reviewedCount}
             savedCount={savedCount}
             sectionTitle={activeSection.title}
+            totalCount={rowsWithEdits.length}
+          />
+
+          <AdminWorkspaceHandoff
+            activeTitle={activeSection.title}
+            priorityCount={priorityCount}
+            reviewedCount={reviewedCount}
+            selectedLabel={selectedRow?.label}
             totalCount={rowsWithEdits.length}
           />
         </div>

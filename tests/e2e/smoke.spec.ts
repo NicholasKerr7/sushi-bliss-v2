@@ -611,14 +611,14 @@ test.describe("admin experience", () => {
     );
 
     await expect(
-      workspace.getByRole("heading", { name: "Order Management" }),
+      workspace.getByRole("heading", { level: 2, name: "Order Management" }),
     ).toBeVisible();
 
     await workspace
       .getByRole("button", { name: "Open Offers Management" })
       .click();
     await expect(
-      workspace.getByRole("heading", { name: "Offers Management" }),
+      workspace.getByRole("heading", { level: 2, name: "Offers Management" }),
     ).toBeVisible();
 
     await workspace
@@ -648,6 +648,29 @@ test.describe("admin experience", () => {
     await workspace.getByRole("button", { name: "Clear" }).click();
     await workspace.getByRole("button", { name: "Open Users & Roles" }).click();
     await expect(workspace.getByText("Finance Review")).toBeVisible();
+
+    const commandBoard = page.locator(
+      'section[aria-labelledby="admin-insight-board-title"]',
+    );
+
+    await expect(
+      commandBoard.getByRole("heading", { name: "Live Orders" }),
+    ).toBeVisible();
+    await commandBoard
+      .getByRole("button", { name: "Open Customer Signals" })
+      .click();
+    await commandBoard
+      .getByRole("searchbox", { name: "Search command center records" })
+      .fill("Alex");
+    await commandBoard.getByRole("button", { name: /Alex Johnson/i }).click();
+    await commandBoard.getByRole("button", { name: "Mark actioned" }).click();
+    await expect(
+      commandBoard.getByRole("button", { exact: true, name: "Actioned" }),
+    ).toBeVisible();
+    await commandBoard.getByRole("button", { name: "Pin record" }).click();
+    await expect(
+      commandBoard.getByRole("button", { exact: true, name: "Pinned" }),
+    ).toBeVisible();
 
     await expect(
       page.getByRole("link", { name: /Sushi Bliss/i }).first(),

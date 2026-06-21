@@ -250,7 +250,7 @@ export function AdminRecordEditor({
         </div>
       )}
 
-      <div className="mt-5 border-t border-white/10 pt-4">
+      <div className="mt-5 border-t border-white/10 pt-4 xl:hidden">
         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/42">
           Top signal
         </p>
