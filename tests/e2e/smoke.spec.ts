@@ -674,7 +674,36 @@ test.describe("admin experience", () => {
       commandBoard.getByRole("button", { exact: true, name: "Pinned" }),
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Open Forms workbench" }).click();
+    await page.getByRole("button", { name: "Open Manage workbench" }).click();
+
+    const domainConsole = page.locator(
+      'section[aria-labelledby="admin-domain-console-title"]',
+    );
+
+    await expect(
+      domainConsole.getByRole("heading", { level: 3, name: "Control Rooms" }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: "Open Locations Management detail" })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 3,
+        name: "Locations Management",
+      }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Sushi Bliss Westside/i })
+      .click();
+    await domainConsole.getByRole("button", { name: "Mark reviewed" }).click();
+    await expect(
+      domainConsole.getByRole("button", { exact: true, name: "Reviewed" }),
+    ).toBeVisible();
+    await domainConsole.getByRole("button", { name: "Pin record" }).click();
+    await expect(
+      domainConsole.getByRole("button", { exact: true, name: "Pinned" }),
+    ).toBeVisible();
+    await domainConsole.getByRole("button", { name: "Open edit form" }).click();
 
     const formStudio = page.locator(
       'section[aria-labelledby="admin-form-studio-title"]',

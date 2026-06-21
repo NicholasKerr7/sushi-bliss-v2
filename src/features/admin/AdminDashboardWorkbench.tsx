@@ -3,12 +3,11 @@
 import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { adminManagementSections } from "@/data/admin";
 import { classNames } from "@/lib/classNames";
 
+import { AdminDomainConsole } from "./AdminDomainConsole";
 import { AdminFormStudio } from "./AdminFormStudio";
 import { AdminInsightBoard } from "./AdminInsightBoard";
-import { ManagementCard } from "./AdminManagementWidgets";
 import { AdminOperationsWorkspace } from "./AdminOperationsWorkspace";
 
 type AdminWorkbenchTabId = "command" | "forms" | "manage" | "operations";
@@ -50,7 +49,15 @@ const adminWorkbenchTabs: readonly {
   },
 ];
 
-function AdminWorkbenchPanel({ activeId }: { activeId: AdminWorkbenchTabId }) {
+function AdminWorkbenchPanel({
+  activeId,
+  onOpenForms,
+  onOpenOperations,
+}: {
+  activeId: AdminWorkbenchTabId;
+  onOpenForms: () => void;
+  onOpenOperations: () => void;
+}) {
   if (activeId === "command") {
     return (
       <div className="[&>section]:mt-0">
@@ -69,14 +76,10 @@ function AdminWorkbenchPanel({ activeId }: { activeId: AdminWorkbenchTabId }) {
 
   if (activeId === "manage") {
     return (
-      <section
-        aria-label="Admin management shortcuts"
-        className="grid gap-4 xl:grid-cols-2"
-      >
-        {adminManagementSections.map((section) => (
-          <ManagementCard key={section.id} section={section} />
-        ))}
-      </section>
+      <AdminDomainConsole
+        onOpenForms={onOpenForms}
+        onOpenOperations={onOpenOperations}
+      />
     );
   }
 
@@ -184,7 +187,11 @@ export function AdminDashboardWorkbench() {
       </div>
 
       <div className="smooth-scroll-area p-3 md:p-4 xl:max-h-[clamp(540px,calc(100dvh-430px),760px)] xl:overflow-y-auto xl:overscroll-contain 2xl:p-5">
-        <AdminWorkbenchPanel activeId={activeId} />
+        <AdminWorkbenchPanel
+          activeId={activeId}
+          onOpenForms={() => setActiveId("forms")}
+          onOpenOperations={() => setActiveId("operations")}
+        />
       </div>
     </section>
   );
