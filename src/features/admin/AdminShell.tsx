@@ -8,6 +8,8 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { adminNavigation, adminSystemNavigation } from "@/data/admin";
 import { classNames } from "@/lib/classNames";
 
+import { workspaceSections } from "./adminOperationsData";
+
 interface AdminShellProps {
   children: ReactNode;
 }
@@ -59,6 +61,7 @@ function AdminNavLink({
 
   return (
     <a
+      aria-label={item.label}
       aria-current={isActive ? "page" : undefined}
       className={classNames(
         "group relative flex min-h-12 min-w-0 items-center rounded-[12px] border text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
@@ -123,6 +126,15 @@ export function AdminShell({ children }: AdminShellProps) {
 
       if (hash === "#customer-chart-admin") {
         setActiveId("customers");
+        return;
+      }
+
+      const workspaceMatch = workspaceSections.find(
+        (section) => section.hash === hash,
+      );
+
+      if (workspaceMatch) {
+        setActiveId(workspaceMatch.id);
         return;
       }
 

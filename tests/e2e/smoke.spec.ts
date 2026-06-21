@@ -753,6 +753,23 @@ test.describe("admin experience", () => {
       formStudio.getByRole("button", { exact: true, name: "Queued" }),
     ).toBeVisible();
 
+    await page.getByRole("link", { name: "Menu Management" }).first().click();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Manage Workbench" }),
+    ).toBeVisible();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 3,
+        name: "Menu Management",
+      }),
+    ).toBeVisible();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Menu catalog board",
+      }),
+    ).toBeVisible();
+
     await expect(
       page.getByRole("link", { name: /Sushi Bliss/i }).first(),
     ).toBeVisible();

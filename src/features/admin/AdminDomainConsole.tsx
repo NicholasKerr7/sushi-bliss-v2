@@ -14,6 +14,8 @@ import {
 } from "./adminOperationsData";
 
 interface AdminDomainConsoleProps {
+  initialDomainId?: AdminWorkspaceId;
+  onDomainChange?: (domainId: AdminWorkspaceId) => void;
   onOpenForms: (domainId: AdminWorkspaceId) => void;
   onOpenOperations: (domainId: AdminWorkspaceId) => void;
 }
@@ -61,10 +63,12 @@ function getPrimaryRecord(sectionId: AdminWorkspaceId, rows: WorkspaceRow[]) {
 }
 
 export function AdminDomainConsole({
+  initialDomainId = "menu",
+  onDomainChange,
   onOpenForms,
   onOpenOperations,
 }: AdminDomainConsoleProps) {
-  const [activeId, setActiveId] = useState<AdminWorkspaceId>("menu");
+  const [activeId, setActiveId] = useState<AdminWorkspaceId>(initialDomainId);
   const [reviewedIds, setReviewedIds] = useState<Set<string>>(() => new Set());
   const [pinnedIds, setPinnedIds] = useState<Set<string>>(() => new Set());
   const activeSection = getWorkspaceSection(activeId);
@@ -111,6 +115,7 @@ export function AdminDomainConsole({
 
     setActiveId(nextId);
     setSelectedRecordId(nextRecord?.id ?? "");
+    onDomainChange?.(nextId);
   };
 
   const toggleReviewed = () => {

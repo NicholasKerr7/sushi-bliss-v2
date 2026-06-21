@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
@@ -13,6 +13,7 @@ import { AdminOperationsWorkspace } from "./AdminOperationsWorkspace";
 import {
   defaultWorkspaceId,
   getWorkspaceSection,
+  workspaceSections,
   type AdminWorkspaceId,
 } from "./adminOperationsData";
 
@@ -25,6 +26,71 @@ const formIdByWorkspaceId: Partial<Record<AdminWorkspaceId, AdminFormId>> = {
   settings: "settings",
   users: "users",
 };
+
+const managedWorkspaceIds: readonly AdminWorkspaceId[] = [
+  "analytics",
+  "customers",
+  "locations",
+  "menu",
+  "offers",
+  "orders",
+  "reservations",
+];
+
+interface AdminWorkbenchIntent {
+  formId?: AdminFormId;
+  tabId: AdminWorkbenchTabId;
+  workspaceId?: AdminWorkspaceId;
+}
+
+function getWorkspaceIdFromSlug(slug: string) {
+  return workspaceSections.find((section) => section.id === slug)?.id;
+}
+
+function getWorkbenchIntentFromHash(hash: string): AdminWorkbenchIntent | null {
+  if (!hash || hash === "#overview") {
+    return { tabId: "operations", workspaceId: defaultWorkspaceId };
+  }
+
+  const manageMatch = /^#manage-(.+)-admin$/.exec(hash);
+  const operationsMatch = /^#operations-(.+)-admin$/.exec(hash);
+  const formsMatch = /^#forms-(.+)-admin$/.exec(hash);
+
+  if (manageMatch) {
+    const workspaceId = getWorkspaceIdFromSlug(manageMatch[1]);
+
+    if (workspaceId && managedWorkspaceIds.includes(workspaceId)) {
+      return { tabId: "manage", workspaceId };
+    }
+  }
+
+  if (operationsMatch) {
+    const workspaceId = getWorkspaceIdFromSlug(operationsMatch[1]);
+
+    if (workspaceId) {
+      return { tabId: "operations", workspaceId };
+    }
+  }
+
+  if (formsMatch) {
+    const workspaceId = getWorkspaceIdFromSlug(formsMatch[1]);
+    const formId = workspaceId ? formIdByWorkspaceId[workspaceId] : undefined;
+
+    if (workspaceId && formId) {
+      return { formId, tabId: "forms", workspaceId };
+    }
+  }
+
+  const legacyWorkspace = workspaceSections.find(
+    (section) => section.hash === hash,
+  );
+
+  if (legacyWorkspace) {
+    return { tabId: "operations", workspaceId: legacyWorkspace.id };
+  }
+
+  return null;
+}
 
 const adminWorkbenchTabs: readonly {
   description: string;
@@ -77,12 +143,16 @@ function AdminWorkbenchPanel({
   activeId,
   onOpenForms,
   onOpenOperations,
+  onTargetDomainChange,
+  targetDomainId,
   targetFormId,
   targetWorkspaceId,
 }: {
   activeId: AdminWorkbenchTabId;
+  onTargetDomainChange: (domainId: AdminWorkspaceId) => void;
   onOpenForms: (domainId: AdminWorkspaceId) => void;
   onOpenOperations: (domainId: AdminWorkspaceId) => void;
+  targetDomainId: AdminWorkspaceId;
   targetFormId: AdminFormId;
   targetWorkspaceId: AdminWorkspaceId;
 }) {
@@ -105,6 +175,9 @@ function AdminWorkbenchPanel({
   if (activeId === "manage") {
     return (
       <AdminDomainConsole
+        initialDomainId={targetDomainId}
+        key={targetDomainId}
+        onDomainChange={onTargetDomainChange}
         onOpenForms={onOpenForms}
         onOpenOperations={onOpenOperations}
       />
@@ -121,12 +194,57 @@ function AdminWorkbenchPanel({
 export function AdminDashboardWorkbench() {
   const [activeId, setActiveId] =
     useState<AdminWorkbenchTabId>("operations");
+  const [targetDomainId, setTargetDomainId] =
+    useState<AdminWorkspaceId>("menu");
   const [targetFormId, setTargetFormId] = useState<AdminFormId>("menu");
   const [targetWorkspaceId, setTargetWorkspaceId] =
     useState<AdminWorkspaceId>(defaultWorkspaceId);
   const activeTab =
     adminWorkbenchTabs.find((tab) => tab.id === activeId) ??
     adminWorkbenchTabs[0];
+
+  useEffect(() => {
+    const scrollDeckIntoView = () => {
+      document.getElementById("admin-control-deck")?.scrollIntoView({
+        block: "start",
+      });
+    };
+    const applyHashIntent = () => {
+      const intent = getWorkbenchIntentFromHash(window.location.hash);
+
+      if (!intent) {
+        return;
+      }
+
+      if (intent.workspaceId) {
+        setTargetWorkspaceId(intent.workspaceId);
+
+        if (managedWorkspaceIds.includes(intent.workspaceId)) {
+          setTargetDomainId(intent.workspaceId);
+        }
+      }
+
+      if (intent.formId) {
+        setTargetFormId(intent.formId);
+      }
+
+      setActiveId(intent.tabId);
+
+      if (window.location.hash && window.location.hash !== "#overview") {
+        window.requestAnimationFrame(scrollDeckIntoView);
+      }
+    };
+
+    queueMicrotask(applyHashIntent);
+    window.addEventListener("hashchange", applyHashIntent);
+    window.addEventListener("popstate", applyHashIntent);
+
+    return () => {
+      window.removeEventListener("hashchange", applyHashIntent);
+      window.removeEventListener("popstate", applyHashIntent);
+    };
+  }, []);
+
   const openFormsForDomain = (domainId: AdminWorkspaceId) => {
     const nextFormId = formIdByWorkspaceId[domainId];
 
@@ -134,12 +252,14 @@ export function AdminDashboardWorkbench() {
       return;
     }
 
+    setTargetDomainId(domainId);
     setTargetFormId(nextFormId);
     setActiveId("forms");
   };
   const openOperationsForDomain = (domainId: AdminWorkspaceId) => {
     const nextSection = getWorkspaceSection(domainId);
 
+    setTargetDomainId(domainId);
     setTargetWorkspaceId(domainId);
     window.history.replaceState(null, "", nextSection.hash);
     window.dispatchEvent(new Event("hashchange"));
@@ -149,6 +269,7 @@ export function AdminDashboardWorkbench() {
   return (
     <section
       aria-labelledby="admin-control-deck-title"
+      id="admin-control-deck"
       className="mt-6 overflow-hidden rounded-[26px] border border-[var(--sb-border)] bg-[radial-gradient(circle_at_18%_0%,rgba(239,47,37,0.1),transparent_36%),linear-gradient(145deg,rgba(255,255,255,0.052),rgba(255,255,255,0.012)),rgba(4,7,8,0.96)] shadow-[0_34px_110px_rgba(0,0,0,0.5)]"
     >
       <div className="grid gap-4 border-b border-white/10 p-4 md:p-5 2xl:p-6">
@@ -243,6 +364,8 @@ export function AdminDashboardWorkbench() {
           activeId={activeId}
           onOpenForms={openFormsForDomain}
           onOpenOperations={openOperationsForDomain}
+          onTargetDomainChange={setTargetDomainId}
+          targetDomainId={targetDomainId}
           targetFormId={targetFormId}
           targetWorkspaceId={targetWorkspaceId}
         />
