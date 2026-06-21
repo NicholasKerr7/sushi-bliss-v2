@@ -672,6 +672,26 @@ test.describe("admin experience", () => {
       commandBoard.getByRole("button", { exact: true, name: "Pinned" }),
     ).toBeVisible();
 
+    const formStudio = page.locator(
+      'section[aria-labelledby="admin-form-studio-title"]',
+    );
+
+    await expect(
+      formStudio.getByRole("heading", { level: 2, name: "Menu Item Form" }),
+    ).toBeVisible();
+    await formStudio
+      .getByRole("button", { name: "Open System Settings Form" })
+      .click();
+    await formStudio.getByLabel("Pickup lead time").fill("20 minutes");
+    await formStudio.getByRole("button", { name: "Save mock" }).click();
+    await expect(
+      formStudio.getByText("Saved", { exact: true }).first(),
+    ).toBeVisible();
+    await formStudio.getByRole("button", { name: "Queue review" }).click();
+    await expect(
+      formStudio.getByRole("button", { exact: true, name: "Queued" }),
+    ).toBeVisible();
+
     await expect(
       page.getByRole("link", { name: /Sushi Bliss/i }).first(),
     ).toBeVisible();

@@ -10,6 +10,7 @@ import {
 } from "@/data/admin";
 
 import { ManagementCard } from "./AdminManagementWidgets";
+import { AdminFormStudio } from "./AdminFormStudio";
 import { AdminInsightBoard } from "./AdminInsightBoard";
 import {
   AdminKpiCard,
@@ -122,6 +123,8 @@ export function AdminDashboard() {
         </section>
 
         <AdminInsightBoard />
+
+        <AdminFormStudio />
       </div>
     </>
   );
