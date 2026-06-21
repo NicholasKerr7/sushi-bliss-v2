@@ -749,6 +749,105 @@ test.describe("admin experience", () => {
     ).toBeVisible();
 
     await domainConsole
+      .getByRole("button", { name: "Open Offers Management detail" })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "Offer control" }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Launch scheduled offer/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "Sashimi Night" }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Campaign launched for the upcoming service window.")
+        .first(),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Clean expired offer/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "New Customer" }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Expired offer pinned for weekly campaign cleanup.")
+        .first(),
+    ).toBeVisible();
+
+    await domainConsole
+      .getByRole("button", { name: "Open Customer Overview detail" })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Customer control",
+      }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Pin VIP follow-up/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "Alex Johnson" }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Hospitality follow-up queued for the top guest segment.")
+        .first(),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Review referral guest/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "Michael Chen" }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Referral onboarding reviewed for the loyalty team.")
+        .first(),
+    ).toBeVisible();
+
+    await domainConsole
+      .getByRole("button", { name: "Open Analytics Summary detail" })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Analytics control",
+      }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Pin revenue metric/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Average Order Value",
+      }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Pinned for the weekly revenue performance note.")
+        .first(),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Review guest metric/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Customer Satisfaction",
+      }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Guest experience metric reviewed for weekly reporting.")
+        .first(),
+    ).toBeVisible();
+
+    await domainConsole
       .getByRole("button", { name: "Open Locations Management detail" })
       .click();
     await expect(
@@ -768,6 +867,26 @@ test.describe("admin experience", () => {
       .click();
     await expect(
       domainConsole.getByRole("button", { name: /Staged branch handoff/i }),
+    ).toBeVisible();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Location control",
+      }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Review busiest branch/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Sushi Bliss Downtown",
+      }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Service load reviewed for the current branch window.")
+        .first(),
     ).toBeVisible();
     await domainConsole
       .getByRole("button", { name: /Sushi Bliss Westside/i })

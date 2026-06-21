@@ -1,4 +1,13 @@
-import { type AdminWorkspaceId, type WorkspaceRow } from "./adminOperationsData";
+import {
+  type AdminWorkspaceId,
+  type WorkspaceRow,
+} from "./adminOperationsData";
+import {
+  buildAnalyticsContent,
+  buildCustomerContent,
+  buildLocationContent,
+  buildOfferContent,
+} from "./adminDomainSpecialActions";
 
 export type EditableRecordPatch = Partial<
   Pick<WorkspaceRow, "detail" | "meta" | "status" | "value">
@@ -178,14 +187,21 @@ function buildGenericActions({
 function buildMenuContent(
   context: AdminDomainActionContext,
 ): DomainActionPanelContent {
-  const { onMarkReviewed, onOpenForms, onPatchRecord, onPinRecord, onSelectRecord, rows } =
-    context;
+  const {
+    onMarkReviewed,
+    onOpenForms,
+    onPatchRecord,
+    onPinRecord,
+    onSelectRecord,
+    rows,
+  } = context;
   const inactiveItem = rows.find((row) => row.status === "Inactive");
   const premiumItem =
     rows
       .filter((row) => parseMoney(row.value) >= 18)
-      .sort((first, second) => parseMoney(second.value) - parseMoney(first.value))[0] ??
-    rows[0];
+      .sort(
+        (first, second) => parseMoney(second.value) - parseMoney(first.value),
+      )[0] ?? rows[0];
 
   return {
     accent: "Catalog actions",
@@ -270,8 +286,14 @@ function buildMenuContent(
 function buildOrderContent(
   context: AdminDomainActionContext,
 ): DomainActionPanelContent {
-  const { onMarkReviewed, onOpenOperations, onPatchRecord, onPinRecord, onSelectRecord, rows } =
-    context;
+  const {
+    onMarkReviewed,
+    onOpenOperations,
+    onPatchRecord,
+    onPinRecord,
+    onSelectRecord,
+    rows,
+  } = context;
   const preparingOrder = rows.find((row) => row.status === "Preparing");
   const deliveryOrder = rows.find((row) => row.status === "Out for Delivery");
 
@@ -356,8 +378,14 @@ function buildOrderContent(
 function buildReservationContent(
   context: AdminDomainActionContext,
 ): DomainActionPanelContent {
-  const { onMarkReviewed, onOpenOperations, onPatchRecord, onPinRecord, onSelectRecord, rows } =
-    context;
+  const {
+    onMarkReviewed,
+    onOpenOperations,
+    onPatchRecord,
+    onPinRecord,
+    onSelectRecord,
+    rows,
+  } = context;
   const pendingReservation = rows.find((row) => row.status === "Pending");
   const vipReservation =
     rows.find((row) => row.value.toLowerCase().includes("vip")) ?? rows[0];
@@ -452,6 +480,22 @@ export function buildAdminDomainActionContent(
 
   if (context.activeId === "reservations") {
     return buildReservationContent(context);
+  }
+
+  if (context.activeId === "offers") {
+    return buildOfferContent(context);
+  }
+
+  if (context.activeId === "locations") {
+    return buildLocationContent(context);
+  }
+
+  if (context.activeId === "customers") {
+    return buildCustomerContent(context);
+  }
+
+  if (context.activeId === "analytics") {
+    return buildAnalyticsContent(context);
   }
 
   const defaultCopy = getDefaultPanelCopy(context.activeId);
