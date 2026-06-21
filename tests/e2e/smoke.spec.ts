@@ -679,13 +679,25 @@ test.describe("admin experience", () => {
     const domainConsole = page.locator(
       'section[aria-labelledby="admin-domain-console-title"]',
     );
+    const workbenchPanel = page.getByTestId("admin-workbench-panel");
+    const isDesktopProject = test.info().project.name.includes("desktop");
 
     await expect(
       domainConsole.getByRole("heading", { level: 3, name: "Control Rooms" }),
     ).toBeVisible();
+    if (isDesktopProject) {
+      await workbenchPanel.evaluate((element) => {
+        element.scrollTop = element.scrollHeight;
+      });
+    }
     await domainConsole
       .getByRole("button", { name: "Open Menu Management detail" })
       .click();
+    if (isDesktopProject) {
+      await expect
+        .poll(() => workbenchPanel.evaluate((element) => element.scrollTop))
+        .toBe(0);
+    }
     await expect(
       domainConsole.getByRole("heading", { level: 4, name: "Menu control" }),
     ).toBeVisible();

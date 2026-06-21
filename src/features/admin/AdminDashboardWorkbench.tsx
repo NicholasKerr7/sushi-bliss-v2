@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
@@ -199,9 +199,15 @@ export function AdminDashboardWorkbench() {
   const [targetFormId, setTargetFormId] = useState<AdminFormId>("menu");
   const [targetWorkspaceId, setTargetWorkspaceId] =
     useState<AdminWorkspaceId>(defaultWorkspaceId);
+  const workbenchPanelRef = useRef<HTMLDivElement>(null);
   const activeTab =
     adminWorkbenchTabs.find((tab) => tab.id === activeId) ??
     adminWorkbenchTabs[0];
+  const resetWorkbenchPanelScroll = useCallback(() => {
+    window.requestAnimationFrame(() => {
+      workbenchPanelRef.current?.scrollTo({ top: 0 });
+    });
+  }, []);
 
   useEffect(() => {
     const scrollDeckIntoView = () => {
@@ -229,6 +235,7 @@ export function AdminDashboardWorkbench() {
       }
 
       setActiveId(intent.tabId);
+      resetWorkbenchPanelScroll();
 
       if (window.location.hash && window.location.hash !== "#overview") {
         window.requestAnimationFrame(scrollDeckIntoView);
@@ -243,7 +250,17 @@ export function AdminDashboardWorkbench() {
       window.removeEventListener("hashchange", applyHashIntent);
       window.removeEventListener("popstate", applyHashIntent);
     };
-  }, []);
+  }, [resetWorkbenchPanelScroll]);
+
+  const handleWorkbenchTabChange = (tabId: AdminWorkbenchTabId) => {
+    setActiveId(tabId);
+    resetWorkbenchPanelScroll();
+  };
+
+  const handleTargetDomainChange = (domainId: AdminWorkspaceId) => {
+    setTargetDomainId(domainId);
+    resetWorkbenchPanelScroll();
+  };
 
   const openFormsForDomain = (domainId: AdminWorkspaceId) => {
     const nextFormId = formIdByWorkspaceId[domainId];
@@ -255,6 +272,7 @@ export function AdminDashboardWorkbench() {
     setTargetDomainId(domainId);
     setTargetFormId(nextFormId);
     setActiveId("forms");
+    resetWorkbenchPanelScroll();
   };
   const openOperationsForDomain = (domainId: AdminWorkspaceId) => {
     const nextSection = getWorkspaceSection(domainId);
@@ -264,6 +282,7 @@ export function AdminDashboardWorkbench() {
     window.history.replaceState(null, "", nextSection.hash);
     window.dispatchEvent(new Event("hashchange"));
     setActiveId("operations");
+    resetWorkbenchPanelScroll();
   };
 
   return (
@@ -306,7 +325,7 @@ export function AdminDashboardWorkbench() {
                     : "border-transparent bg-white/[0.025] hover:border-[var(--sb-gold)]/28 hover:bg-white/[0.045]",
                 )}
                 key={tab.id}
-                onClick={() => setActiveId(tab.id)}
+                onClick={() => handleWorkbenchTabChange(tab.id)}
                 type="button"
               >
                 <span
@@ -359,12 +378,16 @@ export function AdminDashboardWorkbench() {
         </nav>
       </div>
 
-      <div className="smooth-scroll-area p-3 md:p-4 xl:max-h-[clamp(540px,calc(100dvh-430px),760px)] xl:overflow-y-auto xl:overscroll-contain 2xl:p-5">
+      <div
+        className="smooth-scroll-area p-3 md:p-4 xl:max-h-[clamp(540px,calc(100dvh-430px),760px)] xl:overflow-y-auto xl:overscroll-contain 2xl:p-5"
+        data-testid="admin-workbench-panel"
+        ref={workbenchPanelRef}
+      >
         <AdminWorkbenchPanel
           activeId={activeId}
           onOpenForms={openFormsForDomain}
           onOpenOperations={openOperationsForDomain}
-          onTargetDomainChange={setTargetDomainId}
+          onTargetDomainChange={handleTargetDomainChange}
           targetDomainId={targetDomainId}
           targetFormId={targetFormId}
           targetWorkspaceId={targetWorkspaceId}
