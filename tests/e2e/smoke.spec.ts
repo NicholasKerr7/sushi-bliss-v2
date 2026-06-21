@@ -692,6 +692,18 @@ test.describe("admin experience", () => {
         name: "Locations Management",
       }),
     ).toBeVisible();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Branch service board",
+      }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Stage branch handoff/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("button", { name: /Staged branch handoff/i }),
+    ).toBeVisible();
     await domainConsole
       .getByRole("button", { name: /Sushi Bliss Westside/i })
       .click();

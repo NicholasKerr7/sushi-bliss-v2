@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
 
+import { AdminDomainBriefing } from "./AdminDomainBriefing";
 import { AdminWorkspaceStatusPill } from "./AdminWorkspaceStatusPill";
 import {
   getWorkspaceSection,
@@ -266,6 +267,14 @@ export function AdminDomainConsole({
             </div>
           </div>
         </div>
+
+        <AdminDomainBriefing
+          activeId={activeSection.id}
+          openCount={activeOpenCount}
+          pinnedCount={pinnedCount}
+          recordCount={activeSection.rows.length}
+          reviewedCount={reviewedCount}
+        />
 
         <div className="grid gap-4 p-4 xl:grid-cols-[minmax(0,1fr)_330px] 2xl:grid-cols-[minmax(0,1fr)_360px] 2xl:p-5">
           <div className="min-w-0">
