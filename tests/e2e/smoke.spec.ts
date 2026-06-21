@@ -703,14 +703,30 @@ test.describe("admin experience", () => {
     await expect(
       domainConsole.getByRole("button", { exact: true, name: "Pinned" }),
     ).toBeVisible();
-    await domainConsole.getByRole("button", { name: "Open edit form" }).click();
+    await domainConsole
+      .getByRole("button", { name: "Open live workspace" })
+      .click();
+    await expect(
+      workspace.getByRole("heading", {
+        level: 2,
+        name: "Locations Management",
+      }),
+    ).toBeVisible();
+
+    await page.getByRole("button", { name: "Open Manage workbench" }).click();
+    await domainConsole
+      .getByRole("button", { name: "Open Locations Management detail" })
+      .click();
+    await domainConsole
+      .getByRole("button", { name: "Open location form" })
+      .click();
 
     const formStudio = page.locator(
       'section[aria-labelledby="admin-form-studio-title"]',
     );
 
     await expect(
-      formStudio.getByRole("heading", { level: 2, name: "Menu Item Form" }),
+      formStudio.getByRole("heading", { level: 2, name: "Location Form" }),
     ).toBeVisible();
     await formStudio
       .getByRole("button", { name: "Open System Settings Form" })

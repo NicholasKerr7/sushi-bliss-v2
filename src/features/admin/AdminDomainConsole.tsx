@@ -13,8 +13,8 @@ import {
 } from "./adminOperationsData";
 
 interface AdminDomainConsoleProps {
-  onOpenForms: () => void;
-  onOpenOperations: () => void;
+  onOpenForms: (domainId: AdminWorkspaceId) => void;
+  onOpenOperations: (domainId: AdminWorkspaceId) => void;
 }
 
 const primaryDomainIds: readonly AdminWorkspaceId[] = [
@@ -37,6 +37,14 @@ const domainCardCopy: Partial<
   offers: { label: "Offers", metric: "12 offers" },
   orders: { label: "Orders", metric: "18 active" },
   reservations: { label: "Reservations", metric: "42 today" },
+};
+
+const formActionLabels: Partial<Record<AdminWorkspaceId, string>> = {
+  locations: "Open location form",
+  menu: "Open menu form",
+  offers: "Open offer form",
+  settings: "Open settings form",
+  users: "Open user form",
 };
 
 function getPrimaryRecord(sectionId: AdminWorkspaceId, rows: WorkspaceRow[]) {
@@ -94,6 +102,7 @@ export function AdminDomainConsole({
   const isSelectedPinned = selectedRecord
     ? pinnedIds.has(selectedRecord.id)
     : false;
+  const formActionLabel = formActionLabels[activeSection.id];
 
   const handleDomainChange = (nextId: AdminWorkspaceId) => {
     const nextSection = getWorkspaceSection(nextId);
@@ -365,15 +374,16 @@ export function AdminDomainConsole({
                     {isSelectedPinned ? "Pinned" : "Pin record"}
                   </button>
                   <button
-                    className="h-11 rounded-[12px] border border-[var(--sb-gold)]/34 bg-black/20 px-4 text-[12px] font-semibold uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-                    onClick={onOpenForms}
+                    className="h-11 rounded-[12px] border border-[var(--sb-gold)]/34 bg-black/20 px-4 text-[12px] font-semibold uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:bg-black/20"
+                    disabled={!formActionLabel}
+                    onClick={() => onOpenForms(activeSection.id)}
                     type="button"
                   >
-                    Open edit form
+                    {formActionLabel ?? "Form coming soon"}
                   </button>
                   <button
                     className="h-11 rounded-[12px] border border-white/12 bg-black/20 px-4 text-[12px] font-semibold uppercase tracking-[0.07em] text-white/68 transition hover:border-[var(--sb-red-bright)]/42 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-                    onClick={onOpenOperations}
+                    onClick={() => onOpenOperations(activeSection.id)}
                     type="button"
                   >
                     Open live workspace

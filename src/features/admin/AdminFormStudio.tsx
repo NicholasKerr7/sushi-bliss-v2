@@ -16,6 +16,10 @@ import {
 
 type FormValuesById = Record<AdminFormId, Record<string, string>>;
 
+interface AdminFormStudioProps {
+  initialFormId?: AdminFormId;
+}
+
 function buildInitialValues(): FormValuesById {
   return Object.fromEntries(
     adminFormConfigs.map((config) => [config.id, config.initialValues]),
@@ -200,8 +204,10 @@ function AdminFormReview({
   );
 }
 
-export function AdminFormStudio() {
-  const [activeId, setActiveId] = useState<AdminFormId>(defaultAdminFormId);
+export function AdminFormStudio({
+  initialFormId = defaultAdminFormId,
+}: AdminFormStudioProps) {
+  const [activeId, setActiveId] = useState<AdminFormId>(initialFormId);
   const [draftValues, setDraftValues] =
     useState<FormValuesById>(buildInitialValues);
   const [savedValues, setSavedValues] =

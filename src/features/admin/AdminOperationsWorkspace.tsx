@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
@@ -13,7 +13,6 @@ import { AdminWorkspaceQueue } from "./AdminWorkspaceQueue";
 import { AdminWorkspaceRows } from "./AdminWorkspaceRows";
 import {
   defaultWorkspaceId,
-  getWorkspaceFromHash,
   getWorkspaceSection,
   workspaceSections,
   type AdminWorkspaceId,
@@ -24,14 +23,20 @@ import {
 type EditableRecordField = "detail" | "meta" | "status" | "value";
 type RowEdits = Record<string, Partial<Pick<WorkspaceRow, EditableRecordField>>>;
 
+interface AdminOperationsWorkspaceProps {
+  initialWorkspaceId?: AdminWorkspaceId;
+}
+
 function setWorkspaceHash(section: WorkspaceSection) {
   window.history.replaceState(null, "", section.hash);
   window.dispatchEvent(new Event("hashchange"));
 }
 
-export function AdminOperationsWorkspace() {
+export function AdminOperationsWorkspace({
+  initialWorkspaceId = defaultWorkspaceId,
+}: AdminOperationsWorkspaceProps) {
   const [activeId, setActiveId] =
-    useState<AdminWorkspaceId>(defaultWorkspaceId);
+    useState<AdminWorkspaceId>(initialWorkspaceId);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All statuses");
   const [priorityRowIds, setPriorityRowIds] = useState<Set<string>>(
@@ -100,17 +105,21 @@ export function AdminOperationsWorkspace() {
     priorityRowIds.has(row.id),
   );
 
-  useEffect(() => {
-    const applyWorkspaceId = (nextId: AdminWorkspaceId) => {
-      const nextSection = getWorkspaceSection(nextId);
+  const applyWorkspaceId = useCallback((nextId: AdminWorkspaceId) => {
+    const nextSection = getWorkspaceSection(nextId);
 
-      setActiveId(nextId);
-      setQuery("");
-      setStatusFilter("All statuses");
-      setSelectedRowId(nextSection.rows[0]?.id ?? "");
-    };
+    setActiveId(nextId);
+    setQuery("");
+    setStatusFilter("All statuses");
+    setSelectedRowId(nextSection.rows[0]?.id ?? "");
+  }, []);
+
+  useEffect(() => {
+    const getHashWorkspaceId = () =>
+      workspaceSections.find((section) => section.hash === window.location.hash)
+        ?.id;
     const syncFromHash = () =>
-      applyWorkspaceId(getWorkspaceFromHash(window.location.hash));
+      applyWorkspaceId(getHashWorkspaceId() ?? initialWorkspaceId);
 
     queueMicrotask(syncFromHash);
     window.addEventListener("hashchange", syncFromHash);
@@ -120,13 +129,10 @@ export function AdminOperationsWorkspace() {
       window.removeEventListener("hashchange", syncFromHash);
       window.removeEventListener("popstate", syncFromHash);
     };
-  }, []);
+  }, [applyWorkspaceId, initialWorkspaceId]);
 
   const handleWorkspaceChange = (section: WorkspaceSection) => {
-    setActiveId(section.id);
-    setQuery("");
-    setStatusFilter("All statuses");
-    setSelectedRowId(section.rows[0]?.id ?? "");
+    applyWorkspaceId(section.id);
     setWorkspaceHash(section);
   };
 
