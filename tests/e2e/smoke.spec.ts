@@ -629,6 +629,17 @@ test.describe("admin experience", () => {
     ).toBeVisible();
 
     await workspace.getByRole("button", { name: /Loyalty Reward/i }).click();
+    await workspace.getByLabel("Record value").fill("Jun 30, 2026");
+    await workspace.getByRole("button", { name: "Apply update" }).click();
+    await expect(
+      workspace.getByRole("button", { name: "Update saved" }),
+    ).toBeVisible();
+
+    await workspace.getByRole("button", { name: "Set priority" }).click();
+    await expect(
+      workspace.getByRole("button", { name: "Priority set" }),
+    ).toBeVisible();
+
     await workspace.getByRole("button", { name: "Mark reviewed" }).click();
     await expect(
       workspace.getByRole("button", { name: "Marked reviewed" }),

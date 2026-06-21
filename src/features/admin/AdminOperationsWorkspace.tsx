@@ -7,6 +7,9 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { adminTopMenuItems } from "@/data/admin";
 import { classNames } from "@/lib/classNames";
 
+import { AdminRecordEditor } from "./AdminRecordEditor";
+import { AdminWorkspaceQueue } from "./AdminWorkspaceQueue";
+import { AdminWorkspaceRows } from "./AdminWorkspaceRows";
 import {
   defaultWorkspaceId,
   getWorkspaceFromHash,
@@ -14,25 +17,15 @@ import {
   workspaceSections,
   type AdminWorkspaceId,
   type WorkspaceSection,
+  type WorkspaceRow,
 } from "./adminOperationsData";
-import { getStatusTone, statusToneClasses } from "./adminDashboardUtils";
+
+type EditableRecordField = "detail" | "meta" | "status" | "value";
+type RowEdits = Record<string, Partial<Pick<WorkspaceRow, EditableRecordField>>>;
 
 function setWorkspaceHash(section: WorkspaceSection) {
   window.history.replaceState(null, "", section.hash);
   window.dispatchEvent(new Event("hashchange"));
-}
-
-function StatusPill({ value }: { value: string }) {
-  return (
-    <span
-      className={classNames(
-        "inline-flex min-h-6 items-center rounded-full px-2.5 text-[11px] font-semibold",
-        statusToneClasses[getStatusTone(value)],
-      )}
-    >
-      {value}
-    </span>
-  );
 }
 
 export function AdminOperationsWorkspace() {
@@ -40,21 +33,34 @@ export function AdminOperationsWorkspace() {
     useState<AdminWorkspaceId>(defaultWorkspaceId);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All statuses");
+  const [priorityRowIds, setPriorityRowIds] = useState<Set<string>>(
+    () => new Set(),
+  );
   const [reviewedRowIds, setReviewedRowIds] = useState<Set<string>>(
     () => new Set(),
   );
+  const [rowEdits, setRowEdits] = useState<RowEdits>({});
+  const [savedRowIds, setSavedRowIds] = useState<Set<string>>(() => new Set());
   const activeSection = getWorkspaceSection(activeId);
+  const rowsWithEdits = useMemo(
+    () =>
+      activeSection.rows.map((row) => ({
+        ...row,
+        ...rowEdits[row.id],
+      })),
+    [activeSection.rows, rowEdits],
+  );
   const statusOptions = useMemo(
     () => [
       "All statuses",
-      ...Array.from(new Set(activeSection.rows.map((row) => row.status))),
+      ...Array.from(new Set(rowsWithEdits.map((row) => row.status))),
     ],
-    [activeSection.rows],
+    [rowsWithEdits],
   );
   const filteredRows = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return activeSection.rows.filter((row) => {
+    return rowsWithEdits.filter((row) => {
       const matchesStatus =
         statusFilter === "All statuses" || row.status === statusFilter;
       const matchesQuery =
@@ -65,14 +71,33 @@ export function AdminOperationsWorkspace() {
 
       return matchesStatus && matchesQuery;
     });
-  }, [activeSection.rows, query, statusFilter]);
+  }, [query, rowsWithEdits, statusFilter]);
   const [selectedRowId, setSelectedRowId] = useState(
     activeSection.rows[0]?.id ?? "",
   );
   const selectedRow =
     filteredRows.find((row) => row.id === selectedRowId) ??
     filteredRows[0] ??
-    activeSection.rows[0];
+    rowsWithEdits[0];
+  const hasSelectedChanges = selectedRow
+    ? Boolean(rowEdits[selectedRow.id])
+    : false;
+  const signalItems = adminTopMenuItems.slice(0, 3);
+  const reviewedCount = rowsWithEdits.filter((row) =>
+    reviewedRowIds.has(row.id),
+  ).length;
+  const savedCount = rowsWithEdits.filter((row) =>
+    savedRowIds.has(row.id),
+  ).length;
+  const priorityCount = rowsWithEdits.filter((row) =>
+    priorityRowIds.has(row.id),
+  ).length;
+  const nextReviewRow = rowsWithEdits.find(
+    (row) => !reviewedRowIds.has(row.id),
+  );
+  const nextPriorityRow = rowsWithEdits.find((row) =>
+    priorityRowIds.has(row.id),
+  );
 
   useEffect(() => {
     const applyWorkspaceId = (nextId: AdminWorkspaceId) => {
@@ -120,6 +145,129 @@ export function AdminOperationsWorkspace() {
 
       return next;
     });
+  };
+
+  const handleTogglePriority = () => {
+    if (!selectedRow) {
+      return;
+    }
+
+    setPriorityRowIds((current) => {
+      const next = new Set(current);
+
+      if (next.has(selectedRow.id)) {
+        next.delete(selectedRow.id);
+      } else {
+        next.add(selectedRow.id);
+      }
+
+      return next;
+    });
+  };
+
+  const handleSelectedRowFieldChange = (
+    field: EditableRecordField,
+    value: string,
+  ) => {
+    if (!selectedRow) {
+      return;
+    }
+
+    setRowEdits((current) => ({
+      ...current,
+      [selectedRow.id]: {
+        ...current[selectedRow.id],
+        [field]: value,
+      },
+    }));
+    setSavedRowIds((current) => {
+      const next = new Set(current);
+
+      next.delete(selectedRow.id);
+
+      return next;
+    });
+  };
+
+  const handleApplyUpdate = () => {
+    if (!selectedRow || !hasSelectedChanges) {
+      return;
+    }
+
+    setSavedRowIds((current) => new Set(current).add(selectedRow.id));
+  };
+
+  const handleResetSelectedRow = () => {
+    if (!selectedRow) {
+      return;
+    }
+
+    setRowEdits((current) => {
+      const next = { ...current };
+
+      delete next[selectedRow.id];
+
+      return next;
+    });
+    setSavedRowIds((current) => {
+      const next = new Set(current);
+
+      next.delete(selectedRow.id);
+
+      return next;
+    });
+  };
+
+  const handleReviewNext = () => {
+    if (!nextReviewRow) {
+      return;
+    }
+
+    setQuery("");
+    setStatusFilter("All statuses");
+    setSelectedRowId(nextReviewRow.id);
+  };
+
+  const handleShowPriority = () => {
+    if (!nextPriorityRow) {
+      return;
+    }
+
+    setQuery("");
+    setStatusFilter("All statuses");
+    setSelectedRowId(nextPriorityRow.id);
+  };
+
+  const handleResetWorkspaceQueue = () => {
+    const activeRowIds = new Set(rowsWithEdits.map((row) => row.id));
+
+    setRowEdits((current) =>
+      Object.fromEntries(
+        Object.entries(current).filter(([rowId]) => !activeRowIds.has(rowId)),
+      ),
+    );
+    setSavedRowIds((current) => {
+      const next = new Set(current);
+
+      activeRowIds.forEach((rowId) => next.delete(rowId));
+
+      return next;
+    });
+    setReviewedRowIds((current) => {
+      const next = new Set(current);
+
+      activeRowIds.forEach((rowId) => next.delete(rowId));
+
+      return next;
+    });
+    setPriorityRowIds((current) => {
+      const next = new Set(current);
+
+      activeRowIds.forEach((rowId) => next.delete(rowId));
+
+      return next;
+    });
+    setSelectedRowId(rowsWithEdits[0]?.id ?? "");
   };
 
   return (
@@ -242,145 +390,52 @@ export function AdminOperationsWorkspace() {
             </button>
           </div>
 
-          <div className="mt-4 grid gap-2">
-            {filteredRows.length > 0 ? (
-              filteredRows.map((row) => {
-                const selected = selectedRow?.id === row.id;
-                const reviewed = reviewedRowIds.has(row.id);
-
-                return (
-                  <button
-                    aria-pressed={selected}
-                    className={classNames(
-                      "grid min-w-0 grid-cols-[minmax(0,1fr)_auto] gap-3 rounded-[14px] border p-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold md:grid-cols-[minmax(0,1.2fr)_minmax(120px,0.7fr)_auto]",
-                      selected
-                        ? "border-[var(--sb-red-bright)]/52 bg-[var(--sb-red)]/12 shadow-[inset_3px_0_0_var(--sb-red-bright)]"
-                        : "border-white/10 bg-black/18 hover:border-[var(--sb-gold)]/30 hover:bg-white/[0.035]",
-                    )}
-                    key={row.id}
-                    onClick={() => setSelectedRowId(row.id)}
-                    type="button"
-                  >
-                    <span className="min-w-0">
-                      <span className="flex min-w-0 items-center gap-2">
-                        <span className="truncate text-sm font-semibold text-white md:text-[15px]">
-                          {row.label}
-                        </span>
-                        {reviewed ? (
-                          <span className="shrink-0 rounded-full border border-emerald-400/30 bg-emerald-400/12 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-300">
-                            Reviewed
-                          </span>
-                        ) : null}
-                      </span>
-                      <span className="mt-1 line-clamp-2 text-[12px] leading-5 text-white/52">
-                        {row.detail}
-                      </span>
-                    </span>
-                    <span className="hidden min-w-0 text-sm text-white/68 md:block">
-                      <span className="block truncate">{row.meta}</span>
-                      <span className="mt-1 block truncate font-mono text-[var(--sb-gold-soft)]">
-                        {row.value}
-                      </span>
-                    </span>
-                    <span className="justify-self-end">
-                      <StatusPill value={row.status} />
-                    </span>
-                  </button>
-                );
-              })
-            ) : (
-              <div className="rounded-[14px] border border-dashed border-white/14 bg-black/18 p-6 text-center">
-                <p className="font-serif text-[20px] text-white">
-                  No records found
-                </p>
-                <p className="mt-2 text-sm text-white/52">
-                  Adjust the search or status filter to restore the list.
-                </p>
-              </div>
-            )}
+          <div className="mt-4">
+            <AdminWorkspaceRows
+              onSelectRow={setSelectedRowId}
+              priorityRowIds={priorityRowIds}
+              reviewedRowIds={reviewedRowIds}
+              rows={filteredRows}
+              savedRowIds={savedRowIds}
+              selectedRowId={selectedRow?.id}
+            />
           </div>
+
+          <AdminWorkspaceQueue
+            canReset={
+              reviewedCount > 0 || savedCount > 0 || priorityCount > 0
+            }
+            canReviewNext={Boolean(nextReviewRow)}
+            canShowPriority={Boolean(nextPriorityRow)}
+            onResetWorkspace={handleResetWorkspaceQueue}
+            onReviewNext={handleReviewNext}
+            onShowPriority={handleShowPriority}
+            priorityCount={priorityCount}
+            reviewedCount={reviewedCount}
+            savedCount={savedCount}
+            sectionTitle={activeSection.title}
+            totalCount={rowsWithEdits.length}
+          />
         </div>
 
-        <aside className="min-w-0 rounded-[18px] border border-[var(--sb-border)] bg-black/24 p-4">
-          {selectedRow ? (
-            <>
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-                    Selected record
-                  </p>
-                  <h3 className="editorial-title mt-2 line-clamp-2 text-[23px] leading-tight text-white">
-                    {selectedRow.label}
-                  </h3>
-                </div>
-                <StatusPill value={selectedRow.status} />
-              </div>
-
-              <div className="mt-5 grid gap-3 border-t border-white/10 pt-4">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.12em] text-white/42">
-                    Owner / Type
-                  </p>
-                  <p className="mt-1 text-sm text-white/78">
-                    {selectedRow.meta}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.12em] text-white/42">
-                    Value
-                  </p>
-                  <p className="mt-1 font-mono text-[20px] text-[var(--sb-gold-soft)]">
-                    {selectedRow.value}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.12em] text-white/42">
-                    Notes
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-white/68">
-                    {selectedRow.detail}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                className={classNames(
-                  "mt-5 h-12 w-full rounded-[12px] border px-4 text-sm font-semibold uppercase tracking-[0.07em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
-                  reviewedRowIds.has(selectedRow.id)
-                    ? "border-emerald-400/38 bg-emerald-400/12 text-emerald-300"
-                    : "red-glow-button border-[#ef3326]/70 text-[#e2dcda]",
-                )}
-                onClick={handleToggleReviewed}
-                type="button"
-              >
-                {reviewedRowIds.has(selectedRow.id)
-                  ? "Marked reviewed"
-                  : "Mark reviewed"}
-              </button>
-            </>
-          ) : null}
-
-          <div className="mt-5 border-t border-white/10 pt-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/42">
-              Top signal
-            </p>
-            <div className="mt-3 grid gap-2">
-              {adminTopMenuItems.slice(0, 3).map((item) => (
-                <div
-                  className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 rounded-[12px] border border-white/10 bg-white/[0.025] px-3 py-2"
-                  key={`${activeSection.id}-${item.item}`}
-                >
-                  <span className="truncate text-sm text-white/72">
-                    {item.item}
-                  </span>
-                  <span className="font-mono text-sm text-[var(--sb-gold-soft)]">
-                    {item.sold}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </aside>
+        <AdminRecordEditor
+          activeId={activeId}
+          hasChanges={hasSelectedChanges}
+          isPriority={selectedRow ? priorityRowIds.has(selectedRow.id) : false}
+          isReviewed={selectedRow ? reviewedRowIds.has(selectedRow.id) : false}
+          isSaved={selectedRow ? savedRowIds.has(selectedRow.id) : false}
+          onApply={handleApplyUpdate}
+          onFieldChange={handleSelectedRowFieldChange}
+          onReset={handleResetSelectedRow}
+          onTogglePriority={handleTogglePriority}
+          onToggleReviewed={handleToggleReviewed}
+          row={selectedRow}
+          sectionTitle={activeSection.title}
+          signalItems={signalItems}
+          statusOptions={statusOptions.filter(
+            (option) => option !== "All statuses",
+          )}
+        />
       </div>
     </section>
   );
