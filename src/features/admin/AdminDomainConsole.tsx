@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
 
+import { AdminDomainActionPanel } from "./AdminDomainActionPanel";
 import { AdminDomainBriefing } from "./AdminDomainBriefing";
 import { AdminDomainRecordEditor } from "./AdminDomainRecordEditor";
 import { AdminWorkspaceStatusPill } from "./AdminWorkspaceStatusPill";
@@ -150,7 +151,7 @@ export function AdminDomainConsole({
 
   const handleSaveRecord = (
     rowId: string,
-    updates: EditableRecordFields,
+    updates: Partial<EditableRecordFields>,
   ) => {
     setRecordEdits((current) => ({
       ...current,
@@ -186,6 +187,10 @@ export function AdminDomainConsole({
     });
   };
 
+  const markRecordReviewed = (rowId: string) => {
+    setReviewedIds((current) => new Set(current).add(rowId));
+  };
+
   const togglePinned = () => {
     if (!selectedRecord) {
       return;
@@ -202,6 +207,10 @@ export function AdminDomainConsole({
 
       return next;
     });
+  };
+
+  const pinRecord = (rowId: string) => {
+    setPinnedIds((current) => new Set(current).add(rowId));
   };
 
   return (
@@ -329,6 +338,18 @@ export function AdminDomainConsole({
           pinnedCount={pinnedCount}
           recordCount={rowsWithEdits.length}
           reviewedCount={reviewedCount}
+        />
+
+        <AdminDomainActionPanel
+          activeId={activeSection.id}
+          onMarkReviewed={markRecordReviewed}
+          onOpenForms={onOpenForms}
+          onOpenOperations={onOpenOperations}
+          onPatchRecord={handleSaveRecord}
+          onPinRecord={pinRecord}
+          onSelectRecord={setSelectedRecordId}
+          rows={rowsWithEdits}
+          selectedRecord={selectedRecord}
         />
 
         <div className="grid gap-4 p-4 xl:grid-cols-[minmax(0,1fr)_330px] 2xl:grid-cols-[minmax(0,1fr)_360px] 2xl:p-5">

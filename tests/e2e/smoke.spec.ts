@@ -684,6 +684,71 @@ test.describe("admin experience", () => {
       domainConsole.getByRole("heading", { level: 3, name: "Control Rooms" }),
     ).toBeVisible();
     await domainConsole
+      .getByRole("button", { name: "Open Menu Management detail" })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "Menu control" }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Audit inactive item/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("button", {
+        name: /Wagyu Tataki.*Pending/i,
+      }),
+    ).toBeVisible();
+
+    await domainConsole
+      .getByRole("button", { name: "Open Order Management detail" })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "Order control" }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Prioritize kitchen order/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "#SB-2479" }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Kitchen priority set for the next chef handoff.")
+        .first(),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Complete delivery handoff/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "#SB-2477" }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Courier handoff closed and receipt ready for review.")
+        .first(),
+    ).toBeVisible();
+
+    await domainConsole
+      .getByRole("button", { name: "Open Reservation Management detail" })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", {
+        level: 4,
+        name: "Reservation control",
+      }),
+    ).toBeVisible();
+    await domainConsole
+      .getByRole("button", { name: /Confirm pending party/i })
+      .click();
+    await expect(
+      domainConsole.getByRole("heading", { level: 4, name: "Liam Wilson" }),
+    ).toBeVisible();
+    await expect(
+      domainConsole
+        .getByText("Host confirmation completed for the evening seating plan.")
+        .first(),
+    ).toBeVisible();
+
+    await domainConsole
       .getByRole("button", { name: "Open Locations Management detail" })
       .click();
     await expect(
