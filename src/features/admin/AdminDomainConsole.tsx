@@ -6,6 +6,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { classNames } from "@/lib/classNames";
 
 import { AdminDomainBriefing } from "./AdminDomainBriefing";
+import { AdminDomainRecordEditor } from "./AdminDomainRecordEditor";
 import { AdminWorkspaceStatusPill } from "./AdminWorkspaceStatusPill";
 import {
   getWorkspaceSection,
@@ -50,6 +51,20 @@ const formActionLabels: Partial<Record<AdminWorkspaceId, string>> = {
   users: "Open user form",
 };
 
+type EditableRecordFields = Pick<
+  WorkspaceRow,
+  "detail" | "meta" | "status" | "value"
+>;
+
+type DomainRecordEdits = Record<string, Partial<EditableRecordFields>>;
+
+function applyRecordEdits(
+  rows: WorkspaceRow[],
+  edits: DomainRecordEdits,
+): WorkspaceRow[] {
+  return rows.map((row) => ({ ...row, ...edits[row.id] }));
+}
+
 function getPrimaryRecord(sectionId: AdminWorkspaceId, rows: WorkspaceRow[]) {
   if (sectionId === "analytics") {
     return rows.find((row) => row.label === "Average Order Value") ?? rows[0];
@@ -71,34 +86,47 @@ export function AdminDomainConsole({
   const [activeId, setActiveId] = useState<AdminWorkspaceId>(initialDomainId);
   const [reviewedIds, setReviewedIds] = useState<Set<string>>(() => new Set());
   const [pinnedIds, setPinnedIds] = useState<Set<string>>(() => new Set());
+  const [recordEdits, setRecordEdits] = useState<DomainRecordEdits>({});
+  const [editingRecordId, setEditingRecordId] = useState<string | null>(null);
   const activeSection = getWorkspaceSection(activeId);
-  const initialRecord = getPrimaryRecord(activeId, activeSection.rows);
+  const rowsWithEdits = useMemo(
+    () => applyRecordEdits(activeSection.rows, recordEdits),
+    [activeSection.rows, recordEdits],
+  );
+  const initialRecord = getPrimaryRecord(activeId, rowsWithEdits);
   const [selectedRecordId, setSelectedRecordId] = useState(
     initialRecord?.id ?? "",
   );
   const selectedRecord =
-    activeSection.rows.find((row) => row.id === selectedRecordId) ??
+    rowsWithEdits.find((row) => row.id === selectedRecordId) ??
     initialRecord ??
-    activeSection.rows[0];
+    rowsWithEdits[0];
+  const editingRecord = rowsWithEdits.find(
+    (row) => row.id === editingRecordId,
+  );
+  const originalEditingRecord = activeSection.rows.find(
+    (row) => row.id === editingRecordId,
+  );
   const domainSections = useMemo(
     () =>
       primaryDomainIds.map((id) => {
         const section = getWorkspaceSection(id);
-        const openCount = section.rows.filter(
+        const rows = applyRecordEdits(section.rows, recordEdits);
+        const openCount = rows.filter(
           (row) => !["Active", "Completed", "Confirmed"].includes(row.status),
         ).length;
 
         return { openCount, section };
       }),
-    [],
+    [recordEdits],
   );
-  const activeOpenCount = activeSection.rows.filter(
+  const activeOpenCount = rowsWithEdits.filter(
     (row) => !["Active", "Completed", "Confirmed"].includes(row.status),
   ).length;
-  const reviewedCount = activeSection.rows.filter((row) =>
+  const reviewedCount = rowsWithEdits.filter((row) =>
     reviewedIds.has(row.id),
   ).length;
-  const pinnedCount = activeSection.rows.filter((row) =>
+  const pinnedCount = rowsWithEdits.filter((row) =>
     pinnedIds.has(row.id),
   ).length;
   const isSelectedReviewed = selectedRecord
@@ -111,11 +139,33 @@ export function AdminDomainConsole({
 
   const handleDomainChange = (nextId: AdminWorkspaceId) => {
     const nextSection = getWorkspaceSection(nextId);
-    const nextRecord = getPrimaryRecord(nextId, nextSection.rows);
+    const nextRows = applyRecordEdits(nextSection.rows, recordEdits);
+    const nextRecord = getPrimaryRecord(nextId, nextRows);
 
     setActiveId(nextId);
     setSelectedRecordId(nextRecord?.id ?? "");
+    setEditingRecordId(null);
     onDomainChange?.(nextId);
+  };
+
+  const handleSaveRecord = (
+    rowId: string,
+    updates: EditableRecordFields,
+  ) => {
+    setRecordEdits((current) => ({
+      ...current,
+      [rowId]: { ...current[rowId], ...updates },
+    }));
+  };
+
+  const handleResetRecord = (rowId: string) => {
+    setRecordEdits((current) => {
+      const next = { ...current };
+
+      delete next[rowId];
+
+      return next;
+    });
   };
 
   const toggleReviewed = () => {
@@ -251,7 +301,7 @@ export function AdminDomainConsole({
                 Records
               </p>
               <p className="mt-1 font-mono text-[18px] text-[var(--sb-gold-soft)]">
-                {activeSection.rows.length}
+                {rowsWithEdits.length}
               </p>
             </div>
             <div className="rounded-[14px] border border-white/10 bg-black/28 px-3 py-2">
@@ -277,14 +327,14 @@ export function AdminDomainConsole({
           activeId={activeSection.id}
           openCount={activeOpenCount}
           pinnedCount={pinnedCount}
-          recordCount={activeSection.rows.length}
+          recordCount={rowsWithEdits.length}
           reviewedCount={reviewedCount}
         />
 
         <div className="grid gap-4 p-4 xl:grid-cols-[minmax(0,1fr)_330px] 2xl:grid-cols-[minmax(0,1fr)_360px] 2xl:p-5">
           <div className="min-w-0">
             <div className="grid gap-2">
-              {activeSection.rows.map((row) => {
+              {rowsWithEdits.map((row) => {
                 const selected = row.id === selectedRecord?.id;
 
                 return (
@@ -364,6 +414,13 @@ export function AdminDomainConsole({
 
                 <div className="mt-5 grid gap-2">
                   <button
+                    className="h-11 rounded-[12px] border border-[var(--sb-gold)]/34 bg-[var(--sb-gold)]/[0.06] px-4 text-[12px] font-semibold uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+                    onClick={() => setEditingRecordId(selectedRecord.id)}
+                    type="button"
+                  >
+                    Open record editor
+                  </button>
+                  <button
                     className={classNames(
                       "h-11 rounded-[12px] border px-4 text-[12px] font-semibold uppercase tracking-[0.07em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
                       isSelectedReviewed
@@ -418,6 +475,19 @@ export function AdminDomainConsole({
           </aside>
         </div>
       </div>
+
+      {editingRecord && originalEditingRecord ? (
+        <AdminDomainRecordEditor
+          domainId={activeSection.id}
+          hasSavedEdit={Boolean(recordEdits[editingRecord.id])}
+          key={editingRecord.id}
+          onClose={() => setEditingRecordId(null)}
+          onReset={handleResetRecord}
+          onSave={handleSaveRecord}
+          originalRow={originalEditingRecord}
+          row={editingRecord}
+        />
+      ) : null}
     </section>
   );
 }

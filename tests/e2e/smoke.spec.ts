@@ -707,6 +707,26 @@ test.describe("admin experience", () => {
     await domainConsole
       .getByRole("button", { name: /Sushi Bliss Westside/i })
       .click();
+    await domainConsole
+      .getByRole("button", { name: "Open record editor" })
+      .click();
+
+    const recordEditor = page.getByRole("dialog", {
+      name: /Sushi Bliss Westside/i,
+    });
+
+    await recordEditor.getByLabel("Daily volume").fill("245 orders");
+    await recordEditor
+      .getByLabel("Location note")
+      .fill("Yuki Tanaka is staging a tighter service handoff.");
+    await recordEditor.getByRole("button", { name: "Save record" }).click();
+    await expect(
+      recordEditor.getByRole("button", { exact: true, name: "Saved" }),
+    ).toBeVisible();
+    await recordEditor
+      .getByRole("button", { name: "Close record editor panel" })
+      .click();
+    await expect(domainConsole.getByText("245 orders").first()).toBeVisible();
     await domainConsole.getByRole("button", { name: "Mark reviewed" }).click();
     await expect(
       domainConsole.getByRole("button", { exact: true, name: "Reviewed" }),
