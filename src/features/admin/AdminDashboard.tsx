@@ -1,23 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
-
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import {
-  adminKpis,
-  adminManagementSections,
-  adminTabletMetrics,
-} from "@/data/admin";
+import { adminKpis, adminTabletMetrics } from "@/data/admin";
 
-import { ManagementCard } from "./AdminManagementWidgets";
-import { AdminFormStudio } from "./AdminFormStudio";
-import { AdminInsightBoard } from "./AdminInsightBoard";
+import { AdminDashboardWorkbench } from "./AdminDashboardWorkbench";
 import {
   AdminKpiCard,
   AdminTopBar,
   TabletMetricCard,
 } from "./AdminMetricWidgets";
-import { AdminOperationsWorkspace } from "./AdminOperationsWorkspace";
 
 export function AdminDashboard() {
   return (
@@ -41,31 +30,10 @@ export function AdminDashboard() {
             </p>
           </div>
           <div className="hidden items-center gap-3 md:flex">
-            <Link
-              className="hidden items-center gap-3 rounded-full border border-[var(--sb-gold)]/24 bg-black/28 px-3 py-2 xl:flex"
-              href="/chefs/hiroshi-tanaka"
-            >
-              <Image
-                alt="Hiroshi Tanaka"
-                className="h-12 w-12 rounded-full border border-[var(--sb-gold)]/34 object-cover"
-                height={48}
-                priority
-                src="/assets/chefs/hiroshi-tanaka-profile-photo.webp"
-                width={48}
-              />
-              <span className="min-w-0">
-                <span className="block text-sm font-semibold text-white">
-                  Hiroshi Tanaka
-                </span>
-                <span className="mt-0.5 block text-[12px] text-white/58">
-                  Super Admin
-                </span>
-              </span>
-              <ChevronIcon
-                className="text-[var(--sb-gold-soft)]"
-                direction="down"
-              />
-            </Link>
+            <span className="inline-flex min-h-11 items-center gap-2 rounded-[10px] border border-emerald-400/20 bg-emerald-400/[0.07] px-4 text-sm text-emerald-200">
+              <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_14px_rgba(110,231,183,0.82)]" />
+              Live floor
+            </span>
             <span className="inline-flex min-h-11 items-center gap-3 rounded-[10px] border border-[var(--sb-gold)]/28 bg-black/24 px-4 text-sm text-[var(--sb-gold-soft)]">
               <AssetIcon
                 loading="eager"
@@ -111,20 +79,7 @@ export function AdminDashboard() {
           ))}
         </section>
 
-        <AdminOperationsWorkspace />
-
-        <section
-          aria-label="Admin management shortcuts"
-          className="mt-6 grid gap-4 xl:grid-cols-2 2xl:hidden"
-        >
-          {adminManagementSections.map((section) => (
-            <ManagementCard key={section.id} section={section} />
-          ))}
-        </section>
-
-        <AdminInsightBoard />
-
-        <AdminFormStudio />
+        <AdminDashboardWorkbench />
       </div>
     </>
   );

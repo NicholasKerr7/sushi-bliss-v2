@@ -649,6 +649,8 @@ test.describe("admin experience", () => {
     await workspace.getByRole("button", { name: "Open Users & Roles" }).click();
     await expect(workspace.getByText("Finance Review")).toBeVisible();
 
+    await page.getByRole("button", { name: "Open Command workbench" }).click();
+
     const commandBoard = page.locator(
       'section[aria-labelledby="admin-insight-board-title"]',
     );
@@ -671,6 +673,8 @@ test.describe("admin experience", () => {
     await expect(
       commandBoard.getByRole("button", { exact: true, name: "Pinned" }),
     ).toBeVisible();
+
+    await page.getByRole("button", { name: "Open Forms workbench" }).click();
 
     const formStudio = page.locator(
       'section[aria-labelledby="admin-form-studio-title"]',

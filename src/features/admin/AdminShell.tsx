@@ -17,7 +17,7 @@ function AdminBrand({ compact = false }: { compact?: boolean }) {
     <Link
       className={classNames(
         "group flex min-w-0 items-center gap-3 rounded-[18px] text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold",
-        compact ? "justify-center" : "",
+        compact ? "justify-center" : "justify-center xl:justify-start",
       )}
       href="/"
     >
@@ -30,7 +30,7 @@ function AdminBrand({ compact = false }: { compact?: boolean }) {
         />
       </span>
       {compact ? null : (
-        <span className="min-w-0">
+        <span className="hidden min-w-0 xl:block">
           <span className="editorial-title block truncate text-[16px] leading-none tracking-[0.28em] text-white">
             Sushi
           </span>
@@ -62,7 +62,9 @@ function AdminNavLink({
       aria-current={isActive ? "page" : undefined}
       className={classNames(
         "group relative flex min-h-12 min-w-0 items-center rounded-[12px] border text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
-        compact ? "justify-center px-2" : "gap-3 px-3 md:px-4 xl:px-3 2xl:px-4",
+        compact
+          ? "justify-center px-2"
+          : "justify-center px-2 xl:justify-start xl:gap-3 xl:px-3 2xl:px-4",
         isActive
           ? "border-[var(--sb-red-bright)]/42 bg-[linear-gradient(90deg,rgba(239,47,37,0.28),rgba(239,47,37,0.08),transparent)] text-white shadow-[inset_4px_0_0_var(--sb-red-bright),0_0_34px_rgba(239,47,37,0.18)]"
           : "border-transparent text-white/72 hover:border-[var(--sb-gold)]/24 hover:bg-white/[0.045] hover:text-[var(--sb-gold-soft)]",
@@ -86,9 +88,11 @@ function AdminNavLink({
       </span>
       {compact ? null : (
         <>
-          <span className="min-w-0 flex-1 truncate">{item.label}</span>
+          <span className="hidden min-w-0 flex-1 truncate xl:block">
+            {item.label}
+          </span>
           {item.badge ? (
-            <span className="grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red-bright)] px-1.5 text-[11px] font-bold leading-none text-white">
+            <span className="absolute right-1.5 top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red-bright)] px-1.5 text-[11px] font-bold leading-none text-white xl:static">
               {item.badge}
             </span>
           ) : null}
@@ -203,13 +207,13 @@ export function AdminShell({ children }: AdminShellProps) {
         </nav>
       </header>
 
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-[270px] flex-col border-r border-[var(--sb-border)] bg-[linear-gradient(180deg,#050708_0%,#070909_46%,#030404_100%)] px-6 py-7 shadow-[26px_0_80px_rgba(0,0,0,0.46)] md:flex xl:w-[252px] 2xl:w-[286px] 2xl:px-7">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-[92px] flex-col border-r border-[var(--sb-border)] bg-[linear-gradient(180deg,#050708_0%,#070909_46%,#030404_100%)] px-3 py-5 shadow-[26px_0_80px_rgba(0,0,0,0.46)] md:flex xl:w-[252px] xl:px-6 xl:py-7 2xl:w-[286px] 2xl:px-7">
         <div className="pb-8">
           <AdminBrand />
         </div>
 
         <nav aria-label="Admin sidebar navigation" className="min-h-0 flex-1">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
+          <p className="mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)] xl:text-left xl:text-[11px]">
             Main
           </p>
           <ul className="grid gap-2">
@@ -258,16 +262,16 @@ export function AdminShell({ children }: AdminShellProps) {
           </div>
 
           <Link
-            className="flex min-h-12 items-center gap-3 border-t border-white/10 pt-5 text-sm text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+            className="flex min-h-12 items-center justify-center gap-3 border-t border-white/10 pt-5 text-sm text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold xl:justify-start"
             href="/"
           >
             <ChevronIcon direction="left" size={20} />
-            <span>Back to website</span>
+            <span className="hidden xl:inline">Back to website</span>
           </Link>
         </div>
       </aside>
 
-      <main className="min-h-dvh md:pl-[270px] xl:pl-[252px] 2xl:pl-[286px]">
+      <main className="min-h-dvh md:pl-[92px] xl:pl-[252px] 2xl:pl-[286px]">
         {children}
       </main>
     </div>
