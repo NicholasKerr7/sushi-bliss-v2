@@ -689,6 +689,9 @@ test.describe("admin experience", () => {
     await expect(
       domainConsole.getByRole("heading", { level: 4, name: "Menu control" }),
     ).toBeVisible();
+    await expect(
+      domainConsole.getByText("Action history will appear here").first(),
+    ).toBeVisible();
     await domainConsole
       .getByRole("button", { name: /Audit inactive item/i })
       .click();
@@ -696,6 +699,13 @@ test.describe("admin experience", () => {
       domainConsole.getByRole("button", {
         name: /Wagyu Tataki.*Pending/i,
       }),
+    ).toBeVisible();
+    await expect(
+      domainConsole.getByText("Audit inactive item routed").first(),
+    ).toBeVisible();
+    await domainConsole.getByRole("button", { name: "Clear" }).click();
+    await expect(
+      domainConsole.getByText("Action history will appear here").first(),
     ).toBeVisible();
 
     await domainConsole
