@@ -62,11 +62,11 @@ const tabletHeroSlides = [
     accent: "Pairings",
     description: "Rare sake selections matched to each signature course.",
     eyebrow: "Cellar Curated.",
-    imageAlt: "Warm wine still life with candlelight",
-    imageClassName: "object-center brightness-[1.18] contrast-[1.08]",
-    imageUrl: "/assets/food/warm-wine-still-life-with-candlelight.webp",
+    imageAlt: "Moonlit tea pairing still life with candlelight",
+    imageClassName: "object-[50%_56%] brightness-[1.18] contrast-[1.08]",
+    imageUrl: "/assets/editorial/moonlit-tea-pairing-still-life.webp",
     overlayClassName:
-      "bg-[linear-gradient(90deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.58)_34%,rgba(0,0,0,0.04)_68%,rgba(0,0,0,0.18)_100%)]",
+      "bg-[linear-gradient(90deg,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.6)_34%,rgba(0,0,0,0.06)_68%,rgba(0,0,0,0.24)_100%)]",
     title: "Sake",
   },
   {

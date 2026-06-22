@@ -132,9 +132,9 @@ const desktopHeroSlides = [
     description:
       "Rare sake, precise temperatures, and pours chosen for each course.",
     eyebrow: "Cellar Curated.",
-    imageAlt: "Warm wine still life with candlelight",
-    imageClassName: "object-[52%_50%]",
-    imageUrl: "/assets/food/warm-wine-still-life-with-candlelight.webp",
+    imageAlt: "Moonlit tea pairing still life with candlelight",
+    imageClassName: "object-[50%_57%] brightness-[1.12] contrast-[1.05]",
+    imageUrl: "/assets/editorial/moonlit-tea-pairing-still-life.webp",
     title: "Sake",
   },
   {
