@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { icons } from "@/features/home/visualHomeData";
 import {
+  getMenuGalleryImageClassName,
   getMenuItemGalleryImages,
   getTabletPresentationImage,
 } from "@/lib/assets";
@@ -22,6 +23,7 @@ import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
 import { ReservationHandoffCard } from "./ReservationHandoffCard";
+import { PairingImageBackdrop } from "./PairingImageBackdrop";
 import { TabletQuantityStepper } from "./TabletItemQuantityStepper";
 import { TastingNotesCard } from "./TastingNotesCard";
 
@@ -80,9 +82,14 @@ export function TabletDetailView({
     <>
       <section className="mt-4 overflow-hidden rounded-[26px] border border-white/10 bg-[#101112] shadow-[0_26px_80px_rgb(0_0_0_/_0.48)]">
         <div className="relative h-[440px]">
+          <PairingImageBackdrop imageUrl={activeImage} sizes="1034px" />
           <Image
             alt={item.image.alt || item.name}
-            className="object-cover object-[58%_48%]"
+            className={getMenuGalleryImageClassName(
+              activeImage,
+              "object-cover object-[58%_48%]",
+              "object-contain p-4 min-[980px]:p-5",
+            )}
             fill
             loading="eager"
             priority

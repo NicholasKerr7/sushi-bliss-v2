@@ -40,6 +40,20 @@ export function getMenuItemGalleryImages(item: MenuItem): string[] {
   );
 }
 
+/** Identifies composed sushi/sake pairing images that should not be cropped. */
+export function isSakePairingImage(imageUrl: string | undefined): boolean {
+  return Boolean(imageUrl?.includes("/assets/pairings/"));
+}
+
+/** Keeps pairing compositions fully visible while preserving normal food crops. */
+export function getMenuGalleryImageClassName(
+  imageUrl: string | undefined,
+  coverClassName: string,
+  pairingClassName = "object-contain p-3 min-[430px]:p-4 md:p-5",
+): string {
+  return isSakePairingImage(imageUrl) ? pairingClassName : coverClassName;
+}
+
 /** Returns the normalized asset manifest as a stable, read-only list. */
 export function getAssetManifest(): AssetManifestEntry[] {
   return assetEntries;

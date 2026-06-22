@@ -4,7 +4,10 @@ import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { getMenuItemGalleryImages } from "@/lib/assets";
+import {
+  getMenuGalleryImageClassName,
+  getMenuItemGalleryImages,
+} from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { getMenuItemOrderAction } from "@/lib/menuAvailability";
 import { formatMoney } from "@/lib/money";
@@ -12,6 +15,7 @@ import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition, CartCustomization } from "@/types/order";
 
 import type { DesktopMenuAddHandler } from "./DesktopMenuTypes";
+import { PairingImageBackdrop } from "./PairingImageBackdrop";
 
 export const detailFeaturePills = [
   ["floral-emblem-icon.png", "Sourced Daily"],
@@ -88,9 +92,13 @@ export function DesktopImageStage({
 
   return (
     <div className="relative h-[388px] overflow-hidden">
+      <PairingImageBackdrop imageUrl={activeImage} sizes="820px" />
       <Image
         alt={itemName}
-        className="object-cover object-[50%_50%]"
+        className={getMenuGalleryImageClassName(
+          activeImage,
+          "object-cover object-[50%_50%]",
+        )}
         fill
         loading="eager"
         priority
@@ -276,7 +284,11 @@ export function DesktopImageThumbs({
         >
           <Image
             alt=""
-            className="object-cover"
+            className={getMenuGalleryImageClassName(
+              image,
+              "object-cover",
+              "object-contain p-1.5",
+            )}
             fill
             sizes="95px"
             src={image}

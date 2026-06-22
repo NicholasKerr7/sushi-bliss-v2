@@ -8,6 +8,7 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { cartCustomizationGroups } from "@/data/cart";
 import {
+  getMenuGalleryImageClassName,
   getMenuItemGalleryImages,
   getTabletPresentationImage,
 } from "@/lib/assets";
@@ -25,6 +26,7 @@ import {
   DesktopAddOnButton,
   DesktopQuantity,
 } from "./DesktopMenuPrimitives";
+import { PairingImageBackdrop } from "./PairingImageBackdrop";
 import type { DesktopMenuAddHandler } from "./DesktopMenuTypes";
 import { DesktopBenefitStrip } from "./DesktopMenuChrome";
 import {
@@ -351,9 +353,13 @@ export function DesktopItemCustomizeView({
 
       <section className="grid min-h-[720px] grid-cols-[minmax(0,0.36fr)_minmax(390px,0.39fr)_minmax(286px,0.25fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)] min-[1500px]:grid-cols-[minmax(0,0.38fr)_minmax(430px,0.38fr)_minmax(320px,0.24fr)]">
         <div className="relative min-h-0 overflow-hidden">
+          <PairingImageBackdrop imageUrl={activeImage} sizes="650px" />
           <Image
             alt={item.image.alt || item.name}
-            className="object-cover object-[51%_48%]"
+            className={getMenuGalleryImageClassName(
+              activeImage,
+              "object-cover object-[51%_48%]",
+            )}
             fill
             loading="eager"
             priority

@@ -9,6 +9,7 @@ import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { brand, icons } from "@/features/home/visualHomeData";
 import {
+  getMenuGalleryImageClassName,
   getMenuItemGalleryImages,
   getTabletPresentationImage,
 } from "@/lib/assets";
@@ -20,6 +21,7 @@ import {
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
+import { PairingImageBackdrop } from "./PairingImageBackdrop";
 import { ReservationHandoffCard } from "./ReservationHandoffCard";
 import { TastingNotesCard } from "./TastingNotesCard";
 
@@ -155,9 +157,14 @@ export function MobileItemDetailView({
 
       <main className="relative z-10">
         <section className="relative h-[360px]">
+          <PairingImageBackdrop imageUrl={heroImage} sizes="430px" />
           <Image
             alt={item.image.alt || item.name}
-            className="object-cover object-[58%_42%]"
+            className={getMenuGalleryImageClassName(
+              heroImage,
+              "object-cover object-[58%_42%]",
+              "object-contain p-3 min-[390px]:p-4",
+            )}
             fill
             loading="eager"
             priority

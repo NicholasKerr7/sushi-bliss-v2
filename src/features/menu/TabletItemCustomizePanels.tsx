@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
+import { getMenuGalleryImageClassName } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
@@ -106,7 +107,11 @@ export function ProductStoryCard({
             >
               <Image
                 alt=""
-                className="object-cover"
+                className={getMenuGalleryImageClassName(
+                  imageUrl,
+                  "object-cover",
+                  "object-contain p-1.5",
+                )}
                 fill
                 sizes="110px"
                 src={imageUrl}
