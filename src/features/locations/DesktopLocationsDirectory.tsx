@@ -183,6 +183,7 @@ export function DesktopLocationsDirectory({
                   alt=""
                   className="object-cover opacity-36"
                   fill
+                  loading="eager"
                   sizes="442px"
                   src="/assets/gallery/serene-illuminated-courtyard-with-red-blossoms.webp"
                 />
