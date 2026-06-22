@@ -15,8 +15,8 @@ import type { MenuItem } from "@/types/menu";
 
 import {
   getChefDishPreview,
-  getChefOmakaseCoursePreviews,
-  type ChefOmakaseCoursePreview,
+  getChefSignatureCoursePreviews,
+  type ChefSignatureCoursePreview,
 } from "./chefProfileContent";
 
 interface ChefDetailModalProps {
@@ -25,7 +25,7 @@ interface ChefDetailModalProps {
 }
 
 export function ChefDetailModal({ chef, onOpenChange }: ChefDetailModalProps) {
-  const omakaseCourses = chef ? getChefOmakaseCoursePreviews(chef) : [];
+  const signatureCourses = chef ? getChefSignatureCoursePreviews(chef) : [];
   const menuPreviewDishes = chef ? getChefDishPreview(chef) : [];
 
   return (
@@ -145,10 +145,10 @@ export function ChefDetailModal({ chef, onOpenChange }: ChefDetailModalProps) {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-                  Chef omakase
+                  Chef signatures
                 </p>
                 <h3 className="editorial-title mt-2 text-[24px] uppercase tracking-[0.06em] text-white">
-                  Course preview
+                  Five-course preview
                 </h3>
               </div>
               <span className="rounded-full border border-[var(--sb-gold)]/30 bg-black/24 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
@@ -156,9 +156,9 @@ export function ChefDetailModal({ chef, onOpenChange }: ChefDetailModalProps) {
               </span>
             </div>
 
-            <div className="mt-4 grid gap-3 md:grid-cols-3">
-              {omakaseCourses.map((course) => (
-                <ChefOmakaseCourseCard
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+              {signatureCourses.map((course) => (
+                <ChefSignatureCourseCard
                   course={course}
                   key={`${course.label}-${course.name}`}
                 />
@@ -229,16 +229,17 @@ function ChefSignalCard({
   );
 }
 
-function ChefOmakaseCourseCard({
+function ChefSignatureCourseCard({
   course,
 }: {
-  course: ChefOmakaseCoursePreview;
+  course: ChefSignatureCoursePreview;
 }) {
   return (
     <article
       className={classNames(
         "flex min-h-[318px] flex-col overflow-hidden rounded-[18px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.018))] shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_58px_rgba(0,0,0,0.34)]",
         course.sequence === 1 && "shadow-[0_0_34px_rgba(239,47,37,0.13)]",
+        course.sequence === 5 && "sm:col-span-2 lg:col-span-1",
       )}
     >
       <div className="relative min-h-[190px] overflow-hidden bg-black/34">
@@ -256,7 +257,7 @@ function ChefOmakaseCourseCard({
             0{course.sequence}
           </span>
           <span className="truncate rounded-full border border-[var(--sb-gold)]/26 bg-black/52 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-            Omakase
+            {course.sourceLabel}
           </span>
         </div>
       </div>
@@ -268,7 +269,7 @@ function ChefOmakaseCourseCard({
           {course.name}
         </h4>
         <p className="mt-auto pt-4 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-red-bright)]">
-          Chef course
+          Chef preview
         </p>
       </div>
     </article>

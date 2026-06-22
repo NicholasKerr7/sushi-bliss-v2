@@ -5,13 +5,19 @@ import type { MenuItem } from "@/types/menu";
 
 import { menuItemById, menuItems } from "@/data/menu";
 
-type ChefOmakaseCourseLabel = "Appetizer" | "Signature" | "Dessert";
+type ChefSignatureCourseLabel =
+  | "Signature"
+  | "Sushi"
+  | "Sashimi"
+  | "Appetizer"
+  | "Dessert";
 
-export interface ChefOmakaseCoursePreview {
+export interface ChefSignatureCoursePreview {
   image: ImageReference;
-  label: ChefOmakaseCourseLabel;
+  label: ChefSignatureCourseLabel;
   name: string;
   sequence: number;
+  sourceLabel: string;
 }
 
 const omakaseCourseByChefId = new Map(
@@ -27,6 +33,33 @@ const chefDishPreviewIds: Record<string, string[]> = {
 
 const fallbackDishIds = ["otoro-nigiri", "spicy-tuna-roll", "salmon-sashimi"];
 
+const chefDishMenuAliases: Record<
+  string,
+  Partial<Record<ChefSignatureCourseLabel, string>>
+> = {
+  "aiko-nakamura": {
+    Sashimi: "scallop-sashimi",
+    Sushi: "salmon-temari-sushi",
+  },
+  "hiroshi-tanaka": {
+    Sashimi: "tuna-sashimi",
+    Signature: "otoro-nigiri",
+    Sushi: "deluxe-toro-caviar-nigiri",
+  },
+  "kenji-sato": {
+    Sashimi: "hamachi-nigiri",
+    Sushi: "seared-beef-nigiri",
+  },
+  "ren-mori": {
+    Sashimi: "red-snapper-sashimi",
+    Sushi: "dragon-roll",
+  },
+};
+
+const menuItemByName = new Map(
+  menuItems.map((item) => [normalizeDishName(item.name), item]),
+);
+
 /** Returns real menu records for the orderable picks below each chef profile. */
 export function getChefDishPreview(chef: Chef): MenuItem[] {
   const ids = chefDishPreviewIds[chef.id] || fallbackDishIds;
@@ -41,10 +74,10 @@ export function getChefDishPreview(chef: Chef): MenuItem[] {
   return menuItems.filter((item) => item.itemType !== "drink").slice(0, 3);
 }
 
-/** Returns non-clickable chef omakase course cards from the omakase data set. */
-export function getChefOmakaseCoursePreviews(
+/** Returns the five chef-profile preview cards shown above related menu picks. */
+export function getChefSignatureCoursePreviews(
   chef: Chef,
-): ChefOmakaseCoursePreview[] {
+): ChefSignatureCoursePreview[] {
   const course = omakaseCourseByChefId.get(chef.id);
 
   if (!course) {
@@ -52,38 +85,62 @@ export function getChefOmakaseCoursePreviews(
       getChefDishPreview(chef)[0]?.image || chef.platingImage;
 
     return [
-      createOmakaseCoursePreview("Signature", chef.specialty, fallbackImage, 1),
+      createSignatureCoursePreview(
+        "Signature",
+        chef.specialty,
+        fallbackImage,
+        1,
+        "Chef course",
+      ),
     ];
   }
 
   return [
-    createOmakaseCoursePreview(
-      "Appetizer",
-      course.appetizer.title || chef.appetizer,
-      course.appetizer.image,
-      1,
-    ),
-    createOmakaseCoursePreview(
+    createSignatureCoursePreview(
       "Signature",
-      course.specialty.title || chef.specialty,
-      course.specialty.image,
-      2,
+      chef.specialty,
+      getChefCourseImage(chef, "Signature", course.specialty.image),
+      1,
+      getChefCourseSourceLabel(chef, "Signature"),
     ),
-    createOmakaseCoursePreview(
-      "Dessert",
-      course.dessert.title || chef.dessert,
-      course.dessert.image,
+    createSignatureCoursePreview(
+      "Sushi",
+      chef.sushi,
+      getChefCourseImage(chef, "Sushi", chef.platingImage),
+      2,
+      getChefCourseSourceLabel(chef, "Sushi"),
+    ),
+    createSignatureCoursePreview(
+      "Sashimi",
+      chef.sashimi,
+      getChefCourseImage(chef, "Sashimi", chef.platingImage),
       3,
+      getChefCourseSourceLabel(chef, "Sashimi"),
+    ),
+    createSignatureCoursePreview(
+      "Appetizer",
+      chef.appetizer,
+      course.appetizer.image,
+      4,
+      "Omakase",
+    ),
+    createSignatureCoursePreview(
+      "Dessert",
+      chef.dessert,
+      course.dessert.image,
+      5,
+      "Omakase",
     ),
   ];
 }
 
-function createOmakaseCoursePreview(
-  label: ChefOmakaseCourseLabel,
+function createSignatureCoursePreview(
+  label: ChefSignatureCourseLabel,
   name: string,
   image: ImageReference,
   sequence: number,
-): ChefOmakaseCoursePreview {
+  sourceLabel = "Chef course",
+): ChefSignatureCoursePreview {
   return {
     image: {
       ...image,
@@ -92,5 +149,46 @@ function createOmakaseCoursePreview(
     label,
     name,
     sequence,
+    sourceLabel,
   };
+}
+
+function getChefCourseImage(
+  chef: Chef,
+  label: ChefSignatureCourseLabel,
+  fallbackImage: ImageReference,
+): ImageReference {
+  const menuItem = getChefCourseMenuItem(chef, label);
+
+  return menuItem?.image || fallbackImage;
+}
+
+function getChefCourseMenuItem(
+  chef: Chef,
+  label: ChefSignatureCourseLabel,
+): MenuItem | undefined {
+  const aliasId = chefDishMenuAliases[chef.id]?.[label];
+  const name =
+    label === "Signature"
+      ? chef.specialty
+      : label === "Sushi"
+        ? chef.sushi
+        : label === "Sashimi"
+          ? chef.sashimi
+          : "";
+
+  return aliasId
+    ? menuItemById.get(aliasId)
+    : menuItemByName.get(normalizeDishName(name));
+}
+
+function getChefCourseSourceLabel(
+  chef: Chef,
+  label: ChefSignatureCourseLabel,
+): string {
+  return getChefCourseMenuItem(chef, label)?.categoryLabel || "Omakase";
+}
+
+function normalizeDishName(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "");
 }

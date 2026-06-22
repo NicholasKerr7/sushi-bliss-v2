@@ -16,8 +16,8 @@ import {
 } from "./MobileChefsPrimitives";
 import {
   getChefDishPreview,
-  getChefOmakaseCoursePreviews,
-  type ChefOmakaseCoursePreview,
+  getChefSignatureCoursePreviews,
+  type ChefSignatureCoursePreview,
 } from "./chefProfileContent";
 
 interface MobileChefDetailViewProps {
@@ -30,7 +30,7 @@ export function MobileChefDetailView({
   chef,
   onBack,
 }: MobileChefDetailViewProps) {
-  const omakaseCourses = getChefOmakaseCoursePreviews(chef);
+  const signatureCourses = getChefSignatureCoursePreviews(chef);
   const menuPreviewDishes = getChefDishPreview(chef);
 
   return (
@@ -136,10 +136,10 @@ export function MobileChefDetailView({
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-              Chef omakase
+              Chef signatures
             </p>
             <h2 className="editorial-title mt-2 text-[27px] uppercase tracking-[0.04em] text-white">
-              Course preview
+              Five-course preview
             </h2>
           </div>
           <span className="rounded-full border border-[var(--sb-border)] bg-black/34 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
@@ -148,8 +148,8 @@ export function MobileChefDetailView({
         </div>
 
         <div className="mt-3 grid gap-3">
-          {omakaseCourses.map((course) => (
-            <MobileOmakaseCourseCard
+          {signatureCourses.map((course) => (
+            <MobileSignatureCourseCard
               course={course}
               key={`${course.label}-${course.name}`}
             />
@@ -186,10 +186,10 @@ export function MobileChefDetailView({
   );
 }
 
-function MobileOmakaseCourseCard({
+function MobileSignatureCourseCard({
   course,
 }: {
-  course: ChefOmakaseCoursePreview;
+  course: ChefSignatureCoursePreview;
 }) {
   return (
     <article className="grid min-h-[150px] grid-cols-[116px_minmax(0,1fr)] overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl min-[390px]:grid-cols-[136px_minmax(0,1fr)]">
@@ -214,14 +214,14 @@ function MobileOmakaseCourseCard({
             {course.label}
           </p>
           <span className="shrink-0 rounded-full border border-[var(--sb-gold)]/26 bg-black/28 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-            Omakase
+            {course.sourceLabel}
           </span>
         </div>
         <h3 className="editorial-title mt-3 line-clamp-2 text-[18px] leading-tight text-white">
           {course.name}
         </h3>
         <span className="mt-auto pt-4 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-red-bright)]">
-          Chef course
+          Chef preview
         </span>
       </div>
     </article>
