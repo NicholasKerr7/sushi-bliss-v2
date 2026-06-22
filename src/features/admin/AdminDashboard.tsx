@@ -20,7 +20,7 @@ export function AdminDashboard() {
         >
           <div className="min-w-0">
             <h1
-              className="editorial-title text-[38px] leading-none text-white md:text-[44px] xl:text-[42px] 2xl:text-[36px]"
+              className="editorial-title text-[38px] leading-none text-white md:text-[44px] xl:text-[46px] 2xl:text-[50px]"
               id="admin-dashboard-title"
             >
               Admin Dashboard
@@ -47,13 +47,10 @@ export function AdminDashboard() {
 
         <section
           aria-label="Admin key metrics"
-          className="mt-6 hidden gap-4 xl:grid xl:grid-cols-4 2xl:grid-cols-5"
+          className="mt-6 hidden gap-3 xl:grid xl:grid-cols-5 2xl:gap-4"
         >
           {adminKpis.map((metric) => (
-            <div
-              className={metric.id === "aov" ? "hidden 2xl:block" : ""}
-              key={metric.id}
-            >
+            <div key={metric.id}>
               <AdminKpiCard metric={metric} />
             </div>
           ))}
