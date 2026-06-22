@@ -49,6 +49,23 @@ The strict mode defaults to `VISUAL_REFERENCE_MAX_DIFF_RATIO=0.08` and
 current viewport capture is scaled to the source reference dimensions because
 several legacy mobile screenshots are stored at larger source sizes.
 
+## Approving New Baselines
+
+Strict mode compares the current app to the canonical PNGs in
+`public/assets/screenshots`. When the app intentionally changes, run a diff pass,
+review the generated current/reference/diff PNGs, then approve the new baselines:
+
+```bash
+npm run test:visual:diff
+npm run test:visual:approve:dry-run
+npm run test:visual:approve
+```
+
+The approval script reads `test-results/visual-reference-diffs/*.metadata.json`,
+resizes each `*.current.png` to the reference asset dimensions, and writes the
+approved PNGs back into `public/assets/screenshots`. Only run it after manually
+reviewing the diff artifacts, because it changes the visual source of truth.
+
 Current audit targets:
 
 - mobile welcome: `/` against `mobile/mobile-01.png`
