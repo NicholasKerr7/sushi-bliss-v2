@@ -15,7 +15,8 @@ import type { MenuItem } from "@/types/menu";
 
 import {
   getChefDishPreview,
-  getChefProfileHighlights,
+  getChefSignatureDishPreviews,
+  type ChefSignatureDishPreview,
 } from "./chefProfileContent";
 
 interface ChefDetailModalProps {
@@ -24,8 +25,8 @@ interface ChefDetailModalProps {
 }
 
 export function ChefDetailModal({ chef, onOpenChange }: ChefDetailModalProps) {
-  const chefDetails = chef ? getChefProfileHighlights(chef) : [];
-  const previewDishes = chef ? getChefDishPreview(chef) : [];
+  const signatureDishes = chef ? getChefSignatureDishPreviews(chef) : [];
+  const menuPreviewDishes = chef ? getChefDishPreview(chef) : [];
 
   return (
     <Modal
@@ -144,10 +145,42 @@ export function ChefDetailModal({ chef, onOpenChange }: ChefDetailModalProps) {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-                  Dishes preview
+                  Chef signatures
                 </p>
                 <h3 className="editorial-title mt-2 text-[24px] uppercase tracking-[0.06em] text-white">
-                  Chef signatures
+                  Five-course preview
+                </h3>
+              </div>
+              <Link
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--sb-gold)]/30 bg-black/24 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+                href="/omakase"
+                onClick={() => onOpenChange(false)}
+              >
+                Omakase
+                <ChevronIcon direction="right" size={15} />
+              </Link>
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+              {signatureDishes.map((dish, index) => (
+                <ChefSignaturePreviewCard
+                  dish={dish}
+                  index={index}
+                  key={`${dish.label}-${dish.value}`}
+                  onNavigate={() => onOpenChange(false)}
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-[20px] border border-[var(--sb-border)] bg-black/24 p-4 sm:p-5">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+                  Related menu
+                </p>
+                <h3 className="editorial-title mt-2 text-[22px] uppercase tracking-[0.06em] text-white">
+                  Orderable picks
                 </h3>
               </div>
               <Link
@@ -161,7 +194,7 @@ export function ChefDetailModal({ chef, onOpenChange }: ChefDetailModalProps) {
             </div>
 
             <div className="mt-4 grid gap-3 md:grid-cols-3">
-              {previewDishes.map((dish, index) => (
+              {menuPreviewDishes.map((dish, index) => (
                 <ChefDishPreviewCard
                   dish={dish}
                   index={index}
@@ -170,22 +203,6 @@ export function ChefDetailModal({ chef, onOpenChange }: ChefDetailModalProps) {
                 />
               ))}
             </div>
-          </section>
-
-          <section className="grid gap-3 md:grid-cols-5">
-            {chefDetails.map((detail) => (
-              <div
-                className="rounded-[16px] border border-[var(--sb-border)] bg-black/28 p-4"
-                key={detail.label}
-              >
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/42">
-                  {detail.label}
-                </p>
-                <p className="mt-3 line-clamp-3 text-[13px] leading-5 text-white/64">
-                  {detail.value}
-                </p>
-              </div>
-            ))}
           </section>
         </div>
       ) : null}
@@ -216,6 +233,66 @@ function ChefSignalCard({
         </p>
       </div>
     </div>
+  );
+}
+
+function ChefSignaturePreviewCard({
+  dish,
+  index,
+  onNavigate,
+}: {
+  dish: ChefSignatureDishPreview;
+  index: number;
+  onNavigate: () => void;
+}) {
+  return (
+    <Link
+      aria-label={`${dish.ctaLabel} for ${dish.value}`}
+      className={classNames(
+        "group flex min-h-[294px] flex-col overflow-hidden rounded-[18px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.018))] shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_58px_rgba(0,0,0,0.34)] transition hover:-translate-y-0.5 hover:border-[var(--sb-gold)]/38 hover:bg-black/34 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
+        index === 0 && "shadow-[0_0_34px_rgba(239,47,37,0.13)]",
+      )}
+      href={dish.href}
+      onClick={onNavigate}
+    >
+      <div className="relative min-h-[162px] overflow-hidden bg-black/34">
+        <Image
+          alt={dish.image.alt || dish.value}
+          className="object-cover object-[50%_56%] transition duration-500 group-hover:scale-[1.035]"
+          fill
+          loading="eager"
+          sizes="(min-width: 1280px) 190px, (min-width: 1024px) 300px, 50vw"
+          src={dish.image.publicUrl}
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.66))]" />
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3">
+          <span className="rounded-full border border-white/12 bg-black/62 px-2.5 py-1 font-mono text-[10px] text-[var(--sb-gold-soft)]">
+            0{index + 1}
+          </span>
+          <span className="truncate rounded-full border border-[var(--sb-gold)]/26 bg-black/52 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+            {dish.sourceLabel}
+          </span>
+        </div>
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col p-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/42">
+          {dish.label}
+        </p>
+        <h4 className="editorial-title mt-3 line-clamp-3 text-[18px] leading-tight text-white">
+          {dish.value}
+        </h4>
+        <div className="mt-auto flex items-center justify-between gap-3 pt-4">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-red-bright)]">
+            {dish.ctaLabel}
+          </span>
+          <ChevronIcon
+            className="text-[var(--sb-gold-soft)] transition group-hover:translate-x-0.5"
+            direction="right"
+            size={16}
+          />
+        </div>
+      </div>
+    </Link>
   );
 }
 
