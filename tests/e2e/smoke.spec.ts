@@ -594,6 +594,31 @@ test.describe("customer experience", () => {
 });
 
 test.describe("admin experience", () => {
+  test("desktop operations intelligence links into the workbench", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "The operations intelligence band is desktop-only.",
+    );
+
+    await page.goto("/admin");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const intelligence = page.locator(
+      'section[aria-label="Admin operations intelligence"]',
+    );
+
+    await expect(intelligence).toBeVisible();
+    await intelligence.getByRole("link", { name: "Manage Menu" }).click();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Manage Workbench" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 3, name: "Menu Management" }),
+    ).toBeVisible();
+  });
+
   test("renders the admin dashboard and supports workspace controls", async ({
     page,
   }) => {
