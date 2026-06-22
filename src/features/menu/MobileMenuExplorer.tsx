@@ -467,12 +467,17 @@ function MobileSearchResults({
       <div className="mt-3 flex gap-3 overflow-x-auto pb-2">
         {recentMobileSearches.map((search) => (
           <button
-            className="shrink-0 rounded-full border border-white/14 bg-white/[0.045] px-4 py-2 text-[14px] text-white/82"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-white/14 bg-white/[0.045] px-4 py-2 text-[14px] text-white/82"
             key={search}
             onClick={() => onQueryChange(search)}
             type="button"
           >
-            {search} <span className="ml-2 text-[var(--sb-gold)]">x</span>
+            {search}
+            <ChevronIcon
+              className="text-[var(--sb-gold)]"
+              direction="right"
+              size={14}
+            />
           </button>
         ))}
       </div>
