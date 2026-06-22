@@ -9,6 +9,7 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { useAutoCarousel } from "@/hooks/useAutoCarousel";
+import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -110,6 +111,7 @@ const desktopHeroSlides = [
       "An unforgettable dining experience where tradition meets perfection.",
     eyebrow: "Timeless Japanese Artistry.",
     imageAlt: "Otoro nigiri presented on a dark luxury surface",
+    imageClassName: "object-center",
     imageUrl: featuredAssets.heroSushi.publicUrl,
     title: "Sushi",
   },
@@ -119,6 +121,7 @@ const desktopHeroSlides = [
       "Seasonal chef selections, warm pacing, and intimate omakase service.",
     eyebrow: "Chef-Led Evenings.",
     imageAlt: "Premium sushi preparation still life",
+    imageClassName: "object-center",
     imageUrl:
       featuredAssets.ambience[1]?.image.publicUrl ||
       "/assets/ambience/intimate-sushi-bar-dining-experience.webp",
@@ -129,10 +132,9 @@ const desktopHeroSlides = [
     description:
       "Rare sake, precise temperatures, and pours chosen for each course.",
     eyebrow: "Cellar Curated.",
-    imageAlt: "Luxury sake set in black and gold",
-    imageUrl:
-      featuredAssets.sakeSets[0]?.publicUrl ||
-      "/assets/editorial/sake-vase-set-black-gold-floral.webp",
+    imageAlt: "Warm wine still life with candlelight",
+    imageClassName: "object-[52%_50%]",
+    imageUrl: "/assets/food/warm-wine-still-life-with-candlelight.webp",
     title: "Sake",
   },
   {
@@ -141,6 +143,7 @@ const desktopHeroSlides = [
       "Dark wood, lantern glow, and a dining room designed for quiet celebration.",
     eyebrow: "Tokyo After Dark.",
     imageAlt: "Elegant sushi bar ambience at night",
+    imageClassName: "object-center",
     imageUrl:
       featuredAssets.ambience[0]?.image.publicUrl ||
       "/assets/ambience/elegant-sushi-bar-ambience-at-night.webp",
@@ -174,7 +177,7 @@ export function DesktopDashboard({
         <section className="relative min-h-[260px] overflow-hidden border-b border-[var(--sb-border)] px-8 py-4 xl:px-[6vw]">
           <Image
             alt={activeHero.imageAlt}
-            className="object-cover"
+            className={classNames("object-cover", activeHero.imageClassName)}
             fill
             loading="eager"
             priority

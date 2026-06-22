@@ -10,6 +10,7 @@ import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigati
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
 import { useAutoCarousel } from "@/hooks/useAutoCarousel";
+import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
@@ -38,7 +39,10 @@ const tabletHeroSlides = [
       "An unforgettable dining experience where tradition meets perfection.",
     eyebrow: "Timeless Japanese Artistry.",
     imageAlt: "Otoro nigiri presented on a dark luxury surface",
+    imageClassName: "object-[74%_54%]",
     imageUrl: featuredAssets.heroSushi.publicUrl,
+    overlayClassName:
+      "bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.66)_38%,rgba(0,0,0,0.12)_72%,rgba(0,0,0,0.36)_100%)]",
     title: "Sushi",
   },
   {
@@ -46,19 +50,23 @@ const tabletHeroSlides = [
     description: "Seasonal omakase experiences prepared seat by seat.",
     eyebrow: "Chef-Led Evenings.",
     imageAlt: "Intimate sushi bar dining room",
+    imageClassName: "object-[74%_54%]",
     imageUrl:
       featuredAssets.ambience[1]?.image.publicUrl ||
       "/assets/ambience/intimate-sushi-bar-dining-experience.webp",
+    overlayClassName:
+      "bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.66)_38%,rgba(0,0,0,0.12)_72%,rgba(0,0,0,0.36)_100%)]",
     title: "Omakase",
   },
   {
     accent: "Pairings",
     description: "Rare sake selections matched to each signature course.",
     eyebrow: "Cellar Curated.",
-    imageAlt: "Luxury sake set in black and gold",
-    imageUrl:
-      featuredAssets.sakeSets[0]?.publicUrl ||
-      "/assets/editorial/sake-vase-set-black-gold-floral.webp",
+    imageAlt: "Warm wine still life with candlelight",
+    imageClassName: "object-center brightness-[1.18] contrast-[1.08]",
+    imageUrl: "/assets/food/warm-wine-still-life-with-candlelight.webp",
+    overlayClassName:
+      "bg-[linear-gradient(90deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.58)_34%,rgba(0,0,0,0.04)_68%,rgba(0,0,0,0.18)_100%)]",
     title: "Sake",
   },
   {
@@ -66,9 +74,12 @@ const tabletHeroSlides = [
     description: "A dark, polished dining room designed for celebration.",
     eyebrow: "Tokyo After Dark.",
     imageAlt: "Elegant sushi bar ambience at night",
+    imageClassName: "object-[74%_54%]",
     imageUrl:
       featuredAssets.ambience[0]?.image.publicUrl ||
       "/assets/ambience/elegant-sushi-bar-ambience-at-night.webp",
+    overlayClassName:
+      "bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.66)_38%,rgba(0,0,0,0.12)_72%,rgba(0,0,0,0.36)_100%)]",
     title: "Bliss",
   },
 ] as const;
@@ -210,14 +221,16 @@ function TabletHero() {
     <section className="relative mt-[18px] min-h-[460px] overflow-hidden rounded-[14px] border border-white/16">
       <Image
         alt={activeHero.imageAlt}
-        className="object-cover object-[74%_54%]"
+        className={classNames("object-cover", activeHero.imageClassName)}
         fill
         loading="eager"
         priority
         sizes="1034px"
         src={activeHero.imageUrl}
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.66)_38%,rgba(0,0,0,0.12)_72%,rgba(0,0,0,0.36)_100%)]" />
+      <div
+        className={classNames("absolute inset-0", activeHero.overlayClassName)}
+      />
       <div className="relative z-10 flex min-h-[460px] flex-col justify-center px-[86px]">
         <p className="text-[20px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">
           {activeHero.eyebrow}
