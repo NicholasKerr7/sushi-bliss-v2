@@ -6,6 +6,11 @@ import type {
   SupportTopic,
 } from "@/types/support";
 
+export const supportHeroImages = {
+  contact:
+    "/assets/gallery/serene-illuminated-courtyard-with-red-blossoms.webp",
+} as const;
+
 export const supportTopics: SupportTopic[] = [
   {
     description:

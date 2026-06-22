@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
+import { supportHeroImages } from "@/data/support";
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -51,8 +53,18 @@ export function MobileSupportCenter() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[430px] bg-[url('/assets/ambience/elegant-sushi-bar-ambience-at-night.webp')] bg-cover bg-center opacity-24"
-      />
+        className="pointer-events-none absolute inset-x-0 top-0 h-[430px]"
+      >
+        <Image
+          alt=""
+          className="object-cover object-[56%_50%] opacity-34"
+          fill
+          loading="eager"
+          priority
+          sizes="425px"
+          src={supportHeroImages.contact}
+        />
+      </div>
 
       <div className="mobile-frame relative z-10">
         <MobileSupportHeader

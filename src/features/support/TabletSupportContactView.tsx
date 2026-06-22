@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { contactMethods, socialLinks } from "@/data/support";
+import { contactMethods, socialLinks, supportHeroImages } from "@/data/support";
 import { formatDateTime } from "@/lib/dates";
 import {
   getSupportTopicLabel,
@@ -37,14 +37,14 @@ export function TabletSupportContactView({
       <section className="relative mt-3 overflow-hidden rounded-[18px] border border-white/10 bg-black/42 min-[1080px]:mt-5">
         <Image
           alt=""
-          className="object-cover opacity-72"
+          className="object-cover object-[58%_50%] opacity-82"
           fill
           loading="eager"
           priority
           sizes="1034px"
-          src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
+          src={supportHeroImages.contact}
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98),rgba(5,6,7,0.76)_44%,rgba(5,6,7,0.14))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.98),rgba(5,6,7,0.76)_44%,rgba(5,6,7,0.1))]" />
         <div className="relative z-10 grid min-h-[234px] grid-cols-[minmax(0,0.9fr)_minmax(280px,0.72fr)] items-center gap-6 px-7 py-6 min-[1080px]:min-h-[286px] min-[1080px]:px-9 min-[1080px]:py-8">
           <div>
             <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
@@ -163,6 +163,7 @@ export function TabletSupportContactView({
                 alt="Map to Sushi Bliss Ginza"
                 className="object-cover"
                 fill
+                loading="eager"
                 sizes="640px"
                 src="/assets/maps/map-ginza.webp"
               />

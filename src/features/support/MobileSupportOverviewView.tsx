@@ -1,9 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { contactMethods, helpArticles, socialLinks } from "@/data/support";
+import {
+  contactMethods,
+  helpArticles,
+  socialLinks,
+  supportHeroImages,
+} from "@/data/support";
 import { formatDateTime } from "@/lib/dates";
 import { getSupportTopicLabel } from "@/lib/support";
 import type {
@@ -53,9 +59,14 @@ export function MobileSupportOverviewView({
 
       <MobileSupportPanel className="mt-6 overflow-hidden">
         <div className="relative min-h-[206px] p-5">
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-[url('/assets/gallery/elegant-sushi-bar-with-amber-lighting.webp')] bg-cover bg-center opacity-46"
+          <Image
+            alt=""
+            className="object-cover object-[55%_50%] opacity-66"
+            fill
+            loading="eager"
+            priority
+            sizes="425px"
+            src={supportHeroImages.contact}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.88)_100%)]" />
           <div className="relative z-10 flex min-h-[166px] flex-col justify-between">

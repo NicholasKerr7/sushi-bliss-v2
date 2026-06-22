@@ -6,7 +6,12 @@ import Link from "next/link";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
-import { helpArticles, socialLinks, supportTopics } from "@/data/support";
+import {
+  helpArticles,
+  socialLinks,
+  supportHeroImages,
+  supportTopics,
+} from "@/data/support";
 import { DesktopBenefitStrip } from "@/features/menu/DesktopMenuChrome";
 import type { HelpArticle, SupportMessageDraft } from "@/types/support";
 
@@ -35,39 +40,52 @@ export function DesktopContactView({
 }) {
   return (
     <main className="mx-auto max-w-[1672px] px-7 pb-4 pt-4">
-      <section className="grid grid-cols-[minmax(0,1fr)_430px] gap-8">
-        <div>
-          <p className="text-[16px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-            We&apos;d love to hear from you
-          </p>
-          <h1 className="editorial-title mt-2 text-[54px] uppercase leading-none tracking-[0.08em]">
-            Contact
-            <span className="block text-[var(--sb-red-bright)]">
-              Sushi Bliss
-            </span>
-          </h1>
-          <p className="mt-2 max-w-[410px] text-[17px] leading-7 text-[var(--sb-gold-soft)]">
-            Have a question, special request, or want to book a private dining
-            experience? Our team is here to help.
-          </p>
-        </div>
-        <div className="space-y-4">
-          <Link
-            className="red-glow-button grid h-[60px] grid-cols-[48px_1fr_24px] items-center rounded-[12px] px-7 text-[17px] uppercase tracking-[0.06em]"
-            href="/reservations"
-          >
-            <AssetIcon size={28} src="/assets/icons/calendar-icon.png" />
-            Reserve a table
-            <ChevronIcon direction="right" size={18} />
-          </Link>
-          <Link
-            className="grid h-[60px] grid-cols-[48px_1fr_24px] items-center rounded-[12px] border border-[var(--sb-gold)]/36 bg-black/38 px-7 text-[17px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]"
-            href="/menu"
-          >
-            <AssetIcon size={28} src="/assets/icons/takeaway-bag-icon.png" />
-            Order now
-            <ChevronIcon direction="right" size={18} />
-          </Link>
+      <section className="relative overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-black/56 px-8 py-7 shadow-[0_28px_92px_rgba(0,0,0,0.52)]">
+        <Image
+          alt="Serene illuminated Sushi Bliss courtyard with red blossoms"
+          className="object-cover object-[58%_50%] opacity-76"
+          fill
+          loading="eager"
+          priority
+          sizes="1672px"
+          src={supportHeroImages.contact}
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,5,6,0.98)_0%,rgba(4,5,6,0.78)_37%,rgba(4,5,6,0.34)_72%,rgba(4,5,6,0.7)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(520px_180px_at_12%_18%,rgba(239,47,37,0.16),transparent_72%)]" />
+        <div className="relative z-10 grid min-h-[230px] grid-cols-[minmax(0,1fr)_430px] items-center gap-8">
+          <div>
+            <p className="text-[16px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+              We&apos;d love to hear from you
+            </p>
+            <h1 className="editorial-title mt-2 text-[54px] uppercase leading-none tracking-[0.08em]">
+              Contact
+              <span className="block text-[var(--sb-red-bright)]">
+                Sushi Bliss
+              </span>
+            </h1>
+            <p className="mt-3 max-w-[430px] text-[17px] leading-7 text-[var(--sb-gold-soft)]">
+              Have a question, special request, or want to book a private dining
+              experience? Our team is here to help.
+            </p>
+          </div>
+          <div className="space-y-4 rounded-[18px] border border-white/10 bg-black/42 p-5 backdrop-blur-md">
+            <Link
+              className="red-glow-button grid h-[60px] grid-cols-[48px_1fr_24px] items-center rounded-[12px] px-7 text-[17px] uppercase tracking-[0.06em]"
+              href="/reservations"
+            >
+              <AssetIcon size={28} src="/assets/icons/calendar-icon.png" />
+              Reserve a table
+              <ChevronIcon direction="right" size={18} />
+            </Link>
+            <Link
+              className="grid h-[60px] grid-cols-[48px_1fr_24px] items-center rounded-[12px] border border-[var(--sb-gold)]/36 bg-black/38 px-7 text-[17px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]"
+              href="/menu"
+            >
+              <AssetIcon size={28} src="/assets/icons/takeaway-bag-icon.png" />
+              Order now
+              <ChevronIcon direction="right" size={18} />
+            </Link>
+          </div>
         </div>
       </section>
 
