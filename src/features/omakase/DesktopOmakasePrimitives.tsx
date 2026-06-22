@@ -126,16 +126,16 @@ export function DesktopPackageButton({
         </p>
         {compact ? (
           <div className="mt-2 grid grid-cols-2 gap-1.5">
-            <span className="rounded-[7px] border border-white/10 bg-white/[0.035] px-2 py-1">
-              <span className="block text-[10px] uppercase tracking-[0.08em] text-white/40">
+            <span className="min-w-0 rounded-[7px] border border-white/10 bg-white/[0.035] px-1.5 py-1 min-[1500px]:px-2">
+              <span className="block text-[9px] uppercase tracking-[0.02em] text-white/40 min-[1500px]:text-[10px] min-[1500px]:tracking-[0.08em]">
                 Length
               </span>
               <span className="mt-0.5 block text-[11px] text-white/72">
                 {omakasePackage.durationMinutes} min
               </span>
             </span>
-            <span className="rounded-[7px] border border-white/10 bg-white/[0.035] px-2 py-1">
-              <span className="block text-[10px] uppercase tracking-[0.08em] text-white/40">
+            <span className="min-w-0 rounded-[7px] border border-white/10 bg-white/[0.035] px-1.5 py-1 min-[1500px]:px-2">
+              <span className="block text-[9px] uppercase tracking-[0.02em] text-white/40 min-[1500px]:text-[10px] min-[1500px]:tracking-[0.08em]">
                 Guests
               </span>
               <span className="mt-0.5 block text-[11px] text-white/72">
