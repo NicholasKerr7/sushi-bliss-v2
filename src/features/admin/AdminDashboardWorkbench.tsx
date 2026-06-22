@@ -309,7 +309,7 @@ export function AdminDashboardWorkbench() {
 
         <nav
           aria-label="Admin dashboard workbench"
-          className="smooth-scroll-area grid grid-cols-2 gap-2 rounded-[18px] border border-white/10 bg-black/24 p-1.5 sm:flex sm:overflow-x-auto"
+          className="smooth-scroll-area grid grid-cols-2 gap-2 rounded-[18px] border border-white/10 bg-black/24 p-1.5 sm:flex sm:overflow-x-auto md:grid md:grid-cols-4 md:overflow-visible"
         >
           {adminWorkbenchTabs.map((tab) => {
             const active = tab.id === activeId;
@@ -319,7 +319,7 @@ export function AdminDashboardWorkbench() {
                 aria-label={`Open ${tab.label} workbench`}
                 aria-pressed={active}
                 className={classNames(
-                  "group relative grid min-h-[74px] min-w-0 grid-cols-[30px_minmax(0,1fr)] items-center gap-2 overflow-hidden rounded-[14px] border px-2.5 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold sm:min-w-[176px] sm:grid-cols-[34px_minmax(0,1fr)] sm:gap-2.5 sm:px-3",
+                  "group relative grid min-h-[74px] min-w-0 grid-cols-[30px_minmax(0,1fr)] items-center gap-2 overflow-hidden rounded-[14px] border px-2.5 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold sm:min-w-[176px] sm:grid-cols-[34px_minmax(0,1fr)] sm:gap-2.5 sm:px-3 md:min-w-0",
                   active
                     ? "border-[var(--sb-red-bright)]/58 bg-[linear-gradient(135deg,rgba(239,47,37,0.32),rgba(239,47,37,0.08),rgba(215,168,79,0.08))] shadow-[0_0_34px_rgba(239,47,37,0.24)]"
                     : "border-transparent bg-white/[0.025] hover:border-[var(--sb-gold)]/28 hover:bg-white/[0.045]",
@@ -351,8 +351,8 @@ export function AdminDashboardWorkbench() {
                       active ? "text-white" : "text-white/68",
                     )}
                   >
-                    <span className="hidden sm:inline">{tab.label}</span>
-                    <span className="sm:hidden">{tab.shortLabel}</span>
+                    <span className="hidden xl:inline">{tab.label}</span>
+                    <span className="xl:hidden">{tab.shortLabel}</span>
                   </span>
                   <span
                     className={classNames(
@@ -362,8 +362,8 @@ export function AdminDashboardWorkbench() {
                         : "text-white/44",
                     )}
                   >
-                    <span className="hidden sm:inline">{tab.stat}</span>
-                    <span className="sm:hidden">{tab.shortStat}</span>
+                    <span className="hidden xl:inline">{tab.stat}</span>
+                    <span className="xl:hidden">{tab.shortStat}</span>
                   </span>
                 </span>
                 {active ? (

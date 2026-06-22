@@ -170,7 +170,7 @@ export const adminManagementSections = [
     description: "Manage menu items, categories and pricing",
     footerLabel: "Total Items",
     footerValue: "60",
-    href: "#menu-admin",
+    href: "#manage-menu-admin",
     iconUrl: "/assets/icons/sushi-menu-icon.png",
     id: "menu-admin",
     rows: [
@@ -203,7 +203,7 @@ export const adminManagementSections = [
     description: "Monitor and manage customer orders",
     footerLabel: "Total Orders Today",
     footerValue: "156",
-    href: "#orders-admin",
+    href: "#manage-orders-admin",
     iconUrl: "/assets/icons/takeaway-bag-icon.png",
     id: "orders-admin",
     rows: [
@@ -219,7 +219,7 @@ export const adminManagementSections = [
     description: "View and manage table reservations",
     footerLabel: "Total Reservations",
     footerValue: "170",
-    href: "#reservations-admin",
+    href: "#manage-reservations-admin",
     iconUrl: "/assets/icons/calendar-icon.png",
     id: "reservations-admin",
     rows: [
@@ -235,7 +235,7 @@ export const adminManagementSections = [
     description: "Create and manage promotions and offers",
     footerLabel: "Total Offers",
     footerValue: "12",
-    href: "#offers-admin",
+    href: "#manage-offers-admin",
     iconUrl: "/assets/icons/golden-ticket-icon.png",
     id: "offers-admin",
     rows: [
@@ -250,7 +250,7 @@ export const adminManagementSections = [
     description: "Manage restaurant locations and details",
     footerLabel: "Total Locations",
     footerValue: "4",
-    href: "#locations-admin",
+    href: "#manage-locations-admin",
     iconUrl: "/assets/icons/map-pin-icon.png",
     id: "locations-admin",
     rows: [
@@ -266,7 +266,7 @@ export const adminManagementSections = [
     description: "View customer insights and loyalty data",
     footerLabel: "Member Conversion Rate",
     footerValue: "32.6%",
-    href: "#customers-admin",
+    href: "#manage-customers-admin",
     iconUrl: "/assets/icons/user-icon.png",
     id: "customers-admin",
     rows: [
