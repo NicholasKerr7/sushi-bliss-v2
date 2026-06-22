@@ -289,15 +289,15 @@ export function AdminDashboardWorkbench() {
     <section
       aria-labelledby="admin-control-deck-title"
       id="admin-control-deck"
-      className="mt-6 overflow-hidden rounded-[26px] border border-[var(--sb-border)] bg-[radial-gradient(circle_at_18%_0%,rgba(239,47,37,0.1),transparent_36%),linear-gradient(145deg,rgba(255,255,255,0.052),rgba(255,255,255,0.012)),rgba(4,7,8,0.96)] shadow-[0_34px_110px_rgba(0,0,0,0.5)]"
+      className="mt-6 overflow-hidden rounded-[26px] border border-[var(--sb-border)] bg-[radial-gradient(circle_at_18%_0%,rgba(239,47,37,0.1),transparent_36%),linear-gradient(145deg,rgba(255,255,255,0.052),rgba(255,255,255,0.012)),rgba(4,7,8,0.96)] shadow-[0_34px_110px_rgba(0,0,0,0.5)] xl:mt-5"
     >
-      <div className="grid gap-4 border-b border-white/10 p-4 md:p-5 2xl:p-6">
+      <div className="grid gap-4 border-b border-white/10 p-4 md:p-5 xl:grid-cols-[minmax(280px,0.5fr)_minmax(0,1fr)] xl:items-end xl:p-4 2xl:p-5">
         <div className="min-w-0">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
             Admin control deck
           </p>
           <h2
-            className="editorial-title mt-2 text-[28px] leading-none text-white md:text-[34px]"
+            className="editorial-title mt-2 text-[28px] leading-none text-white md:text-[34px] xl:text-[30px] 2xl:text-[34px]"
             id="admin-control-deck-title"
           >
             {activeTab.label} Workbench
@@ -309,7 +309,7 @@ export function AdminDashboardWorkbench() {
 
         <nav
           aria-label="Admin dashboard workbench"
-          className="smooth-scroll-area grid grid-cols-2 gap-2 rounded-[18px] border border-white/10 bg-black/24 p-1.5 sm:flex sm:overflow-x-auto md:grid md:grid-cols-4 md:overflow-visible"
+          className="smooth-scroll-area grid grid-cols-2 gap-2 rounded-[18px] border border-white/10 bg-black/24 p-1.5 sm:flex sm:overflow-x-auto md:grid md:grid-cols-4 md:overflow-visible xl:self-end"
         >
           {adminWorkbenchTabs.map((tab) => {
             const active = tab.id === activeId;
@@ -320,6 +320,7 @@ export function AdminDashboardWorkbench() {
                 aria-pressed={active}
                 className={classNames(
                   "group relative grid min-h-[74px] min-w-0 grid-cols-[30px_minmax(0,1fr)] items-center gap-2 overflow-hidden rounded-[14px] border px-2.5 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold sm:min-w-[176px] sm:grid-cols-[34px_minmax(0,1fr)] sm:gap-2.5 sm:px-3 md:min-w-0",
+                  "xl:min-h-[64px] xl:grid-cols-[32px_minmax(0,1fr)] xl:px-3",
                   active
                     ? "border-[var(--sb-red-bright)]/58 bg-[linear-gradient(135deg,rgba(239,47,37,0.32),rgba(239,47,37,0.08),rgba(215,168,79,0.08))] shadow-[0_0_34px_rgba(239,47,37,0.24)]"
                     : "border-transparent bg-white/[0.025] hover:border-[var(--sb-gold)]/28 hover:bg-white/[0.045]",
@@ -379,7 +380,7 @@ export function AdminDashboardWorkbench() {
       </div>
 
       <div
-        className="smooth-scroll-area p-3 md:p-4 xl:max-h-[clamp(540px,calc(100dvh-430px),760px)] xl:overflow-y-auto xl:overscroll-contain 2xl:p-5"
+        className="smooth-scroll-area p-3 md:p-4 xl:max-h-[clamp(560px,calc(100dvh-354px),780px)] xl:overflow-y-auto xl:overscroll-contain 2xl:p-5"
         data-testid="admin-workbench-panel"
         ref={workbenchPanelRef}
       >

@@ -13,7 +13,7 @@ export function AdminDashboard() {
   return (
     <>
       <AdminTopBar />
-      <div className="mx-auto w-full max-w-[1900px] px-4 pb-10 pt-6 sm:px-5 md:px-8 md:pt-8 xl:px-10 2xl:px-12">
+      <div className="mx-auto w-full max-w-[1900px] px-4 pb-10 pt-6 sm:px-5 md:px-8 md:pt-8 xl:px-10 xl:pt-6 2xl:px-12">
         <section
           aria-labelledby="admin-dashboard-title"
           className="grid gap-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end"

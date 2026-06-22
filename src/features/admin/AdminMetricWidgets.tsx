@@ -10,19 +10,7 @@ import { getSparklinePoints } from "./adminDashboardUtils";
 
 export function AdminTopBar() {
   return (
-    <div className="hidden min-h-[72px] items-center justify-between gap-5 border-b border-white/10 px-8 xl:flex 2xl:px-12">
-      <a
-        aria-label="Jump to admin overview"
-        className="grid h-10 w-10 place-items-center rounded-[12px] border border-transparent text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/28 hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-        href="#overview"
-      >
-        <span className="grid gap-1.5">
-          <span className="h-0.5 w-5 rounded-full bg-current" />
-          <span className="h-0.5 w-5 rounded-full bg-current" />
-          <span className="h-0.5 w-5 rounded-full bg-current" />
-        </span>
-      </a>
-
+    <div className="hidden min-h-[64px] items-center justify-end gap-5 border-b border-white/10 px-8 xl:flex 2xl:px-12">
       <div className="ml-auto flex items-center gap-4">
         <label className="relative hidden w-[min(28vw,340px)] xl:block 2xl:w-[360px]">
           <span className="sr-only">Admin search</span>
