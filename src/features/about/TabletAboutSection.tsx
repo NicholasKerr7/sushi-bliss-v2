@@ -99,7 +99,7 @@ export function TabletAboutSection() {
     <section className="min-h-dvh bg-[#050607] text-white" id="about">
       <TabletAboutHeader unreadCount={unreadCount} />
 
-      <main className="mx-auto w-full max-w-[1008px] pb-[112px]">
+      <main className="mx-auto w-full max-w-[1008px] px-5 pb-[112px] min-[900px]:px-0">
         <section className="relative h-[470px] overflow-hidden border-b border-white/[0.06]">
           <Image
             alt="Otoro nigiri presented on a dark luxury surface"

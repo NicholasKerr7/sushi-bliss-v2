@@ -20,7 +20,7 @@ export function TabletAboutBottomNav() {
       className="fixed bottom-0 left-1/2 z-40 grid h-[92px] w-full max-w-[1086px] -translate-x-1/2 grid-cols-5 overflow-hidden border-t border-white/10 bg-[#070909]/96 shadow-[inset_0_1px_0_rgba(255,255,255,.08),0_-12px_35px_rgba(0,0,0,.48)]"
     >
       {aboutNavItems.map(([id, label, href]) => {
-        const active = id === "reservations";
+        const active = id === "menu";
 
         return (
           <Link
