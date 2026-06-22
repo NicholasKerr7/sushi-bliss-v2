@@ -145,6 +145,7 @@ export function DesktopMenuHeader({
     <header className="border-b border-white/[0.08] bg-[#07090a]/96 px-5 min-[1400px]:px-6 min-[1500px]:px-0">
       <div className="mx-auto flex h-[76px] w-full max-w-[1328px] items-center">
         <Link
+          aria-label="Sushi Bliss home"
           className="flex min-w-[210px] items-center gap-3 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold min-[1360px]:min-w-[250px] min-[1500px]:min-w-[270px] min-[1500px]:gap-4"
           href="/home"
         >
@@ -198,7 +199,11 @@ export function DesktopMenuHeader({
               </span>
             ) : null}
           </Link>
-          <Link className="flex items-center gap-3" href="/profile">
+          <Link
+            aria-label="Open profile for Hiroshi Tanaka"
+            className="flex items-center gap-3"
+            href="/profile"
+          >
             <Image
               alt=""
               className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover"

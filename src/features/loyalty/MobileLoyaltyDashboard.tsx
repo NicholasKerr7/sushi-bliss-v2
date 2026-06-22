@@ -197,7 +197,7 @@ export function MobileLoyaltyDashboard({
               <button
                 aria-pressed={active}
                 className={classNames(
-                  "min-h-[42px] min-w-0 rounded-[12px] border px-2 text-[10px] uppercase tracking-[0.04em] transition min-[390px]:min-h-[44px] min-[390px]:px-0.5 min-[390px]:text-[11px] min-[390px]:tracking-[0.06em]",
+                  "min-h-[42px] min-w-0 rounded-[12px] border px-2 text-[10px] uppercase tracking-[0.04em] transition min-[390px]:min-h-[44px] min-[390px]:px-0 min-[390px]:text-[10px] min-[390px]:tracking-[0.025em] min-[420px]:px-0.5 min-[420px]:text-[11px] min-[420px]:tracking-[0.06em]",
                   active
                     ? "border-[var(--sb-red)]/34 bg-[var(--sb-red)]/24 text-[var(--sb-red-bright)] shadow-[0_0_22px_rgba(239,47,37,0.22)]"
                     : "border-white/[0.06] bg-white/[0.025] text-white/58",

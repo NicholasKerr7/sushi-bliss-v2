@@ -21,7 +21,7 @@ export function AdminDashboard() {
         >
           <div className="min-w-0">
             <h1
-              className="editorial-title text-[38px] leading-none text-white md:text-[44px] xl:text-[46px] 2xl:text-[50px]"
+              className="editorial-title text-[38px] leading-none text-white md:text-[40px] xl:text-[46px] 2xl:text-[50px]"
               id="admin-dashboard-title"
             >
               Admin Dashboard

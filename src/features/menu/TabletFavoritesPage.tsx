@@ -239,7 +239,7 @@ export function TabletFavoritesPage() {
               >
                 <AssetIcon size={30} src={icon} />
                 <span>
-                  <span className="block text-[12px] uppercase text-white/70">
+                  <span className="block text-[11px] uppercase leading-4 text-white/70 min-[900px]:text-[12px]">
                     {title}
                   </span>
                   <span className="mt-1 block text-[12px] text-white/46">

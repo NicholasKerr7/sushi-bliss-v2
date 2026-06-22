@@ -17,6 +17,7 @@ interface AdminShellProps {
 function AdminBrand({ compact = false }: { compact?: boolean }) {
   return (
     <Link
+      aria-label="Sushi Bliss home"
       className={classNames(
         "group flex min-w-0 items-center gap-3 rounded-[18px] text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold",
         compact ? "justify-center" : "justify-center xl:justify-start",
@@ -167,6 +168,7 @@ export function AdminShell({ children }: AdminShellProps) {
             </span>
           </a>
           <Link
+            aria-label="Sushi Bliss home"
             className="flex min-w-0 items-center justify-center gap-3 rounded-[14px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             href="/"
           >

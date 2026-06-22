@@ -167,7 +167,11 @@ function TabletHeader({
       <div className="flex items-center justify-end gap-3 lg:gap-6">
         <TabletIconLink badge={2} href="/notifications" icon={icons.bell} />
         <TabletIconLink badge={cartCount || 4} href="/menu" icon={icons.cart} />
-        <Link className="flex items-center gap-5" href="/profile">
+        <Link
+          aria-label="Open profile"
+          className="flex items-center gap-5"
+          href="/profile"
+        >
           <Image
             alt=""
             className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"
@@ -193,7 +197,13 @@ function TabletIconLink({
   icon?: string;
 }) {
   return (
-    <Link className="relative grid h-11 w-11 place-items-center" href={href}>
+    <Link
+      aria-label={
+        href === "/notifications" ? "Open notifications" : "Open menu"
+      }
+      className="relative grid h-11 w-11 place-items-center"
+      href={href}
+    >
       <AssetIcon size={32} src={icon} />
       <span className="absolute right-0 top-0 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[11px] font-bold text-white">
         {badge}

@@ -217,7 +217,7 @@ export function DesktopCourseJourney({
               />
             </div>
             <div className="p-2.5 text-center">
-              <p className="editorial-title text-[15px] text-white">
+              <p className="editorial-title break-words text-[14px] leading-tight text-white min-[1500px]:text-[15px]">
                 {course.label}
               </p>
               <p className="mt-1 line-clamp-2 min-h-[34px] text-[11px] leading-[17px] text-white/56">

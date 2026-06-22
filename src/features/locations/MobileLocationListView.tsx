@@ -190,7 +190,7 @@ function MobileLocationCard({
       </div>
       <div className="min-w-0 p-3 min-[390px]:p-4">
         <div className="flex min-w-0 items-start justify-between gap-2 min-[390px]:gap-3">
-          <h2 className="editorial-title min-w-0 max-w-full break-normal text-balance text-[16px] leading-[1.03] tracking-[0.01em] text-white min-[390px]:text-[22px]">
+          <h2 className="editorial-title min-w-0 max-w-full break-words text-balance text-[15px] leading-[1.05] tracking-normal text-white min-[390px]:text-[20px] min-[425px]:text-[22px]">
             {location.name}
           </h2>
           <button

@@ -49,6 +49,7 @@ export function TabletMenuCard({
         <AssetIcon size={22} src={icons.star} />
       </button>
       <button
+        aria-label={`${item.name} ${item.ingredients.slice(0, 3).join(", ")}`}
         className="block w-full text-left"
         onClick={() => onViewDetails(item)}
         type="button"
@@ -101,6 +102,7 @@ export function TabletCompactMenuRow({
   return (
     <article className="grid grid-cols-[108px_minmax(0,1fr)_42px] items-center gap-3 rounded-[8px] border border-[var(--sb-border)] bg-black/34 p-1.5">
       <button
+        aria-label={`View ${item.name} image`}
         className="relative h-[74px] overflow-hidden rounded-[6px]"
         onClick={() => onViewDetails(item)}
         type="button"

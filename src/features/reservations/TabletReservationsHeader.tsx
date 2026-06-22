@@ -51,7 +51,11 @@ export function TabletReservationsHeader({
             {cartCount}
           </span>
         </button>
-        <Link className="flex min-w-11 items-center gap-4" href="/profile">
+        <Link
+          aria-label={`Open profile for ${mockUser.name}`}
+          className="flex min-w-11 items-center gap-4"
+          href="/profile"
+        >
           <Image
             alt=""
             className="h-12 w-12 rounded-full border border-[var(--sb-border)] object-cover lg:h-[58px] lg:w-[58px]"
@@ -70,6 +74,7 @@ export function TabletReservationsHeader({
           <ChevronIcon className="text-[var(--sb-gold)]" direction="down" />
         </Link>
         <Link
+          aria-label="Open notifications"
           className="relative grid h-11 w-11 min-w-11 place-items-center"
           href="/notifications"
         >

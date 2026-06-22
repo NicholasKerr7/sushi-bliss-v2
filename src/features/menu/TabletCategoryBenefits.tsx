@@ -55,8 +55,10 @@ function TabletBenefit({
   return (
     <div className="flex items-center gap-4 border-r border-white/10 px-4 last:border-r-0">
       <AssetIcon size={36} src={icon} />
-      <p>
-        <span className="block text-sm uppercase text-white/78">{title}</span>
+      <p className="min-w-0">
+        <span className="block text-[12px] uppercase leading-4 text-white/78 lg:text-sm">
+          {title}
+        </span>
         <span className="mt-1 block text-sm text-white/64">{children}</span>
       </p>
     </div>

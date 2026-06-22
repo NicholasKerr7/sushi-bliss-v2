@@ -37,33 +37,33 @@ export function AdminWorkspaceQueue({
     <div className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/24 p-3 md:p-4">
       <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.04em] text-[var(--sb-gold-soft)] min-[420px]:text-[11px] min-[420px]:tracking-[0.1em] min-[1500px]:tracking-[0.14em]">
             Workspace queue
           </p>
-          <p className="mt-1 text-sm leading-6 text-white/58">
+          <p className="mt-1 max-w-full break-words text-sm leading-6 text-white/58">
             Keep {sectionTitle.toLowerCase()} moving without leaving the
             dashboard.
           </p>
         </div>
         <div className="grid grid-cols-3 gap-2">
-          <div className="rounded-[13px] border border-white/10 bg-white/[0.025] px-3 py-2">
-            <p className="text-[10px] uppercase tracking-[0.1em] text-white/42">
+          <div className="rounded-[13px] border border-white/10 bg-white/[0.025] px-2 py-2 min-[390px]:px-3">
+            <p className="text-[8px] uppercase tracking-normal text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
               Review
             </p>
             <p className="mt-1 truncate font-mono text-[15px] text-[var(--sb-gold-soft)]">
               {reviewLabel}
             </p>
           </div>
-          <div className="rounded-[13px] border border-white/10 bg-white/[0.025] px-3 py-2">
-            <p className="text-[10px] uppercase tracking-[0.1em] text-white/42">
+          <div className="rounded-[13px] border border-white/10 bg-white/[0.025] px-2 py-2 min-[390px]:px-3">
+            <p className="text-[8px] uppercase tracking-normal text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
               Saved
             </p>
             <p className="mt-1 font-mono text-[15px] text-[var(--sb-gold-soft)]">
               {savedCount}
             </p>
           </div>
-          <div className="rounded-[13px] border border-white/10 bg-white/[0.025] px-3 py-2">
-            <p className="text-[10px] uppercase tracking-[0.1em] text-white/42">
+          <div className="rounded-[13px] border border-white/10 bg-white/[0.025] px-2 py-2 min-[390px]:px-3">
+            <p className="text-[8px] uppercase tracking-normal text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
               Priority
             </p>
             <p className="mt-1 font-mono text-[15px] text-[var(--sb-red-bright)]">

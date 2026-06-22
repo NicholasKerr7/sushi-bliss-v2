@@ -52,6 +52,7 @@ export function TabletLocationsHeader({
           </span>
         </button>
         <Link
+          aria-label={`Open profile for ${mockUser.name}`}
           className="flex min-w-[74px] items-center gap-2 lg:min-w-11 lg:gap-4"
           href="/profile"
         >
@@ -77,6 +78,7 @@ export function TabletLocationsHeader({
           />
         </Link>
         <Link
+          aria-label="Open notifications"
           className="relative grid h-11 w-11 min-w-11 place-items-center"
           href="/notifications"
         >

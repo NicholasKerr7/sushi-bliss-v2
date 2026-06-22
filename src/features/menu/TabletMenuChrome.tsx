@@ -87,6 +87,7 @@ export function TabletMenuHeader({
           </span>
         </button>
         <Link
+          aria-label="Open profile"
           className="flex min-w-[58px] items-center gap-2 lg:gap-5"
           href="/profile"
         >
@@ -116,6 +117,9 @@ function TabletHeaderIcon({
 }) {
   return (
     <Link
+      aria-label={
+        href === "/notifications" ? "Open notifications" : "Open menu"
+      }
       className="relative grid h-11 w-11 min-w-11 place-items-center"
       href={href}
     >

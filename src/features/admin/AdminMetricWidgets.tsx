@@ -123,7 +123,7 @@ export function AdminKpiCard({
           <p className="truncate text-[10px] font-semibold uppercase tracking-[0.1em] text-white/68 2xl:text-[11px] 2xl:tracking-[0.12em]">
             {metric.label}
           </p>
-          <p className="mt-3 whitespace-nowrap font-serif text-[22px] leading-none text-white 2xl:text-[25px] min-[1800px]:text-[31px]">
+          <p className="mt-3 whitespace-nowrap font-serif text-[16px] leading-none text-white min-[1660px]:text-[22px] min-[1800px]:text-[31px]">
             {metric.value}
           </p>
         </div>

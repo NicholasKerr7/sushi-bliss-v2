@@ -27,7 +27,8 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
   return (
     <header className="hidden h-[88px] items-center border-b border-white/[0.06] px-[5.5vw] xl:flex">
       <Link
-        className="flex min-w-[270px] items-center gap-4 text-left text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--sb-gold)]"
+        aria-label="Sushi Bliss home"
+        className="flex min-w-[220px] items-center gap-3 text-left text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--sb-gold)] min-[1360px]:min-w-[250px] min-[1500px]:min-w-[270px] min-[1500px]:gap-4"
         href="/home"
       >
         <AssetIcon
@@ -44,11 +45,11 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
       </Link>
       <nav
         aria-label="Desktop primary"
-        className="flex flex-1 items-center justify-center gap-11"
+        className="flex flex-1 items-center justify-center gap-5 min-[1360px]:gap-8 min-[1500px]:gap-11"
       >
         {desktopNav.map(([label, href], index) => (
           <Link
-            className={`relative flex min-w-11 items-center justify-center py-8 text-[13px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] ${
+            className={`relative flex min-w-11 items-center justify-center whitespace-nowrap py-8 text-[12px] font-semibold uppercase text-white transition hover:text-[var(--sb-gold)] min-[1500px]:text-[13px] ${
               index === 0 ? "text-[var(--sb-red-bright)]" : ""
             }`}
             href={href}
@@ -61,7 +62,7 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
           </Link>
         ))}
       </nav>
-      <div className="flex min-w-[330px] items-center justify-end gap-5">
+      <div className="flex min-w-[250px] items-center justify-end gap-3 min-[1360px]:min-w-[290px] min-[1500px]:min-w-[330px] min-[1500px]:gap-5">
         <Link
           aria-label="Open cart"
           className="relative grid h-12 w-12 place-items-center text-[var(--sb-gold)]"
@@ -74,7 +75,11 @@ export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
             </span>
           ) : null}
         </Link>
-        <Link className="flex items-center gap-3" href="/profile">
+        <Link
+          aria-label="Open profile for Hiroshi Tanaka"
+          className="flex items-center gap-3"
+          href="/profile"
+        >
           <Image
             alt=""
             className="h-14 w-14 rounded-full border border-[var(--sb-border)] object-cover"
