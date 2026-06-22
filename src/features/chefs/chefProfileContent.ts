@@ -5,25 +5,18 @@ import type { MenuItem } from "@/types/menu";
 
 import { menuItemById, menuItems } from "@/data/menu";
 
-type ChefProfileHighlightLabel =
-  | "Signature"
-  | "Sushi"
-  | "Sashimi"
-  | "Appetizer"
-  | "Dessert";
+type ChefOmakaseCourseLabel = "Appetizer" | "Signature" | "Dessert";
 
-export interface ChefProfileHighlight {
-  label: ChefProfileHighlightLabel;
-  value: string;
-}
-
-export interface ChefSignatureDishPreview extends ChefProfileHighlight {
-  ctaLabel: string;
-  href: string;
+export interface ChefOmakaseCoursePreview {
   image: ImageReference;
-  menuItem?: MenuItem;
-  sourceLabel: string;
+  label: ChefOmakaseCourseLabel;
+  name: string;
+  sequence: number;
 }
+
+const omakaseCourseByChefId = new Map(
+  getOmakaseExperience().courses.map((course) => [course.chefId, course]),
+);
 
 const chefDishPreviewIds: Record<string, string[]> = {
   "aiko-nakamura": ["tamago-nigiri", "vegetarian-temaki", "inari-sushi"],
@@ -34,38 +27,7 @@ const chefDishPreviewIds: Record<string, string[]> = {
 
 const fallbackDishIds = ["otoro-nigiri", "spicy-tuna-roll", "salmon-sashimi"];
 
-const chefDishMenuAliases: Record<
-  string,
-  Partial<Record<ChefProfileHighlightLabel, string>>
-> = {
-  "aiko-nakamura": {
-    Sashimi: "scallop-sashimi",
-    Sushi: "salmon-temari-sushi",
-  },
-  "hiroshi-tanaka": {
-    Sashimi: "tuna-sashimi",
-    Signature: "otoro-nigiri",
-    Sushi: "deluxe-toro-caviar-nigiri",
-  },
-  "kenji-sato": {
-    Sashimi: "hamachi-nigiri",
-    Sushi: "seared-beef-nigiri",
-  },
-  "ren-mori": {
-    Sashimi: "red-snapper-sashimi",
-    Sushi: "dragon-roll",
-  },
-};
-
-const menuItemByName = new Map(
-  menuItems.map((item) => [normalizeDishName(item.name), item]),
-);
-
-const omakaseCourseByChefId = new Map(
-  getOmakaseExperience().courses.map((course) => [course.chefId, course]),
-);
-
-/** Returns real menu records for a chef's signature dish preview. */
+/** Returns real menu records for the orderable picks below each chef profile. */
 export function getChefDishPreview(chef: Chef): MenuItem[] {
   const ids = chefDishPreviewIds[chef.id] || fallbackDishIds;
   const items = ids
@@ -79,99 +41,56 @@ export function getChefDishPreview(chef: Chef): MenuItem[] {
   return menuItems.filter((item) => item.itemType !== "drink").slice(0, 3);
 }
 
-/** Keeps chef specialty cards consistent between mobile and expanded modals. */
-export function getChefProfileHighlights(chef: Chef): ChefProfileHighlight[] {
-  return [
-    { label: "Signature", value: chef.specialty },
-    { label: "Sushi", value: chef.sushi },
-    { label: "Sashimi", value: chef.sashimi },
-    { label: "Appetizer", value: chef.appetizer },
-    { label: "Dessert", value: chef.dessert },
-  ];
-}
-
-/** Builds five visual chef-signature previews from chef, omakase, and menu data. */
-export function getChefSignatureDishPreviews(
+/** Returns non-clickable chef omakase course cards from the omakase data set. */
+export function getChefOmakaseCoursePreviews(
   chef: Chef,
-): ChefSignatureDishPreview[] {
-  const fallbackImage = getChefDishPreview(chef)[0]?.image || chef.platingImage;
-
-  return getChefProfileHighlights(chef).map((highlight) => {
-    const menuItem = getChefHighlightMenuItem(chef, highlight);
-    const courseImage = getChefHighlightCourseImage(chef, highlight);
-    const image = courseImage || menuItem?.image || fallbackImage;
-    const isMenuItem = Boolean(menuItem && !courseImage);
-
-    return {
-      ...highlight,
-      ctaLabel: isMenuItem ? "View menu" : "View omakase",
-      href:
-        isMenuItem && menuItem
-          ? `/menu?category=${menuItem.category}`
-          : "/omakase",
-      image: {
-        ...image,
-        alt: image.alt || highlight.value,
-      },
-      menuItem,
-      sourceLabel: getChefSignatureSourceLabel(highlight.label, menuItem),
-    };
-  });
-}
-
-function getChefHighlightMenuItem(
-  chef: Chef,
-  highlight: ChefProfileHighlight,
-): MenuItem | undefined {
-  const aliasId = chefDishMenuAliases[chef.id]?.[highlight.label];
-
-  return aliasId
-    ? menuItemById.get(aliasId)
-    : menuItemByName.get(normalizeDishName(highlight.value));
-}
-
-function getChefHighlightCourseImage(
-  chef: Chef,
-  highlight: ChefProfileHighlight,
-): ImageReference | undefined {
+): ChefOmakaseCoursePreview[] {
   const course = omakaseCourseByChefId.get(chef.id);
 
   if (!course) {
-    return undefined;
+    const fallbackImage =
+      getChefDishPreview(chef)[0]?.image || chef.platingImage;
+
+    return [
+      createOmakaseCoursePreview("Signature", chef.specialty, fallbackImage, 1),
+    ];
   }
 
-  if (highlight.label === "Appetizer") {
-    return course.appetizer.image;
-  }
-
-  if (highlight.label === "Dessert") {
-    return course.dessert.image;
-  }
-
-  if (highlight.label === "Signature") {
-    const menuItem = getChefHighlightMenuItem(chef, highlight);
-
-    return menuItem ? undefined : course.specialty.image;
-  }
-
-  return undefined;
+  return [
+    createOmakaseCoursePreview(
+      "Appetizer",
+      course.appetizer.title || chef.appetizer,
+      course.appetizer.image,
+      1,
+    ),
+    createOmakaseCoursePreview(
+      "Signature",
+      course.specialty.title || chef.specialty,
+      course.specialty.image,
+      2,
+    ),
+    createOmakaseCoursePreview(
+      "Dessert",
+      course.dessert.title || chef.dessert,
+      course.dessert.image,
+      3,
+    ),
+  ];
 }
 
-function getChefSignatureSourceLabel(
-  label: ChefProfileHighlightLabel,
-  menuItem: MenuItem | undefined,
-): string {
-  if (menuItem) {
-    return menuItem.categoryLabel;
-  }
-
-  return label === "Dessert"
-    ? "Dessert course"
-    : label === "Appetizer"
-      ? "Opening course"
-      : "Omakase course";
-}
-
-function normalizeDishName(value: string): string {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, "");
+function createOmakaseCoursePreview(
+  label: ChefOmakaseCourseLabel,
+  name: string,
+  image: ImageReference,
+  sequence: number,
+): ChefOmakaseCoursePreview {
+  return {
+    image: {
+      ...image,
+      alt: image.alt || name,
+    },
+    label,
+    name,
+    sequence,
+  };
 }

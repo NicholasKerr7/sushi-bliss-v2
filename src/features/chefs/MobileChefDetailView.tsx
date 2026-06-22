@@ -16,8 +16,8 @@ import {
 } from "./MobileChefsPrimitives";
 import {
   getChefDishPreview,
-  getChefSignatureDishPreviews,
-  type ChefSignatureDishPreview,
+  getChefOmakaseCoursePreviews,
+  type ChefOmakaseCoursePreview,
 } from "./chefProfileContent";
 
 interface MobileChefDetailViewProps {
@@ -30,7 +30,7 @@ export function MobileChefDetailView({
   chef,
   onBack,
 }: MobileChefDetailViewProps) {
-  const signatureDishes = getChefSignatureDishPreviews(chef);
+  const omakaseCourses = getChefOmakaseCoursePreviews(chef);
   const menuPreviewDishes = getChefDishPreview(chef);
 
   return (
@@ -136,27 +136,22 @@ export function MobileChefDetailView({
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-              Chef signatures
+              Chef omakase
             </p>
             <h2 className="editorial-title mt-2 text-[27px] uppercase tracking-[0.04em] text-white">
-              Five-course preview
+              Course preview
             </h2>
           </div>
-          <Link
-            aria-label="Open omakase experiences"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/34 text-[var(--sb-gold-soft)]"
-            href="/omakase"
-          >
-            <ChevronIcon direction="right" size={18} />
-          </Link>
+          <span className="rounded-full border border-[var(--sb-border)] bg-black/34 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
+            Chef-led
+          </span>
         </div>
 
         <div className="mt-3 grid gap-3">
-          {signatureDishes.map((dish, index) => (
-            <MobileSignatureDishCard
-              dish={dish}
-              index={index}
-              key={`${dish.label}-${dish.value}`}
+          {omakaseCourses.map((course) => (
+            <MobileOmakaseCourseCard
+              course={course}
+              key={`${course.label}-${course.name}`}
             />
           ))}
         </div>
@@ -191,52 +186,45 @@ export function MobileChefDetailView({
   );
 }
 
-function MobileSignatureDishCard({
-  dish,
-  index,
+function MobileOmakaseCourseCard({
+  course,
 }: {
-  dish: ChefSignatureDishPreview;
-  index: number;
+  course: ChefOmakaseCoursePreview;
 }) {
   return (
-    <Link
-      aria-label={`${dish.ctaLabel} for ${dish.value}`}
-      className="group grid min-h-[146px] grid-cols-[114px_minmax(0,1fr)] overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl transition hover:border-[var(--sb-gold)]/38 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:grid-cols-[132px_minmax(0,1fr)]"
-      href={dish.href}
-    >
+    <article className="grid min-h-[150px] grid-cols-[116px_minmax(0,1fr)] overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.065),rgba(255,255,255,0.02))] shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_22px_60px_rgba(0,0,0,0.42)] backdrop-blur-xl min-[390px]:grid-cols-[136px_minmax(0,1fr)]">
       <div className="relative min-h-full overflow-hidden bg-black/34">
         <Image
-          alt={dish.image.alt || dish.value}
-          className="object-cover object-[50%_56%] transition duration-500 group-hover:scale-[1.035]"
+          alt={course.image.alt || course.name}
+          className="object-cover object-[50%_56%]"
           fill
           loading="eager"
-          sizes="132px"
-          src={dish.image.publicUrl}
+          sizes="136px"
+          src={course.image.publicUrl}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.62))]" />
         <span className="absolute left-3 top-3 grid h-7 min-w-7 place-items-center rounded-full border border-white/12 bg-black/66 px-2 font-mono text-[10px] text-[var(--sb-gold-soft)]">
-          0{index + 1}
+          0{course.sequence}
         </span>
       </div>
 
       <div className="flex min-w-0 flex-col p-3 min-[390px]:p-4">
         <div className="flex items-center justify-between gap-2">
           <p className="truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-white/42">
-            {dish.label}
+            {course.label}
           </p>
           <span className="shrink-0 rounded-full border border-[var(--sb-gold)]/26 bg-black/28 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-            {dish.sourceLabel}
+            Omakase
           </span>
         </div>
         <h3 className="editorial-title mt-3 line-clamp-2 text-[18px] leading-tight text-white">
-          {dish.value}
+          {course.name}
         </h3>
-        <span className="mt-auto inline-flex items-center gap-1 pt-4 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-red-bright)]">
-          {dish.ctaLabel}
-          <ChevronIcon direction="right" size={14} />
+        <span className="mt-auto pt-4 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-red-bright)]">
+          Chef course
         </span>
       </div>
-    </Link>
+    </article>
   );
 }
 
