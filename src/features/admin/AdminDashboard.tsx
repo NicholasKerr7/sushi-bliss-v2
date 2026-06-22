@@ -2,7 +2,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { adminKpis, adminTabletMetrics } from "@/data/admin";
 
 import { AdminDashboardWorkbench } from "./AdminDashboardWorkbench";
-import { AdminOperationsIntelligence } from "./AdminManagementWidgets";
+import { AdminOperationsIntelligence } from "./AdminOperationsIntelligence";
 import {
   AdminKpiCard,
   AdminTopBar,
