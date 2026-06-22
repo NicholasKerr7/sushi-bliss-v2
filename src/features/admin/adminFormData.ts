@@ -1,5 +1,10 @@
 export type AdminFormFieldType = "select" | "textarea" | "text";
-export type AdminFormId = "locations" | "menu" | "offers" | "settings" | "users";
+export type AdminFormId =
+  | "locations"
+  | "menu"
+  | "offers"
+  | "settings"
+  | "users";
 
 export interface AdminFormField {
   helper?: string;

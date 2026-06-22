@@ -21,7 +21,10 @@ import {
 } from "./adminOperationsData";
 
 type EditableRecordField = "detail" | "meta" | "status" | "value";
-type RowEdits = Record<string, Partial<Pick<WorkspaceRow, EditableRecordField>>>;
+type RowEdits = Record<
+  string,
+  Partial<Pick<WorkspaceRow, EditableRecordField>>
+>;
 
 interface AdminOperationsWorkspaceProps {
   initialWorkspaceId?: AdminWorkspaceId;
@@ -409,9 +412,7 @@ export function AdminOperationsWorkspace({
           </div>
 
           <AdminWorkspaceQueue
-            canReset={
-              reviewedCount > 0 || savedCount > 0 || priorityCount > 0
-            }
+            canReset={reviewedCount > 0 || savedCount > 0 || priorityCount > 0}
             canReviewNext={Boolean(nextReviewRow)}
             canShowPriority={Boolean(nextPriorityRow)}
             onResetWorkspace={handleResetWorkspaceQueue}

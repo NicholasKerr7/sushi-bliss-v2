@@ -146,7 +146,9 @@ export function AdminRecordEditor({
                 <input
                   aria-label="Record owner or type"
                   className="h-11 w-full rounded-[11px] border border-white/12 bg-black/28 px-3 text-sm text-white outline-none placeholder:text-white/38 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
-                  onChange={(event) => onFieldChange("meta", event.target.value)}
+                  onChange={(event) =>
+                    onFieldChange("meta", event.target.value)
+                  }
                   value={row.meta}
                 />
               </label>
@@ -243,7 +245,9 @@ export function AdminRecordEditor({
         </>
       ) : (
         <div className="rounded-[16px] border border-dashed border-white/14 bg-black/20 p-4 text-center">
-          <p className="font-serif text-[20px] text-white">No record selected</p>
+          <p className="font-serif text-[20px] text-white">
+            No record selected
+          </p>
           <p className="mt-2 text-sm text-white/52">
             Select a {sectionTitle.toLowerCase()} row to review it.
           </p>

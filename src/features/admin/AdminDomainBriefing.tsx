@@ -150,7 +150,9 @@ export function AdminDomainBriefing({
                 </span>
                 <span className="min-w-0">
                   <span className="block truncate text-[13px] font-semibold uppercase tracking-[0.07em]">
-                    {staged ? action.label.replace("Stage", "Staged") : action.label}
+                    {staged
+                      ? action.label.replace("Stage", "Staged")
+                      : action.label}
                   </span>
                   <span className="mt-1 line-clamp-2 text-[12px] leading-4 text-white/50 2xl:leading-5">
                     {action.detail}

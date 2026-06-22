@@ -120,7 +120,8 @@ const adminWorkbenchTabs: readonly {
     stat: "5 open",
   },
   {
-    description: "Mock publishing forms for menu, offers, settings, and access.",
+    description:
+      "Mock publishing forms for menu, offers, settings, and access.",
     iconUrl: "/assets/icons/user-settings-icon.png",
     id: "forms",
     label: "Forms",
@@ -192,8 +193,7 @@ function AdminWorkbenchPanel({
 }
 
 export function AdminDashboardWorkbench() {
-  const [activeId, setActiveId] =
-    useState<AdminWorkbenchTabId>("operations");
+  const [activeId, setActiveId] = useState<AdminWorkbenchTabId>("operations");
   const [targetDomainId, setTargetDomainId] =
     useState<AdminWorkspaceId>("menu");
   const [targetFormId, setTargetFormId] = useState<AdminFormId>("menu");
@@ -358,9 +358,7 @@ export function AdminDashboardWorkbench() {
                   <span
                     className={classNames(
                       "mt-1 block truncate font-mono text-[12px] sm:text-[15px]",
-                      active
-                        ? "text-[var(--sb-gold-soft)]"
-                        : "text-white/44",
+                      active ? "text-[var(--sb-gold-soft)]" : "text-white/44",
                     )}
                   >
                     <span className="hidden xl:inline">{tab.stat}</span>

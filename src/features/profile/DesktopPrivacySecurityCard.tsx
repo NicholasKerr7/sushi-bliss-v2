@@ -4,10 +4,7 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import type { UserPreferences } from "@/types/user";
 
 import { desktopProfilePrivacyRows } from "./DesktopProfileSettingsData";
-import {
-  SettingsCard,
-  SwitchPill,
-} from "./DesktopProfileSettingsPrimitives";
+import { SettingsCard, SwitchPill } from "./DesktopProfileSettingsPrimitives";
 
 export function DesktopPrivacySecurityCard({
   preferences,

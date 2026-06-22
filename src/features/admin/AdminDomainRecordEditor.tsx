@@ -7,7 +7,10 @@ import { classNames } from "@/lib/classNames";
 import { AdminWorkspaceStatusPill } from "./AdminWorkspaceStatusPill";
 import type { AdminWorkspaceId, WorkspaceRow } from "./adminOperationsData";
 
-type EditableRecordDraft = Pick<WorkspaceRow, "detail" | "meta" | "status" | "value">;
+type EditableRecordDraft = Pick<
+  WorkspaceRow,
+  "detail" | "meta" | "status" | "value"
+>;
 
 interface EditorLabels {
   detail: string;

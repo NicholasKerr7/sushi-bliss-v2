@@ -47,7 +47,11 @@ export const desktopDietaryOptions = [
   "Vegetarian",
 ] as const;
 export const desktopSpiceOptions = ["Spicy Level", "Mild", "Hot"] as const;
-export const desktopSortOptions = ["Sort By", "Price Low", "Price High"] as const;
+export const desktopSortOptions = [
+  "Sort By",
+  "Price Low",
+  "Price High",
+] as const;
 
 export const desktopHeroContent = {
   all: {

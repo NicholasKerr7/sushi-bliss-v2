@@ -21,7 +21,11 @@ import type {
 import { desktopHeroContent } from "./DesktopMenuSurfaceData";
 import { menuHeroItem } from "./tabletMenuData";
 
-export function DesktopCategoryBenefitStrip({ category }: { category: string }) {
+export function DesktopCategoryBenefitStrip({
+  category,
+}: {
+  category: string;
+}) {
   const benefits =
     category === "drinks"
       ? ([

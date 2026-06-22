@@ -139,9 +139,7 @@ function RecentOrdersPanel() {
               href="#operations-orders-admin"
               key={id}
             >
-              <span className="font-mono text-[var(--sb-gold-soft)]">
-                {id}
-              </span>
+              <span className="font-mono text-[var(--sb-gold-soft)]">{id}</span>
               <span className="min-w-0">
                 <span className="block truncate text-white">{customer}</span>
                 <span className="mt-0.5 block truncate text-[11px] text-white/46">

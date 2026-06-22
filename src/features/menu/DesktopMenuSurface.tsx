@@ -35,10 +35,7 @@ import {
   DesktopMenuHero,
   DesktopMenuSection,
 } from "./DesktopMenuSurfaceSections";
-import {
-  chefSpecialItems,
-  desktopNigiriItems,
-} from "./tabletMenuData";
+import { chefSpecialItems, desktopNigiriItems } from "./tabletMenuData";
 import { TabletFilterSelect } from "./TabletMenuControls";
 
 export function DesktopMenuSurface({

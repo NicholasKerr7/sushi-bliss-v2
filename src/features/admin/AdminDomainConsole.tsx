@@ -102,9 +102,7 @@ export function AdminDomainConsole({
     rowsWithEdits.find((row) => row.id === selectedRecordId) ??
     initialRecord ??
     rowsWithEdits[0];
-  const editingRecord = rowsWithEdits.find(
-    (row) => row.id === editingRecordId,
-  );
+  const editingRecord = rowsWithEdits.find((row) => row.id === editingRecordId);
   const originalEditingRecord = activeSection.rows.find(
     (row) => row.id === editingRecordId,
   );

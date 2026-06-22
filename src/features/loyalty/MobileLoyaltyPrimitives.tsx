@@ -111,11 +111,7 @@ export function MobileLoyaltyIconCircle({
   );
 }
 
-export function MobileQrGrid({
-  memberCode,
-}: {
-  memberCode: string;
-}) {
+export function MobileQrGrid({ memberCode }: { memberCode: string }) {
   return (
     <MemberQrCode
       className="h-[112px] w-[112px] bg-black/58"

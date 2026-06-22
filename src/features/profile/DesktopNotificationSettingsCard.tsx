@@ -1,14 +1,15 @@
 import type { UserPreferences } from "@/types/user";
 
-import {
-  SettingsCard,
-  SwitchPill,
-} from "./DesktopProfileSettingsPrimitives";
+import { SettingsCard, SwitchPill } from "./DesktopProfileSettingsPrimitives";
 
 const notificationRows: Array<
   [keyof UserPreferences["notifications"], string, string]
 > = [
-  ["orderUpdates", "Order Confirmations", "Get notified about your order status"],
+  [
+    "orderUpdates",
+    "Order Confirmations",
+    "Get notified about your order status",
+  ],
   ["reservationReminders", "Reservations", "Reminders and booking updates"],
   ["offerAlerts", "Exclusive Offers", "Receive special offers"],
   ["rewardAlerts", "Loyalty Updates", "Points and rewards updates"],

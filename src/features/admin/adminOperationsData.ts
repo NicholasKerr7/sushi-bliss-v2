@@ -310,7 +310,8 @@ export const workspaceSections: WorkspaceSection[] = [
   },
   {
     accent: "Live log",
-    description: "Audit recent operations across orders, offers, and locations.",
+    description:
+      "Audit recent operations across orders, offers, and locations.",
     hash: "#activity-admin",
     iconUrl: "/assets/icons/gold-alert-icon.png",
     id: "activity",

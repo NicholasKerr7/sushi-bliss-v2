@@ -28,7 +28,8 @@ export function TabletOrderConfirmationDetails({
         ))}
       </StackedDetailCard>
       <StackedDetailCard icon={icons.cart} title="Payment method">
-        {order.paymentMethod.brand.toUpperCase()} •••• {order.paymentMethod.last4}
+        {order.paymentMethod.brand.toUpperCase()} ••••{" "}
+        {order.paymentMethod.last4}
       </StackedDetailCard>
       <StackedDetailCard
         actionHref="/loyalty"

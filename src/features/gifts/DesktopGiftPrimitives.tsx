@@ -221,7 +221,13 @@ export function ReviewRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function SummaryLine({ label, value }: { label: string; value: string }) {
+export function SummaryLine({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
   return (
     <div className="flex items-center justify-between px-4 py-3 text-[13px]">
       <span className="text-white/58">{label}</span>

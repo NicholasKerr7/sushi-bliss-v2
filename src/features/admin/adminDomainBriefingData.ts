@@ -23,7 +23,9 @@ export interface AdminDomainBriefing {
   title: string;
 }
 
-const adminDomainBriefings: Partial<Record<AdminWorkspaceId, AdminDomainBriefing>> = {
+const adminDomainBriefings: Partial<
+  Record<AdminWorkspaceId, AdminDomainBriefing>
+> = {
   analytics: {
     accent: "Weekly performance",
     actions: [

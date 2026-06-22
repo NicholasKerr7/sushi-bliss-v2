@@ -147,7 +147,8 @@ export const adminInsightSections: AdminInsightSection[] = [
   },
   {
     accent: "+12.4%",
-    description: "Performance indicators for revenue, demand, and satisfaction.",
+    description:
+      "Performance indicators for revenue, demand, and satisfaction.",
     iconUrl: "/assets/icons/gold-alert-icon.png",
     id: "analytics",
     records: adminAnalyticsSummary.map((item) => ({

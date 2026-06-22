@@ -173,7 +173,13 @@ function AdminFormReview({
                   : "border-white/10 bg-white/[0.03] text-white/46",
           )}
         >
-          {isQueued ? "Queued" : isSaved ? "Saved" : isDirty ? "Draft" : "Clean"}
+          {isQueued
+            ? "Queued"
+            : isSaved
+              ? "Saved"
+              : isDirty
+                ? "Draft"
+                : "Clean"}
         </span>
       </div>
 
