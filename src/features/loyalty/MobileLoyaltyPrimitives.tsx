@@ -7,6 +7,8 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
 
+import { MemberQrCode } from "./MemberQrCode";
+
 interface MobileLoyaltyHeaderProps {
   cartCount: number;
   onOpenCart: () => void;
@@ -110,27 +112,16 @@ export function MobileLoyaltyIconCircle({
 }
 
 export function MobileQrGrid({
-  cells,
-  label,
+  memberCode,
 }: {
-  cells: boolean[];
-  label: string;
+  memberCode: string;
 }) {
   return (
-    <div
-      aria-label={label}
-      className="grid h-[112px] w-[112px] shrink-0 grid-cols-7 gap-1 rounded-[14px] border border-[var(--sb-gold)]/34 bg-black/58 p-3"
-      role="img"
-    >
-      {cells.map((active, index) => (
-        <span
-          className={classNames(
-            "rounded-[2px]",
-            active ? "bg-[var(--sb-gold-soft)]" : "bg-white/10",
-          )}
-          key={`${label}-${index}`}
-        />
-      ))}
-    </div>
+    <MemberQrCode
+      className="h-[112px] w-[112px] bg-black/58"
+      memberCode={memberCode}
+      priority
+      sizes="112px"
+    />
   );
 }

@@ -2,7 +2,6 @@
 
 import type { LoyaltyAccount } from "@/types/loyalty";
 
-import { getQrCells } from "./MemberPass";
 import {
   MobileLoyaltyIconCircle,
   MobileLoyaltyPanel,
@@ -18,8 +17,6 @@ export function MobileLoyaltyPassView({
   account,
   tierLabel,
 }: MobileLoyaltyPassViewProps) {
-  const qrCells = getQrCells(account.memberCode);
-
   return (
     <div className="grid gap-4">
       <MobileLoyaltyPanel className="p-4">
@@ -35,10 +32,7 @@ export function MobileLoyaltyPassView({
               {account.memberCode}
             </p>
           </div>
-          <MobileQrGrid
-            cells={qrCells}
-            label={`Mock QR code for ${account.memberCode}`}
-          />
+          <MobileQrGrid memberCode={account.memberCode} />
         </div>
         <p className="mt-5 text-[14px] leading-6 text-white/58">
           Present this pass for dine-in rewards, concierge notes, and referral

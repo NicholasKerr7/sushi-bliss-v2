@@ -3,7 +3,7 @@
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { classNames } from "@/lib/classNames";
 
-import { getQrCells } from "./MemberPass";
+import { MemberQrCode } from "./MemberQrCode";
 
 interface TabletLoyaltyMemberSummaryProps {
   lifetimePoints: number;
@@ -63,21 +63,12 @@ export function TabletLoyaltyMemberSummary({
           </p>
         </div>
       </div>
-      <div
-        aria-label={`Mock QR code for ${memberCode}`}
-        className="grid h-[100px] w-[100px] shrink-0 grid-cols-7 gap-1 rounded-[14px] border border-[var(--sb-gold)]/34 bg-black/42 p-3 min-[1080px]:h-[126px] min-[1080px]:w-[126px]"
-        role="img"
-      >
-        {getQrCells(memberCode).map((active, index) => (
-          <span
-            className={classNames(
-              "rounded-[2px]",
-              active ? "bg-[var(--sb-gold-soft)]" : "bg-white/10",
-            )}
-            key={`${memberCode}-tablet-${index}`}
-          />
-        ))}
-      </div>
+      <MemberQrCode
+        className="h-[100px] w-[100px] min-[1080px]:h-[126px] min-[1080px]:w-[126px]"
+        memberCode={memberCode}
+        priority
+        sizes="(min-width: 1080px) 126px, 100px"
+      />
     </article>
   );
 }

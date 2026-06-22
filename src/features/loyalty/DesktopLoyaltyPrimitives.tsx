@@ -14,7 +14,7 @@ import type {
   Reward,
 } from "@/types/loyalty";
 
-import { getQrCells } from "./MemberPass";
+import { MemberQrCode } from "./MemberQrCode";
 
 export const desktopLoyaltyHeroImage =
   "/assets/menu/sushi/deluxe-toro-caviar-nigiri.webp";
@@ -104,24 +104,15 @@ export function DesktopMemberQr({
   large?: boolean;
 }) {
   return (
-    <div
-      aria-label={`Mock QR code for ${account.memberCode}`}
+    <MemberQrCode
       className={classNames(
-        "grid shrink-0 grid-cols-7 gap-1 rounded-[8px] border border-white/18 bg-white p-3 shadow-[0_0_24px_rgba(255,255,255,0.18)]",
+        "rounded-[8px] border-white/18 bg-black/36 shadow-[0_0_24px_rgba(255,255,255,0.18)]",
         large ? "h-[152px] w-[152px]" : "h-[118px] w-[118px]",
       )}
-      role="img"
-    >
-      {getQrCells(account.memberCode).map((active, index) => (
-        <span
-          className={classNames(
-            "rounded-[2px]",
-            active ? "bg-black" : "bg-white",
-          )}
-          key={`${account.memberCode}-${index}`}
-        />
-      ))}
-    </div>
+      memberCode={account.memberCode}
+      priority={large}
+      sizes={large ? "152px" : "118px"}
+    />
   );
 }
 

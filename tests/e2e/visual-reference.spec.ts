@@ -562,7 +562,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       const loyaltySection = page.locator("#loyalty");
 
       await expect(loyaltySection.getByText("Member pass")).toBeVisible();
-      await expect(loyaltySection.getByLabel(/Mock QR code/i)).toBeVisible();
+      await expect(loyaltySection.getByLabel(/QR code for/i)).toBeVisible();
     },
   },
   {
