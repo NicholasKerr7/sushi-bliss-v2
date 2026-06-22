@@ -103,7 +103,7 @@ export function TabletAboutSection() {
         <section className="relative h-[470px] overflow-hidden border-b border-white/[0.06]">
           <Image
             alt="Otoro nigiri presented on a dark luxury surface"
-            className="translate-x-[18%] scale-[1.08] object-cover object-center opacity-90"
+            className="object-cover object-[72%_50%] opacity-90"
             fill
             loading="eager"
             priority

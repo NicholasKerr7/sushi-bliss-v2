@@ -117,19 +117,15 @@ export function TabletReferralShareButton({
 function ShareGlyph({ icon }: { icon: TabletReferralShareIcon }) {
   if (icon === "email") {
     return (
-      <AssetIcon
-        className="brightness-0 invert"
-        size={25}
-        src="/assets/icons/email-icon.png"
-      />
+      <AssetIcon loading="eager" size={28} src="/assets/icons/email-icon.png" />
     );
   }
 
   if (icon === "facebook") {
     return (
       <AssetIcon
-        className="brightness-0 invert"
-        size={25}
+        loading="eager"
+        size={28}
         src="/assets/icons/facebook-icon.png"
       />
     );

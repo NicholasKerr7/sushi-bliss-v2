@@ -154,14 +154,14 @@ export function TabletOfferDetailView({
         <section className="relative h-[396px] overflow-hidden">
           <Image
             alt="Sakura Omakase Experience"
-            className="translate-x-[21%] scale-[1.16] object-cover object-center"
+            className="object-cover object-[72%_50%]"
             fill
             loading="eager"
             priority
             sizes="1034px"
             src={heroImage}
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1),rgba(5,6,7,0.85)_34%,rgba(5,6,7,0.12)_70%,rgba(5,6,7,0.7)),linear-gradient(180deg,rgba(5,6,7,0.05),rgba(5,6,7,0.28)_54%,rgba(5,6,7,0.97))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1),rgba(5,6,7,0.94)_44%,rgba(5,6,7,0.28)_72%,rgba(5,6,7,0.74)),linear-gradient(180deg,rgba(5,6,7,0.08),rgba(5,6,7,0.34)_54%,rgba(5,6,7,0.97))]" />
           <div className="relative z-10 flex h-full max-w-[540px] flex-col justify-center px-10 pb-7 pt-4">
             <span className="inline-flex w-fit items-center gap-3 rounded-[5px] border border-[var(--sb-gold)]/34 bg-black/24 px-5 py-3 text-[15px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
               <AssetIcon size={20} src="/assets/icons/lotus-crown-icon.png" />

@@ -107,7 +107,7 @@ export function TabletOffersDashboard() {
         <section className="relative min-h-[248px] overflow-hidden bg-black/20">
           <Image
             alt=""
-            className="translate-x-[28%] scale-[1.05] object-cover object-center opacity-92"
+            className="object-cover object-[72%_50%] opacity-92"
             fill
             loading="eager"
             priority
@@ -115,7 +115,7 @@ export function TabletOffersDashboard() {
             src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
             unoptimized
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1),rgba(5,6,7,0.84)_34%,rgba(5,6,7,0.18)_67%,rgba(5,6,7,0.66)),linear-gradient(180deg,rgba(5,6,7,0.15),rgba(5,6,7,0.96))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1),rgba(5,6,7,0.96)_46%,rgba(5,6,7,0.38)_72%,rgba(5,6,7,0.74)),linear-gradient(180deg,rgba(5,6,7,0.2),rgba(5,6,7,0.96))]" />
           <div className="relative z-10 flex min-h-[248px] flex-col justify-center px-8">
             <h1 className="editorial-title text-[62px] leading-[0.94] text-white">
               Promotions

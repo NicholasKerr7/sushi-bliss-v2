@@ -64,7 +64,7 @@ export function TabletNotificationDetailView({
         <section className="relative min-h-[420px] overflow-hidden border-b border-white/12">
           <Image
             alt=""
-            className="translate-x-[9%] scale-[1.18] object-cover object-center"
+            className="object-cover object-[70%_50%]"
             fill
             loading="eager"
             priority

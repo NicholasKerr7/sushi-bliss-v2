@@ -31,12 +31,12 @@ const referralSteps = [
   [
     "Invite friends",
     "Share your unique code or link with friends and family.",
-    "/assets/icons/user-icon.png",
+    "/assets/icons/star-icon.png",
   ],
   [
     "They join & dine",
     "Your friends sign up and place their first order.",
-    "/assets/icons/dining-setting-icon.png",
+    "/assets/icons/chef-crest-icon.png",
   ],
   [
     "You earn rewards",
@@ -65,9 +65,9 @@ const loveCards = [
 
 const shareActions = [
   ["Messages", "sms", "bg-[#23b33a]", "chat"],
-  ["Email", "email", "bg-[#176bb5]", "email"],
+  ["Email", "email", "bg-black/42", "email"],
   ["WhatsApp", "whatsapp", "bg-[#25c73f]", "chat"],
-  ["Facebook", "facebook", "bg-[#3264b7]", "facebook"],
+  ["Facebook", "facebook", "bg-black/42", "facebook"],
   ["More", "more", "bg-black/34", "more"],
 ] as const satisfies ReadonlyArray<
   readonly [string, TabletReferralShareAction, string, TabletReferralShareIcon]
@@ -100,18 +100,18 @@ export function TabletReferralEarnView({
         unreadCount={unreadCount}
       />
 
-      <main className="mx-auto w-full max-w-[1012px] pb-[96px]">
+      <main className="mx-auto w-full max-w-[1012px] px-5 pb-[96px] min-[900px]:px-0">
         <section className="relative h-[226px] overflow-hidden">
           <Image
             alt=""
-            className="translate-x-[18%] scale-[1.1] object-cover object-center opacity-86"
+            className="object-cover object-[72%_50%] opacity-86"
             fill
             loading="eager"
             priority
             sizes="1012px"
             src="/assets/editorial/hero-otoro-nigiri-no-red-moon.webp"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1)_0%,rgba(5,6,7,0.91)_40%,rgba(5,6,7,0.18)_78%,rgba(5,6,7,0.58)),linear-gradient(180deg,rgba(5,6,7,0.06),rgba(5,6,7,0.96))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,1)_0%,rgba(5,6,7,0.94)_46%,rgba(5,6,7,0.24)_80%,rgba(5,6,7,0.62)),linear-gradient(180deg,rgba(5,6,7,0.06),rgba(5,6,7,0.96))]" />
           <div className="relative z-10 flex h-full flex-col justify-center">
             <button
               className="mb-5 w-fit text-[13px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sb-gold"
@@ -295,7 +295,7 @@ export function TabletReferralEarnView({
                 key={title}
               >
                 <span className="grid h-[64px] w-[64px] place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/20">
-                  <AssetIcon size={34} src={icon} />
+                  <AssetIcon loading="eager" size={34} src={icon} />
                 </span>
                 <span>
                   <span className="block text-[13px] font-semibold uppercase tracking-[0.08em] text-white">
