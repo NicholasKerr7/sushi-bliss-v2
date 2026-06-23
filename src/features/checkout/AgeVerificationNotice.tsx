@@ -42,17 +42,17 @@ export function AgeVerificationNotice({
   return (
     <section
       className={classNames(
-        "rounded-[15px] border bg-[linear-gradient(180deg,rgba(15,16,15,0.92),rgba(5,6,7,0.96))] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.28)]",
+        "rounded-[15px] border bg-[linear-gradient(180deg,rgba(15,16,15,0.92),rgba(5,6,7,0.96))] p-3 shadow-[0_18px_48px_rgba(0,0,0,0.28)] min-[390px]:p-4",
         blocked
           ? "border-[var(--sb-red-bright)]/45"
           : "border-[var(--sb-gold)]/34",
         className,
       )}
     >
-      <div className="grid grid-cols-[42px_1fr] gap-3">
+      <div className="grid grid-cols-[38px_minmax(0,1fr)] gap-3 min-[390px]:grid-cols-[42px_1fr]">
         <span
           className={classNames(
-            "grid h-[42px] w-[42px] place-items-center rounded-full border bg-black/38",
+            "grid h-[38px] w-[38px] place-items-center rounded-full border bg-black/38 min-[390px]:h-[42px] min-[390px]:w-[42px]",
             blocked
               ? "border-[var(--sb-red-bright)]/48 shadow-[0_0_22px_rgba(239,47,37,0.24)]"
               : "border-[var(--sb-gold)]/38 shadow-[0_0_22px_rgba(215,168,79,0.16)]",
@@ -70,7 +70,7 @@ export function AgeVerificationNotice({
 
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-[13px] font-semibold uppercase tracking-[0.12em] text-white">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white min-[390px]:text-[13px] min-[390px]:tracking-[0.12em]">
               {blocked ? "Restaurant-only drinks" : "Age verification"}
             </h2>
             <span
@@ -85,25 +85,25 @@ export function AgeVerificationNotice({
             </span>
           </div>
 
-          <p className="mt-2 text-[13px] leading-5 text-white/66">
+          <p className="mt-2 text-[12px] leading-5 text-white/66 min-[390px]:text-[13px]">
             {blocked
               ? "Alcohol pairings stay in the dining room until online compliance and fulfillment are enabled."
               : "Regulated drinks require a recipient who is 21+ and can present valid ID at handoff."}
           </p>
-          <p className="mt-2 text-[12px] leading-5 text-[var(--sb-gold-soft)]">
+          <p className="mt-2 break-words text-[11px] leading-5 text-[var(--sb-gold-soft)] min-[390px]:text-[12px]">
             {formatItemNames(gatedItems)}
           </p>
 
           {blocked ? (
             <div className="mt-4 grid grid-cols-2 gap-2">
               <Link
-                className="red-glow-button grid min-h-11 place-items-center rounded-[11px] px-3 text-center text-[11px] uppercase tracking-[0.08em]"
+                className="red-glow-button grid min-h-11 place-items-center rounded-[11px] px-2 text-center text-[10px] uppercase tracking-[0.06em] min-[390px]:px-3 min-[390px]:text-[11px] min-[390px]:tracking-[0.08em]"
                 href={liquidOmakaseReservationHref}
               >
                 Reserve Pairing
               </Link>
               <Link
-                className="grid min-h-11 place-items-center rounded-[11px] border border-[var(--sb-gold)]/30 bg-black/24 px-3 text-center text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+                className="grid min-h-11 place-items-center rounded-[11px] border border-[var(--sb-gold)]/30 bg-black/24 px-2 text-center text-[10px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:px-3 min-[390px]:text-[11px] min-[390px]:tracking-[0.08em]"
                 href={drinksMenuHref}
               >
                 View Drinks

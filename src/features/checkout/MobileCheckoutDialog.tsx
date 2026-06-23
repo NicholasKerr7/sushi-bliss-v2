@@ -116,7 +116,7 @@ export function MobileCheckoutDialog({
       tabIndex={-1}
     >
       <div
-        className="relative h-dvh overflow-y-auto px-5 pb-8 pt-6"
+        className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto px-4 pb-[calc(2rem+var(--sb-safe-bottom))] pt-5 min-[390px]:px-5 min-[390px]:pt-6"
         ref={scrollRef}
       >
         <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(180deg,#030303_0%,#090908_42%,#020202_100%)]" />

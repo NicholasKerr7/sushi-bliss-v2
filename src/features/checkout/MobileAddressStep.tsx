@@ -58,11 +58,13 @@ export function AddressStep({
           ) : null}
 
           <button
-            className="mt-4 flex min-h-[62px] w-full items-center justify-center gap-4 rounded-[15px] border border-[var(--sb-border-strong)] bg-white/[0.025] text-[15px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]"
+            className="mt-4 flex min-h-[56px] w-full items-center justify-center gap-3 rounded-[15px] border border-[var(--sb-border-strong)] bg-white/[0.025] text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[390px]:min-h-[62px] min-[390px]:gap-4 min-[390px]:text-[15px] min-[390px]:tracking-[0.12em]"
             onClick={checkout.startNewAddress}
             type="button"
           >
-            <span className="text-[30px] leading-none">+</span>
+            <span className="text-[24px] leading-none min-[390px]:text-[30px]">
+              +
+            </span>
             Add new address
           </button>
 
@@ -77,7 +79,7 @@ export function AddressStep({
         <label className="mt-3 block rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] p-4">
           <span className="sr-only">Delivery instructions</span>
           <textarea
-            className="min-h-[108px] w-full resize-none bg-transparent text-[16px] leading-6 text-white outline-none placeholder:text-white/40"
+            className="min-h-[104px] w-full resize-none bg-transparent text-[14px] leading-6 text-white outline-none placeholder:text-white/40 min-[390px]:min-h-[108px] min-[390px]:text-[16px]"
             maxLength={120}
             onChange={(event) => onInstructionsChange(event.target.value)}
             placeholder="e.g., Leave at the door, call upon arrival, etc."
@@ -93,7 +95,7 @@ export function AddressStep({
         <section className="mt-7">
           <div className="flex items-center justify-between gap-4">
             <SectionTitle>Saved addresses</SectionTitle>
-            <span className="text-[14px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
+            <span className="text-[11px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] min-[390px]:text-[14px] min-[390px]:tracking-[0.1em]">
               View all
             </span>
           </div>
@@ -119,7 +121,7 @@ export function AddressStep({
 
       <SecureInlineCopy>All addresses are securely saved</SecureInlineCopy>
       <button
-        className="red-glow-button mt-7 min-h-[66px] w-full rounded-[14px] text-[17px]"
+        className="red-glow-button mt-6 min-h-[58px] w-full rounded-[14px] text-[14px] uppercase tracking-[0.07em] min-[390px]:mt-7 min-[390px]:min-h-[66px] min-[390px]:text-[17px]"
         onClick={onContinue}
         type="button"
       >
@@ -132,7 +134,7 @@ export function AddressStep({
 function MobileAddressForm({ checkout }: { checkout: MobileCheckoutState }) {
   return (
     <section className="mt-4 rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] p-4">
-      <h2 className="text-[15px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
+      <h2 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[390px]:text-[15px] min-[390px]:tracking-[0.1em]">
         Add address
       </h2>
       <div className="mt-4 grid gap-3">
@@ -176,16 +178,16 @@ function MobileAddressForm({ checkout }: { checkout: MobileCheckoutState }) {
           {checkout.validation.address}
         </p>
       ) : null}
-      <div className="mt-4 grid grid-cols-2 gap-3">
+      <div className="mt-4 grid grid-cols-2 gap-2.5 min-[390px]:gap-3">
         <button
-          className="h-11 rounded-[12px] border border-[var(--sb-gold)]/45 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+          className="h-11 rounded-[12px] border border-[var(--sb-gold)]/45 text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]"
           onClick={() => checkout.saveAddressDraft()}
           type="button"
         >
           Save
         </button>
         <button
-          className="h-11 rounded-[12px] border border-white/12 text-[13px] uppercase tracking-[0.08em] text-white/64"
+          className="h-11 rounded-[12px] border border-white/12 text-[12px] uppercase tracking-[0.06em] text-white/64 min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]"
           onClick={checkout.cancelAddressForm}
           type="button"
         >

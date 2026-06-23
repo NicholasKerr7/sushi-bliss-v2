@@ -12,15 +12,15 @@ export function StepHeading({
   return (
     <header>
       {eyebrow ? (
-        <p className="editorial-title text-[25px] text-[var(--sb-gold-soft)]">
+        <p className="editorial-title text-[20px] text-[var(--sb-gold-soft)] min-[390px]:text-[25px]">
           {eyebrow}
         </p>
       ) : null}
-      <h1 className="editorial-title mt-5 text-[36px] leading-none min-[390px]:text-[42px]">
+      <h1 className="editorial-title mt-4 text-[30px] leading-none min-[390px]:mt-5 min-[390px]:text-[42px]">
         {title}
       </h1>
       {subtitle ? (
-        <p className="mt-3 text-[17px] leading-6 text-[var(--sb-gold-soft)]">
+        <p className="mt-3 text-[14px] leading-6 text-[var(--sb-gold-soft)] min-[390px]:text-[17px]">
           {subtitle}
         </p>
       ) : null}
@@ -31,7 +31,7 @@ export function StepHeading({
 export function MobileBackButton({ onBack }: { onBack: () => void }) {
   return (
     <button
-      className="mb-5 rounded-full border border-[var(--sb-border)] bg-white/[0.025] px-4 py-2 text-[12px] uppercase tracking-[0.1em] text-white/66"
+      className="mb-4 rounded-full border border-[var(--sb-border)] bg-white/[0.025] px-3.5 py-2 text-[11px] uppercase tracking-[0.08em] text-white/66 min-[390px]:mb-5 min-[390px]:px-4 min-[390px]:text-[12px] min-[390px]:tracking-[0.1em]"
       onClick={onBack}
       type="button"
     >
@@ -42,7 +42,7 @@ export function MobileBackButton({ onBack }: { onBack: () => void }) {
 
 export function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="editorial-title text-[20px] text-[var(--sb-gold-soft)]">
+    <h2 className="editorial-title text-[18px] text-[var(--sb-gold-soft)] min-[390px]:text-[20px]">
       {children}
     </h2>
   );
@@ -50,7 +50,7 @@ export function SectionTitle({ children }: { children: ReactNode }) {
 
 export function SecureInlineCopy({ children }: { children: ReactNode }) {
   return (
-    <p className="mt-5 flex items-center justify-center gap-3 text-center text-[14px] text-white/48">
+    <p className="mt-5 flex items-center justify-center gap-2.5 text-center text-[12px] leading-5 text-white/48 min-[390px]:gap-3 min-[390px]:text-[14px]">
       <LockGlyph />
       {children}
     </p>
@@ -59,7 +59,7 @@ export function SecureInlineCopy({ children }: { children: ReactNode }) {
 
 export function SecureCheckoutNote() {
   return (
-    <p className="mt-5 flex items-center justify-center gap-3 text-center text-[14px] text-white/48">
+    <p className="mt-5 flex items-center justify-center gap-2.5 text-center text-[12px] leading-5 text-white/48 min-[390px]:gap-3 min-[390px]:text-[14px]">
       <LockGlyph />
       Secure checkout · Your information is always protected.
     </p>

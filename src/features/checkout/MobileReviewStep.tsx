@@ -128,17 +128,17 @@ export function ReviewStep({
 
       {instructions ? (
         <div className="mt-4 rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] p-4">
-          <p className="text-[13px] uppercase tracking-[0.13em] text-[var(--sb-gold-soft)]">
+          <p className="text-[12px] uppercase tracking-[0.09em] text-[var(--sb-gold-soft)] min-[390px]:text-[13px] min-[390px]:tracking-[0.13em]">
             Delivery notes
           </p>
-          <p className="mt-2 text-[15px] leading-6 text-white/66">
+          <p className="mt-2 break-words text-[14px] leading-6 text-white/66 min-[390px]:text-[15px]">
             {instructions}
           </p>
         </div>
       ) : null}
 
       <button
-        className="red-glow-button mt-5 min-h-[66px] w-full rounded-[14px] text-[16px]"
+        className="red-glow-button mt-5 min-h-[58px] w-full rounded-[14px] px-3 text-[13px] uppercase tracking-[0.06em] min-[390px]:min-h-[66px] min-[390px]:text-[16px]"
         disabled={items.length === 0}
         onClick={onPlaceOrder}
         type="button"
