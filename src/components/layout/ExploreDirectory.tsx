@@ -106,7 +106,7 @@ function MobileExploreTile({ item }: { item: ExploreNavigationItem }) {
 
   return (
     <Link
-      aria-label={`${item.label}: ${item.description}`}
+      aria-label={`${item.label} ${item.description}`}
       className={classNames(
         "group relative grid min-h-[92px] min-w-0 place-items-center gap-1.5 overflow-hidden rounded-[14px] border px-1.5 py-2 text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[390px]:min-h-[98px] min-[390px]:rounded-[16px]",
         isRed
