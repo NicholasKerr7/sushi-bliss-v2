@@ -138,7 +138,7 @@ function MenuExplorerContent({
         />
       ) : null}
       <CartDrawer onOpenChange={setCartOpen} open={cartOpen} />
-      {selectedItem ? (
+      {responsiveReady && mode !== "desktop" && selectedItem ? (
         <ItemDetailDrawer
           item={selectedItem}
           key={selectedItem.id}

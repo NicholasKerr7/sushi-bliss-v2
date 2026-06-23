@@ -1,12 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
 
-import { Button } from "@/components/ui/Button";
-import { Drawer } from "@/components/ui/Drawer";
-import { QuantityControl } from "@/components/ui/QuantityControl";
-import { StatusBadge } from "@/components/ui/StatusBadge";
 import { useCart } from "@/hooks/useCart";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useResponsiveMode } from "@/hooks/useResponsiveMode";
@@ -17,15 +12,8 @@ import {
   getAvailableSidePairings,
   getDefaultCustomizationsForItem,
 } from "@/lib/cart";
-import {
-  getMenuItemOrderAction,
-  isMenuItemOnlineOrderable,
-} from "@/lib/menuAvailability";
-import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
-import { ItemAddOnSelector } from "./ItemAddOnSelector";
-import { ItemCustomizationControls } from "./ItemCustomizationControls";
 import { MobileItemDetailDialog } from "./MobileItemDetailDialog";
 import { TabletItemDetailDialog } from "./TabletItemDetailDialog";
 
@@ -50,8 +38,6 @@ export function ItemDetailDrawer({
   const { addItem, itemCount: cartItemCount } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
   const isDrinkItem = item.itemType === "drink";
-  const orderAction = getMenuItemOrderAction(item);
-  const isOnlineOrderable = isMenuItemOnlineOrderable(item);
   const availableAddOns = useMemo(() => getAvailableAddOns(item), [item]);
   const availableSidePairings = useMemo(() => getAvailableSidePairings(), []);
   const [quantity, setQuantity] = useState(1);
@@ -141,164 +127,34 @@ export function ItemDetailDrawer({
     );
   }
 
-  if (mode === "tablet") {
-    return (
-      <TabletItemDetailDialog
-        availableAddOns={availableAddOns}
-        availableSidePairings={availableSidePairings}
-        cartItemCount={cartItemCount}
-        customizations={customizations}
-        isFavorite={isFavorite(item.id)}
-        item={item}
-        notes={notes}
-        open={open}
-        quantity={quantity}
-        selectedAddOnIds={selectedAddOnIds}
-        totalCents={totalCents}
-        unitPriceCents={unitPriceCents}
-        onAddOnToggle={handleAddOnToggle}
-        onAddRelatedItem={handleAddRelatedItem}
-        onAddToCart={handleAddToCart}
-        onClose={() => onOpenChange(false)}
-        onCustomizationChange={handleCustomizationChange}
-        onNotesChange={setNotes}
-        onOpenCart={() => onOpenCart?.()}
-        onQuantityChange={setQuantity}
-        onSearchQueryChange={onSearchQueryChange}
-        onToggleFavorite={() => toggleFavorite(item.id)}
-      />
-    );
+  if (mode === "desktop") {
+    return null;
   }
 
   return (
-    <Drawer
-      className="md:max-w-2xl"
-      description={`${item.categoryLabel} · ${formatMoney(item.priceCents)}`}
-      labelledById={`item-detail-${item.id}`}
-      onOpenChange={onOpenChange}
+    <TabletItemDetailDialog
+      availableAddOns={availableAddOns}
+      availableSidePairings={availableSidePairings}
+      cartItemCount={cartItemCount}
+      customizations={customizations}
+      isFavorite={isFavorite(item.id)}
+      item={item}
+      notes={notes}
       open={open}
-      side="right"
-      title={item.name}
-      footer={
-        <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase text-sb-dim">
-              {isOnlineOrderable ? "Current item total" : orderAction.badge}
-            </p>
-            <p className="font-mono text-xl font-semibold text-sb-gold-soft">
-              {isOnlineOrderable ? formatMoney(totalCents) : item.serving}
-            </p>
-          </div>
-          {isOnlineOrderable ? (
-            <Button onClick={handleAddToCart}>
-              {orderAction.label} - {formatMoney(totalCents)}
-            </Button>
-          ) : (
-            <Button href={orderAction.href || "/reservations"}>
-              {orderAction.label}
-            </Button>
-          )}
-        </div>
-      }
-    >
-      <div className="space-y-6">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-sb-panel-soft">
-          <Image
-            alt={item.image.alt || item.name}
-            className="object-cover"
-            fetchPriority="high"
-            fill
-            loading="eager"
-            priority
-            sizes="(min-width: 768px) 42rem, 100vw"
-            src={item.image.publicUrl}
-          />
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-start">
-          <div>
-            <StatusBadge
-              tone={item.tags.includes("premium") ? "premium" : "neutral"}
-            >
-              {item.categoryLabel}
-            </StatusBadge>
-            <p className="mt-3 text-sm leading-6 text-sb-muted">
-              {item.description}
-            </p>
-            <p className="mt-3 text-sm leading-6 text-sb-rice">
-              {item.chefNote}
-            </p>
-          </div>
-          {isOnlineOrderable ? (
-            <QuantityControl
-              max={12}
-              min={1}
-              onChange={setQuantity}
-              value={quantity}
-            />
-          ) : null}
-        </div>
-
-        <section>
-          <h3 className="text-sm font-semibold text-sb-rice">Ingredients</h3>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {item.ingredients.map((ingredient) => (
-              <span
-                className="rounded-control border border-sb-line bg-sb-rice/5 px-3 py-1 text-xs font-medium text-sb-muted"
-                key={ingredient}
-              >
-                {ingredient}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        {item.sakePairing || isDrinkItem ? (
-          <section className="rounded-card border border-sb-gold/30 bg-sb-gold/10 p-4">
-            <h3 className="text-sm font-semibold text-sb-gold-soft">
-              {isDrinkItem ? "Pairing note" : "Sake pairing"}
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-sb-muted">
-              {item.sakePairing
-                ? `${item.sakePairing.sakeName} is recommended with ${item.name}.`
-                : orderAction.note}
-            </p>
-          </section>
-        ) : null}
-
-        {isDrinkItem ? null : (
-          <ItemCustomizationControls
-            customizations={customizations}
-            itemId={item.id}
-            onCustomizationChange={handleCustomizationChange}
-          />
-        )}
-
-        {isDrinkItem ? null : (
-          <ItemAddOnSelector
-            addOns={availableAddOns}
-            onAddOnToggle={handleAddOnToggle}
-            selectedAddOnIds={selectedAddOnIds}
-          />
-        )}
-
-        <section>
-          <label
-            className="block text-sm font-semibold text-sb-rice"
-            htmlFor={`item-notes-${item.id}`}
-          >
-            Notes
-          </label>
-          <textarea
-            className="mt-2 min-h-24 w-full resize-y rounded-card border border-sb-line bg-sb-ink/70 px-4 py-3 text-sm text-sb-rice outline-none transition placeholder:text-sb-dim focus:border-sb-gold/70 focus:ring-2 focus:ring-sb-gold/25"
-            id={`item-notes-${item.id}`}
-            maxLength={180}
-            onChange={(event) => setNotes(event.target.value)}
-            placeholder="Allergy notes or plating preference"
-            value={notes}
-          />
-        </section>
-      </div>
-    </Drawer>
+      quantity={quantity}
+      selectedAddOnIds={selectedAddOnIds}
+      totalCents={totalCents}
+      unitPriceCents={unitPriceCents}
+      onAddOnToggle={handleAddOnToggle}
+      onAddRelatedItem={handleAddRelatedItem}
+      onAddToCart={handleAddToCart}
+      onClose={() => onOpenChange(false)}
+      onCustomizationChange={handleCustomizationChange}
+      onNotesChange={setNotes}
+      onOpenCart={() => onOpenCart?.()}
+      onQuantityChange={setQuantity}
+      onSearchQueryChange={onSearchQueryChange}
+      onToggleFavorite={() => toggleFavorite(item.id)}
+    />
   );
 }
