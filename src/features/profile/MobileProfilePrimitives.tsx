@@ -109,10 +109,12 @@ export function MobileProfilePanel({
 export function MobileProfileIconCircle({
   className,
   icon,
+  mark,
   size = 28,
 }: {
   className?: string;
   icon?: string;
+  mark?: string;
   size?: number;
 }) {
   return (
@@ -122,7 +124,24 @@ export function MobileProfileIconCircle({
         className,
       )}
     >
-      <AssetIcon size={size} src={icon} />
+      {mark ? (
+        <>
+          <AssetIcon
+            className="absolute opacity-20 brightness-125 contrast-125 saturate-150"
+            size={size + 8}
+            src={icon}
+          />
+          <span className="relative z-10 font-mono text-[11px] font-black uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] drop-shadow-[0_1px_1px_rgba(0,0,0,0.9)]">
+            {mark}
+          </span>
+        </>
+      ) : (
+        <AssetIcon
+          className="brightness-125 contrast-125 saturate-150"
+          size={size}
+          src={icon}
+        />
+      )}
     </span>
   );
 }

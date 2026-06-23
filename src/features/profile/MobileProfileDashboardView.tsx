@@ -51,6 +51,14 @@ const quickActions = [
   { href: "/gifts", icon: "/assets/icons/gift-icon.png", label: "Gifts" },
 ] as const;
 
+const profilePreviewMarks: Record<string, string> = {
+  "Account information": "ID",
+  "Payment methods": "PM",
+  "Preferences & security": "PS",
+  "Saved addresses": "AD",
+  "Upcoming reservation": "RS",
+};
+
 /** Mobile member dashboard modeled after the account reference cards. */
 export function MobileProfileDashboardView({
   account,
@@ -327,7 +335,12 @@ function ProfilePreviewHeader({
   const content = (
     <>
       <span className="flex min-w-0 items-center gap-3">
-        <MobileProfileIconCircle className="h-11 w-11" icon={icon} size={23} />
+        <MobileProfileIconCircle
+          className="h-11 w-11"
+          icon={icon}
+          mark={getProfilePreviewMark(label)}
+          size={23}
+        />
         <span className="text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
           {label}
         </span>
@@ -357,6 +370,22 @@ function ProfilePreviewHeader({
       {content}
     </button>
   );
+}
+
+function getProfilePreviewMark(label: string) {
+  const mappedMark = profilePreviewMarks[label];
+
+  if (mappedMark) {
+    return mappedMark;
+  }
+
+  const [firstWord = "", secondWord] = label.match(/[A-Za-z0-9]+/g) ?? [];
+
+  if (!secondWord) {
+    return firstWord.slice(0, 2).toUpperCase();
+  }
+
+  return `${firstWord[0]}${secondWord[0]}`.toUpperCase();
 }
 
 function getProgressWidthClass(progress: number) {
