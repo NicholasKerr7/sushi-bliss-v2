@@ -191,10 +191,12 @@ export function ReservationsDashboard() {
       <>
         <DesktopReservationsDashboard
           cartCount={itemCount}
+          confirmedReservation={confirmedReservation}
           draft={draft}
           editingReservation={editingReservation}
           initialBookingOpen={reservationIntentActive}
           onCancelReservation={cancelReservation}
+          onConfirmedReservationChange={setConfirmedReservation}
           onDraftChange={updateDraft}
           onModifyReservation={handleModify}
           onResetForm={resetForm}

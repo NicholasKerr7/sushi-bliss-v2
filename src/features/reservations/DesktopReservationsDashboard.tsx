@@ -16,6 +16,7 @@ import type {
 } from "@/types/reservation";
 
 import { DesktopCancelReservationModal } from "./DesktopCancelReservationModal";
+import { DesktopReservationConfirmationView } from "./DesktopReservationConfirmationView";
 import { DesktopExperienceChooser } from "./DesktopReservationExperience";
 import { DesktopReservationHistory } from "./DesktopReservationHistory";
 import { DesktopReservationMain } from "./DesktopReservationMain";
@@ -23,6 +24,7 @@ import { DesktopReservationModify } from "./DesktopReservationModify";
 import { DesktopReservationReview } from "./DesktopReservationReview";
 
 type DesktopReservationSurface =
+  | "confirmation"
   | "experience"
   | "history"
   | "main"
@@ -32,10 +34,12 @@ type ReservationView = "upcoming" | "past";
 
 interface DesktopReservationsDashboardProps {
   cartCount: number;
+  confirmedReservation: Reservation | null;
   draft: ReservationDraft;
   editingReservation: Reservation | null;
   initialBookingOpen?: boolean;
   onCancelReservation: (reservationId: string) => void;
+  onConfirmedReservationChange: (reservation: Reservation | null) => void;
   onDraftChange: <TField extends keyof ReservationDraft>(
     field: TField,
     value: ReservationDraft[TField],
@@ -52,10 +56,12 @@ interface DesktopReservationsDashboardProps {
 
 export function DesktopReservationsDashboard({
   cartCount,
+  confirmedReservation,
   draft,
   editingReservation,
   initialBookingOpen = false,
   onCancelReservation,
+  onConfirmedReservationChange,
   onDraftChange,
   onModifyReservation,
   onResetForm,
@@ -87,11 +93,12 @@ export function DesktopReservationsDashboard({
   const confirmReservation = () => {
     if (onSubmit()) {
       onViewChange("upcoming");
-      setSurface("history");
+      setSurface("confirmation");
     }
   };
 
   const openHistory = () => {
+    onConfirmedReservationChange(null);
     onViewChange("upcoming");
     setSurface("history");
   };
@@ -127,6 +134,16 @@ export function DesktopReservationsDashboard({
             setSurface(editingReservation ? "modify" : "experience")
           }
           onConfirm={confirmReservation}
+        />
+      ) : surface === "confirmation" && confirmedReservation ? (
+        <DesktopReservationConfirmationView
+          reservation={confirmedReservation}
+          onMakeAnotherReservation={() => {
+            onConfirmedReservationChange(null);
+            onResetForm();
+            setSurface("experience");
+          }}
+          onViewReservations={openHistory}
         />
       ) : surface === "history" ? (
         <DesktopReservationHistory

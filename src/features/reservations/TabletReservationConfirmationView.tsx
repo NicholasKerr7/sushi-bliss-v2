@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { locations } from "@/data/locations";
 import { reservationExperiences } from "@/data/reservations";
 import { icons } from "@/features/home/visualHomeData";
+import { downloadCalendarEvent } from "@/lib/calendar";
 import { formatDateTime } from "@/lib/dates";
 import type { Reservation } from "@/types/reservation";
 
@@ -28,37 +29,16 @@ export function TabletReservationConfirmationView({
     const endsAt = new Date(
       startsAt.getTime() + (experience?.durationMinutes || 120) * 60_000,
     );
-    const calendarContent = [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "PRODID:-//Sushi Bliss//Reservations//EN",
-      "BEGIN:VEVENT",
-      `UID:${reservation.confirmationCode}@sushi-bliss`,
-      `DTSTAMP:${formatCalendarDate(new Date())}`,
-      `DTSTART:${formatCalendarDate(startsAt)}`,
-      `DTEND:${formatCalendarDate(endsAt)}`,
-      `SUMMARY:${escapeCalendarValue(experience?.title || "Sushi Bliss Reservation")}`,
-      `LOCATION:${escapeCalendarValue(
-        [location?.name, location?.address].filter(Boolean).join(" - "),
-      )}`,
-      `DESCRIPTION:${escapeCalendarValue(
-        `Reservation ${reservation.confirmationCode} for ${reservation.partySize} guests.`,
-      )}`,
-      "END:VEVENT",
-      "END:VCALENDAR",
-    ].join("\r\n");
-    const calendarBlob = new Blob([calendarContent], {
-      type: "text/calendar;charset=utf-8",
-    });
-    const calendarUrl = URL.createObjectURL(calendarBlob);
-    const calendarLink = document.createElement("a");
 
-    calendarLink.href = calendarUrl;
-    calendarLink.download = `sushi-bliss-${reservation.confirmationCode}.ics`;
-    document.body.appendChild(calendarLink);
-    calendarLink.click();
-    calendarLink.remove();
-    window.setTimeout(() => URL.revokeObjectURL(calendarUrl), 0);
+    downloadCalendarEvent({
+      description: `Reservation ${reservation.confirmationCode} for ${reservation.partySize} guests.`,
+      endsAt,
+      fileName: `sushi-bliss-${reservation.confirmationCode}.ics`,
+      location: [location?.name, location?.address].filter(Boolean).join(" - "),
+      startsAt,
+      summary: experience?.title || "Sushi Bliss Reservation",
+      uid: `${reservation.confirmationCode}@sushi-bliss`,
+    });
   };
 
   return (
@@ -97,14 +77,14 @@ export function TabletReservationConfirmationView({
           <ConfirmationRow
             icon={icons.location}
             label="Location"
-            value={location?.name || reservation.locationId}
             supporting={location?.address}
+            value={location?.name || reservation.locationId}
           />
           <ConfirmationRow
             icon={icons.flower}
             label="Experience"
-            value={experience?.title || reservation.experienceId}
             supporting={reservation.seatingPreference}
+            value={experience?.title || reservation.experienceId}
           />
         </div>
 
@@ -146,23 +126,6 @@ export function TabletReservationConfirmationView({
       </section>
     </main>
   );
-}
-
-/** Formats a Date for portable UTC iCalendar timestamps. */
-function formatCalendarDate(date: Date): string {
-  return date
-    .toISOString()
-    .replace(/[-:]/g, "")
-    .replace(/\.\d{3}Z$/, "Z");
-}
-
-/** Escapes text fields before writing a browser-generated iCalendar file. */
-function escapeCalendarValue(value: string): string {
-  return value
-    .replace(/\\/g, "\\\\")
-    .replace(/\n/g, "\\n")
-    .replace(/,/g, "\\,")
-    .replace(/;/g, "\\;");
 }
 
 function ConfirmationRow({
