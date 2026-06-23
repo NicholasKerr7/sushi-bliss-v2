@@ -94,7 +94,7 @@ export function MobileNotificationDetailView({
               disabled
               type="button"
             >
-              No link
+              Action unavailable
             </button>
           )}
           <button

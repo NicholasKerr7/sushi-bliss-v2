@@ -158,7 +158,7 @@ export function TabletNotificationDetailView({
                 disabled
                 type="button"
               >
-                No related flow
+                Action unavailable
               </button>
             )}
             <button
@@ -171,8 +171,8 @@ export function TabletNotificationDetailView({
           </div>
 
           <div className="mt-9 grid grid-cols-[42px_minmax(0,1fr)] gap-5 text-white/47">
-            <span className="grid h-10 w-10 place-items-center rounded-full border border-white/24 text-[24px] font-serif">
-              i
+            <span className="grid h-10 w-10 place-items-center rounded-full border border-white/24 bg-black/20">
+              <AssetIcon size={20} src="/assets/icons/gold-alert-icon.png" />
             </span>
             <p className="text-[17px] leading-7">
               {detail.note} {flowCopy.body}

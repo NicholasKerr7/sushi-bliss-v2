@@ -275,11 +275,12 @@ export function TabletCustomizeView({
               {quantity} {quantity === 1 ? "Piece" : "Pieces"}
             </p>
             <button
-              className="mt-2 hidden text-[13px] text-[var(--sb-gold-soft)] min-[980px]:inline"
+              className="mt-2 hidden items-center gap-1.5 text-[13px] text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold min-[980px]:inline-flex"
               onClick={onViewDetail}
               type="button"
             >
-              View details ↑
+              <span>View details</span>
+              <ChevronIcon direction="up" size={15} />
             </button>
           </div>
         </div>
