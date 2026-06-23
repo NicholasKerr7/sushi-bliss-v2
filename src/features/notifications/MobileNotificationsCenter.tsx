@@ -11,6 +11,7 @@ import {
   sortNotificationsByRecency,
   type NotificationFilter,
 } from "@/lib/notifications";
+import { scrollWindowToTopInstantly } from "@/lib/scroll";
 import type { AppNotification } from "@/types/notification";
 
 import { MobileNotificationDetailView } from "./MobileNotificationDetailView";
@@ -37,7 +38,7 @@ export function MobileNotificationsCenter() {
   );
 
   useEffect(() => {
-    window.scrollTo({ behavior: "smooth", top: 0 });
+    scrollWindowToTopInstantly();
   }, [selectedNotification?.id]);
 
   const handleViewNotification = (notification: AppNotification) => {

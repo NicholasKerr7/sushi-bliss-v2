@@ -7,6 +7,7 @@ import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useOmakase } from "@/hooks/useOmakase";
+import { scrollWindowToTopInstantly } from "@/lib/scroll";
 
 import { MobileOmakaseLandingView } from "./MobileOmakaseLandingView";
 import { MobileOmakaseHeader } from "./MobileOmakasePrimitives";
@@ -31,7 +32,7 @@ export function MobileOmakaseExperience() {
   } = useOmakase();
 
   useEffect(() => {
-    window.scrollTo({ behavior: "smooth", top: 0 });
+    scrollWindowToTopInstantly();
   }, [reviewVisible]);
 
   return (

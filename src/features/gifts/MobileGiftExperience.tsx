@@ -10,6 +10,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { useProfile } from "@/hooks/useProfile";
 import { addDays } from "@/lib/dates";
 import { getDefaultGiftCheckoutDraft } from "@/lib/gifts";
+import { scrollWindowToTopInstantly } from "@/lib/scroll";
 import type { GiftCheckoutDraft, GiftConfirmation } from "@/types/gift";
 
 import { MobileGiftCheckoutView } from "./MobileGiftCheckoutView";
@@ -52,7 +53,7 @@ export function MobileGiftExperience() {
     giftExperiences.find((gift) => gift.id === selectedGiftId) || defaultGift;
 
   useEffect(() => {
-    window.scrollTo({ behavior: "smooth", top: 0 });
+    scrollWindowToTopInstantly();
   }, [view]);
 
   if (!selectedGift) {

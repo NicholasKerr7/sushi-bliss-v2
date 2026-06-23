@@ -10,6 +10,7 @@ import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useProfile } from "@/hooks/useProfile";
 import { useSupport } from "@/hooks/useSupport";
+import { scrollWindowToTopInstantly } from "@/lib/scroll";
 import type { HelpArticle } from "@/types/support";
 
 import { MobileSupportArticleDetailView } from "./MobileSupportArticleDetailView";
@@ -33,7 +34,7 @@ export function MobileSupportCenter() {
   const [view, setView] = useState<MobileSupportView>("overview");
 
   useEffect(() => {
-    window.scrollTo({ behavior: "smooth", top: 0 });
+    scrollWindowToTopInstantly();
   }, [selectedArticle?.id, view]);
 
   const openRequest = (topicId?: string) => {

@@ -12,6 +12,7 @@ import {
   offerMatchesQuery,
   sortOffersByAvailability,
 } from "@/lib/offers";
+import { scrollWindowToTopInstantly } from "@/lib/scroll";
 import type { Offer } from "@/types/offer";
 
 import { MobileOfferDetailView } from "./MobileOfferDetailView";
@@ -78,7 +79,7 @@ export function MobileOffersDashboard() {
   }, [currentTime, featuredOffer?.id, filter, query, sortedOffers]);
 
   useEffect(() => {
-    window.scrollTo({ behavior: "smooth", top: 0 });
+    scrollWindowToTopInstantly();
   }, [selectedOffer?.id]);
 
   const handleApplyOffer = async (offer: Offer) => {

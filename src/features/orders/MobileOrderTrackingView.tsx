@@ -114,7 +114,7 @@ export function MobileOrderTrackingView({
               sizes="430px"
               src="/assets/maps/tokyo-delivery-route-tracker.webp"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.26))]" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-[linear-gradient(0deg,rgba(0,0,0,0.46),transparent)]" />
             <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-[var(--sb-red-bright)]/38 bg-black/54 px-3 py-2 text-[10px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)] shadow-[0_0_22px_rgba(239,47,37,0.22)] backdrop-blur-md min-[390px]:left-4 min-[390px]:top-4 min-[390px]:px-4 min-[390px]:text-[11px] min-[390px]:tracking-[0.1em]">
               <span className="h-2 w-2 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_14px_rgba(239,47,37,0.95)]" />
               Live route

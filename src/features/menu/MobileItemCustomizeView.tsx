@@ -291,7 +291,7 @@ function MobileAddOnRow({
     <button
       aria-pressed={checked}
       className={classNames(
-        "grid min-h-[78px] w-full grid-cols-[58px_minmax(0,1fr)_42px] items-center gap-3 rounded-[14px] border px-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
+        "grid min-h-[74px] w-full grid-cols-[50px_minmax(0,1fr)_52px] items-center gap-2 rounded-[14px] border px-2.5 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[78px] min-[390px]:grid-cols-[58px_minmax(0,1fr)_58px] min-[390px]:gap-3 min-[390px]:px-3",
         checked
           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12"
           : "border-white/10 bg-white/[0.025]",
@@ -299,7 +299,7 @@ function MobileAddOnRow({
       onClick={() => onToggle(addOn.id)}
       type="button"
     >
-      <span className="grid h-[54px] w-[54px] place-items-center overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+      <span className="grid h-[46px] w-[46px] place-items-center overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] min-[390px]:h-[54px] min-[390px]:w-[54px] min-[390px]:rounded-[13px]">
         <Image
           alt=""
           className="h-full w-full object-cover"
@@ -311,21 +311,21 @@ function MobileAddOnRow({
         />
       </span>
       <span className="min-w-0">
-        <span className="editorial-title block text-[16px] uppercase tracking-[0.04em]">
+        <span className="editorial-title block truncate text-[14px] uppercase tracking-[0.02em] min-[390px]:text-[16px] min-[390px]:tracking-[0.04em]">
           {displayLabel}
         </span>
-        <span className="mt-1 block line-clamp-2 text-[13px] leading-5 text-white/58">
+        <span className="mt-1 block line-clamp-2 text-[12px] leading-[18px] text-white/58 min-[390px]:text-[13px] min-[390px]:leading-5">
           {addOn.description}
         </span>
       </span>
       <span className="grid gap-2 justify-self-end text-right">
-        <span className="text-[15px] text-[var(--sb-gold)]">
+        <span className="text-[13px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
           {formatMoney(addOn.priceCents)}
         </span>
         <span
           aria-hidden="true"
           className={classNames(
-            "grid h-8 w-8 place-items-center rounded-[9px] border text-[14px]",
+            "grid h-8 w-8 place-items-center justify-self-end rounded-[9px] border text-[14px]",
             checked
               ? "border-[var(--sb-red-bright)] text-white"
               : "border-[var(--sb-border)] text-transparent",

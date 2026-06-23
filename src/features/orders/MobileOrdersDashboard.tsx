@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { CartDrawer } from "@/features/cart/CartDrawer";
+import { scrollWindowToTopInstantly } from "@/lib/scroll";
 import type { Order } from "@/types/order";
 
 import { MobileOrderDetailsView } from "./MobileOrderDetailsView";
@@ -49,27 +50,36 @@ export function MobileOrdersDashboard({
   const currentOrder = selectedOrder || fallbackOrder;
 
   useEffect(() => {
-    window.scrollTo({ behavior: "smooth", top: 0 });
+    scrollWindowToTopInstantly();
   }, [currentOrder?.id, surface]);
+
+  const resetSurfaceScroll = () => {
+    scrollWindowToTopInstantly();
+    window.requestAnimationFrame(scrollWindowToTopInstantly);
+  };
 
   const handleViewChange = (nextView: OrderView) => {
     onViewChange(nextView);
     onSelectOrder(null);
     setSurface("list");
+    resetSurfaceScroll();
   };
 
   const handleViewDetails = (order: Order) => {
     onSelectOrder(order);
     setSurface("details");
+    resetSurfaceScroll();
   };
 
   const handleTrackOrder = (order: Order) => {
     onSelectOrder(order);
     setSurface("tracking");
+    resetSurfaceScroll();
   };
 
   const handleReorder = (order: Order) => {
     setSurface("list");
+    resetSurfaceScroll();
     onReorder(order);
   };
 
