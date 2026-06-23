@@ -73,7 +73,7 @@ export function Modal({
     <div
       aria-labelledby={labelledById}
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#020202]/82 p-3 backdrop-blur-xl sm:p-4"
+      className="fixed inset-0 z-50 grid place-items-center bg-[#020202]/84 p-3 backdrop-blur-xl sm:p-4"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           onOpenChange(false);
@@ -83,16 +83,20 @@ export function Modal({
     >
       <div
         className={classNames(
-          "smooth-scroll-area max-h-[min(44rem,calc(100dvh-1.5rem))] w-full max-w-lg overflow-y-auto rounded-[22px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.07),rgba(255,255,255,0.018)_34%,rgba(7,9,10,0.96)_100%)] text-sb-rice shadow-[0_28px_90px_rgba(0,0,0,0.62),inset_0_1px_0_rgba(255,255,255,0.08)] outline-none backdrop-blur-2xl",
+          "flex max-h-[min(46rem,calc(100dvh-1.5rem))] min-h-0 w-full max-w-[min(35rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[24px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.024)_34%,rgba(7,9,10,0.97)_100%)] text-sb-rice shadow-[0_28px_90px_rgba(0,0,0,0.64),0_0_44px_rgba(215,168,79,0.08),inset_0_1px_0_rgba(255,255,255,0.09)] outline-none backdrop-blur-2xl sm:max-w-lg",
           className,
         )}
         ref={panelRef}
         tabIndex={-1}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-[var(--sb-border)] px-4 py-4 sm:px-5">
+        <span
+          aria-hidden="true"
+          className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-[linear-gradient(90deg,transparent,var(--sb-gold-soft),transparent)] opacity-70"
+        />
+        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-[var(--sb-border)] px-4 py-4 sm:px-5">
           <div className="min-w-0">
             <h2
-              className="editorial-title text-[20px] leading-tight text-sb-rice sm:text-[22px]"
+              className="editorial-title break-words text-[20px] leading-tight text-sb-rice sm:text-[22px]"
               id={labelledById}
             >
               {title}
@@ -113,9 +117,11 @@ export function Modal({
             <ChevronIcon direction="x" size={18} />
           </Button>
         </div>
-        <div className="px-4 py-5 sm:px-5">{children}</div>
+        <div className="smooth-scroll-area min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:px-5">
+          {children}
+        </div>
         {footer ? (
-          <div className="border-t border-[var(--sb-border)] bg-black/18 px-4 py-4 sm:px-5">
+          <div className="shrink-0 border-t border-[var(--sb-border)] bg-black/28 px-4 py-4 shadow-[0_-18px_42px_rgba(0,0,0,0.34)] sm:px-5">
             {footer}
           </div>
         ) : null}
