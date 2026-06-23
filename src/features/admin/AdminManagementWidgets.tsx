@@ -18,6 +18,7 @@ import {
   isStatusValue,
   statusToneClasses,
 } from "./adminDashboardUtils";
+import { AdminHashLink } from "./AdminHashLink";
 
 export function SectionAction({
   href,
@@ -27,13 +28,13 @@ export function SectionAction({
   label: string;
 }) {
   return (
-    <a
+    <AdminHashLink
       className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-[9px] border border-[var(--sb-gold)]/48 bg-black/24 px-3 text-[12px] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-red-bright)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold md:h-10 md:gap-2 md:rounded-[10px] md:px-4 md:text-sm"
       href={href}
     >
       <span>{label}</span>
       <ChevronIcon direction="right" size={17} />
-    </a>
+    </AdminHashLink>
   );
 }
 
@@ -81,7 +82,7 @@ export function ManagementCard({
 
       <div className="mt-5 overflow-hidden rounded-[14px] border border-white/10">
         {section.rows.map((row) => (
-          <a
+          <AdminHashLink
             className="grid min-h-[46px] grid-cols-[minmax(0,1fr)_auto_16px] items-center gap-2 border-t border-white/10 px-2.5 text-[13px] text-white/84 transition first:border-t-0 hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-sb-gold min-[390px]:gap-3 min-[390px]:px-3 md:min-h-[48px] md:text-sm"
             href={section.href}
             key={`${section.id}-${row.label}`}
@@ -111,7 +112,7 @@ export function ManagementCard({
               direction="right"
               size={17}
             />
-          </a>
+          </AdminHashLink>
         ))}
       </div>
 
@@ -159,12 +160,12 @@ export function AdminPanel({
           {title}
         </h2>
         {action ? (
-          <a
+          <AdminHashLink
             className="shrink-0 text-[13px] text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             href={actionHref}
           >
             {action}
-          </a>
+          </AdminHashLink>
         ) : null}
       </div>
       {children}
@@ -217,7 +218,7 @@ export function TopMenuPanel() {
     >
       <div className="grid gap-1 p-3">
         {adminTopMenuItems.map((item) => (
-          <a
+          <AdminHashLink
             className="grid min-h-[54px] grid-cols-[48px_minmax(0,1fr)_58px_84px] items-center gap-3 rounded-[10px] px-2 text-sm text-white/78 transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             href="#manage-menu-admin"
             key={item.item}
@@ -232,7 +233,7 @@ export function TopMenuPanel() {
             <span className="truncate">{item.item}</span>
             <span className="text-right">{item.sold}</span>
             <span className="text-right">{item.revenue}</span>
-          </a>
+          </AdminHashLink>
         ))}
       </div>
     </AdminPanel>
@@ -256,7 +257,7 @@ export function ManagementTable({
     <AdminPanel action="View All" id={id} title={title}>
       <CompactTable headers={headers} rows={rows} />
       <div className="px-4 pb-4">
-        <a
+        <AdminHashLink
           className="inline-flex min-h-10 min-w-[190px] items-center justify-center gap-2 rounded-[9px] border border-[var(--sb-gold)]/52 bg-black/24 px-4 text-sm text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-red-bright)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           href={`#${id}`}
         >
@@ -266,7 +267,7 @@ export function ManagementTable({
             src="/assets/icons/plus-icon.png"
           />
           {actionLabel}
-        </a>
+        </AdminHashLink>
       </div>
     </AdminPanel>
   );

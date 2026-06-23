@@ -8,6 +8,7 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { adminNavigation, adminSystemNavigation } from "@/data/admin";
 import { classNames } from "@/lib/classNames";
 
+import { AdminHashLink } from "./AdminHashLink";
 import { workspaceSections } from "./adminOperationsData";
 
 interface AdminShellProps {
@@ -61,7 +62,7 @@ function AdminNavLink({
   const isActive = item.id === activeId;
 
   return (
-    <a
+    <AdminHashLink
       aria-label={item.label}
       aria-current={isActive ? "page" : undefined}
       className={classNames(
@@ -74,6 +75,7 @@ function AdminNavLink({
           : "border-transparent text-white/72 hover:border-[var(--sb-gold)]/24 hover:bg-white/[0.045] hover:text-[var(--sb-gold-soft)]",
       )}
       href={item.href}
+      scrollTargetId={item.href === "#overview" ? "overview" : undefined}
     >
       <span
         className={classNames(
@@ -102,7 +104,7 @@ function AdminNavLink({
           ) : null}
         </>
       )}
-    </a>
+    </AdminHashLink>
   );
 }
 
@@ -204,7 +206,7 @@ export function AdminShell({ children }: AdminShellProps) {
           id="admin-mobile-nav"
         >
           {adminNavigation.slice(0, 5).map((item) => (
-            <a
+            <AdminHashLink
               className={classNames(
                 "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-3 text-[12px] text-white/76 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold",
                 item.id === activeId
@@ -213,10 +215,13 @@ export function AdminShell({ children }: AdminShellProps) {
               )}
               href={item.href}
               key={item.id}
+              scrollTargetId={
+                item.href === "#overview" ? "overview" : undefined
+              }
             >
               <AssetIcon loading="eager" size={18} src={item.iconUrl} />
               <span className="whitespace-nowrap">{item.label}</span>
-            </a>
+            </AdminHashLink>
           ))}
         </nav>
       </header>

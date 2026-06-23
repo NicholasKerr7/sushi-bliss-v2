@@ -15,6 +15,7 @@ import {
   getStatusTone,
   statusToneClasses,
 } from "./adminDashboardUtils";
+import { AdminHashLink } from "./AdminHashLink";
 
 function StatusPill({ value }: { value: string }) {
   return (
@@ -46,12 +47,12 @@ function AdminIntelligenceList({
         <h3 className="editorial-title truncate text-[16px] tracking-[0.04em] text-white">
           {title}
         </h3>
-        <a
+        <AdminHashLink
           className="shrink-0 text-[12px] text-[var(--sb-gold-soft)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           href={actionHref}
         >
           {actionLabel}
-        </a>
+        </AdminHashLink>
       </div>
       {children}
     </section>
@@ -134,7 +135,7 @@ function RecentOrdersPanel() {
         {adminRecentOrders
           .slice(0, 4)
           .map(([id, customer, type, amount, status]) => (
-            <a
+            <AdminHashLink
               className="grid min-h-[48px] grid-cols-[88px_minmax(0,1fr)_auto] items-center gap-3 rounded-[11px] px-2 text-[13px] text-white/76 transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
               href="#operations-orders-admin"
               key={id}
@@ -147,7 +148,7 @@ function RecentOrdersPanel() {
                 </span>
               </span>
               <StatusPill value={status} />
-            </a>
+            </AdminHashLink>
           ))}
       </div>
     </AdminIntelligenceList>
@@ -165,7 +166,7 @@ function ReservationQueuePanel() {
         {adminReservationQueue
           .slice(0, 4)
           .map(([time, customer, party, table, status]) => (
-            <a
+            <AdminHashLink
               className="grid min-h-[48px] grid-cols-[70px_minmax(0,1fr)_auto] items-center gap-3 rounded-[11px] px-2 text-[13px] text-white/76 transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
               href="#operations-reservations-admin"
               key={`${time}-${customer}`}
@@ -180,7 +181,7 @@ function ReservationQueuePanel() {
                 </span>
               </span>
               <StatusPill value={status} />
-            </a>
+            </AdminHashLink>
           ))}
       </div>
     </AdminIntelligenceList>
@@ -196,7 +197,7 @@ function TopItemsMiniPanel() {
     >
       <div className="grid gap-1 p-3">
         {adminTopMenuItems.slice(0, 4).map((item) => (
-          <a
+          <AdminHashLink
             className="grid min-h-[48px] grid-cols-[44px_minmax(0,1fr)_auto] items-center gap-3 rounded-[11px] px-2 text-[13px] text-white/76 transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             href="#manage-menu-admin"
             key={item.item}
@@ -217,7 +218,7 @@ function TopItemsMiniPanel() {
             <span className="font-mono text-[12px] text-[var(--sb-gold-soft)]">
               {item.revenue}
             </span>
-          </a>
+          </AdminHashLink>
         ))}
       </div>
     </AdminIntelligenceList>
