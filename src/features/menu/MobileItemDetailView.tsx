@@ -77,86 +77,72 @@ export function MobileItemDetailView({
   };
 
   return (
-    <div className="relative h-dvh overflow-y-auto bg-black pb-[126px]">
+    <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto bg-black pb-[126px]">
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_6%,rgba(202,164,93,0.08),transparent_24%),radial-gradient(circle_at_90%_8%,rgba(160,22,18,0.12),transparent_26%),linear-gradient(180deg,#050505_0%,#080706_44%,#030303_100%)]" />
       </div>
 
-      <header className="fixed left-0 right-0 top-0 z-20 flex items-center justify-between px-5 pt-5">
-        <button
-          aria-label="Back to menu"
-          className="grid h-[54px] w-[54px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 text-[30px] text-[var(--sb-gold)] backdrop-blur"
-          onClick={onClose}
-          type="button"
-        >
-          <ChevronIcon direction="left" size={18} />
-        </button>
-        <div className="flex items-center gap-3">
-          <AssetIcon
-            alt=""
-            className="rounded-full"
-            loading="eager"
-            size={46}
-            src={brand.assets.floralEmblem.publicUrl}
-          />
-          <span className="editorial-title text-[17px] leading-[0.95] tracking-[0.34em]">
-            Sushi
-            <br />
-            Bliss
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
+      <header className="fixed inset-x-0 top-0 z-20 px-4 pt-4 min-[390px]:px-5 min-[390px]:pt-5">
+        <div className="mobile-frame flex items-center justify-between gap-2">
           <button
-            aria-label={isFavorite ? "Remove favorite" : "Save favorite"}
-            aria-pressed={isFavorite}
-            className={classNames(
-              "grid h-[50px] w-[50px] place-items-center rounded-full border bg-black/44 backdrop-blur",
-              isFavorite
-                ? "border-[var(--sb-red-bright)]"
-                : "border-[var(--sb-border)]",
-            )}
-            onClick={onToggleFavorite}
+            aria-label="Back to menu"
+            className="grid h-[46px] w-[46px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 text-[var(--sb-gold)] backdrop-blur min-[390px]:h-[54px] min-[390px]:w-[54px]"
+            onClick={onClose}
             type="button"
           >
+            <ChevronIcon direction="left" size={18} />
+          </button>
+          <div className="flex min-w-0 items-center gap-2 min-[390px]:gap-3">
             <AssetIcon
+              alt=""
+              className="h-[38px] w-[38px] rounded-full min-[390px]:h-[46px] min-[390px]:w-[46px]"
               loading="eager"
-              size={24}
-              src="/assets/icons/heart-icon.png"
+              size={46}
+              src={brand.assets.floralEmblem.publicUrl}
             />
-          </button>
-          <button
-            aria-label="Share item"
-            className="grid h-[50px] w-[50px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 text-[var(--sb-gold)] backdrop-blur"
-            onClick={handleShareItem}
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              className="h-7 w-7 drop-shadow-[0_0_8px_rgba(202,164,93,0.65)]"
-              fill="none"
-              viewBox="0 0 24 24"
+            <span className="editorial-title text-[14px] leading-[0.95] tracking-[0.24em] min-[390px]:text-[17px] min-[390px]:tracking-[0.34em]">
+              Sushi
+              <br />
+              Bliss
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 min-[390px]:gap-2">
+            <button
+              aria-label={isFavorite ? "Remove favorite" : "Save favorite"}
+              aria-pressed={isFavorite}
+              className={classNames(
+                "grid h-[44px] w-[44px] place-items-center rounded-full border bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]",
+                isFavorite
+                  ? "border-[var(--sb-red-bright)]"
+                  : "border-[var(--sb-border)]",
+              )}
+              onClick={onToggleFavorite}
+              type="button"
             >
-              <path
-                d="M12 16V4m0 0 5 5m-5-5-5 5"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.8"
+              <AssetIcon
+                loading="eager"
+                size={22}
+                src="/assets/icons/heart-icon.png"
               />
-              <path
-                d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.8"
+            </button>
+            <button
+              aria-label="Share item"
+              className="grid h-[44px] w-[44px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]"
+              onClick={handleShareItem}
+              type="button"
+            >
+              <AssetIcon
+                loading="eager"
+                size={21}
+                src="/assets/icons/share-icon.png"
               />
-            </svg>
-          </button>
+            </button>
+          </div>
         </div>
       </header>
 
       <main className="relative z-10">
-        <section className="relative h-[360px]">
+        <section className="relative h-[332px] min-[390px]:h-[360px]">
           <PairingImageBackdrop imageUrl={heroImage} sizes="430px" />
           <Image
             alt={item.image.alt || item.name}
@@ -182,23 +168,23 @@ export function MobileItemDetailView({
           />
         </section>
 
-        <section className="-mt-3 px-8">
-          <span className="inline-flex rounded-[8px] border border-[var(--sb-border)] bg-[var(--sb-red)]/24 px-4 py-1 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold)]">
+        <section className="-mt-3 px-5 min-[390px]:px-8">
+          <span className="inline-flex rounded-[8px] border border-[var(--sb-border)] bg-[var(--sb-red)]/24 px-3.5 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold)] min-[390px]:px-4 min-[390px]:text-[12px]">
             {item.tags.includes("premium") ? "Premium" : item.categoryLabel}
           </span>
           <h1
-            className="editorial-title mt-3 text-[32px] leading-none tracking-[0.12em]"
+            className="editorial-title mt-3 text-[29px] leading-none tracking-[0.08em] min-[390px]:text-[32px] min-[390px]:tracking-[0.12em]"
             id={`mobile-item-detail-${item.id}`}
           >
             {item.name}
           </h1>
-          <p className="mt-2 text-[16px] text-[var(--sb-gold)]">
+          <p className="mt-2 text-[15px] text-[var(--sb-gold)] min-[390px]:text-[16px]">
             {item.description}
           </p>
-          <p className="mt-3 text-[28px] text-[var(--sb-gold)]">
+          <p className="mt-3 text-[25px] text-[var(--sb-gold)] min-[390px]:text-[28px]">
             {formatMoney(item.priceCents)}
           </p>
-          <p className="mt-3 max-w-[360px] text-[15px] leading-6 text-white/72">
+          <p className="mt-3 max-w-[360px] text-[14px] leading-6 text-white/72 min-[390px]:text-[15px]">
             {item.chefNote}
           </p>
 
@@ -223,7 +209,7 @@ export function MobileItemDetailView({
                     ? `${orderAction.label} ${quantity}`
                     : `Add ${quantity} to cart`
                 }
-                className="red-glow-button mt-4 grid min-h-[66px] w-full grid-cols-[1fr_auto] items-center rounded-[14px] px-8 text-[17px] uppercase tracking-[0.08em]"
+                className="red-glow-button mt-4 grid min-h-[60px] w-full grid-cols-1 place-items-center gap-1 rounded-[14px] px-4 py-3 text-[14px] uppercase tracking-[0.07em] min-[390px]:min-h-[66px] min-[390px]:grid-cols-[1fr_auto] min-[390px]:px-8 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
                 onClick={onAddToCart}
                 type="button"
               >
@@ -281,7 +267,7 @@ export function MobileItemDetailView({
 
           {isDrinkItem ? null : (
             <button
-              className="mt-4 min-h-[54px] w-full rounded-[14px] border border-[var(--sb-border)] bg-black/40 text-[14px] uppercase tracking-[0.1em] text-[var(--sb-gold)]"
+              className="mt-4 min-h-[52px] w-full rounded-[14px] border border-[var(--sb-border)] bg-black/40 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold)] min-[390px]:min-h-[54px] min-[390px]:text-[14px] min-[390px]:tracking-[0.1em]"
               onClick={onCustomize}
               type="button"
             >
@@ -304,7 +290,7 @@ function MobileQuantityStepper({
   value: number;
 }) {
   return (
-    <div className="grid h-[64px] w-[190px] grid-cols-3 overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/38 text-[26px] text-[var(--sb-gold)]">
+    <div className="grid h-[58px] w-[168px] grid-cols-3 overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/38 text-[23px] text-[var(--sb-gold)] min-[390px]:h-[64px] min-[390px]:w-[190px] min-[390px]:text-[26px]">
       <button
         aria-label="Decrease quantity"
         className="grid place-items-center disabled:opacity-35"
@@ -357,27 +343,27 @@ function DetailPanelButton({
       <button
         aria-expanded={expanded}
         className={classNames(
-          "grid min-h-[78px] w-full grid-cols-[48px_1fr_auto] items-center gap-3 px-4 text-left transition",
+          "grid min-h-[72px] w-full grid-cols-[42px_minmax(0,1fr)_36px] items-center gap-2.5 px-3 text-left transition min-[390px]:min-h-[78px] min-[390px]:grid-cols-[48px_1fr_auto] min-[390px]:gap-3 min-[390px]:px-4",
           expanded ? "bg-[var(--sb-gold)]/7" : "hover:bg-white/[0.025]",
         )}
         onClick={onClick}
         type="button"
       >
-        <span className="grid h-11 w-11 place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/42">
-          <AssetIcon size={28} src={icon} />
+        <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/42 min-[390px]:h-11 min-[390px]:w-11">
+          <AssetIcon size={26} src={icon} />
         </span>
-        <span className="min-w-0 text-[13px] font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+        <span className="min-w-0 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[390px]:text-[13px] min-[390px]:tracking-[0.12em]">
           {label}
         </span>
         <span
-          className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-black/24 text-[var(--sb-gold)]"
+          className="grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-black/24 text-[var(--sb-gold)] min-[390px]:h-9 min-[390px]:w-9"
           aria-hidden="true"
         >
           <ChevronIcon direction={expanded ? "up" : "down"} size={17} />
         </span>
       </button>
       {expanded ? (
-        <p className="px-5 pb-5 pl-[76px] text-[14px] leading-6 text-white/66">
+        <p className="px-4 pb-5 pl-[64px] text-[13px] leading-6 text-white/66 min-[390px]:px-5 min-[390px]:pl-[76px] min-[390px]:text-[14px]">
           {children}
         </p>
       ) : null}
