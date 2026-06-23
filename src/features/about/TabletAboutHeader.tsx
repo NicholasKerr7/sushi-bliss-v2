@@ -38,13 +38,13 @@ export function TabletAboutHeader({ unreadCount }: TabletAboutHeaderProps) {
         >
           <AssetIcon size={22} src={icons.search} />
           <label className="sr-only" htmlFor="tablet-about-search">
-            Search Sushi Bliss
+            Search menu items
           </label>
           <input
             className="h-full min-w-0 flex-1 bg-transparent text-[15px] text-white outline-none placeholder:text-white/58"
             id="tablet-about-search"
             name="q"
-            placeholder="Search for sushi, chefs, rolls..."
+            placeholder="Search menu items..."
             type="search"
           />
         </form>

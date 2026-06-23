@@ -35,7 +35,7 @@ export function TabletNotificationsHeader({
               Sushi Bliss
             </span>
             <span className="mt-2 block truncate text-[11px] uppercase tracking-[0.32em] text-white/72 min-[900px]:text-[12px] min-[900px]:tracking-[0.45em]">
-              Omakase
+              Alerts
             </span>
           </span>
         </Link>
@@ -48,7 +48,7 @@ export function TabletNotificationsHeader({
           <input
             className="h-full min-w-0 flex-1 bg-transparent text-[14px] text-white outline-none placeholder:text-white/60"
             id="tablet-notifications-search"
-            placeholder="Search menu, items, or categories"
+            placeholder="Search alerts, rewards, or bookings"
             type="search"
           />
         </form>
