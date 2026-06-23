@@ -77,16 +77,16 @@ export function MobileItemDetailView({
   };
 
   return (
-    <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto bg-black pb-[126px]">
+    <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto bg-black pb-[calc(126px+var(--sb-safe-bottom))]">
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_6%,rgba(202,164,93,0.08),transparent_24%),radial-gradient(circle_at_90%_8%,rgba(160,22,18,0.12),transparent_26%),linear-gradient(180deg,#050505_0%,#080706_44%,#030303_100%)]" />
       </div>
 
-      <header className="fixed inset-x-0 top-0 z-20 px-4 pt-4 min-[390px]:px-5 min-[390px]:pt-5">
+      <header className="fixed inset-x-0 top-0 z-20 px-3 pt-3 min-[390px]:px-5 min-[390px]:pt-5">
         <div className="mobile-frame flex items-center justify-between gap-2">
           <button
             aria-label="Back to menu"
-            className="grid h-[46px] w-[46px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 text-[var(--sb-gold)] backdrop-blur min-[390px]:h-[54px] min-[390px]:w-[54px]"
+            className="grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 text-[var(--sb-gold)] backdrop-blur min-[390px]:h-[54px] min-[390px]:w-[54px]"
             onClick={onClose}
             type="button"
           >
@@ -95,12 +95,12 @@ export function MobileItemDetailView({
           <div className="flex min-w-0 items-center gap-2 min-[390px]:gap-3">
             <AssetIcon
               alt=""
-              className="h-[38px] w-[38px] rounded-full min-[390px]:h-[46px] min-[390px]:w-[46px]"
+              className="h-9 w-9 rounded-full min-[390px]:h-[46px] min-[390px]:w-[46px]"
               loading="eager"
               size={46}
               src={brand.assets.floralEmblem.publicUrl}
             />
-            <span className="editorial-title text-[14px] leading-[0.95] tracking-[0.24em] min-[390px]:text-[17px] min-[390px]:tracking-[0.34em]">
+            <span className="editorial-title text-[13px] leading-[0.95] tracking-[0.2em] min-[390px]:text-[17px] min-[390px]:tracking-[0.34em]">
               Sushi
               <br />
               Bliss
@@ -111,7 +111,7 @@ export function MobileItemDetailView({
               aria-label={isFavorite ? "Remove favorite" : "Save favorite"}
               aria-pressed={isFavorite}
               className={classNames(
-                "grid h-[44px] w-[44px] place-items-center rounded-full border bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]",
+                "grid h-10 w-10 place-items-center rounded-full border bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]",
                 isFavorite
                   ? "border-[var(--sb-red-bright)]"
                   : "border-[var(--sb-border)]",
@@ -127,7 +127,7 @@ export function MobileItemDetailView({
             </button>
             <button
               aria-label="Share item"
-              className="grid h-[44px] w-[44px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]"
+              className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]"
               onClick={handleShareItem}
               type="button"
             >
@@ -142,7 +142,7 @@ export function MobileItemDetailView({
       </header>
 
       <main className="relative z-10">
-        <section className="relative h-[332px] min-[390px]:h-[360px]">
+        <section className="relative h-[306px] min-[390px]:h-[342px] min-[430px]:h-[360px]">
           <PairingImageBackdrop imageUrl={heroImage} sizes="430px" />
           <Image
             alt={item.image.alt || item.name}
@@ -168,23 +168,23 @@ export function MobileItemDetailView({
           />
         </section>
 
-        <section className="relative z-10 mt-2 px-5 min-[390px]:px-8">
+        <section className="relative z-10 mt-2 px-4 min-[390px]:px-6 min-[430px]:px-8">
           <span className="inline-flex rounded-[8px] border border-[var(--sb-border)] bg-[var(--sb-red)]/24 px-3.5 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold)] shadow-[0_10px_22px_rgba(0,0,0,0.32)] min-[390px]:px-4 min-[390px]:text-[12px]">
             {item.tags.includes("premium") ? "Premium" : item.categoryLabel}
           </span>
           <h1
-            className="editorial-title mt-3 text-[29px] leading-none tracking-[0.08em] min-[390px]:text-[32px] min-[390px]:tracking-[0.12em]"
+            className="editorial-title mt-3 text-[27px] leading-none tracking-[0.06em] min-[390px]:text-[32px] min-[390px]:tracking-[0.12em]"
             id={`mobile-item-detail-${item.id}`}
           >
             {item.name}
           </h1>
-          <p className="mt-2 text-[15px] text-[var(--sb-gold)] min-[390px]:text-[16px]">
+          <p className="mt-2 text-[14px] leading-5 text-[var(--sb-gold)] min-[390px]:text-[16px]">
             {item.description}
           </p>
-          <p className="mt-3 text-[25px] text-[var(--sb-gold)] min-[390px]:text-[28px]">
+          <p className="mt-3 text-[23px] text-[var(--sb-gold)] min-[390px]:text-[28px]">
             {formatMoney(item.priceCents)}
           </p>
-          <p className="mt-3 max-w-[360px] text-[14px] leading-6 text-white/72 min-[390px]:text-[15px]">
+          <p className="mt-3 max-w-[360px] text-[13px] leading-[22px] text-white/72 min-[390px]:text-[15px] min-[390px]:leading-6">
             {item.chefNote}
           </p>
 
@@ -209,12 +209,12 @@ export function MobileItemDetailView({
                     ? `${orderAction.label} ${quantity}`
                     : `Add ${quantity} to cart`
                 }
-                className="red-glow-button mt-4 grid min-h-[60px] w-full grid-cols-1 place-items-center gap-1 rounded-[14px] px-4 py-3 text-[14px] uppercase tracking-[0.07em] min-[390px]:min-h-[66px] min-[390px]:grid-cols-[1fr_auto] min-[390px]:px-8 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
+                className="red-glow-button mt-4 grid min-h-[58px] w-full grid-cols-1 place-items-center gap-1 rounded-[14px] px-3 py-3 text-[13px] uppercase tracking-[0.06em] min-[390px]:min-h-[66px] min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:px-8 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
                 onClick={onAddToCart}
                 type="button"
               >
-                <span className="text-center">{orderAction.label}</span>
-                <span>{formatMoney(totalCents)}</span>
+                <span className="min-w-0 text-center">{orderAction.label}</span>
+                <span className="shrink-0">{formatMoney(totalCents)}</span>
               </button>
             </>
           ) : (
@@ -226,7 +226,7 @@ export function MobileItemDetailView({
             />
           )}
 
-          <div className="mt-5 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.24)]">
+          <div className="mt-4 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.24)] min-[390px]:mt-5">
             <DetailPanelButton
               expanded={expandedPanel === "ingredients"}
               icon={
@@ -290,7 +290,7 @@ function MobileQuantityStepper({
   value: number;
 }) {
   return (
-    <div className="grid h-[58px] w-[168px] grid-cols-3 overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/38 text-[23px] text-[var(--sb-gold)] min-[390px]:h-[64px] min-[390px]:w-[190px] min-[390px]:text-[26px]">
+    <div className="grid h-[54px] w-[156px] grid-cols-3 overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/38 text-[21px] text-[var(--sb-gold)] min-[390px]:h-[64px] min-[390px]:w-[190px] min-[390px]:text-[26px]">
       <button
         aria-label="Decrease quantity"
         className="grid place-items-center disabled:opacity-35"
@@ -343,16 +343,16 @@ function DetailPanelButton({
       <button
         aria-expanded={expanded}
         className={classNames(
-          "grid min-h-[72px] w-full grid-cols-[42px_minmax(0,1fr)_36px] items-center gap-2.5 px-3 text-left transition min-[390px]:min-h-[78px] min-[390px]:grid-cols-[48px_1fr_auto] min-[390px]:gap-3 min-[390px]:px-4",
+          "grid min-h-[68px] w-full grid-cols-[38px_minmax(0,1fr)_34px] items-center gap-2 px-3 text-left transition min-[390px]:min-h-[78px] min-[390px]:grid-cols-[48px_1fr_auto] min-[390px]:gap-3 min-[390px]:px-4",
           expanded ? "bg-[var(--sb-gold)]/7" : "hover:bg-white/[0.025]",
         )}
         onClick={onClick}
         type="button"
       >
-        <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/42 min-[390px]:h-11 min-[390px]:w-11">
-          <AssetIcon size={26} src={icon} />
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/42 min-[390px]:h-11 min-[390px]:w-11">
+          <AssetIcon size={23} src={icon} />
         </span>
-        <span className="min-w-0 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[390px]:text-[13px] min-[390px]:tracking-[0.12em]">
+        <span className="min-w-0 break-words text-[11px] font-semibold uppercase leading-4 tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:text-[13px] min-[390px]:tracking-[0.12em]">
           {label}
         </span>
         <span
@@ -363,7 +363,7 @@ function DetailPanelButton({
         </span>
       </button>
       {expanded ? (
-        <p className="px-4 pb-5 pl-[64px] text-[13px] leading-6 text-white/66 min-[390px]:px-5 min-[390px]:pl-[76px] min-[390px]:text-[14px]">
+        <p className="px-3 pb-4 pl-[54px] text-[12px] leading-5 text-white/66 min-[390px]:px-5 min-[390px]:pl-[76px] min-[390px]:text-[14px] min-[390px]:leading-6">
           {children}
         </p>
       ) : null}

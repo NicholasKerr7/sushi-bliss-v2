@@ -73,7 +73,7 @@ export function MobileOrderConfirmation({
       role="dialog"
       tabIndex={-1}
     >
-      <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto px-4 pb-[calc(2rem+var(--sb-safe-bottom))] pt-5 min-[390px]:px-5 min-[390px]:pt-6">
+      <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto px-3 pb-[calc(2rem+var(--sb-safe-bottom))] pt-4 min-[390px]:px-5 min-[390px]:pt-6">
         <div
           aria-hidden="true"
           className="pointer-events-none fixed inset-0 bg-[url('/assets/textures/red-moon-sakura-background.webp')] bg-cover bg-left-top opacity-70"
@@ -81,20 +81,20 @@ export function MobileOrderConfirmation({
         <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.25),#030303_48%,#030303_100%)]" />
 
         <div className="mobile-frame relative z-10">
-          <header className="flex items-center justify-between gap-3 min-[390px]:gap-4">
+          <header className="flex items-center justify-between gap-2.5 min-[390px]:gap-4">
             <Link
-              className="flex min-w-0 items-center gap-2.5 rounded-[14px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:gap-3"
+              className="flex min-w-0 items-center gap-2 rounded-[14px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:gap-3"
               href="/home"
               onClick={onClose}
             >
               <AssetIcon
                 alt=""
-                className="h-[44px] w-[44px] rounded-full min-[390px]:h-[52px] min-[390px]:w-[52px]"
+                className="h-10 w-10 rounded-full min-[390px]:h-[52px] min-[390px]:w-[52px]"
                 loading="eager"
                 size={52}
                 src={brand.assets.floralEmblem.publicUrl}
               />
-              <span className="editorial-title text-[13px] leading-[0.96] tracking-[0.28em] min-[390px]:text-[16px] min-[390px]:tracking-[0.38em]">
+              <span className="editorial-title text-[12px] leading-[0.96] tracking-[0.22em] min-[390px]:text-[16px] min-[390px]:tracking-[0.38em]">
                 Sushi
                 <br />
                 Bliss
@@ -102,7 +102,7 @@ export function MobileOrderConfirmation({
             </Link>
             <button
               aria-label="Close order confirmation"
-              className="grid h-[44px] w-[44px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/34 min-[390px]:h-[48px] min-[390px]:w-[48px]"
+              className="grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/34 min-[390px]:h-[48px] min-[390px]:w-[48px]"
               onClick={onClose}
               type="button"
             >
@@ -110,11 +110,11 @@ export function MobileOrderConfirmation({
             </button>
           </header>
 
-          <main className="pt-10 text-center min-[390px]:pt-16">
-            <div className="mx-auto grid h-[124px] w-[124px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/38 shadow-[0_0_34px_rgb(215_168_79_/_0.24)] min-[390px]:h-[150px] min-[390px]:w-[150px]">
+          <main className="pt-8 text-center min-[390px]:pt-16">
+            <div className="mx-auto grid h-[108px] w-[108px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/38 shadow-[0_0_34px_rgb(215_168_79_/_0.24)] min-[390px]:h-[150px] min-[390px]:w-[150px]">
               <svg
                 aria-hidden="true"
-                className="h-16 w-16 text-[var(--sb-gold-soft)] min-[390px]:h-20 min-[390px]:w-20"
+                className="h-14 w-14 text-[var(--sb-gold-soft)] min-[390px]:h-20 min-[390px]:w-20"
                 fill="none"
                 viewBox="0 0 80 80"
               >
@@ -128,19 +128,19 @@ export function MobileOrderConfirmation({
               </svg>
             </div>
 
-            <h1 className="editorial-title mt-8 text-[30px] leading-none min-[390px]:mt-10 min-[390px]:text-[39px]">
+            <h1 className="editorial-title mt-7 text-[28px] leading-none min-[390px]:mt-10 min-[390px]:text-[39px]">
               Order{" "}
               <span className="text-[var(--sb-red-bright)]">Confirmed</span>
             </h1>
-            <p className="mt-4 text-[16px] text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[22px]">
+            <p className="mt-4 text-[15px] text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[22px]">
               Thank you, {order.customer.name.split(" ")[0]}.
             </p>
-            <p className="mx-auto mt-3 max-w-[340px] text-[14px] leading-6 text-white/70 min-[390px]:mt-4 min-[390px]:text-[17px] min-[390px]:leading-7">
+            <p className="mx-auto mt-3 max-w-[340px] text-[13px] leading-[22px] text-white/70 min-[390px]:mt-4 min-[390px]:text-[17px] min-[390px]:leading-7">
               Your order has been received and is being prepared with the finest
               ingredients.
             </p>
 
-            <section className="mt-7 overflow-hidden rounded-[17px] border border-[var(--sb-border)] bg-black/42 text-left min-[390px]:mt-9">
+            <section className="mt-6 overflow-hidden rounded-[17px] border border-[var(--sb-border)] bg-black/42 text-left min-[390px]:mt-9">
               <ConfirmationRow
                 icon={icons.menu}
                 label="Order number"
@@ -169,12 +169,12 @@ export function MobileOrderConfirmation({
             </section>
 
             {pointsAwarded > 0 ? (
-              <p className="mt-5 text-[13px] text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[15px]">
+              <p className="mt-5 text-[12px] leading-5 text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[15px]">
                 +{pointsAwarded} Bliss Points added to your rewards.
               </p>
             ) : null}
 
-            <p className="mx-auto mt-6 max-w-[340px] text-[14px] leading-6 text-white/68 min-[390px]:mt-8 min-[390px]:text-[17px] min-[390px]:leading-7">
+            <p className="mx-auto mt-5 max-w-[340px] text-[13px] leading-[22px] text-white/68 min-[390px]:mt-8 min-[390px]:text-[17px] min-[390px]:leading-7">
               We&apos;re preparing your sushi with care. You&apos;ll receive
               updates as your order progresses.
             </p>
@@ -182,14 +182,14 @@ export function MobileOrderConfirmation({
             <MobileConfirmationNextSteps mode={order.mode} />
 
             <Link
-              className="red-glow-button mt-6 flex min-h-[58px] w-full items-center justify-center rounded-[14px] text-[14px] uppercase tracking-[0.07em] min-[390px]:mt-8 min-[390px]:min-h-[66px] min-[390px]:text-[17px]"
+              className="red-glow-button mt-6 flex min-h-[56px] w-full items-center justify-center rounded-[14px] text-[13px] uppercase tracking-[0.06em] min-[390px]:mt-8 min-[390px]:min-h-[66px] min-[390px]:text-[17px] min-[390px]:tracking-[0.07em]"
               href="/orders"
               onClick={onClose}
             >
               Track order
             </Link>
             <Link
-              className="mt-4 flex min-h-[54px] w-full items-center justify-center rounded-[14px] border border-[var(--sb-border)] bg-black/30 text-[14px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] min-[390px]:mt-5 min-[390px]:min-h-[60px] min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
+              className="mt-4 flex min-h-[52px] w-full items-center justify-center rounded-[14px] border border-[var(--sb-border)] bg-black/30 text-[13px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:mt-5 min-[390px]:min-h-[60px] min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
               href="/home"
               onClick={onClose}
             >
@@ -215,8 +215,8 @@ function MobileConfirmationNextSteps({ mode }: { mode: Order["mode"] }) {
   ] as const;
 
   return (
-    <section className="mt-6 rounded-[17px] border border-white/10 bg-black/36 px-3.5 py-4 text-left min-[390px]:mt-7 min-[390px]:px-4 min-[390px]:py-5">
-      <h2 className="text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] min-[390px]:text-[13px] min-[390px]:tracking-[0.12em]">
+    <section className="mt-5 rounded-[17px] border border-white/10 bg-black/36 px-3 py-4 text-left min-[390px]:mt-7 min-[390px]:px-4 min-[390px]:py-5">
+      <h2 className="text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[390px]:text-[13px] min-[390px]:tracking-[0.12em]">
         What happens next
       </h2>
       <ol className="relative mt-4 grid grid-cols-3 gap-1.5 min-[390px]:mt-5 min-[390px]:gap-2">
@@ -234,19 +234,19 @@ function MobileConfirmationNextSteps({ mode }: { mode: Order["mode"] }) {
             key={step.label}
           >
             <span
-              className={`relative z-10 mx-auto grid h-[46px] w-[46px] place-items-center rounded-full border bg-black/62 min-[390px]:h-[52px] min-[390px]:w-[52px] ${
+              className={`relative z-10 mx-auto grid h-[42px] w-[42px] place-items-center rounded-full border bg-black/62 min-[390px]:h-[52px] min-[390px]:w-[52px] ${
                 step.active
                   ? "border-[var(--sb-red-bright)] shadow-[0_0_24px_rgba(238,43,36,0.36),inset_0_0_16px_rgba(238,43,36,0.18)]"
                   : "border-white/18 shadow-[inset_0_0_14px_rgba(0,0,0,0.62)]"
               }`}
             >
-              <AssetIcon size={21} src={step.icon} />
+              <AssetIcon size={20} src={step.icon} />
               {step.active ? (
                 <span className="absolute -bottom-1 h-1.5 w-7 rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(238,43,36,0.78)] min-[390px]:w-8" />
               ) : null}
             </span>
             <span
-              className={`mt-2.5 block text-[10px] uppercase tracking-[0.06em] min-[390px]:mt-3 min-[390px]:text-[11px] min-[390px]:tracking-[0.08em] ${
+              className={`mt-2.5 block text-[9px] uppercase leading-3 tracking-[0.04em] min-[390px]:mt-3 min-[390px]:text-[11px] min-[390px]:leading-4 min-[390px]:tracking-[0.08em] ${
                 step.active ? "text-[var(--sb-red-bright)]" : "text-white/48"
               }`}
             >
@@ -271,22 +271,26 @@ function ConfirmationRow({
   value: string;
 }) {
   return (
-    <div className="grid min-h-[82px] grid-cols-[48px_minmax(0,1fr)_28px] items-center gap-2.5 border-b border-white/10 px-3 py-3.5 last:border-b-0 min-[390px]:min-h-[92px] min-[390px]:grid-cols-[64px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4 min-[390px]:py-4">
-      <span className="grid h-[44px] w-[44px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/32 min-[390px]:h-[52px] min-[390px]:w-[52px]">
-        <AssetIcon size={26} src={icon} />
+    <div className="grid min-h-[78px] grid-cols-[42px_minmax(0,1fr)] items-center gap-2.5 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:min-h-[92px] min-[390px]:grid-cols-[64px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4 min-[390px]:py-4">
+      <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] bg-black/32 min-[390px]:h-[52px] min-[390px]:w-[52px]">
+        <AssetIcon size={24} src={icon} />
       </span>
       <p className="min-w-0">
-        <span className="editorial-title block text-[14px] text-[var(--sb-gold-soft)] min-[390px]:text-[17px]">
+        <span className="editorial-title block text-[13px] text-[var(--sb-gold-soft)] min-[390px]:text-[17px]">
           {label}
         </span>
-        <span className="mt-1.5 block break-words text-[14px] leading-5 text-white min-[390px]:mt-2 min-[390px]:text-[18px] min-[390px]:leading-6">
+        <span className="mt-1.5 block break-words text-[13px] leading-5 text-white min-[390px]:mt-2 min-[390px]:text-[18px] min-[390px]:leading-6">
           {value}
         </span>
       </p>
       {accentIcon ? (
-        <AssetIcon className="justify-self-end" size={28} src={accentIcon} />
+        <AssetIcon
+          className="hidden justify-self-end min-[390px]:inline-block"
+          size={28}
+          src={accentIcon}
+        />
       ) : (
-        <span aria-hidden="true" />
+        <span aria-hidden="true" className="hidden min-[390px]:block" />
       )}
     </div>
   );

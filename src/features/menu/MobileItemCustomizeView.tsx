@@ -58,34 +58,34 @@ export function MobileItemCustomizeView({
   const pointsEarned = Math.max(1, Math.floor(totalCents / 100));
 
   return (
-    <div className="smooth-scroll-area h-dvh overflow-x-hidden overflow-y-auto bg-black px-4 pb-[calc(2rem+var(--sb-safe-bottom))] pt-5">
+    <div className="smooth-scroll-area h-dvh overflow-x-hidden overflow-y-auto bg-black px-3 pb-[calc(2rem+var(--sb-safe-bottom))] pt-4 min-[390px]:px-4 min-[390px]:pt-5">
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(120,14,12,0.22),transparent_24%),radial-gradient(circle_at_88%_24%,rgba(202,164,93,0.08),transparent_24%),linear-gradient(180deg,#050505_0%,#080706_42%,#030303_100%)]" />
       </div>
 
       <div className="mobile-frame relative z-10">
-        <header className="grid grid-cols-[44px_minmax(0,1fr)_42px] items-center gap-2 min-[390px]:grid-cols-[52px_1fr_52px] min-[390px]:gap-0">
+        <header className="grid grid-cols-[42px_minmax(0,1fr)_38px] items-center gap-2 min-[390px]:grid-cols-[52px_1fr_52px] min-[390px]:gap-0">
           <button
             aria-label="Back to item details"
-            className="grid h-[44px] w-[44px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/36 text-[var(--sb-gold)] min-[390px]:h-[48px] min-[390px]:w-[48px]"
+            className="grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/36 text-[var(--sb-gold)] min-[390px]:h-[48px] min-[390px]:w-[48px]"
             onClick={onBack}
             type="button"
           >
             <ChevronIcon direction="left" size={18} />
           </button>
-          <h1 className="editorial-title min-w-0 text-center text-[14px] uppercase leading-5 tracking-[0.06em] text-[var(--sb-gold)] min-[390px]:text-[19px] min-[390px]:tracking-[0.14em]">
+          <h1 className="editorial-title min-w-0 text-center text-[13px] uppercase leading-5 tracking-[0.04em] text-[var(--sb-gold)] min-[390px]:text-[19px] min-[390px]:tracking-[0.14em]">
             Customize Your Item
           </h1>
-          <div className="relative justify-self-end">
-            <AssetIcon loading="eager" size={32} src={icons.cart} />
+          <div className="relative grid h-[38px] w-[38px] place-items-center justify-self-end rounded-full border border-[var(--sb-border)] bg-black/28 min-[390px]:h-auto min-[390px]:w-auto min-[390px]:border-0 min-[390px]:bg-transparent">
+            <AssetIcon loading="eager" size={28} src={icons.cart} />
             <span className="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold">
               {quantity}
             </span>
           </div>
         </header>
 
-        <section className="mt-5 grid grid-cols-[104px_minmax(0,1fr)] gap-3 rounded-[18px] border border-[var(--sb-border)] bg-black/46 p-3 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4 min-[390px]:p-4">
-          <div className="relative h-[106px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] min-[390px]:h-[128px]">
+        <section className="mt-4 grid grid-cols-[92px_minmax(0,1fr)] gap-2.5 rounded-[18px] border border-[var(--sb-border)] bg-black/46 p-2.5 min-[390px]:mt-5 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4 min-[390px]:p-4">
+          <div className="relative h-[100px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] min-[390px]:h-[128px]">
             <Image
               alt=""
               className="object-cover"
@@ -97,19 +97,19 @@ export function MobileItemCustomizeView({
             />
           </div>
           <div className="min-w-0 self-center">
-            <span className="rounded-[7px] border border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 px-2 py-1 text-[10px] uppercase text-white min-[390px]:px-2.5 min-[390px]:text-[11px]">
+            <span className="inline-flex max-w-full truncate rounded-[7px] border border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 px-2 py-1 text-[9px] uppercase text-white min-[390px]:px-2.5 min-[390px]:text-[11px]">
               {item.tags.includes("premium") ? "Premium" : item.categoryLabel}
             </span>
-            <h2 className="editorial-title mt-2 line-clamp-2 text-[19px] leading-6 min-[390px]:mt-3 min-[390px]:text-[24px] min-[390px]:leading-7">
+            <h2 className="editorial-title mt-2 line-clamp-2 text-[18px] leading-[22px] min-[390px]:mt-3 min-[390px]:text-[24px] min-[390px]:leading-7">
               {item.name}
             </h2>
-            <p className="mt-1 line-clamp-1 text-[13px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
+            <p className="mt-1 line-clamp-1 text-[12px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
               {item.description}
             </p>
-            <p className="mt-2 line-clamp-2 text-[12px] leading-[18px] text-white/64 min-[390px]:mt-3 min-[390px]:text-[13px] min-[390px]:leading-5">
+            <p className="mt-2 line-clamp-2 text-[11px] leading-4 text-white/64 min-[390px]:mt-3 min-[390px]:text-[13px] min-[390px]:leading-5">
               {item.chefNote}
             </p>
-            <p className="mt-3 text-[18px] text-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:text-[22px]">
+            <p className="mt-2 text-[17px] text-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:text-[22px]">
               {formatMoney(item.priceCents)}
             </p>
           </div>
@@ -124,14 +124,14 @@ export function MobileItemCustomizeView({
           </div>
         </section>
 
-        <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-4">
+        <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-3 min-[390px]:p-4">
           <div className="flex items-start gap-3">
-            <AssetIcon size={30} src={icons.flower} />
-            <div>
-              <h2 className="editorial-title text-[20px] uppercase tracking-[0.08em]">
+            <AssetIcon size={27} src={icons.flower} />
+            <div className="min-w-0">
+              <h2 className="editorial-title text-[18px] uppercase tracking-[0.06em] min-[390px]:text-[20px] min-[390px]:tracking-[0.08em]">
                 Add-ons
               </h2>
-              <p className="mt-1 text-[13px] text-white/62">
+              <p className="mt-1 text-[12px] leading-5 text-white/62 min-[390px]:text-[13px]">
                 Elevate your experience with premium add-ons.
               </p>
             </div>
@@ -148,19 +148,19 @@ export function MobileItemCustomizeView({
           </div>
         </section>
 
-        <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-4">
+        <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-3 min-[390px]:p-4">
           <label
-            className="editorial-title flex flex-wrap items-center gap-2.5 text-[15px] uppercase tracking-[0.06em] text-white/86 min-[390px]:gap-3 min-[390px]:text-[18px] min-[390px]:tracking-[0.08em]"
+            className="editorial-title flex flex-wrap items-center gap-2 text-[14px] uppercase tracking-[0.04em] text-white/86 min-[390px]:gap-3 min-[390px]:text-[18px] min-[390px]:tracking-[0.08em]"
             htmlFor={`mobile-notes-${item.id}`}
           >
-            <AssetIcon size={26} src={icons.settings} />
+            <AssetIcon size={24} src={icons.settings} />
             Special instructions
             <span className="text-[11px] text-white/42 min-[390px]:text-[12px]">
               (optional)
             </span>
           </label>
           <textarea
-            className="mt-4 min-h-[92px] w-full resize-none rounded-[12px] border border-[var(--sb-border)] bg-black/36 px-4 py-3 text-[15px] text-white outline-none placeholder:text-white/38 focus:border-[var(--sb-gold)]"
+            className="mt-3 min-h-[88px] w-full resize-none rounded-[12px] border border-[var(--sb-border)] bg-black/36 px-3 py-3 text-[14px] leading-5 text-white outline-none placeholder:text-white/38 focus:border-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:min-h-[92px] min-[390px]:px-4 min-[390px]:text-[15px]"
             id={`mobile-notes-${item.id}`}
             maxLength={180}
             onChange={(event) => onNotesChange(event.target.value)}
@@ -172,9 +172,9 @@ export function MobileItemCustomizeView({
           </p>
         </section>
 
-        <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-4">
-          <h2 className="editorial-title flex items-center gap-3 text-[16px] uppercase tracking-[0.06em] min-[390px]:text-[18px] min-[390px]:tracking-[0.08em]">
-            <AssetIcon size={26} src={icons.chef} />
+        <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/42 p-3 min-[390px]:p-4">
+          <h2 className="editorial-title flex items-center gap-2.5 text-[15px] uppercase tracking-[0.04em] min-[390px]:gap-3 min-[390px]:text-[18px] min-[390px]:tracking-[0.08em]">
+            <AssetIcon size={24} src={icons.chef} />
             Presentation preference
           </h2>
           <div className="mt-4 grid gap-3">
@@ -185,17 +185,17 @@ export function MobileItemCustomizeView({
 
               return (
                 <fieldset
-                  className="rounded-[14px] border border-white/10 bg-white/[0.025] p-3"
+                  className="rounded-[14px] border border-white/10 bg-white/[0.025] p-2.5 min-[390px]:p-3"
                   key={group.id}
                 >
-                  <legend className="px-1 text-[12px] uppercase text-[var(--sb-gold)] min-[390px]:text-[13px]">
+                  <legend className="px-1 text-[11px] uppercase text-[var(--sb-gold)] min-[390px]:text-[13px]">
                     {group.label}
                   </legend>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {group.options.map((option) => (
                       <label
                         className={classNames(
-                          "cursor-pointer rounded-[10px] border px-2.5 py-2 text-[11px] min-[390px]:px-3 min-[390px]:text-[12px]",
+                          "cursor-pointer rounded-[10px] border px-2.5 py-2 text-[10px] leading-4 min-[390px]:px-3 min-[390px]:text-[12px]",
                           selected?.optionId === option.id
                             ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/16 text-white"
                             : "border-white/10 bg-black/24 text-white/58",
@@ -221,12 +221,12 @@ export function MobileItemCustomizeView({
           </div>
         </section>
 
-        <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/50 p-4">
-          <h2 className="editorial-title flex items-center gap-3 text-[16px] uppercase tracking-[0.06em] min-[390px]:text-[18px] min-[390px]:tracking-[0.08em]">
-            <AssetIcon size={26} src={icons.chef} />
+        <section className="mt-4 rounded-[18px] border border-[var(--sb-border)] bg-black/50 p-3 min-[390px]:p-4">
+          <h2 className="editorial-title flex items-center gap-2.5 text-[15px] uppercase tracking-[0.04em] min-[390px]:gap-3 min-[390px]:text-[18px] min-[390px]:tracking-[0.08em]">
+            <AssetIcon size={24} src={icons.chef} />
             Order summary
           </h2>
-          <div className="mt-4 space-y-2 border-t border-white/10 pt-4 text-[13px] min-[390px]:text-[15px]">
+          <div className="mt-4 space-y-2 border-t border-white/10 pt-4 text-[12px] min-[390px]:text-[15px]">
             <SummaryLine
               label="Unit price"
               muted
@@ -258,13 +258,13 @@ export function MobileItemCustomizeView({
           </div>
           <button
             aria-label={`Add ${quantity} to cart`}
-            className="red-glow-button mt-5 min-h-[60px] w-full rounded-[14px] px-4 text-[14px] uppercase tracking-[0.06em] min-[390px]:min-h-[70px] min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
+            className="red-glow-button mt-5 min-h-[56px] w-full rounded-[14px] px-3 text-[13px] uppercase tracking-[0.05em] min-[390px]:min-h-[70px] min-[390px]:px-4 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
             onClick={onAddToCart}
             type="button"
           >
             Add to Cart - {formatMoney(totalCents)}
           </button>
-          <p className="mt-4 text-center text-[13px] text-white/56">
+          <p className="mt-4 text-center text-[12px] leading-5 text-white/56 min-[390px]:text-[13px]">
             Earn{" "}
             <span className="text-[var(--sb-gold)]">
               {pointsEarned} Bliss Points
@@ -293,7 +293,7 @@ function MobileAddOnRow({
     <button
       aria-pressed={checked}
       className={classNames(
-        "grid min-h-[72px] w-full grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-2 rounded-[14px] border px-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[78px] min-[390px]:grid-cols-[58px_minmax(0,1fr)_58px] min-[390px]:gap-3 min-[390px]:px-3",
+        "grid min-h-[70px] w-full grid-cols-[42px_minmax(0,1fr)_40px] items-center gap-2 rounded-[14px] border px-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[78px] min-[390px]:grid-cols-[58px_minmax(0,1fr)_58px] min-[390px]:gap-3 min-[390px]:px-3",
         checked
           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12"
           : "border-white/10 bg-white/[0.025]",
@@ -301,7 +301,7 @@ function MobileAddOnRow({
       onClick={() => onToggle(addOn.id)}
       type="button"
     >
-      <span className="grid h-[42px] w-[42px] place-items-center overflow-hidden rounded-[11px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] min-[390px]:h-[54px] min-[390px]:w-[54px] min-[390px]:rounded-[13px]">
+      <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-[11px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] min-[390px]:h-[54px] min-[390px]:w-[54px] min-[390px]:rounded-[13px]">
         <Image
           alt=""
           className="h-full w-full object-cover"
@@ -313,15 +313,15 @@ function MobileAddOnRow({
         />
       </span>
       <span className="min-w-0">
-        <span className="editorial-title block truncate text-[13px] uppercase tracking-[0.02em] min-[390px]:text-[16px] min-[390px]:tracking-[0.04em]">
+        <span className="editorial-title block truncate text-[12px] uppercase tracking-[0.02em] min-[390px]:text-[16px] min-[390px]:tracking-[0.04em]">
           {displayLabel}
         </span>
-        <span className="mt-1 block line-clamp-2 text-[11px] leading-[16px] text-white/58 min-[390px]:text-[13px] min-[390px]:leading-5">
+        <span className="mt-1 block line-clamp-2 text-[10px] leading-[15px] text-white/58 min-[390px]:text-[13px] min-[390px]:leading-5">
           {addOn.description}
         </span>
       </span>
       <span className="grid gap-1.5 justify-self-end text-right min-[390px]:gap-2">
-        <span className="text-[12px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
+        <span className="text-[11px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
           {formatMoney(addOn.priceCents)}
         </span>
         <span
