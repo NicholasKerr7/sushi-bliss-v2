@@ -98,6 +98,7 @@ export function DesktopMenuHero({
     desktopHeroContent[category as keyof typeof desktopHeroContent] ||
     desktopHeroContent.all;
   const showFeaturedActions = category === "all";
+  const featuredItemShortName = menuHeroItem.name.replace(/\s+Nigiri$/, "");
 
   return (
     <section className="relative min-h-[216px] overflow-hidden rounded-[16px] border border-white/10 min-[1500px]:min-h-[174px]">
@@ -130,18 +131,20 @@ export function DesktopMenuHero({
         {showFeaturedActions ? (
           <div className="mt-4 flex gap-3 min-[1500px]:hidden">
             <button
+              aria-label={`Add ${menuHeroItem.name} to cart`}
               className="red-glow-button h-11 w-[180px] rounded-[10px] text-[12px] uppercase tracking-[0.08em]"
               onClick={() => onAddToCart(menuHeroItem)}
               type="button"
             >
-              Add feature
+              Add {featuredItemShortName}
             </button>
             <button
+              aria-label={`View details for ${menuHeroItem.name}`}
               className="h-11 w-[170px] rounded-[10px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
               onClick={() => onViewDetails(menuHeroItem)}
               type="button"
             >
-              View details
+              View Pairing
             </button>
           </div>
         ) : null}

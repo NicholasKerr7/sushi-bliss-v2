@@ -469,7 +469,7 @@ export function AdminDomainConsole({
                     onClick={() => onOpenForms(activeSection.id)}
                     type="button"
                   >
-                    {formActionLabel ?? "Form coming soon"}
+                    {formActionLabel ?? "Workspace only"}
                   </button>
                   <button
                     className="h-10 rounded-[12px] border border-white/12 bg-black/20 px-4 text-[12px] font-semibold uppercase tracking-[0.07em] text-white/68 transition hover:border-[var(--sb-red-bright)]/42 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold 2xl:h-11"
