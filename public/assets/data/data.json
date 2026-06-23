@@ -1337,15 +1337,18 @@
         "publicUrl": "/assets/ingredients/salmon-fillet.webp"
       },
       "sakePairing": {
-        "id": "sushi-cone-seasonal-sake",
+        "id": "sushi-cone-senkin-modern-muku",
         "menuItemId": "sushi-cone",
         "menuName": "Sushi Cone",
-        "sakeName": "Chef's Seasonal Sake",
-        "sakeSlug": "chefs-seasonal-sake",
-        "image": null,
+        "sakeName": "Senkin Modern Muku",
+        "sakeSlug": "senkin-modern-muku",
+        "image": {
+          "filePath": "public/assets/pairings/sushi-cone-senkin-modern-muku.webp",
+          "publicUrl": "/assets/pairings/sushi-cone-senkin-modern-muku.webp"
+        },
         "textIsDynamic": true,
         "bakedTextRemoved": true,
-        "filenameRule": "fallback-without-dedicated-pairing-asset"
+        "filenameRule": "sushi-or-sashimi-name-then-sake-name"
       }
     },
     {
@@ -1909,15 +1912,18 @@
       "filenameRule": "sushi-or-sashimi-name-then-sake-name"
     },
     {
-      "id": "sushi-cone-seasonal-sake",
+      "id": "sushi-cone-senkin-modern-muku",
       "menuItemId": "sushi-cone",
       "menuName": "Sushi Cone",
-      "sakeName": "Chef's Seasonal Sake",
-      "sakeSlug": "chefs-seasonal-sake",
-      "image": null,
+      "sakeName": "Senkin Modern Muku",
+      "sakeSlug": "senkin-modern-muku",
+      "image": {
+        "filePath": "public/assets/pairings/sushi-cone-senkin-modern-muku.webp",
+        "publicUrl": "/assets/pairings/sushi-cone-senkin-modern-muku.webp"
+      },
       "textIsDynamic": true,
       "bakedTextRemoved": true,
-      "filenameRule": "fallback-without-dedicated-pairing-asset"
+      "filenameRule": "sushi-or-sashimi-name-then-sake-name"
     },
     {
       "id": "tako-nigiri-suigei-tokubetsu-junmai",

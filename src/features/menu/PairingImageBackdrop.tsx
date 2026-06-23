@@ -7,7 +7,7 @@ interface PairingImageBackdropProps {
   sizes: string;
 }
 
-/** Adds ambient fill behind portrait pairing photos without cropping the foreground. */
+/** Adds ambient depth behind composed pairing photos. */
 export function PairingImageBackdrop({
   imageUrl,
   sizes,

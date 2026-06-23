@@ -287,7 +287,7 @@ export function DesktopImageThumbs({
             className={getMenuGalleryImageClassName(
               image,
               "object-cover",
-              "object-contain p-1.5",
+              "object-cover object-[50%_50%]",
             )}
             fill
             sizes="95px"

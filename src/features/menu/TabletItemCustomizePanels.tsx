@@ -110,7 +110,7 @@ export function ProductStoryCard({
                 className={getMenuGalleryImageClassName(
                   imageUrl,
                   "object-cover",
-                  "object-contain p-1.5",
+                  "object-cover object-[50%_50%]",
                 )}
                 fill
                 sizes="110px"
