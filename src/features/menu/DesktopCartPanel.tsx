@@ -35,11 +35,16 @@ export function DesktopCartPanel({
   const itemCount = items.length;
 
   return (
-    <aside className="rounded-[18px] border border-[var(--sb-border)] bg-[#070909]/92 p-5 shadow-[0_28px_90px_rgba(0,0,0,0.48)] min-[1500px]:mt-4">
+    <aside className="overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-[radial-gradient(circle_at_18%_0%,rgba(239,47,37,0.16),transparent_30%),linear-gradient(145deg,rgba(255,255,255,0.055),rgba(7,9,9,0.94)_42%,rgba(4,5,5,0.98))] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_28px_90px_rgba(0,0,0,0.5)] min-[1500px]:mt-4">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="editorial-title text-[21px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-          Your Cart
-        </h2>
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">
+            Order tray
+          </p>
+          <h2 className="editorial-title mt-1 text-[21px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+            Your Cart
+          </h2>
+        </div>
         <div className="flex items-center gap-3">
           <span className="rounded-full border border-[var(--sb-gold)]/36 px-3 py-1 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
             {itemCount} {itemCount === 1 ? "item" : "items"}
@@ -57,7 +62,7 @@ export function DesktopCartPanel({
       </div>
 
       {items.length > 0 ? (
-        <div className="mt-4 grid min-[1500px]:mt-0">
+        <div className="smooth-scroll-area mt-4 grid max-h-[430px] gap-3 overflow-y-auto pr-1 min-[1500px]:max-h-[320px]">
           {items.map((item) => (
             <DesktopCartLine
               item={item}
@@ -68,7 +73,7 @@ export function DesktopCartPanel({
           ))}
         </div>
       ) : (
-        <div className="mt-5 rounded-[14px] border border-dashed border-white/14 bg-white/[0.025] p-5 text-center">
+        <div className="mt-5 rounded-[16px] border border-dashed border-[var(--sb-gold)]/24 bg-black/24 p-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
           <AssetIcon
             className="mx-auto opacity-80"
             size={42}
@@ -84,7 +89,7 @@ export function DesktopCartPanel({
       )}
 
       {items.length > 0 ? (
-        <label className="mt-4 grid h-9 grid-cols-[28px_1fr] items-center rounded-[9px] border border-white/10 bg-black/28 px-3 text-[12px] text-white/50 min-[1500px]:mt-3">
+        <label className="mt-4 grid h-11 grid-cols-[28px_1fr] items-center rounded-[12px] border border-white/10 bg-black/28 px-3 text-[12px] text-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] min-[1500px]:mt-3">
           <AssetIcon size={18} src="/assets/icons/gift-icon.png" />
           <span className="sr-only">Add a note</span>
           <input
@@ -95,7 +100,7 @@ export function DesktopCartPanel({
         </label>
       ) : null}
 
-      <div className="mt-4 space-y-2 border-t border-white/10 pt-4 text-[14px] min-[1500px]:mt-3 min-[1500px]:pt-3">
+      <div className="mt-4 space-y-2 rounded-[16px] border border-white/10 bg-black/24 p-4 text-[14px] shadow-[inset_0_1px_0_rgba(255,255,255,0.045)] min-[1500px]:mt-3">
         <TotalRow label="Subtotal" value={formatMoney(totals.subtotalCents)} />
         <TotalRow
           label="Delivery Fee"
@@ -111,15 +116,15 @@ export function DesktopCartPanel({
         {totals.tipCents > 0 ? (
           <TotalRow label="Tip" value={formatMoney(totals.tipCents)} />
         ) : null}
-      </div>
 
-      <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 min-[1500px]:mt-3 min-[1500px]:pt-3">
-        <span className="editorial-title text-[19px] uppercase text-white/86">
-          Total
-        </span>
-        <span className="font-mono text-[25px] text-[var(--sb-gold-soft)]">
-          {formatMoney(totals.totalCents)}
-        </span>
+        <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
+          <span className="editorial-title text-[19px] uppercase text-white/86">
+            Total
+          </span>
+          <span className="font-mono text-[25px] text-[var(--sb-gold-soft)]">
+            {formatMoney(totals.totalCents)}
+          </span>
+        </div>
       </div>
 
       {showCta ? (
@@ -185,70 +190,79 @@ function DesktopCartLine({
   const unitPrice = calculateCartLineUnitPrice(item.menuItem, item.addOns);
 
   return (
-    <article className="relative grid min-h-[114px] grid-cols-[64px_minmax(0,1fr)_72px_52px] items-center gap-2 border-b border-white/10 py-3 last:border-b-0 min-[1500px]:min-h-[72px] min-[1500px]:py-1">
-      <div className="relative h-[68px] overflow-hidden rounded-[8px] border border-white/10 bg-black/40 min-[1500px]:h-14">
-        <Image
-          alt=""
-          className="object-cover"
-          fetchPriority="high"
-          fill
-          loading="eager"
-          sizes="64px"
-          src={item.menuItem.image.publicUrl}
-        />
-      </div>
-      <div className="min-w-0">
-        <h3 className="truncate text-[14px] font-semibold text-white">
-          {item.menuItem.name}
-        </h3>
-        <p className="mt-1 line-clamp-2 text-[12px] leading-4 text-white/50">
-          {item.menuItem.ingredients.slice(0, 3).join(", ")}
-        </p>
-        <p className="mt-1 font-mono text-[14px] text-[var(--sb-gold-soft)]">
-          {formatMoney(unitPrice)}
-        </p>
-      </div>
-      {onUpdateQuantity ? (
-        <div className="grid h-8 grid-cols-[22px_28px_22px] overflow-hidden rounded-[10px] border border-[var(--sb-gold)]/22">
-          <button
-            aria-label={`Decrease ${item.menuItem.name} quantity`}
-            className="text-[var(--sb-gold-soft)] disabled:opacity-35"
-            disabled={item.quantity <= 1}
-            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-            type="button"
-          >
-            -
-          </button>
-          <span className="grid place-items-center border-x border-white/10 font-mono text-[13px] text-white">
-            {item.quantity}
-          </span>
-          <button
-            aria-label={`Increase ${item.menuItem.name} quantity`}
-            className="text-[var(--sb-gold-soft)]"
-            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-            type="button"
-          >
-            +
-          </button>
+    <article className="rounded-[16px] border border-white/10 bg-black/26 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.045)]">
+      <div className="grid grid-cols-[68px_minmax(0,1fr)] gap-3">
+        <div className="relative h-[72px] overflow-hidden rounded-[10px] border border-white/10 bg-black/40">
+          <Image
+            alt=""
+            className="object-cover"
+            fetchPriority="high"
+            fill
+            loading="eager"
+            sizes="68px"
+            src={item.menuItem.image.publicUrl}
+          />
         </div>
-      ) : (
-        <p className="text-center text-[13px] text-white/56">
-          x {item.quantity}
-        </p>
-      )}
-      <p className="self-center text-right font-mono text-[13px] text-white">
-        {formatMoney(calculateCartLineSubtotal(item))}
-      </p>
-      {onRemove ? (
-        <button
-          aria-label={`Remove ${item.menuItem.name}`}
-          className="absolute right-0 top-4 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/18 text-white/58 transition hover:border-[var(--sb-red-bright)]/60 hover:text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-          onClick={() => onRemove(item.id)}
-          type="button"
-        >
-          <ChevronIcon direction="x" size={15} />
-        </button>
-      ) : null}
+        <div className="min-w-0">
+          <div className="flex items-start justify-between gap-3">
+            <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-white">
+              {item.menuItem.name}
+            </h3>
+            <p className="shrink-0 font-mono text-[13px] text-[var(--sb-gold-soft)]">
+              {formatMoney(unitPrice)}
+            </p>
+          </div>
+          <p className="mt-1 line-clamp-2 text-[12px] leading-4 text-white/52">
+            {item.menuItem.ingredients.slice(0, 3).join(", ")}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-3 flex items-center justify-between gap-3">
+        {onUpdateQuantity ? (
+          <div className="grid h-9 grid-cols-[28px_34px_28px] overflow-hidden rounded-[11px] border border-[var(--sb-gold)]/24 bg-black/22">
+            <button
+              aria-label={`Decrease ${item.menuItem.name} quantity`}
+              className="text-[var(--sb-gold-soft)] disabled:opacity-35"
+              disabled={item.quantity <= 1}
+              onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+              type="button"
+            >
+              -
+            </button>
+            <span className="grid place-items-center border-x border-white/10 font-mono text-[13px] text-white">
+              {item.quantity}
+            </span>
+            <button
+              aria-label={`Increase ${item.menuItem.name} quantity`}
+              className="text-[var(--sb-gold-soft)]"
+              onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+              type="button"
+            >
+              +
+            </button>
+          </div>
+        ) : (
+          <p className="font-mono text-[13px] text-white/56">
+            Qty {item.quantity}
+          </p>
+        )}
+        <div className="flex min-w-0 items-center gap-3">
+          {onRemove ? (
+            <button
+              aria-label={`Remove ${item.menuItem.name}`}
+              className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/44 transition hover:text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+              onClick={() => onRemove(item.id)}
+              type="button"
+            >
+              Remove
+            </button>
+          ) : null}
+          <p className="font-mono text-[14px] text-white">
+            {formatMoney(calculateCartLineSubtotal(item))}
+          </p>
+        </div>
+      </div>
     </article>
   );
 }
