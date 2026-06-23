@@ -256,9 +256,9 @@ export function TabletCustomizeView({
         </div>
       </section>
 
-      <div className="mt-3 grid grid-cols-[260px_1fr_180px_270px] items-center gap-6 rounded-[20px] border border-[var(--sb-gold)]/28 bg-[#111111]/95 p-4 shadow-[0_24px_70px_rgb(0_0_0_/_0.56)] backdrop-blur">
-        <div className="grid grid-cols-[64px_1fr] items-center gap-4">
-          <div className="relative h-[64px] overflow-hidden rounded-[10px] border border-white/12">
+      <div className="sticky bottom-3 z-20 mt-3 grid grid-cols-[minmax(0,1fr)_minmax(174px,220px)] items-center gap-3 rounded-[20px] border border-[var(--sb-gold)]/28 bg-[#111111]/95 p-3 shadow-[0_24px_70px_rgb(0_0_0_/_0.56)] backdrop-blur min-[980px]:grid-cols-[240px_minmax(0,1fr)_150px_220px] min-[980px]:gap-4 min-[980px]:p-4 min-[1080px]:grid-cols-[260px_minmax(0,1fr)_180px_270px] min-[1080px]:gap-6">
+        <div className="grid min-w-0 grid-cols-[54px_minmax(0,1fr)] items-center gap-3 min-[980px]:grid-cols-[64px_1fr] min-[980px]:gap-4">
+          <div className="relative h-[54px] overflow-hidden rounded-[10px] border border-white/12 min-[980px]:h-[64px]">
             <Image
               alt=""
               className="object-cover"
@@ -267,15 +267,15 @@ export function TabletCustomizeView({
               src={item.image.publicUrl}
             />
           </div>
-          <div>
-            <p className="font-serif text-[15px] uppercase tracking-[0.08em]">
+          <div className="min-w-0">
+            <p className="truncate font-serif text-[14px] uppercase tracking-[0.08em] min-[980px]:text-[15px]">
               {item.name}
             </p>
             <p className="mt-1 text-[14px] text-white/72">
               {quantity} {quantity === 1 ? "Piece" : "Pieces"}
             </p>
             <button
-              className="mt-2 text-[13px] text-[var(--sb-gold-soft)]"
+              className="mt-2 hidden text-[13px] text-[var(--sb-gold-soft)] min-[980px]:inline"
               onClick={onViewDetail}
               type="button"
             >
@@ -283,7 +283,7 @@ export function TabletCustomizeView({
             </button>
           </div>
         </div>
-        <div className="border-l border-white/12 pl-8">
+        <div className="hidden border-l border-white/12 pl-5 min-[980px]:block min-[1080px]:pl-8">
           <p className="font-serif text-[15px] uppercase tracking-[0.08em]">
             Customizations
           </p>
@@ -291,18 +291,18 @@ export function TabletCustomizeView({
             {selectedCustomizationsCount} selected
           </p>
         </div>
-        <div className="border-l border-white/12 pl-8">
-          <p className="font-mono text-[26px] text-white">
+        <div className="hidden border-l border-white/12 pl-5 min-[980px]:block min-[1080px]:pl-8">
+          <p className="font-mono text-[22px] text-white min-[1080px]:text-[26px]">
             {formatMoney(totalCents)}
           </p>
           <p className="mt-1 text-[13px] text-white/54">Estimated total</p>
         </div>
         <Button
-          className="h-[72px] rounded-[16px] text-[17px] uppercase tracking-[0.08em]"
+          className="h-[62px] min-w-0 flex-col gap-0 rounded-[15px] text-[13px] uppercase tracking-[0.08em] min-[980px]:h-[66px] min-[980px]:text-[15px] min-[1080px]:h-[72px] min-[1080px]:text-[17px]"
           onClick={onAddToCart}
         >
           Add to cart
-          <span className="block font-mono text-[18px]">
+          <span className="block font-mono text-[15px] min-[980px]:text-[17px] min-[1080px]:text-[18px]">
             {formatMoney(totalCents)}
           </span>
         </Button>

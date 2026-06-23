@@ -351,7 +351,7 @@ export function DesktopItemCustomizeView({
         Back to menu
       </button>
 
-      <section className="grid min-h-[720px] grid-cols-[minmax(0,0.36fr)_minmax(390px,0.39fr)_minmax(286px,0.25fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)] min-[1500px]:grid-cols-[minmax(0,0.38fr)_minmax(430px,0.38fr)_minmax(320px,0.24fr)]">
+      <section className="grid max-h-[calc(100dvh-150px)] min-h-[640px] grid-cols-[minmax(310px,0.32fr)_minmax(420px,0.43fr)_minmax(292px,0.25fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)] min-[1500px]:grid-cols-[minmax(380px,0.36fr)_minmax(470px,0.4fr)_minmax(336px,0.24fr)]">
         <div className="relative min-h-0 overflow-hidden">
           <PairingImageBackdrop imageUrl={activeImage} sizes="650px" />
           <Image
@@ -366,18 +366,20 @@ export function DesktopItemCustomizeView({
             sizes="650px"
             src={activeImage}
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.08)_48%,rgba(0,0,0,0.86)_100%)]" />
-          <div className="absolute inset-x-0 bottom-0 p-5">
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.36),rgba(0,0,0,0.08)_48%,rgba(0,0,0,0.86)_100%)]" />
+          <div className="absolute inset-x-0 top-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.82),rgba(0,0,0,0.3)_64%,transparent)] p-5">
             <span className="rounded-[8px] border border-[var(--sb-gold)]/34 bg-[var(--sb-gold)]/8 px-3 py-1 text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)]">
               Chef&apos;s Special
             </span>
-            <h1 className="editorial-title mt-3 text-[36px] leading-none text-white">
+            <h1 className="editorial-title mt-3 text-[32px] leading-none text-white min-[1500px]:text-[36px]">
               {item.name}
             </h1>
             <p className="mt-2 text-[15px] text-[var(--sb-gold-soft)]">
               {item.description}
             </p>
-            <div className="mt-4 grid grid-cols-4 gap-3">
+          </div>
+          <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.9),rgba(0,0,0,0.42)_68%,transparent)] p-5">
+            <div className="mt-4 grid grid-cols-2 gap-3 min-[1500px]:grid-cols-4">
               {customizeFeaturePills.map(([icon, title, copy]) => (
                 <div className="grid grid-cols-[28px_1fr] gap-2" key={title}>
                   <AssetIcon size={24} src={`/assets/icons/${icon}`} />
@@ -397,7 +399,7 @@ export function DesktopItemCustomizeView({
           </div>
         </div>
 
-        <div className="min-h-0 space-y-3 border-l border-white/10 p-3.5 min-[1500px]:p-4">
+        <div className="smooth-scroll-area min-h-0 space-y-3 overflow-y-auto border-l border-white/10 p-3.5 min-[1500px]:p-4">
           <section className="grid grid-cols-[minmax(0,1fr)_126px_96px] items-center gap-4 border-b border-white/10 pb-3">
             <h2 className="editorial-title text-[17px] uppercase tracking-[0.08em]">
               Quantity
@@ -510,7 +512,7 @@ export function DesktopItemCustomizeView({
           </CustomizeGroup>
         </div>
 
-        <aside className="min-h-0 border-l border-white/10 p-4 min-[1500px]:p-5">
+        <aside className="smooth-scroll-area min-h-0 overflow-y-auto border-l border-white/10 p-4 min-[1500px]:p-5">
           <h2 className="editorial-title text-[20px] uppercase tracking-[0.08em]">
             Your selection
           </h2>
@@ -549,7 +551,7 @@ export function DesktopItemCustomizeView({
           />
 
           <Button
-            className="mt-6 h-[58px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em]"
+            className="sticky bottom-0 mt-6 h-[58px] w-full rounded-[12px] text-[15px] uppercase tracking-[0.08em]"
             onClick={onAddToCart}
           >
             Add to cart
