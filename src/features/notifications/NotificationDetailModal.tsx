@@ -47,22 +47,26 @@ export function NotificationDetailModal({
       title={notification?.title || "Notification"}
     >
       {notification ? (
-        <div className="space-y-5">
+        <div className="space-y-4">
           <StatusBadge tone={notification.tone}>
             {notificationCategoryLabels[notification.category]}
           </StatusBadge>
 
-          <p className="text-sm leading-6 text-sb-muted">{notification.body}</p>
+          <section className="rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.016)),rgba(0,0,0,0.3)] p-4">
+            <p className="text-sm leading-6 text-sb-muted">
+              {notification.body}
+            </p>
+          </section>
 
           {notification.relatedLabel ? (
-            <div className="rounded-card border border-sb-line bg-sb-ink/50 p-4">
-              <p className="text-xs font-semibold uppercase text-sb-dim">
+            <section className="rounded-[18px] border border-[var(--sb-border)] bg-black/24 p-4">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
                 Related
-              </p>
+              </h3>
               <p className="mt-2 text-sm font-semibold text-sb-rice">
                 {notification.relatedLabel}
               </p>
-            </div>
+            </section>
           ) : null}
         </div>
       ) : null}

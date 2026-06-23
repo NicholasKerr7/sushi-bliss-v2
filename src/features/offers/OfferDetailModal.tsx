@@ -66,8 +66,8 @@ export function OfferDetailModal({
       }
     >
       {offer ? (
-        <div className="space-y-5">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-sb-panel-soft">
+        <div className="space-y-4">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-black/40 shadow-[0_18px_54px_rgba(0,0,0,0.36)]">
             <Image
               alt={offer.title}
               className="object-cover"
@@ -75,6 +75,15 @@ export function OfferDetailModal({
               sizes="(min-width: 768px) 32rem, 100vw"
               src={offer.imageUrl}
             />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.54))]" />
+            <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-end justify-between gap-3">
+              <p className="max-w-[18rem] text-[13px] leading-5 text-white/78">
+                {offer.subtitle}
+              </p>
+              <span className="rounded-full border border-[var(--sb-gold)]/45 bg-black/58 px-3 py-1 font-mono text-[12px] text-[var(--sb-gold-soft)]">
+                {offer.code}
+              </span>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -91,28 +100,40 @@ export function OfferDetailModal({
             </StatusBadge>
           </div>
 
-          <p className="text-sm leading-6 text-sb-muted">{offer.description}</p>
-
-          <div className="rounded-card border border-sb-line bg-sb-ink/50 p-4">
-            <p className="text-xs font-semibold uppercase text-sb-dim">
-              Eligibility
+          <section className="rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.016)),rgba(0,0,0,0.3)] p-4">
+            <p className="text-sm leading-6 text-sb-muted">
+              {offer.description}
             </p>
+          </section>
+
+          <section className="rounded-[18px] border border-[var(--sb-border)] bg-black/24 p-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+              Eligibility
+            </h3>
             <p className="mt-2 text-sm leading-6 text-sb-muted">
               {offer.eligibility}
             </p>
-          </div>
+          </section>
 
-          <div className="rounded-card border border-sb-line bg-sb-ink/50 p-4">
-            <p className="text-xs font-semibold uppercase text-sb-dim">Terms</p>
+          <section className="rounded-[18px] border border-[var(--sb-border)] bg-black/24 p-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+              Terms
+            </h3>
             <ul className="mt-2 space-y-2 text-sm leading-6 text-sb-muted">
               {offer.terms.map((term) => (
-                <li key={term}>{term}</li>
+                <li className="grid grid-cols-[0.5rem_1fr] gap-3" key={term}>
+                  <span
+                    aria-hidden="true"
+                    className="mt-[0.65rem] h-1.5 w-1.5 rounded-full bg-[var(--sb-red-bright)]"
+                  />
+                  <span>{term}</span>
+                </li>
               ))}
             </ul>
-          </div>
+          </section>
 
           {copyMessage ? (
-            <p className="rounded-card border border-sb-gold/30 bg-sb-gold/10 p-3 text-sm font-semibold text-sb-gold-soft">
+            <p className="rounded-[16px] border border-[var(--sb-gold)]/36 bg-[var(--sb-gold)]/10 p-3 text-sm font-semibold text-sb-gold-soft">
               {copyMessage}
             </p>
           ) : null}

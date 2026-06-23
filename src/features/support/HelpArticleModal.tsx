@@ -27,14 +27,20 @@ export function HelpArticleModal({
       title={article?.title || "Help article"}
     >
       {article ? (
-        <div className="space-y-5">
+        <article className="space-y-4">
           <StatusBadge tone="premium">{article.category}</StatusBadge>
-          <div className="space-y-3 text-sm leading-6 text-sb-muted">
-            {article.body.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
+          <div className="rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.016)),rgba(0,0,0,0.3)] p-4">
+            <div className="space-y-3 text-sm leading-6 text-sb-muted">
+              {article.body.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
           </div>
-        </div>
+          <div className="rounded-[16px] border border-[var(--sb-gold)]/28 bg-black/24 p-3 text-[13px] leading-5 text-[var(--sb-gold-soft)]">
+            Need more help? Send a support request and our hospitality team will
+            follow up.
+          </div>
+        </article>
       ) : null}
     </Modal>
   );
