@@ -19,6 +19,7 @@ import type {
 } from "@/types/notification";
 
 import { DesktopNotificationDetailPanel } from "./DesktopNotificationDetailPanel";
+import { getNotificationActionLabel } from "./notificationContent";
 
 const categoryIcons: Record<NotificationCategory, string> = {
   offer: "/assets/icons/golden-ticket-icon.png",
@@ -59,30 +60,6 @@ const preferenceRows = [
 const desktopFilters = notificationFilters.filter((filter) =>
   ["all", "order", "reservation", "reward", "offer"].includes(filter.id),
 );
-
-function getNotificationActionLabel(notification: AppNotification) {
-  if (notification.category === "reservation") {
-    return "Review reservation";
-  }
-
-  if (notification.category === "reward") {
-    return "View rewards";
-  }
-
-  if (notification.category === "offer") {
-    return "Redeem offer";
-  }
-
-  if (notification.category === "support") {
-    return "Contact support";
-  }
-
-  if (notification.id === "notification-delivery-out") {
-    return "Track order";
-  }
-
-  return "View order";
-}
 
 export function DesktopNotificationsCenter() {
   const { itemCount } = useCart();

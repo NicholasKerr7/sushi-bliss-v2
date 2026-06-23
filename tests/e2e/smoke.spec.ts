@@ -591,6 +591,37 @@ test.describe("customer experience", () => {
       supportSection.getByText("Restaurant-only drinks stay blocked"),
     ).toBeVisible();
   });
+
+  test("uses specific desktop notification detail actions", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "Desktop notification detail rail is hidden on narrower layouts.",
+    );
+
+    await page.goto("/notifications");
+    await expectNoFrameworkErrorOverlay(page);
+
+    const notificationSection = page.locator("#notifications");
+
+    await notificationSection
+      .getByRole("button", { name: "Track order" })
+      .first()
+      .click();
+
+    await expect(
+      notificationSection.getByRole("button", {
+        name: "Back to notifications",
+      }),
+    ).toBeVisible();
+    await expect(
+      notificationSection.getByText("Order follow-up"),
+    ).toBeVisible();
+    await expect(
+      notificationSection.getByRole("link", { name: "Track order" }),
+    ).toHaveAttribute("href", "/orders");
+  });
 });
 
 test.describe("admin experience", () => {

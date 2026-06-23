@@ -8,7 +8,7 @@ import { formatDateTime } from "@/lib/dates";
 import { notificationCategoryLabels } from "@/lib/notifications";
 import type { AppNotification } from "@/types/notification";
 
-import { getNotificationActionLabel } from "./mobileNotificationContent";
+import { getNotificationActionLabel } from "./notificationContent";
 import {
   MobileNotificationIcon,
   MobileNotificationsPanel,

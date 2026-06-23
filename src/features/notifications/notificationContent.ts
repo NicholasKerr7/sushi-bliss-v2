@@ -49,7 +49,7 @@ export function getNotificationActionLabel(notification: AppNotification) {
   return notificationActionLabels[notification.category];
 }
 
-/** Returns category-specific context for the mobile notification detail view. */
+/** Returns category-specific context for notification detail views. */
 export function getNotificationFlowCopy(category: NotificationCategory) {
   return notificationFlowCopy[category];
 }

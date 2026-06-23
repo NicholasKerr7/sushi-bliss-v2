@@ -18,7 +18,7 @@ import type {
 import {
   getNotificationActionLabel,
   getNotificationFlowCopy,
-} from "./mobileNotificationContent";
+} from "./notificationContent";
 
 interface TabletNotificationDetailViewProps {
   notification: AppNotification;

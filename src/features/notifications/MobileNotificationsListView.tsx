@@ -18,7 +18,7 @@ import {
   getNotificationActionLabel,
   getNoticeCountLabel,
   mobileNotificationCategoryOrder,
-} from "./mobileNotificationContent";
+} from "./notificationContent";
 import {
   MobileNotificationIcon,
   MobileNotificationsPanel,

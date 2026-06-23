@@ -2933,6 +2933,9 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
       await expect(
         notificationsSection.getByText("Order details"),
       ).toBeVisible();
+      await expect(
+        notificationsSection.getByText("Order follow-up"),
+      ).toBeVisible();
     },
   },
   {
@@ -4353,10 +4356,11 @@ async function openDesktopNotificationDetail(page: Page) {
   const notificationsSection = page.locator("#notifications");
 
   await expect(
-    notificationsSection.getByRole("button", { name: "View order" }),
+    notificationsSection.getByRole("button", { name: "Track order" }).first(),
   ).toBeVisible();
   await notificationsSection
-    .getByRole("button", { name: "View order" })
+    .getByRole("button", { name: "Track order" })
+    .first()
     .click();
   await expect(
     notificationsSection.getByRole("heading", { name: "Order Delivered" }),

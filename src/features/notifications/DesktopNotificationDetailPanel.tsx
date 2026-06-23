@@ -6,6 +6,11 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import type { AppNotification } from "@/types/notification";
 
+import {
+  getNotificationActionLabel,
+  getNotificationFlowCopy,
+} from "./notificationContent";
+
 const orderItems = [
   ["Otoro Nigiri", "2 pieces", "$24.00"],
   ["Dragon Roll", "1 roll", "$18.00"],
@@ -35,6 +40,7 @@ export function DesktopNotificationDetailPanel({
   notification: AppNotification;
   onBack: () => void;
 }) {
+  const flowCopy = getNotificationFlowCopy(notification.category);
   const createdAt = new Intl.DateTimeFormat("en-US", {
     dateStyle: "medium",
     timeStyle: "short",
@@ -47,7 +53,7 @@ export function DesktopNotificationDetailPanel({
         onClick={onBack}
         type="button"
       >
-        Back to preferences
+        Back to notifications
       </button>
       <div className="grid h-16 w-16 place-items-center rounded-full border border-[var(--sb-gold)]/34 bg-black/42">
         <AssetIcon
@@ -71,6 +77,12 @@ export function DesktopNotificationDetailPanel({
         {notification.body}
       </p>
       <div className="mt-5 rounded-[14px] border border-white/10 bg-black/24 p-4">
+        <p className="text-[12px] uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
+          {flowCopy.title}
+        </p>
+        <p className="mt-2 border-b border-white/10 pb-3 text-[14px] leading-6 text-white/62">
+          {flowCopy.body}
+        </p>
         <p className="flex justify-between py-2 text-[14px] text-white/58">
           <span>Reference</span>
           <span className="text-white">{notification.relatedLabel}</span>
@@ -112,7 +124,7 @@ export function DesktopNotificationDetailPanel({
           className="h-[52px] rounded-[10px] text-[12px] uppercase tracking-[0.08em]"
           href={notification.href || "/notifications"}
         >
-          View details
+          {getNotificationActionLabel(notification)}
         </Button>
         <Link
           className="grid h-[52px] place-items-center rounded-[10px] border border-[var(--sb-gold)]/34 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
