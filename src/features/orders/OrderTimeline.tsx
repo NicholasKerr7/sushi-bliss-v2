@@ -8,24 +8,54 @@ interface OrderTimelineProps {
 
 export function OrderTimeline({ order }: OrderTimelineProps) {
   const steps = getOrderTimeline(order);
+  const completedSteps = steps.filter((step) => step.completed).length;
 
   return (
-    <section>
-      <h3 className="text-sm font-semibold text-sb-rice">Timeline</h3>
-      <div className="mt-3 space-y-3">
-        {steps.map((step) => (
-          <div
-            className="grid grid-cols-[1rem_1fr] gap-3 rounded-card border border-sb-line bg-sb-ink/45 p-3"
+    <section className="rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.062),rgba(255,255,255,0.018))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_55px_rgba(0,0,0,0.36)]">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+            Kitchen flow
+          </p>
+          <h3 className="mt-1 text-sm font-semibold text-sb-rice">Timeline</h3>
+        </div>
+        <span className="rounded-full border border-white/12 bg-black/34 px-3 py-1 font-mono text-xs text-sb-gold-soft">
+          {completedSteps}/{steps.length}
+        </span>
+      </div>
+
+      <ol className="mt-4 space-y-3">
+        {steps.map((step, index) => (
+          <li
+            className="relative grid grid-cols-[2rem_1fr] gap-3"
             key={step.id}
           >
+            {index < steps.length - 1 ? (
+              <span
+                aria-hidden="true"
+                className={
+                  step.completed
+                    ? "absolute left-[15px] top-8 h-[calc(100%+0.75rem)] w-px bg-[linear-gradient(180deg,var(--sb-red-bright),rgba(239,47,37,0.18))] shadow-[0_0_12px_rgba(239,47,37,0.36)]"
+                    : "absolute left-[15px] top-8 h-[calc(100%+0.75rem)] w-px bg-white/10"
+                }
+              />
+            ) : null}
             <span
               className={
                 step.completed
-                  ? "mt-1 h-3 w-3 rounded-full bg-sb-gold"
-                  : "mt-1 h-3 w-3 rounded-full border border-sb-line"
+                  ? "relative z-10 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-red-bright)] bg-black/62 shadow-[0_0_24px_rgba(239,47,37,0.38)]"
+                  : "relative z-10 grid h-8 w-8 place-items-center rounded-full border border-white/16 bg-black/48"
               }
-            />
-            <div>
+            >
+              <span
+                className={
+                  step.completed
+                    ? "h-2.5 w-2.5 rounded-full bg-[var(--sb-red-bright)]"
+                    : "h-2.5 w-2.5 rounded-full bg-white/18"
+                }
+              />
+            </span>
+            <div className="rounded-[15px] border border-white/10 bg-black/26 p-3">
               <div className="flex flex-wrap items-center gap-2">
                 <p className="text-sm font-semibold text-sb-rice">
                   {step.label}
@@ -43,9 +73,9 @@ export function OrderTimeline({ order }: OrderTimelineProps) {
                 </p>
               ) : null}
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
   );
 }

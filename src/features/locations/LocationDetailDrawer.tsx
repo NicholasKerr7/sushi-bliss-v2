@@ -23,7 +23,7 @@ export function LocationDetailDrawer({
 
   return (
     <Drawer
-      className="md:max-w-xl"
+      className="md:max-w-[40rem]"
       description={location?.neighborhood}
       labelledById="location-detail-title"
       onOpenChange={onOpenChange}
@@ -40,7 +40,7 @@ export function LocationDetailDrawer({
     >
       {location ? (
         <div className="space-y-5">
-          <div className="relative aspect-[5/3] overflow-hidden rounded-card bg-sb-panel-soft">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[20px] border border-[var(--sb-border)] bg-sb-panel-soft shadow-[0_24px_65px_rgba(0,0,0,0.44)]">
             <Image
               alt={`${location.name} map`}
               className="object-cover"
@@ -48,36 +48,53 @@ export function LocationDetailDrawer({
               sizes="(min-width: 768px) 36rem, 100vw"
               src={location.mapImageUrl}
             />
-          </div>
-
-          <div>
-            <StatusBadge tone="premium">{location.neighborhood}</StatusBadge>
-            <p className="mt-3 text-sm leading-6 text-sb-muted">
-              {location.description}
-            </p>
-          </div>
-
-          <div className="grid gap-3 rounded-card border border-sb-line bg-sb-ink/45 p-4 text-sm">
-            <div>
-              <p className="font-semibold text-sb-rice">Address</p>
-              <p className="mt-1 text-sb-muted">{location.address}</p>
-            </div>
-            <div>
-              <p className="font-semibold text-sb-rice">Hours</p>
-              <p className="mt-1 text-sb-muted">{location.hours}</p>
-            </div>
-            <div>
-              <p className="font-semibold text-sb-rice">Contact</p>
-              <p className="mt-1 text-sb-muted">
-                {location.phone} - {location.email}
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.48))]" />
+            <div className="absolute bottom-4 left-4 right-4">
+              <StatusBadge tone="premium">{location.neighborhood}</StatusBadge>
+              <p className="mt-2 text-lg leading-6 text-white">
+                {location.name}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <section className="rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.066),rgba(255,255,255,0.018))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_55px_rgba(0,0,0,0.36)]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+              Dining room
+            </p>
+            <p className="mt-2 text-sm leading-6 text-sb-muted">
+              {location.description}
+            </p>
+          </section>
+
+          <dl className="grid gap-3 rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.016))] p-4 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_18px_50px_rgba(0,0,0,0.34)]">
+            <div className="rounded-[15px] border border-white/10 bg-black/24 p-3">
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/42">
+                Address
+              </dt>
+              <dd className="mt-1 leading-5 text-sb-rice">
+                {location.address}
+              </dd>
+            </div>
+            <div className="rounded-[15px] border border-white/10 bg-black/24 p-3">
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/42">
+                Hours
+              </dt>
+              <dd className="mt-1 leading-5 text-sb-rice">{location.hours}</dd>
+            </div>
+            <div className="rounded-[15px] border border-white/10 bg-black/24 p-3">
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/42">
+                Contact
+              </dt>
+              <dd className="mt-1 break-words leading-5 text-sb-rice">
+                {location.phone} - {location.email}
+              </dd>
+            </div>
+          </dl>
+
+          <div className="flex flex-wrap gap-2 rounded-[18px] border border-[var(--sb-border)] bg-black/24 p-3">
             {location.features.map((feature) => (
               <span
-                className="rounded-control border border-sb-line bg-sb-rice/5 px-3 py-1 text-xs font-semibold text-sb-muted"
+                className="rounded-full border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]"
                 key={feature}
               >
                 {feature}
