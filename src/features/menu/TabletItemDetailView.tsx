@@ -88,7 +88,7 @@ export function TabletDetailView({
             className={getMenuGalleryImageClassName(
               activeImage,
               "object-cover object-[58%_48%]",
-              "object-cover object-[50%_50%]",
+              "object-contain object-[50%_50%]",
             )}
             fill
             loading="eager"

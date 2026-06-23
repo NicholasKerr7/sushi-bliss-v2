@@ -49,7 +49,7 @@ export function isSakePairingImage(imageUrl: string | undefined): boolean {
 export function getMenuGalleryImageClassName(
   imageUrl: string | undefined,
   coverClassName: string,
-  pairingClassName = "object-cover object-[50%_50%]",
+  pairingClassName = "object-contain object-[50%_50%]",
 ): string {
   return isSakePairingImage(imageUrl) ? pairingClassName : coverClassName;
 }

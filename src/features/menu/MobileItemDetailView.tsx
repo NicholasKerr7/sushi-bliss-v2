@@ -163,7 +163,7 @@ export function MobileItemDetailView({
             className={getMenuGalleryImageClassName(
               heroImage,
               "object-cover object-[58%_42%]",
-              "object-cover object-[50%_50%]",
+              "object-contain object-[50%_50%]",
             )}
             fill
             loading="eager"
