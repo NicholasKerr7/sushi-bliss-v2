@@ -27,10 +27,10 @@ const focusableSelector =
 
 const sideClasses: Record<DrawerSide, string> = {
   bottom:
-    "inset-x-2 bottom-2 max-h-[calc(100dvh-1rem)] rounded-[22px] border sm:inset-x-4 sm:bottom-4 sm:max-h-[calc(100dvh-2rem)]",
-  left: "inset-y-2 left-2 h-[calc(100dvh-1rem)] max-w-[min(30rem,calc(100vw-1rem))] rounded-[22px] border sm:inset-y-4 sm:left-4 sm:h-[calc(100dvh-2rem)] sm:max-w-sm",
+    "bottom-[calc(10px+var(--sb-safe-bottom))] left-3 right-3 max-h-[calc(100dvh-1.25rem-var(--sb-safe-bottom))] rounded-[24px] border sm:bottom-[calc(16px+var(--sb-safe-bottom))] sm:left-1/2 sm:right-auto sm:w-[min(42rem,calc(100vw-2rem))] sm:max-h-[calc(100dvh-2rem-var(--sb-safe-bottom))] sm:-translate-x-1/2",
+  left: "inset-y-3 left-3 h-[calc(100dvh-1.5rem)] w-[min(30rem,calc(100vw-1.5rem))] rounded-[24px] border sm:inset-y-4 sm:left-4 sm:h-[calc(100dvh-2rem)] sm:w-[min(26rem,calc(100vw-2rem))]",
   right:
-    "inset-y-2 right-2 h-[calc(100dvh-1rem)] max-w-[min(30rem,calc(100vw-1rem))] rounded-[22px] border sm:inset-y-4 sm:right-4 sm:h-[calc(100dvh-2rem)] sm:max-w-sm",
+    "inset-y-3 right-3 h-[calc(100dvh-1.5rem)] w-[min(30rem,calc(100vw-1.5rem))] rounded-[24px] border sm:inset-y-4 sm:right-4 sm:h-[calc(100dvh-2rem)] sm:w-[min(26rem,calc(100vw-2rem))]",
 };
 
 export function Drawer({
@@ -95,17 +95,23 @@ export function Drawer({
     >
       <div
         className={classNames(
-          "smooth-scroll-area fixed w-full overflow-y-auto border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.07),rgba(255,255,255,0.018)_34%,rgba(7,9,10,0.96)_100%)] text-sb-rice shadow-[0_28px_90px_rgba(0,0,0,0.62),inset_0_1px_0_rgba(255,255,255,0.08)] outline-none backdrop-blur-2xl",
+          "fixed flex min-h-0 flex-col overflow-hidden border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.024)_36%,rgba(7,9,10,0.97)_100%)] text-sb-rice shadow-[0_28px_90px_rgba(0,0,0,0.62),0_0_44px_rgba(215,168,79,0.08),inset_0_1px_0_rgba(255,255,255,0.09)] outline-none backdrop-blur-2xl",
           sideClasses[side],
           className,
         )}
         ref={panelRef}
         tabIndex={-1}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-[var(--sb-border)] px-4 py-4 sm:px-5">
+        {side === "bottom" ? (
+          <span
+            aria-hidden="true"
+            className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-[linear-gradient(90deg,transparent,var(--sb-gold-soft),transparent)] opacity-70"
+          />
+        ) : null}
+        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-[var(--sb-border)] px-4 py-4 sm:px-5">
           <div className="min-w-0">
             <h2
-              className="editorial-title text-[20px] leading-tight text-sb-rice sm:text-[22px]"
+              className="editorial-title break-words text-[20px] leading-tight text-sb-rice sm:text-[22px]"
               id={labelledById}
             >
               {title}
@@ -126,9 +132,11 @@ export function Drawer({
             <ChevronIcon direction="x" size={18} />
           </Button>
         </div>
-        <div className="px-4 py-5 sm:px-5">{children}</div>
+        <div className="smooth-scroll-area min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:px-5">
+          {children}
+        </div>
         {footer ? (
-          <div className="border-t border-[var(--sb-border)] bg-black/18 px-4 py-4 sm:px-5">
+          <div className="shrink-0 border-t border-[var(--sb-border)] bg-black/28 px-4 py-4 shadow-[0_-18px_42px_rgba(0,0,0,0.34)] sm:px-5">
             {footer}
           </div>
         ) : null}

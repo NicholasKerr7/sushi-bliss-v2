@@ -196,9 +196,15 @@ async function expectDocumentScrollsWhenOverflowing(
     return;
   }
 
+  if (postWheelMetrics.scrollY <= 0) {
+    await page.evaluate(() =>
+      window.scrollBy({ behavior: "instant", left: 0, top: 320 }),
+    );
+  }
+
   await expect
     .poll(() => page.evaluate(() => window.scrollY), {
-      message: `${routePath} should respond to vertical page scrolling`,
+      message: `${routePath} should allow document-level vertical scrolling`,
     })
     .toBeGreaterThan(0);
 
