@@ -168,8 +168,8 @@ export function MobileItemDetailView({
           />
         </section>
 
-        <section className="-mt-3 px-5 min-[390px]:px-8">
-          <span className="inline-flex rounded-[8px] border border-[var(--sb-border)] bg-[var(--sb-red)]/24 px-3.5 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold)] min-[390px]:px-4 min-[390px]:text-[12px]">
+        <section className="relative z-10 mt-2 px-5 min-[390px]:px-8">
+          <span className="inline-flex rounded-[8px] border border-[var(--sb-border)] bg-[var(--sb-red)]/24 px-3.5 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold)] shadow-[0_10px_22px_rgba(0,0,0,0.32)] min-[390px]:px-4 min-[390px]:text-[12px]">
             {item.tags.includes("premium") ? "Premium" : item.categoryLabel}
           </span>
           <h1
