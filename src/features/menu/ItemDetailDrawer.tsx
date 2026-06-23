@@ -206,7 +206,10 @@ export function ItemDetailDrawer({
           <Image
             alt={item.image.alt || item.name}
             className="object-cover"
+            fetchPriority="high"
             fill
+            loading="eager"
+            priority
             sizes="(min-width: 768px) 42rem, 100vw"
             src={item.image.publicUrl}
           />
