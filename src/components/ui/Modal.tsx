@@ -73,7 +73,7 @@ export function Modal({
     <div
       aria-labelledby={labelledById}
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-sb-ink/80 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#020202]/82 p-3 backdrop-blur-xl sm:p-4"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           onOpenChange(false);
@@ -83,29 +83,29 @@ export function Modal({
     >
       <div
         className={classNames(
-          "max-h-[min(42rem,calc(100dvh-2rem))] w-full max-w-lg overflow-y-auto rounded-card border border-sb-line bg-sb-panel shadow-soft outline-none",
+          "smooth-scroll-area max-h-[min(44rem,calc(100dvh-1.5rem))] w-full max-w-lg overflow-y-auto rounded-[22px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.07),rgba(255,255,255,0.018)_34%,rgba(7,9,10,0.96)_100%)] text-sb-rice shadow-[0_28px_90px_rgba(0,0,0,0.62),inset_0_1px_0_rgba(255,255,255,0.08)] outline-none backdrop-blur-2xl",
           className,
         )}
         ref={panelRef}
         tabIndex={-1}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-sb-line p-5">
-          <div>
+        <div className="flex items-start justify-between gap-4 border-b border-[var(--sb-border)] px-4 py-4 sm:px-5">
+          <div className="min-w-0">
             <h2
-              className="text-lg font-semibold text-sb-rice"
+              className="editorial-title text-[20px] leading-tight text-sb-rice sm:text-[22px]"
               id={labelledById}
             >
               {title}
             </h2>
             {description ? (
-              <p className="mt-1 text-sm leading-6 text-sb-muted">
+              <p className="mt-1 text-[13px] leading-5 text-sb-muted sm:text-sm sm:leading-6">
                 {description}
               </p>
             ) : null}
           </div>
           <Button
             aria-label="Close modal"
-            className="h-10 w-10 rounded-full px-0 py-0"
+            className="h-10 w-10 shrink-0 rounded-full border-[var(--sb-border)] bg-black/28 px-0 py-0 text-sb-gold-soft hover:bg-white/[0.04]"
             onClick={() => onOpenChange(false)}
             size="sm"
             variant="ghost"
@@ -113,9 +113,11 @@ export function Modal({
             <ChevronIcon direction="x" size={18} />
           </Button>
         </div>
-        <div className="p-5">{children}</div>
+        <div className="px-4 py-5 sm:px-5">{children}</div>
         {footer ? (
-          <div className="border-t border-sb-line p-5">{footer}</div>
+          <div className="border-t border-[var(--sb-border)] bg-black/18 px-4 py-4 sm:px-5">
+            {footer}
+          </div>
         ) : null}
       </div>
     </div>
