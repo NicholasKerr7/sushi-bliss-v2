@@ -95,14 +95,14 @@ export function TabletCheckoutDetails({
 
   return (
     <>
-      <div className="mt-5 flex items-center gap-7">
+      <div className="mt-5 grid gap-2 min-[900px]:flex min-[900px]:items-center min-[900px]:gap-7">
         <h1
-          className="editorial-title text-[44px] uppercase leading-none tracking-[0.08em]"
+          className="editorial-title text-[38px] uppercase leading-none tracking-[0.07em] min-[900px]:text-[44px] min-[900px]:tracking-[0.08em]"
           id="tablet-checkout-title"
         >
           Checkout
         </h1>
-        <p className="text-[16px] text-[var(--sb-gold-soft)]">
+        <p className="text-[15px] text-[var(--sb-gold-soft)] min-[900px]:text-[16px]">
           Almost there! Complete your order.
         </p>
       </div>
@@ -117,10 +117,10 @@ export function TabletCheckoutDetails({
         verified={checkout.ageVerified}
       />
 
-      <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_390px]">
+      <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_360px] min-[1080px]:grid-cols-[minmax(0,1fr)_390px]">
         <section className="rounded-[18px] border border-white/10 bg-white/[0.04] p-4">
           <TabletCheckoutStepTitle number={1} title="Delivery or pickup" />
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="mt-4 grid gap-3 min-[900px]:grid-cols-2">
             {fulfillmentOptions.map((option) => (
               <button
                 aria-pressed={checkout.mode === option.value}
@@ -176,7 +176,7 @@ export function TabletCheckoutDetails({
 
           <div className="mt-4 border-t border-white/10 pt-4">
             <TabletCheckoutStepTitle number={3} title="Date & time" />
-            <div className="mt-3 grid grid-cols-2 gap-3">
+            <div className="mt-3 grid gap-3 min-[900px]:grid-cols-2">
               <TabletCheckoutSelectLike
                 label="Date"
                 value={
@@ -244,14 +244,14 @@ export function TabletCheckoutDetails({
             <p className="mt-2 text-[13px] text-white/56">
               100% of tips go to our team.
             </p>
-            <div className="mt-3 grid grid-cols-4 gap-3">
+            <div className="mt-3 grid grid-cols-2 gap-3 min-[900px]:grid-cols-4">
               {tipPercentOptions.map((option) => (
                 <button
                   aria-pressed={
                     checkout.customTipCents === 0 &&
                     checkout.tipPercent === option
                   }
-                  className={`min-h-[58px] rounded-[12px] border text-center transition ${
+                  className={`min-h-[54px] rounded-[12px] border px-2 text-center transition min-[900px]:min-h-[58px] ${
                     checkout.customTipCents === 0 &&
                     checkout.tipPercent === option
                       ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 text-white shadow-[0_0_22px_var(--sb-red-glow)]"
@@ -331,7 +331,7 @@ export function TabletCheckoutDetails({
             />
           </div>
           <Button
-            className="red-glow-button mt-4 h-[58px] w-full rounded-[12px] text-[17px] uppercase tracking-[0.08em]"
+            className="red-glow-button mt-4 h-[58px] w-full rounded-[12px] px-3 text-[15px] uppercase tracking-[0.06em] min-[900px]:text-[17px] min-[900px]:tracking-[0.08em]"
             disabled={items.length === 0}
             onClick={onContinueToReview}
           >

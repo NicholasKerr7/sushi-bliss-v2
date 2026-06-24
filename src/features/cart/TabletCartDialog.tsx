@@ -161,7 +161,7 @@ export function TabletCartDialog({
     <div
       aria-labelledby="tablet-cart-title"
       aria-modal="true"
-      className="fixed inset-0 z-50 hidden overflow-y-auto bg-[#050607] px-[26px] pb-4 pt-3 text-white md:block xl:hidden"
+      className="fixed inset-0 z-50 hidden overflow-y-auto bg-[#050607] px-4 pb-4 pt-3 text-white md:block min-[900px]:px-[26px] xl:hidden"
       ref={dialogRef}
       role="dialog"
       tabIndex={-1}
@@ -175,21 +175,21 @@ export function TabletCartDialog({
         onSubmitQuery={handleSubmitSearch}
       />
 
-      <main className="mx-auto max-w-[1034px] rounded-[26px] border border-white/10 bg-[#090b0b] px-8 pb-6 pt-10 shadow-[0_26px_90px_rgb(0_0_0_/_0.5)]">
-        <div className="flex items-end justify-between gap-5">
-          <div>
-            <div className="flex items-center gap-5">
+      <main className="mx-auto max-w-[1034px] rounded-[24px] border border-white/10 bg-[#090b0b] px-4 pb-6 pt-8 shadow-[0_26px_90px_rgb(0_0_0_/_0.5)] min-[900px]:rounded-[26px] min-[900px]:px-6 min-[1080px]:px-8 min-[1080px]:pt-10">
+        <div className="grid gap-4 min-[900px]:grid-cols-[minmax(0,1fr)_auto] min-[900px]:items-end min-[900px]:gap-5">
+          <div className="min-w-0">
+            <div className="flex min-w-0 flex-wrap items-center gap-3 min-[900px]:gap-5">
               <h1
-                className="editorial-title text-[42px] uppercase leading-none tracking-[0.08em]"
+                className="editorial-title text-[34px] uppercase leading-none tracking-[0.06em] min-[900px]:text-[42px] min-[900px]:tracking-[0.08em]"
                 id="tablet-cart-title"
               >
                 Your Cart
               </h1>
-              <span className="rounded-[14px] border border-[var(--sb-gold)]/36 bg-[var(--sb-gold)]/10 px-4 py-2 text-[14px] font-semibold uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
+              <span className="rounded-[12px] border border-[var(--sb-gold)]/36 bg-[var(--sb-gold)]/10 px-3 py-1.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] min-[900px]:rounded-[14px] min-[900px]:px-4 min-[900px]:py-2 min-[900px]:text-[14px] min-[900px]:tracking-[0.14em]">
                 {itemCount} {itemCount === 1 ? "item" : "items"}
               </span>
             </div>
-            <p className="mt-4 text-[17px] text-white/72">
+            <p className="mt-3 text-[15px] leading-6 text-white/72 min-[900px]:mt-4 min-[900px]:text-[17px]">
               {remainingForFreeDelivery > 0
                 ? `Add ${formatMoney(remainingForFreeDelivery)} more to unlock free delivery.`
                 : "Free delivery unlocked for this order."}
@@ -204,7 +204,7 @@ export function TabletCartDialog({
           </Button>
         </div>
 
-        <div className="mt-6 grid grid-cols-[minmax(0,1fr)_360px] gap-6">
+        <div className="mt-6 grid gap-5 min-[980px]:grid-cols-[minmax(0,1fr)_340px] min-[1080px]:grid-cols-[minmax(0,1fr)_360px] min-[1080px]:gap-6">
           <section>
             <SegmentedProgressMeter
               ariaLabel="Free delivery progress"
@@ -249,7 +249,7 @@ export function TabletCartDialog({
             </Button>
           </section>
 
-          <aside className="space-y-5">
+          <aside className="space-y-4 min-[1080px]:space-y-5">
             <section className="rounded-[18px] border border-white/10 bg-white/[0.04] p-5">
               <h2 className="text-[20px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
                 Order Summary
@@ -296,16 +296,16 @@ export function TabletCartDialog({
                 >
                   Promo code
                 </label>
-                <div className="mt-3 grid grid-cols-[1fr_86px] gap-3">
+                <div className="mt-3 grid grid-cols-[minmax(0,1fr)_78px] gap-2 min-[1080px]:grid-cols-[minmax(0,1fr)_86px] min-[1080px]:gap-3">
                   <input
-                    className="h-11 rounded-[12px] border border-white/10 bg-black/24 px-4 text-[14px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
+                    className="h-11 min-w-0 rounded-[12px] border border-white/10 bg-black/24 px-3 text-[14px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20 min-[1080px]:px-4"
                     id="tablet-cart-promo"
                     onChange={(event) => setPromoCode(event.target.value)}
                     placeholder="Enter code"
                     value={promoCode}
                   />
                   <button
-                    className="rounded-[12px] border border-[var(--sb-gold)]/36 bg-[var(--sb-gold)]/10 text-[13px] font-semibold uppercase text-[var(--sb-gold-soft)]"
+                    className="rounded-[12px] border border-[var(--sb-gold)]/36 bg-[var(--sb-gold)]/10 text-[12px] font-semibold uppercase text-[var(--sb-gold-soft)] min-[1080px]:text-[13px]"
                     onClick={handleApplyPromo}
                     type="button"
                   >
@@ -331,7 +331,7 @@ export function TabletCartDialog({
                       aria-pressed={
                         customTipCents === 0 && tipPercent === option
                       }
-                      className={`rounded-[12px] border px-3 py-3 text-center transition ${
+                      className={`rounded-[12px] border px-2 py-3 text-center transition min-[1080px]:px-3 ${
                         customTipCents === 0 && tipPercent === option
                           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 text-white shadow-[0_0_22px_var(--sb-red-glow)]"
                           : "border-white/10 bg-black/20 text-white/74"
@@ -379,10 +379,10 @@ export function TabletCartDialog({
             </section>
 
             <section className="rounded-[18px] border border-white/10 bg-white/[0.04] p-5">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
+              <div className="grid gap-3 min-[1080px]:grid-cols-[minmax(0,1fr)_auto] min-[1080px]:items-center min-[1080px]:gap-4">
+                <div className="flex min-w-0 items-center gap-3">
                   <AssetIcon size={38} src={icons.flower} />
-                  <div>
+                  <div className="min-w-0">
                     <h2 className="text-[16px] font-semibold text-[var(--sb-gold-soft)]">
                       Bliss Rewards
                     </h2>
@@ -391,7 +391,12 @@ export function TabletCartDialog({
                     </p>
                   </div>
                 </div>
-                <Button href="/loyalty" size="sm" variant="ghost">
+                <Button
+                  className="justify-self-start min-[1080px]:justify-self-end"
+                  href="/loyalty"
+                  size="sm"
+                  variant="ghost"
+                >
                   Rewards
                 </Button>
               </div>
@@ -411,18 +416,18 @@ export function TabletCartDialog({
           </aside>
         </div>
 
-        <div className="mt-6 grid grid-cols-4 rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
+        <div className="mt-6 grid grid-cols-2 gap-y-4 rounded-[16px] border border-white/10 bg-white/[0.035] p-4 min-[980px]:grid-cols-4 min-[980px]:gap-y-0">
           {benefitItems.map((benefit) => (
             <div
-              className="flex items-center gap-4 border-r border-white/10 px-5 last:border-r-0"
+              className="flex min-w-0 items-center gap-3 px-2 min-[980px]:border-r min-[980px]:border-white/10 min-[980px]:px-5 min-[980px]:last:border-r-0"
               key={benefit.label}
             >
-              <AssetIcon size={34} src={benefit.icon} />
-              <p>
-                <span className="block text-[12px] uppercase tracking-[0.08em] text-white/62">
+              <AssetIcon size={30} src={benefit.icon} />
+              <p className="min-w-0">
+                <span className="block line-clamp-1 text-[11px] uppercase tracking-[0.06em] text-white/62 min-[980px]:text-[12px] min-[980px]:tracking-[0.08em]">
                   {benefit.label}
                 </span>
-                <span className="mt-1 block text-[13px] text-white/48">
+                <span className="mt-1 block line-clamp-1 text-[12px] text-white/48 min-[980px]:text-[13px]">
                   {benefit.value}
                 </span>
               </p>
@@ -446,8 +451,10 @@ function SummaryRow({
   value: string;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4">
-      <span className={large ? "text-[20px] uppercase" : "text-white/72"}>
+    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+      <span
+        className={large ? "text-[20px] uppercase" : "min-w-0 text-white/72"}
+      >
         {label}
       </span>
       <span

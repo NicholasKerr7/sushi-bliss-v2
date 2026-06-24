@@ -19,7 +19,7 @@ export function TabletCheckoutAddressPanel({
     return (
       <div className="mt-3 rounded-[12px] border border-white/10 bg-black/22 p-4 text-[15px] leading-6 text-white/68">
         <p className="font-semibold text-white">{pickupLocation.label}</p>
-        <p>
+        <p className="break-words">
           {pickupLocation.line1}, {pickupLocation.city}, {pickupLocation.region}{" "}
           {pickupLocation.postalCode}
         </p>
@@ -34,13 +34,13 @@ export function TabletCheckoutAddressPanel({
           <p className="font-semibold text-white">
             {checkout.selectedAddress.label}
           </p>
-          <p>
+          <p className="break-words">
             {checkout.selectedAddress.line1}
             {checkout.selectedAddress.line2
               ? `, ${checkout.selectedAddress.line2}`
               : ""}
           </p>
-          <p>
+          <p className="break-words">
             {checkout.selectedAddress.city}, {checkout.selectedAddress.region}{" "}
             {checkout.selectedAddress.postalCode}
           </p>
@@ -64,7 +64,9 @@ export function TabletCheckoutAddressPanel({
               type="button"
             >
               <span className="font-semibold text-white">{address.label}</span>
-              <span className="ml-2 text-white/56">{address.line1}</span>
+              <span className="ml-2 break-words text-white/56">
+                {address.line1}
+              </span>
             </button>
           ))}
         </div>

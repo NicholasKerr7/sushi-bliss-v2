@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { QuantityControl } from "@/components/ui/QuantityControl";
 import { calculateCartLineSubtotal } from "@/lib/cart";
 import { classNames } from "@/lib/classNames";
@@ -106,8 +107,8 @@ function TabletCheckoutLine({
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
   return (
-    <article className="grid grid-cols-[68px_1fr] gap-3 py-2.5 first:pt-0 last:pb-0">
-      <div className="relative h-[56px] overflow-hidden rounded-[10px] bg-white/[0.04]">
+    <article className="grid grid-cols-[62px_minmax(0,1fr)] gap-3 py-2.5 first:pt-0 last:pb-0 min-[1080px]:grid-cols-[68px_minmax(0,1fr)]">
+      <div className="relative h-[54px] overflow-hidden rounded-[10px] bg-white/[0.04] min-[1080px]:h-[56px]">
         <Image
           alt={item.menuItem.image.alt || item.menuItem.name}
           className="object-cover"
@@ -118,9 +119,9 @@ function TabletCheckoutLine({
         />
       </div>
       <div className="min-w-0">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h3 className="text-[14px] font-semibold text-white">
+        <div className="grid grid-cols-[minmax(0,1fr)_28px] items-start gap-2">
+          <div className="min-w-0">
+            <h3 className="line-clamp-1 text-[14px] font-semibold text-white">
               {item.menuItem.name}
             </h3>
             <p className="mt-0.5 line-clamp-1 text-[12px] leading-4 text-white/52">
@@ -129,14 +130,14 @@ function TabletCheckoutLine({
           </div>
           <button
             aria-label={`Remove ${item.menuItem.name}`}
-            className="grid h-6 w-6 place-items-center rounded-full border border-[var(--sb-gold)]/32 text-[var(--sb-gold-soft)]"
+            className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-gold)]/32 text-[var(--sb-gold-soft)]"
             onClick={() => onRemoveItem(item.id)}
             type="button"
           >
-            x
+            <ChevronIcon direction="x" size={14} />
           </button>
         </div>
-        <div className="mt-1.5 flex items-center justify-between gap-3">
+        <div className="mt-2 grid gap-2 min-[1080px]:grid-cols-[auto_minmax(0,1fr)] min-[1080px]:items-center">
           <QuantityControl
             className="h-7 grid-cols-[1.85rem_2.1rem_1.85rem] rounded-[10px] border-[var(--sb-gold)]/28"
             max={99}
@@ -144,7 +145,7 @@ function TabletCheckoutLine({
             onChange={(quantity) => onUpdateQuantity(item.id, quantity)}
             value={item.quantity}
           />
-          <span className="font-mono text-[13px] text-white">
+          <span className="justify-self-start font-mono text-[13px] text-white min-[1080px]:justify-self-end">
             {formatMoney(calculateCartLineSubtotal(item))}
           </span>
         </div>
@@ -165,7 +166,7 @@ function SummaryRow({
   valueClassName?: string;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
       <span className={large ? "text-[18px] uppercase" : "text-white/72"}>
         {label}
       </span>

@@ -42,14 +42,14 @@ export function TabletCheckoutReviewStep({
   const payment = checkout.selectedPaymentMethod;
 
   return (
-    <section className="mt-3 rounded-[20px] border border-white/10 bg-white/[0.035] p-5">
-      <div className="flex items-start justify-between gap-5">
-        <div>
+    <section className="mt-3 rounded-[20px] border border-white/10 bg-white/[0.035] p-4 min-[900px]:p-5">
+      <div className="grid gap-4 min-[900px]:grid-cols-[minmax(0,1fr)_auto] min-[900px]:items-start min-[900px]:gap-5">
+        <div className="min-w-0">
           <p className="text-[14px] uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
             Checkout
           </p>
           <h1
-            className="editorial-title mt-1.5 whitespace-nowrap text-[36px] uppercase leading-none tracking-[0.08em] lg:text-[40px]"
+            className="editorial-title mt-1.5 text-[32px] uppercase leading-none tracking-[0.06em] min-[900px]:text-[36px] min-[900px]:tracking-[0.08em] lg:text-[40px]"
             id="tablet-checkout-title"
           >
             Review & Confirm
@@ -59,7 +59,7 @@ export function TabletCheckoutReviewStep({
           </p>
         </div>
         <Button
-          className="min-h-10 shrink-0 whitespace-nowrap px-5 py-2 text-[13px]"
+          className="min-h-10 w-max shrink-0 whitespace-nowrap px-5 py-2 text-[13px]"
           onClick={onEditCart}
           variant="secondary"
         >
@@ -69,7 +69,7 @@ export function TabletCheckoutReviewStep({
 
       <TabletCheckoutProgress activeStep={3} />
 
-      <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_390px]">
+      <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_360px] min-[1080px]:grid-cols-[minmax(0,1fr)_390px]">
         <div className="space-y-2.5">
           <ReviewCard
             action={onBackToDetails}
@@ -202,24 +202,24 @@ function ReviewCard({
 }) {
   return (
     <article className="rounded-[14px] border border-white/10 bg-black/22 p-3">
-      <div className="flex items-center justify-between gap-4">
-        <h2 className="flex items-center gap-2.5 text-[15px] font-semibold uppercase tracking-[0.08em]">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+        <h2 className="flex min-w-0 items-center gap-2.5 text-[14px] font-semibold uppercase tracking-[0.06em] min-[900px]:text-[15px] min-[900px]:tracking-[0.08em]">
           <span className="grid h-6 w-6 place-items-center rounded-full border border-[var(--sb-gold)]/50 text-[var(--sb-gold-soft)]">
             {number}
           </span>
-          {title}
+          <span className="min-w-0 truncate">{title}</span>
         </h2>
         <button
-          className="text-[13px] text-[var(--sb-gold-soft)]"
+          className="text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[900px]:text-[13px]"
           onClick={action}
           type="button"
         >
           Change
         </button>
       </div>
-      <div className="mt-2 flex gap-2.5 text-[13px] leading-5 text-white/68">
+      <div className="mt-2 grid grid-cols-[21px_minmax(0,1fr)] gap-2.5 text-[13px] leading-5 text-white/68">
         <AssetIcon size={21} src={icon} />
-        <div>{children}</div>
+        <div className="min-w-0 break-words">{children}</div>
       </div>
     </article>
   );

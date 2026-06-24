@@ -117,11 +117,11 @@ export function DesktopCartPanel({
           <TotalRow label="Tip" value={formatMoney(totals.tipCents)} />
         ) : null}
 
-        <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
+        <div className="mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-t border-white/10 pt-3">
           <span className="editorial-title text-[19px] uppercase text-white/86">
             Total
           </span>
-          <span className="font-mono text-[25px] text-[var(--sb-gold-soft)]">
+          <span className="shrink-0 font-mono text-[25px] text-[var(--sb-gold-soft)]">
             {formatMoney(totals.totalCents)}
           </span>
         </div>
@@ -204,7 +204,7 @@ function DesktopCartLine({
           />
         </div>
         <div className="min-w-0">
-          <div className="flex items-start justify-between gap-3">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
             <h3 className="line-clamp-2 text-[14px] font-semibold leading-5 text-white">
               {item.menuItem.name}
             </h3>
@@ -218,7 +218,7 @@ function DesktopCartLine({
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-between gap-3">
+      <div className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3">
         {onUpdateQuantity ? (
           <div className="grid h-9 grid-cols-[28px_34px_28px] overflow-hidden rounded-[11px] border border-[var(--sb-gold)]/24 bg-black/22">
             <button
@@ -247,11 +247,11 @@ function DesktopCartLine({
             Qty {item.quantity}
           </p>
         )}
-        <div className="flex min-w-0 items-center gap-3">
+        <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 justify-self-stretch">
           {onRemove ? (
             <button
               aria-label={`Remove ${item.menuItem.name}`}
-              className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/44 transition hover:text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+              className="min-w-0 justify-self-start truncate text-[11px] font-semibold uppercase tracking-[0.08em] text-white/44 transition hover:text-[var(--sb-red-bright)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
               onClick={() => onRemove(item.id)}
               type="button"
             >
@@ -269,9 +269,9 @@ function DesktopCartLine({
 
 function TotalRow({ label, value }: { label: string; value: string }) {
   return (
-    <p className="flex items-center justify-between gap-4 text-white/72">
-      <span>{label}</span>
-      <span className="font-mono text-white">{value}</span>
+    <p className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-white/72">
+      <span className="min-w-0">{label}</span>
+      <span className="shrink-0 font-mono text-white">{value}</span>
     </p>
   );
 }

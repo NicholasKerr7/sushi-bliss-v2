@@ -52,7 +52,7 @@ export function DesktopCheckoutView({
 }) {
   return (
     <main className="mx-auto max-w-[1534px] px-7 pb-4 pt-5">
-      <div className="grid grid-cols-[minmax(0,1fr)_412px] items-end gap-5">
+      <div className="grid grid-cols-[minmax(0,1fr)_380px] items-end gap-5 min-[1500px]:grid-cols-[minmax(0,1fr)_412px]">
         <div>
           <h1 className="editorial-title text-[42px] uppercase tracking-[0.06em]">
             Checkout
@@ -66,7 +66,7 @@ export function DesktopCheckoutView({
         </p>
       </div>
 
-      <div className="mt-3 grid grid-cols-[minmax(0,1fr)_412px] gap-5">
+      <div className="mt-3 grid grid-cols-[minmax(0,1fr)_380px] gap-5 min-[1500px]:grid-cols-[minmax(0,1fr)_412px]">
         <section className="rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5 shadow-[0_24px_80px_rgba(0,0,0,0.42)]">
           <CheckoutStepTitle
             accessibleName="Fulfillment"
@@ -131,7 +131,7 @@ export function DesktopCheckoutView({
             ) : null}
           </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-3 border-t border-white/10 pt-3">
+          <div className="mt-3 grid gap-3 border-t border-white/10 pt-3 min-[1380px]:grid-cols-2">
             <section>
               <CheckoutStepTitle number={3} title="Date & time" />
               <div className="mt-2.5 grid grid-cols-2 overflow-hidden rounded-[12px] border border-white/12 bg-black/24">
@@ -184,7 +184,7 @@ export function DesktopCheckoutView({
             </section>
           </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-3 border-t border-white/10 pt-3">
+          <div className="mt-3 grid gap-3 border-t border-white/10 pt-3 min-[1380px]:grid-cols-2">
             <section>
               <CheckoutStepTitle
                 action={
@@ -216,9 +216,9 @@ export function DesktopCheckoutView({
             verified={checkout.ageVerified}
           />
 
-          <div className="mt-3 grid grid-cols-[218px_1fr] gap-3 border-t border-white/10 pt-3">
+          <div className="mt-3 grid grid-cols-[190px_minmax(0,1fr)] gap-3 border-t border-white/10 pt-3 min-[1500px]:grid-cols-[218px_1fr]">
             <button
-              className="inline-flex h-[52px] items-center justify-center gap-3 rounded-[12px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54"
+              className="inline-flex h-[52px] items-center justify-center gap-2 rounded-[12px] border border-[var(--sb-border)] text-[11px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/54 min-[1500px]:gap-3 min-[1500px]:text-[12px] min-[1500px]:tracking-[0.08em]"
               onClick={onBackToCart}
               type="button"
             >
@@ -226,7 +226,7 @@ export function DesktopCheckoutView({
               Back to cart
             </button>
             <Button
-              className="h-[52px] rounded-[12px] text-[14px] uppercase tracking-[0.08em]"
+              className="h-[52px] rounded-[12px] px-3 text-[13px] uppercase tracking-[0.06em] min-[1500px]:text-[14px] min-[1500px]:tracking-[0.08em]"
               onClick={onOpenReview}
             >
               Continue to review

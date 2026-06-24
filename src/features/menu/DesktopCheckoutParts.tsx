@@ -83,7 +83,7 @@ export function DesktopFulfillmentCards({
             type="button"
           >
             <AssetIcon size={30} src={option.icon} />
-            <span>
+            <span className="min-w-0">
               <span className="block text-[14px] font-semibold uppercase tracking-[0.06em] text-white">
                 {option.label}
               </span>
@@ -110,7 +110,7 @@ export function DesktopAddressSummary({
     return (
       <div className="mt-2.5 grid min-h-[68px] grid-cols-[36px_1fr] items-center gap-3 rounded-[12px] border border-white/12 bg-black/24 px-3.5">
         <AssetIcon size={28} src="/assets/icons/map-pin-icon.png" />
-        <p>
+        <p className="min-w-0">
           <span className="block text-[14px] font-semibold text-white">
             {pickupLocation.label}
           </span>
@@ -127,7 +127,7 @@ export function DesktopAddressSummary({
     <div className="mt-2.5 grid min-h-[68px] grid-cols-[36px_1fr] items-center gap-3 rounded-[12px] border border-white/12 bg-black/24 px-3.5">
       <AssetIcon size={28} src="/assets/icons/map-pin-icon.png" />
       {address ? (
-        <p>
+        <p className="min-w-0">
           <span className="block text-[14px] font-semibold text-white">
             {address.line1}
           </span>
@@ -159,7 +159,7 @@ export function DesktopPaymentSummary({
     <div className="mt-2.5 grid min-h-[68px] grid-cols-[36px_1fr] items-center gap-3 rounded-[12px] border border-white/12 bg-black/24 px-3.5">
       <AssetIcon size={28} src="/assets/icons/credit-card-icon.png" />
       {payment ? (
-        <p>
+        <p className="min-w-0">
           <span className="block text-[14px] font-semibold text-white">
             {payment.brand} **** {payment.last4}
           </span>
@@ -228,19 +228,19 @@ export function DesktopOfferCode({
 }) {
   return (
     <div className="mt-2.5 rounded-[12px] border border-white/12 bg-black/22 p-2.5">
-      <div className="grid grid-cols-[1fr_86px] items-center gap-2.5">
+      <div className="grid grid-cols-[minmax(0,1fr)_76px] items-center gap-2.5 min-[1500px]:grid-cols-[minmax(0,1fr)_86px]">
         <label className="sr-only" htmlFor="desktop-checkout-promo">
           Promo code
         </label>
         <input
-          className="h-10 rounded-[10px] border border-white/12 bg-black/30 px-3.5 text-[13px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
+          className="h-10 min-w-0 rounded-[10px] border border-white/12 bg-black/30 px-3 text-[13px] text-white outline-none placeholder:text-white/36 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20 min-[1500px]:px-3.5"
           id="desktop-checkout-promo"
           onChange={(event) => checkout.setPromoCode(event.target.value)}
           placeholder="BLISS10"
           value={checkout.promoCode}
         />
         <Button
-          className="h-10 rounded-[10px] text-[12px]"
+          className="h-10 rounded-[10px] px-2 text-[11px] min-[1500px]:text-[12px]"
           onClick={checkout.applyPromoCode}
           variant="secondary"
         >
@@ -342,24 +342,24 @@ export function ReviewTrustStrip({ totalCents }: { totalCents: number }) {
   ] as const;
 
   return (
-    <div className="grid grid-cols-[1fr_1fr_1fr_128px] items-center rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-3">
+    <div className="grid grid-cols-2 gap-y-3 rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-3 min-[1380px]:grid-cols-[1fr_1fr_1fr_128px] min-[1380px]:items-center min-[1380px]:gap-y-0">
       {items.map(([icon, label, value]) => (
         <div
-          className="flex items-center gap-2.5 border-r border-white/10 px-2.5 last:border-r-0"
+          className="flex min-w-0 items-center gap-2.5 px-2.5 min-[1380px]:border-r min-[1380px]:border-white/10 min-[1380px]:last:border-r-0"
           key={label}
         >
           <AssetIcon size={24} src={`/assets/icons/${icon}`} />
-          <p>
-            <span className="block text-[12px] uppercase tracking-[0.08em] text-white/74">
+          <p className="min-w-0">
+            <span className="block line-clamp-1 text-[12px] uppercase tracking-[0.08em] text-white/74">
               {label}
             </span>
-            <span className="mt-1 block text-[12px] text-white/48">
+            <span className="mt-1 block line-clamp-1 text-[12px] text-white/48">
               {value}
             </span>
           </p>
         </div>
       ))}
-      <div className="pl-4 text-right">
+      <div className="pl-2 text-right min-[1380px]:pl-4">
         <span className="block text-[12px] uppercase tracking-[0.08em] text-white/58">
           Total
         </span>
@@ -432,8 +432,8 @@ export function DesktopReviewTotals({
           value={formatMoney(checkout.reviewTotals.tipCents)}
         />
       </div>
-      <div className="mt-3 flex items-end justify-between gap-5">
-        <div>
+      <div className="mt-3 grid gap-3 min-[1500px]:grid-cols-[minmax(0,1fr)_auto] min-[1500px]:items-end min-[1500px]:gap-5">
+        <div className="min-w-0">
           <p className="text-[12px] uppercase tracking-[0.1em] text-white/48">
             {checkout.mode === "delivery" ? "Delivery" : "Pickup"} window
           </p>
@@ -447,7 +447,7 @@ export function DesktopReviewTotals({
             {points} Bliss Points pending
           </p>
         </div>
-        <p className="text-right">
+        <p className="text-left min-[1500px]:text-right">
           <span className="block text-[12px] uppercase tracking-[0.1em] text-white/48">
             Total
           </span>
@@ -462,9 +462,9 @@ export function DesktopReviewTotals({
 
 function SummaryLine({ label, value }: { label: string; value: string }) {
   return (
-    <p className="flex items-center justify-between gap-4 text-white/66">
-      <span>{label}</span>
-      <span className="font-mono text-white">{value}</span>
+    <p className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-white/66">
+      <span className="min-w-0">{label}</span>
+      <span className="shrink-0 font-mono text-white">{value}</span>
     </p>
   );
 }
