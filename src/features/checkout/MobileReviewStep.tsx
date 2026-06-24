@@ -10,11 +10,11 @@ import { AgeVerificationNotice } from "./AgeVerificationNotice";
 import {
   MemberBenefitsCard,
   MobileBackButton,
+  MobileCheckoutActionDock,
   MobileTotalsCard,
   ReviewInfoCard,
   ReviewLine,
   ReviewPromoTip,
-  SecureCheckoutNote,
   StepHeading,
 } from "./MobileCheckoutPrimitives";
 import type { MobileCheckoutState } from "./mobileCheckoutTypes";
@@ -46,7 +46,7 @@ export function ReviewStep({
   const payment = checkout.selectedPaymentMethod;
 
   return (
-    <main className="mt-8">
+    <main className="mt-6">
       <MobileBackButton onBack={onBack} />
       <StepHeading
         subtitle="Almost there! Please review your order details."
@@ -137,15 +137,13 @@ export function ReviewStep({
         </div>
       ) : null}
 
-      <button
-        className="red-glow-button mt-5 min-h-[58px] w-full rounded-[14px] px-3 text-[13px] uppercase tracking-[0.06em] min-[390px]:min-h-[66px] min-[390px]:text-[16px]"
+      <MobileCheckoutActionDock
         disabled={items.length === 0}
+        label="Place order"
+        meta={`${itemCount} ${itemCount === 1 ? "item" : "items"} · secure checkout`}
         onClick={onPlaceOrder}
-        type="button"
-      >
-        Place order - {formatMoney(checkout.reviewTotals.totalCents)}
-      </button>
-      <SecureCheckoutNote />
+        value={formatMoney(checkout.reviewTotals.totalCents)}
+      />
     </main>
   );
 }
