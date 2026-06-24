@@ -110,11 +110,11 @@ export function MobileOrderConfirmation({
             </button>
           </header>
 
-          <main className="pt-6 text-center min-[390px]:pt-16">
-            <div className="mx-auto grid h-[96px] w-[96px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/38 shadow-[0_0_34px_rgb(215_168_79_/_0.24)] min-[390px]:h-[150px] min-[390px]:w-[150px]">
+          <main className="pt-5 text-center min-[390px]:pt-10">
+            <div className="mx-auto grid h-[92px] w-[92px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/38 shadow-[0_0_34px_rgb(215_168_79_/_0.24),inset_0_0_24px_rgba(215,168,79,0.08)] min-[390px]:h-[132px] min-[390px]:w-[132px]">
               <svg
                 aria-hidden="true"
-                className="h-12 w-12 text-[var(--sb-gold-soft)] min-[390px]:h-20 min-[390px]:w-20"
+                className="h-11 w-11 text-[var(--sb-gold-soft)] min-[390px]:h-[70px] min-[390px]:w-[70px]"
                 fill="none"
                 viewBox="0 0 80 80"
               >
@@ -128,19 +128,19 @@ export function MobileOrderConfirmation({
               </svg>
             </div>
 
-            <h1 className="editorial-title mt-6 text-[27px] leading-none min-[390px]:mt-10 min-[390px]:text-[39px]">
+            <h1 className="editorial-title mt-5 text-[27px] leading-none min-[390px]:mt-7 min-[390px]:text-[36px]">
               Order{" "}
               <span className="text-[var(--sb-red-bright)]">Confirmed</span>
             </h1>
-            <p className="mt-3 text-[15px] text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[22px]">
+            <p className="mt-3 text-[15px] text-[var(--sb-gold-soft)] min-[390px]:mt-4 min-[390px]:text-[20px]">
               Thank you, {order.customer.name.split(" ")[0]}.
             </p>
-            <p className="mx-auto mt-3 max-w-[340px] text-[13px] leading-[22px] text-white/70 min-[390px]:mt-4 min-[390px]:text-[17px] min-[390px]:leading-7">
+            <p className="mx-auto mt-3 max-w-[340px] text-[13px] leading-[22px] text-white/70 min-[390px]:mt-4 min-[390px]:text-[16px] min-[390px]:leading-7">
               Your order has been received and is being prepared with the finest
               ingredients.
             </p>
 
-            <section className="mt-5 overflow-hidden rounded-[17px] border border-[var(--sb-border)] bg-black/42 text-left min-[390px]:mt-9">
+            <section className="mt-5 overflow-hidden rounded-[17px] border border-[var(--sb-border)] bg-black/42 text-left min-[390px]:mt-7">
               <ConfirmationRow
                 icon={icons.menu}
                 label="Order number"
@@ -169,12 +169,12 @@ export function MobileOrderConfirmation({
             </section>
 
             {pointsAwarded > 0 ? (
-              <p className="mt-5 text-[12px] leading-5 text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[15px]">
+              <p className="mt-5 text-[12px] leading-5 text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[14px]">
                 +{pointsAwarded} Bliss Points added to your rewards.
               </p>
             ) : null}
 
-            <p className="mx-auto mt-5 max-w-[340px] text-[13px] leading-[22px] text-white/68 min-[390px]:mt-8 min-[390px]:text-[17px] min-[390px]:leading-7">
+            <p className="mx-auto mt-5 max-w-[340px] text-[13px] leading-[22px] text-white/68 min-[390px]:mt-6 min-[390px]:text-[15px] min-[390px]:leading-6">
               We&apos;re preparing your sushi with care. You&apos;ll receive
               updates as your order progresses.
             </p>
@@ -271,15 +271,15 @@ function ConfirmationRow({
   value: string;
 }) {
   return (
-    <div className="grid min-h-[74px] grid-cols-[38px_minmax(0,1fr)] items-center gap-2.5 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:min-h-[92px] min-[390px]:grid-cols-[64px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4 min-[390px]:py-4">
+    <div className="grid min-h-[74px] grid-cols-[38px_minmax(0,1fr)] items-center gap-2.5 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:min-h-[84px] min-[390px]:grid-cols-[58px_minmax(0,1fr)_auto] min-[390px]:gap-4 min-[390px]:px-4 min-[390px]:py-3.5">
       <span className="grid h-[38px] w-[38px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/32 min-[390px]:h-[52px] min-[390px]:w-[52px]">
         <AssetIcon size={22} src={icon} />
       </span>
       <p className="min-w-0">
-        <span className="editorial-title block text-[13px] text-[var(--sb-gold-soft)] min-[390px]:text-[17px]">
+        <span className="editorial-title block text-[13px] text-[var(--sb-gold-soft)] min-[390px]:text-[15px]">
           {label}
         </span>
-        <span className="mt-1.5 block break-words text-[13px] leading-5 text-white min-[390px]:mt-2 min-[390px]:text-[18px] min-[390px]:leading-6">
+        <span className="mt-1.5 block break-words text-[13px] leading-5 text-white min-[390px]:mt-2 min-[390px]:text-[16px] min-[390px]:leading-6">
           {value}
         </span>
       </p>

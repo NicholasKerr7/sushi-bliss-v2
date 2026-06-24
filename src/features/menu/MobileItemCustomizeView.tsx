@@ -56,9 +56,10 @@ export function MobileItemCustomizeView({
   );
   const baseTotalCents = item.priceCents * quantity;
   const pointsEarned = Math.max(1, Math.floor(totalCents / 100));
+  const selectedCount = selectedAddOns.length;
 
   return (
-    <div className="smooth-scroll-area h-dvh overflow-x-hidden overflow-y-auto bg-black px-3 pb-[calc(2rem+var(--sb-safe-bottom))] pt-4 min-[390px]:px-4 min-[390px]:pt-5">
+    <div className="smooth-scroll-area h-dvh overflow-x-hidden overflow-y-auto bg-black px-3 pb-[calc(7.75rem+var(--sb-safe-bottom))] pt-4 min-[390px]:px-4 min-[390px]:pt-5">
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(120,14,12,0.22),transparent_24%),radial-gradient(circle_at_88%_24%,rgba(202,164,93,0.08),transparent_24%),linear-gradient(180deg,#050505_0%,#080706_42%,#030303_100%)]" />
       </div>
@@ -256,17 +257,6 @@ export function MobileItemCustomizeView({
               />
             </div>
           </div>
-          <button
-            aria-label={`Add ${quantity} to cart`}
-            className="red-glow-button mt-5 grid min-h-[56px] w-full place-items-center rounded-[14px] px-3 py-2 text-[12px] uppercase tracking-[0.05em] min-[390px]:min-h-[70px] min-[390px]:px-4 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
-            onClick={onAddToCart}
-            type="button"
-          >
-            <span>Add to Cart</span>
-            <span className="font-mono text-[13px] text-white min-[390px]:text-[18px]">
-              {formatMoney(totalCents)}
-            </span>
-          </button>
           <p className="mt-4 text-center text-[12px] leading-5 text-white/56 min-[390px]:text-[13px]">
             Earn{" "}
             <span className="text-[var(--sb-gold)]">
@@ -276,6 +266,29 @@ export function MobileItemCustomizeView({
           </p>
         </section>
       </div>
+
+      <footer className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--sb-border)] bg-[linear-gradient(180deg,rgba(9,8,7,0.9),rgba(0,0,0,0.98))] px-3 pb-[calc(0.75rem+var(--sb-safe-bottom))] pt-3 shadow-[0_-20px_50px_rgba(0,0,0,0.62)] backdrop-blur-xl">
+        <div className="mobile-frame grid grid-cols-[minmax(0,1fr)_130px] items-center gap-2.5 min-[390px]:grid-cols-[minmax(0,1fr)_150px] min-[390px]:gap-3">
+          <p className="min-w-0">
+            <span className="block text-[10px] uppercase tracking-[0.08em] text-white/48 min-[390px]:text-[11px]">
+              {selectedCount > 0
+                ? `${selectedCount} add-on${selectedCount === 1 ? "" : "s"} selected`
+                : "Chef standard"}
+            </span>
+            <span className="mt-1 block font-mono text-[18px] leading-none text-[var(--sb-gold-soft)] min-[390px]:text-[22px]">
+              {formatMoney(totalCents)}
+            </span>
+          </p>
+          <button
+            aria-label={`Add ${quantity} to cart`}
+            className="red-glow-button grid h-[52px] min-w-0 place-items-center rounded-[13px] px-2 text-[12px] uppercase tracking-[0.05em] min-[390px]:h-[58px] min-[390px]:text-[14px] min-[390px]:tracking-[0.07em]"
+            onClick={onAddToCart}
+            type="button"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </footer>
     </div>
   );
 }

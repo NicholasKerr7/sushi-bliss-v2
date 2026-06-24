@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { brand, icons } from "@/features/home/visualHomeData";
 import {
@@ -76,8 +75,12 @@ export function MobileItemDetailView({
     void navigator.clipboard?.writeText(window.location.href);
   };
 
+  const addButtonLabel = isDrinkItem
+    ? `${orderAction.label} ${quantity}`
+    : `Add ${quantity} to cart`;
+
   return (
-    <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto bg-black pb-[calc(126px+var(--sb-safe-bottom))]">
+    <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto bg-black pb-[calc(112px+var(--sb-safe-bottom))]">
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_6%,rgba(202,164,93,0.08),transparent_24%),radial-gradient(circle_at_90%_8%,rgba(160,22,18,0.12),transparent_26%),linear-gradient(180deg,#050505_0%,#080706_44%,#030303_100%)]" />
       </div>
@@ -120,6 +123,7 @@ export function MobileItemDetailView({
               type="button"
             >
               <AssetIcon
+                className="drop-shadow-[0_0_8px_rgba(215,168,79,0.38)]"
                 loading="eager"
                 size={22}
                 src="/assets/icons/heart-icon.png"
@@ -131,18 +135,14 @@ export function MobileItemDetailView({
               onClick={handleShareItem}
               type="button"
             >
-              <AssetIcon
-                loading="eager"
-                size={21}
-                src="/assets/icons/share-icon.png"
-              />
+              <ShareGlyph />
             </button>
           </div>
         </div>
       </header>
 
       <main className="relative z-10">
-        <section className="relative h-[306px] min-[390px]:h-[342px] min-[430px]:h-[360px]">
+        <section className="relative h-[288px] min-[390px]:h-[330px] min-[430px]:h-[348px]">
           <PairingImageBackdrop imageUrl={heroImage} sizes="430px" />
           <Image
             alt={item.image.alt || item.name}
@@ -194,37 +194,14 @@ export function MobileItemDetailView({
             variant={isDrinkItem ? "drink" : "food"}
           />
 
-          {isOnlineOrderable ? (
-            <>
-              <div className="mt-4">
-                <MobileQuantityStepper
-                  onChange={onQuantityChange}
-                  value={quantity}
-                />
-              </div>
-
-              <button
-                aria-label={
-                  isDrinkItem
-                    ? `${orderAction.label} ${quantity}`
-                    : `Add ${quantity} to cart`
-                }
-                className="red-glow-button mt-4 grid min-h-[58px] w-full grid-cols-1 place-items-center gap-1 rounded-[14px] px-3 py-3 text-[13px] uppercase tracking-[0.06em] min-[390px]:min-h-[66px] min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:px-8 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
-                onClick={onAddToCart}
-                type="button"
-              >
-                <span className="min-w-0 text-center">{orderAction.label}</span>
-                <span className="shrink-0">{formatMoney(totalCents)}</span>
-              </button>
-            </>
-          ) : (
+          {!isOnlineOrderable ? (
             <ReservationHandoffCard
               action={orderAction}
               className="mt-4"
               item={item}
               variant="mobile"
             />
-          )}
+          ) : null}
 
           <div className="mt-4 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_45px_rgba(0,0,0,0.24)] min-[390px]:mt-5">
             <DetailPanelButton
@@ -277,8 +254,52 @@ export function MobileItemDetailView({
         </section>
       </main>
 
-      <BottomNavigation activeId="menu" ariaLabel="Mobile item navigation" />
+      {isOnlineOrderable ? (
+        <footer className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--sb-border)] bg-[linear-gradient(180deg,rgba(9,8,7,0.88),rgba(0,0,0,0.98))] px-3 pb-[calc(0.75rem+var(--sb-safe-bottom))] pt-3 shadow-[0_-20px_50px_rgba(0,0,0,0.62)] backdrop-blur-xl">
+          <div className="mobile-frame grid grid-cols-[112px_minmax(0,1fr)] items-center gap-2.5 min-[390px]:grid-cols-[126px_minmax(0,1fr)] min-[390px]:gap-3">
+            <MobileQuantityStepper
+              onChange={onQuantityChange}
+              value={quantity}
+            />
+            <button
+              aria-label={addButtonLabel}
+              className="red-glow-button grid h-[52px] min-w-0 grid-cols-1 place-items-center rounded-[13px] px-2.5 text-[12px] uppercase tracking-[0.05em] min-[390px]:h-[58px] min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[14px] min-[390px]:tracking-[0.07em]"
+              onClick={onAddToCart}
+              type="button"
+            >
+              <span className="min-w-0 truncate">{orderAction.label}</span>
+              <span className="shrink-0 font-mono text-[12px] min-[390px]:text-[13px]">
+                {formatMoney(totalCents)}
+              </span>
+            </button>
+          </div>
+        </footer>
+      ) : null}
     </div>
+  );
+}
+
+function ShareGlyph() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-[18px] w-[18px] text-[var(--sb-gold-soft)] drop-shadow-[0_0_8px_rgba(215,168,79,0.38)] min-[390px]:h-[20px] min-[390px]:w-[20px]"
+      fill="none"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M8.5 11.25 15.5 7.5M8.5 12.75l7 3.75"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="1.9"
+      />
+      <path
+        d="M7 15.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM18 9.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM18 20.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+      />
+    </svg>
   );
 }
 
@@ -290,7 +311,7 @@ function MobileQuantityStepper({
   value: number;
 }) {
   return (
-    <div className="grid h-[54px] w-[156px] grid-cols-3 overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-black/38 text-[21px] text-[var(--sb-gold)] min-[390px]:h-[64px] min-[390px]:w-[190px] min-[390px]:text-[26px]">
+    <div className="grid h-[52px] w-[112px] grid-cols-[34px_44px_34px] overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-black/38 text-[18px] text-[var(--sb-gold)] min-[390px]:h-[58px] min-[390px]:w-[126px] min-[390px]:grid-cols-[39px_48px_39px] min-[390px]:text-[22px]">
       <button
         aria-label="Decrease quantity"
         className="grid place-items-center disabled:opacity-35"
