@@ -27,7 +27,7 @@ export function TabletCheckoutSummary({
   totals,
 }: TabletCheckoutSummaryProps) {
   return (
-    <aside className="rounded-[16px] border border-white/10 bg-white/[0.04] p-3">
+    <aside className="overflow-hidden rounded-[18px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)]">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-[18px] font-semibold uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
@@ -46,7 +46,7 @@ export function TabletCheckoutSummary({
         </button>
       </div>
 
-      <div className="mt-3 divide-y divide-white/10">
+      <div className="mt-3 grid gap-2.5">
         {items.map((item) => (
           <TabletCheckoutLine
             item={item}
@@ -57,7 +57,7 @@ export function TabletCheckoutSummary({
         ))}
       </div>
 
-      <div className="mt-3 space-y-2 border-t border-white/10 pt-3 text-[13px]">
+      <div className="mt-3 space-y-2 rounded-[14px] border border-white/10 bg-black/22 p-3 text-[13px]">
         <SummaryRow
           label={`Subtotal (${itemCount} items)`}
           value={formatMoney(totals.subtotalCents)}
@@ -79,7 +79,7 @@ export function TabletCheckoutSummary({
         ) : null}
       </div>
 
-      <div className="mt-3 border-t border-white/10 pt-3">
+      <div className="mt-3 rounded-[14px] border border-[var(--sb-gold)]/24 bg-black/24 p-3">
         <SummaryRow
           large
           label="Total"
@@ -107,8 +107,8 @@ function TabletCheckoutLine({
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
   return (
-    <article className="grid grid-cols-[62px_minmax(0,1fr)] gap-3 py-2.5 first:pt-0 last:pb-0 min-[1080px]:grid-cols-[68px_minmax(0,1fr)]">
-      <div className="relative h-[54px] overflow-hidden rounded-[10px] bg-white/[0.04] min-[1080px]:h-[56px]">
+    <article className="grid grid-cols-[66px_minmax(0,1fr)] gap-3 rounded-[14px] border border-white/10 bg-black/22 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] min-[1080px]:grid-cols-[72px_minmax(0,1fr)]">
+      <div className="relative h-[60px] overflow-hidden rounded-[11px] border border-white/10 bg-white/[0.04] min-[1080px]:h-[64px]">
         <Image
           alt={item.menuItem.image.alt || item.menuItem.name}
           className="object-cover"
@@ -130,7 +130,7 @@ function TabletCheckoutLine({
           </div>
           <button
             aria-label={`Remove ${item.menuItem.name}`}
-            className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-gold)]/32 text-[var(--sb-gold-soft)]"
+            className="grid h-7 w-7 place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/24 text-[var(--sb-gold-soft)]"
             onClick={() => onRemoveItem(item.id)}
             type="button"
           >

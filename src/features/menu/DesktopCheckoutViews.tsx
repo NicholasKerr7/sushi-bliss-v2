@@ -266,6 +266,14 @@ export function DesktopReviewView({
   onRemoveItem: (id: string) => void;
   onUpdateQuantity: (id: string, quantity: number) => void;
 }) {
+  const primaryItem = items[0]?.menuItem;
+  const heroImage = primaryItem
+    ? getTabletPresentationImage(primaryItem)
+    : "/assets/menu/sushi/deluxe-toro-caviar-nigiri.webp";
+  const destinationCopy = checkout.selectedAddress
+    ? `${checkout.selectedAddress.line1}, ${checkout.selectedAddress.city}, ${checkout.selectedAddress.region}`
+    : "Pickup at Sushi Bliss counter.";
+
   return (
     <main className="mx-auto max-w-[1470px] px-7 pb-5 pt-4">
       <section className="rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.54)]">
@@ -293,6 +301,44 @@ export function DesktopReviewView({
             Back to checkout
           </button>
         </div>
+        <section className="relative mt-4 min-h-[168px] overflow-hidden rounded-[18px] border border-white/10 bg-black">
+          <Image
+            alt={primaryItem?.image.alt || "Sushi Bliss checkout review"}
+            className="object-cover"
+            fill
+            loading="eager"
+            priority
+            sizes="1430px"
+            src={heroImage}
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.92),rgba(0,0,0,0.62)_55%,rgba(0,0,0,0.18)),radial-gradient(circle_at_20%_18%,rgba(239,47,37,0.24),transparent_32%)]" />
+          <div className="relative z-10 grid min-h-[168px] grid-cols-[minmax(0,1fr)_auto] items-end gap-5 p-5">
+            <div className="min-w-0 self-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--sb-red-bright)]/42 bg-[var(--sb-red)]/20 px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-[var(--sb-red-bright)]">
+                <AssetIcon size={16} src={icons.chef} />
+                Final kitchen check
+              </span>
+              <p className="mt-4 max-w-[560px] text-[18px] leading-7 text-[var(--sb-gold-soft)]">
+                Confirm handoff, payment, and timing before Sushi Bliss starts
+                the chef counter ticket.
+              </p>
+            </div>
+            <div className="grid w-[420px] grid-cols-2 gap-3">
+              <DesktopReviewSignal
+                label={checkout.mode === "delivery" ? "Handoff" : "Pickup"}
+                value={destinationCopy}
+              />
+              <DesktopReviewSignal
+                label="Scheduled"
+                value={
+                  checkout.selectedTime
+                    ? formatDateTime(checkout.selectedTime)
+                    : "Selected time"
+                }
+              />
+            </div>
+          </div>
+        </section>
         <div className="mt-4 grid grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)] gap-4">
           <section className="space-y-3">
             <DesktopCartPanel
@@ -307,17 +353,22 @@ export function DesktopReviewView({
             <ReviewTrustStrip totalCents={checkout.reviewTotals.totalCents} />
           </section>
           <section className="space-y-3">
-            <DesktopReviewInfoCard title="Delivery information">
-              {checkout.selectedAddress
-                ? `${checkout.selectedAddress.line1}, ${checkout.selectedAddress.city}, ${checkout.selectedAddress.region}`
-                : "Pickup at Sushi Bliss counter."}
+            <DesktopReviewInfoCard
+              icon={icons.location}
+              title={
+                checkout.mode === "delivery"
+                  ? "Delivery information"
+                  : "Pickup information"
+              }
+            >
+              {destinationCopy}
               <span className="mt-2 block text-[var(--sb-red-bright)]">
                 {checkout.selectedTime
                   ? formatDateTime(checkout.selectedTime)
                   : "Selected time"}
               </span>
             </DesktopReviewInfoCard>
-            <DesktopReviewInfoCard title="Payment method">
+            <DesktopReviewInfoCard icon={icons.cart} title="Payment method">
               {checkout.selectedPaymentMethod
                 ? `${checkout.selectedPaymentMethod.brand} **** ${checkout.selectedPaymentMethod.last4}`
                 : "Select a payment method"}
@@ -340,6 +391,25 @@ export function DesktopReviewView({
         </div>
       </section>
     </main>
+  );
+}
+
+function DesktopReviewSignal({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="min-w-0 rounded-[14px] border border-white/10 bg-black/54 p-3 backdrop-blur">
+      <p className="text-[11px] uppercase tracking-[0.12em] text-white/44">
+        {label}
+      </p>
+      <p className="mt-1 line-clamp-2 text-[13px] leading-5 text-white/74">
+        {value}
+      </p>
+    </div>
   );
 }
 

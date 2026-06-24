@@ -69,6 +69,25 @@ export function TabletCheckoutReviewStep({
 
       <TabletCheckoutProgress activeStep={3} />
 
+      <section className="mt-3 grid gap-3 rounded-[16px] border border-[var(--sb-border)] bg-[radial-gradient(circle_at_14%_0%,rgba(239,47,37,0.18),transparent_36%),linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] min-[900px]:grid-cols-[54px_minmax(0,1fr)_auto] min-[900px]:items-center min-[900px]:p-4">
+        <span className="hidden h-[54px] w-[54px] place-items-center rounded-[15px] border border-[var(--sb-red-bright)]/42 bg-[var(--sb-red)]/20 min-[900px]:grid">
+          <AssetIcon size={30} src={icons.chef} />
+        </span>
+        <p className="min-w-0">
+          <span className="block text-[12px] uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
+            Final kitchen check
+          </span>
+          <span className="mt-1 block text-[14px] leading-6 text-white/68">
+            Confirm handoff, payment, and timing before Sushi Bliss starts the
+            chef counter ticket.
+          </span>
+        </p>
+        <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--sb-gold)]/28 bg-black/28 px-3 py-1.5 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+          <AssetIcon size={16} src={icons.bag} />
+          {itemCount} {itemCount === 1 ? "item" : "items"}
+        </span>
+      </section>
+
       <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_360px] min-[1080px]:grid-cols-[minmax(0,1fr)_390px]">
         <div className="space-y-2.5">
           <ReviewCard
@@ -201,24 +220,26 @@ function ReviewCard({
   title: string;
 }) {
   return (
-    <article className="rounded-[14px] border border-white/10 bg-black/22 p-3">
+    <article className="rounded-[16px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.052),rgba(0,0,0,0.22))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <h2 className="flex min-w-0 items-center gap-2.5 text-[14px] font-semibold uppercase tracking-[0.06em] min-[900px]:text-[15px] min-[900px]:tracking-[0.08em]">
-          <span className="grid h-6 w-6 place-items-center rounded-full border border-[var(--sb-gold)]/50 text-[var(--sb-gold-soft)]">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-[var(--sb-gold)]/50 bg-black/24 text-[12px] text-[var(--sb-gold-soft)]">
             {number}
           </span>
           <span className="min-w-0 truncate">{title}</span>
         </h2>
         <button
-          className="text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[900px]:text-[13px]"
+          className="rounded-full border border-[var(--sb-gold)]/20 bg-black/22 px-3 py-1 text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/44 min-[900px]:text-[13px]"
           onClick={action}
           type="button"
         >
           Change
         </button>
       </div>
-      <div className="mt-2 grid grid-cols-[21px_minmax(0,1fr)] gap-2.5 text-[13px] leading-5 text-white/68">
-        <AssetIcon size={21} src={icon} />
+      <div className="mt-3 grid grid-cols-[34px_minmax(0,1fr)] gap-3 text-[13px] leading-5 text-white/68">
+        <span className="grid h-[34px] w-[34px] place-items-center rounded-[11px] border border-[var(--sb-gold)]/22 bg-[var(--sb-gold)]/8">
+          <AssetIcon size={21} src={icon} />
+        </span>
         <div className="min-w-0 break-words">{children}</div>
       </div>
     </article>

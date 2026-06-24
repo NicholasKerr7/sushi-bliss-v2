@@ -342,7 +342,7 @@ export function ReviewTrustStrip({ totalCents }: { totalCents: number }) {
   ] as const;
 
   return (
-    <div className="grid grid-cols-2 gap-y-3 rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-3 min-[1380px]:grid-cols-[1fr_1fr_1fr_128px] min-[1380px]:items-center min-[1380px]:gap-y-0">
+    <div className="grid grid-cols-2 gap-y-3 rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] min-[1380px]:grid-cols-[1fr_1fr_1fr_128px] min-[1380px]:items-center min-[1380px]:gap-y-0">
       {items.map(([icon, label, value]) => (
         <div
           className="flex min-w-0 items-center gap-2.5 px-2.5 min-[1380px]:border-r min-[1380px]:border-white/10 min-[1380px]:last:border-r-0"
@@ -373,17 +373,24 @@ export function ReviewTrustStrip({ totalCents }: { totalCents: number }) {
 
 export function DesktopReviewInfoCard({
   children,
+  icon,
   title,
 }: {
   children: ReactNode;
+  icon?: string;
   title: string;
 }) {
   return (
-    <article className="min-h-[88px] rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
-      <h2 className="editorial-title text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-        {title}
-      </h2>
-      <p className="mt-2 text-[13px] leading-5 text-white/64">{children}</p>
+    <article className="grid min-h-[94px] grid-cols-[42px_minmax(0,1fr)] gap-3 rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] p-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)]">
+      <span className="grid h-[42px] w-[42px] place-items-center rounded-[13px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8">
+        <AssetIcon size={24} src={icon} />
+      </span>
+      <div className="min-w-0">
+        <h2 className="editorial-title text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+          {title}
+        </h2>
+        <p className="mt-2 text-[13px] leading-5 text-white/64">{children}</p>
+      </div>
     </article>
   );
 }
@@ -399,7 +406,7 @@ export function DesktopReviewTotals({
   const points = Math.floor(checkout.reviewTotals.totalCents / 100);
 
   return (
-    <article className="rounded-[16px] border border-[var(--sb-border)] bg-white/[0.035] p-4">
+    <article className="rounded-[18px] border border-[var(--sb-border)] bg-[radial-gradient(circle_at_88%_0%,rgba(215,168,79,0.12),transparent_36%),linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.018))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)]">
       <div className="flex items-center justify-between gap-4">
         <h2 className="editorial-title text-[17px] uppercase text-[var(--sb-gold-soft)]">
           Order summary
@@ -408,7 +415,7 @@ export function DesktopReviewTotals({
           {itemCount} items
         </span>
       </div>
-      <div className="mt-3 space-y-1.5 border-b border-white/10 pb-3 text-[13px]">
+      <div className="mt-3 space-y-1.5 rounded-[14px] border border-white/10 bg-black/24 p-3 text-[13px]">
         <SummaryLine
           label="Subtotal"
           value={formatMoney(checkout.reviewTotals.subtotalCents)}
@@ -432,7 +439,7 @@ export function DesktopReviewTotals({
           value={formatMoney(checkout.reviewTotals.tipCents)}
         />
       </div>
-      <div className="mt-3 grid gap-3 min-[1500px]:grid-cols-[minmax(0,1fr)_auto] min-[1500px]:items-end min-[1500px]:gap-5">
+      <div className="mt-3 grid gap-3 rounded-[14px] border border-[var(--sb-gold)]/22 bg-black/24 p-3 min-[1500px]:grid-cols-[minmax(0,1fr)_auto] min-[1500px]:items-end min-[1500px]:gap-5">
         <div className="min-w-0">
           <p className="text-[12px] uppercase tracking-[0.1em] text-white/48">
             {checkout.mode === "delivery" ? "Delivery" : "Pickup"} window

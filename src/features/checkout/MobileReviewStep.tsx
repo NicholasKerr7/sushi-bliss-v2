@@ -1,5 +1,6 @@
 "use client";
 
+import { AssetIcon } from "@/components/icons/AssetIcon";
 import { pickupLocation } from "@/data/checkout";
 import { icons } from "@/features/home/visualHomeData";
 import { formatDateTime } from "@/lib/dates";
@@ -53,6 +54,21 @@ export function ReviewStep({
         title="Review your order"
       />
 
+      <section className="mt-5 grid grid-cols-[44px_minmax(0,1fr)] gap-3 rounded-[18px] border border-[var(--sb-border)] bg-[radial-gradient(circle_at_18%_0%,rgba(239,47,37,0.2),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_18px_42px_rgba(0,0,0,0.26)] min-[390px]:grid-cols-[54px_1fr] min-[390px]:gap-4 min-[390px]:p-4">
+        <span className="grid h-11 w-11 place-items-center rounded-[14px] border border-[var(--sb-red-bright)]/42 bg-[var(--sb-red)]/20 min-[390px]:h-[54px] min-[390px]:w-[54px]">
+          <AssetIcon size={28} src={icons.chef} />
+        </span>
+        <p className="min-w-0">
+          <span className="block text-[11px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)] min-[390px]:text-[12px]">
+            Final kitchen check
+          </span>
+          <span className="mt-1 block text-[14px] leading-5 text-white/74 min-[390px]:text-[16px] min-[390px]:leading-6">
+            Confirm handoff, payment, and timing before the chef counter starts
+            your order.
+          </span>
+        </p>
+      </section>
+
       <div className="mt-5 grid gap-3">
         <ReviewInfoCard
           icon={checkout.mode === "delivery" ? icons.location : icons.bag}
@@ -103,8 +119,8 @@ export function ReviewStep({
         />
       </div>
 
-      <section className="mt-4 rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] p-3">
-        <div className="divide-y divide-white/10">
+      <section className="mt-4 rounded-[16px] border border-[var(--sb-border)] bg-white/[0.025] p-2.5 min-[390px]:p-3">
+        <div className="grid gap-2.5">
           {items.map((item) => (
             <ReviewLine item={item} key={item.id} onRemoveItem={onRemoveItem} />
           ))}
