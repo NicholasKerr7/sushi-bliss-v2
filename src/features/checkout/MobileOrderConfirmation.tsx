@@ -110,11 +110,11 @@ export function MobileOrderConfirmation({
             </button>
           </header>
 
-          <main className="pt-8 text-center min-[390px]:pt-16">
-            <div className="mx-auto grid h-[108px] w-[108px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/38 shadow-[0_0_34px_rgb(215_168_79_/_0.24)] min-[390px]:h-[150px] min-[390px]:w-[150px]">
+          <main className="pt-6 text-center min-[390px]:pt-16">
+            <div className="mx-auto grid h-[96px] w-[96px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/38 shadow-[0_0_34px_rgb(215_168_79_/_0.24)] min-[390px]:h-[150px] min-[390px]:w-[150px]">
               <svg
                 aria-hidden="true"
-                className="h-14 w-14 text-[var(--sb-gold-soft)] min-[390px]:h-20 min-[390px]:w-20"
+                className="h-12 w-12 text-[var(--sb-gold-soft)] min-[390px]:h-20 min-[390px]:w-20"
                 fill="none"
                 viewBox="0 0 80 80"
               >
@@ -128,11 +128,11 @@ export function MobileOrderConfirmation({
               </svg>
             </div>
 
-            <h1 className="editorial-title mt-7 text-[28px] leading-none min-[390px]:mt-10 min-[390px]:text-[39px]">
+            <h1 className="editorial-title mt-6 text-[27px] leading-none min-[390px]:mt-10 min-[390px]:text-[39px]">
               Order{" "}
               <span className="text-[var(--sb-red-bright)]">Confirmed</span>
             </h1>
-            <p className="mt-4 text-[15px] text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[22px]">
+            <p className="mt-3 text-[15px] text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[22px]">
               Thank you, {order.customer.name.split(" ")[0]}.
             </p>
             <p className="mx-auto mt-3 max-w-[340px] text-[13px] leading-[22px] text-white/70 min-[390px]:mt-4 min-[390px]:text-[17px] min-[390px]:leading-7">
@@ -140,7 +140,7 @@ export function MobileOrderConfirmation({
               ingredients.
             </p>
 
-            <section className="mt-6 overflow-hidden rounded-[17px] border border-[var(--sb-border)] bg-black/42 text-left min-[390px]:mt-9">
+            <section className="mt-5 overflow-hidden rounded-[17px] border border-[var(--sb-border)] bg-black/42 text-left min-[390px]:mt-9">
               <ConfirmationRow
                 icon={icons.menu}
                 label="Order number"
@@ -222,7 +222,7 @@ function MobileConfirmationNextSteps({ mode }: { mode: Order["mode"] }) {
       <ol className="relative mt-4 grid grid-cols-3 gap-1.5 min-[390px]:mt-5 min-[390px]:gap-2">
         <span
           aria-hidden="true"
-          className="absolute left-[16.66%] right-[16.66%] top-[20px] h-[6px] overflow-hidden rounded-full border border-white/[0.045] bg-black/54 shadow-[inset_0_0_10px_rgba(0,0,0,0.72)] min-[390px]:top-[23px]"
+          className="absolute left-[16.66%] right-[16.66%] top-[18px] h-[6px] overflow-hidden rounded-full border border-white/[0.045] bg-black/54 shadow-[inset_0_0_10px_rgba(0,0,0,0.72)] min-[390px]:top-[23px]"
         >
           <span className="absolute inset-y-[2px] left-2 right-2 rounded-full bg-white/10" />
           <span className="absolute inset-y-[1px] left-0 w-[18%] rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(238,43,36,0.64)]" />
@@ -271,9 +271,9 @@ function ConfirmationRow({
   value: string;
 }) {
   return (
-    <div className="grid min-h-[78px] grid-cols-[42px_minmax(0,1fr)] items-center gap-2.5 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:min-h-[92px] min-[390px]:grid-cols-[64px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4 min-[390px]:py-4">
-      <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] bg-black/32 min-[390px]:h-[52px] min-[390px]:w-[52px]">
-        <AssetIcon size={24} src={icon} />
+    <div className="grid min-h-[74px] grid-cols-[38px_minmax(0,1fr)] items-center gap-2.5 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:min-h-[92px] min-[390px]:grid-cols-[64px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4 min-[390px]:py-4">
+      <span className="grid h-[38px] w-[38px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/32 min-[390px]:h-[52px] min-[390px]:w-[52px]">
+        <AssetIcon size={22} src={icon} />
       </span>
       <p className="min-w-0">
         <span className="editorial-title block text-[13px] text-[var(--sb-gold-soft)] min-[390px]:text-[17px]">

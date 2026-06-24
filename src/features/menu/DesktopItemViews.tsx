@@ -351,7 +351,7 @@ export function DesktopItemCustomizeView({
         Back to menu
       </button>
 
-      <section className="grid max-h-[calc(100dvh-150px)] min-h-[640px] grid-cols-[minmax(310px,0.32fr)_minmax(420px,0.43fr)_minmax(292px,0.25fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)] min-[1500px]:grid-cols-[minmax(380px,0.36fr)_minmax(470px,0.4fr)_minmax(336px,0.24fr)]">
+      <section className="grid max-h-[calc(100dvh-132px)] min-h-[610px] grid-cols-[minmax(280px,0.32fr)_minmax(360px,0.44fr)_minmax(252px,0.24fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)] min-[1500px]:min-h-[640px] min-[1500px]:grid-cols-[minmax(380px,0.36fr)_minmax(470px,0.4fr)_minmax(336px,0.24fr)]">
         <div className="relative min-h-0 overflow-hidden">
           <PairingImageBackdrop imageUrl={activeImage} sizes="650px" />
           <Image
@@ -400,7 +400,7 @@ export function DesktopItemCustomizeView({
         </div>
 
         <div className="smooth-scroll-area min-h-0 space-y-3 overflow-y-auto border-l border-white/10 p-3.5 min-[1500px]:p-4">
-          <section className="grid grid-cols-[minmax(0,1fr)_126px_96px] items-center gap-4 border-b border-white/10 pb-3">
+          <section className="grid grid-cols-[minmax(0,1fr)_126px] items-center gap-x-4 gap-y-2 border-b border-white/10 pb-3 min-[1420px]:grid-cols-[minmax(0,1fr)_126px_96px]">
             <h2 className="editorial-title text-[17px] uppercase tracking-[0.08em]">
               Quantity
             </h2>
@@ -409,7 +409,7 @@ export function DesktopItemCustomizeView({
               quantity={quantity}
               onQuantityChange={onQuantityChange}
             />
-            <p className="text-right">
+            <p className="col-span-2 flex items-center justify-between gap-4 rounded-[11px] border border-white/10 bg-black/20 px-3 py-2 min-[1420px]:col-span-1 min-[1420px]:block min-[1420px]:border-0 min-[1420px]:bg-transparent min-[1420px]:px-0 min-[1420px]:py-0 min-[1420px]:text-right">
               <span className="block font-mono text-[17px] text-white">
                 {formatMoney(item.priceCents)}
               </span>
@@ -420,7 +420,7 @@ export function DesktopItemCustomizeView({
           </section>
 
           <CustomizeGroup title="Add-ons">
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid gap-2.5 min-[1380px]:grid-cols-2">
               {availableAddOns.map((addOn) => (
                 <DesktopAddOnButton
                   addOn={addOn}
@@ -441,7 +441,7 @@ export function DesktopItemCustomizeView({
 
                 return (
                   <fieldset
-                    className="grid grid-cols-[74px_minmax(0,1fr)] items-center gap-3"
+                    className="grid gap-2 min-[1420px]:grid-cols-[74px_minmax(0,1fr)] min-[1420px]:items-center min-[1420px]:gap-3"
                     key={group.id}
                   >
                     <legend className="sr-only">{group.label}</legend>
@@ -488,7 +488,7 @@ export function DesktopItemCustomizeView({
           </CustomizeGroup>
 
           <CustomizeGroup title="Side options">
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid gap-2.5 min-[1380px]:grid-cols-2">
               {availableSidePairings.slice(0, 4).map((addOn) => (
                 <DesktopAddOnButton
                   addOn={addOn}

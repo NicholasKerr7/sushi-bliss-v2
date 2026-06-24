@@ -64,12 +64,12 @@ export function MemberBenefitsCard({
   return (
     <section
       className={classNames(
-        "grid min-h-[88px] grid-cols-[46px_minmax(0,1fr)_auto] items-center gap-3 rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] px-3 min-[390px]:min-h-[92px] min-[390px]:grid-cols-[58px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4",
+        "grid min-h-[88px] grid-cols-[42px_minmax(0,1fr)] items-center gap-x-3 gap-y-2 rounded-[15px] border border-[var(--sb-border)] bg-white/[0.025] px-3 py-3 min-[390px]:min-h-[92px] min-[390px]:grid-cols-[58px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4 min-[390px]:py-0",
         className,
       )}
     >
-      <span className="grid h-[44px] w-[44px] place-items-center rounded-full border border-[var(--sb-red-bright)]/70 min-[390px]:h-[54px] min-[390px]:w-[54px]">
-        <AssetIcon size={28} src={icons.flower} />
+      <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-red-bright)]/70 min-[390px]:h-[54px] min-[390px]:w-[54px]">
+        <AssetIcon size={24} src={icons.flower} />
       </span>
       <p className="min-w-0">
         <span className="block text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:text-[16px] min-[390px]:tracking-[0.09em]">
@@ -79,7 +79,7 @@ export function MemberBenefitsCard({
           You&apos;ll earn {pointsEarned} pts with this order.
         </span>
       </p>
-      <span className="rounded-[8px] border border-[var(--sb-gold)]/60 px-2 py-1 text-[10px] uppercase text-[var(--sb-gold-soft)] min-[390px]:px-3 min-[390px]:text-[12px]">
+      <span className="col-start-2 w-max rounded-[8px] border border-[var(--sb-gold)]/60 px-2 py-1 text-[10px] uppercase text-[var(--sb-gold-soft)] min-[390px]:col-start-auto min-[390px]:px-3 min-[390px]:text-[12px]">
         Gold
       </span>
     </section>
@@ -98,7 +98,7 @@ function SummaryLine({
   valueClassName?: string;
 }) {
   return (
-    <p className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+    <p className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2.5 min-[390px]:gap-3">
       <span
         className={classNames(
           "min-w-0 break-words",

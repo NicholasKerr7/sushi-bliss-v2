@@ -21,15 +21,15 @@ export function DesktopAddOnButton({
 }) {
   const imageSrc = getAddOnImageSrc(addOn.id);
   const displayLabel = getCompactAddOnLabel(addOn.id, addOn.label);
-  const imageSize = compact ? 50 : 58;
+  const imageSize = compact ? 44 : 52;
 
   return (
     <label
       className={classNames(
         "relative grid cursor-pointer items-center overflow-hidden rounded-[12px] border text-left transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-sb-gold",
         compact
-          ? "min-h-[64px] grid-cols-[50px_minmax(0,1fr)_22px] gap-2.5 px-2.5 py-2 text-[11px]"
-          : "min-h-[76px] grid-cols-[58px_minmax(0,1fr)_24px] gap-3 px-3 py-2.5 text-[12px]",
+          ? "min-h-[62px] grid-cols-[44px_minmax(0,1fr)_20px] gap-2 px-2.5 py-2 text-[11px]"
+          : "min-h-[72px] grid-cols-[52px_minmax(0,1fr)_22px] gap-2.5 px-2.5 py-2.5 text-[12px]",
         checked
           ? "border-[var(--sb-red-bright)] bg-[linear-gradient(180deg,rgba(130,12,9,0.58),rgba(28,4,4,0.82))] text-white shadow-[inset_0_0_18px_rgba(255,35,22,0.16)]"
           : "border-white/12 bg-white/[0.025] text-white/66 hover:border-[var(--sb-gold)]/38 hover:bg-white/[0.045]",
@@ -44,7 +44,7 @@ export function DesktopAddOnButton({
       <span
         className={classNames(
           "relative grid place-items-center overflow-hidden rounded-[10px] border border-white/10 bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]",
-          compact ? "h-12 w-12" : "h-14 w-14",
+          compact ? "h-11 w-11" : "h-[52px] w-[52px]",
         )}
       >
         <Image
@@ -52,7 +52,7 @@ export function DesktopAddOnButton({
           className="h-full w-full object-cover"
           height={imageSize}
           loading="eager"
-          sizes={compact ? "50px" : "58px"}
+          sizes={compact ? "44px" : "52px"}
           src={imageSrc}
           width={imageSize}
         />
@@ -61,7 +61,7 @@ export function DesktopAddOnButton({
       <span className="min-w-0">
         <span
           className={classNames(
-            "block truncate font-semibold leading-4 text-white/88",
+            "block line-clamp-2 font-semibold leading-4 text-white/88",
             compact ? "text-[12px]" : "text-[13px]",
           )}
           title={addOn.label}
@@ -69,7 +69,7 @@ export function DesktopAddOnButton({
           {displayLabel}
         </span>
         {compact ? null : (
-          <span className="mt-0.5 block truncate text-[11px] leading-4 text-white/45">
+          <span className="mt-0.5 block line-clamp-1 text-[11px] leading-4 text-white/45">
             {addOn.description}
           </span>
         )}

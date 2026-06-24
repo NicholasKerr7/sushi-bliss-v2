@@ -198,7 +198,7 @@ export function AddOnCard({
       />
       <span
         className={classNames(
-          "grid items-center rounded-[12px] border border-white/10 bg-black/20 transition peer-checked:border-[var(--sb-red-bright)] peer-checked:bg-[var(--sb-red)]/10",
+          "grid min-w-0 items-center rounded-[12px] border border-white/10 bg-black/20 transition peer-checked:border-[var(--sb-red-bright)] peer-checked:bg-[var(--sb-red)]/10",
           compact
             ? "min-h-[48px] grid-cols-[36px_minmax(0,1fr)_22px] gap-2 px-2 py-1.5"
             : "min-h-[62px] grid-cols-[46px_minmax(0,1fr)_28px] gap-3 px-3 py-2",
@@ -224,7 +224,7 @@ export function AddOnCard({
         <span className="min-w-0">
           <span
             className={classNames(
-              "block truncate font-semibold leading-tight text-white/82",
+              "block line-clamp-2 font-semibold leading-tight text-white/82",
               compact ? "text-[12px]" : "text-[13px]",
             )}
             title={addOn.label}
@@ -233,7 +233,7 @@ export function AddOnCard({
           </span>
           <span
             className={classNames(
-              "mt-1 block font-mono text-white/62",
+              "mt-1 block font-mono leading-tight text-white/62",
               compact ? "text-[12px]" : "text-[13px]",
             )}
           >

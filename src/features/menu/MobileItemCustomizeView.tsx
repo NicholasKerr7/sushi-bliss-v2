@@ -84,8 +84,8 @@ export function MobileItemCustomizeView({
           </div>
         </header>
 
-        <section className="mt-4 grid grid-cols-[92px_minmax(0,1fr)] gap-2.5 rounded-[18px] border border-[var(--sb-border)] bg-black/46 p-2.5 min-[390px]:mt-5 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4 min-[390px]:p-4">
-          <div className="relative h-[100px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] min-[390px]:h-[128px]">
+        <section className="mt-4 grid grid-cols-[86px_minmax(0,1fr)] gap-2.5 rounded-[18px] border border-[var(--sb-border)] bg-black/46 p-2.5 min-[390px]:mt-5 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4 min-[390px]:p-4">
+          <div className="relative h-[94px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] min-[390px]:h-[128px]">
             <Image
               alt=""
               className="object-cover"
@@ -258,11 +258,14 @@ export function MobileItemCustomizeView({
           </div>
           <button
             aria-label={`Add ${quantity} to cart`}
-            className="red-glow-button mt-5 min-h-[56px] w-full rounded-[14px] px-3 text-[13px] uppercase tracking-[0.05em] min-[390px]:min-h-[70px] min-[390px]:px-4 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
+            className="red-glow-button mt-5 grid min-h-[56px] w-full place-items-center rounded-[14px] px-3 py-2 text-[12px] uppercase tracking-[0.05em] min-[390px]:min-h-[70px] min-[390px]:px-4 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
             onClick={onAddToCart}
             type="button"
           >
-            Add to Cart - {formatMoney(totalCents)}
+            <span>Add to Cart</span>
+            <span className="font-mono text-[13px] text-white min-[390px]:text-[18px]">
+              {formatMoney(totalCents)}
+            </span>
           </button>
           <p className="mt-4 text-center text-[12px] leading-5 text-white/56 min-[390px]:text-[13px]">
             Earn{" "}
@@ -293,7 +296,7 @@ function MobileAddOnRow({
     <button
       aria-pressed={checked}
       className={classNames(
-        "grid min-h-[70px] w-full grid-cols-[42px_minmax(0,1fr)_40px] items-center gap-2 rounded-[14px] border px-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[78px] min-[390px]:grid-cols-[58px_minmax(0,1fr)_58px] min-[390px]:gap-3 min-[390px]:px-3",
+        "grid min-h-[74px] w-full grid-cols-[42px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 rounded-[14px] border px-2 py-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[78px] min-[390px]:grid-cols-[58px_minmax(0,1fr)_58px] min-[390px]:gap-3 min-[390px]:py-0 min-[390px]:px-3",
         checked
           ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12"
           : "border-white/10 bg-white/[0.025]",
@@ -313,21 +316,21 @@ function MobileAddOnRow({
         />
       </span>
       <span className="min-w-0">
-        <span className="editorial-title block truncate text-[12px] uppercase tracking-[0.02em] min-[390px]:text-[16px] min-[390px]:tracking-[0.04em]">
+        <span className="editorial-title block line-clamp-2 text-[12px] uppercase leading-4 tracking-[0.02em] min-[390px]:line-clamp-1 min-[390px]:text-[16px] min-[390px]:leading-normal min-[390px]:tracking-[0.04em]">
           {displayLabel}
         </span>
-        <span className="mt-1 block line-clamp-2 text-[10px] leading-[15px] text-white/58 min-[390px]:text-[13px] min-[390px]:leading-5">
+        <span className="mt-1 block line-clamp-1 text-[10px] leading-[15px] text-white/58 min-[390px]:line-clamp-2 min-[390px]:text-[13px] min-[390px]:leading-5">
           {addOn.description}
         </span>
       </span>
-      <span className="grid gap-1.5 justify-self-end text-right min-[390px]:gap-2">
+      <span className="col-start-2 flex items-center justify-between gap-2 text-right min-[390px]:col-start-auto min-[390px]:grid min-[390px]:gap-2 min-[390px]:justify-self-end">
         <span className="text-[11px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
           {formatMoney(addOn.priceCents)}
         </span>
         <span
           aria-hidden="true"
           className={classNames(
-            "grid h-7 w-7 place-items-center justify-self-end rounded-[8px] border text-[13px] min-[390px]:h-8 min-[390px]:w-8 min-[390px]:rounded-[9px] min-[390px]:text-[14px]",
+            "grid h-6 w-6 place-items-center justify-self-end rounded-[8px] border text-[12px] min-[390px]:h-8 min-[390px]:w-8 min-[390px]:rounded-[9px] min-[390px]:text-[14px]",
             checked
               ? "border-[var(--sb-red-bright)] text-white"
               : "border-[var(--sb-border)] text-transparent",
@@ -387,13 +390,13 @@ function SummaryLine({
   return (
     <p
       className={classNames(
-        "grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3",
+        "grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2.5 min-[390px]:gap-3",
         large && "text-[19px] text-[var(--sb-gold)] min-[390px]:text-[22px]",
         muted && "text-white/58",
       )}
     >
       <span className="min-w-0 break-words">{label}</span>
-      <span className="shrink-0 text-right">{value}</span>
+      <span className="shrink-0 text-right font-mono">{value}</span>
     </p>
   );
 }
