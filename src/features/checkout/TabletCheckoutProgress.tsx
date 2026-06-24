@@ -18,7 +18,7 @@ export function TabletCheckoutProgress({
   activeStep,
 }: TabletCheckoutProgressProps) {
   return (
-    <ol className="mt-3 grid grid-cols-[1fr_72px_1fr_72px_1fr] items-center gap-2 text-[12px] text-white/54">
+    <ol className="mt-3 grid grid-cols-[1fr_56px_1fr_56px_1fr] items-center gap-2 text-[12px] text-white/54 min-[900px]:grid-cols-[1fr_72px_1fr_72px_1fr]">
       {checkoutSteps.map((step, index) => {
         const isActive = step.id <= activeStep;
         const isCurrent = step.id === activeStep;
@@ -28,7 +28,7 @@ export function TabletCheckoutProgress({
             <li
               aria-current={isCurrent ? "step" : undefined}
               className={classNames(
-                "flex min-w-0 items-center gap-3 rounded-[14px] border px-3 py-2",
+                "flex min-w-0 items-center gap-2 rounded-[14px] border px-2.5 py-2 min-[900px]:gap-3 min-[900px]:px-3",
                 isActive
                   ? "border-[var(--sb-red-bright)]/42 bg-[radial-gradient(circle_at_14%_50%,rgba(238,43,36,0.18),transparent_52%),rgba(255,255,255,0.035)]"
                   : "border-white/10 bg-black/20",
@@ -49,9 +49,7 @@ export function TabletCheckoutProgress({
               </span>
               <span
                 className={
-                  isActive
-                    ? "truncate text-white"
-                    : "hidden truncate text-white/54 lg:inline"
+                  isActive ? "truncate text-white" : "truncate text-white/54"
                 }
               >
                 {step.label}
