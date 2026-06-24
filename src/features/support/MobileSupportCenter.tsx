@@ -45,7 +45,7 @@ export function MobileSupportCenter() {
 
   return (
     <section
-      className="relative min-h-dvh overflow-hidden bg-[#050607] px-4 pb-[236px] pt-5 text-white md:hidden"
+      className="relative min-h-dvh bg-[#050607] px-4 pb-[124px] pt-5 text-white md:hidden"
       id="support"
     >
       <div
