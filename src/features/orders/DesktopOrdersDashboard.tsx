@@ -106,29 +106,35 @@ export function DesktopOrdersDashboard({
                     </div>
                     <OrderStatusRail status={activeOrder.status} />
                   </div>
-                  <div className="grid grid-cols-[minmax(0,1fr)_160px_200px_200px] items-center gap-5 p-3.5">
-                    <OrderItemPreview order={activeOrder} />
-                    <div>
-                      <p className="text-[13px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
-                        Total
-                      </p>
-                      <p className="mt-2 font-mono text-[25px] text-[var(--sb-gold-soft)]">
-                        {formatMoney(activeOrder.totals.totalCents)}
-                      </p>
+                  <div className="grid grid-cols-[minmax(0,1fr)_252px] gap-3 p-3.5 min-[1500px]:grid-cols-[minmax(0,1fr)_286px]">
+                    <div className="grid grid-cols-[minmax(0,1fr)_138px_156px_164px] items-center gap-4">
+                      <OrderItemPreview order={activeOrder} />
+                      <div>
+                        <p className="text-[12px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+                          Total
+                        </p>
+                        <p className="mt-2 font-mono text-[23px] text-[var(--sb-gold-soft)]">
+                          {formatMoney(activeOrder.totals.totalCents)}
+                        </p>
+                      </div>
+                      <button
+                        className="h-12 rounded-[12px] border border-[var(--sb-gold)]/36 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/58 hover:bg-[var(--sb-gold)]/8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+                        onClick={() => onSelectOrder(activeOrder)}
+                        type="button"
+                      >
+                        Track details
+                      </button>
+                      <Link
+                        className="grid h-12 place-items-center rounded-[12px] border border-[var(--sb-red-bright)]/58 bg-[var(--sb-red)]/42 text-[13px] uppercase tracking-[0.08em] text-white shadow-[0_0_22px_rgba(238,43,36,0.28)] transition hover:border-[var(--sb-red-bright)]"
+                        href="/support"
+                      >
+                        Support
+                      </Link>
                     </div>
-                    <button
-                      className="h-12 rounded-[12px] border border-[var(--sb-gold)]/36 text-[14px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-                      onClick={() => onSelectOrder(activeOrder)}
-                      type="button"
-                    >
-                      View details
-                    </button>
-                    <Link
-                      className="grid h-12 place-items-center rounded-[12px] border border-[var(--sb-red-bright)]/58 bg-[var(--sb-red)]/42 text-[14px] uppercase tracking-[0.08em] text-white shadow-[0_0_22px_rgba(238,43,36,0.28)]"
-                      href="/support"
-                    >
-                      Contact support
-                    </Link>
+                    <ActiveOrderRoutePanel
+                      order={activeOrder}
+                      onSelectOrder={onSelectOrder}
+                    />
                   </div>
                 </article>
               </section>
@@ -275,6 +281,62 @@ function getDesktopOrderStatusRailWidth(activeIndex: number) {
   }
 
   return "w-2/3";
+}
+
+function ActiveOrderRoutePanel({
+  order,
+  onSelectOrder,
+}: {
+  order: Order;
+  onSelectOrder: (order: Order) => void;
+}) {
+  const isDelivery = order.mode === "delivery";
+  const destination =
+    isDelivery && order.deliveryAddress
+      ? `${order.deliveryAddress.line1}, ${order.deliveryAddress.city}`
+      : "Sushi Bliss counter";
+
+  return (
+    <button
+      aria-label={`Open tracking for order ${order.confirmationCode}`}
+      className="group relative min-h-[116px] overflow-hidden rounded-[15px] border border-white/10 bg-black/34 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition hover:border-[var(--sb-gold)]/36 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+      onClick={() => onSelectOrder(order)}
+      type="button"
+    >
+      <Image
+        alt=""
+        className="object-cover opacity-80 transition duration-500 group-hover:scale-[1.03]"
+        fill
+        loading="eager"
+        sizes="286px"
+        src={
+          isDelivery
+            ? "/assets/maps/tokyo-delivery-route-tracker.webp"
+            : "/assets/maps/tokyo-city-map-with-sushi-markers.webp"
+        }
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.78),rgba(0,0,0,0.34)),radial-gradient(circle_at_74%_30%,rgba(239,47,37,0.26),transparent_32%)]" />
+      <div className="relative z-10 flex h-full min-h-[116px] flex-col justify-between p-3.5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
+              {isDelivery ? "Live route" : "Pickup route"}
+            </p>
+            <p className="mt-1 max-w-[170px] truncate text-[14px] text-white/78">
+              {destination}
+            </p>
+          </div>
+          <span className="rounded-full border border-[var(--sb-red-bright)]/42 bg-black/72 px-2.5 py-1 font-mono text-[12px] text-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(239,47,37,0.28)]">
+            {isDelivery ? `${order.courier?.etaMinutes || 25}m` : "Ready"}
+          </span>
+        </div>
+        <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-white/12 bg-black/64 px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-white/70">
+          Open tracking
+          <ChevronIcon direction="right" size={15} />
+        </span>
+      </div>
+    </button>
+  );
 }
 
 function OrderItemPreview({

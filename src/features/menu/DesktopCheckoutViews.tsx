@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
 import { CheckoutAddressSection } from "@/features/checkout/CheckoutAddressSection";
 import { AgeVerificationNotice } from "@/features/checkout/AgeVerificationNotice";
-import { featuredAssets } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/visualHomeData";
+import { getTabletPresentationImage } from "@/lib/assets";
 import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { Order } from "@/types/order";
@@ -355,36 +356,66 @@ export function DesktopConfirmationView({
     return null;
   }
 
+  const primaryItem = order.items[0]?.menuItem;
+  const heroImage = primaryItem
+    ? getTabletPresentationImage(primaryItem)
+    : "/assets/menu/sushi/deluxe-toro-caviar-nigiri.webp";
+  const fulfillmentCopy =
+    order.mode === "delivery" ? "Estimated delivery" : "Ready for pickup";
+  const destinationCopy =
+    order.mode === "delivery" && order.deliveryAddress
+      ? `${order.deliveryAddress.line1}, ${order.deliveryAddress.city}`
+      : "Pickup at Sushi Bliss counter.";
+
   return (
     <main className="mx-auto max-w-[1530px] px-7 pb-6 pt-4">
       <section className="rounded-[22px] border border-[var(--sb-border)] bg-[#07090a] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.54)]">
         <div className="grid grid-cols-[0.52fr_0.48fr] gap-5">
-          <div className="relative min-h-[220px] overflow-hidden rounded-[18px]">
+          <div className="relative min-h-[256px] overflow-hidden rounded-[18px] border border-white/10">
             <Image
-              alt=""
+              alt={primaryItem?.image.alt || "Sushi Bliss confirmed order"}
               className="object-cover"
               fill
               loading="eager"
               priority
               sizes="760px"
-              src={featuredAssets.heroSushi.publicUrl}
+              src={heroImage}
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.78),rgba(0,0,0,0.12))]" />
-            <div className="relative z-10 p-6">
-              <h1 className="editorial-title text-[43px] uppercase leading-none">
-                Thank you!
-                <span className="block text-[var(--sb-red-bright)]">
-                  Your order is confirmed
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.9),rgba(0,0,0,0.58)_50%,rgba(0,0,0,0.08))]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(239,47,37,0.22),transparent_30%),radial-gradient(circle_at_82%_22%,rgba(215,168,79,0.16),transparent_34%)]" />
+            <div className="relative z-10 flex h-full flex-col justify-between p-6">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--sb-red-bright)]/42 bg-[var(--sb-red)]/20 px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-[var(--sb-red-bright)]">
+                  <AssetIcon size={16} src={icons.chef} />
+                  Kitchen ticket sent
                 </span>
-              </h1>
-              <p className="mt-4 max-w-[360px] text-[16px] leading-7 text-[var(--sb-gold-soft)]">
-                We appreciate your order and cannot wait to serve you an
-                unforgettable experience.
-              </p>
+                <h1 className="editorial-title mt-4 text-[43px] uppercase leading-none">
+                  Thank you!
+                  <span className="block text-[var(--sb-red-bright)]">
+                    Your order is confirmed
+                  </span>
+                </h1>
+                <p className="mt-4 max-w-[430px] text-[16px] leading-7 text-[var(--sb-gold-soft)]">
+                  {primaryItem
+                    ? `${primaryItem.name} is queued with the chef counter.`
+                    : "Your order is queued with the chef counter."}
+                </p>
+              </div>
+              <DesktopConfirmationStatusStrip />
             </div>
           </div>
-          <div className="grid place-items-center rounded-[18px] border border-[var(--sb-border)] bg-white/[0.035] p-7 text-center">
-            <AssetIcon size={58} src="/assets/icons/check-icon.png" />
+          <div className="grid place-items-center rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018)_58%,rgba(0,0,0,0.28))] p-7 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+            <span className="relative grid h-[88px] w-[88px] place-items-center rounded-full border border-[var(--sb-gold)]/62 bg-black/44 shadow-[0_0_34px_rgba(215,168,79,0.22)]">
+              <AssetIcon
+                className="rounded-full"
+                loading="eager"
+                size={58}
+                src={brand.assets.floralEmblem.publicUrl}
+              />
+              <span className="absolute -bottom-1 -right-1 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-red-bright)] bg-black shadow-[0_0_18px_rgba(239,47,37,0.56)]">
+                <AssetIcon size={18} src="/assets/icons/check-icon.png" />
+              </span>
+            </span>
             <p className="mt-5 text-[18px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)]">
               Order confirmation
             </p>
@@ -399,11 +430,13 @@ export function DesktopConfirmationView({
         <div className="mt-4 grid grid-cols-[0.42fr_0.29fr_0.29fr] items-start gap-4">
           <DesktopConfirmationOrderSummary order={order} />
           <div className="grid gap-4">
-            <InfoCard title="Estimated delivery">30 - 40 min</InfoCard>
-            <InfoCard title="Delivery to">
-              {order.deliveryAddress
-                ? `${order.deliveryAddress.line1}, ${order.deliveryAddress.city}`
-                : "Pickup at Sushi Bliss counter."}
+            <InfoCard title={fulfillmentCopy}>
+              {formatDateTime(order.fulfillmentAt)}
+            </InfoCard>
+            <InfoCard
+              title={order.mode === "delivery" ? "Delivery to" : "Pickup at"}
+            >
+              {destinationCopy}
             </InfoCard>
             <InfoCard title="Payment method">
               {order.paymentMethod.brand} **** {order.paymentMethod.last4}
@@ -416,13 +449,20 @@ export function DesktopConfirmationView({
             <InfoCard title="Enjoy exclusive perks">
               View membership benefits from your profile.
             </InfoCard>
-            <button
-              className="h-[58px] rounded-[12px] border border-[var(--sb-border)] text-[14px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+            <Button
+              className="red-glow-button h-[58px] rounded-[12px] text-[14px] uppercase tracking-[0.08em]"
+              href="/orders"
+            >
+              Track order
+              <ChevronIcon direction="right" size={18} />
+            </Button>
+            <Button
+              className="h-[52px] rounded-[12px] border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
               onClick={onBackToMenu}
-              type="button"
+              variant="secondary"
             >
               Back to menu
-            </button>
+            </Button>
           </div>
         </div>
         <div className="mt-5">
@@ -430,5 +470,49 @@ export function DesktopConfirmationView({
         </div>
       </section>
     </main>
+  );
+}
+
+function DesktopConfirmationStatusStrip() {
+  const steps = [
+    { active: true, icon: icons.star, label: "Confirmed" },
+    { active: false, icon: icons.chef, label: "Preparing" },
+    { active: false, icon: icons.bag, label: "Handoff" },
+  ] as const;
+
+  return (
+    <ol className="relative isolate grid max-w-[520px] grid-cols-3 rounded-[14px] border border-white/10 bg-black/34 p-3 backdrop-blur">
+      <span
+        aria-hidden="true"
+        className="absolute left-[16.666%] right-[16.666%] top-[34px] h-[6px] overflow-hidden rounded-full border border-white/[0.05] bg-black/62 shadow-[inset_0_0_10px_rgba(0,0,0,0.72)]"
+      >
+        <span className="absolute inset-y-[2px] left-2 right-2 rounded-full bg-white/10" />
+        <span className="absolute inset-y-[1px] left-0 w-[18%] rounded-full bg-[var(--sb-red-bright)] shadow-[0_0_16px_rgba(239,47,37,0.62)]" />
+      </span>
+      {steps.map((step) => (
+        <li
+          aria-current={step.active ? "step" : undefined}
+          className="relative z-10 flex flex-col items-center gap-2 text-center"
+          key={step.label}
+        >
+          <span
+            className={`grid h-11 w-11 place-items-center rounded-full border bg-black/72 ${
+              step.active
+                ? "border-[var(--sb-red-bright)] shadow-[0_0_18px_rgba(239,47,37,0.38)]"
+                : "border-white/16"
+            }`}
+          >
+            <AssetIcon size={22} src={step.icon} />
+          </span>
+          <span
+            className={`text-[11px] uppercase tracking-[0.08em] ${
+              step.active ? "text-[var(--sb-red-bright)]" : "text-white/50"
+            }`}
+          >
+            {step.label}
+          </span>
+        </li>
+      ))}
+    </ol>
   );
 }
