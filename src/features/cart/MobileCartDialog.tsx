@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { calculateCartLineSubtotal } from "@/lib/cart";
@@ -92,7 +91,7 @@ export function MobileCartDialog({
       role="dialog"
       tabIndex={-1}
     >
-      <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto px-4 pb-[calc(126px+var(--sb-safe-bottom))] pt-4 min-[390px]:px-5">
+      <div className="smooth-scroll-area relative h-dvh overflow-x-hidden overflow-y-auto px-4 pb-[calc(8.75rem+var(--sb-safe-bottom))] pt-4 min-[390px]:px-5">
         <div className="pointer-events-none fixed inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_8%,rgba(202,164,93,0.08),transparent_22%),radial-gradient(circle_at_100%_28%,rgba(172,20,19,0.12),transparent_26%),linear-gradient(180deg,#040404_0%,#080807_42%,#030303_100%)]" />
         </div>
@@ -147,22 +146,62 @@ export function MobileCartDialog({
                   />
                 ) : null}
 
-                <button
-                  aria-label="Checkout"
-                  className="red-glow-button mt-4 min-h-[54px] w-full rounded-[14px] text-[13px] uppercase tracking-[0.07em] min-[390px]:min-h-[56px] min-[390px]:text-[16px] min-[390px]:tracking-[0.08em]"
-                  onClick={onOpenCheckout}
-                  type="button"
-                >
-                  Proceed To Checkout
-                </button>
+                <SecureCartNote />
               </>
             )}
           </main>
         </div>
       </div>
 
-      <BottomNavigation activeId="orders" ariaLabel="Mobile cart navigation" />
+      {!isEmpty ? (
+        <MobileCartCheckoutDock
+          itemCount={itemCount}
+          onOpenCheckout={onOpenCheckout}
+          totalCents={totals.totalCents}
+        />
+      ) : null}
     </div>
+  );
+}
+
+function MobileCartCheckoutDock({
+  itemCount,
+  onOpenCheckout,
+  totalCents,
+}: {
+  itemCount: number;
+  onOpenCheckout: () => void;
+  totalCents: number;
+}) {
+  return (
+    <footer className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--sb-border)] bg-[linear-gradient(180deg,rgba(9,8,7,0.88),rgba(0,0,0,0.98))] px-3 pb-[calc(0.72rem+var(--sb-safe-bottom))] pt-3 shadow-[0_-22px_54px_rgba(0,0,0,0.66)] backdrop-blur-xl">
+      <div className="mobile-frame">
+        <div className="mb-2 flex min-w-0 items-center justify-between gap-3 px-1 text-[11px] uppercase tracking-[0.06em] text-white/50">
+          <span className="min-w-0 truncate">
+            {itemCount} {itemCount === 1 ? "item" : "items"} ready
+          </span>
+          <span className="shrink-0 font-mono text-[13px] tracking-normal text-[var(--sb-gold-soft)]">
+            {formatMoney(totalCents)}
+          </span>
+        </div>
+        <button
+          aria-label="Checkout"
+          className="red-glow-button grid h-[52px] w-full place-items-center rounded-[13px] px-3 text-[12px] uppercase tracking-[0.06em] min-[390px]:h-[56px] min-[390px]:text-[13px] min-[390px]:tracking-[0.07em]"
+          onClick={onOpenCheckout}
+          type="button"
+        >
+          Proceed To Checkout
+        </button>
+      </div>
+    </footer>
+  );
+}
+
+function SecureCartNote() {
+  return (
+    <p className="mt-3 text-center text-[11px] leading-5 text-white/42">
+      Taxes and fulfillment timing are finalized during checkout.
+    </p>
   );
 }
 
