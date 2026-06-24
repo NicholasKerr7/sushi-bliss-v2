@@ -12,6 +12,7 @@ export {
 } from "./MobileCheckoutChoices";
 export {
   MobileBackButton,
+  MobileCheckoutActionDock,
   SectionTitle,
   SecureCheckoutNote,
   SecureInlineCopy,
