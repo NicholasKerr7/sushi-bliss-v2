@@ -138,22 +138,22 @@ export function MobileProfilePreferencesView({
           onOpenCart={onOpenCart}
         />
 
-        <div className="mt-7 grid grid-cols-[52px_1fr_52px] items-center">
+        <div className="mt-6 grid grid-cols-[44px_minmax(0,1fr)_44px] items-center min-[390px]:mt-7 min-[390px]:grid-cols-[52px_1fr_52px]">
           <MobileProfileBackButton label="Back to profile" onClick={onBack} />
-          <h1 className="editorial-title text-center text-[25px] uppercase tracking-[0.1em] text-white">
+          <h1 className="editorial-title text-center text-[21px] uppercase tracking-[0.07em] text-white min-[390px]:text-[25px] min-[390px]:tracking-[0.1em]">
             Settings
           </h1>
           <span aria-hidden="true" />
         </div>
 
-        <section className="mt-8">
-          <h2 className="editorial-title text-[34px] uppercase leading-[1.03] text-white min-[390px]:text-[38px]">
+        <section className="mt-7 min-[390px]:mt-8">
+          <h2 className="editorial-title text-[30px] uppercase leading-[1.03] text-white min-[390px]:text-[38px]">
             Preferences
             <span className="block text-[var(--sb-red-bright)]">
               & Security
             </span>
           </h2>
-          <p className="mt-4 text-[16px] leading-6 text-white/62">
+          <p className="mt-3 text-[14px] leading-[22px] text-white/62 min-[390px]:mt-4 min-[390px]:text-[16px] min-[390px]:leading-6">
             Tune your dining preferences, notification rules, and account
             controls.
           </p>
@@ -171,7 +171,7 @@ export function MobileProfilePreferencesView({
           title="Preferences synced locally"
           action={
             <Link
-              className="grid min-h-[48px] place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/28 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
+              className="grid min-h-[46px] place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/28 px-3 text-center text-[10px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:min-h-[48px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
               href="/notifications"
             >
               Open notification center
@@ -185,16 +185,16 @@ export function MobileProfilePreferencesView({
           </p>
         ) : null}
 
-        <MobileProfilePanel className="mt-6 p-4">
-          <h3 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+        <MobileProfilePanel className="mt-5 p-3 min-[390px]:mt-6 min-[390px]:p-4">
+          <h3 className="text-[14px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:text-[16px] min-[390px]:tracking-[0.08em]">
             Preferred fulfillment
           </h3>
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-2 gap-2.5 min-[390px]:mt-4 min-[390px]:gap-3">
             {(["delivery", "pickup"] as const).map((mode) => (
               <button
                 aria-pressed={preferences.fulfillmentMode === mode}
                 className={classNames(
-                  "min-h-[58px] rounded-[14px] border text-[15px] uppercase tracking-[0.08em] transition",
+                  "min-h-[50px] rounded-[13px] border text-[12px] uppercase tracking-[0.05em] transition min-[390px]:min-h-[58px] min-[390px]:rounded-[14px] min-[390px]:text-[15px] min-[390px]:tracking-[0.08em]",
                   preferences.fulfillmentMode === mode
                     ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/20 text-[var(--sb-red-bright)] shadow-[0_0_24px_rgba(239,47,37,0.24)]"
                     : "border-white/12 bg-black/34 text-white/62",
@@ -209,8 +209,8 @@ export function MobileProfilePreferencesView({
           </div>
         </MobileProfilePanel>
 
-        <MobileProfilePanel className="mt-4 p-4">
-          <h3 className="text-[16px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+        <MobileProfilePanel className="mt-4 p-3 min-[390px]:p-4">
+          <h3 className="text-[14px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:text-[16px] min-[390px]:tracking-[0.08em]">
             Dietary preferences
           </h3>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -221,7 +221,7 @@ export function MobileProfilePreferencesView({
                 <button
                   aria-pressed={selected}
                   className={classNames(
-                    "min-h-[40px] rounded-full border px-4 text-[12px] uppercase tracking-[0.06em]",
+                    "min-h-9 rounded-full border px-3 text-[10px] uppercase tracking-[0.04em] min-[390px]:min-h-10 min-[390px]:px-4 min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]",
                     selected
                       ? "border-[var(--sb-gold)] bg-[var(--sb-gold)]/16 text-[var(--sb-gold-soft)]"
                       : "border-white/12 bg-black/34 text-white/58",
@@ -326,8 +326,8 @@ export function MobileProfilePreferencesView({
 
 function SectionTitle({ icon, label }: { icon?: string; label: string }) {
   return (
-    <h3 className="flex min-h-[58px] items-center gap-3 border-b border-white/10 px-4 text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-      <AssetIcon size={24} src={icon} />
+    <h3 className="flex min-h-[52px] items-center gap-2.5 border-b border-white/10 px-3 text-[13px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:min-h-[58px] min-[390px]:gap-3 min-[390px]:px-4 min-[390px]:text-[15px] min-[390px]:tracking-[0.08em]">
+      <AssetIcon size={22} src={icon} />
       {label}
     </h3>
   );
@@ -345,12 +345,12 @@ function PreferenceSwitchRow({
   onCheckedChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_52px] items-center gap-3 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:px-4 min-[390px]:py-4">
+    <div className="grid grid-cols-[minmax(0,1fr)_46px] items-center gap-2.5 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:grid-cols-[minmax(0,1fr)_52px] min-[390px]:gap-3 min-[390px]:px-4 min-[390px]:py-4">
       <span className="min-w-0">
-        <span className="block text-[14px] leading-5 text-white min-[390px]:text-[15px]">
+        <span className="block break-words text-[13px] leading-[18px] text-white min-[390px]:text-[15px] min-[390px]:leading-5">
           {label}
         </span>
-        <span className="mt-1 block text-[12px] leading-4 text-white/50 min-[390px]:text-[13px] min-[390px]:leading-5">
+        <span className="mt-1 block text-[11px] leading-[15px] text-white/50 min-[390px]:text-[13px] min-[390px]:leading-5">
           {description}
         </span>
       </span>
@@ -366,7 +366,7 @@ function PreferenceSwitchRow({
 function LinkRow({ href, label }: { href: string; label: string }) {
   return (
     <Link
-      className="flex min-h-[58px] items-center justify-between border-b border-white/10 px-4 text-[15px] text-white/72 last:border-b-0"
+      className="flex min-h-[52px] items-center justify-between gap-3 border-b border-white/10 px-3 text-[13px] text-white/72 last:border-b-0 min-[390px]:min-h-[58px] min-[390px]:px-4 min-[390px]:text-[15px]"
       href={href}
     >
       {label}

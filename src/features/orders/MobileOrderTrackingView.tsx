@@ -65,38 +65,38 @@ export function MobileOrderTrackingView({
           unreadNotificationCount={unreadNotificationCount}
         />
 
-        <section className="mt-9 grid grid-cols-[58px_1fr] gap-4">
+        <section className="mt-7 grid grid-cols-[44px_minmax(0,1fr)] gap-3 min-[390px]:mt-9 min-[390px]:grid-cols-[58px_1fr] min-[390px]:gap-4">
           <MobileBackButton label="Back to order details" onClick={onBack} />
           <div className="min-w-0">
             <div className="inline-grid max-w-full rounded-[12px] border border-[var(--sb-border)] bg-black/30 px-3 py-2">
-              <span className="text-[10px] uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
+              <span className="text-[9px] uppercase tracking-[0.12em] text-[var(--sb-gold-soft)] min-[390px]:text-[10px] min-[390px]:tracking-[0.16em]">
                 Order tracking
               </span>
-              <span className="mt-1 truncate font-mono text-[13px] uppercase tracking-[0.04em] text-white/72">
+              <span className="mt-1 truncate font-mono text-[11px] uppercase tracking-[0.03em] text-white/72 min-[390px]:text-[13px] min-[390px]:tracking-[0.04em]">
                 {order.confirmationCode}
               </span>
             </div>
-            <h1 className="mt-5 text-[34px] leading-[0.98] text-white min-[390px]:text-[40px] min-[390px]:leading-[0.96]">
+            <h1 className="mt-4 text-[29px] leading-[0.98] text-white min-[390px]:mt-5 min-[390px]:text-[40px] min-[390px]:leading-[0.96]">
               {getMobileOrderHeadline(order)}
             </h1>
-            <p className="mt-4 text-[16px] leading-6 text-[var(--sb-gold-soft)] min-[390px]:text-[19px] min-[390px]:leading-7">
+            <p className="mt-3 text-[14px] leading-[22px] text-[var(--sb-gold-soft)] min-[390px]:mt-4 min-[390px]:text-[19px] min-[390px]:leading-7">
               {order.mode === "delivery"
                 ? "Your sushi is moving through the final handoff."
                 : "Your sushi is being prepared for pickup."}
             </p>
           </div>
-          <MobileOrderPanel className="col-start-2 p-4 text-left">
+          <MobileOrderPanel className="col-start-2 p-3 text-left min-[390px]:p-4">
             <div className="flex items-center gap-2">
               <AssetIcon size={20} src={icons.clock} />
               <span className="text-[13px] uppercase tracking-[0.08em] text-white/70">
                 ETA
               </span>
             </div>
-            <div className="mt-3 flex items-end justify-between gap-4">
-              <p className="text-[31px] leading-none text-white">
+            <div className="mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 min-[390px]:gap-4">
+              <p className="min-w-0 text-[25px] leading-none text-white min-[390px]:text-[31px]">
                 {formatTime(order.fulfillmentAt)}
               </p>
-              <p className="max-w-[112px] text-right text-[13px] leading-5 text-[var(--sb-gold-soft)]">
+              <p className="max-w-[96px] text-right text-[11px] leading-4 text-[var(--sb-gold-soft)] min-[390px]:max-w-[112px] min-[390px]:text-[13px] min-[390px]:leading-5">
                 {getMobileEtaCopy(order)}
               </p>
             </div>
@@ -134,25 +134,25 @@ export function MobileOrderTrackingView({
             </div>
           </div>
 
-          <div className="grid grid-cols-[54px_1fr] items-center gap-4 border-t border-[var(--sb-border)] px-4 py-5">
-            <span className="grid h-[54px] w-[54px] place-items-center rounded-[14px] border border-[var(--sb-gold)]/30 bg-[var(--sb-gold)]/8">
-              <AssetIcon size={30} src={icons.location} />
+          <div className="grid grid-cols-[44px_minmax(0,1fr)] items-center gap-3 border-t border-[var(--sb-border)] px-3 py-4 min-[390px]:grid-cols-[54px_1fr] min-[390px]:gap-4 min-[390px]:px-4 min-[390px]:py-5">
+            <span className="grid h-11 w-11 place-items-center rounded-[13px] border border-[var(--sb-gold)]/30 bg-[var(--sb-gold)]/8 min-[390px]:h-[54px] min-[390px]:w-[54px] min-[390px]:rounded-[14px]">
+              <AssetIcon size={25} src={icons.location} />
             </span>
             <p className="min-w-0">
-              <span className="editorial-title block text-[16px] uppercase text-[var(--sb-gold-soft)]">
+              <span className="editorial-title block text-[13px] uppercase text-[var(--sb-gold-soft)] min-[390px]:text-[16px]">
                 {order.mode === "delivery" ? "Destination" : "Pickup"}
               </span>
-              <span className="mt-2 block text-[18px] leading-6 text-white">
+              <span className="mt-1.5 block break-words text-[13px] leading-5 text-white min-[390px]:mt-2 min-[390px]:text-[18px] min-[390px]:leading-6">
                 {address}
               </span>
-              <span className="mt-1 block text-[14px] leading-5 text-white/52">
+              <span className="mt-1 block text-[12px] leading-[18px] text-white/52 min-[390px]:text-[14px] min-[390px]:leading-5">
                 {supportingAddress}
               </span>
             </p>
           </div>
         </MobileOrderPanel>
 
-        <div className="mt-4 grid grid-cols-2 gap-3">
+        <div className="mt-4 grid grid-cols-2 gap-2.5 min-[390px]:gap-3">
           {order.courier && courierPhone ? (
             <TrackingActionLink
               href={`tel:${courierPhone}`}
@@ -175,12 +175,12 @@ export function MobileOrderTrackingView({
           />
         </div>
 
-        <MobileOrderPanel className="mt-5 p-4">
+        <MobileOrderPanel className="mt-5 p-3 min-[390px]:p-4">
           <div className="flex items-center justify-between">
-            <h2 className="editorial-title text-[18px] uppercase text-[var(--sb-gold-soft)]">
+            <h2 className="editorial-title text-[16px] uppercase text-[var(--sb-gold-soft)] min-[390px]:text-[18px]">
               Order Summary
             </h2>
-            <p className="text-[15px] text-white/58">
+            <p className="text-[12px] text-white/58 min-[390px]:text-[15px]">
               {getOrderItemCount(order)} items
             </p>
           </div>
@@ -188,10 +188,10 @@ export function MobileOrderTrackingView({
           <div className="mt-4 divide-y divide-white/10">
             {order.items.map((item) => (
               <div
-                className="grid grid-cols-[78px_1fr_auto] gap-4 py-4 first:pt-0"
+                className="grid grid-cols-[58px_minmax(0,1fr)] gap-2.5 py-3 first:pt-0 min-[390px]:grid-cols-[78px_1fr_auto] min-[390px]:gap-4 min-[390px]:py-4"
                 key={item.id}
               >
-                <div className="relative h-[60px] overflow-hidden rounded-[9px] border border-white/10 bg-black/34">
+                <div className="relative h-[54px] overflow-hidden rounded-[9px] border border-white/10 bg-black/34 min-[390px]:h-[60px]">
                   <Image
                     alt={item.menuItem.image.alt || item.menuItem.name}
                     className="object-cover"
@@ -201,36 +201,38 @@ export function MobileOrderTrackingView({
                   />
                 </div>
                 <p className="min-w-0">
-                  <span className="block truncate text-[18px] text-white">
+                  <span className="block truncate text-[14px] text-white min-[390px]:text-[18px]">
                     {item.menuItem.name}
                   </span>
-                  <span className="mt-2 block text-[14px] text-white/54">
+                  <span className="mt-1.5 block text-[12px] text-white/54 min-[390px]:mt-2 min-[390px]:text-[14px]">
                     {item.quantity}x {formatMoney(item.menuItem.priceCents)}
                   </span>
                 </p>
-                <span className="pt-1 font-mono text-[17px] text-[var(--sb-gold-soft)]">
+                <span className="col-start-2 font-mono text-[12px] text-[var(--sb-gold-soft)] min-[390px]:col-start-auto min-[390px]:pt-1 min-[390px]:text-[17px]">
                   {formatMoney(calculateCartLineSubtotal(item))}
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-5">
-            <span className="text-[22px] text-white">Total</span>
-            <span className="font-mono text-[24px] text-[var(--sb-gold-soft)]">
+          <div className="mt-2 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-t border-white/10 pt-4 min-[390px]:pt-5">
+            <span className="text-[18px] text-white min-[390px]:text-[22px]">
+              Total
+            </span>
+            <span className="font-mono text-[20px] text-[var(--sb-gold-soft)] min-[390px]:text-[24px]">
               {formatMoney(order.totals.totalCents)}
             </span>
           </div>
         </MobileOrderPanel>
 
         <MobileOrderPanel className="mt-5 overflow-hidden">
-          <div className="grid grid-cols-[64px_1fr] gap-4 p-4">
-            <MobileIconCircle icon={icons.bag} />
-            <p>
-              <span className="block text-[16px] text-white">
+          <div className="grid grid-cols-[48px_minmax(0,1fr)] gap-3 p-3 min-[390px]:grid-cols-[64px_1fr] min-[390px]:gap-4 min-[390px]:p-4">
+            <MobileIconCircle icon={icons.bag} size={25} />
+            <p className="min-w-0">
+              <span className="block break-words text-[14px] text-white min-[390px]:text-[16px]">
                 {order.courier?.name || "Sushi Bliss team"}
               </span>
-              <span className="mt-2 block text-[14px] leading-6 text-white/54">
+              <span className="mt-1.5 block text-[12px] leading-[18px] text-white/54 min-[390px]:mt-2 min-[390px]:text-[14px] min-[390px]:leading-6">
                 {order.courier
                   ? `${order.courier.vehicle} assigned for a sealed handoff.`
                   : "We will update this screen when your handoff is assigned."}
@@ -274,12 +276,12 @@ function TrackingActionLink({
     <Link
       className={
         primary
-          ? "red-glow-button flex min-h-[62px] items-center justify-center gap-2.5 rounded-[14px] text-[12px] uppercase tracking-[0.07em] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[15px] min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]"
-          : "flex min-h-[62px] items-center justify-center gap-2.5 rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/34 text-[12px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_16px_34px_rgba(0,0,0,0.32)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[15px] min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]"
+          ? "red-glow-button flex min-h-[56px] items-center justify-center gap-2 rounded-[14px] px-2 text-[10px] uppercase tracking-[0.05em] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[15px] min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]"
+          : "flex min-h-[56px] items-center justify-center gap-2 rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/34 px-2 text-[10px] uppercase tracking-[0.05em] text-[var(--sb-gold-soft)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_16px_34px_rgba(0,0,0,0.32)] transition hover:border-[var(--sb-gold)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[72px] min-[390px]:gap-3 min-[390px]:rounded-[15px] min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]"
       }
       href={href}
     >
-      <AssetIcon size={24} src={icon} />
+      <AssetIcon size={21} src={icon} />
       {label}
     </Link>
   );
@@ -287,11 +289,11 @@ function TrackingActionLink({
 
 function CourierSignal({ label, value }: { label: string; value: string }) {
   return (
-    <p className="border-r border-white/10 px-3 py-3 text-center last:border-r-0">
-      <span className="block text-[10px] uppercase tracking-[0.12em] text-white/42">
+    <p className="border-r border-white/10 px-2 py-3 text-center last:border-r-0 min-[390px]:px-3">
+      <span className="block text-[8.5px] uppercase tracking-[0.07em] text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.12em]">
         {label}
       </span>
-      <span className="mt-1 block text-[13px] text-[var(--sb-gold-soft)]">
+      <span className="mt-1 block text-[11px] text-[var(--sb-gold-soft)] min-[390px]:text-[13px]">
         {value}
       </span>
     </p>

@@ -69,18 +69,18 @@ export function MobileOrdersListView({
           unreadNotificationCount={unreadNotificationCount}
         />
 
-        <section className="pt-8 text-center min-[390px]:pt-12">
-          <h1 className="editorial-title text-[33px] leading-none tracking-[0.09em] min-[390px]:text-[40px] min-[390px]:tracking-[0.13em]">
+        <section className="pt-7 text-center min-[390px]:pt-12">
+          <h1 className="editorial-title text-[30px] leading-none tracking-[0.07em] min-[390px]:text-[40px] min-[390px]:tracking-[0.13em]">
             My <span className="text-[var(--sb-gold-soft)]">Orders</span>
           </h1>
-          <p className="mx-auto mt-3 max-w-[260px] text-[15px] leading-5 text-white/66 min-[390px]:mt-4 min-[390px]:max-w-none min-[390px]:text-[17px] min-[390px]:leading-6">
+          <p className="mx-auto mt-3 max-w-[260px] text-[13px] leading-[19px] text-white/66 min-[390px]:mt-4 min-[390px]:max-w-none min-[390px]:text-[17px] min-[390px]:leading-6">
             Track your orders and view order history.
           </p>
         </section>
 
         <div
           aria-label="Order views"
-          className="mx-auto mt-5 grid h-[52px] max-w-[330px] grid-cols-2 overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/46 p-1 min-[390px]:mt-8 min-[390px]:h-[68px]"
+          className="mx-auto mt-5 grid h-[48px] max-w-[330px] grid-cols-2 overflow-hidden rounded-full border border-[var(--sb-border)] bg-black/46 p-1 min-[390px]:mt-8 min-[390px]:h-[68px]"
           role="group"
         >
           <MobileOrderTab
@@ -112,7 +112,7 @@ export function MobileOrdersListView({
 
         {view === "active" ? (
           <section className="mt-6 min-[390px]:mt-8">
-            <h2 className="editorial-title text-[23px] text-[var(--sb-gold-soft)] min-[390px]:text-[25px]">
+            <h2 className="editorial-title text-[21px] text-[var(--sb-gold-soft)] min-[390px]:text-[25px]">
               Active Order
             </h2>
             {featuredOrder ? (
@@ -142,7 +142,7 @@ export function MobileOrdersListView({
           </section>
         ) : (
           <section className="mt-6 min-[390px]:mt-8">
-            <h2 className="editorial-title text-[23px] text-[var(--sb-gold-soft)] min-[390px]:text-[25px]">
+            <h2 className="editorial-title text-[21px] text-[var(--sb-gold-soft)] min-[390px]:text-[25px]">
               Past Orders
             </h2>
             {visibleOrders.length > 0 ? (
@@ -187,7 +187,7 @@ function MobileOrderTab({
     <button
       aria-pressed={active}
       className={classNames(
-        "rounded-full text-[15px] uppercase tracking-[0.04em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:text-[18px]",
+        "rounded-full text-[13px] uppercase tracking-[0.03em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:text-[18px] min-[390px]:tracking-[0.04em]",
         active
           ? "border border-[var(--sb-red-bright)] bg-[radial-gradient(circle_at_50%_50%,rgba(239,47,37,0.26),rgba(239,47,37,0.05)_70%)] text-[var(--sb-red-bright)] shadow-[0_0_26px_rgba(239,47,37,0.35)]"
           : "text-white/68 hover:text-white",
@@ -211,30 +211,30 @@ function MobileActiveOrderCard({
   const remaining = Math.max(order.items.length - visibleItems.length, 0);
 
   return (
-    <MobileOrderPanel className="mt-4 p-4">
-      <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
-        <div className="flex min-w-0 items-center gap-4">
-          <MobileIconCircle icon={icons.bag} size={29} />
+    <MobileOrderPanel className="mt-4 p-3 min-[390px]:p-4">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2.5 border-b border-white/10 pb-3 min-[390px]:gap-4 min-[390px]:pb-4">
+        <div className="grid min-w-0 grid-cols-[44px_minmax(0,1fr)] items-center gap-2.5 min-[390px]:grid-cols-[58px_minmax(0,1fr)] min-[390px]:gap-4">
+          <MobileIconCircle icon={icons.bag} size={25} />
           <div className="min-w-0">
-            <h3 className="text-[13px] uppercase tracking-[0.06em] text-white/76 min-[390px]:text-[14px] min-[390px]:tracking-[0.12em]">
+            <h3 className="text-[11px] uppercase tracking-[0.05em] text-white/76 min-[390px]:text-[14px] min-[390px]:tracking-[0.12em]">
               Order
             </h3>
-            <p className="mt-1 break-words text-[16px] uppercase leading-5 text-white">
+            <p className="mt-1 break-words text-[14px] uppercase leading-5 text-white min-[390px]:text-[16px]">
               {order.confirmationCode}
             </p>
-            <p className="mt-2 text-[14px] text-white/56">
+            <p className="mt-1.5 text-[12px] text-white/56 min-[390px]:mt-2 min-[390px]:text-[14px]">
               {formatOrderStamp(order.createdAt)}
             </p>
           </div>
         </div>
-        <span className="shrink-0 rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/10 px-4 py-2 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
+        <span className="shrink-0 rounded-full border border-[var(--sb-gold)]/42 bg-[var(--sb-gold)]/10 px-2.5 py-1.5 text-[9px] uppercase tracking-[0.05em] text-[var(--sb-gold-soft)] min-[390px]:px-4 min-[390px]:py-2 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]">
           {getOrderStatusLabel(order.status)}
         </span>
       </div>
 
       <div
         className={classNames(
-          "mt-4 grid gap-3",
+          "mt-3 grid gap-2.5 min-[390px]:mt-4 min-[390px]:gap-3",
           remaining > 0
             ? "grid-cols-[repeat(3,minmax(0,1fr))_52px]"
             : "grid-cols-3",
@@ -253,10 +253,10 @@ function MobileActiveOrderCard({
                 src={item.menuItem.image.publicUrl}
               />
             </div>
-            <p className="mt-3 min-h-[32px] text-[12px] leading-4 text-white">
+            <p className="mt-2 min-h-[30px] text-[10px] leading-[15px] text-white min-[390px]:mt-3 min-[390px]:min-h-[32px] min-[390px]:text-[12px] min-[390px]:leading-4">
               {item.menuItem.name}
             </p>
-            <p className="mt-1 text-[14px] text-[var(--sb-gold-soft)]">
+            <p className="mt-1 text-[12px] text-[var(--sb-gold-soft)] min-[390px]:text-[14px]">
               {formatMoney(item.menuItem.priceCents)}
             </p>
           </div>
@@ -276,7 +276,7 @@ function MobileActiveOrderCard({
         ) : null}
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-4 border-y border-white/10 py-5">
+      <div className="mt-4 grid grid-cols-2 gap-3 border-y border-white/10 py-4 min-[390px]:mt-5 min-[390px]:gap-4 min-[390px]:py-5">
         <OrderMetric
           icon={icons.star}
           label="Total"
@@ -294,9 +294,9 @@ function MobileActiveOrderCard({
         <MobileOrderProgress order={order} />
       </div>
 
-      <div className="mt-7 grid gap-3">
+      <div className="mt-5 grid gap-3 min-[390px]:mt-7">
         <button
-          className="flex h-[62px] w-full items-center justify-center gap-4 rounded-full border border-[var(--sb-gold)]/70 bg-black/28 text-[17px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+          className="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-full border border-[var(--sb-gold)]/70 bg-black/28 text-[13px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-[62px] min-[390px]:gap-4 min-[390px]:text-[17px] min-[390px]:tracking-[0.08em]"
           onClick={() => onViewDetails(order)}
           type="button"
         >
@@ -355,9 +355,9 @@ function MobileCompactOrderRow({
   const firstItem = order.items[0];
 
   return (
-    <MobileOrderPanel className="grid grid-cols-[86px_1fr] gap-4 p-3">
+    <MobileOrderPanel className="grid grid-cols-[74px_minmax(0,1fr)] gap-2.5 p-2.5 min-[390px]:grid-cols-[86px_1fr] min-[390px]:gap-4 min-[390px]:p-3">
       <button
-        className="relative h-[86px] overflow-hidden rounded-[12px] border border-white/10 bg-black/38"
+        className="relative h-[78px] overflow-hidden rounded-[12px] border border-white/10 bg-black/38 min-[390px]:h-[86px]"
         onClick={() => onViewDetails(order)}
         type="button"
       >
@@ -372,32 +372,32 @@ function MobileCompactOrderRow({
         ) : null}
       </button>
       <div className="min-w-0">
-        <div className="flex items-start justify-between gap-3">
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2">
           <div className="min-w-0">
-            <h3 className="truncate text-[16px] text-white">
+            <h3 className="truncate text-[14px] text-white min-[390px]:text-[16px]">
               {getOrderSummary(order)}
             </h3>
-            <p className="mt-1 text-[12px] text-white/50">
+            <p className="mt-1 line-clamp-1 text-[11px] text-white/50 min-[390px]:text-[12px]">
               {formatFullDateTime(order.createdAt)}
             </p>
-            <p className="mt-1 text-[12px] text-[var(--sb-gold-soft)]">
+            <p className="mt-1 text-[11px] text-[var(--sb-gold-soft)] min-[390px]:text-[12px]">
               {getOrderItemCount(order)} items
             </p>
           </div>
-          <span className="font-mono text-[15px] text-[var(--sb-gold-soft)]">
+          <span className="shrink-0 font-mono text-[12px] text-[var(--sb-gold-soft)] min-[390px]:text-[15px]">
             {formatMoney(order.totals.totalCents)}
           </span>
         </div>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <button
-            className="h-[38px] rounded-[10px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)]"
+            className="h-9 rounded-[10px] border border-[var(--sb-border)] text-[10px] uppercase tracking-[0.05em] text-[var(--sb-gold-soft)] min-[390px]:h-[38px] min-[390px]:text-[12px] min-[390px]:tracking-[0.07em]"
             onClick={() => onViewDetails(order)}
             type="button"
           >
             Details
           </button>
           <button
-            className="h-[38px] rounded-[10px] border border-white/10 bg-white/[0.035] text-[12px] uppercase tracking-[0.07em] text-white/70"
+            className="h-9 rounded-[10px] border border-white/10 bg-white/[0.035] text-[10px] uppercase tracking-[0.05em] text-white/70 min-[390px]:h-[38px] min-[390px]:text-[12px] min-[390px]:tracking-[0.07em]"
             onClick={() => onReorder(order)}
             type="button"
           >

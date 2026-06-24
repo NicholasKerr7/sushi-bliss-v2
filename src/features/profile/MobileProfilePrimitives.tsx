@@ -19,33 +19,33 @@ export function MobileProfileHeader({
   onOpenCart: () => void;
 }) {
   return (
-    <header className="flex items-center justify-between">
+    <header className="flex items-center justify-between gap-2.5">
       <Link
-        className="flex min-w-0 items-center gap-3 rounded-[14px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+        className="flex min-w-0 items-center gap-2 rounded-[14px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:gap-3"
         href="/home"
       >
         <AssetIcon
           alt="Sushi Bliss"
-          className="rounded-full"
+          className="h-[42px] w-[42px] rounded-full min-[390px]:h-[54px] min-[390px]:w-[54px]"
           loading="eager"
           size={54}
           src={brand.assets.floralEmblem.publicUrl}
         />
-        <span className="editorial-title text-[18px] leading-[0.95] tracking-[0.34em] text-white">
+        <span className="editorial-title text-[13px] leading-[0.95] tracking-[0.22em] text-white min-[390px]:text-[18px] min-[390px]:tracking-[0.34em]">
           Sushi
           <br />
           Bliss
         </span>
       </Link>
-      <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center gap-1.5 min-[390px]:gap-3">
         {cartCount > 0 ? (
           <button
             aria-label="Open cart"
-            className="relative grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
+            className="relative grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)] min-[390px]:h-[52px] min-[390px]:w-[52px]"
             onClick={onOpenCart}
             type="button"
           >
-            <AssetIcon loading="eager" size={25} src={icons.cart} />
+            <AssetIcon loading="eager" size={22} src={icons.cart} />
             <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold">
               {cartCount}
             </span>
@@ -53,10 +53,10 @@ export function MobileProfileHeader({
         ) : null}
         <Link
           aria-label="Notifications"
-          className="relative grid h-[52px] w-[52px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)]"
+          className="relative grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/46 shadow-[0_0_26px_rgba(202,164,93,0.12)] min-[390px]:h-[52px] min-[390px]:w-[52px]"
           href="/notifications"
         >
-          <AssetIcon loading="eager" size={27} src={icons.bell} />
+          <AssetIcon loading="eager" size={23} src={icons.bell} />
           {unreadNotificationCount > 0 ? (
             <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red-bright)] px-1 text-[10px] font-bold text-white">
               {unreadNotificationCount > 9 ? "9+" : unreadNotificationCount}
@@ -78,7 +78,7 @@ export function MobileProfileBackButton({
   return (
     <button
       aria-label={label}
-      className="grid h-[52px] w-[52px] place-items-center rounded-[13px] border border-[var(--sb-border)] bg-black/46 text-[30px] leading-none text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(0,0,0,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]"
+      className="grid h-[44px] w-[44px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/46 text-[30px] leading-none text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(0,0,0,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-[52px] min-[390px]:w-[52px] min-[390px]:rounded-[13px]"
       onClick={onClick}
       type="button"
     >
@@ -120,7 +120,7 @@ export function MobileProfileIconCircle({
   return (
     <span
       className={classNames(
-        "grid h-[56px] w-[56px] shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/34",
+        "grid h-[48px] w-[48px] shrink-0 place-items-center rounded-full border border-[var(--sb-border)] bg-black/34 min-[390px]:h-[56px] min-[390px]:w-[56px]",
         className,
       )}
     >
@@ -160,7 +160,7 @@ export function MobileProfileSwitch({
       aria-checked={checked}
       aria-label={label}
       className={classNames(
-        "relative h-8 w-[52px] shrink-0 rounded-full border border-white/12 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)]",
+        "relative h-7 w-[46px] shrink-0 rounded-full border border-white/12 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:h-8 min-[390px]:w-[52px]",
         checked ? "bg-[var(--sb-red)]" : "bg-white/16",
       )}
       onClick={() => onCheckedChange(!checked)}
@@ -169,8 +169,8 @@ export function MobileProfileSwitch({
     >
       <span
         className={classNames(
-          "absolute top-[3px] grid h-6 w-6 rounded-full bg-white transition",
-          checked ? "left-[25px]" : "left-[3px]",
+          "absolute top-[3px] grid h-5 w-5 rounded-full bg-white transition min-[390px]:h-6 min-[390px]:w-6",
+          checked ? "left-[22px] min-[390px]:left-[25px]" : "left-[3px]",
         )}
       />
     </button>
