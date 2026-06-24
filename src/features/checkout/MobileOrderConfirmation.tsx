@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
@@ -7,6 +8,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { useScrollLock } from "@/hooks/useScrollLock";
+import { calculateCartLineSubtotal } from "@/lib/cart";
 import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { Order } from "@/types/order";
@@ -111,21 +113,20 @@ export function MobileOrderConfirmation({
           </header>
 
           <main className="pt-5 text-center min-[390px]:pt-6 min-[480px]:pt-10">
-            <div className="mx-auto grid h-[86px] w-[86px] place-items-center rounded-full border border-[var(--sb-gold)] bg-black/38 shadow-[0_0_34px_rgb(215_168_79_/_0.24),inset_0_0_24px_rgba(215,168,79,0.08)] min-[390px]:h-[96px] min-[390px]:w-[96px] min-[480px]:h-[132px] min-[480px]:w-[132px]">
-              <svg
+            <div className="relative mx-auto grid h-[92px] w-[92px] place-items-center rounded-full border border-[var(--sb-gold)] bg-[radial-gradient(circle,rgba(215,168,79,0.18),rgba(0,0,0,0.52)_66%)] shadow-[0_0_34px_rgb(215_168_79_/_0.24),inset_0_0_24px_rgba(215,168,79,0.08)] min-[390px]:h-[104px] min-[390px]:w-[104px] min-[480px]:h-[132px] min-[480px]:w-[132px]">
+              <span
                 aria-hidden="true"
-                className="h-10 w-10 text-[var(--sb-gold-soft)] min-[390px]:h-12 min-[390px]:w-12 min-[480px]:h-[70px] min-[480px]:w-[70px]"
-                fill="none"
-                viewBox="0 0 80 80"
-              >
-                <path
-                  d="m18 42 14 14 31-33"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="8"
-                />
-              </svg>
+                className="absolute inset-[9px] rounded-full border border-white/10"
+              />
+              <AssetIcon
+                className="rounded-full"
+                loading="eager"
+                size={54}
+                src={brand.assets.floralEmblem.publicUrl}
+              />
+              <span className="absolute -bottom-1 -right-1 grid h-8 w-8 place-items-center rounded-full border border-[var(--sb-red-bright)] bg-black shadow-[0_0_20px_rgba(239,47,37,0.55)] min-[480px]:h-10 min-[480px]:w-10">
+                <AssetIcon size={18} src="/assets/icons/check-icon.png" />
+              </span>
             </div>
 
             <h1 className="editorial-title mt-5 text-[26px] leading-none min-[390px]:text-[32px] min-[480px]:mt-7 min-[480px]:text-[36px]">
@@ -168,10 +169,22 @@ export function MobileOrderConfirmation({
               />
             </section>
 
+            <MobileConfirmationOrderPreview items={order.items} />
+
             {pointsAwarded > 0 ? (
-              <p className="mt-5 text-[12px] leading-5 text-[var(--sb-gold-soft)] min-[390px]:mt-6 min-[390px]:text-[14px]">
-                +{pointsAwarded} Bliss Points added to your rewards.
-              </p>
+              <section className="mt-4 grid grid-cols-[38px_minmax(0,1fr)] items-center gap-3 rounded-[16px] border border-[var(--sb-gold)]/24 bg-[linear-gradient(135deg,rgba(215,168,79,0.12),rgba(255,255,255,0.03))] p-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] min-[390px]:grid-cols-[44px_minmax(0,1fr)] min-[390px]:p-4">
+                <span className="grid h-[38px] w-[38px] place-items-center rounded-full border border-[var(--sb-gold)]/30 bg-black/42 min-[390px]:h-11 min-[390px]:w-11">
+                  <AssetIcon size={22} src={icons.star} />
+                </span>
+                <p className="min-w-0">
+                  <span className="block text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] min-[390px]:text-[13px]">
+                    Rewards updated
+                  </span>
+                  <span className="mt-1 block text-[13px] leading-5 text-white/68 min-[390px]:text-[14px]">
+                    +{pointsAwarded} Bliss Points added after checkout.
+                  </span>
+                </p>
+              </section>
             ) : null}
 
             <p className="mx-auto mt-5 max-w-[340px] text-[13px] leading-[22px] text-white/68 min-[390px]:mt-6 min-[390px]:text-[15px] min-[390px]:leading-6">
@@ -209,6 +222,69 @@ function MobileConfirmationActionDock({ onClose }: { onClose: () => void }) {
         </Link>
       </div>
     </footer>
+  );
+}
+
+function MobileConfirmationOrderPreview({ items }: { items: Order["items"] }) {
+  const visibleItems = items.slice(0, 2);
+  const remainingCount = Math.max(0, items.length - visibleItems.length);
+
+  return (
+    <section className="mt-4 overflow-hidden rounded-[17px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018)_52%,rgba(0,0,0,0.34))] text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.07)]">
+      <div className="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-3 min-[390px]:px-4">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] min-[390px]:text-[12px]">
+            Order preview
+          </p>
+          <p className="mt-1 text-[12px] text-white/48 min-[390px]:text-[13px]">
+            Kitchen ticket sent
+          </p>
+        </div>
+        <span className="rounded-full border border-[var(--sb-gold)]/22 bg-black/28 px-3 py-1 text-[11px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)]">
+          {items.length} {items.length === 1 ? "item" : "items"}
+        </span>
+      </div>
+
+      <div className="divide-y divide-white/10">
+        {visibleItems.map((item) => (
+          <article
+            className="grid grid-cols-[54px_minmax(0,1fr)_auto] items-center gap-3 px-3 py-3 min-[390px]:grid-cols-[62px_minmax(0,1fr)_auto] min-[390px]:px-4"
+            key={item.id}
+          >
+            <div className="relative h-[54px] overflow-hidden rounded-[12px] border border-white/10 bg-black/34 min-[390px]:h-[62px]">
+              <Image
+                alt={item.menuItem.image.alt || item.menuItem.name}
+                className="object-cover"
+                fill
+                sizes="62px"
+                src={item.menuItem.image.publicUrl}
+              />
+            </div>
+            <div className="min-w-0">
+              <h2 className="line-clamp-1 text-[14px] leading-5 text-white min-[390px]:text-[15px]">
+                {item.menuItem.name}
+              </h2>
+              <p className="mt-1 line-clamp-1 text-[11px] leading-4 text-white/48 min-[390px]:text-[12px]">
+                Qty {item.quantity}
+                {item.addOns.length > 0
+                  ? ` · ${item.addOns.map((addOn) => addOn.label).join(", ")}`
+                  : " · Chef standard"}
+              </p>
+            </div>
+            <p className="font-mono text-[12px] text-[var(--sb-gold-soft)] min-[390px]:text-[14px]">
+              {formatMoney(calculateCartLineSubtotal(item))}
+            </p>
+          </article>
+        ))}
+      </div>
+
+      {remainingCount > 0 ? (
+        <p className="border-t border-white/10 px-3 py-3 text-center text-[12px] text-white/52 min-[390px]:px-4">
+          +{remainingCount} more {remainingCount === 1 ? "item" : "items"} on
+          this order.
+        </p>
+      ) : null}
+    </section>
   );
 }
 

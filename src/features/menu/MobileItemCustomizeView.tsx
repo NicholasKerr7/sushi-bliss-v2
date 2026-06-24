@@ -85,36 +85,54 @@ export function MobileItemCustomizeView({
           </div>
         </header>
 
-        <section className="mt-4 grid grid-cols-[86px_minmax(0,1fr)] gap-2.5 rounded-[18px] border border-[var(--sb-border)] bg-black/46 p-2.5 min-[390px]:mt-5 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4 min-[390px]:p-4">
-          <div className="relative h-[94px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] min-[390px]:h-[128px]">
-            <Image
-              alt=""
-              className="object-cover"
-              fill
-              loading="eager"
-              priority
-              sizes="138px"
-              src={getTabletPresentationImage(item)}
+        <section className="relative mt-4 overflow-hidden rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.07),rgba(255,255,255,0.018)_44%,rgba(7,9,10,0.96))] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_22px_54px_rgba(0,0,0,0.38)] min-[390px]:mt-5 min-[390px]:p-4">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(239,47,37,0.18),transparent_68%)] blur-xl"
+          />
+          <div className="relative grid grid-cols-[86px_minmax(0,1fr)] gap-2.5 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4">
+            <div className="relative h-[94px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/42 min-[390px]:h-[128px]">
+              <Image
+                alt=""
+                className="object-cover"
+                fill
+                loading="eager"
+                priority
+                sizes="138px"
+                src={getTabletPresentationImage(item)}
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_36%,rgba(0,0,0,0.48))]" />
+            </div>
+            <div className="min-w-0 self-center">
+              <span className="inline-flex max-w-full truncate rounded-[7px] border border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 px-2 py-1 text-[9px] uppercase text-white min-[390px]:px-2.5 min-[390px]:text-[11px]">
+                {item.tags.includes("premium") ? "Premium" : item.categoryLabel}
+              </span>
+              <h2 className="editorial-title mt-2 line-clamp-2 text-[18px] leading-[22px] min-[390px]:mt-3 min-[390px]:text-[24px] min-[390px]:leading-7">
+                {item.name}
+              </h2>
+              <p className="mt-1 line-clamp-1 text-[12px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
+                {item.description}
+              </p>
+              <p className="mt-2 line-clamp-2 text-[11px] leading-4 text-white/64 min-[390px]:mt-3 min-[390px]:text-[13px] min-[390px]:leading-5">
+                {item.chefNote}
+              </p>
+              <p className="mt-2 text-[17px] text-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:text-[22px]">
+                {formatMoney(item.priceCents)}
+              </p>
+            </div>
+          </div>
+          <div className="relative mt-3 grid grid-cols-3 overflow-hidden rounded-[13px] border border-white/10 bg-black/26 text-center">
+            <CustomizeMetric
+              label="Base"
+              value={formatMoney(item.priceCents)}
             />
+            <CustomizeMetric
+              label="Add-ons"
+              value={selectedCount > 0 ? `${selectedCount}` : "None"}
+            />
+            <CustomizeMetric label="Points" value={`+${pointsEarned}`} />
           </div>
-          <div className="min-w-0 self-center">
-            <span className="inline-flex max-w-full truncate rounded-[7px] border border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 px-2 py-1 text-[9px] uppercase text-white min-[390px]:px-2.5 min-[390px]:text-[11px]">
-              {item.tags.includes("premium") ? "Premium" : item.categoryLabel}
-            </span>
-            <h2 className="editorial-title mt-2 line-clamp-2 text-[18px] leading-[22px] min-[390px]:mt-3 min-[390px]:text-[24px] min-[390px]:leading-7">
-              {item.name}
-            </h2>
-            <p className="mt-1 line-clamp-1 text-[12px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
-              {item.description}
-            </p>
-            <p className="mt-2 line-clamp-2 text-[11px] leading-4 text-white/64 min-[390px]:mt-3 min-[390px]:text-[13px] min-[390px]:leading-5">
-              {item.chefNote}
-            </p>
-            <p className="mt-2 text-[17px] text-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:text-[22px]">
-              {formatMoney(item.priceCents)}
-            </p>
-          </div>
-          <div className="col-span-2 flex items-center justify-between gap-3 border-t border-white/10 pt-3">
+          <div className="relative mt-3 flex items-center justify-between gap-3 border-t border-white/10 pt-3">
             <span className="text-[11px] uppercase tracking-[0.09em] text-white/48 min-[390px]:text-[12px] min-[390px]:tracking-[0.12em]">
               Quantity
             </span>
@@ -146,6 +164,16 @@ export function MobileItemCustomizeView({
                 onToggle={onAddOnToggle}
               />
             ))}
+          </div>
+          <div className="mt-4 rounded-[14px] border border-white/10 bg-black/26 p-3">
+            <p className="text-[10px] uppercase tracking-[0.1em] text-white/42 min-[390px]:text-[11px] min-[390px]:tracking-[0.12em]">
+              Selected finish
+            </p>
+            <p className="mt-2 text-[13px] leading-5 text-white/70 min-[390px]:text-[14px]">
+              {selectedAddOns.length > 0
+                ? selectedAddOns.map((addOn) => addOn.label).join(" + ")
+                : "Chef standard plating with house ginger and balanced wasabi."}
+            </p>
           </div>
         </section>
 
@@ -309,27 +337,34 @@ function MobileAddOnRow({
     <button
       aria-pressed={checked}
       className={classNames(
-        "grid min-h-[74px] w-full grid-cols-[42px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 rounded-[14px] border px-2 py-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[78px] min-[390px]:grid-cols-[58px_minmax(0,1fr)_58px] min-[390px]:gap-3 min-[390px]:py-0 min-[390px]:px-3",
+        "relative grid min-h-[76px] w-full grid-cols-[46px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 overflow-hidden rounded-[15px] border px-2 py-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[84px] min-[390px]:grid-cols-[64px_minmax(0,1fr)_64px] min-[390px]:gap-3 min-[390px]:px-3",
         checked
-          ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/12"
-          : "border-white/10 bg-white/[0.025]",
+          ? "border-[var(--sb-red-bright)] bg-[linear-gradient(135deg,rgba(239,47,37,0.18),rgba(255,255,255,0.035)_48%,rgba(0,0,0,0.28))] shadow-[0_0_26px_rgba(239,47,37,0.16),inset_0_1px_0_rgba(255,255,255,0.08)]"
+          : "border-white/10 bg-white/[0.025] hover:border-[var(--sb-gold)]/30 hover:bg-white/[0.045]",
       )}
       onClick={() => onToggle(addOn.id)}
       type="button"
     >
-      <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-[11px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] min-[390px]:h-[54px] min-[390px]:w-[54px] min-[390px]:rounded-[13px]">
+      <span
+        aria-hidden="true"
+        className={classNames(
+          "pointer-events-none absolute inset-y-3 left-0 w-1 rounded-r-full bg-[var(--sb-red-bright)] opacity-0 shadow-[0_0_16px_rgba(239,47,37,0.78)] transition",
+          checked && "opacity-100",
+        )}
+      />
+      <span className="grid h-11 w-11 place-items-center overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] min-[390px]:h-[58px] min-[390px]:w-[58px] min-[390px]:rounded-[14px]">
         <Image
           alt=""
           className="h-full w-full object-cover"
-          height={54}
+          height={58}
           loading="eager"
-          sizes="54px"
+          sizes="58px"
           src={imageSrc}
-          width={54}
+          width={58}
         />
       </span>
       <span className="min-w-0">
-        <span className="editorial-title block line-clamp-2 text-[12px] uppercase leading-4 tracking-[0.02em] min-[390px]:line-clamp-1 min-[390px]:text-[16px] min-[390px]:leading-normal min-[390px]:tracking-[0.04em]">
+        <span className="editorial-title block line-clamp-2 text-[12px] uppercase leading-4 tracking-[0.02em] text-white min-[390px]:line-clamp-1 min-[390px]:text-[16px] min-[390px]:leading-normal min-[390px]:tracking-[0.04em]">
           {displayLabel}
         </span>
         <span className="mt-1 block line-clamp-1 text-[10px] leading-[15px] text-white/58 min-[390px]:line-clamp-2 min-[390px]:text-[13px] min-[390px]:leading-5">
@@ -385,6 +420,19 @@ function SmallQuantityStepper({
       >
         +
       </button>
+    </div>
+  );
+}
+
+function CustomizeMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="border-r border-white/10 px-1.5 py-2 last:border-r-0">
+      <p className="truncate text-[9px] uppercase tracking-[0.08em] text-white/42 min-[390px]:text-[10px]">
+        {label}
+      </p>
+      <p className="mt-1 truncate font-mono text-[12px] text-[var(--sb-gold-soft)] min-[390px]:text-[14px]">
+        {value}
+      </p>
     </div>
   );
 }
