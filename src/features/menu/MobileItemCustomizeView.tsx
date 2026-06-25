@@ -65,20 +65,20 @@ export function MobileItemCustomizeView({
       </div>
 
       <div className="mobile-frame relative z-10">
-        <header className="grid grid-cols-[42px_minmax(0,1fr)_38px] items-center gap-2 min-[390px]:grid-cols-[52px_1fr_52px] min-[390px]:gap-0">
+        <header className="grid grid-cols-[40px_minmax(0,1fr)_36px] items-center gap-2 min-[390px]:grid-cols-[52px_1fr_52px] min-[390px]:gap-0">
           <button
             aria-label="Back to item details"
-            className="grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/36 text-[var(--sb-gold)] min-[390px]:h-[48px] min-[390px]:w-[48px]"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] bg-black/36 text-[var(--sb-gold)] min-[390px]:h-[48px] min-[390px]:w-[48px]"
             onClick={onBack}
             type="button"
           >
             <ChevronIcon direction="left" size={18} />
           </button>
-          <h1 className="editorial-title min-w-0 text-center text-[13px] uppercase leading-5 tracking-[0.04em] text-[var(--sb-gold)] min-[390px]:text-[19px] min-[390px]:tracking-[0.14em]">
+          <h1 className="editorial-title min-w-0 text-center text-[12px] uppercase leading-5 tracking-[0.03em] text-[var(--sb-gold)] min-[390px]:text-[19px] min-[390px]:tracking-[0.14em]">
             Customize Your Item
           </h1>
-          <div className="relative grid h-[38px] w-[38px] place-items-center justify-self-end rounded-full border border-[var(--sb-border)] bg-black/28 min-[390px]:h-auto min-[390px]:w-auto min-[390px]:border-0 min-[390px]:bg-transparent">
-            <AssetIcon loading="eager" size={28} src={icons.cart} />
+          <div className="relative grid h-9 w-9 place-items-center justify-self-end rounded-full border border-[var(--sb-border)] bg-black/28 min-[390px]:h-auto min-[390px]:w-auto min-[390px]:border-0 min-[390px]:bg-transparent">
+            <AssetIcon loading="eager" size={26} src={icons.cart} />
             <span className="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--sb-red)] px-1 text-[10px] font-bold">
               {quantity}
             </span>
@@ -90,8 +90,8 @@ export function MobileItemCustomizeView({
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(239,47,37,0.18),transparent_68%)] blur-xl"
           />
-          <div className="relative grid grid-cols-[86px_minmax(0,1fr)] gap-2.5 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4">
-            <div className="relative h-[94px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/42 min-[390px]:h-[128px]">
+          <div className="relative grid grid-cols-[78px_minmax(0,1fr)] gap-2.5 min-[390px]:grid-cols-[138px_1fr] min-[390px]:gap-4">
+            <div className="relative h-[88px] overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/42 min-[390px]:h-[128px]">
               <Image
                 alt=""
                 className="object-cover"
@@ -107,7 +107,7 @@ export function MobileItemCustomizeView({
               <span className="inline-flex max-w-full truncate rounded-[7px] border border-[var(--sb-red-bright)] bg-[var(--sb-red)]/24 px-2 py-1 text-[9px] uppercase text-white min-[390px]:px-2.5 min-[390px]:text-[11px]">
                 {item.tags.includes("premium") ? "Premium" : item.categoryLabel}
               </span>
-              <h2 className="editorial-title mt-2 line-clamp-2 text-[18px] leading-[22px] min-[390px]:mt-3 min-[390px]:text-[24px] min-[390px]:leading-7">
+              <h2 className="editorial-title mt-2 line-clamp-2 text-[16px] leading-5 min-[390px]:mt-3 min-[390px]:text-[24px] min-[390px]:leading-7">
                 {item.name}
               </h2>
               <p className="mt-1 line-clamp-1 text-[12px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
@@ -116,7 +116,7 @@ export function MobileItemCustomizeView({
               <p className="mt-2 line-clamp-2 text-[11px] leading-4 text-white/64 min-[390px]:mt-3 min-[390px]:text-[13px] min-[390px]:leading-5">
                 {item.chefNote}
               </p>
-              <p className="mt-2 text-[17px] text-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:text-[22px]">
+              <p className="mt-2 text-[16px] text-[var(--sb-gold)] min-[390px]:mt-4 min-[390px]:text-[22px]">
                 {formatMoney(item.priceCents)}
               </p>
             </div>
@@ -296,20 +296,20 @@ export function MobileItemCustomizeView({
       </div>
 
       <footer className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--sb-border)] bg-[linear-gradient(180deg,rgba(9,8,7,0.9),rgba(0,0,0,0.98))] px-3 pb-[calc(0.75rem+var(--sb-safe-bottom))] pt-3 shadow-[0_-20px_50px_rgba(0,0,0,0.62)] backdrop-blur-xl">
-        <div className="mobile-frame grid grid-cols-[minmax(0,1fr)_130px] items-center gap-2.5 min-[390px]:grid-cols-[minmax(0,1fr)_150px] min-[390px]:gap-3">
+        <div className="mobile-frame grid grid-cols-[minmax(0,1fr)_118px] items-center gap-2 min-[390px]:grid-cols-[minmax(0,1fr)_150px] min-[390px]:gap-3">
           <p className="min-w-0">
             <span className="block text-[10px] uppercase tracking-[0.08em] text-white/48 min-[390px]:text-[11px]">
               {selectedCount > 0
                 ? `${selectedCount} add-on${selectedCount === 1 ? "" : "s"} selected`
                 : "Chef standard"}
             </span>
-            <span className="mt-1 block font-mono text-[18px] leading-none text-[var(--sb-gold-soft)] min-[390px]:text-[22px]">
+            <span className="mt-1 block font-mono text-[16px] leading-none text-[var(--sb-gold-soft)] min-[390px]:text-[22px]">
               {formatMoney(totalCents)}
             </span>
           </p>
           <button
             aria-label={`Add ${quantity} to cart`}
-            className="red-glow-button grid h-[52px] min-w-0 place-items-center rounded-[13px] px-2 text-[12px] uppercase tracking-[0.05em] min-[390px]:h-[58px] min-[390px]:text-[14px] min-[390px]:tracking-[0.07em]"
+            className="red-glow-button grid h-[50px] min-w-0 place-items-center rounded-[13px] px-2 text-[11px] uppercase tracking-[0.04em] min-[390px]:h-[58px] min-[390px]:text-[14px] min-[390px]:tracking-[0.07em]"
             onClick={onAddToCart}
             type="button"
           >
@@ -337,7 +337,7 @@ function MobileAddOnRow({
     <button
       aria-pressed={checked}
       className={classNames(
-        "relative grid min-h-[76px] w-full grid-cols-[46px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 overflow-hidden rounded-[15px] border px-2 py-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[84px] min-[390px]:grid-cols-[64px_minmax(0,1fr)_64px] min-[390px]:gap-3 min-[390px]:px-3",
+        "relative grid min-h-[72px] w-full grid-cols-[42px_minmax(0,1fr)_48px] items-center gap-2 overflow-hidden rounded-[15px] border px-2 py-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[84px] min-[390px]:grid-cols-[64px_minmax(0,1fr)_64px] min-[390px]:gap-3 min-[390px]:px-3",
         checked
           ? "border-[var(--sb-red-bright)] bg-[linear-gradient(135deg,rgba(239,47,37,0.18),rgba(255,255,255,0.035)_48%,rgba(0,0,0,0.28))] shadow-[0_0_26px_rgba(239,47,37,0.16),inset_0_1px_0_rgba(255,255,255,0.08)]"
           : "border-white/10 bg-white/[0.025] hover:border-[var(--sb-gold)]/30 hover:bg-white/[0.045]",
@@ -352,7 +352,7 @@ function MobileAddOnRow({
           checked && "opacity-100",
         )}
       />
-      <span className="grid h-11 w-11 place-items-center overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] min-[390px]:h-[58px] min-[390px]:w-[58px] min-[390px]:rounded-[14px]">
+      <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-[12px] border border-[var(--sb-border)] bg-black/34 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] min-[390px]:h-[58px] min-[390px]:w-[58px] min-[390px]:rounded-[14px]">
         <Image
           alt=""
           className="h-full w-full object-cover"
@@ -363,7 +363,7 @@ function MobileAddOnRow({
           width={58}
         />
       </span>
-      <span className="min-w-0">
+      <span className="min-w-0 self-center">
         <span className="editorial-title block line-clamp-2 text-[12px] uppercase leading-4 tracking-[0.02em] text-white min-[390px]:line-clamp-1 min-[390px]:text-[16px] min-[390px]:leading-normal min-[390px]:tracking-[0.04em]">
           {displayLabel}
         </span>
@@ -371,8 +371,8 @@ function MobileAddOnRow({
           {addOn.description}
         </span>
       </span>
-      <span className="col-start-2 flex items-center justify-between gap-2 text-right min-[390px]:col-start-auto min-[390px]:grid min-[390px]:gap-2 min-[390px]:justify-self-end">
-        <span className="text-[11px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
+      <span className="grid justify-items-end gap-1.5 text-right min-[390px]:gap-2">
+        <span className="font-mono text-[11px] text-[var(--sb-gold)] min-[390px]:text-[15px]">
           {formatMoney(addOn.priceCents)}
         </span>
         <span

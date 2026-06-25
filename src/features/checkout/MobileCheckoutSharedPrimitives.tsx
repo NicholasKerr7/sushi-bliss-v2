@@ -16,7 +16,7 @@ export function StepHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h1 className="editorial-title mt-3 text-[28px] leading-none min-[390px]:mt-4 min-[390px]:text-[36px] min-[430px]:text-[38px]">
+      <h1 className="editorial-title mt-3 text-[26px] leading-none min-[390px]:mt-4 min-[390px]:text-[36px] min-[430px]:text-[38px]">
         {title}
       </h1>
       {subtitle ? (
@@ -85,14 +85,14 @@ export function MobileCheckoutActionDock({
         {meta || value ? (
           <div className="mb-2 flex min-w-0 items-center justify-between gap-3 px-1 text-[11px] uppercase tracking-[0.06em] text-white/50">
             <span className="min-w-0 truncate">{meta}</span>
-            <span className="shrink-0 font-mono text-[13px] tracking-normal text-[var(--sb-gold-soft)]">
+            <span className="shrink-0 font-mono text-[12px] tracking-normal text-[var(--sb-gold-soft)] min-[390px]:text-[13px]">
               {value}
             </span>
           </div>
         ) : null}
         <button
           aria-label={label}
-          className="red-glow-button grid h-[52px] w-full place-items-center rounded-[13px] px-3 text-[12px] uppercase tracking-[0.06em] disabled:cursor-not-allowed disabled:opacity-60 min-[390px]:h-[56px] min-[390px]:text-[13px] min-[390px]:tracking-[0.07em]"
+          className="red-glow-button grid h-[50px] w-full place-items-center rounded-[13px] px-3 text-[11px] uppercase tracking-[0.05em] disabled:cursor-not-allowed disabled:opacity-60 min-[390px]:h-[56px] min-[390px]:text-[13px] min-[390px]:tracking-[0.07em]"
           disabled={disabled}
           onClick={onClick}
           type="button"

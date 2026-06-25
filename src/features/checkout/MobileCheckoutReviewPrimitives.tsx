@@ -23,15 +23,15 @@ export function ReviewInfoCard({
   title: string;
 }) {
   return (
-    <article className="grid min-h-[80px] grid-cols-[38px_minmax(0,1fr)] items-center gap-x-3 gap-y-2 rounded-[17px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018))] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_14px_34px_rgba(0,0,0,0.22)] min-[390px]:min-h-[84px] min-[390px]:grid-cols-[48px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4">
-      <span className="grid h-[38px] w-[38px] place-items-center rounded-[13px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8 min-[390px]:h-12 min-[390px]:w-12">
+    <article className="grid min-h-[80px] grid-cols-[36px_minmax(0,1fr)_auto] items-center gap-x-2.5 gap-y-2 rounded-[17px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018))] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_14px_34px_rgba(0,0,0,0.22)] min-[390px]:min-h-[84px] min-[390px]:grid-cols-[48px_1fr_auto] min-[390px]:gap-4 min-[390px]:px-4">
+      <span className="grid h-9 w-9 place-items-center rounded-[13px] border border-[var(--sb-gold)]/24 bg-[var(--sb-gold)]/8 min-[390px]:h-12 min-[390px]:w-12">
         <AssetIcon size={25} src={icon} />
       </span>
       <div className="min-w-0">
-        <p className="text-[11px] uppercase tracking-[0.09em] text-[var(--sb-gold-soft)] min-[390px]:text-[12px] min-[390px]:tracking-[0.13em]">
+        <p className="text-[10px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] min-[390px]:text-[12px] min-[390px]:tracking-[0.13em]">
           {label}
         </p>
-        <p className="mt-1 break-words text-[15px] leading-5 text-white min-[390px]:text-[17px] min-[390px]:leading-6">
+        <p className="mt-1 break-words text-[14px] leading-5 text-white min-[390px]:text-[17px] min-[390px]:leading-6">
           {title}
         </p>
         {children ? (
@@ -41,7 +41,7 @@ export function ReviewInfoCard({
         ) : null}
       </div>
       <button
-        className="col-start-2 w-max rounded-full border border-[var(--sb-gold)]/24 bg-black/24 px-3 py-1 text-[10px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/44 min-[390px]:col-start-auto min-[390px]:px-3.5 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
+        className="w-max self-start rounded-full border border-[var(--sb-gold)]/24 bg-black/24 px-2.5 py-1 text-[10px] uppercase tracking-[0.05em] text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)]/44 min-[390px]:self-center min-[390px]:px-3.5 min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
         onClick={onEdit}
         type="button"
       >
@@ -59,8 +59,8 @@ export function ReviewLine({
   onRemoveItem: (id: string) => void;
 }) {
   return (
-    <article className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-x-3 gap-y-1 rounded-[14px] border border-white/10 bg-black/20 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] min-[390px]:grid-cols-[78px_38px_minmax(0,1fr)_auto] min-[390px]:gap-3 min-[390px]:p-3">
-      <div className="relative col-start-1 row-start-1 h-[62px] overflow-hidden rounded-[11px] border border-white/10 bg-black/30 min-[390px]:col-start-auto min-[390px]:row-start-auto min-[390px]:h-[66px]">
+    <article className="grid grid-cols-[58px_minmax(0,1fr)] items-center gap-x-3 gap-y-1 rounded-[14px] border border-white/10 bg-black/20 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] min-[390px]:grid-cols-[78px_38px_minmax(0,1fr)_auto] min-[390px]:gap-3 min-[390px]:p-3">
+      <div className="relative col-start-1 row-start-1 h-[58px] overflow-hidden rounded-[11px] border border-white/10 bg-black/30 min-[390px]:col-start-auto min-[390px]:row-start-auto min-[390px]:h-[66px]">
         <Image
           alt={item.menuItem.image.alt || item.menuItem.name}
           className="object-cover"
@@ -73,21 +73,21 @@ export function ReviewLine({
         {item.quantity}
       </span>
       <div className="min-w-0">
-        <h2 className="line-clamp-1 text-[15px] leading-5 min-[390px]:text-[17px] min-[390px]:leading-6">
+        <h2 className="line-clamp-1 text-[14px] leading-5 min-[390px]:text-[17px] min-[390px]:leading-6">
           {item.menuItem.name}
         </h2>
         <p className="line-clamp-2 text-[12px] leading-[18px] text-white/50 min-[390px]:text-[13px] min-[390px]:leading-5">
           {item.menuItem.description}
         </p>
         <button
-          className="mt-1 text-[12px] text-[var(--sb-red-bright)]"
+          className="mt-1 text-[11px] uppercase tracking-[0.04em] text-[var(--sb-red-bright)] min-[390px]:text-[12px] min-[390px]:normal-case min-[390px]:tracking-normal"
           onClick={() => onRemoveItem(item.id)}
           type="button"
         >
           Remove
         </button>
       </div>
-      <p className="col-start-2 row-start-2 justify-self-start font-mono text-[13px] text-[var(--sb-gold-soft)] min-[390px]:col-start-auto min-[390px]:row-start-auto min-[390px]:justify-self-auto min-[390px]:text-[16px]">
+      <p className="col-start-2 row-start-2 justify-self-start font-mono text-[12px] text-[var(--sb-gold-soft)] min-[390px]:col-start-auto min-[390px]:row-start-auto min-[390px]:justify-self-auto min-[390px]:text-[16px]">
         {formatMoney(calculateCartLineSubtotal(item))}
       </p>
     </article>

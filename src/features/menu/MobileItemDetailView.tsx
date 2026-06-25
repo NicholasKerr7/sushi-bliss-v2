@@ -85,25 +85,25 @@ export function MobileItemDetailView({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_6%,rgba(202,164,93,0.08),transparent_24%),radial-gradient(circle_at_90%_8%,rgba(160,22,18,0.12),transparent_26%),linear-gradient(180deg,#050505_0%,#080706_44%,#030303_100%)]" />
       </div>
 
-      <header className="fixed inset-x-0 top-0 z-20 px-3 pt-3 min-[390px]:px-5 min-[390px]:pt-5">
+      <header className="fixed inset-x-0 top-0 z-20 px-2.5 pt-3 min-[390px]:px-5 min-[390px]:pt-5">
         <div className="mobile-frame flex items-center justify-between gap-2">
           <button
             aria-label="Back to menu"
-            className="grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 text-[var(--sb-gold)] backdrop-blur min-[390px]:h-[54px] min-[390px]:w-[54px]"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 text-[var(--sb-gold)] backdrop-blur min-[390px]:h-[54px] min-[390px]:w-[54px]"
             onClick={onClose}
             type="button"
           >
             <ChevronIcon direction="left" size={18} />
           </button>
-          <div className="flex min-w-0 items-center gap-2 min-[390px]:gap-3">
+          <div className="flex min-w-0 items-center gap-1.5 min-[390px]:gap-3">
             <AssetIcon
               alt=""
-              className="h-9 w-9 rounded-full min-[390px]:h-[46px] min-[390px]:w-[46px]"
+              className="h-8 w-8 rounded-full min-[390px]:h-[46px] min-[390px]:w-[46px]"
               loading="eager"
               size={46}
               src={brand.assets.floralEmblem.publicUrl}
             />
-            <span className="editorial-title text-[13px] leading-[0.95] tracking-[0.2em] min-[390px]:text-[17px] min-[390px]:tracking-[0.34em]">
+            <span className="editorial-title text-[12px] leading-[0.95] tracking-[0.16em] min-[390px]:text-[17px] min-[390px]:tracking-[0.34em]">
               Sushi
               <br />
               Bliss
@@ -114,7 +114,7 @@ export function MobileItemDetailView({
               aria-label={isFavorite ? "Remove favorite" : "Save favorite"}
               aria-pressed={isFavorite}
               className={classNames(
-                "grid h-10 w-10 place-items-center rounded-full border bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]",
+                "grid h-9 w-9 place-items-center rounded-full border bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]",
                 isFavorite
                   ? "border-[var(--sb-red-bright)]"
                   : "border-[var(--sb-border)]",
@@ -131,7 +131,7 @@ export function MobileItemDetailView({
             </button>
             <button
               aria-label="Share item"
-              className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]"
+              className="grid h-9 w-9 place-items-center rounded-full border border-[var(--sb-border)] bg-black/44 backdrop-blur min-[390px]:h-[50px] min-[390px]:w-[50px]"
               onClick={handleShareItem}
               type="button"
             >
@@ -142,7 +142,7 @@ export function MobileItemDetailView({
       </header>
 
       <main className="relative z-10">
-        <section className="relative h-[288px] min-[390px]:h-[330px] min-[430px]:h-[348px]">
+        <section className="relative h-[276px] min-[390px]:h-[330px] min-[430px]:h-[348px]">
           <PairingImageBackdrop imageUrl={heroImage} sizes="430px" />
           <Image
             alt={item.image.alt || item.name}
@@ -168,12 +168,12 @@ export function MobileItemDetailView({
           />
         </section>
 
-        <section className="relative z-10 mt-2 px-4 min-[390px]:px-6 min-[430px]:px-8">
+        <section className="relative z-10 mt-2 px-3.5 min-[390px]:px-6 min-[430px]:px-8">
           <span className="inline-flex rounded-[8px] border border-[var(--sb-border)] bg-[var(--sb-red)]/24 px-3.5 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold)] shadow-[0_10px_22px_rgba(0,0,0,0.32)] min-[390px]:px-4 min-[390px]:text-[12px]">
             {item.tags.includes("premium") ? "Premium" : item.categoryLabel}
           </span>
           <h1
-            className="editorial-title mt-3 text-[27px] leading-none tracking-[0.06em] min-[390px]:text-[32px] min-[390px]:tracking-[0.12em]"
+            className="editorial-title mt-3 text-[25px] leading-none tracking-[0.04em] min-[390px]:text-[32px] min-[390px]:tracking-[0.12em]"
             id={`mobile-item-detail-${item.id}`}
           >
             {item.name}
@@ -256,14 +256,14 @@ export function MobileItemDetailView({
 
       {isOnlineOrderable ? (
         <footer className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--sb-border)] bg-[linear-gradient(180deg,rgba(9,8,7,0.88),rgba(0,0,0,0.98))] px-3 pb-[calc(0.75rem+var(--sb-safe-bottom))] pt-3 shadow-[0_-20px_50px_rgba(0,0,0,0.62)] backdrop-blur-xl">
-          <div className="mobile-frame grid grid-cols-[112px_minmax(0,1fr)] items-center gap-2.5 min-[390px]:grid-cols-[126px_minmax(0,1fr)] min-[390px]:gap-3">
+          <div className="mobile-frame grid grid-cols-[102px_minmax(0,1fr)] items-center gap-2 min-[390px]:grid-cols-[126px_minmax(0,1fr)] min-[390px]:gap-3">
             <MobileQuantityStepper
               onChange={onQuantityChange}
               value={quantity}
             />
             <button
               aria-label={addButtonLabel}
-              className="red-glow-button grid h-[52px] min-w-0 grid-cols-1 place-items-center rounded-[13px] px-2.5 text-[12px] uppercase tracking-[0.05em] min-[390px]:h-[58px] min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[14px] min-[390px]:tracking-[0.07em]"
+              className="red-glow-button grid h-[52px] min-w-0 grid-cols-1 place-items-center rounded-[13px] px-2 text-[11px] uppercase tracking-[0.04em] min-[390px]:h-[58px] min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[14px] min-[390px]:tracking-[0.07em]"
               onClick={onAddToCart}
               type="button"
             >
@@ -311,7 +311,7 @@ function MobileQuantityStepper({
   value: number;
 }) {
   return (
-    <div className="grid h-[52px] w-[112px] grid-cols-[34px_44px_34px] overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-black/38 text-[18px] text-[var(--sb-gold)] min-[390px]:h-[58px] min-[390px]:w-[126px] min-[390px]:grid-cols-[39px_48px_39px] min-[390px]:text-[22px]">
+    <div className="grid h-[52px] w-[102px] grid-cols-[31px_40px_31px] overflow-hidden rounded-[13px] border border-[var(--sb-border)] bg-black/38 text-[17px] text-[var(--sb-gold)] min-[390px]:h-[58px] min-[390px]:w-[126px] min-[390px]:grid-cols-[39px_48px_39px] min-[390px]:text-[22px]">
       <button
         aria-label="Decrease quantity"
         className="grid place-items-center disabled:opacity-35"
