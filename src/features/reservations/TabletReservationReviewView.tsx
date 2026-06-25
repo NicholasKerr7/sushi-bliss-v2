@@ -6,7 +6,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { locations } from "@/data/locations";
 import { reservationExperiences } from "@/data/reservations";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import type { ReservationDraft } from "@/types/reservation";
 
 interface TabletReservationReviewViewProps {

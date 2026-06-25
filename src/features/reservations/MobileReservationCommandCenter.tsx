@@ -1,7 +1,7 @@
 "use client";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { formatTime } from "@/lib/dates";
 import type { Reservation } from "@/types/reservation";
 

@@ -7,7 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { premiumReservationCards } from "@/data/omakase";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { formatMoney } from "@/lib/money";
 import type { OmakasePackage } from "@/types/omakase";
 

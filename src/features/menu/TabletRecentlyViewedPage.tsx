@@ -11,7 +11,7 @@ import { TabletExperienceHeader } from "@/components/layout/TabletExperienceHead
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CartDrawer } from "@/features/cart/CartDrawer";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { useCart } from "@/hooks/useCart";
 import { useRecentlyViewed } from "@/hooks/useRecentlyViewed";
 import { classNames } from "@/lib/classNames";

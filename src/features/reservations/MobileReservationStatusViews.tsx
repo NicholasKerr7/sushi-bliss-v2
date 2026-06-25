@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import type { Reservation } from "@/types/reservation";
 
 import {

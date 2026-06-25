@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
 import { CheckoutAddressSection } from "@/features/checkout/CheckoutAddressSection";
 import { AgeVerificationNotice } from "@/features/checkout/AgeVerificationNotice";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 import { getTabletPresentationImage } from "@/lib/assets";
 import { formatDateTime, formatTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";

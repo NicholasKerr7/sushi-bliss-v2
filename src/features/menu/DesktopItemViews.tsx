@@ -40,7 +40,7 @@ import {
   buildCustomizeGalleryImages,
   customizeFeaturePills,
   detailFeaturePills,
-} from "./DesktopItemVisualParts";
+} from "./DesktopItemParts";
 import { ReservationHandoffCard } from "./ReservationHandoffCard";
 import { TastingNotesCard } from "./TastingNotesCard";
 

@@ -5,14 +5,14 @@ import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { getMenuGalleryImageClassName } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition } from "@/types/order";
 
-import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnVisuals";
+import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnAssets";
 
 const itemHighlights = [
   { icon: icons.crown, label: "Premium Grade", value: "Bluefin Tuna" },

@@ -9,7 +9,7 @@ import type { Reservation } from "@/types/reservation";
 
 import { locations } from "@/data/locations";
 import { reservationExperiences } from "@/data/reservations";
-import { featuredAssets } from "@/features/home/visualHomeData";
+import { featuredAssets } from "@/features/home/homeDashboardData";
 
 export const desktopReservationHeroImage = featuredAssets.heroSushi.publicUrl;
 

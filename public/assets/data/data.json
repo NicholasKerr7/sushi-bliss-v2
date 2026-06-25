@@ -2,16 +2,16 @@
   "meta": {
     "project": "Sushi Bliss",
     "packageName": "sushi-bliss-v2-runtime-assets",
-    "version": "runtime-assets-with-local-visual-references",
+    "version": "runtime-assets",
     "generatedAt": "2026-05-31",
     "assetBasePath": "public/assets",
     "publicBaseUrl": "/assets",
     "notes": [
       "Cleaned package removes __MACOSX and .DS_Store files.",
       "Pairing filenames are normalized as sushi-or-sashimi-name + sake-name.",
-      "Text should be rendered dynamically in the app; pairing images are treated as standalone visual assets.",
+      "Text should be rendered dynamically in the app; pairing images are treated as standalone media assets.",
       "Omakase appetizer, specialty, and dessert images are reserved for the Master Chefs Omakase Experience.",
-      "Reference screenshots are local-only and are not shipped in public assets."
+      "Runtime assets are organized for the customer and admin app surfaces."
     ]
   },
   "brand": {

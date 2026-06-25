@@ -18,7 +18,7 @@ const compactAddOnLabelById: Record<string, string> = {
   "ikura-salmon-roe": "Ikura roe",
 };
 
-/** Returns the best visual asset for a menu add-on or side pairing. */
+/** Returns the best image asset for a menu add-on or side pairing. */
 export function getAddOnImageSrc(addOnId: string) {
   return addOnImageById[addOnId] || "/assets/icons/plus-icon.png";
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 
 interface MobileFavoritesHeaderProps {

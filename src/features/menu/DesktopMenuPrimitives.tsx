@@ -6,7 +6,7 @@ import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { CartAddOnDefinition } from "@/types/order";
 
-import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnVisuals";
+import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnAssets";
 
 export function DesktopAddOnButton({
   addOn,

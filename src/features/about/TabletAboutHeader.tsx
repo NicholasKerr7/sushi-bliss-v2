@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 
 interface TabletAboutHeaderProps {
   unreadCount: number;

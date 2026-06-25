@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory } from "@/types/menu";

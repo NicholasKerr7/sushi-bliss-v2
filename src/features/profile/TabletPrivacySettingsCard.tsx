@@ -1,6 +1,6 @@
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import type { UserPreferences } from "@/types/user";
 
 import { tabletPrivacyRows } from "./TabletProfilePreferencesData";

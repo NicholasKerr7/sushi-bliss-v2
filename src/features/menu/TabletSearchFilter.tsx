@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { menuItemById } from "@/data/menu";
-import { featuredAssets, icons } from "@/features/home/visualHomeData";
+import { featuredAssets, icons } from "@/features/home/homeDashboardData";
 import type { MenuCategory, MenuItem } from "@/types/menu";
 
 import { recentTabletSearches } from "./tabletMenuData";

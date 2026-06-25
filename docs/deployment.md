@@ -18,7 +18,7 @@ The latest production release was verified with:
 - `npm run lint`
 - `npm run typecheck`
 - `npm run build`
-- Desktop visual checks for orders, notifications, and reservation flows
+- Desktop route checks for orders, notifications, and reservation flows
 - Live Playwright smoke against production routes at mobile and desktop widths
 - Live mobile purchase path smoke against production
 - `vercel inspect https://sushi-bliss-v2.vercel.app`

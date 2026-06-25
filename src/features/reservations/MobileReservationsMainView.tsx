@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import type { Reservation } from "@/types/reservation";
 

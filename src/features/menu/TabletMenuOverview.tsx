@@ -5,7 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
-import { featuredAssets, icons } from "@/features/home/visualHomeData";
+import { featuredAssets, icons } from "@/features/home/homeDashboardData";
 import { useAutoCarousel } from "@/hooks/useAutoCarousel";
 import { formatMoney } from "@/lib/money";
 import type { MenuCategory, MenuItem } from "@/types/menu";

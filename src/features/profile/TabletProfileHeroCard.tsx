@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import type { LoyaltyAccount } from "@/types/loyalty";
 import type { UserProfile } from "@/types/user";

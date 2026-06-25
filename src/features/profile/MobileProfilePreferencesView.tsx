@@ -7,7 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { dietaryPreferenceOptions } from "@/data/profile";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { togglePreferenceTag } from "@/lib/profile";
 import type { FulfillmentMode } from "@/types/common";

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 import type { RestaurantLocation } from "@/types/location";
 
 import {

@@ -1,7 +1,7 @@
 "use client";
 
 import { pickupLocation } from "@/data/checkout";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { formatMoney } from "@/lib/money";
 
 import {

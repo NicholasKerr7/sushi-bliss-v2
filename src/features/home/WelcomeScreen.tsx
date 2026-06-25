@@ -10,12 +10,12 @@ const brand = getBrandContent();
 const featuredAssets = getFeaturedAssets();
 const icons = getSushiIconAssets();
 
-/** Recreates the mobile welcome screenshot as the first phone viewport. */
+/** Renders the first-run mobile welcome experience. */
 export function WelcomeScreen() {
   return (
     <section
       aria-label="Sushi Bliss welcome"
-      className="sushi-visual relative min-h-[100svh] overflow-hidden bg-black px-5 pb-7 pt-8 text-center text-white md:hidden"
+      className="sushi-stage relative min-h-[100svh] overflow-hidden bg-black px-5 pb-7 pt-8 text-center text-white md:hidden"
       id="welcome"
     >
       <Image

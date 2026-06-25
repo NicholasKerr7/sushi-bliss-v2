@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { calculateCartLineSubtotal } from "@/lib/cart";
 import { formatTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";

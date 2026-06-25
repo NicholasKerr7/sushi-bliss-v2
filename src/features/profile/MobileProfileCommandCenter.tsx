@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 
 interface MobileProfileCommandCenterProps {

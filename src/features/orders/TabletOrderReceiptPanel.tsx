@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CartSummary } from "@/features/cart/CartSummary";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { calculateCartLineSubtotal } from "@/lib/cart";
 import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";

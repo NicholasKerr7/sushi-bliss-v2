@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { locations } from "@/data/locations";
 import { reservationExperiences } from "@/data/reservations";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { formatDateTime } from "@/lib/dates";
 import type { Reservation } from "@/types/reservation";

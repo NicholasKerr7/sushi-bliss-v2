@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 import type { MenuItem } from "@/types/menu";
 
 export function TabletOrderConfirmationHero({

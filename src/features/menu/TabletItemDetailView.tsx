@@ -8,7 +8,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import {
   getMenuGalleryImageClassName,
   getMenuItemGalleryImages,

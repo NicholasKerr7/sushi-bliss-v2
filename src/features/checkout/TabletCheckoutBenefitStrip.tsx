@@ -1,7 +1,7 @@
 "use client";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 
 const benefitItems = [
   { icon: icons.flower, label: "Premium ingredients", value: "Sourced Daily" },

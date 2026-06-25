@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { formatTime } from "@/lib/dates";
 import type { Order, OrderStatus } from "@/types/order";
@@ -251,7 +251,7 @@ function getMobileOrderProgressRailWidth(completedCount: number) {
   return "w-0";
 }
 
-/** Collapses backend order statuses into the four-step mobile visual timeline. */
+/** Collapses backend order statuses into the four-step mobile timeline. */
 export function getMobileOrderProgress(order: Order) {
   const weight = orderStatusWeight[order.status];
   const pickup = order.mode === "pickup";

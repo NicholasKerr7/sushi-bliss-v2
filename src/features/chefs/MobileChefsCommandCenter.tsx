@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import type { Chef } from "@/types/chef";
 
 import { MobileChefIcon, MobileChefsPanel } from "./MobileChefsPrimitives";

@@ -6,7 +6,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import {
   TabletMenuBottomNav,

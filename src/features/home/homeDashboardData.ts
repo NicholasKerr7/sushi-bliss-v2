@@ -42,7 +42,7 @@ export const mobileNav = [
   { href: "/profile", icon: icons.profile, label: "Profile" },
 ] as const;
 
-/** Chooses a stable menu item for screenshot-matched dashboard modules. */
+/** Chooses a stable menu item for reusable dashboard modules. */
 export function getDashboardItem(id: string, fallbackIndex = 0): MenuItem {
   return (
     menuItemById.get(id) ||

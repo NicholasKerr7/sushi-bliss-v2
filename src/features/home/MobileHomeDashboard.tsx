@@ -17,7 +17,7 @@ import {
   type DashboardCategoryId,
   featuredAssets,
   icons,
-} from "./visualHomeData";
+} from "./homeDashboardData";
 
 interface MobileDashboardProps {
   activeCategory: DashboardCategoryId;

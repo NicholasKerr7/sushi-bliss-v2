@@ -21,7 +21,7 @@ import {
   desktopNav,
   featuredAssets,
   icons,
-} from "./visualHomeData";
+} from "./homeDashboardData";
 
 export function DesktopDashboardHeader({ cartCount }: { cartCount: number }) {
   return (

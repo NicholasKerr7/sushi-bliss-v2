@@ -1,4 +1,4 @@
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { APP_TIME_ZONE } from "@/lib/dates";
 import type { PaymentMethod, UserProfile } from "@/types/user";
 

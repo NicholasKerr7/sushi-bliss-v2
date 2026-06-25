@@ -2,7 +2,7 @@
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { formatDateTime } from "@/lib/dates";
 import type { LoyaltyTransaction, RedeemedReward } from "@/types/loyalty";

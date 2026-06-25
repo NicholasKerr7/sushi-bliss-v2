@@ -4,7 +4,7 @@ import Link from "next/link";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { DesktopExploreMenu } from "@/components/layout/DesktopExploreMenu";
-import { chefAvatar, icons } from "@/features/home/visualHomeData";
+import { chefAvatar, icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { getBrandContent } from "@/lib/data";
 

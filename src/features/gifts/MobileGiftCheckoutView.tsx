@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { GIFT_DELIVERY_TIME_OPTIONS } from "@/lib/gifts";
 import { formatMoney } from "@/lib/money";

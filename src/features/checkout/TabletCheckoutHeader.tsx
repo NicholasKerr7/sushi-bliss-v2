@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
+import { brand, chefAvatar, icons } from "@/features/home/homeDashboardData";
 
 interface TabletCheckoutHeaderProps {
   cartCount: number;

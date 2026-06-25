@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { formatTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { rewards } from "@/data/loyalty";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { getNextTier } from "@/lib/loyalty";
 import type { LoyaltyAccount, Reward } from "@/types/loyalty";
 

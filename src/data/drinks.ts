@@ -280,7 +280,7 @@ const drinkDefinitions: DrinkDefinition[] = [
     tasting: { aromatic: 78, body: 70, bright: 90, dry: 62, finish: 82 },
     texture: "Bright, smoky, and vivid",
     chefNote:
-      "The visual signature of the bar: citrus first, smoke second, red fruit last.",
+      "The house signature of the bar: citrus first, smoke second, red fruit last.",
   },
   {
     abv: 24,

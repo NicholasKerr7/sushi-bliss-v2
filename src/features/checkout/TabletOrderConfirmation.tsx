@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { TabletMenuBottomNav } from "@/features/menu/TabletMenuChrome";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { getTabletPresentationImage } from "@/lib/assets";

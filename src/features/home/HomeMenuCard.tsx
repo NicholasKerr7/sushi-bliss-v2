@@ -8,7 +8,7 @@ import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 
-import { icons } from "./visualHomeData";
+import { icons } from "./homeDashboardData";
 
 interface HomeMenuCardProps {
   badge: string;

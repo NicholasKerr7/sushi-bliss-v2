@@ -5,14 +5,14 @@ import Image from "next/image";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { cartCustomizationGroups } from "@/data/cart";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { getTabletPresentationImage } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { MenuItem } from "@/types/menu";
 import type { CartAddOnDefinition, CartCustomization } from "@/types/order";
 
-import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnVisuals";
+import { getAddOnImageSrc, getCompactAddOnLabel } from "./addOnAssets";
 
 interface MobileItemCustomizeViewProps {
   availableAddOns: CartAddOnDefinition[];

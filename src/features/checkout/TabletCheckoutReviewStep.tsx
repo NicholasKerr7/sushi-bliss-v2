@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { pickupLocation } from "@/data/checkout";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { CartLineItem } from "@/types/order";

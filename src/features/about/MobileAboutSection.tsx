@@ -11,7 +11,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { appContent, brandContent } from "@/data/brand";
 import { featuredAssets } from "@/data/assets";
 import { CartDrawer } from "@/features/cart/CartDrawer";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
 import { classNames } from "@/lib/classNames";

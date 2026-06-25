@@ -7,10 +7,16 @@ import { useCart } from "@/hooks/useCart";
 import { getDefaultCustomizationsForItem } from "@/lib/cart";
 import type { MenuItem } from "@/types/menu";
 
-import { DesktopDashboard, DesktopDashboardHeader } from "./DesktopVisualHome";
-import { MobileDashboard } from "./MobileVisualHome";
-import { TabletDashboard } from "./TabletVisualHome";
-import { getDashboardItem, type DashboardCategoryId } from "./visualHomeData";
+import {
+  DesktopDashboard,
+  DesktopDashboardHeader,
+} from "./DesktopHomeDashboard";
+import { MobileDashboard } from "./MobileHomeDashboard";
+import { TabletDashboard } from "./TabletHomeDashboard";
+import {
+  getDashboardItem,
+  type DashboardCategoryId,
+} from "./homeDashboardData";
 
 const dashboardCategoryItemIds: Record<DashboardCategoryId, string[]> = {
   "chef-specials": [
@@ -35,8 +41,8 @@ function getDashboardItems(category: DashboardCategoryId) {
   );
 }
 
-/** Renders the screenshot-matched home dashboard while keeping v2 cart behavior. */
-export function VisualHomeDashboard() {
+/** Renders the responsive home dashboard while keeping v2 cart behavior. */
+export function HomeDashboard() {
   const { addItem, itemCount } = useCart();
   const [activeCategory, setActiveCategory] =
     useState<DashboardCategoryId>("nigiri");
@@ -74,7 +80,7 @@ export function VisualHomeDashboard() {
 
   return (
     <section
-      className="sushi-visual stone-gradient relative overflow-hidden"
+      className="sushi-stage stone-gradient relative overflow-hidden"
       id="home-dashboard"
     >
       <DesktopDashboardHeader cartCount={itemCount} />

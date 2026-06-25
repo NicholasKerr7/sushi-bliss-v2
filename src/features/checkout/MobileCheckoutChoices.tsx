@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { formatMoney } from "@/lib/money";
 import type { OrderTotals } from "@/types/order";

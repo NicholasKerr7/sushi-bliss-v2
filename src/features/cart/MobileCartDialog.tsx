@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { brand, icons } from "@/features/home/visualHomeData";
+import { brand, icons } from "@/features/home/homeDashboardData";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { calculateCartLineSubtotal } from "@/lib/cart";
 import { getTabletPresentationImage } from "@/lib/assets";

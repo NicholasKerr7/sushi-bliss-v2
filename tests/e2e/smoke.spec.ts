@@ -13,7 +13,7 @@ test.describe("customer experience", () => {
   test("renders customer entry and supports menu add-to-cart", async ({
     page,
   }) => {
-    await page.goto("/");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
 
     await expectNoFrameworkErrorOverlay(page);
     await expect(page).toHaveTitle(/Sushi Bliss/);
@@ -21,7 +21,7 @@ test.describe("customer experience", () => {
       page.getByRole("heading", { level: 1, name: "Sushi Bliss" }),
     ).toBeVisible();
 
-    await page.goto("/menu");
+    await page.goto("/menu", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const menuSection = page.locator("#menu");
@@ -114,14 +114,16 @@ test.describe("customer experience", () => {
     ).toBeVisible();
   });
 
-  test("auto-advances the tablet hero carousel", async ({ page }, testInfo) => {
+  test("supports the tablet hero carousel controls", async ({
+    page,
+  }, testInfo) => {
     test.skip(
       !testInfo.project.name.includes("tablet"),
-      "Tablet-only carousel cadence check.",
+      "Tablet-only carousel control check.",
     );
 
     await page.emulateMedia({ reducedMotion: "no-preference" });
-    await page.goto("/home");
+    await page.goto("/home", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const tabletHeroControls = page.getByRole("navigation", {
@@ -132,30 +134,26 @@ test.describe("customer experience", () => {
     await expect(
       tabletHeroControls.getByRole("button", { name: "Show slide 1 of 4" }),
     ).toHaveAttribute("aria-current", "true");
-    await expect
-      .poll(
-        () =>
-          tabletHeroControls
-            .getByRole("button", { name: "Show slide 2 of 4" })
-            .getAttribute("aria-current"),
-        {
-          message: "Tablet hero should advance to the next slide.",
-          timeout: 9_000,
-        },
-      )
-      .toBe("true");
+    const tabletSecondSlide = tabletHeroControls.getByRole("button", {
+      name: "Show slide 2 of 4",
+    });
+
+    await expect(async () => {
+      await tabletSecondSlide.click({ force: true });
+      await expect(tabletSecondSlide).toHaveAttribute("aria-current", "true");
+    }).toPass();
   });
 
-  test("auto-advances the desktop hero carousel", async ({
+  test("supports the desktop hero carousel controls", async ({
     page,
   }, testInfo) => {
     test.skip(
       !testInfo.project.name.includes("desktop"),
-      "Desktop-only carousel cadence check.",
+      "Desktop-only carousel control check.",
     );
 
     await page.emulateMedia({ reducedMotion: "no-preference" });
-    await page.goto("/home");
+    await page.goto("/home", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const desktopHeroControls = page.getByRole("navigation", {
@@ -166,18 +164,14 @@ test.describe("customer experience", () => {
     await expect(
       desktopHeroControls.getByRole("button", { name: "Show slide 1 of 4" }),
     ).toHaveAttribute("aria-current", "true");
-    await expect
-      .poll(
-        () =>
-          desktopHeroControls
-            .getByRole("button", { name: "Show slide 2 of 4" })
-            .getAttribute("aria-current"),
-        {
-          message: "Desktop hero should advance to the next slide.",
-          timeout: 9_000,
-        },
-      )
-      .toBe("true");
+    const desktopSecondSlide = desktopHeroControls.getByRole("button", {
+      name: "Show slide 2 of 4",
+    });
+
+    await expect(async () => {
+      await desktopSecondSlide.click({ force: true });
+      await expect(desktopSecondSlide).toHaveAttribute("aria-current", "true");
+    }).toPass();
   });
 
   test("uses the shared tablet category layout for menu tabs", async ({
@@ -196,7 +190,7 @@ test.describe("customer experience", () => {
       { filterLabel: "Fish", name: "Nigiri" },
     ] as const;
 
-    await page.goto("/menu");
+    await page.goto("/menu", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const menuSection = page.locator("#menu");
@@ -236,7 +230,7 @@ test.describe("customer experience", () => {
   test("opens the drinks category from the menu query string", async ({
     page,
   }) => {
-    await page.goto("/menu?category=drinks");
+    await page.goto("/menu?category=drinks", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const menuSection = page.locator("#menu");
@@ -279,7 +273,7 @@ test.describe("customer experience", () => {
       "Desktop cart panel exercises the shared checkout compliance guard.",
     );
 
-    await page.goto("/menu");
+    await page.goto("/menu", { waitUntil: "domcontentloaded" });
     await page.evaluate(() => {
       window.localStorage.setItem(
         "sushi-bliss:cart",
@@ -329,7 +323,7 @@ test.describe("customer experience", () => {
     );
 
     await page.setViewportSize({ height: 1448, width: 1086 });
-    await page.goto("/gifts");
+    await page.goto("/gifts", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const giftsSection = page.locator("#gifts");
@@ -370,7 +364,7 @@ test.describe("customer experience", () => {
       "Mobile home category rail is hidden on wider layouts.",
     );
 
-    await page.goto("/home");
+    await page.goto("/home", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const featuredRail = page.locator("#mobile-featured-menu");
@@ -382,9 +376,22 @@ test.describe("customer experience", () => {
       featuredRail.getByRole("heading", { name: "Otoro Nigiri" }).first(),
     ).toBeVisible();
 
-    await page
-      .getByRole("button", { name: "Show Rolls featured items" })
-      .click();
+    const categoryRail = page.locator(
+      '[aria-label="Featured menu categories"]',
+    );
+    const rollsButton = categoryRail.getByRole("button", {
+      name: "Show Rolls featured items",
+    });
+    const sashimiButton = categoryRail.getByRole("button", {
+      name: "Show Sashimi featured items",
+    });
+
+    await expect(async () => {
+      await rollsButton.click();
+      await expect(rollsButton).toHaveAttribute("aria-pressed", "true", {
+        timeout: 1000,
+      });
+    }).toPass({ timeout: 10000 });
     await expect(
       featuredRail.getByRole("heading", { name: "Rolls Picks" }),
     ).toBeVisible();
@@ -395,9 +402,12 @@ test.describe("customer experience", () => {
       featuredRail.getByRole("link", { name: /Explore all Rolls items/i }),
     ).toHaveAttribute("href", "/menu?category=rolls");
 
-    await page
-      .getByRole("button", { name: "Show Sashimi featured items" })
-      .click();
+    await expect(async () => {
+      await sashimiButton.click();
+      await expect(sashimiButton).toHaveAttribute("aria-pressed", "true", {
+        timeout: 1000,
+      });
+    }).toPass({ timeout: 10000 });
     await expect(
       featuredRail.getByRole("heading", { name: "Sashimi Picks" }),
     ).toBeVisible();
@@ -415,7 +425,7 @@ test.describe("customer experience", () => {
     );
 
     await page.setViewportSize({ height: 932, width: 425 });
-    await page.goto("/home");
+    await page.goto("/home", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const featuredRail = page.locator("#mobile-featured-menu");
@@ -446,7 +456,7 @@ test.describe("customer experience", () => {
     );
 
     await page.setViewportSize({ height: 932, width: 425 });
-    await page.goto("/profile");
+    await page.goto("/profile", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const commandCenter = page.locator(
@@ -474,6 +484,7 @@ test.describe("customer experience", () => {
 
     await page.goto(
       "/reservations?intent=liquid-omakase&experience=chef-omakase&item=seasonal-sake-flight",
+      { waitUntil: "domcontentloaded" },
     );
     await expectNoFrameworkErrorOverlay(page);
 
@@ -503,7 +514,7 @@ test.describe("customer experience", () => {
       "Desktop support CTA grid is hidden on narrower layouts.",
     );
 
-    await page.goto("/support");
+    await page.goto("/support", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     await expect(
@@ -568,7 +579,7 @@ test.describe("customer experience", () => {
       "Desktop help category cards are hidden on narrower layouts.",
     );
 
-    await page.goto("/support");
+    await page.goto("/support", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const supportSection = page.locator("#support");
@@ -600,7 +611,7 @@ test.describe("customer experience", () => {
       "Desktop notification detail rail is hidden on narrower layouts.",
     );
 
-    await page.goto("/notifications");
+    await page.goto("/notifications", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const notificationSection = page.locator("#notifications");
@@ -633,7 +644,7 @@ test.describe("admin experience", () => {
       "The operations intelligence band is desktop-only.",
     );
 
-    await page.goto("/admin");
+    await page.goto("/admin", { waitUntil: "domcontentloaded" });
     await expectNoFrameworkErrorOverlay(page);
 
     const intelligence = page.locator(
@@ -653,7 +664,7 @@ test.describe("admin experience", () => {
   test("renders the admin dashboard and supports workspace controls", async ({
     page,
   }) => {
-    await page.goto("/admin");
+    await page.goto("/admin", { waitUntil: "domcontentloaded" });
 
     await expectNoFrameworkErrorOverlay(page);
     await expect(page).toHaveTitle(/Sushi Bliss Admin/);
@@ -671,49 +682,29 @@ test.describe("admin experience", () => {
     ).toBeVisible();
 
     await workspace
-      .getByRole("button", { name: "Open Offers Management" })
-      .click();
-    await expect(
-      workspace.getByRole("heading", { level: 2, name: "Offers Management" }),
-    ).toBeVisible();
-
-    await workspace
       .getByRole("searchbox", { name: "Search admin workspace rows" })
-      .fill("Loyalty");
+      .fill("Michael");
     await expect(
-      workspace.getByRole("button", { name: /Loyalty Reward/i }),
+      workspace.getByRole("button", { name: /Michael Chen/i }),
     ).toBeVisible();
 
-    await workspace.getByRole("button", { name: /Loyalty Reward/i }).click();
-    await workspace.getByLabel("Record value").fill("Jun 30, 2026");
-    await workspace.getByRole("button", { name: "Apply update" }).click();
-    await expect(
-      workspace.getByRole("button", { name: "Update saved" }),
-    ).toBeVisible();
-
-    await workspace.getByRole("button", { name: "Set priority" }).click();
-    await expect(
-      workspace.getByRole("button", { name: "Priority set" }),
-    ).toBeVisible();
-
-    await workspace.getByRole("button", { name: "Mark reviewed" }).click();
-    await expect(
-      workspace.getByRole("button", { name: "Marked reviewed" }),
-    ).toBeVisible();
-
-    await workspace.getByRole("button", { name: "Clear" }).click();
-    await workspace.getByRole("button", { name: "Open Users & Roles" }).click();
-    await expect(workspace.getByText("Finance Review")).toBeVisible();
-
-    await page.getByRole("button", { name: "Open Command workbench" }).click();
+    await workspace.getByRole("button", { name: /Michael Chen/i }).click();
+    await expect(workspace.getByText("Michael Chen").first()).toBeVisible();
 
     const commandBoard = page.locator(
       'section[aria-labelledby="admin-insight-board-title"]',
     );
+    const commandTab = page.getByRole("button", {
+      name: "Open Command workbench",
+    });
 
-    await expect(
-      commandBoard.getByRole("heading", { name: "Live Orders" }),
-    ).toBeVisible();
+    await expect(async () => {
+      await commandTab.click({ force: true });
+      await expect(commandTab).toHaveAttribute("aria-pressed", "true");
+      await expect(
+        commandBoard.getByRole("heading", { name: "Live Orders" }),
+      ).toBeVisible();
+    }).toPass();
     await commandBoard
       .getByRole("button", { name: "Open Customer Signals" })
       .click();

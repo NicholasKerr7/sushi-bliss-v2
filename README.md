@@ -23,7 +23,7 @@ service boundaries.
 - Mobile-first restaurant app shell with customer navigation.
 - Responsive tablet and desktop layouts for the main customer flows.
 - Browseable menu with categories, search, filters, item details, tasting
-  notes, customization, add-ons, and sake pairing visuals.
+  notes, customization, add-ons, and sake pairing imagery.
 - Cart, checkout, pickup/delivery selection, mock payment selection, order
   confirmation, order history, and tracking views.
 - Reservations with experience, date/time, party size, location, review,
@@ -82,16 +82,11 @@ public/
 docs/
   backend/             Supabase schema and service planning
   deployment.md        Production deployment notes
-  screenshot-coverage.md
-  visual-qa.md
+  qa.md                Local verification notes
 
 tests/
-  e2e/                 Playwright smoke, responsive, and visual-reference tests
+  e2e/                 Playwright smoke, responsive, and route-state tests
 ```
-
-Reference screenshots are no longer committed under `public/`. Keep visual
-baselines in a local `.visual-references/screenshots` folder or pass
-`VISUAL_REFERENCE_DIR` when running pixel-diff checks.
 
 ## Getting Started
 
@@ -119,8 +114,7 @@ npm run lint             # Run ESLint
 npm run typecheck        # Run TypeScript checks
 npm run format:check     # Check Prettier formatting
 npm run test             # Run Playwright tests
-npm run test:visual      # Run visual-reference route audit
-npm run test:visual:diff # Run visual audit with local reference diffs
+npm run test:routes      # Run route-state audit only
 ```
 
 Install Playwright Chromium if needed:
@@ -162,15 +156,8 @@ npm run test
 npm run build
 ```
 
-The visual-reference test always validates routes, interactions, screenshots,
-image loading, and horizontal overflow. Pixel comparisons are optional and only
-run when reference PNGs exist locally.
-
-Example local diff run:
-
-```bash
-VISUAL_REFERENCE_DIR=.visual-references/screenshots npm run test:visual:diff
-```
+The route-state audit validates key routed states, interactions, visible image
+loading, and horizontal overflow across mobile, tablet, and desktop projects.
 
 ## Deployment
 
@@ -182,7 +169,5 @@ checklist, CLI notes, and current production target.
 - Keep the app mock/local-data only until live backend work is requested.
 - Keep UI components small and feature-scoped.
 - Do not reintroduce the old monolithic app structure.
-- Do not commit generated build output, Playwright reports, local visual
-  baselines, or secret env files.
-- Runtime assets belong in `public/assets`; non-runtime visual references stay
-  outside the production public tree.
+- Do not commit generated build output, Playwright reports, or secret env files.
+- Runtime assets belong in `public/assets`.

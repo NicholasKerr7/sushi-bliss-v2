@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { formatMoney } from "@/lib/money";
 import type { OmakasePackage } from "@/types/omakase";
 

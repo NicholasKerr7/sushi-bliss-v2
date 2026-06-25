@@ -4,7 +4,7 @@ import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import Image from "next/image";
 import { useState } from "react";
 
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { formatFullDateTime } from "@/lib/dates";
 import {

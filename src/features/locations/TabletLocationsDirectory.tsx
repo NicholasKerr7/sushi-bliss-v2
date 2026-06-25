@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { locations } from "@/data/locations";
 import { CartDrawer } from "@/features/cart/CartDrawer";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import type { RestaurantLocation } from "@/types/location";
 
 import { LocationDetailDrawer } from "./LocationDetailDrawer";

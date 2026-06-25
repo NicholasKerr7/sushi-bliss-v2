@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import { calculateTipCents, formatMoney } from "@/lib/money";
 import type { CartLineItem } from "@/types/order";

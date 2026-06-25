@@ -10,7 +10,7 @@ import {
   reservationOccasions,
   seatingPreferences,
 } from "@/data/reservations";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { classNames } from "@/lib/classNames";
 import type {
   Reservation,

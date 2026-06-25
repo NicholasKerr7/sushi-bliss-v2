@@ -1,5 +1,5 @@
 import { pickupLocation } from "@/data/checkout";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import type { Order } from "@/types/order";
 
 export const tabletConfirmationBenefits = [

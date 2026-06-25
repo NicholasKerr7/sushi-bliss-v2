@@ -4,7 +4,7 @@ import Link from "next/link";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { TabletBottomNavigation } from "@/components/layout/TabletBottomNavigation";
-import { brand, chefAvatar, icons } from "@/features/home/visualHomeData";
+import { brand, chefAvatar, icons } from "@/features/home/homeDashboardData";
 
 interface TabletMenuHeaderProps {
   cartCount: number;

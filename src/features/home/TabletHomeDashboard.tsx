@@ -20,7 +20,7 @@ import {
   chefAvatar,
   featuredAssets,
   icons,
-} from "./visualHomeData";
+} from "./homeDashboardData";
 
 interface TabletDashboardProps {
   cartCount: number;

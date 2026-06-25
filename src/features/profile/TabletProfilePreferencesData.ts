@@ -1,5 +1,5 @@
 import { locations } from "@/data/locations";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import type { PaymentMethod, UserPreferences } from "@/types/user";
 
 export const tabletDietaryOptions = [

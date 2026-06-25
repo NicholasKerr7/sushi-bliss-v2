@@ -7,7 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { SegmentedProgressMeter } from "@/components/ui/SegmentedProgressMeter";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { getTabletPresentationImage } from "@/lib/assets";
 import { classNames } from "@/lib/classNames";
 import { liquidOmakaseReservationHref } from "@/lib/menuAvailability";
@@ -53,7 +53,7 @@ const mobileCategoryOrder = [
   "drinks",
 ] as const;
 
-/** Mobile-first menu browser modeled after the reference menu screens. */
+/** Mobile-first menu browser with search, category, and featured-item states. */
 export function MobileMenuExplorer({
   cartItemCount,
   cartSubtotalCents,

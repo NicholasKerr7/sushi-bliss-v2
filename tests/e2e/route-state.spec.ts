@@ -1,18 +1,10 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
-
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
-interface VisualReferenceTarget {
+interface RouteStateTarget {
   name: string;
   prepare?: (page: Page) => Promise<void>;
   projectName: string;
-  referencePath: string;
-  referenceSize: {
-    height: number;
-    width: number;
-  };
   routePath: string;
   viewport: {
     height: number;
@@ -21,59 +13,12 @@ interface VisualReferenceTarget {
   verify: (page: Page) => Promise<void>;
 }
 
-interface VisualDiffResult {
-  comparedSize: {
-    height: number;
-    width: number;
-  };
-  currentSize: {
-    height: number;
-    width: number;
-  };
-  differentPixels: number;
-  diffPngBase64: string;
-  diffRatio: number;
-  maxChannelDelta: number;
-  meanAbsoluteChannelDelta: number;
-  pixelThreshold: number;
-  referenceSize: {
-    height: number;
-    width: number;
-  };
-  scaledCurrent: boolean;
-  totalPixels: number;
-}
-
 const mobileViewport = { height: 911, width: 430 };
-const mobileReferenceSize = mobileViewport;
-const mobileLargeReferenceSize = mobileViewport;
-const visualDiffEnabled =
-  process.env.VISUAL_REFERENCE_DIFF === "1" ||
-  process.env.VISUAL_REFERENCE_STRICT === "1";
-const visualStrictEnabled = process.env.VISUAL_REFERENCE_STRICT === "1";
-const visualMaxDiffRatio = getNumberEnv(
-  "VISUAL_REFERENCE_MAX_DIFF_RATIO",
-  0.12,
-);
-const visualPixelThreshold = getNumberEnv(
-  "VISUAL_REFERENCE_PIXEL_THRESHOLD",
-  32,
-);
-const visualDiffOutputDir =
-  process.env.VISUAL_REFERENCE_DIFF_DIR ??
-  path.join("test-results", "visual-reference-diffs");
-const visualReferenceRoot = path.resolve(
-  process.cwd(),
-  process.env.VISUAL_REFERENCE_DIR ??
-    path.join(".visual-references", "screenshots"),
-);
 
-const visualReferenceTargets: VisualReferenceTarget[] = [
+const routeStateTargets: RouteStateTarget[] = [
   {
     name: "mobile welcome",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-01.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -86,8 +31,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile home dashboard",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-02.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/home",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -108,8 +51,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile search filter",
     prepare: openMobileSearchFilter,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-03.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -130,8 +71,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile menu overview",
     prepare: seedMobileMenuOverviewCart,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-04.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -152,8 +91,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile menu category nigiri",
     prepare: openMobileNigiriCategory,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-05.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -172,8 +109,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile item detail otoro nigiri",
     prepare: openMobileOtoroDetail,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-06.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -192,8 +127,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile item customization",
     prepare: openMobileOtoroCustomization,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-07.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -214,8 +147,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile cart",
     prepare: openMobileCartWithSeededItems,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-08.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -232,8 +163,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile checkout delivery pickup",
     prepare: openMobileCheckoutFulfillment,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-09.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -252,8 +181,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile checkout address",
     prepare: openMobileCheckoutAddress,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-10.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -272,8 +199,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile checkout payment",
     prepare: openMobileCheckoutPayment,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-11.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -292,8 +217,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile checkout review",
     prepare: openMobileCheckoutReview,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-12.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -312,8 +235,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile order confirmation",
     prepare: openMobileOrderConfirmation,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-13.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -331,8 +252,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile orders dashboard",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-14.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/orders",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -351,8 +270,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile order details",
     prepare: openMobileOrderDetails,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-15.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/orders",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -373,8 +290,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile live order tracking",
     prepare: openMobileLiveOrderTracking,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-16.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/orders",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -392,8 +307,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile reservations dashboard",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-17.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -412,8 +325,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation date time",
     prepare: openMobileReservationDateTime,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-18.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -438,8 +349,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation experience",
     prepare: openMobileReservationExperience,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-19.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -462,8 +371,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation review",
     prepare: openMobileReservationReview,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-20.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -487,8 +394,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile loyalty dashboard",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-21.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -504,8 +409,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile available rewards",
     prepare: openMobileLoyaltyRewards,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-22.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -523,8 +426,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile member benefits",
     prepare: openMobileLoyaltyPass,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-23.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -540,8 +441,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile points activity",
     prepare: openMobileLoyaltyActivity,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-24.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -559,8 +458,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile member pass",
     prepare: openMobileLoyaltyPass,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-25.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -573,8 +470,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile profile dashboard",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-26.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -592,8 +487,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile saved addresses",
     prepare: openMobileProfileAddresses,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-27.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -613,8 +506,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile add address",
     prepare: openMobileProfileAddAddress,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-28.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -633,8 +524,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile payment methods",
     prepare: openMobileProfilePayments,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-29.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -655,8 +544,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile add card",
     prepare: openMobileProfileAddPayment,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-30.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -674,8 +561,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile notifications center",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-31.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/notifications",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -696,8 +581,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile dietary preferences",
     prepare: openMobileProfilePreferences,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-32.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -720,8 +603,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation history",
     prepare: openMobileReservationHistory,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-33.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -744,8 +625,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation detail",
     prepare: openMobileReservationDetail,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-34.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -766,8 +645,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile personal information",
     prepare: openMobileProfileAccount,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-35.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -786,8 +663,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile account settings",
     prepare: openMobileProfilePreferences,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-36.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -810,8 +685,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile privacy security",
     prepare: openMobileProfilePreferences,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-37.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -831,8 +704,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile about story",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-38.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/about",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -850,8 +721,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile contact support",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-39.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/support",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -870,8 +739,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile help center",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-40.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/support",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -892,8 +759,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile support request",
     prepare: openMobileSupportRequest,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-41.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/support",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -912,8 +777,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile faq article detail",
     prepare: openMobileSupportArticleDetail,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-42.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/support",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -932,8 +795,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile notification detail",
     prepare: openMobileNotificationDetail,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-43.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/notifications",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -951,8 +812,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile omakase landing",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-44.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/omakase",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -978,8 +837,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile omakase package selection",
     prepare: openMobileOmakasePackageSelection,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-45.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/omakase",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1002,8 +859,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile omakase review",
     prepare: openMobileOmakaseReview,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-46.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/omakase",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1023,8 +878,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile locations directory",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-47.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/locations",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1045,8 +898,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile location detail",
     prepare: openMobileLocationDetail,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-48.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/locations",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1067,8 +918,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile referral earn",
     prepare: openMobileReferralEarn,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-49.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1086,8 +935,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile gift experience",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-50.png",
-    referenceSize: mobileReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1106,8 +953,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile gift selection",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-51.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1130,8 +975,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile gift checkout recipient",
     prepare: openMobileGiftCheckout,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-52.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1146,8 +989,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile gift checkout payment",
     prepare: openMobileGiftCheckout,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-53.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1166,8 +1007,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile gift confirmation",
     prepare: openMobileGiftConfirmation,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-54.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1185,8 +1024,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile promotions offers",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-55.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/offers",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1210,8 +1047,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile offer detail",
     prepare: openMobileOfferDetail,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-56.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/offers",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1230,8 +1065,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile favorites",
     prepare: seedMobileFavorites,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-57.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/favorites",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1255,8 +1088,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile saved item detail",
     prepare: openMobileSavedOtoroDetail,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-58.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1274,8 +1105,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile recently viewed",
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-59.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/recently-viewed",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1297,8 +1126,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile empty cart",
     prepare: openMobileEmptyCart,
     projectName: "chromium-mobile",
-    referencePath: "mobile/mobile-60.png",
-    referenceSize: mobileLargeReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
     verify: async (page) => {
@@ -1316,8 +1143,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet home dashboard",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-01-home-dashboard.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/home",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1331,8 +1156,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet search filter",
     prepare: openTabletSearchFilter,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-02-search-filter.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1355,8 +1178,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet menu overview",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-03-menu-overview.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1377,8 +1198,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet menu category nigiri",
     prepare: openTabletNigiriCategory,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-04-menu-category-nigiri.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1400,8 +1219,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet item detail",
     prepare: openTabletOtoroDetail,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-06-item-detail-expanded.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1433,8 +1250,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
         .click();
     },
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-07-item-customization-add-ons.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1451,8 +1266,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet cart",
     prepare: openTabletCartWithOtoro,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-08-cart.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1469,8 +1282,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet checkout delivery pickup",
     prepare: openTabletCheckoutDetails,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-09-checkout-delivery-pickup.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1489,8 +1300,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet checkout review confirm",
     prepare: openTabletCheckoutReview,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-10-checkout-review-confirm.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1511,8 +1320,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet order confirmation",
     prepare: openTabletOrderConfirmation,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-05-item-detail-otoro-nigiri.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1530,8 +1337,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet orders dashboard",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-11-orders-dashboard.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/orders",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1550,8 +1355,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet live order tracking",
     prepare: openTabletLiveOrderTracking,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-12-live-order-tracking.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/orders",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1568,8 +1371,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet reservations main",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-13-reservations-main.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1588,8 +1389,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet choose reservation experience",
     prepare: openTabletReservationBooking,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-14-choose-reservation-experience.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1609,8 +1408,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet reservation review",
     prepare: openTabletReservationReview,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-15-reservation-review.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1632,8 +1429,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet reservation confirmation",
     prepare: openTabletReservationConfirmation,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-16-reservation-confirmation.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1653,8 +1448,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet reservation history",
     prepare: openTabletReservationHistory,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-17-reservation-history.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1676,8 +1469,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet modify reservation",
     prepare: openTabletModifyReservation,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-18-modify-reservation.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1697,8 +1488,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet locations",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-19-locations.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/locations",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1723,8 +1512,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet cancel reservation",
     prepare: openTabletCancelReservation,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-20-cancel-reservation.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1748,8 +1535,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet omakase experience",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-21-omakase-experience.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/omakase",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1768,8 +1553,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet omakase package review",
     prepare: openTabletOmakaseReview,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-22-omakase-package-review.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/omakase",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1787,8 +1570,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet gift experience",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-23-gift-experience.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/gifts",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1807,8 +1588,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet gift checkout",
     prepare: openTabletGiftCheckout,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-24-gift-checkout.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/gifts",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1827,8 +1606,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet gift confirmation",
     prepare: openTabletGiftConfirmation,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-25-gift-confirmation.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/gifts",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1844,8 +1621,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet loyalty dashboard",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-26-loyalty-dashboard.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/loyalty",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1865,8 +1640,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet member pass rewards",
     prepare: openTabletRewardDetails,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-27-member-pass-rewards.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/loyalty",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1882,8 +1655,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet profile dashboard",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-28-profile-dashboard.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/profile",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1900,8 +1671,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet favorites",
     prepare: seedTabletFavorites,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-29-favorites.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/favorites",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1920,8 +1689,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet account settings preferences",
     prepare: openTabletProfilePreferences,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-30-account-settings-preferences.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/profile",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1939,8 +1706,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet contact",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-31-contact.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/support",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1959,8 +1724,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet help center",
     prepare: openTabletSupportHelpCenter,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-32-help-center.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/support",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1976,8 +1739,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet faq article detail",
     prepare: openTabletFaqArticle,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-33-faq-article-detail.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/support",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -1990,8 +1751,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet notifications center",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-34-notifications-center.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/notifications",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -2012,8 +1771,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet notification detail",
     prepare: openTabletNotificationDetail,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-35-notification-detail.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/notifications",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -2026,8 +1783,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet promotions offers",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-36-promotions-offers.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/offers",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -2044,8 +1799,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet offer detail",
     prepare: openTabletOfferDetail,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-37-offer-detail.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/offers",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -2059,8 +1812,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet referral earn",
     prepare: openTabletReferralEarn,
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-38-referral-earn.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/loyalty",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -2073,8 +1824,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet about our story",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-39-about-our-story.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/about",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -2090,8 +1839,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet master chefs team",
     projectName: "chromium-tablet",
-    referencePath: "tablet/tablet-40-master-chefs-team.png",
-    referenceSize: { height: 1448, width: 1086 },
     routePath: "/chefs",
     viewport: { height: 1448, width: 1086 },
     verify: async (page) => {
@@ -2112,8 +1859,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-01-home-dashboard.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/home",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2127,8 +1872,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop menu overview",
     prepare: seedDesktopMenuOverviewCart,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-02-menu-overview.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2149,8 +1892,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop menu category nigiri",
     prepare: openDesktopNigiriCategoryWithCart,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-03-menu-category-nigiri.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2169,8 +1910,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop item detail otoro nigiri",
     prepare: openDesktopOtoroDetail,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-04-item-detail-otoro-nigiri.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2189,8 +1928,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop item customization add ons",
     prepare: openDesktopOtoroCustomization,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-05-item-customization-add-ons.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2207,8 +1944,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop cart",
     prepare: seedDesktopCart,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-06-cart.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2231,8 +1966,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop checkout",
     prepare: openDesktopCheckout,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-07-checkout.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2251,8 +1984,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop checkout review",
     prepare: openDesktopCheckoutReview,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-08-checkout-review.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2269,8 +2000,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop order confirmation",
     prepare: openDesktopOrderConfirmation,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-09-order-confirmation.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2286,8 +2015,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop orders dashboard",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-10-orders-dashboard.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/orders",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2304,8 +2031,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop reservations main",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-11-reservations-main.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2331,8 +2056,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop choose reservation experience",
     prepare: openDesktopReservationExperience,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-12-choose-reservation-experience.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2354,8 +2077,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop reservation review",
     prepare: openDesktopReservationReview,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-13-reservation-review.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2377,8 +2098,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop reservation history",
     prepare: openDesktopReservationHistory,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-14-reservation-history.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2402,8 +2121,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop omakase experience",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-15-omakase-experience.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/omakase",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2431,8 +2148,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop omakase package review",
     prepare: openDesktopOmakaseReview,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-16-omakase-package-review.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/omakase",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2454,8 +2169,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop loyalty dashboard",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-17-loyalty-dashboard.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/loyalty",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2477,8 +2190,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop member pass rewards",
     prepare: openDesktopLoyaltyPassRewards,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-18-member-pass-rewards.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/loyalty",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2501,8 +2212,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop profile dashboard",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-19-profile-dashboard.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/profile",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2520,8 +2229,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop account settings preferences",
     prepare: openDesktopProfileSettings,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-20-account-settings-preferences.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/profile",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2550,8 +2257,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop contact",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-21-contact.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/support",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2571,8 +2276,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop help center",
     prepare: openDesktopHelpCenter,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-22-help-center.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/support",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2592,8 +2295,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop notifications center",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-23-notifications-center.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/notifications",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2617,8 +2318,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop favorites",
     prepare: seedDesktopFavorites,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-24-favorites.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/favorites",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2639,8 +2338,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop promotions offers",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-25-promotions-offers.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/offers",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2662,8 +2359,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop referral earn",
     prepare: openDesktopReferralEarn,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-26-referral-earn.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/loyalty",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2683,8 +2378,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop locations",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-27-locations.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/locations",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2703,8 +2396,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop gift experience",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-28-gift-experience.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/gifts",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2726,8 +2417,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop gift checkout",
     prepare: openDesktopGiftCheckout,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-29-gift-checkout.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/gifts",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2746,8 +2435,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop gift confirmation",
     prepare: openDesktopGiftConfirmation,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-30-gift-confirmation.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/gifts",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2767,8 +2454,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop about our story",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-31-about-our-story.png",
-    referenceSize: { height: 992, width: 1586 },
     routePath: "/about",
     viewport: { height: 992, width: 1586 },
     verify: async (page) => {
@@ -2786,8 +2471,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop master chefs team",
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-32-master-chefs-team.png",
-    referenceSize: { height: 992, width: 1586 },
     routePath: "/chefs",
     viewport: { height: 992, width: 1586 },
     verify: async (page) => {
@@ -2808,8 +2491,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop sourcing ingredients",
     prepare: openDesktopAboutSourcing,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-33-sourcing-ingredients.png",
-    referenceSize: { height: 992, width: 1586 },
     routePath: "/about",
     viewport: { height: 992, width: 1586 },
     verify: async (page) => {
@@ -2823,8 +2504,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop restaurant atmosphere gallery",
     prepare: openDesktopAboutAtmosphere,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-34-restaurant-atmosphere-gallery.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/about",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2840,8 +2519,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop faq article detail",
     prepare: openDesktopFaqArticleDetail,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-35-faq-article-detail.png",
-    referenceSize: { height: 992, width: 1586 },
     routePath: "/support",
     viewport: { height: 992, width: 1586 },
     verify: async (page) => {
@@ -2859,8 +2536,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop notification detail",
     prepare: openDesktopNotificationDetail,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-36-notification-detail.png",
-    referenceSize: { height: 992, width: 1586 },
     routePath: "/notifications",
     viewport: { height: 992, width: 1586 },
     verify: async (page) => {
@@ -2881,8 +2556,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop offer detail",
     prepare: openDesktopOfferDetail,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-37-offer-detail.png",
-    referenceSize: { height: 992, width: 1586 },
     routePath: "/offers",
     viewport: { height: 992, width: 1586 },
     verify: async (page) => {
@@ -2898,8 +2571,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop location detail",
     prepare: openDesktopLocationDetail,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-38-location-detail.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/locations",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2917,8 +2588,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop modify reservation",
     prepare: openDesktopModifyReservation,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-39-modify-reservation.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -2938,8 +2607,6 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop cancel reservation modal",
     prepare: openDesktopCancelReservationModal,
     projectName: "chromium-desktop",
-    referencePath: "desktop/desktop-40-cancel-reservation-modal.png",
-    referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
     verify: async (page) => {
@@ -3006,14 +2673,14 @@ async function expectVisibleImagesLoaded(page: Page) {
 
   await expect
     .poll(getUnloadedVisibleImages, {
-      message: "visible images should finish loading before visual capture",
+      message: "visible images should finish loading before route validation",
       timeout: 10000,
     })
     .toEqual([]);
 }
 
-/** Keeps page-level screenshots deterministic without overriding intentional modal scroll states. */
-async function normalizeVisualCaptureScroll(page: Page) {
+/** Resets document scroll while preserving deliberate modal scroll states. */
+async function normalizeRouteStateScroll(page: Page) {
   await page.evaluate(() => {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
@@ -3208,7 +2875,7 @@ async function openMobileCheckoutPayment(page: Page) {
   await expect(
     checkoutDialog.getByRole("heading", { name: "Payment method" }),
   ).toBeVisible();
-  await setMobileCheckoutVisualScroll(page, 24);
+  await setMobileCheckoutRouteScroll(page, 24);
 }
 
 async function openMobileCheckoutReview(page: Page) {
@@ -3221,15 +2888,15 @@ async function openMobileCheckoutReview(page: Page) {
   await expect(
     checkoutDialog.getByRole("heading", { name: "Review your order" }),
   ).toBeVisible();
-  await setMobileCheckoutVisualScroll(page, "bottom");
+  await setMobileCheckoutRouteScroll(page, "bottom");
 }
 
 /**
- * Pins the mobile checkout panel to deliberate visual checkpoints after step changes.
+ * Pins the mobile checkout panel to deliberate review checkpoints after step changes.
  * React swaps step content while preserving the modal viewport, so explicit offsets
- * keep screenshot targets stable across isolated and full-suite runs.
+ * keep route states stable across isolated and full-suite runs.
  */
-async function setMobileCheckoutVisualScroll(
+async function setMobileCheckoutRouteScroll(
   page: Page,
   position: "bottom" | number,
 ) {
@@ -3262,20 +2929,24 @@ async function openMobileOrderDetails(page: Page) {
   await expect(
     ordersSection.getByRole("button", { name: "View Details" }),
   ).toBeVisible();
-  await ordersSection.getByRole("button", { name: "View Details" }).click();
-  await expect(
-    ordersSection.getByRole("heading", { name: "Order Details" }),
-  ).toBeVisible();
+  await expect(async () => {
+    await ordersSection.getByRole("button", { name: "View Details" }).click();
+    await expect(
+      ordersSection.getByRole("heading", { name: "Order Details" }),
+    ).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 10000 });
 }
 
 async function openMobileLiveOrderTracking(page: Page) {
   const ordersSection = page.locator("#orders");
 
   await openMobileOrderDetails(page);
-  await ordersSection.getByRole("button", { name: "Track Order" }).click();
-  await expect(
-    ordersSection.getByRole("heading", { name: "In Preparation" }),
-  ).toBeVisible();
+  await expect(async () => {
+    await ordersSection.getByRole("button", { name: "Track Order" }).click();
+    await expect(
+      ordersSection.getByRole("heading", { name: "In Preparation" }),
+    ).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 10000 });
 }
 
 async function openMobileReservationDateTime(page: Page) {
@@ -3284,14 +2955,16 @@ async function openMobileReservationDateTime(page: Page) {
   await expect(
     reservationsSection.getByRole("button", { name: "Reserve a Table" }),
   ).toBeVisible();
-  await reservationsSection
-    .getByRole("button", { name: "Reserve a Table" })
-    .click();
-  await expect(
-    reservationsSection.getByRole("heading", {
-      name: "Select Your Table Time",
-    }),
-  ).toBeVisible();
+  await expect(async () => {
+    await reservationsSection
+      .getByRole("button", { name: "Reserve a Table" })
+      .click({ force: true });
+    await expect(
+      reservationsSection.getByRole("heading", {
+        name: "Select Your Table Time",
+      }),
+    ).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 10000 });
 }
 
 async function openMobileReservationExperience(page: Page) {
@@ -3456,42 +3129,56 @@ async function openMobileSupportRequest(page: Page) {
 
 async function openMobileSupportArticleDetail(page: Page) {
   const supportSection = page.locator("#support");
+  const reservationArticleButton = supportSection
+    .getByRole("button", { name: "Read" })
+    .nth(1);
 
-  await expect(
-    supportSection.getByRole("button", { name: "Read" }).nth(1),
-  ).toBeVisible();
-  await supportSection.getByRole("button", { name: "Read" }).nth(1).click();
-  await expect(
-    supportSection.getByRole("heading", { name: "Change a reservation" }),
-  ).toBeVisible();
+  await expect(async () => {
+    await expect(reservationArticleButton).toBeVisible();
+    await reservationArticleButton.click({ force: true });
+    await expect(
+      supportSection.getByText("Help article", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      supportSection.getByRole("heading", { name: "Change a reservation" }),
+    ).toBeVisible();
+    await expect(
+      supportSection.getByRole("button", { name: "Ask concierge" }),
+    ).toBeVisible();
+  }).toPass();
 }
 
 async function openMobileNotificationDetail(page: Page) {
   const notificationsSection = page.locator("#notifications");
-
-  await expect(
-    notificationsSection.getByRole("button", { name: "Details" }).first(),
-  ).toBeVisible();
-  await notificationsSection
+  const firstDetailsButton = notificationsSection
     .getByRole("button", { name: "Details" })
-    .first()
-    .click();
-  await expect(notificationsSection.getByText("Inbox state")).toBeVisible();
+    .first();
+
+  await expect(async () => {
+    await expect(firstDetailsButton).toBeVisible();
+    await firstDetailsButton.click({ force: true });
+    await expect(
+      notificationsSection.getByText("Inbox state", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      notificationsSection.getByRole("button", { name: "Done" }),
+    ).toBeVisible();
+  }).toPass();
 }
 
 async function openMobileOmakasePackageSelection(page: Page) {
   const omakaseSection = page.locator("#omakase");
+  const premiumPackageButton = omakaseSection
+    .getByRole("button", {
+      name: /Luxury seafood and wagyu omakase selection.*Premium/i,
+    })
+    .first();
 
-  await expect(
-    omakaseSection.getByRole("button", { name: /Premium/i }).first(),
-  ).toBeVisible();
-  await omakaseSection
-    .getByRole("button", { name: /Premium/i })
-    .first()
-    .click();
-  await expect(
-    omakaseSection.getByRole("button", { name: /Premium/i }).first(),
-  ).toHaveAttribute("aria-pressed", "true");
+  await expect(async () => {
+    await expect(premiumPackageButton).toBeVisible();
+    await premiumPackageButton.click({ force: true });
+    await expect(premiumPackageButton).toHaveAttribute("aria-pressed", "true");
+  }).toPass();
 }
 
 async function openMobileOmakaseReview(page: Page) {
@@ -3515,8 +3202,14 @@ async function openMobileLocationDetail(page: Page) {
   await expect(
     locationsSection.getByLabel("View Sushi Bliss Ginza details"),
   ).toBeVisible();
-  await locationsSection.getByLabel("View Sushi Bliss Ginza details").click();
-  await expect(locationsSection.getByText("Location Details")).toBeVisible();
+  await expect(async () => {
+    await locationsSection
+      .getByLabel("View Sushi Bliss Ginza details")
+      .click({ force: true });
+    await expect(locationsSection.getByText("Location Details")).toBeVisible({
+      timeout: 1000,
+    });
+  }).toPass({ timeout: 10000 });
 }
 
 async function openMobileReferralEarn(page: Page) {
@@ -4375,247 +4068,7 @@ async function openDesktopCancelReservationModal(page: Page) {
   ).toBeVisible();
 }
 
-function getPngSize(buffer: Buffer) {
-  const signature = buffer.subarray(1, 4).toString("ascii");
-
-  expect(signature, "visual audit artifacts must be PNG files").toBe("PNG");
-
-  return {
-    height: buffer.readUInt32BE(20),
-    width: buffer.readUInt32BE(16),
-  };
-}
-
-function getNumberEnv(name: string, fallback: number) {
-  const rawValue = process.env[name];
-  const value = rawValue ? Number(rawValue) : fallback;
-
-  return Number.isFinite(value) ? value : fallback;
-}
-
-function createPngDataUrl(buffer: Buffer) {
-  return `data:image/png;base64,${buffer.toString("base64")}`;
-}
-
-function createVisualArtifactSlug(target: VisualReferenceTarget) {
-  return `${target.projectName}-${target.name}`
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-async function readReferenceScreenshot(target: VisualReferenceTarget) {
-  const resolvedPath = path.join(visualReferenceRoot, target.referencePath);
-
-  try {
-    return {
-      buffer: await readFile(resolvedPath),
-      resolvedPath,
-    };
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return undefined;
-    }
-
-    throw error;
-  }
-}
-
-/** Persists current, reference, diff, and metadata files for visual QA review. */
-async function writeVisualDiffArtifacts({
-  currentScreenshot,
-  metadata,
-  referenceScreenshot,
-  target,
-  visualDiff,
-}: {
-  currentScreenshot: Buffer;
-  metadata: Record<string, unknown>;
-  referenceScreenshot: Buffer;
-  target: VisualReferenceTarget;
-  visualDiff: VisualDiffResult;
-}) {
-  const outputDirectory = path.resolve(process.cwd(), visualDiffOutputDir);
-  const slug = createVisualArtifactSlug(target);
-  const basePath = path.join(outputDirectory, slug);
-  const { diffPngBase64, ...visualDiffMetadata } = visualDiff;
-  const persistedMetadata = {
-    ...metadata,
-    ...visualDiffMetadata,
-    targetName: target.name,
-  };
-
-  await mkdir(outputDirectory, { recursive: true });
-  await Promise.all([
-    writeFile(`${basePath}.current.png`, currentScreenshot),
-    writeFile(`${basePath}.reference.png`, referenceScreenshot),
-    writeFile(`${basePath}.diff.png`, Buffer.from(diffPngBase64, "base64")),
-    writeFile(
-      `${basePath}.metadata.json`,
-      JSON.stringify(persistedMetadata, null, 2),
-    ),
-  ]);
-}
-
-/** Compares visual-reference screenshots inside Chromium to avoid extra image dependencies. */
-async function compareVisualReference(
-  page: Page,
-  currentScreenshot: Buffer,
-  referenceScreenshot: Buffer,
-  currentSize: { height: number; width: number },
-  referenceSize: { height: number; width: number },
-): Promise<VisualDiffResult> {
-  return page.evaluate(
-    async ({
-      currentDataUrl,
-      currentSize,
-      pixelThreshold,
-      referenceDataUrl,
-      referenceSize,
-    }) => {
-      const loadBitmap = async (dataUrl: string) => {
-        const response = await fetch(dataUrl);
-        const blob = await response.blob();
-
-        return createImageBitmap(blob);
-      };
-      const createCanvas = (width: number, height: number) => {
-        const canvas = document.createElement("canvas");
-
-        canvas.height = height;
-        canvas.width = width;
-
-        const context = canvas.getContext("2d", {
-          willReadFrequently: true,
-        });
-
-        if (!context) {
-          throw new Error("Unable to create visual diff canvas context");
-        }
-
-        return { canvas, context };
-      };
-      const currentBitmap = await loadBitmap(currentDataUrl);
-      const referenceBitmap = await loadBitmap(referenceDataUrl);
-      const comparedWidth = referenceSize.width;
-      const comparedHeight = referenceSize.height;
-      const currentCanvas = createCanvas(comparedWidth, comparedHeight);
-      const referenceCanvas = createCanvas(comparedWidth, comparedHeight);
-      const diffCanvas = createCanvas(comparedWidth, comparedHeight);
-
-      currentCanvas.context.imageSmoothingEnabled = true;
-      currentCanvas.context.imageSmoothingQuality = "high";
-      currentCanvas.context.drawImage(
-        currentBitmap,
-        0,
-        0,
-        comparedWidth,
-        comparedHeight,
-      );
-      referenceCanvas.context.drawImage(referenceBitmap, 0, 0);
-
-      const currentPixels = currentCanvas.context.getImageData(
-        0,
-        0,
-        comparedWidth,
-        comparedHeight,
-      ).data;
-      const referencePixels = referenceCanvas.context.getImageData(
-        0,
-        0,
-        comparedWidth,
-        comparedHeight,
-      ).data;
-      const diffPixels = diffCanvas.context.createImageData(
-        comparedWidth,
-        comparedHeight,
-      );
-      let differentPixels = 0;
-      let totalChannelDelta = 0;
-      let maxChannelDelta = 0;
-
-      for (let index = 0; index < currentPixels.length; index += 4) {
-        const redDelta = Math.abs(
-          currentPixels[index] - referencePixels[index],
-        );
-        const greenDelta = Math.abs(
-          currentPixels[index + 1] - referencePixels[index + 1],
-        );
-        const blueDelta = Math.abs(
-          currentPixels[index + 2] - referencePixels[index + 2],
-        );
-        const alphaDelta = Math.abs(
-          currentPixels[index + 3] - referencePixels[index + 3],
-        );
-        const channelDelta = Math.max(
-          redDelta,
-          greenDelta,
-          blueDelta,
-          alphaDelta,
-        );
-        const grayscaleReference =
-          (referencePixels[index] +
-            referencePixels[index + 1] +
-            referencePixels[index + 2]) /
-          3;
-        const diffIndex = index;
-
-        totalChannelDelta += (redDelta + greenDelta + blueDelta) / 3;
-        maxChannelDelta = Math.max(maxChannelDelta, channelDelta);
-
-        if (channelDelta > pixelThreshold) {
-          differentPixels += 1;
-          diffPixels.data[diffIndex] = 255;
-          diffPixels.data[diffIndex + 1] = Math.max(24, 92 - greenDelta);
-          diffPixels.data[diffIndex + 2] = 48;
-          diffPixels.data[diffIndex + 3] = 230;
-        } else {
-          const mutedReference = Math.round(grayscaleReference * 0.22);
-
-          diffPixels.data[diffIndex] = mutedReference;
-          diffPixels.data[diffIndex + 1] = mutedReference;
-          diffPixels.data[diffIndex + 2] = mutedReference;
-          diffPixels.data[diffIndex + 3] = 120;
-        }
-      }
-
-      diffCanvas.context.putImageData(diffPixels, 0, 0);
-
-      const totalPixels = comparedWidth * comparedHeight;
-      const diffPngBase64 = diffCanvas.canvas
-        .toDataURL("image/png")
-        .replace(/^data:image\/png;base64,/, "");
-
-      return {
-        comparedSize: {
-          height: comparedHeight,
-          width: comparedWidth,
-        },
-        currentSize,
-        differentPixels,
-        diffPngBase64,
-        diffRatio: differentPixels / totalPixels,
-        maxChannelDelta,
-        meanAbsoluteChannelDelta: totalChannelDelta / totalPixels,
-        pixelThreshold,
-        referenceSize,
-        scaledCurrent:
-          currentSize.height !== referenceSize.height ||
-          currentSize.width !== referenceSize.width,
-        totalPixels,
-      };
-    },
-    {
-      currentDataUrl: createPngDataUrl(currentScreenshot),
-      currentSize,
-      pixelThreshold: visualPixelThreshold,
-      referenceDataUrl: createPngDataUrl(referenceScreenshot),
-      referenceSize,
-    },
-  );
-}
-
-test.describe("visual reference audit", () => {
+test.describe("route state audit", () => {
   test.describe.configure({ mode: "serial" });
 
   test.beforeEach(async ({ page }) => {
@@ -4624,10 +4077,8 @@ test.describe("visual reference audit", () => {
     });
   });
 
-  for (const target of visualReferenceTargets) {
-    test(`validates ${target.name} visual state`, async ({
-      page,
-    }, testInfo) => {
+  for (const target of routeStateTargets) {
+    test(`validates ${target.name} route state`, async ({ page }, testInfo) => {
       test.skip(
         testInfo.project.name !== target.projectName,
         `${target.name} is audited by ${target.projectName}`,
@@ -4635,108 +4086,14 @@ test.describe("visual reference audit", () => {
 
       await page.setViewportSize(target.viewport);
       await page.goto(target.routePath, { waitUntil: "domcontentloaded" });
-      await page.waitForLoadState("load", { timeout: 10000 });
       await page.waitForFunction(() => document.fonts.status === "loaded");
       await target.prepare?.(page);
 
       await expectNoFrameworkErrorOverlay(page);
       await target.verify(page);
-      await normalizeVisualCaptureScroll(page);
+      await normalizeRouteStateScroll(page);
       await expectVisibleImagesLoaded(page);
       await expectNoHorizontalOverflow(page, target.routePath);
-
-      const currentScreenshot = await page.screenshot({
-        animations: "disabled",
-        fullPage: false,
-        scale: "css",
-      });
-      const currentSize = getPngSize(currentScreenshot);
-      const reference = await readReferenceScreenshot(target);
-      const metadataBase = {
-        currentSize,
-        referenceAvailable: Boolean(reference),
-        referencePath: target.referencePath,
-        referenceRoot: visualReferenceRoot,
-        resolvedReferencePath: path.join(
-          visualReferenceRoot,
-          target.referencePath,
-        ),
-        routePath: target.routePath,
-        viewport: target.viewport,
-      };
-
-      expect(currentSize).toEqual(target.viewport);
-
-      await testInfo.attach(`${target.name} current`, {
-        body: currentScreenshot,
-        contentType: "image/png",
-      });
-
-      if (!reference) {
-        await testInfo.attach(`${target.name} metadata`, {
-          body: Buffer.from(JSON.stringify(metadataBase, null, 2)),
-          contentType: "application/json",
-        });
-
-        test.skip(
-          visualDiffEnabled,
-          `Visual reference is missing from ${visualReferenceRoot}`,
-        );
-
-        return;
-      }
-
-      const referenceScreenshot = reference.buffer;
-      const referenceSize = getPngSize(referenceScreenshot);
-      const metadata = {
-        ...metadataBase,
-        referenceSize,
-      };
-
-      expect(referenceSize).toEqual(target.referenceSize);
-
-      await testInfo.attach(`${target.name} reference`, {
-        body: referenceScreenshot,
-        contentType: "image/png",
-      });
-      await testInfo.attach(`${target.name} metadata`, {
-        body: Buffer.from(JSON.stringify(metadata, null, 2)),
-        contentType: "application/json",
-      });
-
-      if (visualDiffEnabled) {
-        const visualDiff = await compareVisualReference(
-          page,
-          currentScreenshot,
-          referenceScreenshot,
-          currentSize,
-          referenceSize,
-        );
-        const { diffPngBase64, ...visualDiffMetadata } = visualDiff;
-
-        await writeVisualDiffArtifacts({
-          currentScreenshot,
-          metadata,
-          referenceScreenshot,
-          target,
-          visualDiff,
-        });
-        await testInfo.attach(`${target.name} diff`, {
-          body: Buffer.from(diffPngBase64, "base64"),
-          contentType: "image/png",
-        });
-        await testInfo.attach(`${target.name} diff metadata`, {
-          body: Buffer.from(JSON.stringify(visualDiffMetadata, null, 2)),
-          contentType: "application/json",
-        });
-
-        if (visualStrictEnabled) {
-          expect(
-            visualDiff.diffRatio,
-            `${target.name} visual drift ratio should stay at or below ${visualMaxDiffRatio}`,
-          ).toBeLessThanOrEqual(visualMaxDiffRatio);
-        }
-      }
     });
   }
 });

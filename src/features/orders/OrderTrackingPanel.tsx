@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { icons } from "@/features/home/visualHomeData";
+import { icons } from "@/features/home/homeDashboardData";
 import { formatDateTime } from "@/lib/dates";
 import type { Order } from "@/types/order";
 
