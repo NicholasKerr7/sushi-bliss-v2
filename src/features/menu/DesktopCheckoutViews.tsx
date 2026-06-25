@@ -8,7 +8,7 @@ import { CheckoutAddressSection } from "@/features/checkout/CheckoutAddressSecti
 import { AgeVerificationNotice } from "@/features/checkout/AgeVerificationNotice";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { getTabletPresentationImage } from "@/lib/assets";
-import { formatDateTime } from "@/lib/dates";
+import { formatDateTime, formatTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import type { Order } from "@/types/order";
 
@@ -434,8 +434,27 @@ export function DesktopConfirmationView({
     order.mode === "delivery" ? "Estimated delivery" : "Ready for pickup";
   const destinationCopy =
     order.mode === "delivery" && order.deliveryAddress
-      ? `${order.deliveryAddress.line1}, ${order.deliveryAddress.city}`
+      ? `${order.deliveryAddress.line1}, ${order.deliveryAddress.city}, ${order.deliveryAddress.region} ${order.deliveryAddress.postalCode}`
       : "Pickup at Sushi Bliss counter.";
+  const isDelivery = order.mode === "delivery";
+  const handoffMap = isDelivery
+    ? "/assets/maps/tokyo-delivery-route-tracker.webp"
+    : "/assets/maps/tokyo-city-map-with-sushi-markers.webp";
+  const handoffTitle = isDelivery ? "Live delivery handoff" : "Pickup handoff";
+  const handoffCopy = isDelivery
+    ? order.courier
+      ? `${order.courier.name} is assigned for a sealed delivery handoff.`
+      : "Courier assignment starts once the kitchen seals your order."
+    : "Your order will be held under your profile name at the pickup counter.";
+  const etaCopy = isDelivery
+    ? order.courier
+      ? `${order.courier.etaMinutes} min`
+      : "Live"
+    : formatTime(order.fulfillmentAt);
+  const itemCount = order.items.reduce(
+    (total, item) => total + item.quantity,
+    0,
+  );
 
   return (
     <main className="mx-auto max-w-[1530px] px-7 pb-6 pt-4">
@@ -471,7 +490,7 @@ export function DesktopConfirmationView({
                     : "Your order is queued with the chef counter."}
                 </p>
               </div>
-              <DesktopConfirmationStatusStrip />
+              <DesktopConfirmationStatusStrip mode={order.mode} />
             </div>
           </div>
           <div className="grid place-items-center rounded-[18px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.018)_58%,rgba(0,0,0,0.28))] p-7 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
@@ -495,9 +514,23 @@ export function DesktopConfirmationView({
             <p className="mt-3 text-[15px] text-white/58">
               {formatDateTime(order.createdAt)}
             </p>
+            <div className="mt-6 grid w-full grid-cols-3 gap-3">
+              <DesktopConfirmationMetric
+                label="Items"
+                value={itemCount.toString()}
+              />
+              <DesktopConfirmationMetric
+                label={isDelivery ? "ETA" : "Pickup"}
+                value={etaCopy}
+              />
+              <DesktopConfirmationMetric
+                label="Total"
+                value={formatMoney(order.totals.totalCents)}
+              />
+            </div>
           </div>
         </div>
-        <div className="mt-4 grid grid-cols-[0.42fr_0.29fr_0.29fr] items-start gap-4">
+        <div className="mt-4 grid grid-cols-[0.42fr_0.27fr_0.31fr] items-start gap-4">
           <DesktopConfirmationOrderSummary order={order} />
           <div className="grid gap-4">
             <InfoCard title={fulfillmentCopy}>
@@ -513,11 +546,15 @@ export function DesktopConfirmationView({
             </InfoCard>
           </div>
           <div className="grid gap-4">
+            <DesktopConfirmationHandoffPanel
+              copy={handoffCopy}
+              destination={destinationCopy}
+              eta={etaCopy}
+              image={handoffMap}
+              title={handoffTitle}
+            />
             <InfoCard title="Loyalty points earned">
               +{pointsAwarded} points
-            </InfoCard>
-            <InfoCard title="Enjoy exclusive perks">
-              View membership benefits from your profile.
             </InfoCard>
             <Button
               className="red-glow-button h-[58px] rounded-[12px] text-[14px] uppercase tracking-[0.08em]"
@@ -543,11 +580,89 @@ export function DesktopConfirmationView({
   );
 }
 
-function DesktopConfirmationStatusStrip() {
+function DesktopConfirmationMetric({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <p className="min-w-0 rounded-[12px] border border-white/10 bg-black/26 px-2.5 py-3">
+      <span className="block truncate text-[10px] uppercase tracking-[0.12em] text-white/42">
+        {label}
+      </span>
+      <span className="mt-1 block truncate font-mono text-[15px] text-[var(--sb-gold-soft)]">
+        {value}
+      </span>
+    </p>
+  );
+}
+
+function DesktopConfirmationHandoffPanel({
+  copy,
+  destination,
+  eta,
+  image,
+  title,
+}: {
+  copy: string;
+  destination: string;
+  eta: string;
+  image: string;
+  title: string;
+}) {
+  return (
+    <section className="relative min-h-[214px] overflow-hidden rounded-[16px] border border-[var(--sb-border)] bg-black">
+      <Image
+        alt=""
+        className="object-cover opacity-82"
+        fill
+        sizes="460px"
+        src={image}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.22),rgba(0,0,0,0.82)),radial-gradient(circle_at_74%_22%,rgba(239,47,37,0.26),transparent_34%)]" />
+      <div className="relative z-10 flex min-h-[214px] flex-col justify-between p-4">
+        <div className="flex items-start justify-between gap-3">
+          <p className="min-w-0">
+            <span className="block text-[12px] uppercase tracking-[0.14em] text-[var(--sb-gold-soft)]">
+              {title}
+            </span>
+            <span className="mt-2 block line-clamp-2 text-[14px] leading-5 text-white/74">
+              {copy}
+            </span>
+          </p>
+          <span className="shrink-0 rounded-[12px] border border-[var(--sb-red-bright)]/42 bg-black/72 px-3 py-2 text-center font-mono text-[14px] text-[var(--sb-red-bright)] shadow-[0_0_18px_rgba(239,47,37,0.3)]">
+            {eta}
+          </span>
+        </div>
+        <div className="grid grid-cols-[38px_minmax(0,1fr)] items-center gap-3 rounded-[13px] border border-white/10 bg-black/62 p-3 backdrop-blur">
+          <span className="grid h-[38px] w-[38px] place-items-center rounded-full border border-[var(--sb-gold)]/28 bg-[var(--sb-gold)]/10">
+            <AssetIcon size={22} src={icons.location} />
+          </span>
+          <p className="min-w-0">
+            <span className="block text-[10px] uppercase tracking-[0.12em] text-white/42">
+              Destination
+            </span>
+            <span className="mt-1 block truncate text-[13px] text-white/72">
+              {destination}
+            </span>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DesktopConfirmationStatusStrip({ mode }: { mode: Order["mode"] }) {
   const steps = [
     { active: true, icon: icons.star, label: "Confirmed" },
     { active: false, icon: icons.chef, label: "Preparing" },
-    { active: false, icon: icons.bag, label: "Handoff" },
+    {
+      active: false,
+      icon: mode === "delivery" ? icons.location : icons.bag,
+      label: mode === "delivery" ? "Handoff" : "Pickup",
+    },
   ] as const;
 
   return (
