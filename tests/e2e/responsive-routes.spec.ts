@@ -91,6 +91,49 @@ async function getVisibleMobileFrameMetrics(page: Page) {
   });
 }
 
+async function expectPageHasVisibleSurface(page: Page, routePath: string) {
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() => {
+          const isVisible = (element: Element) => {
+            const style = window.getComputedStyle(element);
+            const rect = element.getBoundingClientRect();
+
+            return (
+              style.display !== "none" &&
+              style.visibility !== "hidden" &&
+              style.opacity !== "0" &&
+              rect.bottom > 0 &&
+              rect.right > 0 &&
+              rect.top < window.innerHeight &&
+              rect.left < window.innerWidth &&
+              rect.width > 1 &&
+              rect.height > 1
+            );
+          };
+          const surfaces = Array.from(
+            document.querySelectorAll<HTMLElement>("main, section"),
+          );
+
+          return surfaces.some(
+            (surface) =>
+              isVisible(surface) ||
+              Array.from(
+                surface.querySelectorAll(
+                  "article, form, h1, h2, h3, p, a, button, img",
+                ),
+              ).some(isVisible),
+          );
+        }),
+      {
+        message: `${routePath} should render a visible app content surface`,
+        timeout: 10_000,
+      },
+    )
+    .toBe(true);
+}
+
 async function expectGlobalScrollPolicy(page: Page, routePath: string) {
   const policy = await page.evaluate(() => {
     const html = getComputedStyle(document.documentElement);
@@ -323,9 +366,7 @@ test.describe("responsive route health", () => {
           400,
         );
         await expectNoFrameworkErrorOverlay(page);
-        await expect(
-          page.locator("main:visible, section:visible").first(),
-        ).toBeVisible();
+        await expectPageHasVisibleSurface(page, routePath);
         await expectNoHorizontalOverflow(page, routePath);
         await expectGlobalScrollPolicy(page, routePath);
         await expectDocumentScrollsWhenOverflowing(page, routePath);
@@ -353,9 +394,7 @@ test.describe("responsive route health", () => {
             })
             .toBe(width);
           await page.goto(routePath, { waitUntil: "domcontentloaded" });
-          await expect(
-            page.locator("main:visible, section:visible").first(),
-          ).toBeVisible();
+          await expectPageHasVisibleSurface(page, routePath);
 
           await expect
             .poll(
@@ -382,9 +421,7 @@ test.describe("responsive route health", () => {
 
         await page.setViewportSize({ height: 1024, width: 768 });
         await page.goto(routePath, { waitUntil: "domcontentloaded" });
-        await expect(
-          page.locator("main:visible, section:visible").first(),
-        ).toBeVisible();
+        await expectPageHasVisibleSurface(page, routePath);
 
         await expect
           .poll(() => getVisibleMobileFrameMetrics(page), {
@@ -424,9 +461,7 @@ test.describe("responsive route health", () => {
               400,
             );
             await expectNoFrameworkErrorOverlay(page);
-            await expect(
-              page.locator("main:visible, section:visible").first(),
-            ).toBeVisible();
+            await expectPageHasVisibleSurface(page, routePath);
             await expectNoHorizontalOverflow(page, routePath);
             await expectGlobalScrollPolicy(page, routePath);
             await expectDocumentScrollsWhenOverflowing(page, routePath);

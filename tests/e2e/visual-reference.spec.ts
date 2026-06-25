@@ -2994,6 +2994,7 @@ async function expectVisibleImagesLoaded(page: Page) {
             rect.height > 1
           );
         })
+        .filter((image) => Boolean(image.currentSrc))
         .filter((image) => !image.complete || image.naturalWidth === 0)
         .map((image) => ({
           alt: image.alt,

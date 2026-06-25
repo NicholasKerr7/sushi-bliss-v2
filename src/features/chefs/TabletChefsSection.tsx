@@ -166,7 +166,7 @@ export function TabletChefsSection() {
               displayedChefs.map((chef, index) => (
                 <TabletChefCard
                   chef={chef}
-                  imagePriority={index < 2}
+                  imagePriority={index < 4}
                   key={chef.id}
                   onViewChef={setSelectedChef}
                 />

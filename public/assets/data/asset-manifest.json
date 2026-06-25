@@ -120,7 +120,7 @@
     "mode": "RGB"
   },
   {
-    "id": "sushi-bliss-app-icon",
+    "id": "brand-logo-sushi-bliss-app-icon",
     "fileName": "sushi-bliss-app-icon.png",
     "filePath": "public/assets/brand/logos/sushi-bliss-app-icon.png",
     "publicUrl": "/assets/brand/logos/sushi-bliss-app-icon.png",
@@ -135,7 +135,7 @@
     "mode": "RGBA"
   },
   {
-    "id": "sushi-bliss-primary-logo",
+    "id": "brand-logo-sushi-bliss-primary-logo",
     "fileName": "sushi-bliss-primary-logo.png",
     "filePath": "public/assets/brand/logos/sushi-bliss-primary-logo.png",
     "publicUrl": "/assets/brand/logos/sushi-bliss-primary-logo.png",
@@ -165,7 +165,7 @@
     "mode": "RGBA"
   },
   {
-    "id": "sushi-bliss-floral-emblem-icon",
+    "id": "brand-mark-sushi-bliss-floral-emblem-icon",
     "fileName": "sushi-bliss-floral-emblem-icon.png",
     "filePath": "public/assets/brand/marks/sushi-bliss-floral-emblem-icon.png",
     "publicUrl": "/assets/brand/marks/sushi-bliss-floral-emblem-icon.png",
@@ -180,7 +180,7 @@
     "mode": "RGBA"
   },
   {
-    "id": "sushi-bliss-secondary-brand-mark",
+    "id": "brand-mark-sushi-bliss-secondary-brand-mark",
     "fileName": "sushi-bliss-secondary-brand-mark.png",
     "filePath": "public/assets/brand/marks/sushi-bliss-secondary-brand-mark.png",
     "publicUrl": "/assets/brand/marks/sushi-bliss-secondary-brand-mark.png",
@@ -330,7 +330,7 @@
     "mode": "RGBA"
   },
   {
-    "id": "wave-pattern-card",
+    "id": "brand-wave-pattern-card",
     "fileName": "wave-pattern-card.png",
     "filePath": "public/assets/brand/wave-pattern-card.png",
     "publicUrl": "/assets/brand/wave-pattern-card.png",
@@ -3525,7 +3525,7 @@
     "mode": "RGB"
   },
   {
-    "id": "wave-pattern-card",
+    "id": "texture-wave-pattern-card",
     "fileName": "wave-pattern-card.png",
     "filePath": "public/assets/textures/wave-pattern-card.png",
     "publicUrl": "/assets/textures/wave-pattern-card.png",
