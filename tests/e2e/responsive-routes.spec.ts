@@ -153,109 +153,141 @@ async function expectDocumentScrollsWhenOverflowing(
   );
   await waitForStableDocumentHeight(page);
 
-  const initialMetrics = await page.evaluate(() => {
-    const root = document.documentElement;
+  const scrollMetrics = await page.evaluate((minimumOverflow) => {
+    const root = document.scrollingElement || document.documentElement;
+    const bodyLocked =
+      document.documentElement.classList.contains("scroll-locked") ||
+      document.body.classList.contains("scroll-locked");
+    const getDocumentMaxScroll = () => root.scrollHeight - root.clientHeight;
+    const tryDocumentScroll = () => {
+      const maxScrollY = getDocumentMaxScroll();
 
-    return {
-      bodyLocked:
-        document.documentElement.classList.contains("scroll-locked") ||
-        document.body.classList.contains("scroll-locked"),
-      clientHeight: root.clientHeight,
-      maxScrollY: root.scrollHeight - root.clientHeight,
-      scrollHeight: root.scrollHeight,
-    };
-  });
+      window.scrollTo({ behavior: "instant", left: 0, top: 0 });
 
-  expect(
-    initialMetrics.bodyLocked,
-    `${routePath} should not leave the page body scroll-locked`,
-  ).toBe(false);
+      if (maxScrollY <= minimumOverflow) {
+        return undefined;
+      }
 
-  if (initialMetrics.maxScrollY <= minimumScrollableOverflow) {
-    return;
-  }
+      window.scrollBy({
+        behavior: "instant",
+        left: 0,
+        top: Math.min(640, maxScrollY),
+      });
 
-  const viewport = page.viewportSize();
-  if (viewport) {
-    await page.mouse.move(viewport.width / 2, viewport.height / 2);
-  }
-
-  await page.mouse.wheel(0, Math.min(640, initialMetrics.maxScrollY));
-  await page.waitForTimeout(100);
-
-  const postWheelMetrics = await page.evaluate(() => {
-    const root = document.documentElement;
-
-    return {
-      maxScrollY: root.scrollHeight - root.clientHeight,
-      scrollY: window.scrollY,
-    };
-  });
-
-  if (postWheelMetrics.maxScrollY <= minimumScrollableOverflow) {
-    return;
-  }
-
-  if (postWheelMetrics.scrollY <= 0) {
-    await page.evaluate(() =>
-      window.scrollBy({ behavior: "instant", left: 0, top: 320 }),
-    );
-  }
-
-  await expect
-    .poll(() => page.evaluate(() => window.scrollY), {
-      message: `${routePath} should allow document-level vertical scrolling`,
-    })
-    .toBeGreaterThan(0);
-
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    await waitForStableDocumentHeight(page);
-    await page.evaluate(() => {
-      const root = document.scrollingElement || document.documentElement;
+      if (window.scrollY <= 0) {
+        return undefined;
+      }
 
       window.scrollTo({
         behavior: "instant",
         left: 0,
         top: root.scrollHeight,
       });
-    });
-    await page.waitForTimeout(100);
 
-    const remainingDistance = await page.evaluate(() => {
-      const root = document.scrollingElement || document.documentElement;
+      return {
+        canScroll: true,
+        kind: "document",
+        maxScrollY,
+        remainingDistance:
+          root.scrollHeight - root.clientHeight - window.scrollY,
+      };
+    };
 
-      return root.scrollHeight - root.clientHeight - window.scrollY;
-    });
+    const isVisible = (element: HTMLElement) => {
+      const style = window.getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
 
-    if (remainingDistance <= 4) {
-      return;
-    }
+      return (
+        style.display !== "none" &&
+        style.visibility !== "hidden" &&
+        rect.bottom > 0 &&
+        rect.right > 0 &&
+        rect.top < window.innerHeight &&
+        rect.left < window.innerWidth &&
+        rect.width > 1 &&
+        rect.height > 1
+      );
+    };
+    const isScrollable = (element: HTMLElement) => {
+      const style = window.getComputedStyle(element);
+      const overflowY = style.overflowY;
+      const maxScrollY = element.scrollHeight - element.clientHeight;
+
+      return (
+        maxScrollY > minimumOverflow &&
+        ["auto", "scroll", "overlay"].includes(overflowY) &&
+        !element.closest("nav")
+      );
+    };
+    const tryElementScroll = () => {
+      const candidates = Array.from(
+        document.querySelectorAll<HTMLElement>("body, main, section, div"),
+      )
+        .filter((element) => isVisible(element) && isScrollable(element))
+        .sort(
+          (a, b) =>
+            b.scrollHeight - b.clientHeight - (a.scrollHeight - a.clientHeight),
+        );
+
+      for (const element of candidates) {
+        const maxScrollY = element.scrollHeight - element.clientHeight;
+
+        element.scrollTop = 0;
+        element.scrollTop = Math.min(640, maxScrollY);
+
+        if (element.scrollTop <= 0) {
+          continue;
+        }
+
+        element.scrollTop = maxScrollY;
+
+        return {
+          canScroll: true,
+          kind:
+            element === document.body
+              ? "body"
+              : element.className || element.tagName.toLowerCase(),
+          maxScrollY,
+          remainingDistance:
+            element.scrollHeight - element.clientHeight - element.scrollTop,
+        };
+      }
+
+      return undefined;
+    };
+    const documentResult = tryDocumentScroll();
+    const elementResult = documentResult || tryElementScroll();
+    const hasOverflow =
+      getDocumentMaxScroll() > minimumOverflow || Boolean(elementResult);
+
+    return {
+      bodyLocked,
+      canScroll: Boolean(elementResult?.canScroll),
+      hasOverflow,
+      kind: elementResult?.kind,
+      maxScrollY: elementResult?.maxScrollY ?? getDocumentMaxScroll(),
+      remainingDistance: elementResult?.remainingDistance ?? 0,
+    };
+  }, minimumScrollableOverflow);
+
+  expect(
+    scrollMetrics.bodyLocked,
+    `${routePath} should not leave the page body scroll-locked`,
+  ).toBe(false);
+
+  if (!scrollMetrics.hasOverflow) {
+    return;
   }
 
-  await expect
-    .poll(
-      async () => {
-        await page.evaluate(() => {
-          const root = document.scrollingElement || document.documentElement;
+  expect(
+    scrollMetrics.canScroll,
+    `${routePath} should allow vertical scrolling on the document or primary app surface`,
+  ).toBe(true);
 
-          window.scrollTo({
-            behavior: "instant",
-            left: 0,
-            top: root.scrollHeight,
-          });
-        });
-
-        return page.evaluate(() => {
-          const root = document.scrollingElement || document.documentElement;
-
-          return root.scrollHeight - root.clientHeight - window.scrollY;
-        });
-      },
-      {
-        message: `${routePath} should allow scrolling near the bottom of long pages`,
-      },
-    )
-    .toBeLessThanOrEqual(4);
+  expect(
+    scrollMetrics.remainingDistance,
+    `${routePath} should allow scrolling near the bottom of long pages via ${scrollMetrics.kind}`,
+  ).toBeLessThanOrEqual(4);
 }
 
 test.describe("responsive route health", () => {

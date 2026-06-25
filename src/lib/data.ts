@@ -18,11 +18,7 @@ import type {
   OmakaseExperience,
 } from "@/types/chef";
 import type { ImageReference } from "@/types/common";
-import type {
-  EditorialAsset,
-  FeaturedAssets,
-  ScreenshotReference,
-} from "@/types/asset";
+import type { EditorialAsset, FeaturedAssets } from "@/types/asset";
 import type {
   MenuCategory,
   MenuItem,
@@ -91,17 +87,6 @@ interface LegacyDesignTokens {
   style?: string[];
 }
 
-interface LegacyScreenshot {
-  device?: string;
-  filePath?: string;
-  height?: number;
-  id?: string;
-  publicUrl?: string;
-  role?: string;
-  sizeBytes?: number;
-  width?: number;
-}
-
 interface LegacyEditorialAsset {
   experienceId?: string;
   filePath?: string;
@@ -115,7 +100,6 @@ interface LegacyFeaturedAssets {
   ambience?: LegacyEditorialAsset[];
   heroSushi?: LegacyImage;
   sakeSets?: LegacyImage[];
-  screensToRedesignFrom?: LegacyScreenshot[];
 }
 
 interface LegacyOmakaseCourseItem {
@@ -157,7 +141,6 @@ interface LegacyDataFile {
   featuredAssets?: LegacyFeaturedAssets;
   masterChefsOmakaseExperience?: LegacyOmakaseExperience;
   menu?: LegacyMenuItem[];
-  screenshots?: LegacyScreenshot[];
 }
 
 const legacyData = rawData as LegacyDataFile;
@@ -474,37 +457,6 @@ function createTastingProfile(
   };
 }
 
-/** Validates screenshot references and narrows their device labels. */
-function normalizeScreenshot(
-  screenshot: LegacyScreenshot,
-): ScreenshotReference | undefined {
-  if (!screenshot.id || !screenshot.publicUrl || !screenshot.filePath) {
-    return undefined;
-  }
-
-  const device =
-    screenshot.device === "mobile" ||
-    screenshot.device === "tablet" ||
-    screenshot.device === "desktop"
-      ? screenshot.device
-      : undefined;
-
-  if (!device) {
-    return undefined;
-  }
-
-  return {
-    device,
-    filePath: screenshot.filePath,
-    height: screenshot.height,
-    id: screenshot.id,
-    publicUrl: screenshot.publicUrl,
-    role: screenshot.role || screenshot.id,
-    sizeBytes: screenshot.sizeBytes,
-    width: screenshot.width,
-  };
-}
-
 /** Converts editorial assets into card-ready image references. */
 function normalizeEditorialAsset(
   asset: LegacyEditorialAsset,
@@ -690,21 +642,6 @@ export function getChefs(): Chef[] {
   });
 }
 
-/** Returns design-reference screenshots, optionally filtered by device. */
-export function getScreenshots(
-  device?: ScreenshotReference["device"],
-): ScreenshotReference[] {
-  const screenshots = (legacyData.screenshots || [])
-    .map(normalizeScreenshot)
-    .filter((screenshot): screenshot is ScreenshotReference =>
-      Boolean(screenshot),
-    );
-
-  return device
-    ? screenshots.filter((screenshot) => screenshot.device === device)
-    : screenshots;
-}
-
 /** Returns editorial asset groups used by home, about, locations, and experiences. */
 export function getFeaturedAssets(): FeaturedAssets {
   const featuredAssets = legacyData.featuredAssets;
@@ -720,11 +657,6 @@ export function getFeaturedAssets(): FeaturedAssets {
     sakeSets: (featuredAssets?.sakeSets || []).map((image, index) =>
       normalizeImage(image, `Sake set ${index + 1}`),
     ),
-    screensToRedesignFrom: (featuredAssets?.screensToRedesignFrom || [])
-      .map(normalizeScreenshot)
-      .filter((screenshot): screenshot is ScreenshotReference =>
-        Boolean(screenshot),
-      ),
   };
 }
 

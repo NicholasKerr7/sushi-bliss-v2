@@ -62,7 +62,6 @@ const visualPixelThreshold = getNumberEnv(
 const visualDiffOutputDir =
   process.env.VISUAL_REFERENCE_DIFF_DIR ??
   path.join("test-results", "visual-reference-diffs");
-const committedVisualReferencePrefix = "public/assets/screenshots/";
 const visualReferenceRoot = path.resolve(
   process.cwd(),
   process.env.VISUAL_REFERENCE_DIR ??
@@ -73,7 +72,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile welcome",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-01.png",
+    referencePath: "mobile/mobile-01.png",
     referenceSize: mobileReferenceSize,
     routePath: "/",
     viewport: mobileViewport,
@@ -87,7 +86,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile home dashboard",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-02.png",
+    referencePath: "mobile/mobile-02.png",
     referenceSize: mobileReferenceSize,
     routePath: "/home",
     viewport: mobileViewport,
@@ -109,7 +108,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile search filter",
     prepare: openMobileSearchFilter,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-03.png",
+    referencePath: "mobile/mobile-03.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -131,7 +130,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile menu overview",
     prepare: seedMobileMenuOverviewCart,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-04.png",
+    referencePath: "mobile/mobile-04.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -153,7 +152,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile menu category nigiri",
     prepare: openMobileNigiriCategory,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-05.png",
+    referencePath: "mobile/mobile-05.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -173,7 +172,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile item detail otoro nigiri",
     prepare: openMobileOtoroDetail,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-06.png",
+    referencePath: "mobile/mobile-06.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -193,7 +192,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile item customization",
     prepare: openMobileOtoroCustomization,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-07.png",
+    referencePath: "mobile/mobile-07.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -215,7 +214,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile cart",
     prepare: openMobileCartWithSeededItems,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-08.png",
+    referencePath: "mobile/mobile-08.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -233,7 +232,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile checkout delivery pickup",
     prepare: openMobileCheckoutFulfillment,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-09.png",
+    referencePath: "mobile/mobile-09.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -253,7 +252,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile checkout address",
     prepare: openMobileCheckoutAddress,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-10.png",
+    referencePath: "mobile/mobile-10.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -273,7 +272,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile checkout payment",
     prepare: openMobileCheckoutPayment,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-11.png",
+    referencePath: "mobile/mobile-11.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -293,7 +292,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile checkout review",
     prepare: openMobileCheckoutReview,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-12.png",
+    referencePath: "mobile/mobile-12.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -313,7 +312,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile order confirmation",
     prepare: openMobileOrderConfirmation,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-13.png",
+    referencePath: "mobile/mobile-13.png",
     referenceSize: mobileReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -332,7 +331,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile orders dashboard",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-14.png",
+    referencePath: "mobile/mobile-14.png",
     referenceSize: mobileReferenceSize,
     routePath: "/orders",
     viewport: mobileViewport,
@@ -352,7 +351,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile order details",
     prepare: openMobileOrderDetails,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-15.png",
+    referencePath: "mobile/mobile-15.png",
     referenceSize: mobileReferenceSize,
     routePath: "/orders",
     viewport: mobileViewport,
@@ -374,7 +373,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile live order tracking",
     prepare: openMobileLiveOrderTracking,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-16.png",
+    referencePath: "mobile/mobile-16.png",
     referenceSize: mobileReferenceSize,
     routePath: "/orders",
     viewport: mobileViewport,
@@ -393,7 +392,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile reservations dashboard",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-17.png",
+    referencePath: "mobile/mobile-17.png",
     referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
@@ -413,7 +412,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation date time",
     prepare: openMobileReservationDateTime,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-18.png",
+    referencePath: "mobile/mobile-18.png",
     referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
@@ -439,7 +438,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation experience",
     prepare: openMobileReservationExperience,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-19.png",
+    referencePath: "mobile/mobile-19.png",
     referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
@@ -463,7 +462,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation review",
     prepare: openMobileReservationReview,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-20.png",
+    referencePath: "mobile/mobile-20.png",
     referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
@@ -488,7 +487,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile loyalty dashboard",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-21.png",
+    referencePath: "mobile/mobile-21.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
@@ -505,7 +504,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile available rewards",
     prepare: openMobileLoyaltyRewards,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-22.png",
+    referencePath: "mobile/mobile-22.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
@@ -524,7 +523,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile member benefits",
     prepare: openMobileLoyaltyPass,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-23.png",
+    referencePath: "mobile/mobile-23.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
@@ -541,7 +540,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile points activity",
     prepare: openMobileLoyaltyActivity,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-24.png",
+    referencePath: "mobile/mobile-24.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
@@ -560,7 +559,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile member pass",
     prepare: openMobileLoyaltyPass,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-25.png",
+    referencePath: "mobile/mobile-25.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
@@ -574,7 +573,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile profile dashboard",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-26.png",
+    referencePath: "mobile/mobile-26.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -593,7 +592,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile saved addresses",
     prepare: openMobileProfileAddresses,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-27.png",
+    referencePath: "mobile/mobile-27.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -614,7 +613,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile add address",
     prepare: openMobileProfileAddAddress,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-28.png",
+    referencePath: "mobile/mobile-28.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -634,7 +633,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile payment methods",
     prepare: openMobileProfilePayments,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-29.png",
+    referencePath: "mobile/mobile-29.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -656,7 +655,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile add card",
     prepare: openMobileProfileAddPayment,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-30.png",
+    referencePath: "mobile/mobile-30.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -675,7 +674,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile notifications center",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-31.png",
+    referencePath: "mobile/mobile-31.png",
     referenceSize: mobileReferenceSize,
     routePath: "/notifications",
     viewport: mobileViewport,
@@ -697,7 +696,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile dietary preferences",
     prepare: openMobileProfilePreferences,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-32.png",
+    referencePath: "mobile/mobile-32.png",
     referenceSize: mobileReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -721,7 +720,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation history",
     prepare: openMobileReservationHistory,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-33.png",
+    referencePath: "mobile/mobile-33.png",
     referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
@@ -745,7 +744,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile reservation detail",
     prepare: openMobileReservationDetail,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-34.png",
+    referencePath: "mobile/mobile-34.png",
     referenceSize: mobileReferenceSize,
     routePath: "/reservations",
     viewport: mobileViewport,
@@ -767,7 +766,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile personal information",
     prepare: openMobileProfileAccount,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-35.png",
+    referencePath: "mobile/mobile-35.png",
     referenceSize: mobileReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -787,7 +786,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile account settings",
     prepare: openMobileProfilePreferences,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-36.png",
+    referencePath: "mobile/mobile-36.png",
     referenceSize: mobileReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -811,7 +810,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile privacy security",
     prepare: openMobileProfilePreferences,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-37.png",
+    referencePath: "mobile/mobile-37.png",
     referenceSize: mobileReferenceSize,
     routePath: "/profile",
     viewport: mobileViewport,
@@ -832,7 +831,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile about story",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-38.png",
+    referencePath: "mobile/mobile-38.png",
     referenceSize: mobileReferenceSize,
     routePath: "/about",
     viewport: mobileViewport,
@@ -851,7 +850,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile contact support",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-39.png",
+    referencePath: "mobile/mobile-39.png",
     referenceSize: mobileReferenceSize,
     routePath: "/support",
     viewport: mobileViewport,
@@ -871,7 +870,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile help center",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-40.png",
+    referencePath: "mobile/mobile-40.png",
     referenceSize: mobileReferenceSize,
     routePath: "/support",
     viewport: mobileViewport,
@@ -893,7 +892,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile support request",
     prepare: openMobileSupportRequest,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-41.png",
+    referencePath: "mobile/mobile-41.png",
     referenceSize: mobileReferenceSize,
     routePath: "/support",
     viewport: mobileViewport,
@@ -913,7 +912,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile faq article detail",
     prepare: openMobileSupportArticleDetail,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-42.png",
+    referencePath: "mobile/mobile-42.png",
     referenceSize: mobileReferenceSize,
     routePath: "/support",
     viewport: mobileViewport,
@@ -933,7 +932,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile notification detail",
     prepare: openMobileNotificationDetail,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-43.png",
+    referencePath: "mobile/mobile-43.png",
     referenceSize: mobileReferenceSize,
     routePath: "/notifications",
     viewport: mobileViewport,
@@ -952,7 +951,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile omakase landing",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-44.png",
+    referencePath: "mobile/mobile-44.png",
     referenceSize: mobileReferenceSize,
     routePath: "/omakase",
     viewport: mobileViewport,
@@ -979,7 +978,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile omakase package selection",
     prepare: openMobileOmakasePackageSelection,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-45.png",
+    referencePath: "mobile/mobile-45.png",
     referenceSize: mobileReferenceSize,
     routePath: "/omakase",
     viewport: mobileViewport,
@@ -1003,7 +1002,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile omakase review",
     prepare: openMobileOmakaseReview,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-46.png",
+    referencePath: "mobile/mobile-46.png",
     referenceSize: mobileReferenceSize,
     routePath: "/omakase",
     viewport: mobileViewport,
@@ -1024,7 +1023,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile locations directory",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-47.png",
+    referencePath: "mobile/mobile-47.png",
     referenceSize: mobileReferenceSize,
     routePath: "/locations",
     viewport: mobileViewport,
@@ -1046,7 +1045,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile location detail",
     prepare: openMobileLocationDetail,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-48.png",
+    referencePath: "mobile/mobile-48.png",
     referenceSize: mobileReferenceSize,
     routePath: "/locations",
     viewport: mobileViewport,
@@ -1068,7 +1067,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile referral earn",
     prepare: openMobileReferralEarn,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-49.png",
+    referencePath: "mobile/mobile-49.png",
     referenceSize: mobileReferenceSize,
     routePath: "/loyalty",
     viewport: mobileViewport,
@@ -1087,7 +1086,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile gift experience",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-50.png",
+    referencePath: "mobile/mobile-50.png",
     referenceSize: mobileReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
@@ -1107,7 +1106,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile gift selection",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-51.png",
+    referencePath: "mobile/mobile-51.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
@@ -1131,7 +1130,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile gift checkout recipient",
     prepare: openMobileGiftCheckout,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-52.png",
+    referencePath: "mobile/mobile-52.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
@@ -1147,7 +1146,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile gift checkout payment",
     prepare: openMobileGiftCheckout,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-53.png",
+    referencePath: "mobile/mobile-53.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
@@ -1167,7 +1166,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile gift confirmation",
     prepare: openMobileGiftConfirmation,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-54.png",
+    referencePath: "mobile/mobile-54.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/gifts",
     viewport: mobileViewport,
@@ -1186,7 +1185,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile promotions offers",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-55.png",
+    referencePath: "mobile/mobile-55.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/offers",
     viewport: mobileViewport,
@@ -1211,7 +1210,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile offer detail",
     prepare: openMobileOfferDetail,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-56.png",
+    referencePath: "mobile/mobile-56.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/offers",
     viewport: mobileViewport,
@@ -1231,7 +1230,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile favorites",
     prepare: seedMobileFavorites,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-57.png",
+    referencePath: "mobile/mobile-57.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/favorites",
     viewport: mobileViewport,
@@ -1256,7 +1255,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile saved item detail",
     prepare: openMobileSavedOtoroDetail,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-58.png",
+    referencePath: "mobile/mobile-58.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -1275,7 +1274,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "mobile recently viewed",
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-59.png",
+    referencePath: "mobile/mobile-59.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/recently-viewed",
     viewport: mobileViewport,
@@ -1298,7 +1297,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "mobile empty cart",
     prepare: openMobileEmptyCart,
     projectName: "chromium-mobile",
-    referencePath: "public/assets/screenshots/mobile/mobile-60.png",
+    referencePath: "mobile/mobile-60.png",
     referenceSize: mobileLargeReferenceSize,
     routePath: "/menu",
     viewport: mobileViewport,
@@ -1317,8 +1316,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet home dashboard",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-01-home-dashboard.png",
+    referencePath: "tablet/tablet-01-home-dashboard.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/home",
     viewport: { height: 1448, width: 1086 },
@@ -1333,8 +1331,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet search filter",
     prepare: openTabletSearchFilter,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-02-search-filter.png",
+    referencePath: "tablet/tablet-02-search-filter.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1358,8 +1355,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet menu overview",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-03-menu-overview.png",
+    referencePath: "tablet/tablet-03-menu-overview.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1381,8 +1377,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet menu category nigiri",
     prepare: openTabletNigiriCategory,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-04-menu-category-nigiri.png",
+    referencePath: "tablet/tablet-04-menu-category-nigiri.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1405,8 +1400,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet item detail",
     prepare: openTabletOtoroDetail,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-06-item-detail-expanded.png",
+    referencePath: "tablet/tablet-06-item-detail-expanded.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1439,8 +1433,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
         .click();
     },
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-07-item-customization-add-ons.png",
+    referencePath: "tablet/tablet-07-item-customization-add-ons.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1458,7 +1451,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet cart",
     prepare: openTabletCartWithOtoro,
     projectName: "chromium-tablet",
-    referencePath: "public/assets/screenshots/tablet/tablet-08-cart.png",
+    referencePath: "tablet/tablet-08-cart.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1476,8 +1469,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet checkout delivery pickup",
     prepare: openTabletCheckoutDetails,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-09-checkout-delivery-pickup.png",
+    referencePath: "tablet/tablet-09-checkout-delivery-pickup.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1497,8 +1489,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet checkout review confirm",
     prepare: openTabletCheckoutReview,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-10-checkout-review-confirm.png",
+    referencePath: "tablet/tablet-10-checkout-review-confirm.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1520,8 +1511,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet order confirmation",
     prepare: openTabletOrderConfirmation,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-05-item-detail-otoro-nigiri.png",
+    referencePath: "tablet/tablet-05-item-detail-otoro-nigiri.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/menu",
     viewport: { height: 1448, width: 1086 },
@@ -1540,8 +1530,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet orders dashboard",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-11-orders-dashboard.png",
+    referencePath: "tablet/tablet-11-orders-dashboard.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/orders",
     viewport: { height: 1448, width: 1086 },
@@ -1561,8 +1550,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet live order tracking",
     prepare: openTabletLiveOrderTracking,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-12-live-order-tracking.png",
+    referencePath: "tablet/tablet-12-live-order-tracking.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/orders",
     viewport: { height: 1448, width: 1086 },
@@ -1580,8 +1568,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet reservations main",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-13-reservations-main.png",
+    referencePath: "tablet/tablet-13-reservations-main.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
@@ -1601,8 +1588,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet choose reservation experience",
     prepare: openTabletReservationBooking,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-14-choose-reservation-experience.png",
+    referencePath: "tablet/tablet-14-choose-reservation-experience.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
@@ -1623,8 +1609,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet reservation review",
     prepare: openTabletReservationReview,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-15-reservation-review.png",
+    referencePath: "tablet/tablet-15-reservation-review.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
@@ -1647,8 +1632,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet reservation confirmation",
     prepare: openTabletReservationConfirmation,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-16-reservation-confirmation.png",
+    referencePath: "tablet/tablet-16-reservation-confirmation.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
@@ -1669,8 +1653,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet reservation history",
     prepare: openTabletReservationHistory,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-17-reservation-history.png",
+    referencePath: "tablet/tablet-17-reservation-history.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
@@ -1693,8 +1676,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet modify reservation",
     prepare: openTabletModifyReservation,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-18-modify-reservation.png",
+    referencePath: "tablet/tablet-18-modify-reservation.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
@@ -1715,7 +1697,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet locations",
     projectName: "chromium-tablet",
-    referencePath: "public/assets/screenshots/tablet/tablet-19-locations.png",
+    referencePath: "tablet/tablet-19-locations.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/locations",
     viewport: { height: 1448, width: 1086 },
@@ -1741,8 +1723,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet cancel reservation",
     prepare: openTabletCancelReservation,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-20-cancel-reservation.png",
+    referencePath: "tablet/tablet-20-cancel-reservation.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/reservations",
     viewport: { height: 1448, width: 1086 },
@@ -1767,8 +1748,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet omakase experience",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-21-omakase-experience.png",
+    referencePath: "tablet/tablet-21-omakase-experience.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/omakase",
     viewport: { height: 1448, width: 1086 },
@@ -1788,8 +1768,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet omakase package review",
     prepare: openTabletOmakaseReview,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-22-omakase-package-review.png",
+    referencePath: "tablet/tablet-22-omakase-package-review.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/omakase",
     viewport: { height: 1448, width: 1086 },
@@ -1808,8 +1787,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet gift experience",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-23-gift-experience.png",
+    referencePath: "tablet/tablet-23-gift-experience.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/gifts",
     viewport: { height: 1448, width: 1086 },
@@ -1829,8 +1807,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet gift checkout",
     prepare: openTabletGiftCheckout,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-24-gift-checkout.png",
+    referencePath: "tablet/tablet-24-gift-checkout.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/gifts",
     viewport: { height: 1448, width: 1086 },
@@ -1850,8 +1827,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet gift confirmation",
     prepare: openTabletGiftConfirmation,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-25-gift-confirmation.png",
+    referencePath: "tablet/tablet-25-gift-confirmation.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/gifts",
     viewport: { height: 1448, width: 1086 },
@@ -1868,8 +1844,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet loyalty dashboard",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-26-loyalty-dashboard.png",
+    referencePath: "tablet/tablet-26-loyalty-dashboard.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/loyalty",
     viewport: { height: 1448, width: 1086 },
@@ -1890,8 +1865,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet member pass rewards",
     prepare: openTabletRewardDetails,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-27-member-pass-rewards.png",
+    referencePath: "tablet/tablet-27-member-pass-rewards.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/loyalty",
     viewport: { height: 1448, width: 1086 },
@@ -1908,8 +1882,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet profile dashboard",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-28-profile-dashboard.png",
+    referencePath: "tablet/tablet-28-profile-dashboard.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/profile",
     viewport: { height: 1448, width: 1086 },
@@ -1927,7 +1900,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet favorites",
     prepare: seedTabletFavorites,
     projectName: "chromium-tablet",
-    referencePath: "public/assets/screenshots/tablet/tablet-29-favorites.png",
+    referencePath: "tablet/tablet-29-favorites.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/favorites",
     viewport: { height: 1448, width: 1086 },
@@ -1947,8 +1920,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet account settings preferences",
     prepare: openTabletProfilePreferences,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-30-account-settings-preferences.png",
+    referencePath: "tablet/tablet-30-account-settings-preferences.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/profile",
     viewport: { height: 1448, width: 1086 },
@@ -1967,7 +1939,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet contact",
     projectName: "chromium-tablet",
-    referencePath: "public/assets/screenshots/tablet/tablet-31-contact.png",
+    referencePath: "tablet/tablet-31-contact.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/support",
     viewport: { height: 1448, width: 1086 },
@@ -1987,7 +1959,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet help center",
     prepare: openTabletSupportHelpCenter,
     projectName: "chromium-tablet",
-    referencePath: "public/assets/screenshots/tablet/tablet-32-help-center.png",
+    referencePath: "tablet/tablet-32-help-center.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/support",
     viewport: { height: 1448, width: 1086 },
@@ -2004,8 +1976,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet faq article detail",
     prepare: openTabletFaqArticle,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-33-faq-article-detail.png",
+    referencePath: "tablet/tablet-33-faq-article-detail.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/support",
     viewport: { height: 1448, width: 1086 },
@@ -2019,8 +1990,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet notifications center",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-34-notifications-center.png",
+    referencePath: "tablet/tablet-34-notifications-center.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/notifications",
     viewport: { height: 1448, width: 1086 },
@@ -2042,8 +2012,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet notification detail",
     prepare: openTabletNotificationDetail,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-35-notification-detail.png",
+    referencePath: "tablet/tablet-35-notification-detail.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/notifications",
     viewport: { height: 1448, width: 1086 },
@@ -2057,8 +2026,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet promotions offers",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-36-promotions-offers.png",
+    referencePath: "tablet/tablet-36-promotions-offers.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/offers",
     viewport: { height: 1448, width: 1086 },
@@ -2076,8 +2044,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet offer detail",
     prepare: openTabletOfferDetail,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-37-offer-detail.png",
+    referencePath: "tablet/tablet-37-offer-detail.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/offers",
     viewport: { height: 1448, width: 1086 },
@@ -2092,8 +2059,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "tablet referral earn",
     prepare: openTabletReferralEarn,
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-38-referral-earn.png",
+    referencePath: "tablet/tablet-38-referral-earn.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/loyalty",
     viewport: { height: 1448, width: 1086 },
@@ -2107,8 +2073,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet about our story",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-39-about-our-story.png",
+    referencePath: "tablet/tablet-39-about-our-story.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/about",
     viewport: { height: 1448, width: 1086 },
@@ -2125,8 +2090,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "tablet master chefs team",
     projectName: "chromium-tablet",
-    referencePath:
-      "public/assets/screenshots/tablet/tablet-40-master-chefs-team.png",
+    referencePath: "tablet/tablet-40-master-chefs-team.png",
     referenceSize: { height: 1448, width: 1086 },
     routePath: "/chefs",
     viewport: { height: 1448, width: 1086 },
@@ -2148,8 +2112,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop home dashboard",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-01-home-dashboard.png",
+    referencePath: "desktop/desktop-01-home-dashboard.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/home",
     viewport: { height: 941, width: 1672 },
@@ -2164,8 +2127,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop menu overview",
     prepare: seedDesktopMenuOverviewCart,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-02-menu-overview.png",
+    referencePath: "desktop/desktop-02-menu-overview.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
@@ -2187,8 +2149,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop menu category nigiri",
     prepare: openDesktopNigiriCategoryWithCart,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-03-menu-category-nigiri.png",
+    referencePath: "desktop/desktop-03-menu-category-nigiri.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
@@ -2208,8 +2169,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop item detail otoro nigiri",
     prepare: openDesktopOtoroDetail,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-04-item-detail-otoro-nigiri.png",
+    referencePath: "desktop/desktop-04-item-detail-otoro-nigiri.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
@@ -2229,8 +2189,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop item customization add ons",
     prepare: openDesktopOtoroCustomization,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-05-item-customization-add-ons.png",
+    referencePath: "desktop/desktop-05-item-customization-add-ons.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
@@ -2248,7 +2207,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop cart",
     prepare: seedDesktopCart,
     projectName: "chromium-desktop",
-    referencePath: "public/assets/screenshots/desktop/desktop-06-cart.png",
+    referencePath: "desktop/desktop-06-cart.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
@@ -2272,7 +2231,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop checkout",
     prepare: openDesktopCheckout,
     projectName: "chromium-desktop",
-    referencePath: "public/assets/screenshots/desktop/desktop-07-checkout.png",
+    referencePath: "desktop/desktop-07-checkout.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
@@ -2292,8 +2251,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop checkout review",
     prepare: openDesktopCheckoutReview,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-08-checkout-review.png",
+    referencePath: "desktop/desktop-08-checkout-review.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
@@ -2311,8 +2269,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop order confirmation",
     prepare: openDesktopOrderConfirmation,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-09-order-confirmation.png",
+    referencePath: "desktop/desktop-09-order-confirmation.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/menu",
     viewport: { height: 941, width: 1672 },
@@ -2329,8 +2286,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop orders dashboard",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-10-orders-dashboard.png",
+    referencePath: "desktop/desktop-10-orders-dashboard.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/orders",
     viewport: { height: 941, width: 1672 },
@@ -2348,8 +2304,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop reservations main",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-11-reservations-main.png",
+    referencePath: "desktop/desktop-11-reservations-main.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
@@ -2376,8 +2331,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop choose reservation experience",
     prepare: openDesktopReservationExperience,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-12-choose-reservation-experience.png",
+    referencePath: "desktop/desktop-12-choose-reservation-experience.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
@@ -2400,8 +2354,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop reservation review",
     prepare: openDesktopReservationReview,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-13-reservation-review.png",
+    referencePath: "desktop/desktop-13-reservation-review.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
@@ -2424,8 +2377,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop reservation history",
     prepare: openDesktopReservationHistory,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-14-reservation-history.png",
+    referencePath: "desktop/desktop-14-reservation-history.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
@@ -2450,8 +2402,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop omakase experience",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-15-omakase-experience.png",
+    referencePath: "desktop/desktop-15-omakase-experience.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/omakase",
     viewport: { height: 941, width: 1672 },
@@ -2480,8 +2431,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop omakase package review",
     prepare: openDesktopOmakaseReview,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-16-omakase-package-review.png",
+    referencePath: "desktop/desktop-16-omakase-package-review.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/omakase",
     viewport: { height: 941, width: 1672 },
@@ -2504,8 +2454,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop loyalty dashboard",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-17-loyalty-dashboard.png",
+    referencePath: "desktop/desktop-17-loyalty-dashboard.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/loyalty",
     viewport: { height: 941, width: 1672 },
@@ -2528,8 +2477,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop member pass rewards",
     prepare: openDesktopLoyaltyPassRewards,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-18-member-pass-rewards.png",
+    referencePath: "desktop/desktop-18-member-pass-rewards.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/loyalty",
     viewport: { height: 941, width: 1672 },
@@ -2553,8 +2501,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop profile dashboard",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-19-profile-dashboard.png",
+    referencePath: "desktop/desktop-19-profile-dashboard.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/profile",
     viewport: { height: 941, width: 1672 },
@@ -2573,8 +2520,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop account settings preferences",
     prepare: openDesktopProfileSettings,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-20-account-settings-preferences.png",
+    referencePath: "desktop/desktop-20-account-settings-preferences.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/profile",
     viewport: { height: 941, width: 1672 },
@@ -2604,7 +2550,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop contact",
     projectName: "chromium-desktop",
-    referencePath: "public/assets/screenshots/desktop/desktop-21-contact.png",
+    referencePath: "desktop/desktop-21-contact.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/support",
     viewport: { height: 941, width: 1672 },
@@ -2625,8 +2571,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop help center",
     prepare: openDesktopHelpCenter,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-22-help-center.png",
+    referencePath: "desktop/desktop-22-help-center.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/support",
     viewport: { height: 941, width: 1672 },
@@ -2647,8 +2592,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop notifications center",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-23-notifications-center.png",
+    referencePath: "desktop/desktop-23-notifications-center.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/notifications",
     viewport: { height: 941, width: 1672 },
@@ -2673,7 +2617,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop favorites",
     prepare: seedDesktopFavorites,
     projectName: "chromium-desktop",
-    referencePath: "public/assets/screenshots/desktop/desktop-24-favorites.png",
+    referencePath: "desktop/desktop-24-favorites.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/favorites",
     viewport: { height: 941, width: 1672 },
@@ -2695,8 +2639,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop promotions offers",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-25-promotions-offers.png",
+    referencePath: "desktop/desktop-25-promotions-offers.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/offers",
     viewport: { height: 941, width: 1672 },
@@ -2719,8 +2662,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop referral earn",
     prepare: openDesktopReferralEarn,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-26-referral-earn.png",
+    referencePath: "desktop/desktop-26-referral-earn.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/loyalty",
     viewport: { height: 941, width: 1672 },
@@ -2741,7 +2683,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop locations",
     projectName: "chromium-desktop",
-    referencePath: "public/assets/screenshots/desktop/desktop-27-locations.png",
+    referencePath: "desktop/desktop-27-locations.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/locations",
     viewport: { height: 941, width: 1672 },
@@ -2761,8 +2703,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop gift experience",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-28-gift-experience.png",
+    referencePath: "desktop/desktop-28-gift-experience.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/gifts",
     viewport: { height: 941, width: 1672 },
@@ -2785,8 +2726,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop gift checkout",
     prepare: openDesktopGiftCheckout,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-29-gift-checkout.png",
+    referencePath: "desktop/desktop-29-gift-checkout.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/gifts",
     viewport: { height: 941, width: 1672 },
@@ -2806,8 +2746,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop gift confirmation",
     prepare: openDesktopGiftConfirmation,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-30-gift-confirmation.png",
+    referencePath: "desktop/desktop-30-gift-confirmation.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/gifts",
     viewport: { height: 941, width: 1672 },
@@ -2828,8 +2767,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop about our story",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-31-about-our-story.png",
+    referencePath: "desktop/desktop-31-about-our-story.png",
     referenceSize: { height: 992, width: 1586 },
     routePath: "/about",
     viewport: { height: 992, width: 1586 },
@@ -2848,8 +2786,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
   {
     name: "desktop master chefs team",
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-32-master-chefs-team.png",
+    referencePath: "desktop/desktop-32-master-chefs-team.png",
     referenceSize: { height: 992, width: 1586 },
     routePath: "/chefs",
     viewport: { height: 992, width: 1586 },
@@ -2871,8 +2808,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop sourcing ingredients",
     prepare: openDesktopAboutSourcing,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-33-sourcing-ingredients.png",
+    referencePath: "desktop/desktop-33-sourcing-ingredients.png",
     referenceSize: { height: 992, width: 1586 },
     routePath: "/about",
     viewport: { height: 992, width: 1586 },
@@ -2887,8 +2823,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop restaurant atmosphere gallery",
     prepare: openDesktopAboutAtmosphere,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-34-restaurant-atmosphere-gallery.png",
+    referencePath: "desktop/desktop-34-restaurant-atmosphere-gallery.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/about",
     viewport: { height: 941, width: 1672 },
@@ -2905,8 +2840,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop faq article detail",
     prepare: openDesktopFaqArticleDetail,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-35-faq-article-detail.png",
+    referencePath: "desktop/desktop-35-faq-article-detail.png",
     referenceSize: { height: 992, width: 1586 },
     routePath: "/support",
     viewport: { height: 992, width: 1586 },
@@ -2925,8 +2859,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop notification detail",
     prepare: openDesktopNotificationDetail,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-36-notification-detail.png",
+    referencePath: "desktop/desktop-36-notification-detail.png",
     referenceSize: { height: 992, width: 1586 },
     routePath: "/notifications",
     viewport: { height: 992, width: 1586 },
@@ -2948,8 +2881,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop offer detail",
     prepare: openDesktopOfferDetail,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-37-offer-detail.png",
+    referencePath: "desktop/desktop-37-offer-detail.png",
     referenceSize: { height: 992, width: 1586 },
     routePath: "/offers",
     viewport: { height: 992, width: 1586 },
@@ -2966,8 +2898,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop location detail",
     prepare: openDesktopLocationDetail,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-38-location-detail.png",
+    referencePath: "desktop/desktop-38-location-detail.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/locations",
     viewport: { height: 941, width: 1672 },
@@ -2986,8 +2917,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop modify reservation",
     prepare: openDesktopModifyReservation,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-39-modify-reservation.png",
+    referencePath: "desktop/desktop-39-modify-reservation.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
@@ -3008,8 +2938,7 @@ const visualReferenceTargets: VisualReferenceTarget[] = [
     name: "desktop cancel reservation modal",
     prepare: openDesktopCancelReservationModal,
     projectName: "chromium-desktop",
-    referencePath:
-      "public/assets/screenshots/desktop/desktop-40-cancel-reservation-modal.png",
+    referencePath: "desktop/desktop-40-cancel-reservation-modal.png",
     referenceSize: { height: 941, width: 1672 },
     routePath: "/reservations",
     viewport: { height: 941, width: 1672 },
@@ -3050,24 +2979,36 @@ async function expectNoHorizontalOverflow(page: Page, routePath: string) {
 }
 
 async function expectVisibleImagesLoaded(page: Page) {
-  await page.waitForFunction(() => {
-    const visibleImages = Array.from(document.images).filter((image) => {
-      const rect = image.getBoundingClientRect();
+  const getUnloadedVisibleImages = () =>
+    page.evaluate(() =>
+      Array.from(document.images)
+        .filter((image) => {
+          const rect = image.getBoundingClientRect();
 
-      return (
-        rect.bottom > 0 &&
-        rect.right > 0 &&
-        rect.top < window.innerHeight &&
-        rect.left < window.innerWidth &&
-        rect.width > 1 &&
-        rect.height > 1
-      );
-    });
-
-    return visibleImages.every(
-      (image) => image.complete && image.naturalWidth > 0,
+          return (
+            rect.bottom > 0 &&
+            rect.right > 0 &&
+            rect.top < window.innerHeight &&
+            rect.left < window.innerWidth &&
+            rect.width > 1 &&
+            rect.height > 1
+          );
+        })
+        .filter((image) => !image.complete || image.naturalWidth === 0)
+        .map((image) => ({
+          alt: image.alt,
+          currentSrc: image.currentSrc,
+          naturalWidth: image.naturalWidth,
+          src: image.getAttribute("src"),
+        })),
     );
-  });
+
+  await expect
+    .poll(getUnloadedVisibleImages, {
+      message: "visible images should finish loading before visual capture",
+      timeout: 10000,
+    })
+    .toEqual([]);
 }
 
 /** Keeps page-level screenshots deterministic without overriding intentional modal scroll states. */
@@ -4462,15 +4403,8 @@ function createVisualArtifactSlug(target: VisualReferenceTarget) {
     .replace(/^-|-$/g, "");
 }
 
-function getReferenceRelativePath(referencePath: string) {
-  return referencePath.startsWith(committedVisualReferencePrefix)
-    ? referencePath.slice(committedVisualReferencePrefix.length)
-    : referencePath;
-}
-
 async function readReferenceScreenshot(target: VisualReferenceTarget) {
-  const relativePath = getReferenceRelativePath(target.referencePath);
-  const resolvedPath = path.join(visualReferenceRoot, relativePath);
+  const resolvedPath = path.join(visualReferenceRoot, target.referencePath);
 
   try {
     return {
@@ -4699,8 +4633,8 @@ test.describe("visual reference audit", () => {
       );
 
       await page.setViewportSize(target.viewport);
-      await page.goto(target.routePath);
-      await page.waitForLoadState("networkidle");
+      await page.goto(target.routePath, { waitUntil: "domcontentloaded" });
+      await page.waitForLoadState("load", { timeout: 10000 });
       await page.waitForFunction(() => document.fonts.status === "loaded");
       await target.prepare?.(page);
 
@@ -4722,6 +4656,10 @@ test.describe("visual reference audit", () => {
         referenceAvailable: Boolean(reference),
         referencePath: target.referencePath,
         referenceRoot: visualReferenceRoot,
+        resolvedReferencePath: path.join(
+          visualReferenceRoot,
+          target.referencePath,
+        ),
         routePath: target.routePath,
         viewport: target.viewport,
       };
@@ -4752,7 +4690,6 @@ test.describe("visual reference audit", () => {
       const metadata = {
         ...metadataBase,
         referenceSize,
-        resolvedReferencePath: reference.resolvedPath,
       };
 
       expect(referenceSize).toEqual(target.referenceSize);
