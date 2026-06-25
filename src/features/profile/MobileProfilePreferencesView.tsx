@@ -194,7 +194,7 @@ export function MobileProfilePreferencesView({
               <button
                 aria-pressed={preferences.fulfillmentMode === mode}
                 className={classNames(
-                  "min-h-[50px] rounded-[13px] border text-[12px] uppercase tracking-[0.05em] transition min-[390px]:min-h-[58px] min-[390px]:rounded-[14px] min-[390px]:text-[15px] min-[390px]:tracking-[0.08em]",
+                  "min-h-[48px] rounded-[13px] border text-[11px] uppercase tracking-[0.05em] transition min-[390px]:min-h-[56px] min-[390px]:rounded-[14px] min-[390px]:text-[13px] min-[390px]:tracking-[0.08em]",
                   preferences.fulfillmentMode === mode
                     ? "border-[var(--sb-red-bright)] bg-[var(--sb-red)]/20 text-[var(--sb-red-bright)] shadow-[0_0_24px_rgba(239,47,37,0.24)]"
                     : "border-white/12 bg-black/34 text-white/62",
@@ -221,7 +221,7 @@ export function MobileProfilePreferencesView({
                 <button
                   aria-pressed={selected}
                   className={classNames(
-                    "min-h-9 rounded-full border px-3 text-[10px] uppercase tracking-[0.04em] min-[390px]:min-h-10 min-[390px]:px-4 min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]",
+                    "min-h-8 rounded-full border px-2.5 text-[9.5px] uppercase tracking-[0.035em] min-[390px]:min-h-10 min-[390px]:px-4 min-[390px]:text-[11px] min-[390px]:tracking-[0.06em]",
                     selected
                       ? "border-[var(--sb-gold)] bg-[var(--sb-gold)]/16 text-[var(--sb-gold-soft)]"
                       : "border-white/12 bg-black/34 text-white/58",
@@ -326,8 +326,8 @@ export function MobileProfilePreferencesView({
 
 function SectionTitle({ icon, label }: { icon?: string; label: string }) {
   return (
-    <h3 className="flex min-h-[52px] items-center gap-2.5 border-b border-white/10 px-3 text-[13px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:min-h-[58px] min-[390px]:gap-3 min-[390px]:px-4 min-[390px]:text-[15px] min-[390px]:tracking-[0.08em]">
-      <AssetIcon size={22} src={icon} />
+    <h3 className="flex min-h-[50px] items-center gap-2.5 border-b border-white/10 px-3 text-[12px] uppercase tracking-[0.06em] text-[var(--sb-gold-soft)] min-[390px]:min-h-[58px] min-[390px]:gap-3 min-[390px]:px-4 min-[390px]:text-[14px] min-[390px]:tracking-[0.08em]">
+      <AssetIcon size={20} src={icon} />
       {label}
     </h3>
   );
@@ -345,12 +345,12 @@ function PreferenceSwitchRow({
   onCheckedChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_46px] items-center gap-2.5 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:grid-cols-[minmax(0,1fr)_52px] min-[390px]:gap-3 min-[390px]:px-4 min-[390px]:py-4">
+    <div className="grid grid-cols-[minmax(0,1fr)_46px] items-center gap-2.5 border-b border-white/10 px-3 py-3 last:border-b-0 min-[390px]:grid-cols-[minmax(0,1fr)_52px] min-[390px]:gap-3 min-[390px]:px-4 min-[390px]:py-3.5">
       <span className="min-w-0">
-        <span className="block break-words text-[13px] leading-[18px] text-white min-[390px]:text-[15px] min-[390px]:leading-5">
+        <span className="block break-words text-[12.5px] leading-[18px] text-white min-[390px]:text-[14px] min-[390px]:leading-5">
           {label}
         </span>
-        <span className="mt-1 block text-[11px] leading-[15px] text-white/50 min-[390px]:text-[13px] min-[390px]:leading-5">
+        <span className="mt-1 block text-[11px] leading-[15px] text-white/50 min-[390px]:text-[12px] min-[390px]:leading-[18px]">
           {description}
         </span>
       </span>

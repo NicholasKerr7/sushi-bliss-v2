@@ -9,6 +9,7 @@ import { ExploreDirectory } from "@/components/layout/ExploreDirectory";
 import { Button } from "@/components/ui/Button";
 import { DesktopBenefitStrip } from "@/features/menu/DesktopMenuChrome";
 import { classNames } from "@/lib/classNames";
+import { isPaymentMethodUsable } from "@/lib/profile";
 import type { LoyaltyAccount } from "@/types/loyalty";
 import type { Reservation } from "@/types/reservation";
 import type { UserProfile } from "@/types/user";
@@ -316,35 +317,44 @@ function SavedAddressesCard({
   onOpenSettings: () => void;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
+    <article className="relative overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.058),rgba(255,255,255,0.018))] p-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.055)]">
+      <span
+        aria-hidden="true"
+        className="absolute -right-12 -top-12 h-28 w-28 rounded-full bg-[var(--sb-gold)]/8 blur-2xl"
+      />
       <CardTitle
         icon="/assets/icons/map-pin-icon.png"
         title="Saved addresses"
       />
-      <div className="mt-3 space-y-2">
+      <div className="relative mt-3 space-y-2">
         {profile.addresses.slice(0, 2).map((address) => (
           <div
-            className="rounded-[10px] border border-white/10 bg-black/24 p-2.5"
+            className="grid grid-cols-[40px_minmax(0,1fr)] gap-3 rounded-[12px] border border-white/10 bg-black/26 p-2.5"
             key={address.id}
           >
-            <p className="flex items-center justify-between text-[13px] text-white">
-              {address.label}
-              {address.isDefault ? (
-                <span className="rounded-full border border-[var(--sb-gold)]/32 px-2 py-0.5 text-[10px] uppercase text-[var(--sb-gold-soft)]">
-                  Default
+            <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--sb-gold)]/24 bg-black/42">
+              <AssetIcon size={21} src="/assets/icons/map-pin-icon.png" />
+            </span>
+            <div className="min-w-0">
+              <p className="flex min-w-0 items-center gap-2 text-[13px] text-white">
+                <span className="truncate">{address.label}</span>
+                <span className="shrink-0 rounded-full border border-white/10 bg-black/34 px-2 py-0.5 text-[9px] uppercase text-white/48">
+                  {address.isDefault ? "Default" : "Saved"}
                 </span>
-              ) : null}
-            </p>
-            <p className="mt-1 text-[12px] leading-5 text-white/58">
-              {address.line1}, {address.city}
-              <br />
-              {address.region}, {address.postalCode}
-            </p>
+              </p>
+              <p className="mt-1 line-clamp-2 text-[12px] leading-5 text-white/58">
+                {[address.line1, address.line2, address.city]
+                  .filter(Boolean)
+                  .join(", ")}
+                <br />
+                {address.region}, {address.postalCode}
+              </p>
+            </div>
           </div>
         ))}
       </div>
       <button
-        className="mt-2.5 h-10 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+        className="relative mt-2.5 h-10 w-full rounded-[9px] border border-white/10 bg-black/16 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         onClick={onOpenSettings}
         type="button"
       >
@@ -362,31 +372,52 @@ function PaymentMethodsCard({
   onOpenSettings: () => void;
 }) {
   return (
-    <article className="rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-3.5">
+    <article className="relative overflow-hidden rounded-[14px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.058),rgba(255,255,255,0.018))] p-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.055)]">
+      <span
+        aria-hidden="true"
+        className="absolute -left-12 -top-12 h-28 w-28 rounded-full bg-[var(--sb-red-bright)]/8 blur-2xl"
+      />
       <CardTitle
         icon="/assets/icons/credit-card-icon.png"
         title="Payment methods"
       />
-      <div className="mt-3 space-y-2">
+      <div className="relative mt-3 space-y-2">
         {profile.paymentMethods.slice(0, 2).map((method) => (
           <div
-            className="grid grid-cols-[58px_1fr] items-center gap-3 rounded-[10px] border border-white/10 bg-black/24 p-2.5"
+            className="grid grid-cols-[62px_minmax(0,1fr)] items-center gap-3 rounded-[12px] border border-white/10 bg-black/26 p-2.5"
             key={method.id}
           >
-            <span className="grid h-11 place-items-center rounded-[8px] border border-white/10 font-mono text-[12px] text-white">
-              {method.brand === "Mastercard" ? "MC" : method.brand}
+            <span className="relative grid h-11 place-items-center overflow-hidden rounded-[9px] border border-white/10 bg-white/8 font-mono text-[11px] font-black italic text-white">
+              <span
+                aria-hidden="true"
+                className="absolute -right-5 -top-6 h-11 w-11 rounded-full bg-[var(--sb-gold)]/12"
+              />
+              <span className="relative z-10">
+                {method.brand === "Mastercard" ? "MC" : method.brand}
+              </span>
             </span>
-            <p className="text-[13px] text-white">
-              {method.brand} **** {method.last4}
+            <div className="min-w-0">
+              <p className="flex min-w-0 items-center gap-2 text-[13px] text-white">
+                <span className="truncate">
+                  {method.brand} **** {method.last4}
+                </span>
+                <span className="shrink-0 rounded-full border border-white/10 bg-black/34 px-2 py-0.5 text-[9px] uppercase text-white/48">
+                  {method.isDefault
+                    ? "Default"
+                    : isPaymentMethodUsable(method)
+                      ? "Ready"
+                      : "Expired"}
+                </span>
+              </p>
               <span className="mt-1 block text-[12px] text-white/54">
                 Expires {method.expiresAt}
               </span>
-            </p>
+            </div>
           </div>
         ))}
       </div>
       <button
-        className="mt-2.5 h-10 w-full rounded-[9px] border border-white/10 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
+        className="relative mt-2.5 h-10 w-full rounded-[9px] border border-white/10 bg-black/16 text-[12px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)] transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
         onClick={onOpenSettings}
         type="button"
       >

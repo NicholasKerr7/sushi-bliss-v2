@@ -16,7 +16,7 @@ export function SettingsCard({
 }) {
   return (
     <article
-      className="scroll-mt-6 rounded-[14px] border border-[var(--sb-border)] bg-white/[0.035] p-4"
+      className="scroll-mt-6 rounded-[16px] border border-[var(--sb-border)] bg-[linear-gradient(145deg,rgba(255,255,255,0.058),rgba(255,255,255,0.018))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.055),0_18px_42px_rgba(0,0,0,0.22)]"
       id={id}
     >
       <CardTitle icon={icon} title={title} />

@@ -7,7 +7,6 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
 import { paymentBrandOptions } from "@/data/profile";
-import { icons } from "@/features/home/visualHomeData";
 import {
   createPaymentMethodFromDraft,
   getDefaultPaymentMethodDraft,
@@ -122,7 +121,7 @@ export function MobileProfilePaymentsView({
           </h1>
           <button
             aria-label="Add payment method"
-            className="grid h-[44px] w-[44px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/46 text-[26px] leading-none text-[var(--sb-gold-soft)] min-[390px]:h-[52px] min-[390px]:w-[52px] min-[390px]:rounded-[13px] min-[390px]:text-[30px]"
+            className="grid h-[44px] w-[44px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/46 text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(0,0,0,0.28)] min-[390px]:h-[52px] min-[390px]:w-[52px] min-[390px]:rounded-[13px]"
             onClick={() => {
               setDraft(getDefaultPaymentMethodDraft());
               setEditingId(null);
@@ -131,7 +130,7 @@ export function MobileProfilePaymentsView({
             }}
             type="button"
           >
-            +
+            <AssetIcon size={18} src="/assets/icons/plus-icon.png" />
           </button>
         </div>
 
@@ -193,36 +192,49 @@ export function MobileProfilePaymentsView({
         <div className="mt-6 grid gap-3">
           {paymentMethods.map((paymentMethod) => (
             <MobileProfilePanel
-              className="p-3 min-[390px]:p-4"
+              className="relative overflow-hidden p-3 min-[390px]:p-4"
               key={paymentMethod.id}
             >
-              <div className="grid grid-cols-[minmax(0,1fr)_26px] items-start gap-3 min-[390px]:gap-4">
-                <div className="grid min-w-0 grid-cols-[54px_minmax(0,1fr)] items-center gap-2.5 min-[390px]:grid-cols-[68px_minmax(0,1fr)] min-[390px]:gap-3">
-                  <span className="grid h-10 w-[54px] place-items-center rounded-[9px] border border-white/12 bg-white/8 text-[10px] font-black italic text-white min-[390px]:h-11 min-[390px]:w-[68px] min-[390px]:text-[12px]">
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-4 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(215,168,79,0.42),transparent)]"
+              />
+              <div className="grid grid-cols-[58px_minmax(0,1fr)] items-start gap-3 min-[390px]:grid-cols-[72px_minmax(0,1fr)] min-[390px]:gap-4">
+                <span className="relative grid h-[42px] w-[58px] place-items-center overflow-hidden rounded-[10px] border border-white/12 bg-[linear-gradient(135deg,rgba(255,255,255,0.13),rgba(0,0,0,0.32))] text-[10px] font-black italic text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] min-[390px]:h-[48px] min-[390px]:w-[72px] min-[390px]:text-[12px]">
+                  <span
+                    aria-hidden="true"
+                    className="absolute -right-6 -top-7 h-12 w-12 rounded-full bg-[var(--sb-gold)]/14"
+                  />
+                  <span className="relative z-10">
                     {getPaymentMark(paymentMethod)}
                   </span>
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="break-words text-[14px] leading-5 text-white min-[390px]:text-[16px]">
+                </span>
+                <div className="min-w-0">
+                  <div className="flex min-w-0 items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-[10px] uppercase tracking-[0.1em] text-white/38">
+                        Checkout wallet
+                      </p>
+                      <h3 className="mt-1 break-words text-[14px] leading-5 text-white min-[390px]:text-[16px]">
                         {formatPaymentLabel(paymentMethod)}
                       </h3>
-                      {paymentMethod.isDefault ? (
-                        <span className="rounded-full border border-[var(--sb-gold)]/38 bg-[var(--sb-gold)]/12 px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-                          Default
-                        </span>
-                      ) : null}
                     </div>
-                    <p className="mt-2 text-[12px] text-white/50 min-[390px]:text-[13px]">
-                      Expires {paymentMethod.expiresAt}
-                    </p>
-                    {!isPaymentMethodUsable(paymentMethod) ? (
-                      <p className="mt-2 text-[12px] font-semibold text-[var(--sb-red-bright)]">
-                        Expired - update before checkout.
-                      </p>
+                    <span className="shrink-0 rounded-full border border-white/10 bg-black/30 px-2 py-1 text-[9px] uppercase tracking-[0.06em] text-white/48">
+                      {paymentMethod.isDefault ? "Default" : "Saved"}
+                    </span>
+                  </div>
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/50 min-[390px]:text-[12px]">
+                    <span>Expires {paymentMethod.expiresAt}</span>
+                    {paymentMethod.billingPostalCode ? (
+                      <span>ZIP {paymentMethod.billingPostalCode}</span>
                     ) : null}
                   </div>
+                  {!isPaymentMethodUsable(paymentMethod) ? (
+                    <p className="mt-2 text-[12px] font-semibold text-[var(--sb-red-bright)]">
+                      Expired - update before checkout.
+                    </p>
+                  ) : null}
                 </div>
-                <AssetIcon className="mt-1" size={28} src={icons.cart} />
               </div>
               <div className="mt-4 grid grid-cols-3 gap-1.5 min-[390px]:gap-2">
                 <button

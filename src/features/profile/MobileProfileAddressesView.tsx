@@ -111,7 +111,7 @@ export function MobileProfileAddressesView({
           </h1>
           <button
             aria-label="Add address"
-            className="grid h-[44px] w-[44px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/46 text-[26px] leading-none text-[var(--sb-gold-soft)] min-[390px]:h-[52px] min-[390px]:w-[52px] min-[390px]:rounded-[13px] min-[390px]:text-[30px]"
+            className="grid h-[44px] w-[44px] place-items-center rounded-[12px] border border-[var(--sb-border)] bg-black/46 text-[var(--sb-gold-soft)] shadow-[0_0_24px_rgba(0,0,0,0.28)] min-[390px]:h-[52px] min-[390px]:w-[52px] min-[390px]:rounded-[13px]"
             onClick={() => {
               setDraft(getDefaultAddressDraft());
               setEditingId(null);
@@ -120,7 +120,7 @@ export function MobileProfileAddressesView({
             }}
             type="button"
           >
-            +
+            <AssetIcon size={18} src="/assets/icons/plus-icon.png" />
           </button>
         </div>
 
@@ -173,26 +173,38 @@ export function MobileProfileAddressesView({
         <div className="mt-6 grid gap-3">
           {addresses.map((address) => (
             <MobileProfilePanel
-              className="p-3 min-[390px]:p-4"
+              className="relative overflow-hidden p-3 min-[390px]:p-4"
               key={address.id}
             >
-              <div className="grid grid-cols-[minmax(0,1fr)_28px] items-start gap-3 min-[390px]:gap-4">
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="break-words text-[16px] text-white min-[390px]:text-[18px]">
-                      {address.label}
-                    </h3>
-                    {address.isDefault ? (
-                      <span className="rounded-full border border-[var(--sb-gold)]/38 bg-[var(--sb-gold)]/12 px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]">
-                        Default
-                      </span>
-                    ) : null}
+              <span
+                aria-hidden="true"
+                className="absolute inset-y-0 left-0 w-1 bg-[linear-gradient(180deg,var(--sb-red-bright),rgba(215,168,79,0.64),transparent)]"
+              />
+              <div className="grid grid-cols-[42px_minmax(0,1fr)] items-start gap-3 min-[390px]:grid-cols-[50px_minmax(0,1fr)] min-[390px]:gap-4">
+                <span className="grid h-[42px] w-[42px] place-items-center rounded-full border border-[var(--sb-gold)]/28 bg-black/42 min-[390px]:h-[50px] min-[390px]:w-[50px]">
+                  <AssetIcon size={24} src={icons.location} />
+                </span>
+                <div className="min-w-0 pr-1">
+                  <div className="flex min-w-0 items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-[10px] uppercase tracking-[0.1em] text-white/38">
+                        Delivery stop
+                      </p>
+                      <h3 className="mt-1 break-words text-[16px] leading-5 text-white min-[390px]:text-[18px] min-[390px]:leading-6">
+                        {address.label}
+                      </h3>
+                    </div>
+                    <span className="shrink-0 rounded-full border border-white/10 bg-black/30 px-2 py-1 text-[9px] uppercase tracking-[0.06em] text-white/48">
+                      {address.isDefault ? "Default" : "Saved"}
+                    </span>
                   </div>
-                  <p className="mt-2 break-words text-[13px] leading-5 text-white/58 min-[390px]:mt-3 min-[390px]:text-[14px] min-[390px]:leading-6">
+                  <p className="mt-2 break-words text-[13px] leading-5 text-white/62 min-[390px]:mt-3 min-[390px]:text-[14px] min-[390px]:leading-6">
                     {formatAddressLine(address)}
                   </p>
+                  <p className="mt-2 text-[11px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]/72">
+                    {address.city}, {address.region}
+                  </p>
                 </div>
-                <AssetIcon className="mt-1" size={28} src={icons.location} />
               </div>
               <div className="mt-4 grid grid-cols-3 gap-1.5 min-[390px]:gap-2">
                 <button

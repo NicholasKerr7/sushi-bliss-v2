@@ -3,6 +3,7 @@
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { icons } from "@/features/home/visualHomeData";
+import { isPaymentMethodUsable } from "@/lib/profile";
 import type { PaymentMethod, UserProfile } from "@/types/user";
 
 import { formatTabletExpiryDate } from "./TabletProfilePreferencesData";
@@ -64,26 +65,35 @@ function TabletSavedCardRow({
   onDeletePaymentMethod: (id: string) => void;
   onMakeDefaultPaymentMethod: (id: string) => void;
 }) {
+  const isUsable = isPaymentMethodUsable(paymentMethod);
+
   return (
-    <div className="grid h-[46px] grid-cols-[88px_minmax(0,1fr)_94px_54px_26px] items-center gap-2 rounded-[10px] border border-white/10 px-3 min-[1080px]:h-[56px]">
+    <div className="grid min-h-[58px] grid-cols-[80px_minmax(0,1fr)_62px_30px] items-center gap-2 rounded-[12px] border border-white/10 bg-black/24 px-3 py-2 min-[1080px]:grid-cols-[88px_minmax(0,1fr)_94px_70px_30px] min-[1080px]:gap-3">
       <TabletPaymentMark paymentMethod={paymentMethod} />
-      <span className="truncate text-[13px] text-white/86 min-[1080px]:text-[15px]">
-        **** {paymentMethod.last4}
+      <span className="min-w-0">
+        <span className="block truncate text-[13px] text-white/86 min-[1080px]:text-[15px]">
+          {paymentMethod.brand} **** {paymentMethod.last4}
+        </span>
+        <span className="mt-1 block truncate text-[11px] text-white/42 min-[1080px]:hidden">
+          Expires {formatTabletExpiryDate(paymentMethod.expiresAt)}
+        </span>
       </span>
       <span className="hidden truncate text-[11px] text-white/42 min-[1080px]:block">
         Expires {formatTabletExpiryDate(paymentMethod.expiresAt)}
       </span>
       {paymentMethod.isDefault ? (
-        <span className="rounded-[5px] border border-[var(--sb-red-bright)] px-2 py-1 text-[9px] uppercase text-[var(--sb-red-bright)]">
+        <span className="rounded-[6px] border border-[var(--sb-red-bright)] bg-[var(--sb-red)]/18 px-2 py-1 text-center text-[9px] uppercase text-[var(--sb-red-bright)]">
           Default
         </span>
       ) : (
         <button
-          className="text-[10px] uppercase text-[var(--sb-gold-soft)]"
+          className="rounded-[6px] border border-[var(--sb-gold)]/22 px-2 py-1 text-[9px] uppercase text-[var(--sb-gold-soft)] transition hover:border-[var(--sb-gold)] hover:bg-[var(--sb-gold)]/8 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-white/32 disabled:hover:bg-transparent"
+          disabled={!isUsable}
           onClick={() => onMakeDefaultPaymentMethod(paymentMethod.id)}
+          title={isUsable ? "Set as default" : "Expired card cannot be default"}
           type="button"
         >
-          Set
+          {isUsable ? "Set" : "Expired"}
         </button>
       )}
       <button
