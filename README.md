@@ -5,6 +5,13 @@
 Clean mobile-first rebuild of Sushi Bliss with Next.js, TypeScript, Tailwind
 CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 
+## Live Site
+
+- Production: [https://sushi-bliss-v2.vercel.app](https://sushi-bliss-v2.vercel.app)
+- Verified app build commit: `9c4e98f`
+- Backend mode: mock/local data with Supabase and Stripe placeholders ready for
+  future credentials.
+
 ## Sprint 0 Status
 
 - Next.js App Router scaffolded in `src/app`.
@@ -167,6 +174,7 @@ CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
 - `docs/deployment.md` records deployment checks, Vercel CLI usage, and env
   handling.
 - Analytics is represented by a disabled placeholder until a provider is chosen.
+- Production is deployed on Vercel at `https://sushi-bliss-v2.vercel.app`.
 
 ## Scripts
 
