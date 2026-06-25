@@ -25,7 +25,10 @@ async function loadEntries() {
       const metadata = JSON.parse(await readFile(metadataPath, "utf8"));
       const stem = metadataFile.replace(/\.metadata\.json$/, "");
       const currentPath = path.join(diffDir, `${stem}.current.png`);
-      const referencePath = path.resolve(projectRoot, metadata.referencePath);
+      const referencePath = path.resolve(
+        projectRoot,
+        metadata.resolvedReferencePath ?? metadata.referencePath,
+      );
 
       if (!isInsideProject(referencePath)) {
         throw new Error(

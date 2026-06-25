@@ -62,6 +62,12 @@ const visualPixelThreshold = getNumberEnv(
 const visualDiffOutputDir =
   process.env.VISUAL_REFERENCE_DIFF_DIR ??
   path.join("test-results", "visual-reference-diffs");
+const committedVisualReferencePrefix = "public/assets/screenshots/";
+const visualReferenceRoot = path.resolve(
+  process.cwd(),
+  process.env.VISUAL_REFERENCE_DIR ??
+    path.join(".visual-references", "screenshots"),
+);
 
 const visualReferenceTargets: VisualReferenceTarget[] = [
   {
@@ -4456,6 +4462,30 @@ function createVisualArtifactSlug(target: VisualReferenceTarget) {
     .replace(/^-|-$/g, "");
 }
 
+function getReferenceRelativePath(referencePath: string) {
+  return referencePath.startsWith(committedVisualReferencePrefix)
+    ? referencePath.slice(committedVisualReferencePrefix.length)
+    : referencePath;
+}
+
+async function readReferenceScreenshot(target: VisualReferenceTarget) {
+  const relativePath = getReferenceRelativePath(target.referencePath);
+  const resolvedPath = path.join(visualReferenceRoot, relativePath);
+
+  try {
+    return {
+      buffer: await readFile(resolvedPath),
+      resolvedPath,
+    };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return undefined;
+    }
+
+    throw error;
+  }
+}
+
 /** Persists current, reference, diff, and metadata files for visual QA review. */
 async function writeVisualDiffArtifacts({
   currentScreenshot,
@@ -4660,7 +4690,7 @@ test.describe("visual reference audit", () => {
   });
 
   for (const target of visualReferenceTargets) {
-    test(`captures ${target.name} against reference artifact`, async ({
+    test(`validates ${target.name} visual state`, async ({
       page,
     }, testInfo) => {
       test.skip(
@@ -4685,26 +4715,48 @@ test.describe("visual reference audit", () => {
         fullPage: false,
         scale: "css",
       });
-      const referenceScreenshot = await readFile(
-        path.join(process.cwd(), target.referencePath),
-      );
       const currentSize = getPngSize(currentScreenshot);
-      const referenceSize = getPngSize(referenceScreenshot);
-      const metadata = {
+      const reference = await readReferenceScreenshot(target);
+      const metadataBase = {
         currentSize,
+        referenceAvailable: Boolean(reference),
         referencePath: target.referencePath,
-        referenceSize,
+        referenceRoot: visualReferenceRoot,
         routePath: target.routePath,
         viewport: target.viewport,
       };
 
       expect(currentSize).toEqual(target.viewport);
-      expect(referenceSize).toEqual(target.referenceSize);
 
       await testInfo.attach(`${target.name} current`, {
         body: currentScreenshot,
         contentType: "image/png",
       });
+
+      if (!reference) {
+        await testInfo.attach(`${target.name} metadata`, {
+          body: Buffer.from(JSON.stringify(metadataBase, null, 2)),
+          contentType: "application/json",
+        });
+
+        test.skip(
+          visualDiffEnabled,
+          `Visual reference is missing from ${visualReferenceRoot}`,
+        );
+
+        return;
+      }
+
+      const referenceScreenshot = reference.buffer;
+      const referenceSize = getPngSize(referenceScreenshot);
+      const metadata = {
+        ...metadataBase,
+        referenceSize,
+        resolvedReferencePath: reference.resolvedPath,
+      };
+
+      expect(referenceSize).toEqual(target.referenceSize);
+
       await testInfo.attach(`${target.name} reference`, {
         body: referenceScreenshot,
         contentType: "image/png",

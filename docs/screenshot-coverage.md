@@ -1,8 +1,11 @@
 # Screenshot Coverage
 
-This document tracks reference-screen coverage for the clean rebuild. A screen is
-only considered audited when `tests/e2e/visual-reference.spec.ts` captures the
-current viewport and attaches the matching reference PNG.
+This document tracks reference-screen coverage for the clean rebuild. The PNG
+binaries are no longer committed into `public/`; keep them locally under
+`.visual-references/screenshots` or provide `VISUAL_REFERENCE_DIR` when running
+pixel-diff checks. A screen is considered audited when
+`tests/e2e/visual-reference.spec.ts` validates the route/interaction and, when a
+local baseline exists, attaches the matching reference PNG.
 
 ## Status Key
 

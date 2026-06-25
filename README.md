@@ -2,208 +2,189 @@
 
 [![Release Checks](https://github.com/NicholasKerr7/sushi-bliss-v2/actions/workflows/release-checks.yml/badge.svg)](https://github.com/NicholasKerr7/sushi-bliss-v2/actions/workflows/release-checks.yml)
 
-Clean mobile-first rebuild of Sushi Bliss with Next.js, TypeScript, Tailwind
-CSS, and a structure ready for future Supabase, Stripe, and Vercel work.
+Sushi Bliss v2 is a luxury sushi restaurant web app built with Next.js,
+TypeScript, React, and Tailwind CSS. It is a clean rebuild of the original
+Sushi Bliss concept with a mobile-first customer experience, responsive tablet
+and desktop layouts, and a separated admin dashboard.
+
+The app is intentionally still mock/local-data driven. It is production-shaped
+and deployed, but Supabase auth/database and Stripe payments are placeholders
+until real backend work is requested.
 
 ## Live Site
 
-- Production: [https://sushi-bliss-v2.vercel.app](https://sushi-bliss-v2.vercel.app)
-- Verified app build commit: `9c4e98f`
-- Backend mode: mock/local data with Supabase and Stripe placeholders ready for
-  future credentials.
+Production: [https://sushi-bliss-v2.vercel.app](https://sushi-bliss-v2.vercel.app)
 
-## Sprint 0 Status
+Verified app build commit: `9c4e98f`
 
-- Next.js App Router scaffolded in `src/app`.
-- Tailwind v4 global tokens live in `src/styles/globals.css`.
-- Legacy runtime assets and data are copied into `public/assets`.
-- Reference screenshots live in `public/assets/screenshots`, with top-level
-  `assets/*` notes pointing to the canonical files.
-- App shell placeholder is implemented with mobile and desktop navigation.
-- Shared types, utilities, hooks, and seed data modules are in place.
+Current backend mode: local mock state, static asset data, and backend-ready
+service boundaries.
 
-## Sprint 1 Status
+## What Is Built
 
-- Mobile header and bottom navigation are established.
-- Tablet navigation uses a dedicated side rail.
-- Desktop navigation is separated into reusable header/nav components.
-- Reusable UI primitives are available for buttons, cards, badges, status
-  badges, inputs, selects, modals, drawers, states, section headers, responsive
-  grids, and quantity controls.
+- Mobile-first restaurant app shell with customer navigation.
+- Responsive tablet and desktop layouts for the main customer flows.
+- Browseable menu with categories, search, filters, item details, tasting
+  notes, customization, add-ons, and sake pairing visuals.
+- Cart, checkout, pickup/delivery selection, mock payment selection, order
+  confirmation, order history, and tracking views.
+- Reservations with experience, date/time, party size, location, review,
+  confirmation, modify, and cancel flows.
+- Loyalty, rewards, referrals, offers, favorites, recently viewed items, and
+  member pass UI.
+- Omakase, gifts, chef profiles, locations, support, notifications, about, and
+  contact screens.
+- Separate `/admin` dashboard with mock business metrics, domain workspaces,
+  and operational controls.
+- Vercel-ready metadata, manifest, sitemap, robots, security headers, and CI
+  checks.
 
-## Sprint 2 Status
+## Not Real Yet
 
-- Legacy `data.json` is isolated behind typed normalizers in `src/lib/data.ts`.
-- Asset manifest helpers provide id, URL, folder, and image fallback lookups.
-- Menu, brand, chef, omakase, screenshot, and featured editorial data are
-  exposed through small `src/data/*` modules.
-- Hooks, utilities, and data transformations include concise docstrings where
-  the behavior is stateful or non-obvious.
+These pieces are deliberately not connected to live services:
 
-## Sprint 3 Status
+- Supabase database, auth, storage, and realtime.
+- Stripe checkout, payment intents, and webhooks.
+- Real admin CRUD.
+- Real order tracking, reservation availability, emails, notifications, support
+  tickets, loyalty accounting, and gift fulfillment.
 
-- Home now uses customer-facing restaurant sections instead of sprint preview
-  copy.
-- The menu explorer supports search, category filtering, result counts, reset
-  controls, empty state handling, and responsive item grids.
-- Popular menu cards and saved favorites are powered by normalized menu data.
-- Favorites persist locally through `useFavorites`.
+Do not add live credentials or wire real services until that work is explicitly
+requested.
 
-## Sprint 4 Status
+## Tech Stack
 
-- Menu item details open in a responsive drawer with ingredients, chef notes,
-  sake pairing previews, customization groups, add-ons, notes, and quantity.
-- Add-to-cart creates persistent local cart lines that merge identical
-  customization sets.
-- Cart drawer supports empty state, editable quantities, item removal, clear
-  cart, and calculated subtotal/tax/service/total summaries.
-- Cart state is stored through `useCart` without backend credentials.
+- Next.js App Router
+- TypeScript
+- React
+- Tailwind CSS v4
+- Playwright
+- ESLint
+- Prettier
+- Vercel deployment config
+- Supabase-ready and Stripe-ready service boundaries
 
-## Sprint 5 Status
+## Project Structure
 
-- Cart checkout now supports pickup or delivery, fulfillment time selection,
-  delivery address add/edit, saved payment selection, promo validation, and
-  receipt review.
-- Placing an order creates a confirmed mock order, clears the cart, and shows an
-  order confirmation with a confirmation code.
-- Confirmed mock orders are persisted locally for the upcoming orders and
-  tracking sprint.
+```text
+src/
+  app/                 Next.js routes, metadata, manifest, robots, sitemap
+  components/          Shared layout, responsive, and UI primitives
+  data/                Mock content, navigation, menu, profile, offers, admin
+  features/            Customer and admin feature modules
+  hooks/               Stateful feature hooks and local persistence
+  lib/                 Data normalization, assets, formatting, validation
+  services/            Backend-ready mock service boundaries
+  styles/              Global Tailwind tokens and app CSS
+  types/               Shared TypeScript models
 
-## Sprint 6 Status
+public/
+  assets/              Runtime brand, menu, editorial, map, pairing, icon assets
 
-- The orders dashboard shows active and past orders from persisted checkout
-  data, with mock fallback orders for first-run review.
-- Order details include receipt lines, totals, status timeline, courier card,
-  and delivery tracking map preview.
-- Reorder adds prior order line items back into the cart with their saved
-  customizations and add-ons.
+docs/
+  backend/             Supabase schema and service planning
+  deployment.md        Production deployment notes
+  screenshot-coverage.md
+  visual-qa.md
 
-## Sprint 7 Status
+tests/
+  e2e/                 Playwright smoke, responsive, and visual-reference tests
+```
 
-- Reservations now support experience, date/time, party size, seating,
-  occasion, location, guest details, notes, review, and confirmation.
-- Reservation history supports modify and cancel actions with persistent local
-  storage and future-date validation.
-- Locations now include a directory and detail drawer with maps, hours,
-  features, and direct reservation entry.
+Reference screenshots are no longer committed under `public/`. Keep visual
+baselines in a local `.visual-references/screenshots` folder or pass
+`VISUAL_REFERENCE_DIR` when running pixel-diff checks.
 
-## Sprint 8 Status
+## Getting Started
 
-- Profile settings now support editable contact details, saved addresses,
-  payment methods, dietary preferences, notification preferences, privacy
-  settings, reset, and mock logout.
-- Profile state is persisted locally through `useProfile` and shared with
-  checkout address/payment selection.
-- Reservation defaults now use the active profile contact, and the profile
-  dashboard summarizes loyalty, active orders, and upcoming reservations.
+Install dependencies:
 
-## Sprint 9 Status
+```bash
+npm install
+```
 
-- Loyalty state now persists locally with points balance, lifetime tier
-  progress, member pass, reward redemptions, and points activity.
-- Checkout awards loyalty points only after a confirmed order, with duplicate
-  order awards blocked by order id.
-- Rewards validate availability, point cost, and balance before subtracting
-  points; invalid reward attempts leave points unchanged.
-- Favorites now support quick add-to-cart, offers include detail modals with
-  copyable codes, and referrals include a member code plus milestone progress.
+Run the local dev server:
 
-## Sprint 10 Status
+```bash
+npm run dev
+```
 
-- Omakase experiences now include package selection, course previews, guest
-  count controls, sake pairing options, package review, and reservation entry.
-- Premium reservation cards connect chef counter and private room experiences
-  back into the reservation flow.
-- Gift experiences support recipient/sender details, message, delivery timing,
-  saved payment selection, validation, confirmation, and local persistence.
-- Sent gift confirmations appear in both the gift section and profile history.
-
-## Sprint 11 Status
-
-- Notifications now include order, reservation, reward, offer, and concierge
-  categories with filters, detail modals, related-flow links, and persisted read
-  state.
-- Support now includes contact methods, a validated concierge form, local
-  request history, and help article detail modals.
-- About and master chef sections use normalized brand, ambience, and chef asset
-  data from the legacy content layer.
-- Customer brand/support pages are integrated into the home flow without
-  reviving the old monolithic app structure.
-
-## Sprint 12 Status
-
-- Backend-ready service boundaries now live in `src/services`, returning typed
-  mock-backed `ServiceResponse<T>` values until Supabase is wired.
-- Supabase and Stripe placeholders read env configuration without constructing
-  SDK clients or exposing server secrets.
-- Checkout, notifications, and admin dashboard snapshots now have explicit
-  mock-backed service boundaries for future route handlers and Supabase reads.
-- `.env.example` documents public Supabase keys, server-only Supabase service
-  secret/service-role usage, and future Stripe values.
-- Backend planning docs cover service boundaries, suggested API routes, schema
-  tables, RLS models, and first-pass indexes.
-
-## Sprint 13 Status
-
-- A separated `/admin` route now uses its own admin shell and navigation.
-- The admin dashboard includes overview metrics, menu controls, order status
-  advancement, reservation status controls, offer visibility, location review
-  flags, customer summaries, and operations analytics.
-- Admin functionality is mock/local state only, keeping future Supabase CRUD
-  boundaries ready without polluting the customer app shell.
-
-## Sprint 14 Status
-
-- Playwright is configured for desktop, tablet, and mobile Chromium smoke
-  coverage.
-- E2E tests verify the customer home/menu/add-to-cart path and the admin
-  dashboard controls.
-- Visual reference audits attach current and source reference screenshots for
-  the first core home/menu breakpoints.
-- Image loading and icon sizing warnings from the browser QA pass were cleaned
-  up.
-- Browser verification confirms `/` and `/admin` render content without a
-  framework error overlay.
-
-## Sprint 15 Status
-
-- Production metadata, Open Graph/Twitter cards, app icons, manifest, robots,
-  and sitemap routes are configured.
-- `vercel.json` documents the Vercel framework, install/build commands, and
-  baseline security headers.
-- `docs/deployment.md` records deployment checks, Vercel CLI usage, and env
-  handling.
-- Analytics is represented by a disabled placeholder until a provider is chosen.
-- Production is deployed on Vercel at `https://sushi-bliss-v2.vercel.app`.
+Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
 ```bash
-npm run dev
-npm run lint
-npm run test
-npm run typecheck
-npm run build
-npm run format:check
+npm run dev              # Start local Next.js dev server
+npm run build            # Create production build
+npm run start            # Serve the production build locally
+npm run lint             # Run ESLint
+npm run typecheck        # Run TypeScript checks
+npm run format:check     # Check Prettier formatting
+npm run test             # Run Playwright tests
+npm run test:visual      # Run visual-reference route audit
+npm run test:visual:diff # Run visual audit with local reference diffs
+```
+
+Install Playwright Chromium if needed:
+
+```bash
+npm run playwright:install
 ```
 
 ## Environment
 
-Copy `.env.example` for local overrides. Set `NEXT_PUBLIC_SITE_URL` in
-production when a Vercel alias or custom domain is assigned. Do not commit real
-Supabase or Stripe secrets.
+Copy `.env.example` for local overrides:
+
+```bash
+cp .env.example .env.local
+```
+
+Current mock mode does not require Supabase or Stripe values. Keep secrets out
+of the client and out of Git.
+
+Important values:
+
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+
+## QA
+
+Run the standard local verification set before committing app changes:
+
+```bash
+npm run format:check
+npm run lint
+npm run typecheck
+npm run test
+npm run build
+```
+
+The visual-reference test always validates routes, interactions, screenshots,
+image loading, and horizontal overflow. Pixel comparisons are optional and only
+run when reference PNGs exist locally.
+
+Example local diff run:
+
+```bash
+VISUAL_REFERENCE_DIR=.visual-references/screenshots npm run test:visual:diff
+```
 
 ## Deployment
 
-See `docs/deployment.md` for the release checklist, GitHub Actions workflow,
-and Vercel CLI flow.
+The project is configured for Vercel. See `docs/deployment.md` for the release
+checklist, CLI notes, and current production target.
 
-## Visual QA
+## Development Rules
 
-See `docs/visual-qa.md` and `docs/screenshot-coverage.md` for the reference
-screenshot inventory, coverage status, and Playwright visual audit targets.
-
-## Asset Source
-
-The old `sushi-bliss` repo is used only for assets, data, and reference
-screenshots. No old app components or giant app files are carried over.
+- Keep the app mock/local-data only until live backend work is requested.
+- Keep UI components small and feature-scoped.
+- Do not reintroduce the old monolithic app structure.
+- Do not commit generated build output, Playwright reports, local visual
+  baselines, or secret env files.
+- Runtime assets belong in `public/assets`; non-runtime visual references stay
+  outside the production public tree.
