@@ -6,13 +6,12 @@ Sushi Bliss v2 is configured for Vercel with the Next.js framework preset.
 
 - Production URL: [https://sushi-bliss-v2.vercel.app](https://sushi-bliss-v2.vercel.app)
 - Vercel target: `production`
-- Latest verified deployment: `dpl_CJkdGrr6xMMDSGGkoL4gt6QzUxtL`
-- Verified app build commit: `9c4e98f`
+- Last manually verified deployment: `dpl_CJkdGrr6xMMDSGGkoL4gt6QzUxtL`
 
 Set `NEXT_PUBLIC_SITE_URL=https://sushi-bliss-v2.vercel.app` in production, or
 replace it with the final custom domain if one is assigned later.
 
-## Latest Release Verification
+## Release Verification
 
 The latest production release was verified with:
 

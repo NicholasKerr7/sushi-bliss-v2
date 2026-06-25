@@ -15,8 +15,6 @@ until real backend work is requested.
 
 Production: [https://sushi-bliss-v2.vercel.app](https://sushi-bliss-v2.vercel.app)
 
-Verified app build commit: `9c4e98f`
-
 Current backend mode: local mock state, static asset data, and backend-ready
 service boundaries.
 
