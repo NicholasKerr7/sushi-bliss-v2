@@ -9,7 +9,7 @@ import type { useCart } from "@/hooks/useCart";
 import type { useCheckout } from "@/hooks/useCheckout";
 import { calculateCartLineSubtotal } from "@/lib/cart";
 import { classNames } from "@/lib/classNames";
-import { formatDateTime } from "@/lib/dates";
+import { APP_TIME_ZONE, formatDateTime } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import { isPaymentMethodUsable } from "@/lib/profile";
 import type { Order } from "@/types/order";
@@ -318,6 +318,7 @@ export function formatCheckoutDate(value: string) {
   return new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "short",
+    timeZone: APP_TIME_ZONE,
     weekday: "short",
   }).format(new Date(value));
 }
@@ -331,6 +332,7 @@ export function formatCheckoutTime(value: string) {
   return new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: APP_TIME_ZONE,
   }).format(new Date(value));
 }
 

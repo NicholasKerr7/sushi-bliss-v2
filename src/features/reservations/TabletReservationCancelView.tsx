@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { locations } from "@/data/locations";
 import { reservationExperiences } from "@/data/reservations";
 import { icons } from "@/features/home/visualHomeData";
+import { APP_TIME_ZONE } from "@/lib/dates";
 import type { Reservation } from "@/types/reservation";
 
 interface TabletReservationCancelViewProps {
@@ -215,6 +216,7 @@ function formatCancelDate(date: Date) {
   return new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "long",
+    timeZone: APP_TIME_ZONE,
     weekday: "long",
     year: "numeric",
   }).format(date);
@@ -224,5 +226,6 @@ function formatCancelTime(date: Date) {
   return new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: APP_TIME_ZONE,
   }).format(date);
 }

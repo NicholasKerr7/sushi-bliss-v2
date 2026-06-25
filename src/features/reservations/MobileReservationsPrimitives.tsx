@@ -9,6 +9,7 @@ import { locations } from "@/data/locations";
 import { reservationExperiences } from "@/data/reservations";
 import { brand, icons } from "@/features/home/visualHomeData";
 import { classNames } from "@/lib/classNames";
+import { APP_TIME_ZONE } from "@/lib/dates";
 import type {
   Reservation,
   ReservationDraft,
@@ -222,15 +223,18 @@ export function getReservationDisplay(reservation: Reservation) {
   const dateLabel = new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
+    timeZone: APP_TIME_ZONE,
     year: "numeric",
     weekday: "long",
   }).format(startsAt);
   const dayLabel = new Intl.DateTimeFormat("en-US", {
+    timeZone: APP_TIME_ZONE,
     weekday: "long",
   }).format(startsAt);
   const timeLabel = new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: APP_TIME_ZONE,
   }).format(startsAt);
   const location =
     locations.find((item) => item.id === reservation.locationId) ||

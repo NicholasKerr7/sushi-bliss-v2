@@ -42,7 +42,7 @@ export function AdminTopBar() {
         </Link>
         <Link
           className="flex min-w-0 items-center gap-3 rounded-full border border-transparent p-1 pr-3 transition hover:border-[var(--sb-gold)]/24 hover:bg-white/[0.035] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
-          href="/chefs/hiroshi-tanaka"
+          href="/chefs"
         >
           <Image
             alt="Hiroshi Tanaka"

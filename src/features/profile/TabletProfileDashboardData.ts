@@ -1,4 +1,5 @@
 import { icons } from "@/features/home/visualHomeData";
+import { APP_TIME_ZONE } from "@/lib/dates";
 import type { PaymentMethod, UserProfile } from "@/types/user";
 
 export const tabletProfileQuickActions = [
@@ -131,14 +132,22 @@ export function getTabletReservationDateSummary(startsAt?: string) {
   }
 
   return {
-    day: new Intl.DateTimeFormat("en-US", { day: "2-digit" }).format(date),
-    month: new Intl.DateTimeFormat("en-US", { month: "short" }).format(date),
+    day: new Intl.DateTimeFormat("en-US", {
+      day: "2-digit",
+      timeZone: APP_TIME_ZONE,
+    }).format(date),
+    month: new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      timeZone: APP_TIME_ZONE,
+    }).format(date),
     time: new Intl.DateTimeFormat("en-US", {
       hour: "numeric",
       minute: "2-digit",
+      timeZone: APP_TIME_ZONE,
     }).format(date),
-    weekday: new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(
-      date,
-    ),
+    weekday: new Intl.DateTimeFormat("en-US", {
+      timeZone: APP_TIME_ZONE,
+      weekday: "short",
+    }).format(date),
   };
 }

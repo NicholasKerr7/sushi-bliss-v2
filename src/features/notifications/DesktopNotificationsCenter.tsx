@@ -8,6 +8,7 @@ import { DesktopMenuHeader } from "@/features/menu/DesktopMenuChrome";
 import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
 import { classNames } from "@/lib/classNames";
+import { APP_TIME_ZONE } from "@/lib/dates";
 import {
   filterNotifications,
   notificationFilters,
@@ -186,6 +187,7 @@ function DesktopNotificationRow({
   const timeLabel = new Intl.DateTimeFormat("en-US", {
     dateStyle: "medium",
     timeStyle: "short",
+    timeZone: APP_TIME_ZONE,
   }).format(new Date(notification.createdAt));
 
   return (

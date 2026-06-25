@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
+import { APP_TIME_ZONE } from "@/lib/dates";
 import type { AppNotification } from "@/types/notification";
 
 import {
@@ -44,6 +45,7 @@ export function DesktopNotificationDetailPanel({
   const createdAt = new Intl.DateTimeFormat("en-US", {
     dateStyle: "medium",
     timeStyle: "short",
+    timeZone: APP_TIME_ZONE,
   }).format(new Date(notification.createdAt));
 
   return (

@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { classNames } from "@/lib/classNames";
-import { formatTime } from "@/lib/dates";
+import { APP_TIME_ZONE, formatTime } from "@/lib/dates";
 import type { Reservation } from "@/types/reservation";
 
 import { locations } from "@/data/locations";
@@ -342,11 +342,17 @@ function startOfLocalDay(date: Date): Date {
 }
 
 export function formatDateOnly(value: string | Date) {
-  const date = typeof value === "string" ? new Date(value) : value;
+  const date =
+    typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)
+      ? new Date(`${value}T12:00:00.000Z`)
+      : typeof value === "string"
+        ? new Date(value)
+        : value;
 
   return new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "long",
+    timeZone: APP_TIME_ZONE,
     weekday: "long",
     year: "numeric",
   }).format(date);

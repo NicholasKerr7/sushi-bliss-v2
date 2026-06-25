@@ -1,3 +1,5 @@
+export const APP_TIME_ZONE = "America/New_York";
+
 /** Formats an ISO date or Date object for compact restaurant UI labels. */
 export function formatDateTime(value: string | Date): string {
   const date = typeof value === "string" ? new Date(value) : value;
@@ -7,6 +9,7 @@ export function formatDateTime(value: string | Date): string {
     day: "numeric",
     hour: "numeric",
     minute: "2-digit",
+    timeZone: APP_TIME_ZONE,
   }).format(date);
 }
 
@@ -20,6 +23,7 @@ export function formatFullDateTime(value: string | Date): string {
     year: "numeric",
     hour: "numeric",
     minute: "2-digit",
+    timeZone: APP_TIME_ZONE,
   }).format(date);
 }
 
@@ -30,6 +34,7 @@ export function formatTime(value: string | Date): string {
   return new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: APP_TIME_ZONE,
   }).format(date);
 }
 
