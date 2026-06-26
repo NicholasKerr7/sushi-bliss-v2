@@ -33,6 +33,13 @@ export function DesktopRecentlyViewedPage() {
       total + section.entries.filter((entry) => isEntrySaved(entry)).length,
     0,
   );
+  const eagerEntryKeys = new Set(
+    sections
+      .flatMap((section) =>
+        section.entries.map((entry) => `${section.label}:${entry.id}`),
+      )
+      .slice(0, 6),
+  );
 
   return (
     <section
@@ -123,12 +130,14 @@ export function DesktopRecentlyViewedPage() {
                   </Link>
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-4">
-                  {section.entries.map((entry, index) => (
+                  {section.entries.map((entry) => (
                     <DesktopHistoryCard
                       entry={entry}
                       isSaved={isEntrySaved(entry)}
                       key={`${section.label}-${entry.id}`}
-                      priority={section.label === "Today" && index < 3}
+                      priority={eagerEntryKeys.has(
+                        `${section.label}:${entry.id}`,
+                      )}
                       onToggleSaved={() => toggleEntrySaved(entry)}
                     />
                   ))}

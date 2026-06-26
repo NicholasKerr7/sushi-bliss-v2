@@ -8,7 +8,7 @@ import {
   type RecentlyViewedEntry,
 } from "@/features/menu/recentlyViewedContent";
 
-/** Manages mock recent-history sections until server-backed history is added. */
+/** Manages local recent-history sections until server-backed history is added. */
 export function useRecentlyViewed() {
   const initialSections = useMemo(() => getRecentlyViewedSections(), []);
   const [sections, setSections] = useState(initialSections);

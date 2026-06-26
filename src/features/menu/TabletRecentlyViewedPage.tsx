@@ -25,6 +25,13 @@ export function TabletRecentlyViewedPage() {
   const { itemCount } = useCart();
   const { clearHistory, hasHistory, isEntrySaved, sections, toggleEntrySaved } =
     useRecentlyViewed();
+  const eagerEntryKeys = new Set(
+    sections
+      .flatMap((section) =>
+        section.entries.map((entry) => `${section.label}:${entry.id}`),
+      )
+      .slice(0, 6),
+  );
 
   return (
     <>
@@ -93,12 +100,14 @@ export function TabletRecentlyViewedPage() {
                     </Link>
                   </div>
                   <div className="mt-3 grid grid-cols-2 gap-3 min-[1080px]:grid-cols-3">
-                    {section.entries.map((entry, index) => (
+                    {section.entries.map((entry) => (
                       <TabletHistoryCard
                         entry={entry}
                         isSaved={isEntrySaved(entry)}
                         key={`${section.label}-${entry.id}`}
-                        priority={section.label === "Today" && index < 3}
+                        priority={eagerEntryKeys.has(
+                          `${section.label}:${entry.id}`,
+                        )}
                         onToggleSaved={() => toggleEntrySaved(entry)}
                       />
                     ))}
