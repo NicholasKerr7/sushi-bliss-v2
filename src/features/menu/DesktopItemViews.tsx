@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { cartCustomizationGroups } from "@/data/cart";
+import { useItemGalleryCarousel } from "@/hooks/useItemGalleryCarousel";
 import {
   getMenuGalleryImageClassName,
   getMenuItemGalleryImages,
@@ -76,10 +76,15 @@ export function DesktopItemDetailView({
   onToggleFavorite: () => void;
 }) {
   const galleryImages = getMenuItemGalleryImages(item);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const activeGalleryIndex = galleryImages.length
-    ? activeImageIndex % galleryImages.length
-    : 0;
+  const {
+    imageIndex: activeGalleryIndex,
+    selectImage,
+    showNextImage,
+    showPreviousImage,
+  } = useItemGalleryCarousel({
+    imageCount: galleryImages.length,
+    itemId: item.id,
+  });
   const activeImage =
     galleryImages[activeGalleryIndex] || getTabletPresentationImage(item);
   const isDrinkItem = item.itemType === "drink";
@@ -89,17 +94,6 @@ export function DesktopItemDetailView({
   const detailPills = isDrinkItem
     ? drinkDetailFeaturePills
     : detailFeaturePills;
-
-  const stepGallery = (direction: number) => {
-    if (galleryImages.length < 2) {
-      return;
-    }
-
-    setActiveImageIndex(
-      (current) =>
-        (current + direction + galleryImages.length) % galleryImages.length,
-    );
-  };
 
   return (
     <main className="mx-auto max-w-[1530px] px-7 pb-6 pt-3">
@@ -120,9 +114,9 @@ export function DesktopItemDetailView({
             activeImageIndex={activeGalleryIndex}
             galleryImages={galleryImages}
             itemName={item.name}
-            onImageSelect={setActiveImageIndex}
-            onNext={() => stepGallery(1)}
-            onPrevious={() => stepGallery(-1)}
+            onImageSelect={selectImage}
+            onNext={showNextImage}
+            onPrevious={showPreviousImage}
           />
 
           <div className="flex flex-col justify-center px-9 py-6">
@@ -328,10 +322,11 @@ export function DesktopItemCustomizeView({
   onQuantityChange: (quantity: number) => void;
 }) {
   const galleryImages = buildCustomizeGalleryImages(item);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const activeGalleryIndex = galleryImages.length
-    ? activeImageIndex % galleryImages.length
-    : 0;
+  const { imageIndex: activeGalleryIndex, selectImage } =
+    useItemGalleryCarousel({
+      imageCount: galleryImages.length,
+      itemId: `customize:${item.id}`,
+    });
   const activeImage = galleryImages[activeGalleryIndex] || item.image.publicUrl;
   const selectedToppingAddOns = availableAddOns.filter((addOn) =>
     selectedAddOnIds.includes(addOn.id),
@@ -394,7 +389,7 @@ export function DesktopItemCustomizeView({
               activeImageIndex={activeGalleryIndex}
               galleryImages={galleryImages}
               itemName={item.name}
-              onImageSelect={setActiveImageIndex}
+              onImageSelect={selectImage}
             />
           </div>
         </div>
