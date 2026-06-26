@@ -78,13 +78,13 @@ export function AdminRecordEditor({
 
           <div className="mt-5 grid gap-3 border-t border-white/10 pt-4">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.12em] text-white/42">
+              <p className="text-[11px] uppercase tracking-[0.12em] text-white/58">
                 Owner / Type
               </p>
               <p className="mt-1 text-sm text-white/78">{row.meta}</p>
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-[0.12em] text-white/42">
+              <p className="text-[11px] uppercase tracking-[0.12em] text-white/58">
                 Value
               </p>
               <p className="mt-1 font-mono text-[20px] text-[var(--sb-gold-soft)]">
@@ -92,7 +92,7 @@ export function AdminRecordEditor({
               </p>
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-[0.12em] text-white/42">
+              <p className="text-[11px] uppercase tracking-[0.12em] text-white/58">
                 Notes
               </p>
               <p className="mt-1 text-sm leading-6 text-white/68">
@@ -255,7 +255,7 @@ export function AdminRecordEditor({
       )}
 
       <div className="mt-5 border-t border-white/10 pt-4 xl:hidden">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/42">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/58">
           Top signal
         </p>
         <div className="mt-3 grid gap-2">

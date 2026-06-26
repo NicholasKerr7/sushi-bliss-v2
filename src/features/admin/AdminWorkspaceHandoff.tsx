@@ -39,7 +39,7 @@ export function AdminWorkspaceHandoff({
         </div>
         <div className="grid grid-cols-3 gap-2 md:grid-cols-1">
           <div className="rounded-[13px] border border-white/10 bg-black/22 px-2 py-2 min-[390px]:px-3">
-            <p className="text-[8px] uppercase tracking-normal text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
+            <p className="text-[8px] uppercase tracking-normal text-white/58 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
               Reviewed
             </p>
             <p className="mt-1 font-mono text-[15px] text-[var(--sb-gold-soft)]">
@@ -47,7 +47,7 @@ export function AdminWorkspaceHandoff({
             </p>
           </div>
           <div className="rounded-[13px] border border-white/10 bg-black/22 px-2 py-2 min-[390px]:px-3">
-            <p className="text-[8px] uppercase tracking-normal text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
+            <p className="text-[8px] uppercase tracking-normal text-white/58 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
               Priority
             </p>
             <p className="mt-1 font-mono text-[15px] text-[var(--sb-red-bright)]">
@@ -55,7 +55,7 @@ export function AdminWorkspaceHandoff({
             </p>
           </div>
           <div className="rounded-[13px] border border-white/10 bg-black/22 px-2 py-2 min-[390px]:px-3">
-            <p className="text-[8px] uppercase tracking-normal text-white/42 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
+            <p className="text-[8px] uppercase tracking-normal text-white/58 min-[390px]:text-[10px] min-[390px]:tracking-[0.08em]">
               Mode
             </p>
             <p className="mt-1 truncate font-mono text-[15px] text-[var(--sb-gold-soft)]">

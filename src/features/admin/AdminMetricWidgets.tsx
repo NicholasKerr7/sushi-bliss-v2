@@ -21,13 +21,14 @@ export function AdminTopBar() {
             src="/assets/icons/search-icon.png"
           />
           <input
+            aria-label="Search admin dashboard"
             className="h-11 w-full rounded-[10px] border border-white/12 bg-black/26 pl-11 pr-4 text-sm text-white outline-none placeholder:text-white/46 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
             placeholder="Search anything..."
             type="search"
           />
         </label>
         <Link
-          aria-label="Open notifications"
+          aria-label="Open notifications, 5 alerts"
           className="relative grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-black/24 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
           href="/notifications"
         >

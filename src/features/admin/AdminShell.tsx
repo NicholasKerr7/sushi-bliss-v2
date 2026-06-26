@@ -186,7 +186,7 @@ export function AdminShell({ children }: AdminShellProps) {
             </span>
           </Link>
           <Link
-            aria-label="Open notifications"
+            aria-label="Open notifications, 3 alerts"
             className="relative grid h-11 w-11 place-items-center rounded-[14px] border border-[var(--sb-gold)]/28 bg-black/32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"
             href="/notifications"
           >

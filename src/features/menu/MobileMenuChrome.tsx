@@ -107,6 +107,7 @@ export function MobileSearchForm({
         <AssetIcon size={23} src={icons.search} />
         <span className="sr-only">Search menu</span>
         <input
+          aria-label="Search menu"
           className="h-full w-full bg-transparent text-[15px] text-white outline-none placeholder:text-white/58"
           onChange={(event) => onQueryChange(event.target.value)}
           placeholder="Search menu..."

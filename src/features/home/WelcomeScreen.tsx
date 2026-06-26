@@ -22,6 +22,7 @@ export function WelcomeScreen() {
         alt=""
         className="object-cover object-[29%_50%] opacity-70"
         fill
+        fetchPriority="high"
         loading="eager"
         priority
         sizes="(max-width: 767px) 100vw, 1px"
@@ -32,6 +33,7 @@ export function WelcomeScreen() {
           alt=""
           className="object-contain opacity-95 [mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)]"
           fill
+          fetchPriority="high"
           loading="eager"
           priority
           sizes="(max-width: 767px) 130vw, 1px"

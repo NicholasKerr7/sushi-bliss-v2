@@ -361,6 +361,7 @@ export function AdminOperationsWorkspace({
                 src="/assets/icons/search-icon.png"
               />
               <input
+                aria-label="Search admin workspace rows"
                 className="h-12 w-full rounded-[12px] border border-white/12 bg-black/24 pl-11 pr-4 text-sm text-white outline-none placeholder:text-white/42 focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={`Search ${activeSection.title.toLowerCase()}...`}
@@ -371,6 +372,7 @@ export function AdminOperationsWorkspace({
             <label className="relative block">
               <span className="sr-only">Filter by status</span>
               <select
+                aria-label="Filter admin workspace rows by status"
                 className="h-12 w-full appearance-none rounded-[12px] border border-white/12 bg-black/24 px-4 pr-10 text-sm text-white outline-none focus:border-[var(--sb-gold)] focus:ring-2 focus:ring-[var(--sb-gold)]/20"
                 onChange={(event) => setStatusFilter(event.target.value)}
                 value={statusFilter}

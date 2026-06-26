@@ -166,6 +166,7 @@ function MobileMenuOverview({
           alt=""
           className="object-cover object-[72%_48%]"
           fill
+          fetchPriority="high"
           loading="eager"
           priority
           sizes="430px"

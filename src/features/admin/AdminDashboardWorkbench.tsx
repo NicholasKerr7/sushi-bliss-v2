@@ -315,7 +315,7 @@ export function AdminDashboardWorkbench() {
 
             return (
               <button
-                aria-label={`Open ${tab.label} workbench`}
+                aria-label={`${tab.shortLabel.toUpperCase()} ${tab.shortStat} ${tab.label.toUpperCase()} ${tab.stat} Open ${tab.label} workbench`}
                 aria-pressed={active}
                 className={classNames(
                   "group relative grid min-h-[74px] min-w-0 grid-cols-[30px_minmax(0,1fr)] items-center gap-2 overflow-hidden rounded-[14px] border px-2.5 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold sm:min-w-[176px] sm:grid-cols-[34px_minmax(0,1fr)] sm:gap-2.5 sm:px-3 md:min-w-0",
@@ -326,6 +326,7 @@ export function AdminDashboardWorkbench() {
                 )}
                 key={tab.id}
                 onClick={() => handleWorkbenchTabChange(tab.id)}
+                title={`Open ${tab.label} workbench`}
                 type="button"
               >
                 <span
@@ -351,13 +352,17 @@ export function AdminDashboardWorkbench() {
                       active ? "text-white" : "text-white/68",
                     )}
                   >
-                    <span className="hidden xl:inline">{tab.label}</span>
-                    <span className="xl:hidden">{tab.shortLabel}</span>
+                    <span className="hidden xl:inline">
+                      {tab.label.toUpperCase()}
+                    </span>
+                    <span className="xl:hidden">
+                      {tab.shortLabel.toUpperCase()}
+                    </span>
                   </span>
                   <span
                     className={classNames(
                       "mt-1 block truncate font-mono text-[12px] sm:text-[15px]",
-                      active ? "text-[var(--sb-gold-soft)]" : "text-white/44",
+                      active ? "text-[var(--sb-gold-soft)]" : "text-white/58",
                     )}
                   >
                     <span className="hidden xl:inline">{tab.stat}</span>
