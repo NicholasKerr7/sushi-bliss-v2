@@ -26,6 +26,10 @@ Real screenshots captured from the current Sushi Bliss v2 app build.
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | ![Sushi Bliss v2 mobile home screen](docs/screenshots/sushi-bliss-v2-mobile-home.png) | ![Sushi Bliss v2 tablet menu screen](docs/screenshots/sushi-bliss-v2-tablet-menu.png) |
 
+| Desktop home                                                                            |
+| --------------------------------------------------------------------------------------- |
+| ![Sushi Bliss v2 desktop home screen](docs/screenshots/sushi-bliss-v2-desktop-home.png) |
+
 | Desktop admin                                                                                |
 | -------------------------------------------------------------------------------------------- |
 | ![Sushi Bliss v2 desktop admin dashboard](docs/screenshots/sushi-bliss-v2-desktop-admin.png) |
