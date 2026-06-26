@@ -38,6 +38,14 @@ const wideMobileFrameWidths = [
   { expectedMin: 630, width: 767 },
 ] as const;
 const narrowMobileWidths = [320, 375, 430] as const;
+const releaseViewportMatrix = [
+  { height: 740, label: "mobile 320", width: 320 },
+  { height: 812, label: "mobile 375", width: 375 },
+  { height: 932, label: "mobile 425", width: 425 },
+  { height: 1194, label: "tablet 834", width: 834 },
+  { height: 900, label: "laptop 1280", width: 1280 },
+  { height: 1000, label: "desktop 1440", width: 1440 },
+] as const;
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
   await expect(
@@ -486,6 +494,65 @@ test.describe("responsive route health", () => {
         }
       });
     }
+  });
+
+  test("covers the release viewport matrix for every route", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "Run the exact release matrix once; project-level tablet/mobile route checks cover device emulation.",
+    );
+    testInfo.setTimeout(180_000);
+
+    const consoleErrors: string[] = [];
+
+    page.on("console", (message) => {
+      if (message.type() === "error") {
+        consoleErrors.push(message.text());
+      }
+    });
+    page.on("pageerror", (error) => {
+      consoleErrors.push(error.message);
+    });
+
+    for (const viewport of releaseViewportMatrix) {
+      await test.step(viewport.label, async () => {
+        await page.setViewportSize({
+          height: viewport.height,
+          width: viewport.width,
+        });
+
+        await expect
+          .poll(() => page.evaluate(() => window.innerWidth), {
+            message: `${viewport.label} should apply the requested viewport width`,
+          })
+          .toBe(viewport.width);
+
+        for (const routePath of routePaths) {
+          await test.step(`${viewport.label} ${routePath}`, async () => {
+            const response = await page.goto(routePath, {
+              waitUntil: "domcontentloaded",
+            });
+
+            expect(
+              response?.status(),
+              `${routePath} should load at ${viewport.label}`,
+            ).toBeLessThan(400);
+            await expectNoFrameworkErrorOverlay(page);
+            await expectPageHasVisibleSurface(page, routePath);
+            await expectNoHorizontalOverflow(page, routePath);
+            await expectGlobalScrollPolicy(page, routePath);
+            await expectDocumentScrollsWhenOverflowing(page, routePath);
+          });
+        }
+      });
+    }
+
+    expect(
+      consoleErrors,
+      "release matrix should not log browser errors",
+    ).toEqual([]);
   });
 
   test("keeps external new-tab links isolated", async ({ page }) => {

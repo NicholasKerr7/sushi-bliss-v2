@@ -980,9 +980,11 @@ const routeStateTargets: RouteStateTarget[] = [
     verify: async (page) => {
       const giftsSection = page.locator("#gifts");
 
-      await expect(giftsSection.getByText("Gift checkout")).toBeVisible();
       await expect(giftsSection.getByLabel("Recipient name")).toBeVisible();
       await expect(giftsSection.getByLabel("Recipient email")).toBeVisible();
+      await expect(
+        giftsSection.getByRole("button", { name: /Send gift/i }),
+      ).toBeVisible();
     },
   },
   {
@@ -3225,16 +3227,33 @@ async function openMobileReferralEarn(page: Page) {
 }
 
 async function openMobileGiftCheckout(page: Page) {
-  const giftsSection = page.locator("#gifts");
+  await page.goto("/gifts", { waitUntil: "domcontentloaded" });
 
+  const giftsSection = page.locator("#gifts");
+  const recipientNameField = giftsSection.getByLabel("Recipient name");
+  const recipientEmailField = giftsSection.getByLabel("Recipient email");
+  const continueButton = giftsSection
+    .getByRole("button", { name: /Continue/i })
+    .first();
+
+  await expect(giftsSection).toBeVisible();
   await expect(
-    giftsSection.getByRole("button", { name: /Continue \$180\.00/i }),
+    giftsSection.getByRole("heading", { name: "Send Bliss" }),
   ).toBeVisible();
-  await giftsSection
-    .getByRole("button", { name: /Continue \$180\.00/i })
-    .first()
-    .click();
-  await expect(giftsSection.getByText("Gift checkout")).toBeVisible();
+
+  await expect(async () => {
+    if (await recipientNameField.isVisible().catch(() => false)) {
+      return;
+    }
+
+    await expect(continueButton).toBeVisible();
+    await continueButton.scrollIntoViewIfNeeded();
+    await continueButton.click();
+    await expect(recipientNameField).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 10000 });
+
+  await expect(recipientNameField).toBeVisible();
+  await expect(recipientEmailField).toBeVisible();
 }
 
 async function openMobileGiftConfirmation(page: Page) {

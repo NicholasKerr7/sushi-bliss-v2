@@ -356,6 +356,97 @@ test.describe("customer experience", () => {
     ).toBeVisible();
   });
 
+  test("persists mobile profile edits across navigation", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("mobile"),
+      "Mobile-only profile persistence check.",
+    );
+
+    await page.goto("/profile", { waitUntil: "domcontentloaded" });
+    await expectNoFrameworkErrorOverlay(page);
+
+    const profileSection = page.locator("#profile");
+    const editedName = "Hiroshi Tanaka Prime";
+
+    await profileSection
+      .getByRole("button", { name: "Account information" })
+      .click();
+    await expect(
+      profileSection.getByRole("heading", { name: "Personal Information" }),
+    ).toBeVisible();
+    await profileSection.getByLabel("Name").fill(editedName);
+    await profileSection.getByRole("button", { name: "Save profile" }).click();
+    await expect(profileSection.getByText("Profile saved.")).toBeVisible();
+
+    await profileSection
+      .getByRole("button", { name: "Back to profile" })
+      .click();
+    await expect(
+      profileSection.getByRole("heading", { name: editedName }),
+    ).toBeVisible();
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await expect(
+      profileSection.getByRole("heading", { name: editedName }),
+    ).toBeVisible();
+  });
+
+  test("redeems loyalty rewards and releases modal focus with Escape", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("mobile"),
+      "Mobile reward redemption exercises the compact modal flow.",
+    );
+
+    await page.goto("/loyalty", { waitUntil: "domcontentloaded" });
+    await expectNoFrameworkErrorOverlay(page);
+
+    const loyaltySection = page.locator("#loyalty");
+
+    await expect(loyaltySection.getByText("3,250").first()).toBeVisible();
+    await loyaltySection
+      .getByRole("button", { name: /Chef Hand Roll/i })
+      .click();
+
+    const rewardDialog = page.getByRole("dialog", { name: "Chef Hand Roll" });
+
+    await expect(rewardDialog).toBeVisible();
+    await expect
+      .poll(() =>
+        rewardDialog.evaluate((dialog) =>
+          dialog.contains(document.activeElement),
+        ),
+      )
+      .toBe(true);
+
+    await rewardDialog
+      .getByRole("button", { name: "Redeem 450 points" })
+      .click();
+    await expect(
+      rewardDialog.getByText("Chef Hand Roll redeemed."),
+    ).toBeVisible();
+    await expect(rewardDialog.getByText("2,800")).toBeVisible();
+
+    await page.keyboard.press("Escape");
+    await expect(rewardDialog).toHaveCount(0);
+    await loyaltySection.getByRole("button", { name: "Activity" }).click();
+    const redeemedRewardsPanel = loyaltySection.locator("section", {
+      has: page.getByRole("heading", { name: "Redeemed rewards" }),
+    });
+    const pointsActivityPanel = loyaltySection.locator("section", {
+      has: page.getByRole("heading", { name: "Points activity" }),
+    });
+
+    await expect(redeemedRewardsPanel).toBeVisible();
+    await expect(
+      redeemedRewardsPanel.getByText("Chef Hand Roll", { exact: true }),
+    ).toBeVisible();
+    await expect(pointsActivityPanel.getByText("-450")).toBeVisible();
+  });
+
   test("updates mobile home featured items from category rail", async ({
     page,
   }, testInfo) => {
