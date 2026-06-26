@@ -7,15 +7,15 @@ TypeScript, React, and Tailwind CSS. It is a clean rebuild of the original
 Sushi Bliss concept with a mobile-first customer experience, responsive tablet
 and desktop layouts, and a separated admin dashboard.
 
-The app is intentionally still mock/local-data driven. It is production-shaped
-and deployed, but Supabase auth/database and Stripe payments are placeholders
-until real backend work is requested.
+The app intentionally runs on local demo data for now. It is production-shaped
+and deployed, with clean service boundaries prepared for Supabase auth/database
+and Stripe payments when live backend work is requested.
 
 ## Live Site
 
 Production: [https://sushi-bliss-v2.vercel.app](https://sushi-bliss-v2.vercel.app)
 
-Current backend mode: local mock state, static asset data, and backend-ready
+Current service mode: local demo state, static asset data, and backend-ready
 service boundaries.
 
 ## What Is Built
@@ -24,7 +24,7 @@ service boundaries.
 - Responsive tablet and desktop layouts for the main customer flows.
 - Browseable menu with categories, search, filters, item details, tasting
   notes, customization, add-ons, and sake pairing imagery.
-- Cart, checkout, pickup/delivery selection, mock payment selection, order
+- Cart, checkout, pickup/delivery selection, saved payment selection, order
   confirmation, order history, and tracking views.
 - Reservations with experience, date/time, party size, location, review,
   confirmation, modify, and cancel flows.
@@ -32,7 +32,7 @@ service boundaries.
   member pass UI.
 - Omakase, gifts, chef profiles, locations, support, notifications, about, and
   contact screens.
-- Separate `/admin` dashboard with mock business metrics, domain workspaces,
+- Separate `/admin` dashboard with business metrics, domain workspaces,
   and operational controls.
 - Vercel-ready metadata, manifest, sitemap, robots, security headers, and CI
   checks.
@@ -131,8 +131,8 @@ Copy `.env.example` for local overrides:
 cp .env.example .env.local
 ```
 
-Current mock mode does not require Supabase or Stripe values. Keep secrets out
-of the client and out of Git.
+Local demo mode does not require Supabase or Stripe values. Keep secrets out of
+the client and out of Git.
 
 Important values:
 
@@ -166,7 +166,7 @@ checklist, CLI notes, and current production target.
 
 ## Development Rules
 
-- Keep the app mock/local-data only until live backend work is requested.
+- Keep the app local-data only until live backend work is requested.
 - Keep UI components small and feature-scoped.
 - Do not reintroduce the old monolithic app structure.
 - Do not commit generated build output, Playwright reports, or secret env files.

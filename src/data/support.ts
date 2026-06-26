@@ -157,7 +157,7 @@ export const helpArticles: HelpArticle[] = [
     body: [
       "Profile details, saved addresses, payment methods, dietary notes, and notification preferences stay editable from Profile.",
       "Checkout, reservations, support, and loyalty reuse saved profile details so repeated tasks stay quick.",
-      "Security controls are mocked locally for now and are ready for backend auth integration later.",
+      "Security controls are staged for account protection and ready for future sign-in upgrades.",
     ],
     category: "Account",
     id: "account-settings",

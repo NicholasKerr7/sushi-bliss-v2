@@ -75,7 +75,7 @@ export const initialLoyaltyTransactions: LoyaltyTransaction[] = [
   {
     createdAt: "2026-06-04T21:05:00.000Z",
     id: "loyalty-earned-live-order",
-    label: "Mock order SB-260604-LIVE",
+    label: "Order SB-260604-LIVE",
     orderId: "mock-active-order",
     points: 64,
     type: "earn",
@@ -83,7 +83,7 @@ export const initialLoyaltyTransactions: LoyaltyTransaction[] = [
   {
     createdAt: "2026-06-03T23:20:00.000Z",
     id: "loyalty-earned-past-order",
-    label: "Mock order SB-260604-PAST",
+    label: "Order SB-260604-PAST",
     orderId: "mock-completed-order",
     points: 43,
     type: "earn",

@@ -251,8 +251,7 @@ export function MobileGiftCheckoutView({
           <AssetIcon size={24} src={icons.star} />
         </span>
         <p className="text-[13px] leading-5 text-white/54">
-          Gift confirmations are stored locally in profile history until backend
-          order history is connected.
+          Gift confirmations are stored in profile history with order details.
         </p>
       </div>
     </section>

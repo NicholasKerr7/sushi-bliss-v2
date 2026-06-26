@@ -36,7 +36,7 @@ interface MobileProfilePaymentsViewProps {
   paymentMethods: PaymentMethod[];
 }
 
-/** Mobile payment manager for checkout-ready mock payment methods. */
+/** Mobile payment manager for checkout-ready payment methods. */
 export function MobileProfilePaymentsView({
   cartCount,
   unreadNotificationCount,
@@ -140,7 +140,7 @@ export function MobileProfilePaymentsView({
             <span className="block text-[var(--sb-red-bright)]">Methods</span>
           </h2>
           <p className="mt-3 text-[14px] leading-[22px] text-white/62 min-[390px]:mt-4 min-[390px]:text-[16px] min-[390px]:leading-6">
-            Saved cards are token-style mocks and can be selected at checkout.
+            Saved cards can be selected during checkout review.
           </p>
         </section>
 
@@ -160,7 +160,7 @@ export function MobileProfilePaymentsView({
           subtitle={
             defaultPaymentMethod
               ? `${formatPaymentLabel(defaultPaymentMethod)} is selected first at checkout.`
-              : "Add a tokenized mock payment method for checkout review."
+              : "Add a saved payment method for checkout review."
           }
           title={
             defaultPaymentMethod

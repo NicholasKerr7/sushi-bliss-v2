@@ -120,8 +120,7 @@ const adminWorkbenchTabs: readonly {
     stat: "5 open",
   },
   {
-    description:
-      "Mock publishing forms for menu, offers, settings, and access.",
+    description: "Publishing controls for menu, offers, settings, and access.",
     iconUrl: "/assets/icons/user-settings-icon.png",
     id: "forms",
     label: "Forms",

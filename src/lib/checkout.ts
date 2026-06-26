@@ -58,7 +58,7 @@ export function calculatePromoDiscount(
   return Math.min(promo.value, subtotalCents);
 }
 
-/** Generates a readable confirmation code for mock orders. */
+/** Generates a readable confirmation code for local orders. */
 export function createConfirmationCode(date = new Date()): string {
   const datePart = date
     .toISOString()

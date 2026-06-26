@@ -23,7 +23,7 @@ function isStoredOrder(value: unknown): value is Order {
   );
 }
 
-/** Validates stored mock orders enough to prevent corrupt localStorage reads. */
+/** Validates stored local orders enough to prevent corrupt localStorage reads. */
 export function parseStoredOrders(value: string | null): Order[] {
   if (!value) {
     return [];

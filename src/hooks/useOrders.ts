@@ -10,7 +10,7 @@ import {
 } from "@/lib/orderStorage";
 import type { Order } from "@/types/order";
 
-/** Stores active and past mock orders for the local ordering flow. */
+/** Stores active and past orders for the local ordering flow. */
 export function useOrders(initialOrders: Order[] = []) {
   const ordersSnapshot = useSyncExternalStore(
     subscribeToOrders,

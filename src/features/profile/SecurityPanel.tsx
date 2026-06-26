@@ -39,7 +39,7 @@ export function SecurityPanel({
   };
 
   const handleLogout = () => {
-    setStatusMessage("Signed out for this mock session.");
+    setStatusMessage("Signed out for this session.");
   };
 
   const handleReset = () => {

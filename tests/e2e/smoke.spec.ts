@@ -1017,7 +1017,7 @@ test.describe("admin experience", () => {
       .getByRole("button", { name: "Open System Settings Form" })
       .click();
     await formStudio.getByLabel("Pickup lead time").fill("20 minutes");
-    await formStudio.getByRole("button", { name: "Save mock" }).click();
+    await formStudio.getByRole("button", { name: "Save changes" }).click();
     await expect(
       formStudio.getByText("Saved", { exact: true }).first(),
     ).toBeVisible();

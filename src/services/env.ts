@@ -73,7 +73,7 @@ export function getServerSupabaseEnv(
   };
 }
 
-/** Reads Stripe placeholders for future checkout session and webhook services. */
+/** Reads Stripe env values for future checkout session and webhook services. */
 export function getStripeEnv(env: EnvRecord = process.env): StripeEnv {
   const browserPublishableKey = cleanEnvValue(
     env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,

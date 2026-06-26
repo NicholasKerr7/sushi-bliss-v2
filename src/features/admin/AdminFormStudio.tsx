@@ -106,7 +106,7 @@ function AdminFormTabs({
 }) {
   return (
     <nav
-      aria-label="Admin mock form domains"
+      aria-label="Admin form domains"
       className="smooth-scroll-area mt-5 flex gap-2 overflow-x-auto"
     >
       {adminFormConfigs.map((config) => {
@@ -198,12 +198,12 @@ function AdminFormReview({
 
       <div className="mt-5 rounded-[16px] border border-[var(--sb-gold)]/18 bg-[var(--sb-gold)]/[0.045] p-3">
         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sb-gold-soft)]">
-          Backend note
+          Release note
         </p>
         <p className="mt-2 text-sm leading-6 text-white/64">
-          This form saves locally in the admin mock layer. Supabase and Stripe
-          values still belong in environment variables when backend wiring
-          begins.
+          This form saves changes for review. Keep credentials out of
+          client-facing forms and manage service-specific values outside the
+          dashboard.
         </p>
       </div>
     </aside>
@@ -307,7 +307,7 @@ export function AdminFormStudio({
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-end">
           <div className="min-w-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--sb-gold-soft)]">
-              Mock edit forms
+              Edit forms
             </p>
             <h2
               className="editorial-title mt-2 text-[26px] leading-none text-white md:text-[32px]"
@@ -380,7 +380,7 @@ export function AdminFormStudio({
               disabled={!isDirty}
               type="submit"
             >
-              Save mock
+              Save changes
             </button>
             <button
               className="h-11 rounded-[12px] border border-[var(--sb-gold)]/32 bg-black/20 px-4 text-[12px] font-semibold uppercase tracking-[0.07em] text-[var(--sb-gold-soft)] transition hover:bg-[var(--sb-gold)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold disabled:cursor-not-allowed disabled:opacity-45"

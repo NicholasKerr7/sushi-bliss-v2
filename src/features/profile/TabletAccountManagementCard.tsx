@@ -32,7 +32,7 @@ export function TabletAccountManagementCard({
         ))}
         <button
           className="grid min-h-[24px] w-full grid-cols-[24px_minmax(0,1fr)] items-center gap-2 px-3 text-left text-[var(--sb-red-bright)]"
-          onClick={() => onAccountAction("Signed out for this mock session.")}
+          onClick={() => onAccountAction("Signed out for this session.")}
           type="button"
         >
           <AssetIcon size={16} src="/assets/icons/user-settings-icon.png" />

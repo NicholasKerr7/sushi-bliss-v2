@@ -10,7 +10,7 @@ interface AdminWorkspaceHandoffProps {
 
 const handoffNotes = [
   "Confirm the active record before the next service checkpoint.",
-  "Use quick edit for reversible mock updates before backend wiring.",
+  "Use quick edit for reversible updates before owner approval.",
   "Keep priority records visible until an owner has reviewed them.",
 ] as const;
 
@@ -59,7 +59,7 @@ export function AdminWorkspaceHandoff({
               Mode
             </p>
             <p className="mt-1 truncate font-mono text-[15px] text-[var(--sb-gold-soft)]">
-              Mock
+              Ready
             </p>
           </div>
         </div>

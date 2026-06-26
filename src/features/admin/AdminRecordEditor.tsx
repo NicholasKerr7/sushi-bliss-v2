@@ -40,7 +40,7 @@ const adminActionCopy: Record<AdminWorkspaceId, string> = {
   offers: "Check eligibility rules and expiration timing before publishing.",
   orders: "Update status, flag timing risks, and confirm guest communication.",
   reservations: "Confirm table assignment, party notes, and seating readiness.",
-  settings: "Keep mock toggles documented until backend wiring begins.",
+  settings: "Keep service toggles documented before broader release updates.",
   users: "Review permissions before granting broader operational access.",
 };
 

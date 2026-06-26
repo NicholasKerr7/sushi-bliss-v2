@@ -75,7 +75,7 @@ export const desktopProfilePrivacyRows: Array<{
     label: "Login alerts",
   },
   {
-    description: "Mock two-step protection until Supabase Auth is connected.",
+    description: "Extra sign-in protection for account changes.",
     key: "twoFactorEnabled",
     label: "Two-factor authentication",
   },

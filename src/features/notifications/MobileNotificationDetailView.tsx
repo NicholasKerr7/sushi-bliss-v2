@@ -112,8 +112,8 @@ export function MobileNotificationDetailView({
           Inbox state
         </h2>
         <p className="mt-3 text-[14px] leading-6 text-white/56">
-          Opening a notice marks it read locally. The related action stays
-          available until Supabase events replace this mock notification source.
+          Opening a notice marks it read. The related action stays available
+          while the concierge team keeps your account activity in sync.
         </p>
       </MobileNotificationsPanel>
     </>

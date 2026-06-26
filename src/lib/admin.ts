@@ -23,7 +23,7 @@ export function getAdminMetrics(): AdminMetric[] {
 
   return [
     {
-      detail: "Mock order revenue",
+      detail: "Order revenue",
       iconUrl: "/assets/icons/golden-ticket-icon.png",
       id: "revenue",
       label: "Revenue",
@@ -57,7 +57,7 @@ export function getAdminMetrics(): AdminMetric[] {
   ];
 }
 
-/** Groups mock orders by status for simple operational summaries. */
+/** Groups local orders by status for simple operational summaries. */
 export function getOrderStatusCounts(orders: Order[] = mockOrders) {
   return orders.reduce<Record<Order["status"], number>>(
     (counts, order) => ({

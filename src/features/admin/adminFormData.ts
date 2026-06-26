@@ -163,7 +163,7 @@ export const adminFormConfigs: readonly AdminFormConfig[] = [
       },
       { id: "reviewer", label: "Reviewer", type: "text" },
       {
-        helper: "This remains local until Supabase Auth policies are wired.",
+        helper: "Access changes stay staged until owner approval.",
         id: "handoff",
         label: "Access handoff",
         type: "textarea",
@@ -173,7 +173,7 @@ export const adminFormConfigs: readonly AdminFormConfig[] = [
     id: "users",
     initialValues: {
       access: "All access",
-      handoff: "Review access after backend roles are connected.",
+      handoff: "Review access after operational roles are approved.",
       name: "Hiroshi Tanaka",
       reviewer: "Owner review",
       role: "Super Admin",
@@ -183,8 +183,7 @@ export const adminFormConfigs: readonly AdminFormConfig[] = [
   },
   {
     accent: "System",
-    description:
-      "Adjust operational toggles that will later map to Supabase and Stripe config.",
+    description: "Adjust operational toggles for service readiness.",
     fields: [
       {
         id: "ordering",
@@ -202,17 +201,17 @@ export const adminFormConfigs: readonly AdminFormConfig[] = [
       {
         id: "paymentMode",
         label: "Payment mode",
-        options: ["Mock Stripe", "Stripe test", "Disabled"],
+        options: ["Integrated", "Test mode", "Disabled"],
         type: "select",
       },
       {
         id: "backendMode",
-        label: "Backend mode",
-        options: ["Local mock", "Supabase ready", "Maintenance"],
+        label: "Service mode",
+        options: ["Ready", "Connected", "Maintenance"],
         type: "select",
       },
       {
-        helper: "Do not add credentials here. Use env vars only.",
+        helper: "Do not add credentials here.",
         id: "note",
         label: "Release note",
         type: "textarea",
@@ -221,11 +220,11 @@ export const adminFormConfigs: readonly AdminFormConfig[] = [
     iconUrl: "/assets/icons/user-settings-icon.png",
     id: "settings",
     initialValues: {
-      backendMode: "Local mock",
+      backendMode: "Ready",
       drinksPolicy: "Restaurant only",
-      note: "Keep Supabase and Stripe credentials out of client code.",
+      note: "Keep credentials out of client-facing forms.",
       ordering: "Enabled",
-      paymentMode: "Mock Stripe",
+      paymentMode: "Test mode",
       pickupLead: "15 minutes",
     },
     title: "System Settings Form",

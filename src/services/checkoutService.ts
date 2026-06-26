@@ -8,7 +8,7 @@ import {
 import type { CheckoutOrderInput } from "@/types/checkout";
 import type { CartLineItem, Order } from "@/types/order";
 
-/** Creates a confirmed mock order behind the future checkout API boundary. */
+/** Creates a confirmed local order behind the future checkout API boundary. */
 export async function createCheckoutOrder(
   items: CartLineItem[],
   input: CheckoutOrderInput,

@@ -6,12 +6,12 @@ import {
 } from "@/services/contracts";
 import type { Order } from "@/types/order";
 
-/** Lists mock orders through the same boundary future Supabase reads will use. */
+/** Lists local orders through the same boundary future Supabase reads will use. */
 export async function listOrders(): Promise<ServiceResponse<Order[]>> {
   return serviceSuccess(mockOrders);
 }
 
-/** Resolves one order by id without coupling UI code to the mock seed module. */
+/** Resolves one order by id without coupling UI code to seed data modules. */
 export async function getOrder(id: string): Promise<ServiceResponse<Order>> {
   const order = mockOrders.find((candidate) => candidate.id === id);
 

@@ -67,8 +67,7 @@ export function TabletSupportContactView({
               {messages.length}
             </p>
             <p className="mt-3 text-[14px] leading-6 text-white/58">
-              Valid messages stay in local history and are ready for future
-              Supabase sync.
+              Valid messages stay in request history for concierge follow-up.
             </p>
             <button
               className="mt-4 h-11 w-full rounded-[12px] border border-[var(--sb-border)] text-[12px] uppercase tracking-[0.1em] text-[var(--sb-gold-soft)] transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sb-gold"

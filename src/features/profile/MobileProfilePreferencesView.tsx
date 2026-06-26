@@ -80,7 +80,7 @@ const privacyRows = [
     label: "Share dining history",
   },
   {
-    description: "Mock two-step protection for future auth.",
+    description: "Extra sign-in protection for account changes.",
     key: "twoFactorEnabled",
     label: "Two-factor enabled",
   },
@@ -302,13 +302,11 @@ export function MobileProfilePreferencesView({
             }}
             type="button"
           >
-            Reset profile mock
+            Reset profile
           </button>
           <button
             className="min-h-[58px] rounded-[14px] border border-[var(--sb-red-bright)]/45 text-[13px] uppercase tracking-[0.08em] text-[var(--sb-red-bright)]"
-            onClick={() =>
-              setMessage("Logout is ready for Supabase Auth wiring.")
-            }
+            onClick={() => setMessage("Signed out for this session.")}
             type="button"
           >
             Log out

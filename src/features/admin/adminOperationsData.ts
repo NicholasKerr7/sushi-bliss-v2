@@ -99,10 +99,10 @@ const settingsRows: WorkspaceRow[] = [
     value: "Rewards",
   },
   {
-    detail: "Supabase and Stripe remain environment-gated placeholders.",
+    detail: "Service credentials stay outside the dashboard.",
     id: "setting-backend",
-    label: "Backend readiness",
-    meta: "Mock mode",
+    label: "Service readiness",
+    meta: "Prepared",
     status: "Scheduled",
     value: "Services",
   },
@@ -299,9 +299,8 @@ export const workspaceSections: WorkspaceSection[] = [
     title: "Users & Roles",
   },
   {
-    accent: "Mock mode",
-    description:
-      "Review service toggles prepared for Supabase and Stripe wiring.",
+    accent: "Prepared",
+    description: "Review service toggles before release updates.",
     hash: "#settings-admin",
     iconUrl: "/assets/icons/user-settings-icon.png",
     id: "settings",

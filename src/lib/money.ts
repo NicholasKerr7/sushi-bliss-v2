@@ -50,7 +50,7 @@ export function calculateTipCents(
   return Math.round(subtotalCents * (tipPercent / 100));
 }
 
-/** Calculates the mock order total model used by cart and checkout previews. */
+/** Calculates the local order total model used by cart and checkout previews. */
 export function calculateOrderTotals(
   subtotalCents: number,
   discountCents = 0,
