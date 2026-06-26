@@ -255,6 +255,8 @@ export function DesktopLoyaltyDashboard({
                   alt=""
                   className="object-cover object-[70%_45%] opacity-62"
                   fill
+                  loading="eager"
+                  priority
                   sizes="396px"
                   src="/assets/menu/sushi/uni-nigiri.webp"
                 />
