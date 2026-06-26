@@ -7,6 +7,7 @@ import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { brand, icons } from "@/features/home/homeDashboardData";
+import { useItemGalleryCarousel } from "@/hooks/useItemGalleryCarousel";
 import {
   getMenuGalleryImageClassName,
   getMenuItemGalleryImages,
@@ -50,22 +51,17 @@ export function MobileItemDetailView({
   onToggleFavorite,
 }: MobileItemDetailViewProps) {
   const [expandedPanel, setExpandedPanel] = useState<DetailPanel | null>(null);
-  const [galleryState, setGalleryState] = useState({
-    imageIndex: 0,
+  const galleryImages = useMemo(() => getMenuItemGalleryImages(item), [item]);
+  const { imageIndex, selectImage } = useItemGalleryCarousel({
+    imageCount: galleryImages.length,
     itemId: item.id,
   });
-  const galleryImages = useMemo(() => getMenuItemGalleryImages(item), [item]);
-  const imageIndex =
-    galleryState.itemId === item.id ? galleryState.imageIndex : 0;
   const heroImage =
     galleryImages[imageIndex] || getTabletPresentationImage(item);
   const isDrinkItem = item.itemType === "drink";
   const isOnlineOrderable = isMenuItemOnlineOrderable(item);
   const orderAction = getMenuItemOrderAction(item);
   const tastingProfile = item.beverageTastingNotes || item.tastingNotes;
-  const selectImage = (nextImageIndex: number) => {
-    setGalleryState({ imageIndex: nextImageIndex, itemId: item.id });
-  };
 
   const togglePanel = (panel: DetailPanel) => {
     setExpandedPanel((current) => (current === panel ? null : panel));

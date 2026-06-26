@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
 import { Button } from "@/components/ui/Button";
 import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import { icons } from "@/features/home/homeDashboardData";
+import { useItemGalleryCarousel } from "@/hooks/useItemGalleryCarousel";
 import {
   getMenuGalleryImageClassName,
   getMenuItemGalleryImages,
@@ -55,28 +56,17 @@ export function TabletDetailView({
   onToggleFavorite,
 }: TabletDetailViewProps) {
   const galleryImages = useMemo(() => getMenuItemGalleryImages(item), [item]);
-  const [galleryState, setGalleryState] = useState({
-    imageIndex: 0,
-    itemId: item.id,
-  });
-  const imageIndex =
-    galleryState.itemId === item.id ? galleryState.imageIndex : 0;
+  const { imageIndex, selectImage, showNextImage, showPreviousImage } =
+    useItemGalleryCarousel({
+      imageCount: galleryImages.length,
+      itemId: item.id,
+    });
   const activeImage =
     galleryImages[imageIndex] || getTabletPresentationImage(item);
   const isDrinkItem = item.itemType === "drink";
   const isOnlineOrderable = isMenuItemOnlineOrderable(item);
   const orderAction = getMenuItemOrderAction(item);
   const tastingProfile = item.beverageTastingNotes || item.tastingNotes;
-  const selectImage = (nextImageIndex: number) => {
-    setGalleryState({ imageIndex: nextImageIndex, itemId: item.id });
-  };
-
-  const showPreviousImage = () => {
-    selectImage(imageIndex === 0 ? galleryImages.length - 1 : imageIndex - 1);
-  };
-  const showNextImage = () => {
-    selectImage(imageIndex === galleryImages.length - 1 ? 0 : imageIndex + 1);
-  };
 
   return (
     <>
