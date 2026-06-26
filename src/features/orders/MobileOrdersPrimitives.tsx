@@ -26,7 +26,7 @@ const orderStatusWeight: Record<OrderStatus, number> = {
   ready: 3,
 };
 
-/** Shared mobile orders header matching the reference logo and alert treatment. */
+/** Shared mobile orders header with branded logo and alert treatment. */
 export function MobileOrdersHeader({
   cartCount = 0,
   onOpenCart,

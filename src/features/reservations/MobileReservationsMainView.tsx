@@ -34,7 +34,7 @@ interface MobileReservationsMainViewProps {
   view: ReservationView;
 }
 
-/** Mobile reservations dashboard matching the reference list and booking entry. */
+/** Mobile reservations dashboard with upcoming, history, and booking entry states. */
 export function MobileReservationsMainView({
   cartCount,
   currentTime,

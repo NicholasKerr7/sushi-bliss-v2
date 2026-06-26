@@ -45,6 +45,7 @@ export function HomeMenuCard({
           <Image
             alt=""
             className="pointer-events-none object-cover"
+            fetchPriority={priority ? "high" : "auto"}
             fill
             loading={priority ? "eager" : "lazy"}
             priority={priority}

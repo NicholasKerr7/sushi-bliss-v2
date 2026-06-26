@@ -11,7 +11,7 @@ const offerDetailNavItems = [
   ["profile", "Profile", "/profile"],
 ] as const;
 
-/** Profile-active tablet footer matching the offer-detail reference screen. */
+/** Profile-active tablet footer for the offer-detail screen. */
 export function TabletOfferDetailBottomNav() {
   return (
     <nav

@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { Button } from "@/components/ui/Button";
 import { formatDateTime } from "@/lib/dates";
@@ -27,12 +29,14 @@ export function TabletOfferTile({
   return (
     <article className="grid h-[184px] grid-cols-[150px_minmax(0,1fr)] overflow-hidden rounded-[14px] border border-[var(--sb-gold)]/24 bg-[linear-gradient(135deg,rgba(13,22,23,0.96),rgba(9,10,11,0.98))]">
       <div className="relative min-h-full bg-black/30">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           alt={offer.title}
-          className="h-full w-full object-cover"
+          className="object-cover"
           fetchPriority={imagePriority ? "high" : "auto"}
+          fill
           loading={imagePriority ? "eager" : "lazy"}
+          priority={imagePriority}
+          sizes="150px"
           src={offer.imageUrl}
         />
       </div>

@@ -44,7 +44,7 @@ const relatedItemIds = [
   "truffle-wagyu-nigiri",
 ] as const;
 
-/** Tablet-only product overlay matching the item detail and add-on reference screens. */
+/** Tablet-only product overlay for item detail and add-on flows. */
 export function TabletItemDetailDialog({
   availableAddOns,
   availableSidePairings,

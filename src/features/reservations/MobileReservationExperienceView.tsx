@@ -127,7 +127,7 @@ export function MobileReservationExperienceView({
                   alt={experience.title}
                   className="object-cover"
                   fill
-                  loading={index < 3 ? "eager" : "lazy"}
+                  loading={index < 4 ? "eager" : "lazy"}
                   priority={index === 0}
                   sizes="118px"
                   src={experience.imageUrl}

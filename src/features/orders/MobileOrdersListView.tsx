@@ -42,7 +42,7 @@ interface MobileOrdersListViewProps {
   view: OrderView;
 }
 
-/** Mobile orders list screen modeled after the active order reference screen. */
+/** Mobile orders list screen for active and saved order states. */
 export function MobileOrdersListView({
   activeOrders,
   cartCount,

@@ -277,6 +277,7 @@ export function DesktopFeatureMenuCard({
           <Image
             alt=""
             className="object-cover"
+            fetchPriority={eagerImage ? "high" : "auto"}
             fill
             loading={eagerImage ? "eager" : "lazy"}
             priority={eagerImage}
@@ -378,6 +379,7 @@ export function DesktopCompactMenuRow({
         <Image
           alt=""
           className="object-cover"
+          fetchPriority={eagerImage ? "high" : "auto"}
           fill
           loading={eagerImage ? "eager" : "lazy"}
           priority={eagerImage}

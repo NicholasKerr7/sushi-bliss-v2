@@ -32,7 +32,7 @@ const favoriteFilterTabs = [
 
 type FavoriteFilterId = (typeof favoriteFilterTabs)[number][0];
 
-/** Tablet favorites surface matching the saved-item reference dashboard. */
+/** Tablet favorites surface for saved items and recent dining activity. */
 export function TabletFavoritesPage() {
   const { addItem, itemCount } = useCart();
   const { clearFavorites, favoriteItems, hasFavorites, toggleFavorite } =

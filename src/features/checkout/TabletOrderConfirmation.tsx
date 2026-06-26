@@ -26,7 +26,7 @@ interface TabletOrderConfirmationProps {
   pointsAwarded: number;
 }
 
-/** Tablet order confirmation view matching the reference while using real order data. */
+/** Tablet order confirmation view backed by the current order data. */
 export function TabletOrderConfirmation({
   onClose,
   order,

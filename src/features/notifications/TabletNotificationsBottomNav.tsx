@@ -14,7 +14,7 @@ const notificationBottomItems = [
   ["account", "Account", "/profile"],
 ] as const;
 
-/** Seven-item tablet footer matching the notifications reference flow. */
+/** Seven-item tablet footer for the notifications flow. */
 export function TabletNotificationsBottomNav({
   unreadCount,
 }: {

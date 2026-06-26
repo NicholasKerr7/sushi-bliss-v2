@@ -23,7 +23,7 @@ interface TabletMenuExplorerProps {
   onViewDetails: (item: MenuItem) => void;
 }
 
-/** Coordinates the tablet menu reference screens without owning their view markup. */
+/** Coordinates tablet menu states without owning their view markup. */
 export function TabletMenuExplorer({
   category,
   categories,

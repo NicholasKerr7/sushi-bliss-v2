@@ -14,7 +14,7 @@ const referralNavItems = [
   ["profile", "Profile", "/profile"],
 ] as const;
 
-/** Rewards-active tablet footer matching the referral reference screen. */
+/** Rewards-active tablet footer for the referral screen. */
 export function TabletReferralEarnBottomNav() {
   return (
     <nav

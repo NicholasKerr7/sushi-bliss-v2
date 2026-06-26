@@ -85,7 +85,7 @@ export function DesktopExperienceChooser({
                       alt=""
                       className="object-cover"
                       fill
-                      loading={index < 3 ? "eager" : "lazy"}
+                      loading={index < 4 ? "eager" : "lazy"}
                       priority={index === 0}
                       sizes="220px"
                       src={experience.imageUrl}

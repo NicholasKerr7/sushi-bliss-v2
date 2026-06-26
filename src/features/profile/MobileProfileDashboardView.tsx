@@ -59,7 +59,7 @@ const profilePreviewMarks: Record<string, string> = {
   "Upcoming reservation": "RS",
 };
 
-/** Mobile member dashboard modeled after the account reference cards. */
+/** Mobile member dashboard with account shortcuts and loyalty status. */
 export function MobileProfileDashboardView({
   account,
   activeOrderCount,

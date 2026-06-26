@@ -9,7 +9,7 @@ interface TabletAboutHeaderProps {
   unreadCount: number;
 }
 
-/** Header chrome for the tablet About / Our Story reference screen. */
+/** Header chrome for the tablet About / Our Story screen. */
 export function TabletAboutHeader({ unreadCount }: TabletAboutHeaderProps) {
   return (
     <header className="border-b border-white/[0.08] bg-[#050607]/98">

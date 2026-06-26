@@ -28,7 +28,7 @@ interface MobileCartDialogProps {
   totals: OrderTotals;
 }
 
-/** Full-screen mobile cart view modeled after the reference cart screen. */
+/** Full-screen mobile cart view with line-item editing and checkout entry. */
 export function MobileCartDialog({
   itemCount,
   items,

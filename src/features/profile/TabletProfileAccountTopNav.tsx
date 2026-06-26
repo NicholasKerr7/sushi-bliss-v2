@@ -25,7 +25,7 @@ interface TabletProfileAccountTopNavProps {
   onOpenCart: () => void;
 }
 
-/** Top navigation used by the account settings tablet reference screen. */
+/** Top navigation used by the tablet account settings screen. */
 export function TabletProfileAccountTopNav({
   cartCount,
   profile,

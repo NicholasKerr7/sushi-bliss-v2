@@ -40,6 +40,7 @@ export function MobileMenuGridCard({
         <Image
           alt=""
           className="object-cover"
+          fetchPriority={eagerImage ? "high" : "auto"}
           fill
           loading={eagerImage ? "eager" : "lazy"}
           priority={eagerImage}
@@ -103,6 +104,7 @@ export function MobileMenuListCard({
         <Image
           alt=""
           className="object-cover"
+          fetchPriority={eagerImage ? "high" : "auto"}
           fill
           loading={eagerImage ? "eager" : "lazy"}
           priority={eagerImage}
@@ -170,6 +172,7 @@ export function MobileSearchResultRow({
         <Image
           alt=""
           className="object-cover"
+          fetchPriority={eagerImage ? "high" : "auto"}
           fill
           loading={eagerImage ? "eager" : "lazy"}
           priority={eagerImage}

@@ -28,7 +28,7 @@ interface TabletOrdersDashboardProps {
   view: OrderView;
 }
 
-/** Tablet-first orders surface matching the live tracking reference flow. */
+/** Tablet-first orders surface for live tracking and order history. */
 export function TabletOrdersDashboard({
   activeOrders,
   cartCount,

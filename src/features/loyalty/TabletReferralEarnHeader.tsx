@@ -12,7 +12,7 @@ interface TabletReferralEarnHeaderProps {
   unreadCount: number;
 }
 
-/** Header chrome for the tablet referral reference screen. */
+/** Header chrome for the tablet referral screen. */
 export function TabletReferralEarnHeader({
   cartCount,
   onOpenCart,

@@ -58,6 +58,7 @@ export function TabletMenuCard({
           <Image
             alt=""
             className="object-cover"
+            fetchPriority={eagerImage ? "high" : "auto"}
             fill
             loading={eagerImage ? "eager" : "lazy"}
             priority={eagerImage}
@@ -110,6 +111,7 @@ export function TabletCompactMenuRow({
         <Image
           alt=""
           className="object-cover"
+          fetchPriority={eagerImage ? "high" : "auto"}
           fill
           loading={eagerImage ? "eager" : "lazy"}
           priority={eagerImage}

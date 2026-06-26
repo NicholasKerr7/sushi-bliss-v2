@@ -16,7 +16,7 @@ interface MobileChefsListViewProps {
   onSelectChef: (chef: Chef) => void;
 }
 
-/** Mobile-first chef roster inspired by the master-chefs reference screens. */
+/** Mobile-first chef roster for the master chefs experience. */
 export function MobileChefsListView({
   chefs,
   onSelectChef,
