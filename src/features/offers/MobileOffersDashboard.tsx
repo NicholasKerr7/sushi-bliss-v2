@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import { BottomNavigation } from "@/components/layout/BottomNavigation";
@@ -27,12 +28,17 @@ interface OfferCopyState {
 
 /** Coordinates the mobile offers, referrals, detail, and copy-code flow. */
 export function MobileOffersDashboard() {
+  const searchParams = useSearchParams();
   const currentTime = useMemo(() => new Date().getTime(), []);
   const [cartOpen, setCartOpen] = useState(false);
   const [copyState, setCopyState] = useState<OfferCopyState | null>(null);
   const [filter, setFilter] = useState<MobileOfferFilter>("active");
   const [query, setQuery] = useState("");
-  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(() => {
+    const offerId = searchParams.get("offer");
+
+    return allOffers.find((offer) => offer.id === offerId) || null;
+  });
   const { itemCount } = useCart();
   const { unreadCount } = useNotifications();
 

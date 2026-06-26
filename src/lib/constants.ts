@@ -18,7 +18,9 @@ export const ASSET_FALLBACKS = {
 } as const;
 
 export const ENV_KEYS = {
+  analyticsEnabled: "NEXT_PUBLIC_ENABLE_ANALYTICS",
   supabaseUrl: "NEXT_PUBLIC_SUPABASE_URL",
+  supabasePublishableKey: "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
   supabaseAnonKey: "NEXT_PUBLIC_SUPABASE_ANON_KEY",
   stripePublishableKey: "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
 } as const;

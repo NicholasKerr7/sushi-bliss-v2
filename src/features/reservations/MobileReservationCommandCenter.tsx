@@ -10,6 +10,7 @@ import {
   MobileReservationIconCircle,
   MobileReservationPanel,
 } from "./MobileReservationsPrimitives";
+import { MobileReservationDetailTrigger } from "./MobileReservationDetailTrigger";
 
 type ReservationView = "upcoming" | "past";
 
@@ -82,14 +83,14 @@ export function MobileReservationCommandCenter({
 
       <div className="mt-3 grid grid-cols-[1.15fr_0.85fr] gap-2.5 min-[390px]:mt-4 min-[390px]:gap-3">
         {featuredReservation ? (
-          <button
+          <MobileReservationDetailTrigger
             className="red-glow-button flex min-h-[46px] items-center justify-center gap-2 rounded-[12px] text-[10px] uppercase tracking-[0.06em] min-[390px]:min-h-[56px] min-[390px]:gap-3 min-[390px]:rounded-[13px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"
-            onClick={() => onViewReservation(featuredReservation)}
-            type="button"
+            onViewReservation={onViewReservation}
+            reservation={featuredReservation}
           >
             <AssetIcon size={24} src={icons.calendar} />
             View Next
-          </button>
+          </MobileReservationDetailTrigger>
         ) : (
           <button
             className="red-glow-button flex min-h-[46px] items-center justify-center gap-2 rounded-[12px] text-[10px] uppercase tracking-[0.06em] min-[390px]:min-h-[56px] min-[390px]:gap-3 min-[390px]:rounded-[13px] min-[390px]:text-[12px] min-[390px]:tracking-[0.08em]"

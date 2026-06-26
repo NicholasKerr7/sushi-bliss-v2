@@ -6,39 +6,28 @@ Sushi Bliss v2 is configured for Vercel with the Next.js framework preset.
 
 - Production URL: [https://sushi-bliss-v2.vercel.app](https://sushi-bliss-v2.vercel.app)
 - Vercel target: `production`
-- Last manually verified deployment: `dpl_CJkdGrr6xMMDSGGkoL4gt6QzUxtL`
 
 Set `NEXT_PUBLIC_SITE_URL=https://sushi-bliss-v2.vercel.app` in production, or
 replace it with the final custom domain if one is assigned later.
 
 ## Release Verification
 
-The latest production release was verified with:
+Verify each release candidate with:
 
+- `npm run format:check`
 - `npm run lint`
 - `npm run typecheck`
+- `npm run test`
 - `npm run build`
-- Desktop route checks for orders, notifications, and reservation flows
-- Live Playwright smoke against production routes at mobile and desktop widths
-- Live mobile purchase path smoke against production
+- `npm audit --audit-level=moderate`
+- Production route/header smoke after deploy
+
+After deployment, verify:
+
 - `vercel inspect https://sushi-bliss-v2.vercel.app`
 - `vercel logs https://sushi-bliss-v2.vercel.app --level error --since 30m`
-
-The production deployment is `READY`, and the final error-log scan found no
-runtime errors.
-
-## Required Checks
-
-Run these before deploying:
-
-```bash
-npm run format:check
-npm run typecheck
-npm run lint
-npm run test
-npm run build
-npm audit --audit-level=moderate
-```
+- Mobile and desktop smoke routes for `/`, `/menu`, `/orders`, `/reservations`,
+  `/profile`, `/support`, and `/admin`
 
 ## GitHub Actions
 
@@ -55,9 +44,9 @@ arrive as isolated pull requests.
 Use the linked Vercel project from the repository root:
 
 ```bash
-vercel link --yes --project sushi-bliss-v2
-vercel env pull .env.local
-vercel deploy --prod
+npx vercel link --yes --project sushi-bliss-v2
+npx vercel env pull .env.local
+npx vercel deploy --prod
 ```
 
 For CI, store `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` as
@@ -68,3 +57,7 @@ provider secrets. Do not commit `.vercel` or real environment values.
 The app works with mock/local data without backend credentials. Future Supabase
 and Stripe values should be configured in Vercel project settings and mirrored
 from `.env.example`.
+
+Use `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` for new Supabase projects. Keep
+`SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, and
+`STRIPE_WEBHOOK_SECRET` server-only.

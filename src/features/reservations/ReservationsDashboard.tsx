@@ -45,6 +45,7 @@ export function ReservationsDashboard() {
   const { profile } = useProfile();
   const searchParams = useSearchParams();
   const reservationIntentActive = hasReservationIntent(searchParams);
+  const initialReservationId = searchParams.get("reservation") || undefined;
   const mode = useResponsiveMode();
   const { itemCount } = useCart();
   const { unreadCount } = useNotifications();
@@ -140,6 +141,7 @@ export function ReservationsDashboard() {
         draft={draft}
         editingReservation={editingReservation}
         initialBookingOpen={reservationIntentActive}
+        initialReservationId={initialReservationId}
         onCancelReservation={cancelReservation}
         onCartOpenChange={setCartOpen}
         onConfirmedReservationChange={setConfirmedReservation}

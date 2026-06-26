@@ -93,7 +93,7 @@ tests/
 Install dependencies:
 
 ```bash
-npm install
+npm ci
 ```
 
 Run the local dev server:
@@ -137,10 +137,14 @@ the client and out of Git.
 Important values:
 
 - `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_ENABLE_ANALYTICS`
 - `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` for legacy Supabase projects only
+- `SUPABASE_SECRET_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_PUBLISHABLE_KEY`
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 

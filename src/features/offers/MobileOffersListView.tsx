@@ -248,13 +248,12 @@ function MobileFeaturedOffer({
                   : "Copy"}
             </button>
           </div>
-          <button
+          <OfferDetailSubmitButton
             className="mt-4 min-h-[48px] rounded-[13px] border border-[var(--sb-border)] text-[13px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-            onClick={() => onViewOffer(offer)}
-            type="button"
-          >
-            View details
-          </button>
+            label="View details"
+            offer={offer}
+            onViewOffer={onViewOffer}
+          />
         </div>
       </div>
     </MobileOffersPanel>
@@ -322,14 +321,13 @@ function MobileOfferCard({
             Ends {formatDateTime(offer.expiresAt)}
           </p>
           <div className="mt-3 grid grid-cols-2 gap-2">
-            <button
+            <OfferDetailSubmitButton
               aria-label={`View details for ${offer.title}`}
               className="min-h-[40px] min-w-0 rounded-[11px] border border-[var(--sb-border)] px-1 text-[10px] uppercase tracking-normal text-[var(--sb-gold-soft)] min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]"
-              onClick={() => onViewOffer(offer)}
-              type="button"
-            >
-              View
-            </button>
+              label="View"
+              offer={offer}
+              onViewOffer={onViewOffer}
+            />
             <button
               className="min-h-[40px] min-w-0 rounded-[11px] border border-[var(--sb-red-bright)]/45 px-1 text-[10px] uppercase tracking-normal text-[var(--sb-red-bright)] disabled:border-white/12 disabled:text-white/34 min-[390px]:text-[12px] min-[390px]:tracking-[0.06em]"
               disabled={expired}
@@ -342,6 +340,37 @@ function MobileOfferCard({
         </div>
       </div>
     </MobileOffersPanel>
+  );
+}
+
+function OfferDetailSubmitButton({
+  "aria-label": ariaLabel,
+  className,
+  label,
+  offer,
+  onViewOffer,
+}: {
+  "aria-label"?: string;
+  className: string;
+  label: string;
+  offer: Offer;
+  onViewOffer: (offer: Offer) => void;
+}) {
+  return (
+    <form
+      action="/offers"
+      className="contents"
+      method="get"
+      onSubmit={(event) => {
+        event.preventDefault();
+        onViewOffer(offer);
+      }}
+    >
+      <input name="offer" type="hidden" value={offer.id} />
+      <button aria-label={ariaLabel} className={className} type="submit">
+        {label}
+      </button>
+    </form>
   );
 }
 

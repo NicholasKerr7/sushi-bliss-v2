@@ -16,6 +16,7 @@ import {
   MobileReservationsHeader,
 } from "./MobileReservationsPrimitives";
 import { MobileReservationCommandCenter } from "./MobileReservationCommandCenter";
+import { MobileReservationDetailTrigger } from "./MobileReservationDetailTrigger";
 
 type ReservationView = "upcoming" | "past";
 
@@ -283,14 +284,14 @@ function FeaturedReservationCard({
             Cancel
           </button>
         </div>
-        <button
+        <MobileReservationDetailTrigger
           className="mt-4 flex h-[54px] w-full items-center justify-center gap-4 rounded-full border border-[var(--sb-gold)]/62 text-[15px] uppercase tracking-[0.08em] text-[var(--sb-gold-soft)]"
-          onClick={() => onViewReservation(reservation)}
-          type="button"
+          onViewReservation={onViewReservation}
+          reservation={reservation}
         >
           View Reservation
           <ChevronIcon direction="right" size={18} />
-        </button>
+        </MobileReservationDetailTrigger>
       </div>
     </MobileReservationPanel>
   );
@@ -344,13 +345,13 @@ function CompactReservationRow({
           {reservation.partySize} guests - {display.location?.name}
         </p>
         <div className="mt-3 grid grid-cols-2 gap-2">
-          <button
+          <MobileReservationDetailTrigger
             className="min-h-11 rounded-[10px] border border-[var(--sb-border)] text-[11px] uppercase tracking-[0.07em] text-[var(--sb-gold-soft)]"
-            onClick={() => onViewReservation(reservation)}
-            type="button"
+            onViewReservation={onViewReservation}
+            reservation={reservation}
           >
             View
-          </button>
+          </MobileReservationDetailTrigger>
           <button
             className="min-h-11 rounded-[10px] border border-white/10 bg-white/[0.035] text-[11px] uppercase tracking-[0.07em] text-white/70 disabled:cursor-not-allowed disabled:opacity-45"
             disabled={!canManage}
