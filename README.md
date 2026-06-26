@@ -18,6 +18,18 @@ Production: [https://sushi-bliss-v2.vercel.app](https://sushi-bliss-v2.vercel.ap
 Current service mode: local demo state, static asset data, and backend-ready
 service boundaries.
 
+## App Preview
+
+Real screenshots captured from the current Sushi Bliss v2 app build.
+
+| Mobile home                                                                           | Tablet menu                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| ![Sushi Bliss v2 mobile home screen](docs/screenshots/sushi-bliss-v2-mobile-home.png) | ![Sushi Bliss v2 tablet menu screen](docs/screenshots/sushi-bliss-v2-tablet-menu.png) |
+
+| Desktop admin                                                                                |
+| -------------------------------------------------------------------------------------------- |
+| ![Sushi Bliss v2 desktop admin dashboard](docs/screenshots/sushi-bliss-v2-desktop-admin.png) |
+
 ## What Is Built
 
 - Mobile-first restaurant app shell with customer navigation.
