@@ -38,6 +38,7 @@ interface MobileProfileDashboardViewProps {
   cartCount: number;
   favoriteCount: number;
   profile: UserProfile;
+  surfaceControlsReady: boolean;
   unreadNotificationCount: number;
   upcomingReservations: Reservation[];
   onOpenCart: () => void;
@@ -66,6 +67,7 @@ export function MobileProfileDashboardView({
   cartCount,
   favoriteCount,
   profile,
+  surfaceControlsReady,
   unreadNotificationCount,
   upcomingReservations,
   onOpenCart,
@@ -206,6 +208,7 @@ export function MobileProfileDashboardView({
           <ProfilePreviewHeader
             icon="/assets/icons/user-icon.png"
             label="Account information"
+            ready={surfaceControlsReady}
             onClick={() => onOpenSurface("account")}
           />
           <div className="px-4 pb-4">
@@ -222,6 +225,7 @@ export function MobileProfileDashboardView({
           <ProfilePreviewHeader
             icon="/assets/icons/map-pin-icon.png"
             label="Saved addresses"
+            ready={surfaceControlsReady}
             onClick={() => onOpenSurface("addresses")}
           />
           <div className="px-4 pb-4">
@@ -241,6 +245,7 @@ export function MobileProfileDashboardView({
           <ProfilePreviewHeader
             icon="/assets/icons/shopping-cart-icon.png"
             label="Payment methods"
+            ready={surfaceControlsReady}
             onClick={() => onOpenSurface("payments")}
           />
           <div className="px-4 pb-4">
@@ -285,6 +290,7 @@ export function MobileProfileDashboardView({
           <ProfilePreviewHeader
             icon="/assets/icons/user-settings-icon.png"
             label="Preferences & security"
+            ready={surfaceControlsReady}
             onClick={() => onOpenSurface("preferences")}
           />
           <div className="grid divide-y divide-white/10 px-4 pb-2">
@@ -330,11 +336,13 @@ function ProfilePreviewHeader({
   icon,
   label,
   onClick,
+  ready = true,
 }: {
   href?: string;
   icon?: string;
   label: string;
   onClick?: () => void;
+  ready?: boolean;
 }) {
   const content = (
     <>
@@ -359,7 +367,7 @@ function ProfilePreviewHeader({
   );
 
   const className =
-    "flex min-h-[60px] w-full items-center justify-between gap-3 px-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[68px] min-[390px]:gap-4 min-[390px]:px-4";
+    "flex min-h-[60px] w-full items-center justify-between gap-3 px-3 text-left transition disabled:cursor-wait disabled:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sb-gold)] min-[390px]:min-h-[68px] min-[390px]:gap-4 min-[390px]:px-4";
 
   if (href) {
     return (
@@ -370,7 +378,12 @@ function ProfilePreviewHeader({
   }
 
   return (
-    <button className={className} onClick={onClick} type="button">
+    <button
+      className={className}
+      disabled={!ready}
+      onClick={onClick}
+      type="button"
+    >
       {content}
     </button>
   );

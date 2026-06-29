@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 import { CartDrawer } from "@/features/cart/CartDrawer";
 import { useCart } from "@/hooks/useCart";
@@ -26,6 +26,10 @@ import { MobileProfilePreferencesView } from "./MobileProfilePreferencesView";
 type PreferencesUpdate =
   | Partial<UserPreferences>
   | ((preferences: UserPreferences) => UserPreferences);
+
+const subscribeToHydration = () => () => {};
+const getClientHydrationSnapshot = () => true;
+const getServerHydrationSnapshot = () => false;
 
 interface MobileProfileExperienceProps {
   account: LoyaltyAccount;
@@ -65,6 +69,11 @@ export function MobileProfileExperience({
 }: MobileProfileExperienceProps) {
   const [surface, setSurface] = useState<MobileProfileSurface>("dashboard");
   const [cartOpen, setCartOpen] = useState(false);
+  const surfaceControlsReady = useSyncExternalStore(
+    subscribeToHydration,
+    getClientHydrationSnapshot,
+    getServerHydrationSnapshot,
+  );
   const { itemCount } = useCart();
 
   const goDashboard = () => setSurface("dashboard");
@@ -136,6 +145,7 @@ export function MobileProfileExperience({
           cartCount={itemCount}
           favoriteCount={favoriteCount}
           profile={profile}
+          surfaceControlsReady={surfaceControlsReady}
           unreadNotificationCount={unreadNotificationCount}
           upcomingReservations={upcomingReservations}
           onOpenCart={openCart}
