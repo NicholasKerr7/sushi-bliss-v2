@@ -324,6 +324,7 @@ export function DesktopItemCustomizeView({
   const galleryImages = buildCustomizeGalleryImages(item);
   const { imageIndex: activeGalleryIndex, selectImage } =
     useItemGalleryCarousel({
+      autoAdvance: false,
       imageCount: galleryImages.length,
       itemId: `customize:${item.id}`,
     });

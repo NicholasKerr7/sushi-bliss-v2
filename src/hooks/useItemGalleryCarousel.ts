@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { useAutoCarousel } from "@/hooks/useAutoCarousel";
 
 interface UseItemGalleryCarouselOptions {
+  autoAdvance?: boolean;
   imageCount: number;
   itemId: string;
 }
@@ -14,8 +15,9 @@ interface ItemGalleryState {
   itemId: string;
 }
 
-/** Keeps item detail image galleries manual, auto-advancing, and reset-safe across item changes. */
+/** Keeps item galleries reset-safe while allowing each surface to choose manual or auto behavior. */
 export function useItemGalleryCarousel({
+  autoAdvance = true,
   imageCount,
   itemId,
 }: UseItemGalleryCarouselOptions) {
@@ -57,6 +59,7 @@ export function useItemGalleryCarousel({
 
   useAutoCarousel({
     count: imageCount,
+    enabled: autoAdvance,
     onAdvance: showNextImage,
     resetKey: `${itemId}:${imageIndex}`,
   });

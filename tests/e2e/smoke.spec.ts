@@ -57,6 +57,13 @@ async function expectCarouselAutoAdvances(carousel: Locator) {
     .not.toBe(activeLabel);
 }
 
+async function getActivePressedLabel(container: Locator) {
+  return container
+    .locator('button[aria-pressed="true"]')
+    .first()
+    .getAttribute("aria-label");
+}
+
 test.describe("customer experience", () => {
   test("renders customer entry and supports menu add-to-cart", async ({
     page,
@@ -559,6 +566,21 @@ test.describe("customer experience", () => {
     ).toBeVisible();
     await page.getByRole("button", { name: "Customize" }).click();
     await expect(page.getByText("Your selection")).toBeVisible();
+
+    const customizationGallery = page
+      .locator("main")
+      .filter({ hasText: "Special instructions" });
+    const activeGalleryLabel =
+      await getActivePressedLabel(customizationGallery);
+
+    expect(activeGalleryLabel).toBeTruthy();
+    await page.waitForTimeout(5800);
+    await expect
+      .poll(() => getActivePressedLabel(customizationGallery), {
+        intervals: [500],
+        timeout: 1000,
+      })
+      .toBe(activeGalleryLabel);
 
     await expectScrollableSurface(
       page
