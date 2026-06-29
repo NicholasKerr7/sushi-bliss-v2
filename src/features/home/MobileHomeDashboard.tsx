@@ -118,13 +118,19 @@ function MobileSearchBar({
   onSubmit,
 }: MobileSearchBarProps) {
   return (
-    <form className="mt-6 grid grid-cols-[1fr_56px] gap-3" onSubmit={onSubmit}>
+    <form
+      action="/menu"
+      className="mt-6 grid grid-cols-[1fr_56px] gap-3"
+      method="get"
+      onSubmit={onSubmit}
+    >
       <label className="flex h-14 items-center gap-3 rounded-[14px] border border-[var(--sb-border)] bg-black/52 px-4 backdrop-blur-xl">
         <AssetIcon size={23} src={icons.search} />
         <span className="sr-only">Search menu</span>
         <input
           aria-label="Search menu"
           className="h-full w-full bg-transparent text-[15px] text-white outline-none placeholder:text-[var(--sb-muted)]"
+          name="q"
           onChange={(event) => onQueryChange(event.target.value)}
           placeholder="Search menu..."
           value={query}

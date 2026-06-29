@@ -114,7 +114,6 @@ export function MobileMenuExplorer({
             categories={visibleCategories}
             items={popularItems}
             onAddToCart={onAddToCart}
-            onOpenCart={onOpenCart}
             onQueryChange={onQueryChange}
             onSelectCategory={onSelectCategory}
             onViewDetails={onViewDetails}
@@ -131,7 +130,6 @@ function MobileMenuOverview({
   categories,
   items,
   onAddToCart,
-  onOpenCart,
   onQueryChange,
   onSelectCategory,
   onViewDetails,
@@ -140,7 +138,6 @@ function MobileMenuOverview({
   categories: MenuCategory[];
   items: MenuItem[];
   onAddToCart: (item: MenuItem) => void;
-  onOpenCart: () => void;
   onQueryChange: (query: string) => void;
   onSelectCategory: (categoryId: string) => void;
   onViewDetails: (item: MenuItem) => void;
@@ -213,11 +210,10 @@ function MobileMenuOverview({
         Prices do not include tax. Photos for illustration only.
       </p>
 
-      <button
+      <Link
         aria-label="View Bliss Member progress"
         className="mt-5 grid w-full grid-cols-[58px_minmax(0,1fr)_auto] items-center gap-4 overflow-hidden rounded-[20px] border border-[var(--sb-gold)]/24 bg-[linear-gradient(145deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02)_42%,rgba(96,7,8,0.28))] p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_48px_rgba(0,0,0,0.34)] transition hover:border-[var(--sb-gold)]/42"
-        onClick={onOpenCart}
-        type="button"
+        href="/loyalty"
       >
         <span className="grid h-[58px] w-[58px] place-items-center rounded-full border border-[var(--sb-gold)]/32 bg-black/42 shadow-[0_0_24px_rgba(215,168,79,0.12)]">
           <AssetIcon size={42} src={icons.flower} />
@@ -245,7 +241,7 @@ function MobileMenuOverview({
         <span className="text-[var(--sb-gold)]" aria-hidden="true">
           <ChevronIcon direction="right" size={18} />
         </span>
-      </button>
+      </Link>
     </>
   );
 }

@@ -149,7 +149,9 @@ function TabletHeader({
         </span>
       </Link>
       <form
+        action="/menu"
         className="mx-auto flex h-[54px] w-full max-w-[386px] items-center gap-3 rounded-[20px] border border-white/16 bg-white/[0.035] px-4 lg:h-[58px] lg:gap-4 lg:rounded-[24px] lg:px-6"
+        method="get"
         onSubmit={onSearchSubmit}
       >
         <AssetIcon size={24} src={icons.search} />
@@ -159,6 +161,7 @@ function TabletHeader({
         <input
           className="h-full w-full bg-transparent text-[15px] text-white outline-none placeholder:text-white/58 lg:text-[16px]"
           id="tablet-dashboard-search"
+          name="q"
           onChange={(event) => onQueryChange(event.target.value)}
           placeholder="Search dishes, rolls, or more..."
           value={query}

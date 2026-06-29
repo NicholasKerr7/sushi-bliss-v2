@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 
@@ -43,6 +44,7 @@ function getDashboardItems(category: DashboardCategoryId) {
 
 /** Renders the responsive home dashboard while keeping v2 cart behavior. */
 export function HomeDashboard() {
+  const router = useRouter();
   const { addItem, itemCount } = useCart();
   const [activeCategory, setActiveCategory] =
     useState<DashboardCategoryId>("nigiri");
@@ -75,7 +77,20 @@ export function HomeDashboard() {
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+
+    const formData = new FormData(event.currentTarget);
+    const submittedQuery = formData.get("q");
+    const trimmedQuery =
+      typeof submittedQuery === "string" ? submittedQuery.trim() : query.trim();
+
+    if (!trimmedQuery) {
+      router.push("/menu");
+      return;
+    }
+
+    const searchParams = new URLSearchParams({ q: trimmedQuery });
+
+    router.push(`/menu?${searchParams.toString()}`);
   };
 
   return (

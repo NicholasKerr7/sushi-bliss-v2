@@ -174,6 +174,60 @@ test.describe("customer experience", () => {
     }).toPass();
   });
 
+  test("routes home search submissions to filtered menu results", async ({
+    page,
+  }, testInfo) => {
+    const isMobileProject = testInfo.project.name.includes("mobile");
+    const isTabletProject = testInfo.project.name.includes("tablet");
+
+    test.skip(
+      !isMobileProject && !isTabletProject,
+      "Home search form is rendered on mobile and tablet dashboards.",
+    );
+
+    await page.goto("/home", { waitUntil: "domcontentloaded" });
+    await expectNoFrameworkErrorOverlay(page);
+
+    const searchInput = page.getByRole("textbox", {
+      name: isTabletProject ? "Search dishes, rolls, or more" : "Search menu",
+    });
+
+    await searchInput.fill("otoro");
+    await searchInput.press("Enter");
+
+    await expect(page).toHaveURL(/\/menu\?q=otoro/);
+    await expectNoFrameworkErrorOverlay(page);
+
+    const menuSection = page.locator("#menu");
+
+    await expect(
+      menuSection.getByRole("heading", { name: /Otoro Nigiri/i }).first(),
+    ).toBeVisible();
+  });
+
+  test("opens loyalty from mobile member progress card", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("mobile"),
+      "Member progress card is part of the mobile menu overview.",
+    );
+
+    await page.goto("/menu", { waitUntil: "domcontentloaded" });
+    await expectNoFrameworkErrorOverlay(page);
+
+    const memberProgressLink = page
+      .locator("#menu")
+      .getByRole("link", { name: "View Bliss Member progress" });
+
+    await expect(memberProgressLink).toHaveAttribute("href", "/loyalty");
+    await memberProgressLink.click();
+
+    await expect(page).toHaveURL(/\/loyalty$/);
+    await expectNoFrameworkErrorOverlay(page);
+    await expect(page.locator("#loyalty")).toBeVisible();
+  });
+
   test("uses the shared tablet category layout for menu tabs", async ({
     page,
   }, testInfo) => {
