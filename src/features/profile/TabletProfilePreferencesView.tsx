@@ -114,7 +114,7 @@ export function TabletProfilePreferencesView({
 
       <TabletProfilePreferencesHero onBack={onBack} />
 
-      <main className="mx-auto w-full max-w-[992px]">
+      <main className="smooth-scroll-area mx-auto min-h-0 w-full max-w-[992px] flex-1 overflow-x-hidden overflow-y-auto pb-5">
         <section className="grid grid-cols-2 gap-3 min-[1080px]:gap-4">
           <TabletDiningPreferencesCard onAccountAction={setStatusMessage} />
           <TabletDietaryPreferencesCard

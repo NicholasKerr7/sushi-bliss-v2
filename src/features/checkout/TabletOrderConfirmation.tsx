@@ -107,8 +107,8 @@ export function TabletOrderConfirmation({
         onSubmitQuery={handleSubmitQuery}
       />
 
-      <main className="mx-auto min-h-0 w-full max-w-[1034px] flex-1 overflow-y-auto overflow-x-hidden min-[1080px]:overflow-hidden">
-        <section className="mt-3 grid gap-3 pb-3 min-[1080px]:h-[calc(100%-12px)] min-[1080px]:grid-rows-[460px_154px_minmax(0,1fr)_58px_70px] min-[1080px]:gap-4 min-[1080px]:pb-0">
+      <main className="smooth-scroll-area mx-auto min-h-0 w-full max-w-[1034px] flex-1 overflow-y-auto overflow-x-hidden pb-3">
+        <section className="mt-3 grid gap-3 pb-3 min-[1080px]:min-h-[calc(100%-12px)] min-[1080px]:grid-rows-[460px_154px_minmax(0,1fr)_58px_70px] min-[1080px]:gap-4 min-[1080px]:pb-0">
           <TabletOrderConfirmationHero
             confirmationCode={order.confirmationCode}
             createdAtLabel={createdAtLabel}

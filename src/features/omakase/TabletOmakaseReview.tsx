@@ -40,7 +40,7 @@ export function TabletOmakaseReview({
   const totalCents = packageSubtotal + pairingSubtotal + taxCents;
 
   return (
-    <main className="mx-auto w-full max-w-[1034px]">
+    <main className="smooth-scroll-area mx-auto min-h-0 w-full max-w-[1034px] flex-1 overflow-x-hidden overflow-y-auto pb-[104px]">
       <section className="relative min-h-[164px] overflow-hidden rounded-b-[18px] border-x border-b border-white/10">
         <Image
           alt=""

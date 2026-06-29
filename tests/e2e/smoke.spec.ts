@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 async function expectNoFrameworkErrorOverlay(page: Page) {
   await expect(
@@ -7,6 +7,33 @@ async function expectNoFrameworkErrorOverlay(page: Page) {
       "[data-nextjs-dialog], .vite-error-overlay, #webpack-dev-server-client-overlay",
     ),
   ).toHaveCount(0);
+}
+
+async function expectScrollableSurface(locator: Locator) {
+  await expect(locator).toBeVisible();
+
+  const metrics = await locator.evaluate((element) => {
+    const previousScrollBehavior = element.style.scrollBehavior;
+
+    element.style.scrollBehavior = "auto";
+    element.scrollTop = 0;
+
+    const maxScrollY = element.scrollHeight - element.clientHeight;
+    element.scrollTop = Math.min(360, maxScrollY);
+
+    const scrollTop = element.scrollTop;
+    element.style.scrollBehavior = previousScrollBehavior;
+
+    return {
+      clientHeight: element.clientHeight,
+      maxScrollY,
+      scrollHeight: element.scrollHeight,
+      scrollTop,
+    };
+  });
+
+  expect(metrics.maxScrollY).toBeGreaterThan(24);
+  expect(metrics.scrollTop).toBeGreaterThan(0);
 }
 
 test.describe("customer experience", () => {
@@ -408,6 +435,58 @@ test.describe("customer experience", () => {
     await expect(
       giftsSection.getByRole("button", { name: "Hide sample email" }),
     ).toBeVisible();
+  });
+
+  test("keeps desktop item customization content scrollable", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("desktop"),
+      "Desktop-only customization surface scroll check.",
+    );
+
+    await page.setViewportSize({ height: 720, width: 1440 });
+    await page.goto("/menu", { waitUntil: "domcontentloaded" });
+    await expectNoFrameworkErrorOverlay(page);
+
+    const menuSection = page.locator("#menu");
+
+    await menuSection
+      .getByRole("button", { name: "View details for Otoro Nigiri" })
+      .first()
+      .click();
+    await expect(
+      page.getByRole("heading", { name: "Otoro Nigiri" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Customize" }).click();
+    await expect(page.getByText("Your selection")).toBeVisible();
+
+    await expectScrollableSurface(
+      page
+        .locator("main .smooth-scroll-area")
+        .filter({ hasText: "Special instructions" })
+        .first(),
+    );
+  });
+
+  test("keeps fixed tablet app surfaces scrollable", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      !testInfo.project.name.includes("tablet"),
+      "Tablet-only fixed-height surface scroll check.",
+    );
+
+    await page.setViewportSize({ height: 760, width: 834 });
+    await page.goto("/menu", { waitUntil: "domcontentloaded" });
+    await expectNoFrameworkErrorOverlay(page);
+    await expectScrollableSurface(
+      page.locator("#menu main.smooth-scroll-area").first(),
+    );
+
+    await page.goto("/omakase", { waitUntil: "domcontentloaded" });
+    await expectNoFrameworkErrorOverlay(page);
+    await expectScrollableSurface(page.locator("main.smooth-scroll-area"));
   });
 
   test("persists mobile profile edits across navigation", async ({

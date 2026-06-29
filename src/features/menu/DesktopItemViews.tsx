@@ -346,7 +346,7 @@ export function DesktopItemCustomizeView({
         Back to menu
       </button>
 
-      <section className="grid max-h-[calc(100dvh-132px)] min-h-[610px] grid-cols-[minmax(280px,0.32fr)_minmax(360px,0.44fr)_minmax(252px,0.24fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)] min-[1500px]:min-h-[640px] min-[1500px]:grid-cols-[minmax(380px,0.36fr)_minmax(470px,0.4fr)_minmax(336px,0.24fr)]">
+      <section className="grid h-[max(610px,calc(100dvh-132px))] grid-cols-[minmax(280px,0.32fr)_minmax(360px,0.44fr)_minmax(252px,0.24fr)] overflow-hidden rounded-[22px] border border-[var(--sb-border)] bg-[#080a0b] shadow-[0_26px_90px_rgba(0,0,0,0.54)] min-[1500px]:h-[max(640px,calc(100dvh-132px))] min-[1500px]:grid-cols-[minmax(380px,0.36fr)_minmax(470px,0.4fr)_minmax(336px,0.24fr)]">
         <div className="relative min-h-0 overflow-hidden">
           <PairingImageBackdrop imageUrl={activeImage} sizes="650px" />
           <Image

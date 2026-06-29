@@ -51,7 +51,7 @@ export function TabletMenuExplorer({
         onOpenCart={onOpenCart}
         onQueryChange={onQueryChange}
       />
-      <div className="flex-1">
+      <main className="smooth-scroll-area min-h-0 flex-1 overflow-x-hidden overflow-y-auto pb-3">
         {hasSearch ? (
           <TabletSearchFilter
             category={category}
@@ -85,7 +85,7 @@ export function TabletMenuExplorer({
             onViewDetails={onViewDetails}
           />
         )}
-      </div>
+      </main>
       <TabletMenuBottomNav activeIndex={1} />
     </div>
   );

@@ -27,7 +27,7 @@ export function TabletOmakaseLanding({
   onSelectPackage,
 }: TabletOmakaseLandingProps) {
   return (
-    <main className="mx-auto w-full max-w-[1034px]">
+    <main className="smooth-scroll-area mx-auto min-h-0 w-full max-w-[1034px] flex-1 overflow-x-hidden overflow-y-auto pb-[104px]">
       <section className="relative mt-0 min-h-[318px] overflow-hidden rounded-b-[18px] border-x border-b border-white/10 bg-black/30 lg:min-h-[346px] min-[1080px]:min-h-[350px]">
         <Image
           alt=""
