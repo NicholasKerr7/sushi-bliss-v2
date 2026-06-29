@@ -93,7 +93,7 @@ body::-webkit-scrollbar,
 .smooth-scroll-area {
   overscroll-behavior-x: contain;
   overscroll-behavior-y: auto;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scrollbar-width: none;
   touch-action: pan-x pan-y;
   -webkit-overflow-scrolling: touch;

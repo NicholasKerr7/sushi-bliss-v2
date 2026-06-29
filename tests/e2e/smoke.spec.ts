@@ -36,6 +36,27 @@ async function expectScrollableSurface(locator: Locator) {
   expect(metrics.scrollTop).toBeGreaterThan(0);
 }
 
+async function getActiveCarouselLabel(carousel: Locator) {
+  return carousel
+    .locator('button[aria-current="true"]')
+    .first()
+    .getAttribute("aria-label");
+}
+
+async function expectCarouselAutoAdvances(carousel: Locator) {
+  await expect(carousel).toBeVisible();
+
+  const activeLabel = await getActiveCarouselLabel(carousel);
+
+  expect(activeLabel).toBeTruthy();
+  await expect
+    .poll(() => getActiveCarouselLabel(carousel), {
+      intervals: [500],
+      timeout: 8000,
+    })
+    .not.toBe(activeLabel);
+}
+
 test.describe("customer experience", () => {
   test("renders customer entry and supports menu add-to-cart", async ({
     page,
@@ -199,6 +220,84 @@ test.describe("customer experience", () => {
       await desktopSecondSlide.click({ force: true });
       await expect(desktopSecondSlide).toHaveAttribute("aria-current", "true");
     }).toPass();
+  });
+
+  test("auto-advances carousel surfaces across breakpoints", async ({
+    page,
+  }, testInfo) => {
+    const isMobileProject = testInfo.project.name.includes("mobile");
+    const isTabletProject = testInfo.project.name.includes("tablet");
+    const isDesktopProject = testInfo.project.name.includes("desktop");
+
+    testInfo.setTimeout(60_000);
+    await page.emulateMedia({ reducedMotion: "reduce" });
+
+    if (isTabletProject) {
+      await page.goto("/home", { waitUntil: "domcontentloaded" });
+      await expectNoFrameworkErrorOverlay(page);
+      await expectCarouselAutoAdvances(
+        page.getByRole("navigation", { name: "Tablet hero slides" }),
+      );
+
+      await page.goto("/menu", { waitUntil: "domcontentloaded" });
+      await expectNoFrameworkErrorOverlay(page);
+      await expectCarouselAutoAdvances(
+        page.getByRole("navigation", { name: "Chef recommendation slides" }),
+      );
+
+      const menuSection = page.locator("#menu");
+
+      await menuSection
+        .getByRole("button", { name: /Otoro Nigiri Premium fatty/i })
+        .first()
+        .click();
+      await expect(
+        page.getByRole("dialog", { name: "Otoro Nigiri" }),
+      ).toBeVisible();
+      await expectCarouselAutoAdvances(
+        page.getByRole("navigation", { name: "Item image gallery" }),
+      );
+      return;
+    }
+
+    if (isDesktopProject) {
+      await page.goto("/home", { waitUntil: "domcontentloaded" });
+      await expectNoFrameworkErrorOverlay(page);
+      await expectCarouselAutoAdvances(
+        page.getByRole("navigation", { name: "Desktop hero slides" }),
+      );
+
+      await page.goto("/menu", { waitUntil: "domcontentloaded" });
+      await expectNoFrameworkErrorOverlay(page);
+      await page
+        .locator("#menu")
+        .getByRole("button", { name: "View details for Otoro Nigiri" })
+        .first()
+        .click();
+      await expect(
+        page.getByRole("heading", { name: "Otoro Nigiri" }),
+      ).toBeVisible();
+      await expectCarouselAutoAdvances(
+        page.getByRole("navigation", { name: "Item image gallery" }),
+      );
+      return;
+    }
+
+    expect(isMobileProject).toBe(true);
+
+    await page.goto("/menu", { waitUntil: "domcontentloaded" });
+    await expectNoFrameworkErrorOverlay(page);
+    await page
+      .locator("#menu")
+      .getByRole("button", { name: /Otoro Nigiri/i })
+      .first()
+      .click();
+    await expect(
+      page.getByRole("dialog", { name: "Otoro Nigiri" }),
+    ).toBeVisible();
+    await expectCarouselAutoAdvances(
+      page.getByRole("navigation", { name: "Item image gallery" }),
+    );
   });
 
   test("routes home search submissions to filtered menu results", async ({

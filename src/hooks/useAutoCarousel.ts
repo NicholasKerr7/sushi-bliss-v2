@@ -7,17 +7,19 @@ interface UseAutoCarouselOptions {
   enabled?: boolean;
   intervalMs?: number;
   onAdvance: () => void;
+  respectReducedMotion?: boolean;
   resetKey?: unknown;
 }
 
-const DEFAULT_AUTO_CAROUSEL_INTERVAL_MS = 6500;
+const DEFAULT_AUTO_CAROUSEL_INTERVAL_MS = 5200;
 
-/** Advances controlled carousel state without running during reduced motion or hidden tabs. */
+/** Advances controlled carousel state while avoiding hidden tabs and stale callbacks. */
 export function useAutoCarousel({
   count,
   enabled = true,
   intervalMs = DEFAULT_AUTO_CAROUSEL_INTERVAL_MS,
   onAdvance,
+  respectReducedMotion = false,
   resetKey,
 }: UseAutoCarouselOptions) {
   const latestOnAdvance = useRef(onAdvance);
@@ -31,12 +33,14 @@ export function useAutoCarousel({
       return;
     }
 
-    const reducedMotionQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
+    if (respectReducedMotion) {
+      const reducedMotionQuery = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
 
-    if (reducedMotionQuery.matches) {
-      return;
+      if (reducedMotionQuery.matches) {
+        return;
+      }
     }
 
     const intervalId = window.setInterval(() => {
@@ -46,5 +50,5 @@ export function useAutoCarousel({
     }, intervalMs);
 
     return () => window.clearInterval(intervalId);
-  }, [count, enabled, intervalMs, resetKey]);
+  }, [count, enabled, intervalMs, respectReducedMotion, resetKey]);
 }

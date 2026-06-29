@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import { AssetIcon } from "@/components/icons/AssetIcon";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
+import { CarouselIndicator } from "@/components/ui/CarouselIndicator";
 import {
   getMenuGalleryImageClassName,
   getMenuItemGalleryImages,
@@ -124,23 +125,14 @@ export function DesktopImageStage({
       >
         <ChevronIcon direction="right" size={22} />
       </button>
-      <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
-        {galleryImages.map((image, index) => (
-          <button
-            aria-label={`Show gallery image ${index + 1}`}
-            aria-pressed={index === activeImageIndex}
-            className={classNames(
-              "h-2.5 rounded-full transition",
-              index === activeImageIndex
-                ? "w-8 bg-[var(--sb-red-bright)] shadow-[0_0_14px_rgba(255,35,22,0.8)]"
-                : "w-2.5 bg-white/34 hover:bg-white/58",
-            )}
-            key={image}
-            onClick={() => onImageSelect(index)}
-            type="button"
-          />
-        ))}
-      </div>
+      <CarouselIndicator
+        activeIndex={activeImageIndex}
+        ariaLabel="Item image gallery"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2"
+        count={galleryImages.length}
+        labelPrefix="Show image"
+        onSelect={onImageSelect}
+      />
     </div>
   );
 }
